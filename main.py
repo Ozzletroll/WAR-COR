@@ -14,12 +14,27 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
+# Define database models
+
+
+
+# Initialise database
+with app.app_context():
+    db.create_all()
+
+
+#   =======================================
+#                  ROUTES
+#   =======================================
+
+
 # Basic navigation
 @app.route("/")
 def home():
     return render_template("index.html")
 
 
+# User management
 @app.route("/register")
 def register():
     return render_template("register.html")
@@ -35,7 +50,6 @@ def logout():
     return redirect(url_for("home"))
 
 
-# User management
 @app.route("/<username>/delete")
 def delete_user():
     return redirect(url_for("home"))
