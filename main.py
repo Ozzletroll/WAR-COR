@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-# Basic navigation routes
+# Basic navigation
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -35,7 +35,7 @@ def logout():
     return redirect(url_for("home"))
 
 
-# Campaign creation/editing/viewing routes
+# Campaign creation/editing/viewing
 @app.route("/create_campaign")
 def create_campaign():
     return render_template("create.html")
