@@ -21,7 +21,7 @@ def home():
 
 
 @app.route("/register")
-def login():
+def register():
     return render_template("register.html")
 
 
@@ -31,7 +31,7 @@ def login():
 
 
 @app.route("/logout")
-def login():
+def logout():
     return redirect(url_for("home"))
 
 
@@ -42,7 +42,7 @@ def create_campaign():
 
 
 @app.route("/edit_campaign/<campaign_name>")
-def create_campaign():
+def edit_campaign():
     return render_template("create.html")
 
 
@@ -62,7 +62,7 @@ def edit_event():
 
 
 @app.route("/<campaign_name>/delete_event")
-def edit_event():
+def delete_event():
     return render_template("event.html")
 
 
