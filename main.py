@@ -15,7 +15,28 @@ db = SQLAlchemy(app)
 
 
 # Define database models
+class User(db.Model):
+    __tablename__ = "users"
 
+    id = db.Column(db.Integer, primary_key=True)
+
+
+class Campaign(db.Model):
+    __tablename__ = "campaigns"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+
+class Event(db.Model):
+    __tablename__ = "events"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+
+class Comments(db.Model):
+    __tablename__ = "comments"
+
+    id = db.Column(db.Integer, primary_key=True)
 
 
 # Initialise database
