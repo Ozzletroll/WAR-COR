@@ -35,6 +35,17 @@ def logout():
     return redirect(url_for("home"))
 
 
+# User management
+@app.route("/<username>/delete")
+def delete_user():
+    return redirect(url_for("home"))
+
+
+@app.route("/<username>/edit")
+def edit_user():
+    return render_template(edit_user.html)
+
+
 # Campaign creation/editing/viewing
 @app.route("/create_campaign")
 def create_campaign():
