@@ -1,10 +1,17 @@
 import flask
 from flask import Flask, render_template, redirect, request, url_for, flash, abort
 import os
+from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+
+
+# Configure database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///war_cor.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 
 # Basic navigation routes
