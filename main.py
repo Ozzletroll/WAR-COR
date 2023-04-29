@@ -22,11 +22,11 @@ def create_app():
     return app
 
 
-app = create_app()
+flask_app = create_app()
 
 
 # Configure database
-db = SQLAlchemy(app)
+db = SQLAlchemy(flask_app)
 
 
 # Define database models
@@ -74,7 +74,7 @@ class Comments(db.Model):
 
 
 # Initialise database
-with app.app_context():
+with flask_app.app_context():
     db.create_all()
 
 
@@ -84,68 +84,68 @@ with app.app_context():
 
 
 # Basic navigation
-@app.route("/")
+@flask_app.route("/")
 def home():
     return render_template("index.html")
 
 
 # User management
-@app.route("/register")
+@flask_app.route("/register")
 def register():
     return render_template("register.html")
 
 
-@app.route("/login")
+@flask_app.route("/login")
 def login():
     return render_template("login.html")
 
 
-@app.route("/logout")
+@flask_app.route("/logout")
 def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/<username>/delete")
+@flask_app.route("/<username>/delete")
 def delete_user():
     return redirect(url_for("home"))
 
 
-@app.route("/<username>/edit")
+@flask_app.route("/<username>/edit")
 def edit_user():
     return render_template(edit_user.html)
 
 
 # Campaign creation/editing/viewing
-@app.route("/create_campaign")
+@flask_app.route("/create_campaign")
 def create_campaign():
     return render_template("create.html")
 
 
-@app.route("/edit_campaign/<campaign_name>")
+@flask_app.route("/edit_campaign/<campaign_name>")
 def edit_campaign():
     return render_template("create.html")
 
 
-@app.route("/<campaign_name>")
+@flask_app.route("/<campaign_name>")
 def show_timeline():
     return render_template("timeline.html")
 
 
-@app.route("/<campaign_name>/add_event")
+@flask_app.route("/<campaign_name>/add_event")
 def add_event():
     return render_template("event.html")
 
 
-@app.route("/<campaign_name>/edit_event")
+@flask_app.route("/<campaign_name>/edit_event")
 def edit_event():
     return render_template("event.html")
 
 
-@app.route("/<campaign_name>/delete_event")
+@flask_app.route("/<campaign_name>/delete_event")
 def delete_event():
     return render_template("event.html")
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    flask_app.run(debug=True)
 
