@@ -3,6 +3,14 @@ from flask import Flask, render_template, redirect, request, url_for, flash, abo
 import os
 from flask_sqlalchemy import SQLAlchemy
 
+# TODO: Create and style page templates
+# TODO: Implement basic page navigation
+# TODO: Add new user registration
+# TODO: Implement user login/logout functionality
+# TODO: Define User database models
+# TODO: Define Campaign database models
+# TODO: Define Event database models
+# TODO: Define Comment database models
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
