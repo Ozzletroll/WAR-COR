@@ -3,8 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
 
-# TODO: Move database models to database.py
-
 # TODO: Create and style page templates
 # TODO: Implement basic page navigation
 # TODO: Add new user registration
@@ -50,7 +48,7 @@ def delete_user():
 
 @flask_app.route("/<username>/edit")
 def edit_user():
-    return render_template(edit_user.html)
+    return render_template("edit_user.html")
 
 
 # Campaign creation/editing/viewing
