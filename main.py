@@ -25,7 +25,11 @@ def home():
     return render_template("index.html")
 
 
-# User management
+#   =======================================
+#                  User
+#   =======================================
+
+
 @flask_app.route("/register")
 def register():
     return render_template("register.html")
@@ -50,36 +54,55 @@ def delete_user():
 def edit_user():
     return render_template("edit_user.html")
 
-
-# Campaign creation/editing/viewing
-@flask_app.route("/create_campaign")
-def create_campaign():
-    return render_template("create.html")
+#   =======================================
+#                  Campaign
+#   =======================================
 
 
-@flask_app.route("/edit_campaign/<campaign_name>")
-def edit_campaign():
-    return render_template("create.html")
-
-
+# View campaign overview
 @flask_app.route("/<campaign_name>")
 def show_timeline():
     return render_template("timeline.html")
 
 
-@flask_app.route("/<campaign_name>/add_event")
+# Create new campaign
+@flask_app.route("/create_campaign")
+def create_campaign():
+    return render_template("new_campaign.html")
+
+
+# Edit campaign data
+@flask_app.route("/edit_campaign/<campaign_name>")
+def edit_campaign():
+    return render_template("edit_campaign.html")
+
+
+#   =======================================
+#                  Event
+#   =======================================
+
+# View event
+@flask_app.route("/<campaign_name>/<event_name>")
+def view_event():
+    return render_template("event.html")
+
+
+# Add new event
+@flask_app.route("/<campaign_name>/new_event")
 def add_event():
-    return render_template("event.html")
+    return render_template("new_event.html")
 
 
-@flask_app.route("/<campaign_name>/edit_event")
+# Edit existing event
+@flask_app.route("/<campaign_name>/<event_name>/edit")
 def edit_event():
-    return render_template("event.html")
+    return render_template("edit_event.html")
 
 
-@flask_app.route("/<campaign_name>/delete_event")
+# Delete existing event
+@flask_app.route("/<campaign_name>/<event_name>/delete")
 def delete_event():
-    return render_template("event.html")
+    return redirect(url_for("show_timeline"))
 
 
 if __name__ == "__main__":
