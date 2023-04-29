@@ -2,7 +2,6 @@ from flask import Flask, render_template, redirect, request, url_for, flash, abo
 from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
-from database import create_database
 
 # TODO: Move database models to database.py
 
@@ -16,7 +15,6 @@ from database import create_database
 # TODO: Define Comment database models
 
 flask_app = create_app()
-db = create_database()
 
 #   =======================================
 #                  ROUTES
