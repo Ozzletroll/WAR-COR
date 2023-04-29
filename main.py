@@ -20,11 +20,30 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
+    # Basic user data
+    username = db.Column(db.String(30))
+    email = db.Column(db.String(250))
+    password = db.Column(db.String(250))
+
+    # Database relationships
+
+    # campaigns =
+    # comments =
+
 
 class Campaign(db.Model):
     __tablename__ = "campaigns"
 
     id = db.Column(db.Integer, primary_key=True)
+
+    # Basic campaign data
+    title = db.Column(db.String(250))
+
+    # Database relationships
+
+    # participants =
+    # events =
+    # comments =
 
 
 class Event(db.Model):
