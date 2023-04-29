@@ -3,7 +3,19 @@ from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
 
+# Initial setup:
 # TODO: Create and style page templates
+#     TODO: Create index.html
+#     TODO: Create register.html
+#     TODO: Create login.html
+#     TODO: Create user_settings.html
+#     TODO: Create timeline.html
+#     TODO: Create new_campaign.html
+#     TODO: Create edit_campaign.html
+#     TODO: Create event.html
+#     TODO: Create new_event.html
+#     TODO: Create edit_event.html
+
 # TODO: Implement basic page navigation
 # TODO: Add new user registration
 # TODO: Implement user login/logout functionality
@@ -11,6 +23,19 @@ from app import create_app
 # TODO: Define Campaign database models
 # TODO: Define Event database models
 # TODO: Define Comment database models
+
+# TODO: Main functionality
+#   TODO: Add campaign creation
+#   TODO: Add campaign viewing
+#   TODO: Add campaign editing
+#   TODO: Add campaign deletion
+#   TODO: Add campaign user invitation
+
+#   TODO: Add event creation
+#   TODO: Add event viewing
+#   TODO: Add event editing
+#   TODO: Add event deletion
+#   TODO: Add event commenting
 
 flask_app = create_app()
 
@@ -52,7 +77,7 @@ def delete_user():
 
 @flask_app.route("/<username>/edit")
 def edit_user():
-    return render_template("edit_user.html")
+    return render_template("user_settings.html")
 
 #   =======================================
 #                  Campaign
