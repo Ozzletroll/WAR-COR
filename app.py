@@ -1,5 +1,5 @@
 import os
-from flask import Flask, current_app
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -14,7 +14,7 @@ def create_app():
 
     # Initialise database
     db.init_app(app)
-    import models.models
+    import models
 
     with app.app_context():
         db.create_all()
