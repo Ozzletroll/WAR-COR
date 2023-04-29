@@ -14,7 +14,7 @@ def create_app():
 
     # Initialise database
     db.init_app(app)
-
+    import models.models
 
     with app.app_context():
         db.create_all()
