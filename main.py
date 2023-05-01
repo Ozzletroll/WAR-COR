@@ -134,7 +134,7 @@ def edit_user():
 
 # View campaign overview
 @flask_app.route("/<campaign_name>")
-def show_timeline():
+def show_timeline(campaign_name):
     return render_template("timeline.html")
 
 
@@ -146,7 +146,7 @@ def create_campaign():
 
 # Edit campaign data
 @flask_app.route("/edit_campaign/<campaign_name>")
-def edit_campaign():
+def edit_campaign(campaign_name):
     return render_template("edit_campaign.html")
 
 
@@ -156,25 +156,25 @@ def edit_campaign():
 
 # View event
 @flask_app.route("/<campaign_name>/<event_name>")
-def view_event():
+def view_event(campaign_name, event_name):
     return render_template("event.html")
 
 
 # Add new event
 @flask_app.route("/<campaign_name>/new_event")
-def add_event():
+def add_event(campaign_name):
     return render_template("new_event.html")
 
 
 # Edit existing event
 @flask_app.route("/<campaign_name>/<event_name>/edit")
-def edit_event():
+def edit_event(campaign_name, event_name):
     return render_template("edit_event.html")
 
 
 # Delete existing event
 @flask_app.route("/<campaign_name>/<event_name>/delete")
-def delete_event():
+def delete_event(campaign_name, event_name):
     return redirect(url_for("show_timeline"))
 
 
