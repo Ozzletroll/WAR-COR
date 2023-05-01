@@ -80,6 +80,7 @@ def register():
             db.session.add(user)
             db.session.commit()
             # Login user
+            # TODO: Add user login
             return redirect(url_for("home"))
 
     return render_template("register.html", form=form)
