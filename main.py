@@ -79,7 +79,16 @@ def register():
         # Create new user
         user = models.User()
         user.username = request.form["username"]
-        user.password = request.form["password"]
+        password = request.form["password"]
+
+        # Salt and hash password
+        sh_password = werkzeug.security.generate_password_hash(
+            password,
+            method="pbkdf2:sha256",
+            salt_length=8
+        )
+
+        user.password = sh_password
 
         # Check if username already exists in database
         # TODO: Add username database query
