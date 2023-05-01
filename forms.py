@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, URL, Email, EqualTo
 from flask_ckeditor import CKEditorField
 
 
+# User management forms
 class RegisterUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired(), EqualTo("confirm_password",
