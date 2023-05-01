@@ -47,6 +47,7 @@ flask_app = create_app()
 
 
 # User loader callback
+# https://flask-login.readthedocs.io/en/latest/#login-example
 @flask_app.login_manager.user_loader
 def load_user(user_id):
     # TODO: Update database query to new syntax
