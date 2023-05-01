@@ -121,15 +121,16 @@ def login():
         user = "DATABASE QUERY GOES HERE"
 
         if user:
-            # TODO: Check if password matches database
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                 # Login user
                 login_user(user)
-
                 return redirect(url_for("home"))
             else:
                 flash("Incorrect password or username.")
                 return redirect(url_for("login"))
+        else:
+            flash("Username not found. Please check login details.")
+            return redirect(url_for("login"))
 
     return render_template("login.html", form=form)
 
