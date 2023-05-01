@@ -17,3 +17,9 @@ class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Login")
+
+
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField("Password", validators=[DataRequired()])
+    password = PasswordField('New Password', [DataRequired(), EqualTo('submit', message='Passwords must match')])
+    submit = PasswordField('Repeat Password')
