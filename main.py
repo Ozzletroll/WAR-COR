@@ -1,5 +1,7 @@
 from flask import Flask, render_template, redirect, request, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
+import werkzeug
+from werkzeug.security import generate_password_hash, check_password_hash
 
 import forms
 import models
@@ -88,7 +90,27 @@ def register():
 
 @flask_app.route("/login")
 def login():
-    return render_template("login.html")
+
+    form = forms.LoginForm()
+
+    if form.validate_on_submit():
+
+        username = request.form["username"]
+        password = request.form["password"]
+
+        # TODO: Check username exists in database
+        user = "DATABASE QUERY GOES HERE"
+
+        if user:
+            # TODO: Check if password matches database
+            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+                # Login user
+                return redirect(url_for("home"))
+            else:
+                flash("Incorrect password or username.")
+                return redirect(url_for("login"))
+
+    return render_template("login.html", form=form)
 
 
 @flask_app.route("/logout")
