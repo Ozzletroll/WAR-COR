@@ -115,6 +115,8 @@ def login():
             # TODO: Check if password matches database
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                 # Login user
+                login_user(user)
+
                 return redirect(url_for("home"))
             else:
                 flash("Incorrect password or username.")
