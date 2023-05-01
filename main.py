@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, login_required, current_user, logout_user
 import werkzeug
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -43,6 +44,14 @@ from app import db
 #   TODO: Add event commenting
 
 flask_app = create_app()
+
+
+# User loader callback
+@flask_app.login_manager.user_loader
+def load_user(user_id):
+    # TODO: Update database query to new syntax
+    return db.session.query(models.User).get(user_id)
+
 
 #   =======================================
 #                  HOMEPAGE
@@ -114,16 +123,19 @@ def login():
 
 
 @flask_app.route("/logout")
+@login_required
 def logout():
     return redirect(url_for("home"))
 
 
 @flask_app.route("/<username>/delete")
+@login_required
 def delete_user():
     return redirect(url_for("home"))
 
 
 @flask_app.route("/<username>/edit")
+@login_required
 def edit_user():
     return render_template("user_settings.html")
 
