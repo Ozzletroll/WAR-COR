@@ -2,7 +2,9 @@ from flask import Flask, render_template, redirect, request, url_for, flash, abo
 from flask_sqlalchemy import SQLAlchemy
 
 import forms
+import models
 from app import create_app
+from app import db
 
 # Initial setup:
 # TODO: Create and style page templates
@@ -62,9 +64,23 @@ def register():
     form = forms.RegisterUserForm()
 
     if form.validate_on_submit():
-        # Add user to database
-        return redirect(url_for("home"))
+        # Create new user
+        user = models.User()
+        user.username = request.form["username"]
+        user.password = request.form["password"]
 
+        # Check if username already exists in database
+        # TODO: Add username database query
+        username_search = False
+        if username_search:
+            flash("Username already taken. Please choose a new username.")
+            return redirect(url_for("register"))
+        else:
+            # Add user to database
+            db.session.add(user)
+            db.session.commit()
+            # Login user
+            return redirect(url_for("home"))
 
     return render_template("register.html", form=form)
 
