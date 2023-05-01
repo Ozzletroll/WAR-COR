@@ -98,7 +98,7 @@ def register():
     return render_template("register.html", form=form)
 
 
-@flask_app.route("/login")
+@flask_app.route("/login", methods=["GET", "POST"])
 def login():
 
     form = forms.LoginForm()
