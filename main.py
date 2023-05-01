@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 
+import forms
 from app import create_app
 
 # Initial setup:
@@ -55,9 +56,17 @@ def home():
 #   =======================================
 
 
-@flask_app.route("/register")
+@flask_app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+
+    form = forms.RegisterUserForm()
+
+    if form.validate_on_submit():
+        # Add user to database
+        return redirect(url_for("home"))
+
+
+    return render_template("register.html", form=form)
 
 
 @flask_app.route("/login")
