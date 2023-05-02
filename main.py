@@ -116,7 +116,6 @@ def login():
 
         username = request.form["username"]
         password = request.form["password"]
-
         # TODO: Check username exists in database
         user = "DATABASE QUERY GOES HERE"
 
@@ -138,6 +137,7 @@ def login():
 @flask_app.route("/logout")
 @login_required
 def logout():
+    logout_user()
     return redirect(url_for("home"))
 
 
