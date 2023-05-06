@@ -104,7 +104,7 @@ def register():
             # Login user
             # Debug message
             print(f"Registration successful {user.username}")
-            # TODO: Add user login
+            login_user(user)
             return redirect(url_for("home"))
 
     return render_template("register.html", form=form)
