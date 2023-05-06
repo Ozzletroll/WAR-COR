@@ -50,8 +50,7 @@ flask_app = create_app()
 # https://flask-login.readthedocs.io/en/latest/#login-example
 @flask_app.login_manager.user_loader
 def load_user(user_id):
-    # TODO: Update database query to new syntax
-    return db.session.query(models.User).get(user_id)
+    return db.session.get(models.User, user_id)
 
 
 #   =======================================
@@ -211,5 +210,5 @@ def delete_event(campaign_name, event_name):
 
 
 if __name__ == "__main__":
-    flask_app.run(debug=True)
+    flask_app.run(debug=False)
 
