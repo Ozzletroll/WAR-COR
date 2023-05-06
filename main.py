@@ -118,7 +118,7 @@ def login():
 
         username = request.form["username"]
         password = request.form["password"]
-        user = db.session.execute(select(models.User).filter_by(username=username)).first()
+        user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
 
         if user:
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
