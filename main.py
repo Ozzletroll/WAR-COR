@@ -91,7 +91,7 @@ def register():
         user.password = sh_password
 
         # Check if username already exists in database
-        username_search = db.session.execute(select(models.User).filter_by(username=user.username)).scalar_one()
+        username_search = db.session.execute(select(models.User).filter_by(username=user.username)).first()
         if username_search:
             # Debug message
             print("Username already in use. Please choose a new username.")
@@ -102,6 +102,8 @@ def register():
             db.session.add(user)
             db.session.commit()
             # Login user
+            # Debug message
+            print(f"Registration successful {user.username}")
             # TODO: Add user login
             return redirect(url_for("home"))
 
@@ -117,12 +119,13 @@ def login():
 
         username = request.form["username"]
         password = request.form["password"]
-        # TODO: Check username exists in database
-        user = "DATABASE QUERY GOES HERE"
+        user = db.session.execute(select(models.User).filter_by(username=username)).first()
 
         if user:
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                 # Login user
+                # Debug message
+                print(f"Login successful {user.username}")
                 login_user(user)
                 return redirect(url_for("home"))
             else:
