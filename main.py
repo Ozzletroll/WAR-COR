@@ -133,6 +133,8 @@ def login():
                 flash("Incorrect password or username.")
                 return redirect(url_for("login"))
         else:
+            # Debug message
+            print("Username not found. Please check login details.")
             flash("Username not found. Please check login details.")
             return redirect(url_for("login"))
 
