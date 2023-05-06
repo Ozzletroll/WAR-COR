@@ -91,7 +91,6 @@ def register():
         user.password = sh_password
 
         # Check if username already exists in database
-        # TODO: Add username database query
         username_search = db.session.execute(select(models.User).filter_by(username=user.username)).scalar_one()
         if username_search:
             # Debug message
