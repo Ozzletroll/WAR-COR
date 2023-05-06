@@ -129,6 +129,8 @@ def login():
                 login_user(user)
                 return redirect(url_for("home"))
             else:
+                # Debug message
+                print("Incorrect password or username.")
                 flash("Incorrect password or username.")
                 return redirect(url_for("login"))
         else:
