@@ -112,6 +112,12 @@ def register():
 @flask_app.route("/login", methods=["GET", "POST"])
 def login():
 
+    # Check if user is already logged in and redirect if they are
+    if current_user.is_authenticated:
+        #Debug message
+        print("User already logged in.")
+        return redirect(url_for("home"))
+
     form = forms.LoginForm()
 
     if form.validate_on_submit():
