@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for, flash, abort
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select
 from flask_login import UserMixin, login_user, login_required, current_user, logout_user
 import werkzeug
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -23,7 +24,6 @@ from app import db
 #     TODO: Create edit_event.html
 
 # TODO: Implement basic page navigation
-# TODO: Add new user registration
 # TODO: Implement user login/logout functionality
 # TODO: Define User database models
 # TODO: Define Campaign database models
@@ -92,9 +92,11 @@ def register():
 
         # Check if username already exists in database
         # TODO: Add username database query
-        username_search = False
+        username_search = db.session.execute(select(models.User).filter_by(username=user.username)).scalar_one()
         if username_search:
-            flash("Username already taken. Please choose a new username.")
+            # Debug message
+            print("Username already in use. Please choose a new username.")
+            flash("Username already in use. Please choose a new username.")
             return redirect(url_for("register"))
         else:
             # Add user to database
