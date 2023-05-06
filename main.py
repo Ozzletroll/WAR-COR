@@ -144,6 +144,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    print("Logged out")
     return redirect(url_for("home"))
 
 
