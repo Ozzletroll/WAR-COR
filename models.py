@@ -40,7 +40,7 @@ class Campaign(UserMixin, db.Model):
 
 
 class Event(UserMixin, db.Model):
-    __tablename__ = "events"
+    __tablename__ = "event"
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -57,11 +57,11 @@ class Event(UserMixin, db.Model):
     # An event is part of a campaign, and may contain multiple comments.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
-    # comments =
+    comments = db.relationship("Comment", backref="event")
 
 
-class Comments(UserMixin, db.Model):
-    __tablename__ = "comments"
+class Comment(UserMixin, db.Model):
+    __tablename__ = "comment"
 
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(250))
@@ -70,5 +70,5 @@ class Comments(UserMixin, db.Model):
 
     # A comment is attached to an event, and has an author.
 
-    # parent_event =
+    event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
     # author =
