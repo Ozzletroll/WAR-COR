@@ -2,9 +2,14 @@ from flask_login import UserMixin
 
 from app import db
 
+# Association table that defines user to campaign relationships
+user_campaign = db.Table("user_campaign",
+                         db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
+                         db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
+
 
 class User(UserMixin, db.Model):
-    __tablename__ = "users"
+    __tablename__ = "user"
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -16,7 +21,7 @@ class User(UserMixin, db.Model):
 
     # A user takes part in a number of campaigns, and may be the author of many comments.
 
-    # campaigns =
+    campaigns = db.relationship("Campaign", secondary=user_campaign, backref="participants")
     # comments =
 
 
@@ -34,7 +39,6 @@ class Campaign(UserMixin, db.Model):
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
     # permission.
 
-    # participants =
     # edit_permission = 
     events = db.relationship("Event", backref="campaign")
 
