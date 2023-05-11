@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
 
 
 class Campaign(UserMixin, db.Model):
-    __tablename__ = "campaigns"
+    __tablename__ = "campaign"
 
     id = db.Column(db.Integer, primary_key=True)
 
@@ -31,10 +31,12 @@ class Campaign(UserMixin, db.Model):
 
     # Database relationships
 
-    # A campaign has a number of participating users, and is made up of a number of events.
+    # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
+    # permission.
 
     # participants =
-    # events =
+    # edit_permission = 
+    events = db.relationship("Event", backref="campaign")
 
 
 class Event(UserMixin, db.Model):
@@ -54,7 +56,7 @@ class Event(UserMixin, db.Model):
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments.
 
-    # parent_campaign =
+    campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     # comments =
 
 
