@@ -189,6 +189,31 @@ def edit_campaign(campaign_name):
     return render_template("edit_campaign.html")
 
 
+# Edit campaign users
+@flask_app.route("/edit_campaign/<campaign_name>/add_users")
+def add_campaign_users(campaign_name):
+
+    user_to_add = "USERNAME OF USER TO BE ADDED TO CAMPAIGN"
+
+    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name)).scalar()
+
+    # Add user to campaign:
+    user.campaigns.append(campaign)
+    db.session.commit()
+
+    # Remove user from campaign:
+    # user.campaigns.remove(campaign)
+    # db.session.commit()
+    # Can be iterated through:
+    # for campaign in user.campaigns:
+    #     print(campaign.title)
+    #
+    # See https://www.youtube.com/watch?v=47i-jzrrIGQ for a reminder.
+
+    return render_template("edit_campaign.html")
+
+
 #   =======================================
 #                  Event
 #   =======================================
