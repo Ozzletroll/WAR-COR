@@ -7,6 +7,10 @@ user_campaign = db.Table("user_campaign",
                          db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
                          db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
 
+user_edit_permissions = db.Table("user_edit_permissions",
+                                 db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
+                                 db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
+
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
@@ -19,9 +23,10 @@ class User(UserMixin, db.Model):
 
     # Database relationships
 
-    # A user takes part in a number of campaigns, and may be the author of many comments.
+    # A user takes part in a number of campaigns, may have editing permissions, and may be the author of many comments.
 
     campaigns = db.relationship("Campaign", secondary=user_campaign, backref="participants")
+    permissions = db.relationship("Campaign", secondary=user_edit_permissions, backref="editors")
     # comments =
 
 
@@ -39,7 +44,6 @@ class Campaign(UserMixin, db.Model):
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
     # permission.
 
-    # edit_permission = 
     events = db.relationship("Event", backref="campaign")
 
 
