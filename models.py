@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
 
     campaigns = db.relationship("Campaign", secondary=user_campaign, backref="participants")
     permissions = db.relationship("Campaign", secondary=user_edit_permissions, backref="editors")
-    # comments =
+    comments = db.relationship("Comment", backref="author")
 
 
 class Campaign(UserMixin, db.Model):
@@ -79,4 +79,4 @@ class Comment(UserMixin, db.Model):
     # A comment is attached to an event, and has an author.
 
     event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
-    # author =
+    author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
