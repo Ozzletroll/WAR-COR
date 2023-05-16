@@ -25,9 +25,10 @@ class User(UserMixin, db.Model):
 
     # A user takes part in a number of campaigns, may have editing permissions, and may be the author of many comments.
 
-    campaigns = db.relationship("Campaign", secondary=user_campaign, backref="participants")
-    permissions = db.relationship("Campaign", secondary=user_edit_permissions, backref="editors")
-    comments = db.relationship("Comment", backref="author")
+    campaigns = db.relationship("Campaign", secondary=user_campaign)
+    permissions = db.relationship("Campaign", secondary=user_edit_permissions)
+
+    comments = db.relationship("Comment", back_populates="author")
 
 
 class Campaign(UserMixin, db.Model):
@@ -44,7 +45,7 @@ class Campaign(UserMixin, db.Model):
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
     # permission.
 
-    events = db.relationship("Event", backref="campaign")
+    events = db.relationship("Event", back_populates="parent_campaign")
 
 
 class Event(UserMixin, db.Model):
@@ -65,7 +66,9 @@ class Event(UserMixin, db.Model):
     # An event is part of a campaign, and may contain multiple comments.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
-    comments = db.relationship("Comment", backref="event")
+    comments = db.relationship("Comment", back_populates="parent_event")
+
+    parent_campaign = db.relationship("Campaign", back_populates="events")
 
 
 class Comment(UserMixin, db.Model):
@@ -79,4 +82,7 @@ class Comment(UserMixin, db.Model):
     # A comment is attached to an event, and has an author.
 
     event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
+    parent_event = db.relationship("Event", back_populates="comments")
+
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    author = db.relationship("User", back_populates="comments")
