@@ -1,4 +1,5 @@
 import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -7,7 +8,8 @@ db = SQLAlchemy()
 
 
 # Application factory
-def create_app(database_uri='sqlite:///war_cor.db'):
+def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
+    # Create and configure instance of the Flask app
     app = Flask(__name__, instance_relative_config=True)
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
@@ -21,7 +23,7 @@ def create_app(database_uri='sqlite:///war_cor.db'):
     with app.app_context():
         db.create_all()
 
-    # Login manager
+    # Initialise login manager
     login_manager = LoginManager()
     login_manager.init_app(app)
 
