@@ -1,14 +1,4 @@
-from flask import Flask, render_template, redirect, request, url_for, flash, abort, Blueprint
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
-from flask_login import UserMixin, login_user, login_required, current_user, logout_user
-import werkzeug
-from werkzeug.security import generate_password_hash, check_password_hash
-
-import forms
-import models
 from app import create_app
-from app import db
 from routes import configure_routes
 
 # Initial setup:
