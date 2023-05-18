@@ -7,6 +7,7 @@ user_campaign = db.Table("user_campaign",
                          db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
                          db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
 
+# Association table that defines user to campaign editing permissions.
 user_edit_permissions = db.Table("user_edit_permissions",
                                  db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
                                  db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
@@ -22,7 +23,6 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(250))
 
     # Database relationships
-
     # A user takes part in a number of campaigns, may have editing permissions, and may be the author of many comments.
 
     campaigns = db.relationship("Campaign", secondary=user_campaign)
@@ -41,7 +41,6 @@ class Campaign(UserMixin, db.Model):
     description = db.Column(db.String(250), nullable=False)
 
     # Database relationships
-
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
     # permission.
 
@@ -78,7 +77,6 @@ class Comment(UserMixin, db.Model):
     body = db.Column(db.String(250))
 
     # Database relationships
-
     # A comment is attached to an event, and has an author.
 
     event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
