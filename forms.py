@@ -23,3 +23,9 @@ class ChangePasswordForm(FlaskForm):
     old_password = PasswordField("Password", validators=[DataRequired()])
     password = PasswordField('New Password', [DataRequired(), EqualTo('submit', message='Passwords must match')])
     submit = PasswordField('Repeat Password')
+
+
+class CreateCampaignForm():
+    title = StringField("Campaign Title", validators=[DataRequired()])
+    description = StringField("Description", validators=[DataRequired()])
+    submit = SubmitField("Create Campaign")
