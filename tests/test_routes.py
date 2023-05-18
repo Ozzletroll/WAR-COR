@@ -15,6 +15,14 @@ TEST_PASSWORD = "123"
 TEST_CAMPAIGN_TITLE = "Test Campaign Title"
 TEST_CAMPAIGN_DESCRIPTION = "Test Campaign Description"
 
+TEST_EVENT_TITLE = "Test Event Title"
+TEST_EVENT_TYPE = "Test Event Type"
+TEST_EVENT_DATE = "2006-09-01 04:00:00"
+TEST_EVENT_LOCATION = "Karaq Desert"
+TEST_EVENT_BELLIGERENTS = "9th Armoured Cavalry, 12th Haqqarri Legion"
+TEST_EVENT_BODY = "A description of the battle goes here."
+TEST_EVENT_RESULT = "9th Armoured Cavalry victory."
+
 
 # Function to log in test user
 def example_login(client):
@@ -84,3 +92,22 @@ def test_create_campaign(client, app):
     assert response.status_code == 200
     campaign_query = db.session.execute(select(models.Campaign).filter_by(title=TEST_CAMPAIGN_TITLE)).scalar()
     assert campaign_query.description == TEST_CAMPAIGN_DESCRIPTION
+
+
+def test_add_event(client, app):
+    example_login(client)
+    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event?id=1", follow_redirects=True)
+    assert response_1.status_code == 200
+
+    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event?id=1", follow_redirects=True, data={
+        "title": TEST_EVENT_TITLE,
+        "type": TEST_EVENT_TYPE,
+        "date": TEST_EVENT_DATE,
+        "location": TEST_EVENT_LOCATION,
+        "belligerents": TEST_EVENT_BELLIGERENTS,
+        "body": TEST_EVENT_BODY,
+        "result": TEST_EVENT_RESULT,
+    })
+    assert response_2.status_code == 200
+
+
