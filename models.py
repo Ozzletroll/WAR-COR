@@ -25,7 +25,7 @@ class User(UserMixin, db.Model):
     # Database relationships
     # A user takes part in a number of campaigns, may have editing permissions, and may be the author of many comments.
 
-    campaigns = db.relationship("Campaign", secondary=user_campaign)
+    campaigns = db.relationship("Campaign", secondary=user_campaign, back_populates="members")
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
 
     comments = db.relationship("Comment", back_populates="author")
@@ -45,6 +45,7 @@ class Campaign(UserMixin, db.Model):
     # permission.
 
     events = db.relationship("Event", back_populates="parent_campaign")
+    members = db.relationship("User", secondary=user_campaign, back_populates="campaigns")
 
 
 class Event(UserMixin, db.Model):
