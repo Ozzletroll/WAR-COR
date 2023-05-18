@@ -22,7 +22,7 @@ def configure_routes(flask_app):
     #                  HOMEPAGE
     #   =======================================
 
-    # Basic navigation
+    # Main page
     @flask_app.route("/")
     def home():
         return render_template("index.html")
@@ -31,6 +31,7 @@ def configure_routes(flask_app):
     #                  User
     #   =======================================
 
+    # New user registration
     @flask_app.route("/register", methods=["GET", "POST"])
     def register():
 
@@ -70,6 +71,7 @@ def configure_routes(flask_app):
 
         return render_template("register.html", form=form)
 
+    # Existing user login
     @flask_app.route("/login", methods=["GET", "POST"])
     def login():
 
@@ -107,6 +109,7 @@ def configure_routes(flask_app):
 
         return render_template("login.html", form=form)
 
+    # Logout user
     @flask_app.route("/logout")
     @login_required
     def logout():
