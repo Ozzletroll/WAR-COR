@@ -137,8 +137,29 @@ def configure_routes(flask_app):
         return render_template("timeline.html")
 
     # Create new campaign
-    @flask_app.route("/create_campaign")
+    @flask_app.route("/create_campaign", methods=["GET", "POST"])
+    @login_required
     def create_campaign():
+
+        form = forms.CreateCampaignForm()
+
+        if form.validate_on_submit():
+            user = current_user
+
+            new_campaign = models.Campaign()
+
+            new_campaign.title = request.form["title"]
+            new_campaign.description = request.form["description"]
+
+            # Add new campaign to database
+            db.session.add(new_campaign)
+            # Add current user as campaign member
+            user.campaigns.append(new_campaign)
+            # Give current user campaign editing permissions
+            user.permissions.append(new_campaign)
+
+            db.session.commit()
+
         return render_template("new_campaign.html")
 
     # Edit campaign data
