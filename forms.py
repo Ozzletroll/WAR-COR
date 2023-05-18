@@ -25,7 +25,7 @@ class ChangePasswordForm(FlaskForm):
     submit = PasswordField('Repeat Password')
 
 
-class CreateCampaignForm():
+class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()])
     submit = SubmitField("Create Campaign")
