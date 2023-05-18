@@ -12,6 +12,9 @@ from app import db
 TEST_USERNAME = "test_user"
 TEST_PASSWORD = "123"
 
+TEST_CAMPAIGN_TITLE = "Test Campaign Title"
+TEST_CAMPAIGN_DESCRIPTION = "Test Campaign Description"
+
 
 # Function to log in test user
 def example_login(client):
@@ -70,3 +73,14 @@ def test_logout(client):
     response = client.get("/logout", follow_redirects=True)
     assert response.status_code == 200
     assert current_user.is_anonymous is True
+
+
+def test_create_campaign(client, app):
+    example_login(client)
+    response = client.post("/create_campaign", follow_redirects=True, data={
+        "title": TEST_CAMPAIGN_TITLE,
+        "description": TEST_CAMPAIGN_DESCRIPTION,
+    })
+    assert response.status_code == 200
+    campaign_query = db.session.execute(select(models.Campaign).filter_by(title=TEST_CAMPAIGN_TITLE)).scalar()
+    assert campaign_query.description == TEST_CAMPAIGN_DESCRIPTION
