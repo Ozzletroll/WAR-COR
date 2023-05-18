@@ -22,7 +22,6 @@ def test_home(client):
 
 # Test if a new user can be added
 def test_register(client, app):
-
     # Check the route actually works
     response_1 = client.get("/register")
     assert response_1.status_code == 200
@@ -42,29 +41,27 @@ def test_register(client, app):
         assert werkzeug.security.check_password_hash(pwhash=user_query.password, password=TEST_PASSWORD)
 
 
-def test_logout(client, app):
-    response_1 = client.get("/logout")
+def test_login(client):
+    # Test if the page is reachable
+    response_1 = client.get("/login")
     assert response_1.status_code == 200
 
+    # Test if the test user can log in successfully
+    response_2 = client.post("/login", follow_redirects=True, data={
+        "username": TEST_USERNAME,
+        "password": TEST_PASSWORD,
+    })
+    assert response_2.status_code == 200
+    assert current_user.username == TEST_USERNAME
 
-def test_login(client):
-    response = client.get("/login")
-    assert response.status_code == 200
 
-
-
-#
-# # Test if the newly created user can be logged in.
-# def test_login(client, app):
-#     # The register path automatically logs in the newly created user,
-#     # so they must be logged out here.
-#     with app.test_request_context():
-#         logout_user()
-#
-#     response = client.post("/login", data={
-#         "username": "test_user",
-#         "password": "123",
-#     })
-#
-#     assert response.status_code == 200
-
+def test_logout(client):
+    # Login user
+    response_1 = client.post("/login", follow_redirects=True, data={
+        "username": TEST_USERNAME,
+        "password": TEST_PASSWORD,
+    })
+    # Test if the user can be logged out
+    response_2 = client.get("/logout", follow_redirects=True)
+    assert response_2.status_code == 200
+    assert current_user.is_anonymous is True
