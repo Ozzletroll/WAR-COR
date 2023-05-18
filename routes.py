@@ -10,6 +10,7 @@ import models
 from app import db
 
 
+# Here all the routes are configured as a function, with an instance of the app passed as a parameter.
 def configure_routes(flask_app):
 
     # User loader callback
