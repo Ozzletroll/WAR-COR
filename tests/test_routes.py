@@ -13,6 +13,14 @@ TEST_USERNAME = "test_user"
 TEST_PASSWORD = "123"
 
 
+# Function to log in test user
+def example_login(client):
+    client.post("/login", follow_redirects=True, data={
+        "username": TEST_USERNAME,
+        "password": TEST_PASSWORD,
+    })
+
+
 # Test if the home page is reachable
 def test_home(client):
     response = client.get("/")
@@ -57,11 +65,8 @@ def test_login(client):
 
 def test_logout(client):
     # Login user
-    response_1 = client.post("/login", follow_redirects=True, data={
-        "username": TEST_USERNAME,
-        "password": TEST_PASSWORD,
-    })
+    example_login(client)
     # Test if the user can be logged out
-    response_2 = client.get("/logout", follow_redirects=True)
-    assert response_2.status_code == 200
+    response = client.get("/logout", follow_redirects=True)
+    assert response.status_code == 200
     assert current_user.is_anonymous is True
