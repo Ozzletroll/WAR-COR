@@ -44,7 +44,7 @@ def test_register(client, app):
 
 
 def test_logout(client, app):
-    response_1 = client.get("/register")
+    response_1 = client.get("/logout")
     assert response_1.status_code == 200
 
 
