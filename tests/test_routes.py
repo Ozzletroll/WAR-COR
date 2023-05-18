@@ -9,6 +9,9 @@ import forms
 import models
 from app import db
 
+TEST_USERNAME = "test_user"
+TEST_PASSWORD = "123"
+
 
 # Test if the home page is reachable
 def test_home(client):
@@ -20,9 +23,6 @@ def test_home(client):
 # Test if a new user can be added
 def test_register(client, app):
 
-    test_username = "test_user"
-    test_password = "123"
-
     # Check the route actually works
     response_1 = client.get("/register")
     assert response_1.status_code == 200
@@ -30,17 +30,17 @@ def test_register(client, app):
     # TODO: This is not submitted a form properly, so the form.validate_on_submit condition is never met.
     # Check that the post response is correct
     response_2 = client.post("/register", follow_redirects=True, data={
-        "username": test_username,
-        "password": test_password,
+        "username": TEST_USERNAME,
+        "password": TEST_PASSWORD,
         "confirm_password": "123",
     })
     assert response_2.status_code == 200
 
     # Check that the new user was added to the database
     with app.app_context():
-        user_query = db.session.execute(select(models.User).filter_by(username=test_username)).scalar()
-        assert user_query.username == test_username
-        assert werkzeug.security.check_password_hash(pwhash=user_query.password, password=test_password)
+        user_query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).scalar()
+        assert user_query.username == TEST_USERNAME
+        assert werkzeug.security.check_password_hash(pwhash=user_query.password, password=TEST_PASSWORD)
 
 
 def test_logout(client, app):
