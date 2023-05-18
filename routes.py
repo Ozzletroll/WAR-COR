@@ -75,7 +75,7 @@ def configure_routes(flask_app):
 
         # Check if user is already logged in and redirect if they are
         if current_user.is_authenticated:
-            #Debug message
+            # Debug message
             print("User already logged in.")
             return redirect(url_for("home"))
 
