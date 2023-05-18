@@ -27,7 +27,6 @@ def test_register(client, app):
     response_1 = client.get("/register")
     assert response_1.status_code == 200
 
-    # TODO: This is not submitted a form properly, so the form.validate_on_submit condition is never met.
     # Check that the post response is correct
     response_2 = client.post("/register", follow_redirects=True, data={
         "username": TEST_USERNAME,
