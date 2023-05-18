@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField
+from wtforms import StringField, SubmitField, PasswordField, EmailField, DateTimeField
 from wtforms.validators import DataRequired, URL, Email, EqualTo
 from flask_ckeditor import CKEditorField
 
@@ -29,3 +29,15 @@ class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()])
     submit = SubmitField("Create Campaign")
+
+
+class CreateEventForm(FlaskForm):
+    title = StringField("Event Title", validators=[DataRequired()])
+    type = StringField("Event Type", validators=[DataRequired()])
+    date = DateTimeField("Event Date. Year-Month-Day Hours:Minutes:Seconds Format",
+                         format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
+    location = StringField("Location", validators=[DataRequired()])
+    belligerents = StringField("Belligerents", validators=[DataRequired()])
+    body = StringField("Description", validators=[DataRequired()])
+    result = StringField("Result", validators=[DataRequired()])
+    submit = SubmitField("Create Event")
