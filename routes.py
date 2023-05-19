@@ -136,7 +136,13 @@ def configure_routes(flask_app):
     # View campaign overview
     @flask_app.route("/<campaign_name>")
     def show_timeline(campaign_name):
-        return render_template("timeline.html")
+
+        # Get the target campaign's id from the url argument. Campaign ids are stored as an integer in the database.
+        target_id = int(request.args["id"])
+
+        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_id)).scalar()
+
+        return render_template("timeline.html", campaign=campaign)
 
     # Create new campaign
     @flask_app.route("/create_campaign", methods=["GET", "POST"])
