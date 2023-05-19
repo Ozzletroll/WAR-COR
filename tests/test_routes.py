@@ -122,3 +122,4 @@ def test_show_timeline(client, app):
     response = client.get(f"/{TEST_CAMPAIGN_TITLE}?id={id_param}")
     assert response.status_code == 200
     assert b"<title>Test Campaign Title</title>" in response.data
+    assert b"<li>Test Event Title</li>" in response.data
