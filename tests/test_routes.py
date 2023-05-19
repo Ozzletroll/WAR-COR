@@ -101,7 +101,7 @@ def test_add_event(client, app):
     response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event?id={id_param}", follow_redirects=True)
     assert response_1.status_code == 200
 
-    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event?id=1", follow_redirects=True, data={
+    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event?id={id_param}", follow_redirects=True, data={
         "title": TEST_EVENT_TITLE,
         "type": TEST_EVENT_TYPE,
         "date": TEST_EVENT_DATE,
@@ -116,3 +116,9 @@ def test_add_event(client, app):
     assert event_query.date == TEST_EVENT_DATE
 
 
+def test_show_timeline(client, app):
+    id_param = 1
+
+    response = client.get(f"/{TEST_CAMPAIGN_TITLE}?id={id_param}")
+    assert response.status_code == 200
+    assert b"<title>Test Campaign Title</title>" in response.data
