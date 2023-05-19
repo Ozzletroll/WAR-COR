@@ -3,6 +3,7 @@ from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 import forms
 import models
@@ -171,28 +172,6 @@ def configure_routes(flask_app):
     # Edit campaign users
     @flask_app.route("/edit_campaign/<campaign_name>/add_users")
     def add_campaign_users(campaign_name):
-
-        user_to_add = "USERNAME OF USER TO BE ADDED TO CAMPAIGN"
-
-        user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
-        campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name)).scalar()
-
-        # Add user to campaign:
-        user.campaigns.append(campaign)
-        db.session.commit()
-
-        # Give user campaign permissions:
-        user.permissions.append(campaign)
-
-        # Remove user from campaign:
-        # user.campaigns.remove(campaign)
-        # db.session.commit()
-        # Can be iterated through:
-        # for campaign in user.campaigns:
-        #     print(campaign.title)
-        #
-        # See https://www.youtube.com/watch?v=47i-jzrrIGQ for a reminder.
-
         return render_template("edit_campaign.html")
 
     #   =======================================
@@ -205,9 +184,59 @@ def configure_routes(flask_app):
         return render_template("event.html")
 
     # Add new event
-    @flask_app.route("/<campaign_name>/new_event")
+    @flask_app.route("/<campaign_name>/new_event", methods=["GET", "POST"])
+    @login_required
     def add_event(campaign_name):
-        return render_template("new_event.html")
+
+        # Get the target campaign's id from the url argument. Campaign ids are stored as an integer in the database.
+        target_id = int(request.args["id"])
+
+        # Check if the user has permissions to edit the target campaign.
+        for editable_campaign in current_user.permissions:
+            if target_id == editable_campaign.id:
+                # Select the campaign to be edited
+                campaign_query = db.session.execute(select(models.Campaign).filter_by(title=campaign_name,
+                                                                                      id=target_id)).scalar()
+
+                form = forms.CreateEventForm()
+
+                # Check if user has submitted a new event
+                if form.validate_on_submit():
+                    title = request.form["title"]
+                    # event_type to avoid shadowing built-in name 'type'
+                    event_type = request.form["type"]
+                    date = request.form["date"]
+                    # Convert date to datetime object
+                    date_format = '%Y-%m-%d %H:%M:%S'
+                    date_obj = datetime.strptime(date, date_format)
+
+                    location = request.form["location"]
+                    belligerents = request.form["belligerents"]
+                    body = request.form["body"]
+                    result = request.form["result"]
+
+                    # Create new event object using form data
+                    event = models.Event()
+                    event.title = title
+                    event.type = event_type
+                    event.date = date_obj
+                    event.location = location
+                    event.belligerents = belligerents
+                    event.body = body
+                    event.result = result
+
+                    event.parent_campaign = campaign_query
+
+                    # Add event to database
+                    db.session.add(event)
+                    db.session.commit()
+
+                return render_template("new_event.html", form=form)
+
+            else:
+                # Redirect to homepage if the user is somehow trying to edit a campaign that they
+                # do not have permission for.
+                return redirect(url_for("home"))
 
     # Edit existing event
     @flask_app.route("/<campaign_name>/<event_name>/edit")
