@@ -17,7 +17,7 @@ TEST_CAMPAIGN_DESCRIPTION = "Test Campaign Description"
 
 TEST_EVENT_TITLE = "Test Event Title"
 TEST_EVENT_TYPE = "Test Event Type"
-TEST_EVENT_DATE = "2006-09-01 04:00:00"
+TEST_EVENT_DATE = "5126-09-01 04:00:00"
 TEST_EVENT_LOCATION = "Karaq Desert"
 TEST_EVENT_BELLIGERENTS = "9th Armoured Cavalry, 12th Haqqarri Legion"
 TEST_EVENT_BODY = "A description of the battle goes here."
@@ -95,8 +95,10 @@ def test_create_campaign(client, app):
 
 
 def test_add_event(client, app):
+    id_param = 1
     example_login(client)
-    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event?id=1", follow_redirects=True)
+    # The id of the campaign is passed as an url parameter
+    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event?id={id_param}", follow_redirects=True)
     assert response_1.status_code == 200
 
     response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event?id=1", follow_redirects=True, data={
@@ -109,5 +111,8 @@ def test_add_event(client, app):
         "result": TEST_EVENT_RESULT,
     })
     assert response_2.status_code == 200
+    event_query = db.session.execute(select(models.Event).filter_by(id=id_param, title=TEST_EVENT_TITLE)).scalar()
+    assert event_query.title == TEST_EVENT_TITLE
+    assert event_query.date == TEST_EVENT_DATE
 
 
