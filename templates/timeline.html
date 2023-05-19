@@ -12,5 +12,11 @@
             <li>{{ member.username }}</li>
         {% endfor %}
     </ul>
+    <ul>
+        {% for event in campaign.events %}
+            <li>{{ event.title }}</li>
+            <li>{{ event.date }}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
