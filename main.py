@@ -15,16 +15,12 @@ from routes import configure_routes
 #     TODO: Create edit_event.html
 
 # TODO: Implement basic page navigation
-# TODO: Implement user login/logout functionality
 
 # TODO: Main functionality
-#   TODO: Add campaign creation
-#   TODO: Add campaign viewing
 #   TODO: Add campaign editing
 #   TODO: Add campaign deletion
 #   TODO: Add campaign user invitation
 
-#   TODO: Add event creation
 #   TODO: Add event viewing
 #   TODO: Add event editing
 #   TODO: Add event deletion
