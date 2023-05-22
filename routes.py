@@ -249,9 +249,60 @@ def configure_routes(flask_app):
                 return redirect(url_for("home"))
 
     # Edit existing event
-    @flask_app.route("/<campaign_name>/<event_name>/edit")
+    @flask_app.route("/<campaign_name>/<event_name>/edit", methods=["GET", "POST"])
+    @login_required
     def edit_event(campaign_name, event_name):
-        return render_template("edit_event.html")
+
+        # Get the target event's id from the url argument.
+        target_id = int(request.args["id"])
+        event = db.session.execute(select(models.Event).filter_by(title=event_name, id=target_id)).scalar()
+
+        # Check if the user has permissions to edit the event.
+        for editable_campaign in current_user.permissions:
+            if event.id == editable_campaign.id:
+
+                form = forms.CreateEventForm(obj=event)
+
+                if form.validate_on_submit():
+                    # Update event data
+                    title = request.form["title"]
+                    # event_type to avoid shadowing built-in name 'type'
+                    event_type = request.form["type"]
+                    date = request.form["date"]
+                    # Convert date to datetime object
+                    date_format = '%Y-%m-%d %H:%M:%S'
+                    date_obj = datetime.strptime(date, date_format)
+
+                    location = request.form["location"]
+                    belligerents = request.form["belligerents"]
+                    body = request.form["body"]
+                    result = request.form["result"]
+
+                    # Update event attributes
+                    event.title = title
+                    event.type = event_type
+                    event.date = date_obj
+                    event.location = location
+                    event.belligerents = belligerents
+                    event.body = body
+                    event.result = result
+
+                    # Update the database
+                    db.session.add(event)
+                    db.session.commit()
+
+                    return redirect(url_for("view_event",
+                                            campaign_name=campaign_name,
+                                            event_name=title))
+
+                return render_template("edit_event.html",
+                                       campaign_name=campaign_name,
+                                       event_name=event_name,
+                                       id=target_id)
+
+        # Redirect to homepage if the user is somehow trying to edit an event that they
+        # do not have permission for.
+        return redirect(url_for("home"))
 
     # Delete existing event
     @flask_app.route("/<campaign_name>/<event_name>/delete")
