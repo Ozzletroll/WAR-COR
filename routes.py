@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
@@ -137,9 +137,7 @@ def configure_routes(flask_app):
     @flask_app.route("/<campaign_name>")
     def show_timeline(campaign_name):
 
-        # Get the target campaign's id from the url argument. Campaign ids are stored as an integer in the database.
-        target_id = int(request.args["id"])
-
+        target_id = session.get("campaign_id", None)
         campaign = db.session.execute(select(models.Campaign).filter_by(id=target_id)).scalar()
 
         return render_template("timeline.html", campaign=campaign)
@@ -169,8 +167,8 @@ def configure_routes(flask_app):
             db.session.commit()
 
             campaign = db.session.execute(select(models.Campaign).filter_by(id=new_campaign.id)).scalar()
-
-            return redirect(url_for("show_timeline", campaign_name=campaign.title, id=campaign.id))
+            session["campaign_id"] = campaign.id
+            return redirect(url_for("show_timeline", campaign_name=campaign.title))
 
         return render_template("new_campaign.html", form=form)
 
@@ -198,15 +196,14 @@ def configure_routes(flask_app):
     @login_required
     def add_event(campaign_name):
 
-        # Get the target campaign's id from the url argument. Campaign ids are stored as an integer in the database.
-        target_id = int(request.args["id"])
+        target_campaign_id = session.get("campaign_id", None)
 
         # Check if the user has permissions to edit the target campaign.
         for editable_campaign in current_user.permissions:
-            if target_id == editable_campaign.id:
+            if target_campaign_id == editable_campaign.id:
                 # Select the campaign to be edited
                 campaign_query = db.session.execute(select(models.Campaign).filter_by(title=campaign_name,
-                                                                                      id=target_id)).scalar()
+                                                                                      id=target_campaign_id)).scalar()
 
                 form = forms.CreateEventForm()
 
@@ -241,9 +238,10 @@ def configure_routes(flask_app):
                     db.session.add(event)
                     db.session.commit()
 
+                    session["campaign_id"] = campaign_query.id
+
                     return redirect(url_for("show_timeline",
-                                            campaign_name=campaign_query.title,
-                                            id=target_id))
+                                            campaign_name=campaign_query.title))
 
                 return render_template("new_event.html", form=form)
 
@@ -257,13 +255,13 @@ def configure_routes(flask_app):
     @login_required
     def edit_event(campaign_name, event_name):
 
-        # Get the target event's id from the url argument.
-        target_id = int(request.args["id"])
-        event = db.session.execute(select(models.Event).filter_by(title=event_name, id=target_id)).scalar()
+        target_campaign_id = session.get("campaign_id", None)
+        target_event_id = session.get("event_id", None)
+        event = db.session.execute(select(models.Event).filter_by(title=event_name, id=target_event_id)).scalar()
 
         # Check if the user has permissions to edit the event.
         for editable_campaign in current_user.permissions:
-            if event.id == editable_campaign.id:
+            if target_campaign_id == editable_campaign.id:
 
                 form = forms.CreateEventForm(obj=event)
 
@@ -295,14 +293,16 @@ def configure_routes(flask_app):
                     db.session.add(event)
                     db.session.commit()
 
+                    session["campaign_id"] = target_campaign_id
+                    session["event_id"] = event.id
+
                     return redirect(url_for("view_event",
                                             campaign_name=campaign_name,
-                                            event_name=title))
+                                            event_name=event.title))
 
                 return render_template("edit_event.html",
                                        campaign_name=campaign_name,
-                                       event_name=event_name,
-                                       id=target_id)
+                                       event_name=event_name)
 
         # Redirect to homepage if the user is somehow trying to edit an event that they
         # do not have permission for.
