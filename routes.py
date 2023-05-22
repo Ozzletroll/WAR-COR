@@ -241,7 +241,9 @@ def configure_routes(flask_app):
                     db.session.add(event)
                     db.session.commit()
 
-                    return redirect(url_for("show_timeline", id=target_id))
+                    return redirect(url_for("show_timeline",
+                                            campaign_name=campaign_query.title,
+                                            id=target_id))
 
                 return render_template("new_event.html", form=form)
 
