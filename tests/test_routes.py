@@ -122,3 +122,24 @@ def test_show_timeline(client, app):
     assert response.status_code == 200
     assert b"<title>Test Campaign Title</title>" in response.data
     assert b"<li>Test Event Title</li>" in response.data
+
+
+def test_edit_event(client, app):
+    id_param = 1
+    example_login(client)
+    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit?id={id_param}")
+    assert response_1.status_code == 200
+    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit?id={id_param}", follow_redirects=True, data={
+        "title": "Edited Event Title",
+        "type": TEST_EVENT_TYPE,
+        "date": "5127-11-01 07:01:13",
+        "location": TEST_EVENT_LOCATION,
+        "belligerents": "Edited Belligerents",
+        "body": TEST_EVENT_BODY,
+        "result": TEST_EVENT_RESULT,
+    })
+    event_query = db.session.execute(select(models.Event).filter_by(id=id_param)).scalar()
+    assert event_query.title == "Edited Event Title"
+    assert event_query.date == "5127-11-01 07:01:13"
+    assert event_query.belligerents == "Edited Belligerents"
+
