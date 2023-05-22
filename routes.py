@@ -168,7 +168,7 @@ def configure_routes(flask_app):
 
             db.session.commit()
 
-        return render_template("new_campaign.html")
+        return render_template("new_campaign.html", form=form)
 
     # Edit campaign data
     @flask_app.route("/edit_campaign/<campaign_name>")
