@@ -321,22 +321,22 @@ def configure_routes(flask_app):
     @flask_app.route("/<campaign_name>/backup")
     def campaign_backup(campaign_name):
 
-        target_id = int(request.args["id"])
+        target_campaign_id = session.get("campaign_id", None)
         # Export campaign data as json file.
-        return redirect(url_for("show_timeline", id=target_id))
+        return redirect(url_for("show_timeline", id=target_campaign_id))
 
     # Import campaign backup
     @flask_app.route("/<campaign_name>/import")
     def import_campaign(campaign_name):
 
-        target_id = int(request.args["id"])
+        target_campaign_id = session.get("campaign_id", None)
         # Export campaign data as json file.
-        return redirect(url_for("show_timeline", id=target_id))
+        return redirect(url_for("show_timeline", id=target_campaign_id)
 
     # Export campaign timeline as pdf
     @flask_app.route("/<campaign_name>/export")
     def export_campaign(campaign_name):
 
-        target_id = int(request.args["id"])
+        target_campaign_id = session.get("campaign_id", None)
         # Export campaign data as json file.
-        return redirect(url_for("show_timeline", id=target_id))
+        return redirect(url_for("show_timeline", id=target_campaign_id))
