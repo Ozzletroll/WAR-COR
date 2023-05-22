@@ -89,6 +89,8 @@ def test_create_campaign(client, app):
     assert response.status_code == 200
     campaign_query = db.session.execute(select(models.Campaign).filter_by(title=TEST_CAMPAIGN_TITLE)).scalar()
     assert campaign_query.description == TEST_CAMPAIGN_DESCRIPTION
+    # Check if redirect to campaign timeline was successful
+    assert b"<title>Test Campaign Title</title>" in response.data
 
 
 def test_add_event(client, app):
