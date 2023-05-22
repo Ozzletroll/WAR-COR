@@ -276,7 +276,7 @@ def configure_routes(flask_app):
 
     # Export campaign timeline as pdf
     @flask_app.route("/<campaign_name>/export")
-    def import_campaign(campaign_name):
+    def export_campaign(campaign_name):
 
         target_id = int(request.args["id"])
         # Export campaign data as json file.
