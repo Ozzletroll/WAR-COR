@@ -168,6 +168,10 @@ def configure_routes(flask_app):
 
             db.session.commit()
 
+            campaign = db.session.execute(select(models.Campaign).filter_by(id=new_campaign.id)).scalar()
+
+            return redirect(url_for("show_timeline", campaign_name=campaign.title, id=campaign.id))
+
         return render_template("new_campaign.html", form=form)
 
     # Edit campaign data
