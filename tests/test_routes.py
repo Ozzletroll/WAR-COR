@@ -51,10 +51,9 @@ def test_register(client, app):
     assert response_2.status_code == 200
 
     # Check that the new user was added to the database
-    with app.app_context():
-        user_query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).scalar()
-        assert user_query.username == TEST_USERNAME
-        assert werkzeug.security.check_password_hash(pwhash=user_query.password, password=TEST_PASSWORD)
+    user_query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).scalar()
+    assert user_query.username == TEST_USERNAME
+    assert werkzeug.security.check_password_hash(pwhash=user_query.password, password=TEST_PASSWORD)
 
 
 def test_login(client):
@@ -142,4 +141,3 @@ def test_edit_event(client, app):
     assert event_query.title == "Edited Event Title"
     assert event_query.date == "5127-11-01 07:01:13"
     assert event_query.belligerents == "Edited Belligerents"
-
