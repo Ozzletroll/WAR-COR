@@ -331,7 +331,7 @@ def configure_routes(flask_app):
 
         target_campaign_id = session.get("campaign_id", None)
         # Export campaign data as json file.
-        return redirect(url_for("show_timeline", id=target_campaign_id)
+        return redirect(url_for("show_timeline", id=target_campaign_id))
 
     # Export campaign timeline as pdf
     @flask_app.route("/<campaign_name>/export")
