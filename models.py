@@ -18,7 +18,6 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    # Basic user data
     username = db.Column(db.String(30))
     password = db.Column(db.String(250))
 
@@ -36,7 +35,6 @@ class Campaign(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    # Basic campaign data
     title = db.Column(db.String(250))
     description = db.Column(db.String(250), nullable=False)
 
@@ -53,7 +51,6 @@ class Event(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    # Events will either be defined as a "Conflict" or an "Event"
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
     date = db.Column(db.String(250), nullable=False)
