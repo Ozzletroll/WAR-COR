@@ -86,20 +86,23 @@ def test_create_campaign(client, app):
         "description": TEST_CAMPAIGN_DESCRIPTION,
     })
     assert response.status_code == 200
-    campaign_query = db.session.execute(select(models.Campaign).filter_by(title=TEST_CAMPAIGN_TITLE)).scalar()
+    campaign_query = db.session.execute(select(models.Campaign).filter_by(title=TEST_CAMPAIGN_TITLE, id=1)).scalar()
     assert campaign_query.description == TEST_CAMPAIGN_DESCRIPTION
     # Check if redirect to campaign timeline was successful
     assert b"<title>Test Campaign Title</title>" in response.data
 
 
 def test_add_event(client, app):
-    id_param = 1
+
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+
     example_login(client)
     # The id of the campaign is passed as an url parameter
-    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event?id={id_param}", follow_redirects=True)
+    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event", follow_redirects=True)
     assert response_1.status_code == 200
 
-    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event?id={id_param}", follow_redirects=True, data={
+    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event", follow_redirects=True, data={
         "title": TEST_EVENT_TITLE,
         "type": TEST_EVENT_TYPE,
         "date": TEST_EVENT_DATE,
@@ -109,26 +112,32 @@ def test_add_event(client, app):
         "result": TEST_EVENT_RESULT,
     })
     assert response_2.status_code == 200
-    event_query = db.session.execute(select(models.Event).filter_by(id=id_param, title=TEST_EVENT_TITLE)).scalar()
+    event_query = db.session.execute(select(models.Event).filter_by(id=1, title=TEST_EVENT_TITLE)).scalar()
     assert event_query.title == TEST_EVENT_TITLE
     assert event_query.date == TEST_EVENT_DATE
 
 
 def test_show_timeline(client, app):
-    id_param = 1
 
-    response = client.get(f"/{TEST_CAMPAIGN_TITLE}?id={id_param}")
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+
+    response = client.get(f"/{TEST_CAMPAIGN_TITLE}")
     assert response.status_code == 200
     assert b"<title>Test Campaign Title</title>" in response.data
     assert b"<li>Test Event Title</li>" in response.data
 
 
 def test_edit_event(client, app):
-    id_param = 1
+
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+        session["event_id"] = 1
+
     example_login(client)
-    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit?id={id_param}")
+    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit")
     assert response_1.status_code == 200
-    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit?id={id_param}", follow_redirects=True, data={
+    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit", follow_redirects=True, data={
         "title": "Edited Event Title",
         "type": TEST_EVENT_TYPE,
         "date": "5127-11-01 07:01:13",
@@ -137,7 +146,7 @@ def test_edit_event(client, app):
         "body": TEST_EVENT_BODY,
         "result": TEST_EVENT_RESULT,
     })
-    event_query = db.session.execute(select(models.Event).filter_by(id=id_param)).scalar()
+    event_query = db.session.execute(select(models.Event).filter_by(id=1)).scalar()
     assert event_query.title == "Edited Event Title"
     assert event_query.date == "5127-11-01 07:01:13"
     assert event_query.belligerents == "Edited Belligerents"
