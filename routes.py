@@ -253,3 +253,31 @@ def configure_routes(flask_app):
     @flask_app.route("/<campaign_name>/<event_name>/delete")
     def delete_event(campaign_name, event_name):
         return redirect(url_for("show_timeline"))
+
+    #   =======================================
+    #            User Data Management
+    #   =======================================
+
+    # Backup campaign data
+    @flask_app.route("/<campaign_name>/backup")
+    def campaign_backup(campaign_name):
+
+        target_id = int(request.args["id"])
+        # Export campaign data as json file.
+        return redirect(url_for("show_timeline", id=target_id))
+
+    # Import campaign backup
+    @flask_app.route("/<campaign_name>/import")
+    def import_campaign(campaign_name):
+
+        target_id = int(request.args["id"])
+        # Export campaign data as json file.
+        return redirect(url_for("show_timeline", id=target_id))
+
+    # Export campaign timeline as pdf
+    @flask_app.route("/<campaign_name>/export")
+    def import_campaign(campaign_name):
+
+        target_id = int(request.args["id"])
+        # Export campaign data as json file.
+        return redirect(url_for("show_timeline", id=target_id))
