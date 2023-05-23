@@ -173,9 +173,27 @@ def configure_routes(flask_app):
         return render_template("new_campaign.html", form=form)
 
     # Edit campaign data
-    @flask_app.route("/edit_campaign/<campaign_name>")
+    @flask_app.route("/edit_campaign/<campaign_name>", methods=["GET", "POST"])
     def edit_campaign(campaign_name):
-        return render_template("edit_campaign.html")
+
+        target_campaign_id = session.get("campaign_id", None)
+
+        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+        form = forms.CreateCampaignForm(obj=campaign)
+
+        if form.validate_on_submit():
+
+            campaign.title = request.form["title"]
+            campaign.description = request.form["description"]
+
+            db.session.add(campaign)
+            db.session.commit()
+
+            session["campaign_id"] = campaign.id
+            return redirect(url_for("show_timeline", campaign_name=campaign.title))
+
+        return render_template("edit_campaign.html", form=form)
 
     # Edit campaign users
     @flask_app.route("/edit_campaign/<campaign_name>/add_users")
