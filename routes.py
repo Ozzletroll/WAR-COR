@@ -207,7 +207,11 @@ def configure_routes(flask_app):
     # View event
     @flask_app.route("/<campaign_name>/<event_name>")
     def view_event(campaign_name, event_name):
-        return render_template("event.html")
+
+        target_event_id = session.get("event_id", None)
+        event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+
+        return render_template("event.html", event=event)
 
     # Add new event
     @flask_app.route("/<campaign_name>/new_event", methods=["GET", "POST"])
