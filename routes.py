@@ -268,7 +268,7 @@ def configure_routes(flask_app):
 
         target_campaign_id = session.get("campaign_id", None)
         target_event_id = session.get("event_id", None)
-        event = db.session.execute(select(models.Event).filter_by(title=event_name, id=target_event_id)).scalar()
+        event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
         # Check if the user has permissions to edit the event.
         for editable_campaign in current_user.permissions:
@@ -277,28 +277,20 @@ def configure_routes(flask_app):
                 form = forms.CreateEventForm(obj=event)
 
                 if form.validate_on_submit():
-                    # Update event data
-                    title = request.form["title"]
-                    # event_type to avoid shadowing built-in name 'type'
-                    event_type = request.form["type"]
+                    # Update event object using form data
+                    event.title = request.form["title"]
+                    event.type = request.form["type"]
+
                     date = request.form["date"]
                     # Convert date to datetime object
                     date_format = '%Y-%m-%d %H:%M:%S'
                     date_obj = datetime.strptime(date, date_format)
-
-                    location = request.form["location"]
-                    belligerents = request.form["belligerents"]
-                    body = request.form["body"]
-                    result = request.form["result"]
-
-                    # Update event attributes
-                    event.title = title
-                    event.type = event_type
                     event.date = date_obj
-                    event.location = location
-                    event.belligerents = belligerents
-                    event.body = body
-                    event.result = result
+
+                    event.location = request.form["location"]
+                    event.belligerents = request.form["belligerents"]
+                    event.body = request.form["body"]
+                    event.result = request.form["result"]
 
                     # Update the database
                     db.session.add(event)
