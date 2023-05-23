@@ -227,28 +227,21 @@ def configure_routes(flask_app):
 
                 # Check if user has submitted a new event
                 if form.validate_on_submit():
-                    title = request.form["title"]
-                    # event_type to avoid shadowing built-in name 'type'
-                    event_type = request.form["type"]
+                    # Create new event object using form data
+                    event = models.Event()
+                    event.title = request.form["title"]
+                    event.type = request.form["type"]
+
                     date = request.form["date"]
                     # Convert date to datetime object
                     date_format = '%Y-%m-%d %H:%M:%S'
                     date_obj = datetime.strptime(date, date_format)
-
-                    location = request.form["location"]
-                    belligerents = request.form["belligerents"]
-                    body = request.form["body"]
-                    result = request.form["result"]
-
-                    # Create new event object using form data
-                    event = models.Event()
-                    event.title = title
-                    event.type = event_type
                     event.date = date_obj
-                    event.location = location
-                    event.belligerents = belligerents
-                    event.body = body
-                    event.result = result
+
+                    event.location = request.form["location"]
+                    event.belligerents = request.form["belligerents"]
+                    event.body = request.form["body"]
+                    event.result = request.form["result"]
 
                     event.parent_campaign = campaign_query
 
