@@ -2,9 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Event Title</title>
+    <title>{{event.title}}</title>
 </head>
 <body>
-
+    {{event.type}}
+    {{event.date}}
+    {{event.location}}
+    {{event.belligerents}}
+    {{event.body}}
+    {{event.result}}
+    <br>
+    {{event.parent_campaign.title}}
+    <br>
+    {{event.parent_campaign.members}}
+    <br>
+    {{event.comments}}
 </body>
 </html>
