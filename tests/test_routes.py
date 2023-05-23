@@ -46,7 +46,7 @@ def test_register(client, app):
     response_2 = client.post("/register", follow_redirects=True, data={
         "username": TEST_USERNAME,
         "password": TEST_PASSWORD,
-        "confirm_password": "123",
+        "confirm_password": TEST_PASSWORD,
     })
     assert response_2.status_code == 200
 
