@@ -128,6 +128,22 @@ def test_show_timeline(client, app):
     assert b"<li>Test Event Title</li>" in response.data
 
 
+def test_edit_campaign(client, app):
+
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+
+    example_login(client)
+    response_1 = client.post(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}", follow_redirects=True, data={
+        "title": "Edited Campaign Title",
+        "description": "An edited campaign description.",
+    })
+    assert response_1.status_code == 200
+    campaign_query = db.session.execute(select(models.Campaign).filter_by(id=1)).scalar()
+    assert campaign_query.title == "Edited Campaign Title"
+    assert campaign_query.description == "An edited campaign description."
+
+
 def test_edit_event(client, app):
 
     with client.session_transaction() as session:
