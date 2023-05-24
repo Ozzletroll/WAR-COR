@@ -322,9 +322,23 @@ def configure_routes(flask_app):
         return redirect(url_for("home"))
 
     # Delete existing event
-    @flask_app.route("/<campaign_name>/<event_name>/delete")
+    @flask_app.route("/<campaign_name>/<event_name>/delete", methods=["GET"])
+    @login_required
     def delete_event(campaign_name, event_name):
-        return redirect(url_for("show_timeline"))
+
+        target_campaign_id = session.get("campaign_id", None)
+        target_event_id = session.get("event_id", None)
+
+        # Check if the user has permissions to delete the event.
+        for editable_campaign in current_user.permissions:
+            if target_campaign_id == editable_campaign.id:
+
+                event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+
+                db.session.delete(event)
+                db.session.commit()
+
+        return redirect(url_for("show_timeline", campaign_name=campaign_name))
 
     #   =======================================
     #            User Data Management
