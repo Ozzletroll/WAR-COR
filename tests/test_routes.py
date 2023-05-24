@@ -20,6 +20,10 @@ TEST_EVENT_BELLIGERENTS = "9th Armoured Cavalry, 12th Haqqarri Legion"
 TEST_EVENT_BODY = "A description of the battle goes here."
 TEST_EVENT_RESULT = "9th Armoured Cavalry victory."
 
+EDITED_EVENT_TITLE = "Edited Event Title"
+EDITED_EVENT_DATE = "5127-11-01 07:01:13"
+EDITED_EVENT_BELLIGERENTS = "Edited Belligerents"
+
 
 # Function to log in test user
 def example_login(client):
@@ -154,18 +158,18 @@ def test_edit_event(client, app):
     response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit")
     assert response_1.status_code == 200
     response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit", follow_redirects=True, data={
-        "title": "Edited Event Title",
+        "title": EDITED_EVENT_TITLE,
         "type": TEST_EVENT_TYPE,
-        "date": "5127-11-01 07:01:13",
+        "date": EDITED_EVENT_DATE,
         "location": TEST_EVENT_LOCATION,
-        "belligerents": "Edited Belligerents",
+        "belligerents": EDITED_EVENT_BELLIGERENTS,
         "body": TEST_EVENT_BODY,
         "result": TEST_EVENT_RESULT,
     })
     event_query = db.session.execute(select(models.Event).filter_by(id=1)).scalar()
-    assert event_query.title == "Edited Event Title"
-    assert event_query.date == "5127-11-01 07:01:13"
-    assert event_query.belligerents == "Edited Belligerents"
+    assert event_query.title == EDITED_EVENT_TITLE
+    assert event_query.date == EDITED_EVENT_DATE
+    assert event_query.belligerents == EDITED_EVENT_BELLIGERENTS
 
 
 def test_view_event(client, app):
