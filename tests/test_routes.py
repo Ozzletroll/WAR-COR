@@ -194,3 +194,18 @@ def test_delete_event(client, app):
     assert response.status_code == 200
     event_query = db.session.execute(select(models.Event).filter_by(id=1)).scalar()
     assert event_query is None
+
+
+def test_delete_user(client, app):
+
+    # First test without logging in
+    response_1 = client.get(f"/user/{TEST_USERNAME}/delete", follow_redirects=True)
+    assert response_1.status_code == 401
+
+    example_login(client)
+    response_2 = client.post(f"/user/{TEST_USERNAME}/delete", follow_redirects=True, data={
+        "username": TEST_USERNAME,
+        "password": TEST_PASSWORD,
+    })
+    user_query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).scalar()
+    assert user_query is None
