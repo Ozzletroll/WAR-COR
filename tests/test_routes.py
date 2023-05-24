@@ -180,3 +180,17 @@ def test_view_event(client, app):
     response = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}")
     assert b"<title>Edited Event Title</title>" in response.data
     assert b"Edited Belligerents" in response.data
+
+
+def test_delete_event(client, app):
+
+    example_login(client)
+
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+        session["event_id"] = 1
+
+    response = client.get(f"/{TEST_CAMPAIGN_TITLE}/{EDITED_EVENT_TITLE}/delete", follow_redirects=True)
+    assert response.status_code == 200
+    event_query = db.session.execute(select(models.Event).filter_by(id=1)).scalar()
+    assert event_query is None
