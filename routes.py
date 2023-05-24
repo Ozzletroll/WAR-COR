@@ -125,12 +125,55 @@ def configure_routes(flask_app):
         print("Logged out")
         return redirect(url_for("home"))
 
-    @flask_app.route("/<username>/delete")
+    # Access user settings
+    @flask_app.route("/user/<username>")
     @login_required
-    def delete_user():
-        return redirect(url_for("home"))
+    def user_settings(username):
+        return render_template("user_settings.html")
 
-    @flask_app.route("/<username>/edit")
+    @flask_app.route("/user/<username>/delete", methods=["GET", "POST"])
+    @login_required
+    def delete_user(username):
+
+        if current_user.username == username:
+
+            form = forms.LoginForm()
+
+            if form.validate_on_submit():
+
+                user_id = current_user.id
+
+                search_username = request.form["username"]
+                password = request.form["password"]
+                user = db.session.execute(select(models.User).filter_by(id=user_id, username=search_username)).scalar()
+
+                if user:
+                    if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+                        # Delete user from database
+                        db.session.delete(user)
+                        db.session.commit()
+                        # Debug message
+                        print(f"{user.username} account deleted.")
+                        flash(f"{user.username} account deleted.")
+                        return redirect(url_for("home"))
+                    else:
+                        # Debug message
+                        print("Incorrect password or username.")
+                        flash("Incorrect password or username.")
+                        return redirect(url_for("delete_user", username=current_user.username))
+                else:
+                    # Debug message
+                    print("Username not found. Please check username and password.")
+                    flash("Username not found. Please check username and password.")
+                    return redirect(url_for("user_settings", username=current_user.username))
+            else:
+                return render_template("delete_user.html", form=form)
+
+        # Redirect if a user is trying to access another user's delete route
+        else:
+            return redirect(url_for("home"))
+
+    @flask_app.route("/user/<username>/edit")
     @login_required
     def edit_user():
         return render_template("user_settings.html")
