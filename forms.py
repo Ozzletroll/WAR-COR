@@ -41,3 +41,8 @@ class CreateEventForm(FlaskForm):
     body = StringField("Description", validators=[DataRequired()])
     result = StringField("Result", validators=[DataRequired()])
     submit = SubmitField("Create Event")
+
+
+class AddUserForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    submit = SubmitField("Add user")

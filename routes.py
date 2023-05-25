@@ -245,9 +245,38 @@ def configure_routes(flask_app):
         return render_template("edit_campaign.html", form=form)
 
     # Edit campaign users
-    @flask_app.route("/edit_campaign/<campaign_name>/add_users")
+    @flask_app.route("/edit_campaign/<campaign_name>/add_users", methods=["GET", "POST"])
+    @login_required
     def add_campaign_users(campaign_name):
-        return render_template("edit_campaign.html")
+
+        target_campaign_id = session.get("campaign_id", None)
+
+        # Check if the user has permissions to edit the target campaign.
+        for editable_campaign in current_user.permissions:
+            if target_campaign_id == editable_campaign.id:
+
+                form = forms.AddUserForm()
+
+                if form.validate_on_submit():
+
+                    user_to_add = request.form["username"]
+
+                    # Check if username exists
+                    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+                    if user:
+                        # Get campaign and add user as member
+                        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+                        user.campaigns.append(campaign)
+                        db.session.commit()
+                    else:
+                        print("User not in database, please check username.")
+                        flash("User not in database, please check username.")
+                    return redirect(url_for("edit_campaign", campaign_name=campaign_name))
+
+                return render_template("edit_campaign.html", form=form)
+
+        # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
+        return redirect(url_for("home"))
 
     #   =======================================
     #                  Event
