@@ -182,6 +182,31 @@ def test_view_event(client, app):
     assert b"Edited Belligerents" in response.data
 
 
+def test_add_campaign_users(client, app):
+    response_1 = client.post("/register", follow_redirects=True, data={
+        "username": "Ozzletroll",
+        "password": TEST_PASSWORD,
+        "confirm_password": TEST_PASSWORD,
+    })
+
+    test_logout(client)
+
+    example_login(client)
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+
+    response_2 = client.get(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}/add_users")
+    assert response_2.status_code == 200
+
+    response_3 = client.post(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}/add_users", follow_redirects=True, data={
+        "username": "Ozzletroll",
+    })
+    # Test if the campaign is in the user.campaigns
+    campaign_query = db.session.execute(select(models.Campaign).filter_by(id=1)).scalar()
+    user_query = db.session.execute(select(models.User).filter_by(username="Ozzletroll")).scalar()
+    assert campaign_query in user_query.campaigns
+
+
 def test_delete_event(client, app):
 
     example_login(client)
