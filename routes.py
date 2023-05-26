@@ -278,6 +278,41 @@ def configure_routes(flask_app):
         # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
         return redirect(url_for("home"))
 
+    # Remove campaign users
+    @flask_app.route("/edit_campaign/<campaign_name>/remove_users/<username>", methods=["GET"])
+    @login_required
+    def remove_campaign_users(campaign_name, username):
+
+        target_campaign_id = session.get("campaign_id", None)
+        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+        # Check if the user has permissions to edit the target campaign.
+        if campaign in current_user.permissions:
+
+            user_to_remove = username
+
+            # Check if username exists
+            user = db.session.execute(select(models.User).filter_by(username=user_to_remove)).scalar()
+            if user:
+                # Check is user is actually a member of the campaign
+                if user in campaign.members:
+                    user.campaigns.remove(campaign)
+                    flash(f"Removed user {user} from campaign.")
+                    print(f"Removed user {user} from campaign.")
+                # Remove editing permissions if they exist
+                if campaign in user.permissions:
+                    user.permissions.remove(campaign)
+                    flash(f"Removed user {user}'s campaign permissions.")
+                    print(f"Removed user {user}'s campaign permissions.")
+                db.session.commit()
+            else:
+                print("User not in database, please check username.")
+                flash("User not in database, please check username.")
+            return redirect(url_for("edit_campaign", campaign_name=campaign_name))
+
+        # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
+        return redirect(url_for("home"))
+
     #   =======================================
     #                  Event
     #   =======================================
