@@ -339,50 +339,48 @@ def configure_routes(flask_app):
 
         target_campaign_id = session.get("campaign_id", None)
 
+        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
         # Check if the user has permissions to edit the target campaign.
-        for editable_campaign in current_user.permissions:
-            if target_campaign_id == editable_campaign.id:
-                # Select the campaign to be edited
-                campaign_query = db.session.execute(select(models.Campaign).filter_by(title=campaign_name,
-                                                                                      id=target_campaign_id)).scalar()
+        if campaign in current_user.permissions:
 
-                form = forms.CreateEventForm()
+            form = forms.CreateEventForm()
 
-                # Check if user has submitted a new event
-                if form.validate_on_submit():
-                    # Create new event object using form data
-                    event = models.Event()
-                    event.title = request.form["title"]
-                    event.type = request.form["type"]
+            # Check if user has submitted a new event
+            if form.validate_on_submit():
+                # Create new event object using form data
+                event = models.Event()
+                event.title = request.form["title"]
+                event.type = request.form["type"]
 
-                    date = request.form["date"]
-                    # Convert date to datetime object
-                    date_format = '%Y-%m-%d %H:%M:%S'
-                    date_obj = datetime.strptime(date, date_format)
-                    event.date = date_obj
+                date = request.form["date"]
+                # Convert date to datetime object
+                date_format = '%Y-%m-%d %H:%M:%S'
+                date_obj = datetime.strptime(date, date_format)
+                event.date = date_obj
 
-                    event.location = request.form["location"]
-                    event.belligerents = request.form["belligerents"]
-                    event.body = request.form["body"]
-                    event.result = request.form["result"]
+                event.location = request.form["location"]
+                event.belligerents = request.form["belligerents"]
+                event.body = request.form["body"]
+                event.result = request.form["result"]
 
-                    event.parent_campaign = campaign_query
+                event.parent_campaign = campaign
 
-                    # Add event to database
-                    db.session.add(event)
-                    db.session.commit()
+                # Add event to database
+                db.session.add(event)
+                db.session.commit()
 
-                    session["campaign_id"] = campaign_query.id
+                session["campaign_id"] = campaign.id
 
-                    return redirect(url_for("show_timeline",
-                                            campaign_name=campaign_query.title))
+                return redirect(url_for("show_timeline",
+                                        campaign_name=campaign.title))
 
-                return render_template("new_event.html", form=form)
+            return render_template("new_event.html", form=form)
 
-            else:
-                # Redirect to homepage if the user is somehow trying to edit a campaign that they
-                # do not have permission for.
-                return redirect(url_for("home"))
+        else:
+            # Redirect to homepage if the user is somehow trying to edit a campaign that they
+            # do not have permission for.
+            return redirect(url_for("home"))
 
     # Edit existing event
     @flask_app.route("/<campaign_name>/<event_name>/edit", methods=["GET", "POST"])
