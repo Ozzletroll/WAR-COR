@@ -389,44 +389,45 @@ def configure_routes(flask_app):
 
         target_campaign_id = session.get("campaign_id", None)
         target_event_id = session.get("event_id", None)
+
+        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
         event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
-        # Check if the user has permissions to edit the event.
-        for editable_campaign in current_user.permissions:
-            if target_campaign_id == editable_campaign.id:
+        # Check if the user has permissions to edit the target campaign.
+        if campaign in current_user.permissions:
 
-                form = forms.CreateEventForm(obj=event)
+            form = forms.CreateEventForm(obj=event)
 
-                if form.validate_on_submit():
-                    # Update event object using form data
-                    event.title = request.form["title"]
-                    event.type = request.form["type"]
+            if form.validate_on_submit():
+                # Update event object using form data
+                event.title = request.form["title"]
+                event.type = request.form["type"]
 
-                    date = request.form["date"]
-                    # Convert date to datetime object
-                    date_format = '%Y-%m-%d %H:%M:%S'
-                    date_obj = datetime.strptime(date, date_format)
-                    event.date = date_obj
+                date = request.form["date"]
+                # Convert date to datetime object
+                date_format = '%Y-%m-%d %H:%M:%S'
+                date_obj = datetime.strptime(date, date_format)
+                event.date = date_obj
 
-                    event.location = request.form["location"]
-                    event.belligerents = request.form["belligerents"]
-                    event.body = request.form["body"]
-                    event.result = request.form["result"]
+                event.location = request.form["location"]
+                event.belligerents = request.form["belligerents"]
+                event.body = request.form["body"]
+                event.result = request.form["result"]
 
-                    # Update the database
-                    db.session.add(event)
-                    db.session.commit()
+                # Update the database
+                db.session.add(event)
+                db.session.commit()
 
-                    session["campaign_id"] = target_campaign_id
-                    session["event_id"] = event.id
+                session["campaign_id"] = target_campaign_id
+                session["event_id"] = event.id
 
-                    return redirect(url_for("view_event",
-                                            campaign_name=campaign_name,
-                                            event_name=event.title))
+                return redirect(url_for("view_event",
+                                        campaign_name=campaign_name,
+                                        event_name=event.title))
 
-                return render_template("edit_event.html",
-                                       campaign_name=campaign_name,
-                                       event_name=event_name)
+            return render_template("edit_event.html",
+                                   campaign_name=campaign_name,
+                                   event_name=event_name)
 
         # Redirect to homepage if the user is somehow trying to edit an event that they
         # do not have permission for.
