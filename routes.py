@@ -229,20 +229,26 @@ def configure_routes(flask_app):
 
         campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
 
-        form = forms.CreateCampaignForm(obj=campaign)
+        # Check if the user has permissions to edit the target campaign.
+        if campaign in current_user.permissions:
 
-        if form.validate_on_submit():
+            form = forms.CreateCampaignForm(obj=campaign)
 
-            campaign.title = request.form["title"]
-            campaign.description = request.form["description"]
+            if form.validate_on_submit():
 
-            db.session.add(campaign)
-            db.session.commit()
+                campaign.title = request.form["title"]
+                campaign.description = request.form["description"]
 
-            session["campaign_id"] = campaign.id
-            return redirect(url_for("show_timeline", campaign_name=campaign.title))
+                db.session.add(campaign)
+                db.session.commit()
 
-        return render_template("edit_campaign.html", form=form)
+                session["campaign_id"] = campaign.id
+                return redirect(url_for("show_timeline", campaign_name=campaign.title))
+
+            return render_template("edit_campaign.html", form=form)
+
+        # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
+        return redirect(url_for("home"))
 
     # Edit campaign users
     @flask_app.route("/edit_campaign/<campaign_name>/add_users", methods=["GET", "POST"])
