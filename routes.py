@@ -441,14 +441,13 @@ def configure_routes(flask_app):
         target_campaign_id = session.get("campaign_id", None)
         target_event_id = session.get("event_id", None)
 
-        # Check if the user has permissions to delete the event.
-        for editable_campaign in current_user.permissions:
-            if target_campaign_id == editable_campaign.id:
+        campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+        event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
-                event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
-
-                db.session.delete(event)
-                db.session.commit()
+        # Check if the user has permissions to edit the target campaign.
+        if campaign in current_user.permissions:
+            db.session.delete(event)
+            db.session.commit()
 
         return redirect(url_for("show_timeline", campaign_name=campaign_name))
 
