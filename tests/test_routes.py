@@ -207,6 +207,20 @@ def test_add_campaign_users(client, app):
     assert campaign_query in user_query.campaigns
 
 
+def test_remove_campaign_users(client, app):
+
+    with client.session_transaction() as session:
+        session["campaign_id"] = 1
+
+    example_login(client)
+
+    response_1 = client.get(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}/remove_users/Ozzletroll", follow_redirects=True)
+    assert response_1.status_code == 200
+    campaign_query = db.session.execute(select(models.Campaign).filter_by(id=1)).scalar()
+    user_query = db.session.execute(select(models.User).filter_by(username="Ozzletroll")).scalar()
+    assert campaign_query not in user_query.campaigns
+
+
 def test_delete_event(client, app):
 
     example_login(client)
