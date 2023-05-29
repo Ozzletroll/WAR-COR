@@ -83,6 +83,16 @@ def test_logout(client):
     assert current_user.is_anonymous is True
 
 
+def test_user_page(client, app):
+    example_login(client)
+
+    with client.session_transaction() as session:
+        session["user_id"] = current_user.id
+
+    response = client.get(f"/user/{TEST_USERNAME}", follow_redirects=True)
+    assert b"<title>test_user</title>" in response.data
+
+
 def test_create_campaign(client, app):
     example_login(client)
     response = client.post("/create_campaign", follow_redirects=True, data={
