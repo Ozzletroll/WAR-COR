@@ -125,11 +125,18 @@ def configure_routes(flask_app):
         print("Logged out")
         return redirect(url_for("home"))
 
-    # Access user settings
+    # Access user page
     @flask_app.route("/user/<username>")
     @login_required
-    def user_settings(username):
-        return render_template("user_settings.html")
+    def user_page(username):
+
+        target_id = session.get("user_id", None)
+        user = db.session.execute(select(models.User).filter_by(id=target_id)).scalar()
+
+        if user.id == current_user.id:
+            return render_template("user_page.html", user=user)
+
+        return redirect(url_for("home"))
 
     @flask_app.route("/user/<username>/delete", methods=["GET", "POST"])
     @login_required
