@@ -188,6 +188,11 @@ def configure_routes(flask_app):
     #                  Campaign
     #   =======================================
 
+    # View all users campaigns
+    @flask_app.route("/campaigns")
+    def campaigns():
+        return render_template("campaigns.html")
+
     # View campaign overview
     @flask_app.route("/campaigns/<campaign_name>")
     def show_timeline(campaign_name):
