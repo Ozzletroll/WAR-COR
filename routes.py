@@ -189,7 +189,7 @@ def configure_routes(flask_app):
     #   =======================================
 
     # View campaign overview
-    @flask_app.route("/<campaign_name>")
+    @flask_app.route("/campaigns/<campaign_name>")
     def show_timeline(campaign_name):
 
         target_id = session.get("campaign_id", None)
@@ -198,7 +198,7 @@ def configure_routes(flask_app):
         return render_template("timeline.html", campaign=campaign)
 
     # Create new campaign
-    @flask_app.route("/create_campaign", methods=["GET", "POST"])
+    @flask_app.route("/campaigns/create_campaign", methods=["GET", "POST"])
     @login_required
     def create_campaign():
 
@@ -228,7 +228,7 @@ def configure_routes(flask_app):
         return render_template("new_campaign.html", form=form)
 
     # Edit campaign data
-    @flask_app.route("/edit_campaign/<campaign_name>", methods=["GET", "POST"])
+    @flask_app.route("/campaigns/<campaign_name>/edit", methods=["GET", "POST"])
     def edit_campaign(campaign_name):
 
         target_campaign_id = session.get("campaign_id", None)
@@ -257,7 +257,7 @@ def configure_routes(flask_app):
         return redirect(url_for("home"))
 
     # Edit campaign users
-    @flask_app.route("/edit_campaign/<campaign_name>/add_users", methods=["GET", "POST"])
+    @flask_app.route("/campaigns/<campaign_name>/add_users", methods=["GET", "POST"])
     @login_required
     def add_campaign_users(campaign_name):
 
@@ -291,7 +291,7 @@ def configure_routes(flask_app):
         return redirect(url_for("home"))
 
     # Remove campaign users
-    @flask_app.route("/edit_campaign/<campaign_name>/remove_users/<username>", methods=["GET"])
+    @flask_app.route("/campaigns/<campaign_name>/remove_users/<username>", methods=["GET"])
     @login_required
     def remove_campaign_users(campaign_name, username):
 
@@ -330,7 +330,7 @@ def configure_routes(flask_app):
     #   =======================================
 
     # View event
-    @flask_app.route("/<campaign_name>/<event_name>")
+    @flask_app.route("/campaigns/<campaign_name>/<event_name>")
     def view_event(campaign_name, event_name):
 
         target_event_id = session.get("event_id", None)
@@ -339,7 +339,7 @@ def configure_routes(flask_app):
         return render_template("event.html", event=event)
 
     # Add new event
-    @flask_app.route("/<campaign_name>/new_event", methods=["GET", "POST"])
+    @flask_app.route("/campaigns/<campaign_name>/new_event", methods=["GET", "POST"])
     @login_required
     def add_event(campaign_name):
 
@@ -389,7 +389,7 @@ def configure_routes(flask_app):
             return redirect(url_for("home"))
 
     # Edit existing event
-    @flask_app.route("/<campaign_name>/<event_name>/edit", methods=["GET", "POST"])
+    @flask_app.route("/campaigns/<campaign_name>/<event_name>/edit", methods=["GET", "POST"])
     @login_required
     def edit_event(campaign_name, event_name):
 
@@ -440,7 +440,7 @@ def configure_routes(flask_app):
         return redirect(url_for("home"))
 
     # Delete existing event
-    @flask_app.route("/<campaign_name>/<event_name>/delete", methods=["GET"])
+    @flask_app.route("/campaigns/<campaign_name>/<event_name>/delete", methods=["GET"])
     @login_required
     def delete_event(campaign_name, event_name):
 
@@ -462,7 +462,7 @@ def configure_routes(flask_app):
     #   =======================================
 
     # Backup campaign data
-    @flask_app.route("/<campaign_name>/backup")
+    @flask_app.route("/campaigns/<campaign_name>/backup")
     def campaign_backup(campaign_name):
 
         target_campaign_id = session.get("campaign_id", None)
@@ -470,7 +470,7 @@ def configure_routes(flask_app):
         return redirect(url_for("show_timeline", id=target_campaign_id))
 
     # Import campaign backup
-    @flask_app.route("/<campaign_name>/import")
+    @flask_app.route("/campaigns/<campaign_name>/import")
     def import_campaign(campaign_name):
 
         target_campaign_id = session.get("campaign_id", None)
@@ -478,7 +478,7 @@ def configure_routes(flask_app):
         return redirect(url_for("show_timeline", id=target_campaign_id))
 
     # Export campaign timeline as pdf
-    @flask_app.route("/<campaign_name>/export")
+    @flask_app.route("/campaigns/<campaign_name>/export")
     def export_campaign(campaign_name):
 
         target_campaign_id = session.get("campaign_id", None)

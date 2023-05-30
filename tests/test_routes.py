@@ -95,7 +95,7 @@ def test_user_page(client, app):
 
 def test_create_campaign(client, app):
     example_login(client)
-    response = client.post("/create_campaign", follow_redirects=True, data={
+    response = client.post("/campaigns/create_campaign", follow_redirects=True, data={
         "title": TEST_CAMPAIGN_TITLE,
         "description": TEST_CAMPAIGN_DESCRIPTION,
     })
@@ -113,10 +113,10 @@ def test_add_event(client, app):
 
     example_login(client)
     # The id of the campaign is passed as an url parameter
-    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/new_event", follow_redirects=True)
+    response_1 = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}/new_event", follow_redirects=True)
     assert response_1.status_code == 200
 
-    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/new_event", follow_redirects=True, data={
+    response_2 = client.post(f"/campaigns/{TEST_CAMPAIGN_TITLE}/new_event", follow_redirects=True, data={
         "title": TEST_EVENT_TITLE,
         "type": TEST_EVENT_TYPE,
         "date": TEST_EVENT_DATE,
@@ -136,7 +136,7 @@ def test_show_timeline(client, app):
     with client.session_transaction() as session:
         session["campaign_id"] = 1
 
-    response = client.get(f"/{TEST_CAMPAIGN_TITLE}")
+    response = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}")
     assert response.status_code == 200
     assert b"<title>Test Campaign Title</title>" in response.data
     assert b"<li>Test Event Title</li>" in response.data
@@ -148,7 +148,7 @@ def test_edit_campaign(client, app):
         session["campaign_id"] = 1
 
     example_login(client)
-    response_1 = client.post(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}", follow_redirects=True, data={
+    response_1 = client.post(f"/campaigns/{TEST_CAMPAIGN_TITLE}/edit", follow_redirects=True, data={
         "title": "Edited Campaign Title",
         "description": "An edited campaign description.",
     })
@@ -165,9 +165,9 @@ def test_edit_event(client, app):
         session["event_id"] = 1
 
     example_login(client)
-    response_1 = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit")
+    response_1 = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit")
     assert response_1.status_code == 200
-    response_2 = client.post(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit", follow_redirects=True, data={
+    response_2 = client.post(f"/campaigns/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}/edit", follow_redirects=True, data={
         "title": EDITED_EVENT_TITLE,
         "type": TEST_EVENT_TYPE,
         "date": EDITED_EVENT_DATE,
@@ -187,7 +187,7 @@ def test_view_event(client, app):
     with client.session_transaction() as session:
         session["event_id"] = 1
 
-    response = client.get(f"/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}")
+    response = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}/{TEST_EVENT_TITLE}")
     assert b"<title>Edited Event Title</title>" in response.data
     assert b"Edited Belligerents" in response.data
 
@@ -205,10 +205,10 @@ def test_add_campaign_users(client, app):
     with client.session_transaction() as session:
         session["campaign_id"] = 1
 
-    response_2 = client.get(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}/add_users")
+    response_2 = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}/add_users")
     assert response_2.status_code == 200
 
-    response_3 = client.post(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}/add_users", follow_redirects=True, data={
+    response_3 = client.post(f"/campaigns/{TEST_CAMPAIGN_TITLE}/add_users", follow_redirects=True, data={
         "username": "Ozzletroll",
     })
     # Test if the campaign is in the user.campaigns
@@ -224,7 +224,7 @@ def test_remove_campaign_users(client, app):
 
     example_login(client)
 
-    response_1 = client.get(f"/edit_campaign/{TEST_CAMPAIGN_TITLE}/remove_users/Ozzletroll", follow_redirects=True)
+    response_1 = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}/remove_users/Ozzletroll", follow_redirects=True)
     assert response_1.status_code == 200
     campaign_query = db.session.execute(select(models.Campaign).filter_by(id=1)).scalar()
     user_query = db.session.execute(select(models.User).filter_by(username="Ozzletroll")).scalar()
@@ -239,7 +239,7 @@ def test_delete_event(client, app):
         session["campaign_id"] = 1
         session["event_id"] = 1
 
-    response = client.get(f"/{TEST_CAMPAIGN_TITLE}/{EDITED_EVENT_TITLE}/delete", follow_redirects=True)
+    response = client.get(f"/campaigns/{TEST_CAMPAIGN_TITLE}/{EDITED_EVENT_TITLE}/delete", follow_redirects=True)
     assert response.status_code == 200
     event_query = db.session.execute(select(models.Event).filter_by(id=1)).scalar()
     assert event_query is None
