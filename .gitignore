@@ -1,0 +1,17 @@
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/WAR-COR.iml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+__pycache__/__init__.cpython-311.pyc
+__pycache__/app.cpython-311.pyc
+__pycache__/conftest.cpython-311-pytest-7.3.1.pyc
+__pycache__/forms.cpython-311.pyc
+__pycache__/main.cpython-311.pyc
+__pycache__/models.cpython-311.pyc
+__pycache__/routes.cpython-311.pyc
+__pycache__/test_main.cpython-311-pytest-7.3.1.pyc
+instance/test.db
+instance/war_cor.db
