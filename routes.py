@@ -130,8 +130,7 @@ def configure_routes(flask_app):
     @login_required
     def user_page(username):
 
-        target_id = session.get("user_id", None)
-        user = db.session.execute(select(models.User).filter_by(id=target_id)).scalar()
+        user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
 
         if user.id == current_user.id:
             return render_template("user_page.html", user=user)
