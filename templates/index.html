@@ -4,14 +4,81 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/styles.css">
   <title>WAR/COR</title>
 </head>
 <body>
 
-  {% include 'navbar.html' %} 
+  <!-- Re add this when basic layout is complete -->
+  <!-- {% include 'navbar.html' %}  -->
+
+
+  <section class="hero">
+
+    <div class="hero_centered">
+      <h1>WAR/COR</h1>
+      <h2>Frontline reporting in the year 5016u</h2>
+      <a href="{{ url_for('register') }}"><button type="button">Enlist</button></a>
+    </div>
+    <img src="" class="hero_background">
+
+  </section>
+
+  <section class="features">
+
+    <div class="features_header">
+      <h3>Create and share rpg campaign timelines</h3>
+    </div>
+    <div class="features_grid">
+      <div class="feature">
+        <h5>Feature Title</h5>
+        <p>> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+        <a href=""><button type="button">Learn more</button></a>
+      </div>
+      <div class="feature">
+        <h5>Feature Title</h5>
+        <p>> Amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
+        <a href=""><button type="button">Learn more</button></a>
+      </div>
+      <div class="feature">
+        <h5>Feature Title</h5>
+        <p>> Consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.</p>
+        <a href=""><button type="button">Learn more</button></a>
+      </div>
+      <div class="feature">
+        <h5>Feature Title</h5>
+        <p>> Eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
+        <a href=""><button type="button">Learn more</button></a>
+      </div>
+    </div>
+
+    <div class="features_lower">
+      <img src="">
+      <div class="features_text_area">
+        <h5>Feature Title</h5>
+        <p>> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="bottom">
+    <div class="bottom_area">
+      <img src="">
+      <div class="bottom_text_area">
+        <h5>Feature Title</h5>
+        <p>> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+      </div>
+    </div>
+    <div class="bottom_cta">
+      <h4>> Eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</h4>
+      <a href=""><button type="button">Enlist today</button></a>
+    </div>
+
+  </section>
+
+  <!-- Re add this when basic layout is complete -->
+  <!-- {% include 'footer.html' %}  -->
 
 </body>
-
-  {% include 'footer.html' %} 
-
 </html>
