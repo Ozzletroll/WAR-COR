@@ -219,7 +219,7 @@ def configure_routes(flask_app):
 
             # Add new campaign to database
             db.session.add(new_campaign)
-            # Add current user as campaign member
+            # Add current user as campaign member, callsign will be set to None
             user.campaigns.append(new_campaign)
             # Give current user campaign editing permissions
             user.permissions.append(new_campaign)
