@@ -18,6 +18,59 @@ button {
   font-family: "Roboto Mono", monospace;
 }
 
+/* Navbar */
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #9C1717;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.logo_area {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 10%;
+}
+
+.logo_title{
+  color: #E5E5E5;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.version_number {
+  color: #E5E5E5;
+  font-size: 14px;
+}
+
+.navbar_links {
+  display: flex;
+  flex-direction: row;
+  gap: 3%;
+  justify-items: flex-end;
+  align-items: center;
+  color: #E5E5E5;
+  list-style-type: none;
+}
+
+.navbar_buttons button {
+  font-size: 15px;
+}
+
+.navbar_buttons .log_in_button, .log_out_button {
+  color: #9C1717;
+}
+
+.navbar_buttons .register_button {
+  color: #9C1717;
+  background-color: #2B2B2B;
+}
+
 /* Hero */
 
 h1 {
