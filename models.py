@@ -30,7 +30,7 @@ class User(UserMixin, db.Model):
     comments = db.relationship("Comment", back_populates="author")
 
 
-class Campaign(UserMixin, db.Model):
+class Campaign(db.Model):
     __tablename__ = "campaign"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +46,7 @@ class Campaign(UserMixin, db.Model):
     members = db.relationship("User", secondary=user_campaign, back_populates="campaigns")
 
 
-class Event(UserMixin, db.Model):
+class Event(db.Model):
     __tablename__ = "event"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -68,7 +68,7 @@ class Event(UserMixin, db.Model):
     parent_campaign = db.relationship("Campaign", back_populates="events")
 
 
-class Comment(UserMixin, db.Model):
+class Comment(db.Model):
     __tablename__ = "comment"
 
     id = db.Column(db.Integer, primary_key=True)
