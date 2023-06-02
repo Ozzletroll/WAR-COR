@@ -132,7 +132,7 @@ button {
 
 h1 {
   color: #ffffff;
-  font-size: 96px;
+  font-size: 124px;
   margin-bottom: 15px;
 }
 
@@ -141,7 +141,7 @@ h2 {
 }
 
 .hero {
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   display: flex;
   flex-direction: column;
   align-items: center;
