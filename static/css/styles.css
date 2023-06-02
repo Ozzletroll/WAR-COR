@@ -35,7 +35,12 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  gap: 10%;
+  align-items: center;
+  gap: 5%;
+}
+
+.top_logo {
+  width: 30px;
 }
 
 .logo_title{
@@ -46,8 +51,12 @@ button {
 
 .version_number {
   display: flex;
+  align-items: flex-end;
+  flex: 1 0 0;
   color: #E5E5E5;
   font-size: 14px;
+  width: 220px;
+  padding: 5px;
 }
 
 .navbar_right {
@@ -110,11 +119,23 @@ button {
   padding-right: 5%;
 }
 
-.navbar_buttons button {
+.navbutton {
+  position: relative;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  -webkit-transition: ease-out 0.5s;
+  -moz-transition: ease-out 0.5s;
+}
+
+.navbutton {
   font-size: 15px;
-  clip-path: polygon(90% 0, 100% 30%, 100% 100%, 0 100%, 0 0);
   border: none;
   padding: 5px;
+  position: relative;
+  cursor: pointer;
+  transition: ease-out 0.5s;
+  -webkit-transition: ease-out 0.5s;
+  -moz-transition: ease-out 0.5s;
 }
 
 .navbar_buttons .log_in_button, .log_out_button {
@@ -126,6 +147,41 @@ button {
   color: #E5E5E5;
   background-color: #2B2B2B;
   width: 100px;
+}
+
+.navbutton::after,
+.navbutton::before {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 0;
+    transition: .5s;
+}
+
+.navbutton::after {
+    top: -5px;
+    left: -5px;
+    border-top: 2px solid transparent;
+    border-left: 2px solid transparent;
+}
+
+.navbutton::before {
+    bottom: -5px;
+    right: -5px;
+    border-bottom: 2px solid transparent;
+    border-right: 2px solid transparent;
+}
+
+.navbutton:hover::after,
+.navbutton:hover::before {
+    width: 30px;
+    height: 30px;
+    border-color: #ffffff;
+}
+
+.navbutton.register_button:hover {
+  color: #2e2e2e;
+  background-color: #ffffff;
 }
 
 /* Hero */
@@ -206,10 +262,20 @@ h5 {
   font-size: 18px;
 }
 
-.feature button {
+.feature_button {
   background-color: #9C1717;
   color: #E5E5E5;
   padding: 3%;
+}
+
+.feature_button:hover, 
+.feature_button:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 1em transparent;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 #9C1717; }
 }
 
 @media screen and (max-width: 600px) { 
