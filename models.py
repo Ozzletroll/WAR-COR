@@ -2,15 +2,26 @@ from flask_login import UserMixin
 
 from app import db
 
-# Association table that defines user to campaign relationships
-user_campaign = db.Table("user_campaign",
-                         db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
-                         db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
-
 # Association table that defines user to campaign editing permissions.
 user_edit_permissions = db.Table("user_edit_permissions",
                                  db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
                                  db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
+
+
+# Association Object that defines user to campaign membership, and allows
+# users to have a unique callsign for each campaign.
+class UserCampaign(db.Model):
+    __tablename__ = 'user_campaign'
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), primary_key=True)
+    callsign = db.Column(db.String(50))
+
+    # Association between UserCampaign -> User
+    user = db.relationship('User', back_populates="campaign_associations")
+
+    # Association between UserCampaign -> Campaign
+    campaign = db.relationship('Campaign', back_populates="user_associations")
 
 
 class User(UserMixin, db.Model):
@@ -24,13 +35,20 @@ class User(UserMixin, db.Model):
     # Database relationships
     # A user takes part in a number of campaigns, may have editing permissions, and may be the author of many comments.
 
-    campaigns = db.relationship("Campaign", secondary=user_campaign, back_populates="members")
+    # Many-to-many relationship to Campaign, bypassing the `UserCampaign` class
+    campaigns = db.relationship("Campaign",
+                                secondary="user_campaign",
+                                back_populates="members")
+
+    # Association between User -> UserCampaign -> Campaign
+    campaign_associations = db.relationship("UserCampaign", back_populates="user", cascade="delete, delete-orphan")
+
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
 
     comments = db.relationship("Comment", back_populates="author")
 
 
-class Campaign(UserMixin, db.Model):
+class Campaign(db.Model):
     __tablename__ = "campaign"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -43,10 +61,17 @@ class Campaign(UserMixin, db.Model):
     # permission.
 
     events = db.relationship("Event", back_populates="parent_campaign")
-    members = db.relationship("User", secondary=user_campaign, back_populates="campaigns")
+
+    # Many-to-many relationship to User, bypassing the `UserCampaign` class
+    members = db.relationship("User",
+                              secondary="user_campaign",
+                              back_populates="campaigns")
+
+    # Association between Child -> Association -> Parent
+    user_associations = db.relationship("UserCampaign", back_populates="campaign", cascade="delete, delete-orphan")
 
 
-class Event(UserMixin, db.Model):
+class Event(db.Model):
     __tablename__ = "event"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -68,7 +93,7 @@ class Event(UserMixin, db.Model):
     parent_campaign = db.relationship("Campaign", back_populates="events")
 
 
-class Comment(UserMixin, db.Model):
+class Comment(db.Model):
     __tablename__ = "comment"
 
     id = db.Column(db.Integer, primary_key=True)
