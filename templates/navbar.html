@@ -11,22 +11,25 @@
     </div>
   </div>
 
-  <ul class="navbar_links">
-     {% if current_user.is_authenticated %}
-      <li><a href="{{ url_for('campaigns') }}">Campaigns</a></li>
-      <li><a href="{{ url_for('user_page', username=current_user.username) }}">{{ current_user.username }}</a></li>
-     {% else %}
-      <li><a href="">Features</a></li>
-      <li><a href="">Comms</a></li>
-     {% endif %}
-  </ul> 
-    <div class="navbar_buttons">
-     {% if not current_user.is_authenticated %}
-      <a href="{{ url_for('login') }}"><button type="button" class="log_in_button">Log in</button></a>
-      <a href="{{ url_for('register') }}"><button type="button" class="register_button">Register</button></a>
-     {% else %}
-      <a href="{{ url_for('logout') }}"><button type="button" class="log_out_button">Log out</button></a>
-     {% endif %}
-  </div>
-</div>
+  <div class="navbar_right">
 
+    <ul class="navbar_links">
+      {% if current_user.is_authenticated %}
+        <li><a href="{{ url_for('campaigns') }}">Campaigns</a></li>
+        <li><a href="{{ url_for('user_page', username=current_user.username) }}">{{ current_user.username }}</a></li>
+      {% else %}
+        <li><a href="">Features</a></li>
+        <li><a href="">Comms</a></li>
+      {% endif %}
+    </ul> 
+      <div class="navbar_buttons">
+      {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('login') }}"><button type="button" class="log_in_button">Log in</button></a>
+        <a href="{{ url_for('register') }}"><button type="button" class="register_button">Register</button></a>
+      {% else %}
+        <a href="{{ url_for('logout') }}"><button type="button" class="log_out_button">Log out</button></a>
+      {% endif %}
+      </div>
+  </div>
+
+</div>

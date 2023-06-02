@@ -2,6 +2,7 @@ body {
   font-family: "Roboto Mono", monospace;
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238a0e0e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   animation: 25s linear 0s infinite bp;
+  margin: 0;
 }
 
 @keyframes bp {
@@ -44,18 +45,69 @@ button {
 }
 
 .version_number {
+  display: flex;
   color: #E5E5E5;
   font-size: 14px;
+}
+
+.navbar_right {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+  justify-content: flex-end;
+  gap: 15%;
 }
 
 .navbar_links {
   display: flex;
   flex-direction: row;
-  gap: 3%;
+  gap: 25%;
   justify-items: flex-end;
   align-items: center;
   color: #E5E5E5;
   list-style-type: none;
+  font-size: 16px;
+}
+
+/* Navbar Links */
+
+.navbar_links a {
+  position: relative;
+  color: #E5E5E5;
+  text-decoration: none;
+}
+
+.navbar_links a:hover {
+  color: #E5E5E5;
+}
+
+.navbar_links a::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #E5E5E5;
+  transform: scaleX(0);
+  transform-origin: top left;
+  transition: transform 0.3s ease;
+}
+
+.navbar_links a:hover::before {
+  transform: scaleX(1);
+}
+
+/* Navbar Buttons */
+
+.navbar_buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .navbar_buttons button {
@@ -64,11 +116,13 @@ button {
 
 .navbar_buttons .log_in_button, .log_out_button {
   color: #9C1717;
+  width: 100px;
 }
 
 .navbar_buttons .register_button {
   color: #9C1717;
   background-color: #2B2B2B;
+  width: 100px;
 }
 
 /* Hero */
