@@ -136,11 +136,13 @@ button {
   transition: ease-out 0.5s;
   -webkit-transition: ease-out 0.5s;
   -moz-transition: ease-out 0.5s;
+  border-radius: 3px;
 }
 
-.navbar_buttons .log_in_button, .log_out_button {
-  color: #9C1717;
+.navbar_buttons .log_in_button, .navbar_buttons .log_out_button {
   width: 100px;
+  color: #E5E5E5;
+  background-color: #2B2B2B;
 }
 
 .navbar_buttons .register_button {
@@ -176,13 +178,19 @@ button {
 .navbutton:hover::before {
     width: 30px;
     height: 30px;
-    border-color: #ffffff;
+    border-color: #ff0000;
 }
 
 .navbutton.register_button:hover {
   color: #2e2e2e;
-  background-color: #ffffff;
+  background-color: #ff0000;
 }
+
+.navbutton.log_in_button:hover, .log_out_button:hover {
+  color: #2e2e2e;
+  background-color: #ff0000;
+}
+
 
 /* Hero */
 
@@ -194,6 +202,26 @@ h1 {
 
 h2 {
   font-size: 56px;
+}
+
+.typing-demo {
+  animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+  white-space: wrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  font-family: monospace;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
 }
 
 .hero {
