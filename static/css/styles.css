@@ -191,37 +191,21 @@ button {
   background-color: #ff0000;
 }
 
-
 /* Hero */
 
 h1 {
-  color: #ffffff;
-  font-size: 124px;
+  font-size: 160px;
   margin-bottom: 15px;
+  background-image: url(/static/images/ac_3.gif);
+	background-size: cover;
+	color: transparent;
+	-moz-background-clip: text;
+	-webkit-background-clip: text;
+	text-transform: uppercase;
 }
 
 h2 {
   font-size: 56px;
-}
-
-.typing-demo {
-  animation: typing 2s steps(22), blink .5s step-end infinite alternate;
-  white-space: wrap;
-  overflow: hidden;
-  border-right: 3px solid;
-  font-family: monospace;
-}
-
-@keyframes typing {
-  from {
-    width: 0
-  }
-}
-    
-@keyframes blink {
-  50% {
-    border-color: transparent
-  }
 }
 
 .hero {
