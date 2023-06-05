@@ -27,8 +27,8 @@ button {
   justify-content: space-between;
   align-items: center;
   background-color: #9C1717;
-  padding-left: 2%;
-  padding-right: 2%;
+  padding-left: min(50px, 2%);
+  padding-right: min(50px, 2%);
 }
 
 .logo_area {
@@ -114,10 +114,11 @@ button {
 .navbar_buttons {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
   gap: 10%;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: max(25px, 2%);
+  padding-right: max(25px, 2%);
 }
 
 .navbutton {
@@ -191,6 +192,90 @@ button {
   color: #2e2e2e;
   background-color: #ff0000;
 }
+
+/* Hamburger Menu */
+
+.hamburger_menu {
+  display: none;
+}
+
+.hamburger_button {
+  display: none;
+  font-size: 36px;
+}
+
+@media screen and (max-width: 800px) { 
+
+  .version_number {
+    display: none;
+  }
+
+  .logo_area {
+    gap: 15px;
+  }
+
+}
+
+@media screen and (max-width: 700px) { 
+
+  .navbar {
+    padding: 8px;
+  }
+
+  .navbar_links {
+    display: none;
+  }
+
+  .hamburger_button {
+    display: flex;
+    justify-content: center;
+    width: 50px;
+    text-decoration: none;
+    color: #E5E5E5;
+  }
+
+  .hamburger_button:hover {
+    color: #ff0000;
+  }
+
+  .hamburger_menu {
+    flex-direction: column;
+    justify-content: right;
+    text-align: right;
+    background-color: #2e2e2e;
+  }
+
+  .hamburger_menu a {
+    font-size: 16px;
+    text-decoration: none;
+    color: #ffffff;
+  }
+
+  .hamburger_menu a:visited {
+    color: #ff0000;
+  }
+
+  .navbar_right rect {
+    fill: #E5E5E5;
+  }
+
+  .hamburger_menu :hover {
+    background-color: #cccccc;
+    color: #ff0000;
+  }
+
+  .hamburger_menu a {
+    padding-top: 3px;
+    padding-right: 15px;
+    padding-bottom: 3px;
+  }
+
+  .navbar_buttons {
+    display: none;
+  }
+
+}
+
 
 /* Hero */
 
