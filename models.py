@@ -18,10 +18,10 @@ class UserCampaign(db.Model):
     callsign = db.Column(db.String(50))
 
     # Association between UserCampaign -> User
-    user = db.relationship('User', back_populates="campaign_associations")
+    user = db.relationship('User', back_populates="campaign_associations", viewonly=True)
 
     # Association between UserCampaign -> Campaign
-    campaign = db.relationship('Campaign', back_populates="user_associations")
+    campaign = db.relationship('Campaign', back_populates="user_associations", viewonly=True)
 
 
 class User(UserMixin, db.Model):
@@ -41,7 +41,10 @@ class User(UserMixin, db.Model):
                                 back_populates="members")
 
     # Association between User -> UserCampaign -> Campaign
-    campaign_associations = db.relationship("UserCampaign", back_populates="user", cascade="delete, delete-orphan")
+    campaign_associations = db.relationship("UserCampaign",
+                                            back_populates="user",
+                                            cascade="delete, delete-orphan",
+                                            viewonly=True)
 
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
 
@@ -68,7 +71,10 @@ class Campaign(db.Model):
                               back_populates="campaigns")
 
     # Association between Child -> Association -> Parent
-    user_associations = db.relationship("UserCampaign", back_populates="campaign", cascade="delete, delete-orphan")
+    user_associations = db.relationship("UserCampaign",
+                                        back_populates="campaign",
+                                        cascade="delete, delete-orphan",
+                                        viewonly=True)
 
 
 class Event(db.Model):
