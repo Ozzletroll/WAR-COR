@@ -47,6 +47,7 @@ button {
   color: #E5E5E5;
   font-size: 28px;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .version_number {
@@ -87,7 +88,7 @@ button {
 }
 
 .navbar_links a:hover {
-  color: #E5E5E5;
+  color: #ffffff;
 }
 
 .navbar_links a::before {
@@ -194,11 +195,12 @@ button {
 /* Hero */
 
 h1 {
-  font-size: 160px;
+  font-size: 180px;
   margin-bottom: 15px;
   background-image: url(/static/images/ac_3.gif);
 	background-size: cover;
 	color: transparent;
+  background-clip: text;
 	-moz-background-clip: text;
 	-webkit-background-clip: text;
 	text-transform: uppercase;
