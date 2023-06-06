@@ -291,9 +291,8 @@ button {
 h1 {
   font-size: min(22vw, 180px);
   margin-bottom: 15px;
-  background-image: url(/static/images/ac_3.gif);
 	background-size: cover;
-	color: transparent;
+	color: #9C1717;
   background-clip: text;
 	-moz-background-clip: text;
 	-webkit-background-clip: text;
@@ -301,9 +300,12 @@ h1 {
 }
 
 h2 {
+  color: #2e2e2e;
   font-size: min(10vw, 56px);
+  font-weight: 400;
   padding-left: 25px;
   padding-right: 25px;
+  margin: 0;
 }
 
 .hero {
