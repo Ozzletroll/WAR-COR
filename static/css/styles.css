@@ -303,6 +303,12 @@ h2 {
   text-align: center;
 }
 
+@media screen and (max-width: 500px) {
+  .hero {
+    height: 100vh;
+  }
+}
+
 .hero_centered {
   display: flex;
   flex-direction: column;
