@@ -301,8 +301,8 @@ h1 {
 
 h2 {
   color: #2e2e2e;
-  font-size: min(10vw, 56px);
-  font-weight: 400;
+  font-size: min(6vw, 36px);
+  font-weight: 500;
   padding-left: 25px;
   padding-right: 25px;
   margin: 0;
