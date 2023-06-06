@@ -280,7 +280,7 @@ button {
 /* Hero */
 
 h1 {
-  font-size: 180px;
+  font-size: min(22vw, 180px);
   margin-bottom: 15px;
   background-image: url(/static/images/ac_3.gif);
 	background-size: cover;
@@ -291,10 +291,8 @@ h1 {
 	text-transform: uppercase;
 }
 
-
-
 h2 {
-  font-size: 56px;
+  font-size: min(10vw, 56px);
 }
 
 .hero {
@@ -303,7 +301,6 @@ h2 {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  height: 1000px;
 }
 
 .hero_centered {
@@ -314,7 +311,7 @@ h2 {
 }
 
 .hero_centered button {
-  margin-top: 150px;
+  margin-top: 50px;
   padding: 15px;
   background-color: #B40000;
   color: #ffffff;
