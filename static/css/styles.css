@@ -1,3 +1,4 @@
+
 body {
   font-family: "Roboto Mono", monospace;
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238a0e0e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
@@ -504,5 +505,36 @@ h5 {
 
 .footer {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3%;
   background-color: #9C1717;
+  color: #E5E5E5;
+  gap: 50px;
 }
+
+.footer_links {
+  display: flex;
+  width: 70%;
+  justify-content: space-around;
+  padding-top: 50px;
+  color: #E5E5E5;
+}
+
+.footer_links a{
+  text-decoration: none;
+}
+
+.footer_links :visited{
+  color: #E5E5E5;
+}
+
+.footer_text {
+  text-align: center;
+  font-weight: 200;
+}
+
+.f_text {
+  padding: 5px;
+}
+
