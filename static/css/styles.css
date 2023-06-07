@@ -438,7 +438,13 @@ h5 {
   0% { box-shadow: 0 0 0 0 #b41919; }
 }
 
-@media screen and (max-width: 900px) { 
+@media screen and (max-width: 750px) { 
+
+  .features_header h3 {
+    text-align: center;
+    width: 90%;
+    padding: 5%;
+  }
 
   .feature p {
     font-size: 14px;
