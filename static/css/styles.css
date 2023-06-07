@@ -1,6 +1,7 @@
 /* Scrollbar styling (only for Firefox) */
 :root {
   scrollbar-color: rgb(207, 27, 27) rgb(20, 25, 27);
+  scroll-behavior: smooth;
 }
 
 body {
@@ -300,8 +301,13 @@ h1 {
   background-image: url(/static/images/banner.jpg);
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   text-align: center;
+}
+
+.down_arrow{
+  display: none;
 }
 
 @media screen and (max-width: 900px) {
@@ -309,6 +315,21 @@ h1 {
     height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
+  }
+
+  .hero .down_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .down_arrow {
+    display: flex;
+    width: 25%;
+  }
+
+  .down_area:hover {
+    filter: invert(0.5) sepia(10) hue-rotate(-50deg) saturate(100);
   }
 }
 
