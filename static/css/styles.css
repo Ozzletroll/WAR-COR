@@ -431,6 +431,7 @@ h5 {
   color: #E5E5E5;
   padding: 3%;
   border-style: none;
+  text-transform: uppercase;
 }
 
 .feature_button:hover, 
@@ -559,8 +560,11 @@ h5 {
 .bottom_cta button {
   background-color: #9C1717;
   color: #E5E5E5;
-  padding: 3%;
+  padding: min(15px, 5%);
+  padding-left: min(20px, 8%);
+  padding-right: min(20px, 8%);
   height: auto;
+  text-transform: uppercase;
 }
 
 @media screen and (max-width: 600px) { 
