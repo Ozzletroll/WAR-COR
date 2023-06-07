@@ -413,24 +413,31 @@ h5 {
 }
 
 .feature {
+  display: flex;
+  flex-direction: column;
   width: 40%;
   padding: 5%;
+  gap: 15px;
 }
 
 .feature p {
   font-weight: normal;
   font-size: 18px;
+  height: 70%;
 }
 
 .feature_button {
   background-color: #9C1717;
   color: #E5E5E5;
   padding: 3%;
+  border-style: none;
 }
 
 .feature_button:hover, 
 .feature_button:focus {
   animation: pulse 1s;
+  background-color: #ff0000;
+  transition: 0.5s;
   box-shadow: 0 0 0 1em transparent;
 }
 
