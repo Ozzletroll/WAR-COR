@@ -295,15 +295,6 @@ h1 {
 	text-transform: uppercase;
 }
 
-h2 {
-  color: #2e2e2e;
-  font-size: min(6vw, 36px);
-  font-weight: 500;
-  padding-left: 25px;
-  padding-right: 25px;
-  margin: 0;
-}
-
 .hero {
   background-color: #e5e5e5;
   background-image: url(/static/images/banner.jpg);
@@ -334,6 +325,18 @@ h2 {
 .secondary_title {
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+
+.secondary_title h2 {
+  color: #2e2e2e;
+  font-size: min(4vw, 36px);
+  font-weight: 500;
+  width: 50%;
+  padding-left: 25px;
+  padding-right: 25px;
+  margin: 0;
+  text-align: center;
 }
 
 .hero_centered button {
