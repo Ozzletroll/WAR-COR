@@ -291,12 +291,7 @@ button {
 h1 {
   font-size: min(22vw, 180px);
   margin-bottom: 15px;
-  background-image: url(/static/images/ac_loop.webp);
-	background-size: cover;
-	color: transparent;
-  background-clip: text;
-	-moz-background-clip: text;
-	-webkit-background-clip: text;
+	color: #F5F5F5;
 	text-transform: uppercase;
 }
 
@@ -311,6 +306,7 @@ h2 {
 
 .hero {
   background-color: #e5e5e5;
+  background-image: url(/static/images/banner.jpg);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -320,6 +316,8 @@ h2 {
 @media screen and (max-width: 900px) {
   .hero {
     height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
 
@@ -447,13 +445,6 @@ h5 {
   background-color: #F5F5F5;
 }
 
-.placeholder_image {
-  padding: 3%;
-  width: 40%;
-  text-align: center;
-  background-color: #cccccc;
-}
-
  .features_text_area {
   padding: 0%;
   width: 40%;
@@ -471,6 +462,9 @@ h5 {
     width: 70%;
   }
 
+  .features_lower img {
+    width: 70%;
+  }
 }
 
 .cta {
