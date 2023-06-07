@@ -530,6 +530,7 @@ h5 {
 .cta {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   text-align: center;
   background-color: #F5F5F5;
   color: #9C1717;
