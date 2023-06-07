@@ -291,8 +291,9 @@ button {
 h1 {
   font-size: min(22vw, 180px);
   margin-bottom: 15px;
+  background-image: url(/static/images/ac_loop.webp);
 	background-size: cover;
-	color: #9C1717;
+	color: transparent;
   background-clip: text;
 	-moz-background-clip: text;
 	-webkit-background-clip: text;
