@@ -1,12 +1,10 @@
 import pytest
 from app import create_app
-from routes import configure_routes
 
 
 @pytest.fixture()
 def app():
     app = create_app(database_uri="sqlite:///test.db")
-    configure_routes(app)
     yield app
 
 
