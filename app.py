@@ -27,6 +27,27 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    # Register blueprints
+    from routes.home import bp as home_bp
+    app.register_blueprint(home_bp)
+
+    from routes.user import bp as user_bp
+    app.register_blueprint(user_bp)
+
+    from routes.campaign import bp as campaign_bp
+    app.register_blueprint(campaign_bp)
+
+    from routes.event import bp as event_bp
+    app.register_blueprint(event_bp)
+
+    from routes.data import bp as data_bp
+    app.register_blueprint(data_bp)
+
+    # User loader callback
+    @login_manager.user_loader
+    def load_user(user_id):
+        return db.session.get(models.User, user_id)
+
     return app
 
 
