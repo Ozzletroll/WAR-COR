@@ -8,7 +8,7 @@ import forms
 import models
 
 from app import db
-from user import bp
+from routes.user import bp
 
 #   =======================================
 #                  User
