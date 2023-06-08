@@ -13,8 +13,8 @@
 
     <ul class="navbar_links">
       {% if current_user.is_authenticated %}
-        <li><a href="{{ url_for('campaigns') }}">CAMPAIGNS</a></li>
-        <li><a href="{{ url_for('user_page', username=current_user.username) }}">{{ current_user.username }}</a></li>
+        <li><a href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a></li>
+        <li><a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username }}</a></li>
       {% else %}
         <li><a href="#main_features">>SITREP</a></li>
         <li><a href="">>COMMS</a></li>
@@ -35,9 +35,9 @@
 </div>
 <div class="hamburger_menu" id="hamburgerMenu">
   {% if current_user.is_authenticated %}
-    <a href="{{ url_for('campaigns') }}">CAMPAIGNS</a>
+    <a href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
     <a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username }}</a>
-    <a href="{{ url_for('logout') }}">LOGOUT</a>
+    <a href="{{ url_for('user.logout') }}">LOGOUT</a>
     {% else %}
     <a href="{{ url_for('user.login') }}">LOGIN</a>
     <a href="{{ url_for('user.register') }}">REGISTER</a>

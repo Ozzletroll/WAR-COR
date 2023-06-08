@@ -23,7 +23,7 @@ def register():
     if current_user.is_authenticated:
         # Debug message
         print("User already logged in.")
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))
 
     form = forms.RegisterUserForm()
 
@@ -48,7 +48,7 @@ def register():
             # Debug message
             print("Username already in use. Please choose a new username.")
             flash("Username already in use. Please choose a new username.")
-            return redirect(url_for("register"))
+            return redirect(url_for("user.register"))
         else:
             # Add user to database
             db.session.add(user)
@@ -57,7 +57,7 @@ def register():
             # Debug message
             print(f"Registration successful {user.username}")
             login_user(user)
-            return redirect(url_for("home"))
+            return redirect(url_for("home.home"))
 
     return render_template("register.html", form=form)
 
@@ -70,7 +70,7 @@ def login():
     if current_user.is_authenticated:
         # Debug message
         print("User already logged in.")
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))
 
     form = forms.LoginForm()
 
@@ -86,17 +86,17 @@ def login():
                 # Debug message
                 print(f"Login successful {user.username}")
                 login_user(user)
-                return redirect(url_for("home"))
+                return redirect(url_for("home.home"))
             else:
                 # Debug message
                 print("Incorrect password or username.")
                 flash("Incorrect password or username.")
-                return redirect(url_for("login"))
+                return redirect(url_for("user.login"))
         else:
             # Debug message
             print("Username not found. Please check login details.")
             flash("Username not found. Please check login details.")
-            return redirect(url_for("login"))
+            return redirect(url_for("user.login"))
 
     return render_template("login.html", form=form)
 
@@ -107,7 +107,7 @@ def login():
 def logout():
     logout_user()
     print("Logged out")
-    return redirect(url_for("home"))
+    return redirect(url_for("home.home"))
 
 
 # Access user page
@@ -120,7 +120,7 @@ def user_page(username):
     if user.id == current_user.id:
         return render_template("user_page.html", user=user)
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home.home"))
 
 
 @bp.route("/user/<username>/delete", methods=["GET", "POST"])
@@ -147,23 +147,23 @@ def delete_user(username):
                     # Debug message
                     print(f"{user.username} account deleted.")
                     flash(f"{user.username} account deleted.")
-                    return redirect(url_for("home"))
+                    return redirect(url_for("home.home"))
                 else:
                     # Debug message
                     print("Incorrect password or username.")
                     flash("Incorrect password or username.")
-                    return redirect(url_for("delete_user", username=current_user.username))
+                    return redirect(url_for("user.delete_user", username=current_user.username))
             else:
                 # Debug message
                 print("Username not found. Please check username and password.")
                 flash("Username not found. Please check username and password.")
-                return redirect(url_for("user_settings", username=current_user.username))
+                return redirect(url_for("user.user_settings", username=current_user.username))
         else:
             return render_template("delete_user.html", form=form)
 
     # Redirect if a user is trying to access another user's delete route
     else:
-        return redirect(url_for("home"))
+        return redirect(url_for("home.home"))
 
 
 @bp.route("/user/<username>/edit")
