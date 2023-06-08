@@ -3,7 +3,7 @@
     <div class="logo">
       <img src="/static/images/logo.png" class="top_logo" alt="A triangular white logo">
     </div>
-    <a href="{{ url_for('home') }}" class="logo_title">WAR/COR</a>
+    <a href="{{ url_for('home.home') }}" class="logo_title">WAR/COR</a>
     <div class="version_number">
       Version: 0.1
     </div>
@@ -22,10 +22,10 @@
     </ul> 
     <div class="navbar_buttons">
     {% if not current_user.is_authenticated %}
-      <a href="{{ url_for('login') }}"><button type="button" class="navbutton log_in_button">LOG IN</button></a>
-      <a href="{{ url_for('register') }}"><button type="button" class="navbutton register_button">REGISTER</button></a>
+      <a href="{{ url_for('user.login') }}"><button type="button" class="navbutton log_in_button">LOG IN</button></a>
+      <a href="{{ url_for('user.register') }}"><button type="button" class="navbutton register_button">REGISTER</button></a>
     {% else %}
-      <a href="{{ url_for('logout') }}"><button type="button" class="navbutton log_out_button">LOG OUT</button></a>
+      <a href="{{ url_for('user.logout') }}"><button type="button" class="navbutton log_out_button">LOG OUT</button></a>
     {% endif %}
     </div>
     <a href="javascript:void(0);" class="hamburger_button" onclick="hamburgerClick()">
@@ -36,11 +36,11 @@
 <div class="hamburger_menu" id="hamburgerMenu">
   {% if current_user.is_authenticated %}
     <a href="{{ url_for('campaigns') }}">CAMPAIGNS</a>
-    <a href="{{ url_for('user_page', username=current_user.username) }}">{{ current_user.username }}</a>
+    <a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username }}</a>
     <a href="{{ url_for('logout') }}">LOGOUT</a>
     {% else %}
-    <a href="{{ url_for('login') }}">LOGIN</a>
-    <a href="{{ url_for('register') }}">REGISTER</a>
+    <a href="{{ url_for('user.login') }}">LOGIN</a>
+    <a href="{{ url_for('user.register') }}">REGISTER</a>
     <a href="">SITREP</a>
     <a href="">COMMS</a>
   {% endif %}

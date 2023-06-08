@@ -27,6 +27,10 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    # Register blueprints
+    from routes.home import bp as home_bp
+    app.register_blueprint(home_bp)
+
     from routes.user import bp as user_bp
     app.register_blueprint(user_bp)
 
