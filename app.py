@@ -40,6 +40,9 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     from routes.event import bp as event_bp
     app.register_blueprint(event_bp)
 
+    from routes.data import bp as data_bp
+    app.register_blueprint(data_bp)
+
     # User loader callback
     @login_manager.user_loader
     def load_user(user_id):
