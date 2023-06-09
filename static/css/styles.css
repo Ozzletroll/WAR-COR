@@ -604,12 +604,29 @@ h5 {
   margin: 25% auto;
   padding: 0;
   border: 1px solid #888;
-  width: 80%;
+  width: min(80%, 500px);
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: modalanim;
   -webkit-animation-duration: 0.4s;
   animation-name: modalanim;;
   animation-duration: 0.5s
+}
+
+.modal_header {
+  padding: 2px 16px;
+  background-color: #b41919;
+  color: white;
+}
+
+.modal_body {
+  display: flex;
+  flex-direction: column;
+  padding: 10%;
+}
+
+.modal_image {
+  display: flex;
+  
 }
 
 /* Add Animation */
@@ -638,13 +655,6 @@ h5 {
   cursor: pointer;
 }
 
-.modal_header {
-  padding: 2px 16px;
-  background-color: #b41919;
-  color: white;
-}
-
-.modal_body {padding: 2px 16px;}
 
 /* Footer */
 
