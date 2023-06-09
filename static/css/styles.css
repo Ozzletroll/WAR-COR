@@ -286,6 +286,35 @@ button {
 
 }
 
+/* Page Layout */
+
+.page {
+  display: flex;
+  flex-direction: row;
+}
+
+.border {
+  display: flex;
+  flex: 1 1 auto;
+  background-attachment: fixed;
+  background-color: #000000da;
+  background-image: url("../images/wireframe.svg");
+  animation: 55s linear 0s infinite backgroundscroll;
+}
+
+@keyframes backgroundscroll {
+  from {
+    background-position:  600px 0;
+  }
+  
+  to {
+    background-position:  600px 600px;
+  }
+}
+
+.main_area {
+  max-width: 1800px;
+}
 
 /* Hero */
 
@@ -504,6 +533,7 @@ h5 {
   flex: 0 0 auto;
   padding: 5%;
   width: 40vw;
+  max-width: 600px;
 }
 
 .lower_2 {
