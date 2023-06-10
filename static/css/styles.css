@@ -19,7 +19,16 @@
 }
 
 .onepage {
+  background: linear-gradient(#ffffff, #d1d1d1);
   height: 100vh;
+}
+
+.onepage_content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .border {
@@ -46,6 +55,10 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238a0e0e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   animation: 25s linear 0s infinite bp;
   margin: 0;
+}
+
+.icon {
+  width: 20px;
 }
 
 @keyframes bp {
@@ -464,7 +477,8 @@ h5 {
   height: 70%;
 }
 
-.feature_button {
+.feature_button,
+#submit {
   background-color: #9C1717;
   color: #E5E5E5;
   padding: 3%;
@@ -474,7 +488,8 @@ h5 {
 }
 
 .feature_button:hover, 
-.feature_button:focus {
+.feature_button:focus,
+#submit:hover {
   animation: pulse 1s;
   background-color: #ff0000;
   transition: 0.5s;
@@ -776,9 +791,74 @@ h5 {
 
 /* Forms */
 
-.form_area {
+.form {
+  position: relative;
+  background-color: #ffffff80;
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
   align-items: center;
-  height: 100%;
+  clip-path: polygon(0 0,calc(100% - 20.00px) 0,100% 20.00px,100% 100%,0 100%);
+}
+
+.form_header {
+  display: flex;
+  justify-content: flex-start;
+  background-color: #9C1717;
+  color: #e5e5e5;
+  text-transform: uppercase;
+  font-size: min(5vw, 20px);
+  width: 100%;
+}
+
+.form_header h4 {
+  margin-left: 45px;
+}
+
+.form_layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.form_elem {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  margin: 24px;
+  background-color: #00000018;
+}
+
+.form_icon {
+  display: flex;
+  align-items: center;
+}
+
+
+.form_elem.center {
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  color: #9C1717;
+  border: 2px solid #2b2b2b71;
+  background-color: #e2e2e2;
+  font-family: "Roboto Mono", monospace;
+  font-size: 18px;
+  padding: 3px;
+  outline: none;
+}
+
+input:hover {
+  color: #db0000;
+  background-color: #0000001c;
+}
+
+input:focus {
+  border: 2px solid rgb(255, 0, 0);
+}
+
+.form_submit submit{
+  display: flex;
+  justify-content: center;
 }

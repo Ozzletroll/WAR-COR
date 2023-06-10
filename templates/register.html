@@ -6,20 +6,38 @@
 
     <div class="page onepage">
 
-        {% include 'navbar.html' %}
+      {% include 'navbar.html' %}
 
-            <div class="form_area">
+        <div class="onepage_content">
 
+          <form class="form register_form" method="POST" action="/register">
+            {{ form.csrf_token }}
+            <div class="form_header">
+              <h4>/Register</h3>
+            </div>
+              
+            <div class="form_layout">
+              <div class="form_elem">
+                <label class="form_icon">
+                  <img class="icon" src="/static/images/icons/user.svg">
+                </label>
+                {{ form.username(placeholder_='USERNAME') }}
+              </div>
+              <div class="form_elem">
+                <label class="form_icon"><img class="icon" src="/static/images/icons/lock.svg"></label>
+                {{ form.password(placeholder_='PASSWORD') }}
+              </div>
+              <div class="form_elem">
+                <label class="form_icon"><img class="icon" src="/static/images/icons/lock_key.svg"></label>
+                {{ form.confirm_password(placeholder_='CONFIRM_PASSWORD') }}
+              </div>
+              <div class="form_submit">
+                <div class="form_elem center">{{ form.submit() }}</div>
+              </div>
+            </div>
+          </form>
 
-                <form class="form register_form" method="POST" action="/register">
-                    {{ form.csrf_token }}
-                    <div>{{ form.username.label }}: {{ form.username() }}</div>
-                    <div>{{ form.password.label }}: {{ form.password() }}</div>
-                    <div>{{ form.confirm_password.label }}: {{ form.confirm_password() }}</div>
-                    <div>{{ form.submit() }}</div>
-                </form>
-
-            </div>    
+        </div>    
 
     </div>
 
