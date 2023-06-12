@@ -15,6 +15,7 @@ from routes.campaign import bp
 
 # View all users campaigns
 @bp.route("/campaigns")
+@login_required
 def campaigns():
     return render_template("campaigns.html")
 
