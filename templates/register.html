@@ -8,6 +8,8 @@
 
   <div class="onepage_content">
 
+    <h1 class="form_heading">>REGISTER</h1>
+
     <form class="form register_form" method="POST" action="/register">
       {{ form.csrf_token }}
       <div class="form_header">
@@ -36,6 +38,17 @@
         </div>
       </div>
     </form>
+
+    <div class="form_flash">
+      {% include 'flash.html' %}
+      <ul class = flashes>
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+
 
   </div>    
 

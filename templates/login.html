@@ -8,6 +8,8 @@
 
     <div class="onepage_content">
 
+        <h1 class="form_heading">>LOGIN</h1>
+
         <form class="form login_form" method="POST" action="/login">
             {{ form.csrf_token }}
             <div class="form_header">
@@ -32,6 +34,11 @@
               </div>
             </div>
           </form>
+
+        <div class="form_flash">
+            {% include 'flash.html' %}
+        </div>
+
     </div>    
 
 </div>  
