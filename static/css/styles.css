@@ -34,11 +34,6 @@
 
 /* Page Layout */
 
-html{ 
-  overflow-y: scroll;
-  overflow-x: hidden;
-}
-
 .layout {
   display: flex;
   flex-direction: row;
