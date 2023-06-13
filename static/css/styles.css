@@ -49,7 +49,6 @@
 .onepage {
   background: linear-gradient(var(--gradient1), var(--gradient2));
   height: 100vh;
-  overflow-y: scroll;
 }
 
 .onepage_content {

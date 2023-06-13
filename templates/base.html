@@ -8,7 +8,9 @@
 
     <div class="border"></div>
 
+      {% block page_style %}
       <div class="page">
+      {% endblock %}  
 
         {% include 'navbar.html' %}
 
@@ -16,10 +18,7 @@
         {% endblock %}
 
       </div>
-
-      {% block foot %}
-      {% endblock %} 
-        
+     
     <div class="border"></div> 
   
   </div>
