@@ -1,0 +1,27 @@
+{% block head %}
+  {% include 'header.html' %}
+{% endblock %}
+
+{% block body %}
+
+  <div class="layout">
+
+    <div class="border"></div>
+
+      <div class="page">
+
+        {% include 'navbar.html' %}
+
+        {% block content %}
+        {% endblock %}
+
+      </div>
+
+      {% block foot %}
+      {% endblock %} 
+        
+    <div class="border"></div> 
+  
+  </div>
+
+{% endblock %}

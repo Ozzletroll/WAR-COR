@@ -37,8 +37,6 @@
 .layout {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  overflow-y: scroll;
 }
 
 .page {
@@ -51,6 +49,7 @@
 .onepage {
   background: linear-gradient(var(--gradient1), var(--gradient2));
   height: 100vh;
+  overflow-y: scroll;
 }
 
 .onepage_content {
