@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
 
 {% block content %}
 
@@ -40,7 +40,7 @@
     </form>
 
     <div class="form_flash">
-      {% include 'flash.html' %}
+      {% include 'base/flash.html' %}
       <ul class = flashes>
         {% for error in form.password.errors %}
           <li>{{ error }}</li>

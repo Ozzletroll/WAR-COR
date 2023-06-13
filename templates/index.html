@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
 
 {% block content %}
 
@@ -132,10 +132,11 @@
 
   </div>
 
-  {% include "footer.html" %}
+  {% include "base/footer.html" %}
+
+ <!-- Javascript -->
+ <script src="/static/js/index.js"></script> 
 
 {% endblock %}
 
 
- <!-- Javascript -->
- <script src="/static/js/index.js"></script> 
