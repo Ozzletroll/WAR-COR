@@ -1,0 +1,48 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+    <div class="campaigns-title">
+      <h3 class="campaigns-heading">Campaigns</h1>
+    </div>
+
+    <hr class="campaigns-divider">
+
+    <ul class="campaigns-list">
+
+      <section class="campaign-entry">
+
+        <h2 class="campaign-entry-title">Campaign Title</h2>
+
+        <div class="campaign-entry-container">
+          <div class="campaign-overview">
+            <h4 class="campaign-entry-title">Overview:</h4>
+            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+          </div>
+          <div class="campaign-members">
+            <h4 class="campaign-entry-title">Members:</h2>
+            <ul class="campaign-members-list">
+              <li>username_1: [GM][ADMIN]</li> 
+              <li>username_2: [MONARCH]</li> 
+              <li>username_3: [GOOSE]</li> 
+              <li>username_4: [FRYUP]</li> 
+            </ul>
+          </div> 
+        </div>
+
+        <div class="campaign-entry-buttons">
+          <a href=""><button class="entry-button">VIEW</button></a>
+          <a href=""><button class="entry-button">EDIT</button></a>
+        </div>
+
+      </section>
+
+    </ul>
+
+  </div>
+</div>
+
+{% endblock %}
