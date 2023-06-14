@@ -943,7 +943,7 @@ h5 {
 
 .campaigns-heading {
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 700;
   padding: 0;
 }
 
@@ -962,6 +962,10 @@ h5 {
   text-align: left;
   gap: 15px;
   margin-bottom: 50px;
+}
+
+.campaign-entry-title {
+  text-transform: uppercase;
 }
 
 .campaign-entry-container {
