@@ -57,7 +57,7 @@ def register():
             # Debug message
             print(f"Registration successful {user.username}")
             login_user(user)
-            return redirect(url_for("home.home"))
+            return redirect(url_for("campaign.campaigns"))
 
     return render_template("register.html", form=form)
 
@@ -86,7 +86,7 @@ def login():
                 # Debug message
                 print(f"Login successful {user.username}")
                 login_user(user)
-                return redirect(url_for("home.home"))
+                return redirect(url_for("campaign.campaigns"))
             else:
                 # Debug message
                 print("Incorrect password or username.")
