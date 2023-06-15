@@ -14,7 +14,7 @@
     <ul class="navbar-links">
       {% if current_user.is_authenticated %}
         <li><a href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a></li>
-        <li><a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username }}</a></li>
+        <li><a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username.upper() }}</a></li>
       {% else %}
         <li><a href="#main-features">>SITREP</a></li>
         <li><a href="">>COMMS</a></li>
