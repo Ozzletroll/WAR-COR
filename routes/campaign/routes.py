@@ -21,11 +21,10 @@ def campaigns():
 
 
 # View campaign overview
-@bp.route("/campaigns/<campaign_name>")
-def show_timeline(campaign_name):
+@bp.route("/campaigns/<campaign_name>/<campaign_id>")
+def show_timeline(campaign_name, campaign_id):
 
-    target_id = session.get("campaign_id", None)
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     return render_template("timeline.html", campaign=campaign)
 
@@ -62,12 +61,10 @@ def create_campaign():
 
 
 # Edit campaign data
-@bp.route("/campaigns/<campaign_name>/edit", methods=["GET", "POST"])
-def edit_campaign(campaign_name):
+@bp.route("/campaigns/<campaign_name>/<campaign_id>/edit", methods=["GET", "POST"])
+def edit_campaign(campaign_name, campaign_id):
 
-    target_campaign_id = session.get("campaign_id", None)
-
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     if campaign in current_user.permissions:

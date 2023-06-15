@@ -28,10 +28,10 @@
               <ul class="campaign-members-list">
                 {% for user in campaign.members %}
                   <li>
-                    {{user.username}}:
+                    {{user.username.upper()}}:
                     {% for entry in user.campaign_associations %}
                       {%if entry.campaign_id == campaign.id%}
-                        [{{entry.callsign}}]
+                        [{{entry.callsign.upper()}}]
                       {%endif%}
                     {% endfor %}
                     {% if campaign in user.permissions %}
@@ -44,8 +44,8 @@
           </div>
 
           <div class="campaign-entry-buttons">
-            <a href=""><button class="entry-button">VIEW</button></a>
-            <a href=""><button class="entry-button">EDIT</button></a>
+            <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">VIEW</button></a>
+            <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">EDIT</button></a>
           </div>
           
         </section>
