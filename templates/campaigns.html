@@ -45,8 +45,10 @@
 
           <div class="campaign-entry-buttons">
             <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">VIEW</button></a>
-            <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">EDIT</button></a>
-          </div>
+            {% if campaign in current_user.permissions %}
+              <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">EDIT</button></a>
+            {% endif %}
+            </div>
           
         </section>
       {% endfor %}
