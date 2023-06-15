@@ -54,9 +54,8 @@
 .scrollpage {
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
-  background-color: var(--bg_colour1);
+  align-items: center;
 }
 
 .onepage-content {
@@ -88,9 +87,8 @@
 
 body {
   font-family: "Roboto Mono", monospace;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238a0e0e' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  animation: 25s linear 0s infinite bp;
   margin: 0;
+  background-color: var(--bg_colour1);
 }
 
 .flashes {
@@ -101,16 +99,6 @@ body {
 
 .icon {
   width: 20px;
-}
-
-@keyframes bp {
-  from {
-    background-position:  150px 0;
-  }
-  
-  to {
-    background-position:  0 150px;
-  }
 }
 
 button {
@@ -995,6 +983,7 @@ h5 {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
+  width: 40%;
   margin: 0;
   gap: 15px;
   flex-wrap: nowrap;
@@ -1035,4 +1024,32 @@ h5 {
 
 .entry-button:active {
   background-color: var(--bright_red);
+}
+
+@media screen and (max-width: 750px) { 
+  
+  .campaign-entry-container {
+    flex-direction: column;
+  }
+
+  .campaign-members-list {
+    margin-bottom: 5vw;
+  }
+
+  .campaign-overview {
+    width: 100%;
+  }
+
+  .campaign-members {
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 400px) { 
+  
+  .entry-button {
+    margin-bottom: 15px;
+  }
+
 }
