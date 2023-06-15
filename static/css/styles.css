@@ -1001,8 +1001,16 @@ h5 {
   color: var(--dark_red);
 }
 
-.campaign-members-list li {
+.campaign-members-list .members-list-item {
   background-image: url("/static/images/icons/user.svg");
+	background-repeat: no-repeat;
+	background-position: left;
+	background-size: 15px;
+  padding-left: 15px;
+}
+
+.campaign-members-list .members-list-admin {
+  background-image: url("/static/images/icons/admin.svg");
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 15px;

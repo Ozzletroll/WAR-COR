@@ -27,7 +27,11 @@
               <h4 class="campaign-entry-title">Members:</h2>
               <ul class="campaign-members-list">
                 {% for user in campaign.members %}
-                  <li>
+                  {% if campaign in user.permissions %}
+                  <li class="members-list-admin">
+                    {% else %}
+                  <li class="members-list-item">
+                  {% endif %}
                     {{user.username.upper()}}:
                     {% for entry in user.campaign_associations %}
                       {%if entry.campaign_id == campaign.id%}
