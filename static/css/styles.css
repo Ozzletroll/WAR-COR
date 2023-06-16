@@ -85,6 +85,8 @@
   }
 }
 
+/* Basic elements */
+
 body {
   font-family: "Roboto Mono", monospace;
   margin: 0;
@@ -1069,19 +1071,14 @@ h5 {
   margin: 0;
   text-decoration: none;
   position: relative;
-  
+  transition: 0.3s all;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   box-sizing: content-box;
-  border: 2px solid transparent;
   margin-bottom: 50px;
-}
-
-.new-campaign-area:hover {
-  background-color: var(--bg_colour3);
-  transition: 0.5s;
+  color: var(--text_dark)
 }
 
 .new-campaign-area::before, .new-campaign-area::after, span::before, span::after {
@@ -1121,24 +1118,22 @@ span::after {
   transition: 0.5s all;
 }
 
-/* New campaign button hover animations */
-
-/* .new-campaign-area:hover::before, .new-campaign-area:hover::after {
-  width: 50%;
-  height: 50%;
-  border-color: var(--bright_red);
-}
-
-.new-campaign-area:hover span::before, .new-campaign-area:hover span::after {
-  width: 50%;
-  height: 50%;
-  border-color: var(--bright_red)
-} */
-
 .new-campaign-heading {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: var(--text_dark);
 }
+
+/* New campaign button hover animations */
+
+.new-campaign-area:hover::before, .new-campaign-area:hover::after, .new-campaign-area:hover {
+  border-color: var(--bright_red);
+  color: var(--bright_red);
+}
+
+.new-campaign-area:hover span::before, .new-campaign-area:hover span::after {
+  border-color: var(--bright_red)
+}
+
+
