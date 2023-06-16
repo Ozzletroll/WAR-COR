@@ -333,10 +333,15 @@ button {
     background-color: var(--dark_grey);
   }
 
-  .hamburger-menu a {
+  .h-menu-item:link {
+    text-decoration: none;
+  }
+
+  .hamburger-menu .h-menu-item:hover {
     font-size: 16px;
     text-decoration: none;
-    color: var(--text_bright);
+    color: var(--bright_red);
+    background-color: var(--bg_colour2);
   }
 
   .hamburger-menu a:visited {
@@ -345,11 +350,6 @@ button {
 
   .navbar-right rect {
     fill: var(--gradient2);
-  }
-
-  .hamburger_menu :hover {
-    background-color: var(--gradient2);
-    color: var(--bright_red);
   }
 
   .hamburger-menu a {

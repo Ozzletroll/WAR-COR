@@ -38,15 +38,15 @@
 <div class="hamburger-menu" id="hamburgerMenu">
   {% if current_user.is_authenticated %}
     {% if request.path != "/campaigns" %}
-    <a href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
+    <a class="h-menu-item" href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
     {% endif %}
-    <a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username.upper() }}</a>
-    <a href="{{ url_for('user.logout') }}">LOGOUT</a>
+    <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username.upper() }}</a>
+    <a class="h-menu-item" href="{{ url_for('user.logout') }}">LOGOUT</a>
     {% else %}
-    <a href="{{ url_for('user.login') }}">LOGIN</a>
-    <a href="{{ url_for('user.register') }}">REGISTER</a>
-    <a href="">SITREP</a>
-    <a href="">COMMS</a>
+    <a class="h-menu-item" href="{{ url_for('user.login') }}">LOGIN</a>
+    <a class="h-menu-item" href="{{ url_for('user.register') }}">REGISTER</a>
+    <a class="h-menu-item" href="">SITREP</a>
+    <a class="h-menu-item" href="">COMMS</a>
   {% endif %}
 </div>
 
