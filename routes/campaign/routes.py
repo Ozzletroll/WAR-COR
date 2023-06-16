@@ -54,8 +54,7 @@ def create_campaign():
         db.session.commit()
 
         campaign = db.session.execute(select(models.Campaign).filter_by(id=new_campaign.id)).scalar()
-        session["campaign_id"] = campaign.id
-        return redirect(url_for("campaign.show_timeline", campaign_name=campaign.title))
+        return redirect(url_for("campaign.show_timeline", campaign_name=campaign.title, campaign_id=campaign.id))
 
     return render_template("new_campaign.html", form=form)
 

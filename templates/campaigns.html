@@ -35,7 +35,9 @@
                     {{user.username.upper()}}:
                     {% for entry in user.campaign_associations %}
                       {%if entry.campaign_id == campaign.id%}
-                        [{{entry.callsign.upper()}}]
+                        {% if entry.callsign is not none %}
+                          [{{entry.callsign.upper()}}]
+                        {% endif %}
                       {%endif%}
                     {% endfor %}
                     {% if campaign in user.permissions %}
