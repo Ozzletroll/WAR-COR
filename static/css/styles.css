@@ -1061,3 +1061,84 @@ h5 {
   }
 
 }
+
+.new-campaign-area {
+  display: flex;
+  /* clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%); */
+  padding: 25px;
+  margin: 0;
+  text-decoration: none;
+  position: relative;
+  
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  box-sizing: content-box;
+  border: 2px solid transparent;
+  margin-bottom: 50px;
+}
+
+.new-campaign-area:hover {
+  background-color: var(--bg_colour3);
+  transition: 0.5s;
+}
+
+.new-campaign-area::before, .new-campaign-area::after, span::before, span::after {
+  display: block;
+  content: "";
+  width: 10px;
+  height: 10px;
+  position: absolute;
+}
+
+.new-campaign-area::before {
+  top: -5px;
+  left: -5px;
+  border-top: 5px solid var(--bg_colour2);
+  border-left: 5px solid var(--bg_colour2);
+  transition: 0.5s all;
+}
+.new-campaign-area::after {
+  top: -5px;
+  right: -5px;
+  border-top: 5px solid var(--bg_colour2);
+  border-right: 5px solid var(--bg_colour2);
+  transition: 0.5s all;
+}
+span::before {
+  bottom: -5px;
+  left: -5px;
+  border-bottom: 5px solid var(--bg_colour2);
+  border-left: 5px solid var(--bg_colour2);
+  transition: 0.5s all;
+}
+span::after {
+  bottom: -5px;
+  right: -5px;
+  border-bottom: 5px solid var(--bg_colour2);
+  border-right: 5px solid var(--bg_colour2);
+  transition: 0.5s all;
+}
+
+/* New campaign button hover animations */
+
+/* .new-campaign-area:hover::before, .new-campaign-area:hover::after {
+  width: 50%;
+  height: 50%;
+  border-color: var(--bright_red);
+}
+
+.new-campaign-area:hover span::before, .new-campaign-area:hover span::after {
+  width: 50%;
+  height: 50%;
+  border-color: var(--bright_red)
+} */
+
+.new-campaign-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--text_dark);
+}
