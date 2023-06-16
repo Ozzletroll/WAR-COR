@@ -1069,7 +1069,6 @@ h5 {
   display: flex;
   /* clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%); */
   padding: 25px;
-  margin: 0;
   text-decoration: none;
   position: relative;
   transition: 0.3s all;
@@ -1079,6 +1078,7 @@ h5 {
   padding: 0;
   box-sizing: content-box;
   margin-bottom: 50px;
+  margin-top: 70px;
   color: var(--text_dark)
 }
 
