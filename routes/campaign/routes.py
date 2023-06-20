@@ -63,7 +63,7 @@ def create_campaign():
 @bp.route("/campaigns/<campaign_name>/<campaign_id>/edit", methods=["GET", "POST"])
 def edit_campaign(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     if campaign in current_user.permissions:
@@ -78,10 +78,9 @@ def edit_campaign(campaign_name, campaign_id):
             db.session.add(campaign)
             db.session.commit()
 
-            session["campaign_id"] = campaign.id
-            return redirect(url_for("campaign.show_timeline", campaign_name=campaign.title))
+            return redirect(url_for("campaign.campaigns"))
 
-        return render_template("edit_campaign.html", form=form)
+        return render_template("edit_campaign.html", form=form, campaign=campaign)
 
     # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
     return redirect(url_for("home.home"))

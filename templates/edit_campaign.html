@@ -1,0 +1,45 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+      <div class="campaigns-title">
+        <h3 class="campaigns-heading">EDIT CAMPAIGN DATA</h1>
+      </div>
+
+      <form class="form edit-form" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+        {{ form.csrf_token }}
+
+        <div class="form-layout">
+          <div class="form-elem">
+            <label class="form-icon">
+              <img class="icon" src="/static/images/icons/user.svg">
+            </label>
+            {{ form.title(class_='form-field') }}
+          </div>
+          <div class="form-elem">
+            <label class="form-icon"><img class="icon" src="/static/images/icons/lock.svg"></label>
+            {{ form.description(class_='form-field') }}
+          </div>
+          <div class="form-submit">
+            <div class="form-elem elem-centre">
+              {{ form.submit(class_="submit-button") }}
+            </div>
+          </div>
+        </div>
+      </form>
+
+    <div class="form-flash">
+      {% include 'base/flash.html' %}
+    </div>
+
+    <hr class="campaigns-divider">
+
+  </div>
+
+</div>
+
+{% endblock %}
