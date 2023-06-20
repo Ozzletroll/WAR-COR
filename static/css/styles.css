@@ -830,6 +830,7 @@ h5 {
   clip-path: polygon(0 0,calc(100% - 20.00px) 0,100% 20.00px,100% 100%,0 100%);
 }
 
+
 .form-heading {
   color: var(--text_normal);
   font-size: min(14vw, 140px);
@@ -914,6 +915,60 @@ h5 {
   color: #ff0000;
   transition: 0.1s;
   border-radius: 3px;
+}
+
+/* Edit campaign form */
+
+.edit-campaign-heading {
+    font-size: min(5vw, 48px);
+    width: 100%;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.campaign-input {
+  display: flex;
+  font-size: 16px;
+  font-family: "Roboto Mono", monospace;
+  border-style: none;
+  transition: 0.5s;
+  background-color: var(--bg_colour3);
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  outline: none;
+  position: relative;
+}
+
+.campaign-input:hover {
+  background-color: var(--bg_colour2);
+}
+
+.campaign-input:focus {
+  border-color: var(--bright_red);
+}
+
+.large-input {
+  resize: none;
+  min-height: 300px;
+}
+
+.campaign-submit-area {
+  display: flex;
+  justify-content: center;
+}
+
+.campaign-submit {
+  background-color: var(--darker_red);
+  color: var(--text_bright);
+}
+
+.campaign-submit:hover, .campaign-submit:active {
+  background-color: var(--bright_red);
 }
 
 /* Campaigns Page */

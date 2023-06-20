@@ -7,29 +7,33 @@
   <div class="campaigns-content">
 
       <div class="campaigns-title">
-        <h3 class="campaigns-heading">EDIT CAMPAIGN DATA</h1>
+        <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
       </div>
 
-      <form class="form edit-form" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+      <form class="edit-form" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
         {{ form.csrf_token }}
 
-        <div class="form-layout">
-          <div class="form-elem">
-            <label class="form-icon">
-              <img class="icon" src="/static/images/icons/user.svg">
-            </label>
-            {{ form.title(class_='form-field') }}
-          </div>
-          <div class="form-elem">
-            <label class="form-icon"><img class="icon" src="/static/images/icons/lock.svg"></label>
-            {{ form.description(class_='form-field') }}
-          </div>
-          <div class="form-submit">
-            <div class="form-elem elem-centre">
-              {{ form.submit(class_="submit-button") }}
-            </div>
-          </div>
-        </div>
+        <label class="campaign-form-label form-icon">
+          <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+          <h4>Title</h4>
+        </label>
+
+        {{ form.title(class_="campaign-input") }}
+
+        <label class="campaign-form-label form-icon">
+          <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+          <h4>Description</h4>
+        </label>
+
+        {{ form.description(class_="campaign-input large-input") }}
+        
+        
+        <div class="campaign-submit-area">
+         
+          {{ form.submit(class_="campaign-input campaign-submit") }}
+        </div>  
+          
+        
       </form>
 
     <div class="form-flash">
