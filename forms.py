@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, EmailField, DateTimeField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, URL, Email, EqualTo
 from flask_ckeditor import CKEditorField
 
@@ -27,7 +27,7 @@ class ChangePasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
-    description = StringField("Description", validators=[DataRequired()])
+    description = TextAreaField("Description", validators=[DataRequired()])
     submit = SubmitField("Create Campaign")
 
 
@@ -38,7 +38,7 @@ class CreateEventForm(FlaskForm):
                          format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
     location = StringField("Location", validators=[DataRequired()])
     belligerents = StringField("Belligerents", validators=[DataRequired()])
-    body = StringField("Description", validators=[DataRequired()])
+    body = TextAreaField("Description", validators=[DataRequired()])
     result = StringField("Result", validators=[DataRequired()])
     submit = SubmitField("Create Event")
 
