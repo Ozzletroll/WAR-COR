@@ -69,6 +69,7 @@ def edit_campaign(campaign_name, campaign_id):
     if campaign in current_user.permissions:
 
         form = forms.CreateCampaignForm(obj=campaign)
+        form.submit.label.text = "Update Campaign Data"
 
         if form.validate_on_submit():
 
