@@ -14,22 +14,27 @@
         {{ form.csrf_token }}
 
         <label class="campaign-form-label form-icon">
-          <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-          <h4>Title</h4>
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4>Campaign Title</h4>
+          </div>
+          <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
         </label>
 
         {{ form.title(class_="campaign-input") }}
 
         <label class="campaign-form-label form-icon">
-          <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-          <h4>Description</h4>
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4>Description</h4>
+          </div>
+          <p class="flavour-text">UWC-5-02 //  Campaign::Conflict Overview</p>
         </label>
 
         {{ form.description(class_="campaign-input large-input") }}
         
         
         <div class="campaign-submit-area">
-         
           {{ form.submit(class_="campaign-input campaign-submit") }}
         </div>  
           
@@ -40,7 +45,9 @@
       {% include 'base/flash.html' %}
     </div>
 
-    <hr class="campaigns-divider">
+    <div class="flavour-text-area">
+      <p class="flavour-text">By submitting this form you attest that all information given is truthful and accurate to the best of your knowledge. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
+    </div>
 
   </div>
 

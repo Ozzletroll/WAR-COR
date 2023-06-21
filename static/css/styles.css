@@ -922,6 +922,14 @@ h5 {
 .edit-campaign-heading {
     font-size: min(5vw, 48px);
     width: 100%;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 600px){
+
+  .edit-campaign-heading {
+    text-align: left;
+  }
 }
 
 .edit-form {
@@ -929,6 +937,25 @@ h5 {
   flex-direction: column;
 }
 
+.campaign-form-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: min(5vw, 22px);
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.campaign-form-label-container {
+  display: flex;
+
+}
+
+.campaign-form-label h4 {
+  margin: 0;
+}
 
 .campaign-input {
   display: flex;
@@ -938,7 +965,7 @@ h5 {
   transition: 0.5s;
   background-color: var(--bg_colour3);
   padding: 20px;
-  margin-top: 20px;
+  margin-top: 5px;
   margin-bottom: 20px;
   outline: none;
   position: relative;
@@ -969,6 +996,20 @@ h5 {
 
 .campaign-submit:hover, .campaign-submit:active {
   background-color: var(--bright_red);
+}
+
+.flavour-text-area {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+
+.flavour-text {
+  font-size: min(2vw, 12px);
+  font-weight: 200;
+  width: min(400px, 60vw);
+  color: var(--darker_red);
+  text-transform: uppercase;
 }
 
 /* Campaigns Page */
