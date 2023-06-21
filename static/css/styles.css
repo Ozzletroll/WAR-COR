@@ -1139,6 +1139,31 @@ h5 {
   padding-left: 15px;
 }
 
+.campaign-entry-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.entry-buttons-left {
+  width: 50%;
+}
+
+.entry-buttons-right {
+  width: 40%;
+}
+
+@media screen and (max-width: 750px) {
+
+  .campaign-entry-buttons {
+    flex-direction: column;
+  }
+
+  .entry-button {
+    margin-bottom: 5px;
+  }
+
+}
+
 .entry-button {
   width: 150px;
   padding: 10px;
@@ -1146,6 +1171,7 @@ h5 {
   color: var(--text_normal);
   border-style: none;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  margin-bottom: 5px;
 }
 
 .entry-button:hover {
@@ -1172,14 +1198,6 @@ h5 {
 
   .campaign-members {
     width: 100%;
-  }
-
-}
-
-@media screen and (max-width: 400px) { 
-  
-  .entry-button {
-    margin-bottom: 15px;
   }
 
 }
