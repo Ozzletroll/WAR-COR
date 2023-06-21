@@ -24,12 +24,13 @@
  
 /* Dark Mode Colours */
 [theme="dark"] {
-  --bg_colour1: #ffffff;
+  --bg_colour1: #2B2B2B;
   --bg_colour2: #E5E5E5;
+  --bg_colour3: #F5F5F5;
 
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
-  --text_dark: #000000;
+  --text_dark: #ffffff;
 }
 
 /* Page Layout */
@@ -964,8 +965,9 @@ h5 {
 
 }
 
-.campaign-form-label h4 {
+.campaign-form.label-title {
   margin: 0;
+  color: var(--text_dark);
 }
 
 .campaign-input {
