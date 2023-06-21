@@ -900,12 +900,13 @@ h5 {
   text-transform: uppercase;
   width: 120px;
   font-family: "Roboto Mono", monospace;
-  color: #db0000;
-  border-color: #db0000;
+  background-color: #9C1717;
+  color: var(--text_bright);
+  border-style: none;
 }
 
 .submit-button:hover {
-  background-color: #9C1717;
+  background-color: var(--bright_red);
   color: #ffffff;
   transition: 0.5s;
 }
@@ -914,7 +915,6 @@ h5 {
   background-color: #660c0c;
   color: #ff0000;
   transition: 0.1s;
-  border-radius: 3px;
 }
 
 /* Edit campaign form */
