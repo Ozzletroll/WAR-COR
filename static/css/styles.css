@@ -1116,7 +1116,7 @@ h5 {
 }
 
 .campaign-members-list {
-  font-size: min(2vw, 14px);
+  font-size: clamp( 10px, 2vw, 14px);
   margin: 0;
   padding-left: 0;
   list-style: none;
@@ -1159,6 +1159,10 @@ h5 {
   }
 
   .entry-button {
+    margin-bottom: 5px;
+  }
+
+  .members-list-item, .members-list-admin {
     margin-bottom: 5px;
   }
 
