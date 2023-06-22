@@ -49,6 +49,6 @@ class AddUserForm(FlaskForm):
 
 
 class ChangeCallsignForm(FlaskForm):
-    callsign = StringField("Callsign", validators=[DataRequired()])
+    callsign = StringField("New Callsign", validators=[DataRequired()])
     submit = SubmitField("Update Callsign")
     
