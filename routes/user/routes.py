@@ -196,6 +196,4 @@ def update_callsign(username):
 
     flash("Callsign updated")
 
-    # Pass campaign id for flash message formatting
-
-    return redirect(url_for("user.user_page", username=username, edited_id=campaign_id))
+    return redirect(url_for("user.user_page", username=username))
