@@ -111,15 +111,30 @@ def logout():
 
 
 # Access user page
-@bp.route("/user/<username>")
+@bp.route("/user/<username>", methods=["GET", "POST"])
 @login_required
-def user_page(username):
+def user_page(username, **kwargs) :
 
     user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
 
+    # Check if the user is actually the owner of the account they are trying to modify
     if user.id == current_user.id:
-        return render_template("user_page.html", user=user)
 
+        form = forms.ChangeCallsignForm()
+
+        # If the callsign change form is submitted, get the kwargs from it and redirect to the callsign change function.
+        if form.validate_on_submit():
+
+            user_id = request.args["user_id"]
+            campaign_id = request.args["campaign_id"]
+            callsign = request.form["callsign"]
+
+            return redirect(url_for("user.update_callsign", username=user.username, user_id=user_id, campaign_id=campaign_id, callsign=callsign))
+
+        # Otherwise, render the user page.
+        return render_template("user_page.html", user=user, form=form)
+
+    # Redirect to homepage if the user is not the owner of the account
     return redirect(url_for("home.home"))
 
 
@@ -166,7 +181,18 @@ def delete_user(username):
         return redirect(url_for("home.home"))
 
 
-@bp.route("/user/<username>/edit")
+@bp.route("/user/<username>/update_callsign", methods=["GET", "POST"])
 @login_required
-def edit_user():
-    return render_template("user_settings.html")
+def update_callsign(username):
+
+    user_id = request.args["user_id"]
+    campaign_id = request.args["campaign_id"]
+    callsign = request.args["callsign"]
+    
+    user_campaign = db.session.execute(select(models.UserCampaign).filter_by(user_id=user_id, campaign_id=campaign_id)).scalar()
+    user_campaign.callsign = callsign
+
+    db.session.commit()
+
+
+    return redirect(url_for("user.user_page", username=username))
