@@ -13,11 +13,11 @@
     <hr class="campaigns-divider">
 
     <div class="callsigns-area">
-      <button class="callsign-deploy-button">
+      <button class="callsign-deploy-button" id="t1-button">
         <h2 class="campaign-entry-title">Callsigns</h2>
       </button>
 
-      <div class="callsign-content-area">
+      <div class="callsign-content-area" id="tab-1">
 
         <p class="flavour-text">UWC-16-01 // Personnel::Known Aliases </p>
 
@@ -46,15 +46,6 @@
                       {{ form.callsign(class_="callsign-input", placeholder="NEW CALLSIGN") }}
                     </div>
                     {{ form.submit(class_="submit-button callsign-submit") }}
-
-                    {% if request.args["edited_id"] is defined %}
-                      {% if entry.campaign_id == request.args["edited_id"]|int %}
-                        <div class="form-flash">
-                          {% include 'base/flash.html' %}
-                        </div>
-                      {% endif %}
-                    {% endif %}
-
                   </form>
 
                 {%endif%}
@@ -70,13 +61,16 @@
       </div>
 
     </div>
-      
+     
+    <div class="form-flash">
+      {% include 'base/flash.html' %}
+    </div>
+
   </div>
 
-
-
-
-
 </div>
+
+ <!-- Javascript -->
+ <script src="/static/js/user_page.js"></script> 
 
 {% endblock %}
