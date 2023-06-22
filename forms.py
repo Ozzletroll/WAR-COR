@@ -46,3 +46,9 @@ class CreateEventForm(FlaskForm):
 class AddUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     submit = SubmitField("Add user")
+
+
+class ChangeCallsignForm(FlaskForm):
+    callsign = StringField("Callsign", validators=[DataRequired()])
+    submit = SubmitField("Update Callsign")
+    
