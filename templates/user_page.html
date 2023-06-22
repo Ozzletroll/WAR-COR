@@ -7,7 +7,7 @@
   <div class="user-content">
     <div class="user-title">
       <h3 class="user-heading">UWC IDENT SERVICE//</h3>
-      <h3 class="user-heading heading-line-2">WAR/COR Designation::{{ user.username }}</h3>
+      <h3 class="user-heading heading-line-2">Designation::{{ user.username }}</h3>
     </div>
 
     <hr class="campaigns-divider">
@@ -23,21 +23,30 @@
 
           {% for entry in user.campaign_associations %}
             {%if entry.campaign_id == campaign.id%}
-              {% if entry.callsign is not none %}
+              
                 <div class="callsign-entry-area">
                   <h4 class="callsign-entry-title">Current callsign: </h4>
-                  [{{entry.callsign.upper()}}]
+                  {% if entry.callsign is not none %}
+                    [{{entry.callsign.upper()}}]
+                  {% else %}
+                    [NO CALLSIGN REGISTERED]
+                  {% endif %}
                 </div>
                 
-              {% endif %}
-
               <form class="callsign-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
                 {{ form.csrf_token }}
                 {{ form.callsign.label }}: {{ form.callsign(class_="callsign-input") }}
-                {{ form.submit(class_="submit-button") }}
+                {{ form.submit(class_="submit-button callsign-submit") }}
+
+                <p class="flavour-text flavour-text-small">Registering a crude, obscene or otherwise immature callsign is a galactic crime, and carries a maximum sentence of 0.00008640Gs. </p>
+
               </form>
 
+
+
             {%endif%}
+
+
           {% endfor %}
 
         </li>

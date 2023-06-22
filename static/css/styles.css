@@ -1288,13 +1288,14 @@ span::after {
 
 /* User page */
 
-.user-content .campaign-entry-title {
-  margin-bottom: 5px;
-}
-
 .user-content .flavour-text {
   margin-top: 0;
   margin-bottom: 25px;
+  display: none;
+}
+
+.user-content .flavour-text-small {
+  margin: 0;
 }
 .user-content {
   display: flex;
@@ -1321,16 +1322,18 @@ span::after {
 
 .user-campaigns-headings {
   font-size: clamp(14px, 3vw, 18px);
+  text-transform: uppercase;
 }
 
 .callsign-entry-area {
   display: flex;
   align-items: center;
-  color: var(--darker_red);
+  color: var(--dark_red);
 }
 
 .callsign-entry-title {
   font-size: clamp(10px, 3vw, 14px);
+  text-transform: uppercase;
 }
 
 .heading-line-2 {
@@ -1358,6 +1361,12 @@ span::after {
   flex-wrap: wrap;
 }
 
+.callsign-form label {
+  text-transform: uppercase;
+  font-size: clamp(10px, 3vw, 14px);
+  color: var(--text_dark);
+}
+
 .callsign-input {
   display: flex;
   font-size: 16px;
@@ -1372,9 +1381,13 @@ span::after {
 
 .callsign-input:hover {
   background-color: var(--bg_colour2);
+
 }
 
 .callsign-input:focus {
   border-color: var(--bright_red);
 }
 
+.submit-button.callsign-submit:hover + .flavour-text.flavour-text-small{
+  display: flex;
+}
