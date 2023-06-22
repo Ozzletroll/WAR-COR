@@ -95,9 +95,9 @@ body {
 }
 
 .flashes {
-  padding: 15px;
   list-style-type: none;
   color: var(--darker_red);
+  text-transform: uppercase;
 }
 
 .icon {
@@ -1288,20 +1288,42 @@ span::after {
 
 /* User page */
 
+.callsign-deploy-button {
+  background-color: var(--darker_red);
+  border-style: none;
+  border-radius: 0;
+  color: white;
+  text-align: left;
+  padding-left: 15px;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+}
+
 .user-content .flavour-text {
   margin-top: 0;
   margin-bottom: 25px;
-  display: none;
 }
 
 .user-content .flavour-text-small {
   margin: 0;
 }
+
 .user-content {
   display: flex;
   flex-direction: column;
   width: 80%;
   margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+.callsigns-area {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg_colour3);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+}
+
+.callsign-content-area {
+  padding: 15px;
 }
 
 .user-title {
@@ -1371,23 +1393,45 @@ span::after {
   display: flex;
   font-size: 16px;
   font-family: "Roboto Mono", monospace;
-  border-style: none;
+  font-weight: 500;
+  border: 2px solid;
+  border-color: var(--bg_colour2);
   transition: 0.5s;
   background-color: var(--bg_colour3);
   padding: 5px;
   outline: none;
   position: relative;
+  color: var(--dark_red);
 }
 
 .callsign-input:hover {
   background-color: var(--bg_colour2);
-
 }
 
 .callsign-input:focus {
-  border-color: var(--bright_red);
+  color: var(--bright_red);
 }
 
-.submit-button.callsign-submit:hover + .flavour-text.flavour-text-small{
+.callsign-form-container {
   display: flex;
+}
+
+.callsign-form-icon {
+  background-color: var(--bg_colour3);
+}
+
+.callsign-submit {
+  clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
+}
+
+.callsign-form .form-flash .flashes {
+  padding-left: 0;
+}
+
+@media screen and (max-width: 400px) { 
+  
+  .callsign-form-icon {
+    display: none;
+  }
+
 }

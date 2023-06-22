@@ -12,49 +12,64 @@
 
     <hr class="campaigns-divider">
 
-    <h2 class="campaign-entry-title">Service Record</h2>
-    <p class="flavour-text">UWC-7-01 // Personnel::Service Record </p>
+    <div class="callsigns-area">
+      <button class="callsign-deploy-button">
+        <h2 class="campaign-entry-title">Callsigns</h2>
+      </button>
 
+      <div class="callsign-content-area">
 
-    <ul class="user-callsigns">
-      {% for campaign in user.campaigns %}
-        <li class="user-service-record-entry">
-          <h5 class="user-campaigns-headings">{{ campaign.title }}</h5>
+        <p class="flavour-text">UWC-16-01 // Personnel::Known Aliases </p>
 
-          {% for entry in user.campaign_associations %}
-            {%if entry.campaign_id == campaign.id%}
-              
-                <div class="callsign-entry-area">
-                  <h4 class="callsign-entry-title">Current callsign: </h4>
-                  {% if entry.callsign is not none %}
-                    [{{entry.callsign.upper()}}]
-                  {% else %}
-                    [NO CALLSIGN REGISTERED]
-                  {% endif %}
-                </div>
-                
-              <form class="callsign-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
-                {{ form.csrf_token }}
-                {{ form.callsign.label }}: {{ form.callsign(class_="callsign-input") }}
-                {{ form.submit(class_="submit-button callsign-submit") }}
+        <ul class="user-callsigns">
+          {% for campaign in user.campaigns %}
+            <li class="user-service-record-entry">
+              <h5 class="user-campaigns-headings">{{ campaign.title }}</h5>
 
-                <p class="flavour-text flavour-text-small">Registering a crude, obscene or otherwise immature callsign is a galactic crime, and carries a maximum sentence of 0.00008640Gs. </p>
+              {% for entry in user.campaign_associations %}
+                {%if entry.campaign_id == campaign.id%}
+                  
+                    <div class="callsign-entry-area">
+                      <h4 class="callsign-entry-title">Current callsign: </h4>
+                      {% if entry.callsign is not none %}
+                        [{{entry.callsign.upper()}}]
+                      {% else %}
+                        [NO CALLSIGN REGISTERED]
+                      {% endif %}
+                    </div>
+                    
+                  <form class="callsign-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
+                    {{ form.csrf_token }}
 
-              </form>
+                    <div class="callsign-form-container">
+                      <img class="icon callsign-form-icon" src="/static/images/icons/edit.svg">
+                      {{ form.callsign(class_="callsign-input", placeholder="NEW CALLSIGN") }}
+                    </div>
+                    {{ form.submit(class_="submit-button callsign-submit") }}
 
+                    {% if request.args["edited_id"] is defined %}
+                      {% if entry.campaign_id == request.args["edited_id"]|int %}
+                        <div class="form-flash">
+                          {% include 'base/flash.html' %}
+                        </div>
+                      {% endif %}
+                    {% endif %}
 
+                  </form>
 
-            {%endif%}
+                {%endif%}
 
+              {% endfor %}
+
+            </li>
 
           {% endfor %}
 
-        </li>
+        </ul>
 
-      {% endfor %}
-    </ul>
+      </div>
 
-    <hr class="campaigns-divider">
+    </div>
       
   </div>
 
