@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="user-content">
+    <div class="user-title">
+      <h3 class="user-heading">UWC IDENT SERVICE//</h3>
+      <h3 class="user-heading heading-line-2">WAR/COR Designation::{{ user.username }}</h3>
+    </div>
+
+    <hr class="campaigns-divider">
+
+    <h2 class="campaign-entry-title">Service Record</h2>
+    <p class="flavour-text">UWC-7-01 // Personnel::Service Record </p>
+
+
+    <ul class="user-callsigns">
+      {% for campaign in user.campaigns %}
+        <li class="user-service-record-entry">
+          <h5 class="user-campaigns-headings">{{ campaign.title }}</h5>
+
+          {% for entry in user.campaign_associations %}
+            {%if entry.campaign_id == campaign.id%}
+              {% if entry.callsign is not none %}
+                <div class="callsign-entry-area">
+                  <h4 class="callsign-entry-title">Current callsign: </h4>
+                  [{{entry.callsign.upper()}}]
+                </div>
+                
+              {% endif %}
+
+              <form class="callsign-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
+                {{ form.csrf_token }}
+                {{ form.callsign.label }}: {{ form.callsign(class_="callsign-input") }}
+                {{ form.submit(class_="submit-button") }}
+              </form>
+
+            {%endif%}
+          {% endfor %}
+
+        </li>
+
+      {% endfor %}
+    </ul>
+
+    <hr class="campaigns-divider">
+      
+  </div>
+
+
+
+
+
+</div>
+
+{% endblock %}
