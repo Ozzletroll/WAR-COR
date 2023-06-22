@@ -1296,6 +1296,19 @@ span::after {
   text-align: left;
   padding-left: 15px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  transition: 0.5s;
+}
+
+
+
+.callsign-deploy-button:hover {
+  background-color: var(--dark_red);
+}
+
+.callsign-deploy-button:active {
+  transition: 0.2s;
+  background-color: var(--bright_red);
+  color: var(--darker_red);
 }
 
 .user-content .flavour-text {
@@ -1323,7 +1336,10 @@ span::after {
 }
 
 .callsign-content-area {
-  padding: 15px;
+  margin-top: -20px;
+  padding: 0px 5% 20px 5%;
+  max-height: 0px;
+  transition: 0.3s;
 }
 
 .user-title {
@@ -1424,7 +1440,7 @@ span::after {
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
 }
 
-.callsign-form .form-flash .flashes {
+.user-content .form-flash .flashes {
   padding-left: 0;
 }
 
