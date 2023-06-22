@@ -1024,10 +1024,6 @@ h5 {
   padding-bottom: 50px;
 }
 
-.flavour-text-centre {
-  text-align: center;
-}
-
 .flavour-text-area .top-logo {
   padding: 15px;
 }
@@ -1038,6 +1034,10 @@ h5 {
   width: min(400px, 60vw);
   color: var(--darker_red);
   text-transform: uppercase;
+}
+
+.flavour-text-centre {
+  text-align: center;
 }
 
 .login-flavour-text {
@@ -1286,4 +1286,31 @@ span::after {
   border-color: var(--bright_red)
 }
 
+/* User page */
 
+.user-content {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-top: 25px;
+}
+
+.user-title {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 90%;
+}
+
+.user-heading {
+  text-transform: uppercase;
+  font-size: min(5vw, 48px);
+  font-weight: 700;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+}
+
+.heading-line-2 {
+  margin-top: 0;
+}
