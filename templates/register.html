@@ -9,6 +9,9 @@
   <div class="onepage-content">
 
     <h1 class="form-heading">>REGISTER</h1>
+        <div class="flavour-text-area login-flavour-text">
+          <p class="flavour-text flavour-text-centre">UWC-3-01 // Correspondent::Identification</p>
+    </div>
 
     <form class="form register-form" method="POST" action="/register">
       {{ form.csrf_token }}
@@ -48,6 +51,10 @@
       </ul>
     </div>
 
+    <div class="flavour-text-area">
+      <p class="flavour-text">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-B-1. Impersonating a registered UWC War Correspondent is a galactic crime, and carries a maximum sentence of 0.7Gs. </p>
+      <img src="/static/images/logo-red.png" class="top-logo">
+    </div>
 
 
   </div>    
