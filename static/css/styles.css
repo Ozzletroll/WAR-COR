@@ -321,10 +321,6 @@ button {
 
 @media screen and (max-width: 700px) { 
 
-  .navbar {
-    padding: 8px;
-  }
-
   .navbar-links {
     display: none;
   }
