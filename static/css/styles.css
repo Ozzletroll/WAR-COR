@@ -54,7 +54,7 @@
 .page {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: calc(100vw - (100vw - 100%));
   max-width: 1800px;
 }
 
@@ -132,7 +132,7 @@ button {
   background-color: var(--darker_red);
   padding-left: min(50px, 2%);
   padding-right: min(50px, 2%);
-  height: 53px;
+  min-height: 53px;
 }
 
 .logo-area {
