@@ -17,7 +17,7 @@
         <li><a href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a></li>
         {% endif %}
         <li><a href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username.upper() }}</a></li>
-      {% else %}
+      {% elif request.path == "/" %}
         <li><a href="#main-features">>SITREP</a></li>
         <li><a href="">>COMMS</a></li>
       {% endif %}
