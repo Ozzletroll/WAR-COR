@@ -921,7 +921,7 @@ h5 {
 /* Edit campaign form */
 
 .scrollpage .edit-campaign-content {
-  width: 50%;
+  width: 80%;
 }
 
 @media screen and (max-width: 700px){
@@ -932,9 +932,8 @@ h5 {
 }
 
 .edit-campaign-heading {
-    font-size: min(4vw, 48px);
+    font-size: min(7vw, 48px);
     width: 100%;
-    margin-bottom: 10px;
 }
 
 @media screen and (max-width: 600px){
@@ -956,7 +955,7 @@ h5 {
   font-size: min(5vw, 22px);
   font-weight: 300;
   text-transform: uppercase;
-  margin-top: 5px;
+  margin-top: 20px;
   margin-bottom: 5px;
 }
 
