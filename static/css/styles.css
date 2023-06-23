@@ -173,7 +173,7 @@ button {
   flex-direction: row;
   width: 40%;
   justify-content: flex-end;
-  gap: 15%;
+  gap: 25px;
 }
 
 /* Navbar Links */
@@ -181,7 +181,7 @@ button {
 .navbar-links {
   display: flex;
   flex-direction: row;
-  gap: 25%;
+  gap: 25px;
   justify-items: flex-end;
   align-items: center;
   color: var(--text_normal);
@@ -190,6 +190,9 @@ button {
 }
 
 .navbar-links a {
+  display: flex;
+  gap: 5px;
+  align-items: center;
   position: relative;
   color: var(--text_normal);
   text-decoration: none;
