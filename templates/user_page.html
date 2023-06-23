@@ -12,8 +12,17 @@
 
     <hr class="campaigns-divider">
 
+    <p class="flavour-text">UWC-16-00 // Personnel::Correspondent Profile</p>
+
+    <div class="form-flash">
+      {% include 'base/flash.html' %}
+    </div>
+
+    <!-- Tab 1 -->
+
     <div class="callsigns-area">
       <button class="callsign-deploy-button" id="t1-button">
+        <img class="icon campaign-form-icon" src="/static/images/icons/callsigns.svg">
         <h2 class="campaign-entry-title">Callsigns</h2>
       </button>
 
@@ -49,28 +58,60 @@
                   </form>
 
                 {%endif%}
-
               {% endfor %}
 
             </li>
-
           {% endfor %}
-
         </ul>
+
+      </div>
+    </div>
+
+    <!-- Tab 2 -->
+
+    <div class="settings-area">
+      <button class="callsign-deploy-button" id="t2-button">
+        <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
+        <h2 class="campaign-entry-title">User Settings</h2>
+      </button>
+
+      <div class="callsign-content-area" id="tab-2">
+
+        <p class="flavour-text">UWC-16-02 // Personnel::Preferences </p>
 
       </div>
 
     </div>
-     
-    <div class="form-flash">
-      {% include 'base/flash.html' %}
+
+   <!-- Tab 3 -->
+
+    <div class="settings-area">
+      <button class="callsign-deploy-button" id="t3-button">
+        <img class="icon campaign-form-icon" src="/static/images/icons/settings.svg">
+        <h2 class="campaign-entry-title">Third Option</h2>
+      </button>
+
+      <div class="callsign-content-area" id="tab-3">
+
+        <p class="flavour-text">UWC-16-02 // Personnel::Preferences </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="flavour-text-area">
+      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum sentence of 0.0000864GS.</p>
+      <img src="/static/images/logo-red.png" class="top-logo">
     </div>
 
   </div>
 
 </div>
 
+
+
  <!-- Javascript -->
- <script src="/static/js/user_page.js"></script> 
+<script src="/static/js/user_page.js"></script> 
 
 {% endblock %}

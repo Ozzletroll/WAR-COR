@@ -1289,6 +1289,7 @@ span::after {
 /* User page */
 
 .callsign-deploy-button {
+  display: flex;
   background-color: var(--darker_red);
   border-style: none;
   border-radius: 0;
@@ -1297,6 +1298,7 @@ span::after {
   padding-left: 15px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   transition: 0.5s;
+  gap: 15px;
 }
 
 .callsign-deploy-button:hover {
@@ -1326,18 +1328,19 @@ span::after {
   margin-bottom: 50px;
 }
 
-.callsigns-area {
+.callsigns-area, .settings-area {
   display: flex;
   flex-direction: column;
   background-color: var(--bg_colour3);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  margin-bottom: 50px;
 }
 
 .callsign-content-area {
   margin-top: -20px;
   padding: 0px 5% 20px 5%;
   max-height: 0px;
-  transition: 0.3s;
+  display: none;
 }
 
 .user-title {
@@ -1377,15 +1380,28 @@ span::after {
 }
 
 .user-service-record-entry {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
   margin-bottom: 25px;
 }
 
 .user-callsigns {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+@media screen and (min-width: 800px) { 
+  
+  .user-callsigns {
+    flex-direction: row;
+    gap: 45px;
+  }
+
 }
 
 .callsign-form {

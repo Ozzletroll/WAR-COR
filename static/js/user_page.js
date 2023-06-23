@@ -20,14 +20,17 @@ class Tab {
   }
   
   openTab() {
-    this.tab.style.maxHeight = "2000px";
     this.tab.style.marginTop = "20px";
+    this.tab.style.display = "flex"
+    this.tab.style.flexDirection = "column"
+    this.tab.style.maxHeight = "fit-content";
     this.state = true
   }
 
   closeTab() {
     this.tab.style.maxHeight = "0";
     this.tab.style.marginTop = "-20px";
+    this.tab.style.display = "none"
     this.state = false
   }
 
@@ -39,3 +42,12 @@ const tab_1 = new Tab({
   button: "t1-button",
 })
 
+const tab_2 = new Tab({
+  tab: "tab-2",
+  button: "t2-button",
+})
+
+const tab_3 = new Tab({
+  tab: "tab-3",
+  button: "t3-button",
+})
