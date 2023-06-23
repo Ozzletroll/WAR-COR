@@ -20,8 +20,19 @@
 
   scrollbar-color: rgb(207, 27, 27) rgb(20, 25, 27);
   scroll-behavior: smooth;
+  
 }
  
+/* Chrome Scrollbar */
+::-webkit-scrollbar {
+  background: var(--dark_grey);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bright_red);
+}
+
+
 /* Dark Mode Colours */
 [theme="dark"] {
   --bg_colour1: #2B2B2B;
@@ -1291,6 +1302,7 @@ span::after {
 
 .callsign-deploy-button {
   display: flex;
+  align-items: center;
   background-color: var(--darker_red);
   border-style: none;
   border-radius: 0;
