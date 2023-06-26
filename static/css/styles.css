@@ -1465,12 +1465,12 @@ span::after {
 .user-buttons {
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 .user-settings-button {
   font-size: 16px;
   width: 200px;
+  min-width: 200px;
   border-style: none;
   border-radius: 0px;
   padding: 5px;
@@ -1496,11 +1496,16 @@ span::after {
   flex-direction: column;
 }
 
-.password-change-form-container {
+.user-form-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
   margin-bottom: 20px;
   gap: 15px;
+}
+
+.user-buttons .user-form-container .user-form-flavour {
+  margin-bottom: 0;
 }
 
 .user-icon-trans {
@@ -1516,7 +1521,15 @@ span::after {
 
 }
 
-@media screen and (max-width: 400px) { 
+@media screen and (max-width: 500px) { 
+  
+  .user-form-flavour {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 320px) { 
   
   .callsign-form-icon {
     display: none;

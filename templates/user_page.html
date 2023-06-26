@@ -99,38 +99,46 @@
 
         <div class="user-buttons">
 
-          <button class="user-settings-button">
-            <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/admin.svg">
-            CHANGE USERNAME
-          </button>
-
+          <div class="user-form-container">
+            <button class="user-settings-button">
+              <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/admin.svg">
+              CHANGE USERNAME
+            </button>
+            <p class="flavour-text user-form-flavour">//Ident::Reconfigure </p>
+          </div>
           
-          <button id="f2-button" class="user-settings-button">
-            <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/lock_key.svg">
-            CHANGE PASSWORD
-          </button>
+          <div class="user-form-container">
+            <button id="f2-button" class="user-settings-button">
+              <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/lock_key.svg">
+              CHANGE PASSWORD
+            </button>
+            <p class="flavour-text user-form-flavour">//Authentication::Update </p>
+         </div>
 
           <form id="form-2" class="change-password-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id) }}">
             {{ password_form.csrf_token }}
 
-            <div class="password-change-form-container">
+            <div class="user-form-container">
               {{ password_form.old_password(class_="callsign-input", placeholder="OLD PASSWORD") }}
             </div>
-            <div class="password-change-form-container">
+            <div class="user-form-container">
               {{ password_form.new_password(class_="callsign-input", placeholder="NEW PASSWORD") }}
             </div>
-            <div class="password-change-form-container">
+            <div class="user-form-container">
               {{ password_form.confirm_password(class_="callsign-input", placeholder="CONFIRM PASSWORD") }}
               {{ password_form.submit(class_="submit-button callsign-submit") }}
             </div>
 
           </form>
 
-          <button class="user-settings-button">
-            <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/bin.svg">
+            <div class="user-form-container">
+            <button class="user-settings-button">
+              <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/bin.svg">
+              DELETE ACCOUNT
+            </button>
+            <p class="flavour-text user-form-flavour">//Contract::Terminate </p>
+          </div>
 
-            DELETE ACCOUNT
-          </button>
 
         </div>
 
