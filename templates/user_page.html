@@ -48,13 +48,13 @@
                     </div>
                     
                   <form class="callsign-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
-                    {{ form.csrf_token }}
+                    {{ callsign_form.csrf_token }}
 
                     <div class="callsign-form-container">
                       <img class="icon callsign-form-icon" src="/static/images/icons/edit.svg">
-                      {{ form.callsign(class_="callsign-input", placeholder="NEW CALLSIGN") }}
+                      {{ callsign_form.callsign(class_="callsign-input", placeholder="NEW CALLSIGN") }}
                     </div>
-                    {{ form.submit(class_="submit-button callsign-submit") }}
+                    {{ callsign_form.submit(class_="submit-button callsign-submit") }}
                   </form>
 
                 {%endif%}
@@ -72,12 +72,14 @@
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t2-button">
         <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
-        <h2 class="campaign-entry-title">User Settings</h2>
+        <h2 class="campaign-entry-title">Profile</h2>
       </button>
 
       <div class="callsign-content-area" id="tab-2">
 
-        <p class="flavour-text">UWC-16-02 // Personnel::Preferences </p>
+        <p class="flavour-text">UWC-16-02 // Personnel::Biometric Data </p>
+
+
 
       </div>
 
@@ -88,12 +90,49 @@
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t3-button">
         <img class="icon campaign-form-icon" src="/static/images/icons/settings.svg">
-        <h2 class="campaign-entry-title">Third Option</h2>
+        <h2 class="campaign-entry-title">User Settings</h2>
       </button>
 
       <div class="callsign-content-area" id="tab-3">
 
         <p class="flavour-text">UWC-16-02 // Personnel::Preferences </p>
+
+        <div class="user-buttons">
+
+          <button class="user-settings-button">
+            <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/admin.svg">
+            CHANGE USERNAME
+          </button>
+
+          
+          <button id="f2-button" class="user-settings-button">
+            <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/lock_key.svg">
+            CHANGE PASSWORD
+          </button>
+
+          <form id="form-2" class="change-password-form" method="POST" action="{{ url_for('user.user_page', username=user.username, user_id=user.id) }}">
+            {{ password_form.csrf_token }}
+
+            <div class="password-change-form-container">
+              {{ password_form.old_password(class_="callsign-input", placeholder="OLD PASSWORD") }}
+            </div>
+            <div class="password-change-form-container">
+              {{ password_form.new_password(class_="callsign-input", placeholder="NEW PASSWORD") }}
+            </div>
+            <div class="password-change-form-container">
+              {{ password_form.confirm_password(class_="callsign-input", placeholder="CONFIRM PASSWORD") }}
+              {{ password_form.submit(class_="submit-button callsign-submit") }}
+            </div>
+
+          </form>
+
+          <button class="user-settings-button">
+            <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/bin.svg">
+
+            DELETE ACCOUNT
+          </button>
+
+        </div>
 
       </div>
 
@@ -101,15 +140,13 @@
 
 
     <div class="flavour-text-area">
-      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum sentence of 0.0000864GS.</p>
+      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>
       <img src="/static/images/logo-red.png" class="top-logo">
     </div>
 
   </div>
 
 </div>
-
-
 
  <!-- Javascript -->
 <script src="/static/js/user_page.js"></script> 

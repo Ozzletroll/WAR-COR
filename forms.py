@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, DateTimeField
-from wtforms.validators import DataRequired, URL, Email, EqualTo
+from wtforms.validators import DataRequired, InputRequired, EqualTo
 from flask_ckeditor import CKEditorField
 
 
@@ -21,8 +21,9 @@ class LoginForm(FlaskForm):
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField("Password", validators=[DataRequired()])
-    password = PasswordField('New Password', [DataRequired(), EqualTo('submit', message='Passwords must match')])
-    submit = PasswordField('Repeat Password')
+    new_password = PasswordField('New Password', [DataRequired(), EqualTo('confirm_password', message='Passwords must match')])
+    confirm_password = PasswordField("Confirm Password")
+    submit = SubmitField("Update")
 
 
 class CreateCampaignForm(FlaskForm):

@@ -120,10 +120,11 @@ def user_page(username, **kwargs) :
     # Check if the user is actually the owner of the account they are trying to modify
     if user.id == current_user.id:
 
-        form = forms.ChangeCallsignForm()
+        callsign_form = forms.ChangeCallsignForm()
+        password_form = forms.ChangePasswordForm()
 
         # If the callsign change form is submitted, get the kwargs from it and redirect to the callsign change function.
-        if form.validate_on_submit():
+        if callsign_form.validate_on_submit():
 
             user_id = request.args["user_id"]
             campaign_id = request.args["campaign_id"]
@@ -131,8 +132,47 @@ def user_page(username, **kwargs) :
 
             return redirect(url_for("user.update_callsign", username=user.username, user_id=user_id, campaign_id=campaign_id, callsign=callsign))
 
+        # Password change form is submitted
+        if password_form.validate_on_submit():
+            
+            user_id = request.args["user_id"]
+            old_password = request.form["old_password"]
+            new_password = request.form["new_password"]
+
+            user_to_edit = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
+
+            # Check if the current user is the owner of the account they are trying to edit
+            if user_to_edit.id == current_user.id:
+                if werkzeug.security.check_password_hash(pwhash=user.password, password=old_password):
+                    
+                    # Salt and hash new password
+                    sh_password = werkzeug.security.generate_password_hash(
+                        new_password,
+                        method="pbkdf2:sha256",
+                        salt_length=8
+                    )
+
+                    user_to_edit.password = sh_password
+
+                    # Update database
+                    db.session.commit()
+
+                    flash("Password updated")
+                    return redirect(url_for("user.user_page", username=user.username))
+                else:
+                    flash("Incorrect password")
+                    return redirect(url_for("user.user_page", username=user.username))
+            else:
+                logout_user()
+                return redirect(url_for("home.home"))
+
+        # Flash any form errors
+        for field_name, errors in password_form.errors.items():
+            for error_message in errors:
+                flash(error_message)        
+
         # Otherwise, render the user page.
-        return render_template("user_page.html", user=user, form=form)
+        return render_template("user_page.html", user=user, callsign_form=callsign_form, password_form=password_form)
 
     # Redirect to homepage if the user is not the owner of the account
     return redirect(url_for("home.home"))
