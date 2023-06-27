@@ -88,6 +88,11 @@ const tab_3 = new Tab({
 // Create toggle buttons
 
 const toggle_1 = new ToggleButton({
+  form: "form-1",
+  button: "f1-button"
+})
+
+const toggle_2 = new ToggleButton({
   form: "form-2",
   button: "f2-button"
 })

@@ -121,10 +121,15 @@ def user_page(username) :
     if user.id == current_user.id:
 
         callsign_form = forms.ChangeCallsignForm()
+        username_form = forms.ChangeUsernameForm()
         password_form = forms.ChangePasswordForm()
 
         # Otherwise, render the user page.
-        return render_template("user_page.html", user=user, callsign_form=callsign_form, password_form=password_form)
+        return render_template("user_page.html", 
+                               user=user, 
+                               callsign_form=callsign_form,
+                               username_form=username_form,
+                               password_form=password_form)
 
     # Redirect to homepage if the user is not the owner of the account
     return redirect(url_for("home.home"))
@@ -161,7 +166,48 @@ def update_callsign(username):
 
         # Redirect back to user page
         return redirect(url_for("user.user_page", username=username))   
-         
+
+
+@bp.route("/user/<username>/change_username", methods=["GET", "POST"])
+@login_required
+def change_username(username):
+
+    user_id = request.args["user_id"]
+    user = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
+
+    # Check if the user matching given parameters exists in database
+    if user:
+
+        username_form = forms.ChangeUsernameForm()
+
+        if username_form.validate_on_submit():
+            
+            new_username = request.form["new_username"]
+
+            # Check if new username is not already in use
+            username_check = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
+            if not username_check:
+
+                # Set username to new value
+                user.username = new_username
+
+                db.session.commit()
+                flash("Username updated")
+                return redirect(url_for("user.user_page", username=user.username))
+            
+            # Otherwise, redirect back to user page
+            else:
+                flash("Username already in use, please choose another")
+                return redirect(url_for("user.user_page", username=user.username))
+
+        else:
+            # Flash any form errors
+            for field_name, errors in username_form.errors.items():
+                for error_message in errors:
+                    flash(error_message)      
+
+    return redirect(url_for("user.user_page", username=username))
+        
 
 @bp.route("/user/<username>/change_password", methods=["GET", "POST"])
 @login_required
