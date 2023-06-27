@@ -1373,7 +1373,7 @@ span::after {
 }
 
 .user-campaigns-headings {
-  font-size: clamp(14px, 3vw, 18px);
+  font-size: clamp(14px, 4vw, 20px);
   text-transform: uppercase;
 }
 
@@ -1523,8 +1523,30 @@ span::after {
 
 @media screen and (max-width: 500px) { 
   
+  .user-service-record-entry {
+    align-items: center;
+    margin-bottom: 60px;
+  }
+
+  .user-campaigns-headings {
+    text-align: center;
+  }
+
+  .callsign-input {
+    text-align: center;
+  }
+
+  .callsign-form {
+    justify-content: center;
+  }
+
   .user-form-flavour {
     display: none;
+  }
+
+  .user-form-container {
+    flex-direction: column;
+    align-items: center;
   }
 
 }
