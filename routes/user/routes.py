@@ -113,7 +113,7 @@ def logout():
 # Access user page
 @bp.route("/user/<username>", methods=["GET", "POST"])
 @login_required
-def user_page(username, **kwargs) :
+def user_page(username) :
 
     user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
 
@@ -123,23 +123,64 @@ def user_page(username, **kwargs) :
         callsign_form = forms.ChangeCallsignForm()
         password_form = forms.ChangePasswordForm()
 
-        # If the callsign change form is submitted, get the kwargs from it and redirect to the callsign change function.
-        if callsign_form.validate_on_submit():
+        # Otherwise, render the user page.
+        return render_template("user_page.html", user=user, callsign_form=callsign_form, password_form=password_form)
 
-            user_id = request.args["user_id"]
-            campaign_id = request.args["campaign_id"]
-            callsign = request.form["callsign"]
+    # Redirect to homepage if the user is not the owner of the account
+    return redirect(url_for("home.home"))
 
-            return redirect(url_for("user.update_callsign", username=user.username, user_id=user_id, campaign_id=campaign_id, callsign=callsign))
+
+@bp.route("/user/<username>/update_callsign", methods=["GET", "POST"])
+@login_required
+def update_callsign(username):
+
+    callsign_form = forms.ChangeCallsignForm()
+
+    if callsign_form.validate_on_submit():
+
+        user_id = request.args["user_id"]
+        campaign_id = request.args["campaign_id"]
+        callsign = request.form["callsign"]
+        
+        # Update the users callsign
+        user_campaign = db.session.execute(select(models.UserCampaign).filter_by(user_id=user_id, campaign_id=campaign_id)).scalar()
+        user_campaign.callsign = callsign
+
+        db.session.commit()
+
+        flash("Callsign updated")
+
+        # Redirect back to user page
+        return redirect(url_for("user.user_page", username=username))
+
+    else:
+        # Flash any form errors  
+        for field_name, errors in callsign_form.errors.items():
+            for error_message in errors:
+                flash(field_name + ": " + error_message)
+
+        # Redirect back to user page
+        return redirect(url_for("user.user_page", username=username))   
+         
+
+@bp.route("/user/<username>/change_password", methods=["GET", "POST"])
+@login_required
+def change_password(username):
+
+    user_id = request.args["user_id"]
+
+    user = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
+
+    # Check if the user matching given parameters exists in database
+    if user:
+
+        password_form = forms.ChangePasswordForm()
 
         # Password change form is submitted
         if password_form.validate_on_submit():
             
-            user_id = request.args["user_id"]
             old_password = request.form["old_password"]
             new_password = request.form["new_password"]
-
-            user_to_edit = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
 
             # Check if the given old password matches the db password
             if werkzeug.security.check_password_hash(pwhash=user.password, password=old_password):
@@ -151,27 +192,26 @@ def user_page(username, **kwargs) :
                     salt_length=8
                 )
 
-                user_to_edit.password = sh_password
+                user.password = sh_password
 
                 # Update database
                 db.session.commit()
 
                 flash("Password updated")
                 return redirect(url_for("user.user_page", username=user.username))
+            
             else:
                 flash("Incorrect password")
                 return redirect(url_for("user.user_page", username=user.username))
 
-        # Flash any form errors
-        for field_name, errors in password_form.errors.items():
-            for error_message in errors:
-                flash(error_message)        
+        else:
+            # Flash any form errors
+            for field_name, errors in password_form.errors.items():
+                for error_message in errors:
+                    flash(error_message)        
 
-        # Otherwise, render the user page.
-        return render_template("user_page.html", user=user, callsign_form=callsign_form, password_form=password_form)
-
-    # Redirect to homepage if the user is not the owner of the account
-    return redirect(url_for("home.home"))
+    # Redirect to user page
+    return redirect(url_for("user.user_page", username=user.username))
 
 
 @bp.route("/user/<username>/delete", methods=["GET", "POST"])
@@ -216,20 +256,3 @@ def delete_user(username):
     else:
         return redirect(url_for("home.home"))
 
-
-@bp.route("/user/<username>/update_callsign", methods=["GET", "POST"])
-@login_required
-def update_callsign(username):
-
-    user_id = request.args["user_id"]
-    campaign_id = request.args["campaign_id"]
-    callsign = request.args["callsign"]
-    
-    user_campaign = db.session.execute(select(models.UserCampaign).filter_by(user_id=user_id, campaign_id=campaign_id)).scalar()
-    user_campaign.callsign = callsign
-
-    db.session.commit()
-
-    flash("Callsign updated")
-
-    return redirect(url_for("user.user_page", username=username))
