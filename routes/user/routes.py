@@ -141,30 +141,26 @@ def user_page(username, **kwargs) :
 
             user_to_edit = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
 
-            # Check if the current user is the owner of the account they are trying to edit
-            if user_to_edit.id == current_user.id:
-                if werkzeug.security.check_password_hash(pwhash=user.password, password=old_password):
-                    
-                    # Salt and hash new password
-                    sh_password = werkzeug.security.generate_password_hash(
-                        new_password,
-                        method="pbkdf2:sha256",
-                        salt_length=8
-                    )
+            # Check if the given old password matches the db password
+            if werkzeug.security.check_password_hash(pwhash=user.password, password=old_password):
+                
+                # Salt and hash new password
+                sh_password = werkzeug.security.generate_password_hash(
+                    new_password,
+                    method="pbkdf2:sha256",
+                    salt_length=8
+                )
 
-                    user_to_edit.password = sh_password
+                user_to_edit.password = sh_password
 
-                    # Update database
-                    db.session.commit()
+                # Update database
+                db.session.commit()
 
-                    flash("Password updated")
-                    return redirect(url_for("user.user_page", username=user.username))
-                else:
-                    flash("Incorrect password")
-                    return redirect(url_for("user.user_page", username=user.username))
+                flash("Password updated")
+                return redirect(url_for("user.user_page", username=user.username))
             else:
-                logout_user()
-                return redirect(url_for("home.home"))
+                flash("Incorrect password")
+                return redirect(url_for("user.user_page", username=user.username))
 
         # Flash any form errors
         for field_name, errors in password_form.errors.items():
