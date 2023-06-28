@@ -1486,6 +1486,10 @@ span::after {
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
 }
 
+.delete-button {
+  text-decoration: none;
+}
+
 .user-settings-button:hover {
   background-color: var(--gradient2);
 }
