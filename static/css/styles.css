@@ -147,6 +147,10 @@ button {
   width: 30px;
 }
 
+.logo {
+  display: flex;
+}
+
 .logo-title{
   color: var(--text_normal);
   font-size: 28px;
