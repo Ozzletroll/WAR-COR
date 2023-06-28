@@ -281,9 +281,17 @@ def delete_user(username):
 
             if user:
                 if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+                    
+                    # Check if user deletion will leave any campaigns without any members
+                    for campaign in user.campaigns:
+                        if len(campaign.members) == 1:
+                            db.session.delete(campaign)
+                    
                     # Delete user from database
                     logout_user()
                     db.session.delete(user)
+                    
+                    # Commit changes
                     db.session.commit()
                     return redirect(url_for("home.home"))
                 else:
