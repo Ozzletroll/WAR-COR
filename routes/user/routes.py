@@ -285,7 +285,6 @@ def delete_user(username):
                     logout_user()
                     db.session.delete(user)
                     db.session.commit()
-                    flash(f"{user.username}'s account deleted.")
                     return redirect(url_for("home.home"))
                 else:
                     flash("Authentication failed. Incorrect password.")
