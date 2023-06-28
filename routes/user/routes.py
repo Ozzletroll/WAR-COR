@@ -264,38 +264,39 @@ def change_password(username):
 @login_required
 def delete_user(username):
 
-    if current_user.username == username:
+    user_id = int(request.args["user_id"])
 
+    # Check user is the owner of the account they are attempting to delete
+    if current_user.id == user_id:
+
+        # Create login form to check credentials
         form = forms.LoginForm()
 
         if form.validate_on_submit():
 
-            user_id = current_user.id
-
             search_username = request.form["username"]
             password = request.form["password"]
+
             user = db.session.execute(select(models.User).filter_by(id=user_id, username=search_username)).scalar()
 
             if user:
                 if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                     # Delete user from database
+                    logout_user()
                     db.session.delete(user)
                     db.session.commit()
-                    # Debug message
-                    print(f"{user.username} account deleted.")
-                    flash(f"{user.username} account deleted.")
+                    flash(f"{user.username}'s account deleted.")
                     return redirect(url_for("home.home"))
                 else:
-                    # Debug message
-                    print("Incorrect password or username.")
-                    flash("Incorrect password or username.")
-                    return redirect(url_for("user.delete_user", username=current_user.username))
+                    flash("Authentication failed. Incorrect password.")
+                    return redirect(url_for("user.user_page", username=current_user.username))
             else:
-                # Debug message
-                print("Username not found. Please check username and password.")
                 flash("Username not found. Please check username and password.")
-                return redirect(url_for("user.user_settings", username=current_user.username))
+                return redirect(url_for("user.user_page", username=current_user.username))
         else:
+            # Change LoginForm submit button text to 'delete'
+            form.submit.label.text = "Terminate"
+
             return render_template("delete_user.html", form=form)
 
     # Redirect if a user is trying to access another user's delete route

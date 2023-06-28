@@ -1,0 +1,59 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+{% block page_style %}
+<div class="page onepage">
+{% endblock %}  
+
+    <div class="onepage-content">
+
+        <h1 class="form-heading">>DELETE</h1>
+        <div class="flavour-text-area login-flavour-text">
+          <p class="flavour-text flavour-text-centre">UWC-18-01 // Contract::Termination</p>
+        </div>
+
+        <form class="form login-form" method="POST" action="{{ url_for('user.delete_user', username=current_user.username, user_id=current_user.id) }}">
+            {{ form.csrf_token }}
+            <div class="form-header">
+              <h4>/Delete</h3>
+            </div>
+              
+            <div class="form-layout">
+              <div class="form-elem">
+                <label class="form-icon">
+                  <img class="icon" src="/static/images/icons/user.svg">
+                </label>
+                {{ form.username(placeholder_='USERNAME', class_='form-field') }}
+              </div>
+              <div class="form-elem">
+                <label class="form-icon"><img class="icon" src="/static/images/icons/lock.svg"></label>
+                {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
+              </div>
+              <div class="form-submit">
+                <div class="form-elem elem-centre">
+                  {{ form.submit(class_="submit-button") }}
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <div class="form-flash">
+            {% include 'base/flash.html' %}
+            <ul class = flashes>
+              {% for error in form.password.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+
+        <div class="flavour-text-area">
+          <p class="flavour-text flavour-text-centre">By submitting this for you confirm the immediate termination of your UWC WAR/COR contract. The UWC thanks you for your service, and wishes you prosperity in all your future endeavours. </p>
+          <img src="/static/images/logo-red.png" class="top-logo">
+        </div>
+
+    </div>    
+
+</div>  
+
+{% endblock %}

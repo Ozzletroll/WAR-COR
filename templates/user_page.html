@@ -139,10 +139,12 @@
           </form>
 
             <div class="user-form-container">
-            <button class="user-settings-button">
-              <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/bin.svg">
-              DELETE ACCOUNT
-            </button>
+            <a href="{{ url_for('user.delete_user', username=user.username, user_id=user.id) }}">
+              <button class="user-settings-button">
+                <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/bin.svg">
+                DELETE ACCOUNT
+              </button>
+            </a>
             <p class="flavour-text user-form-flavour">//Contract::Terminate </p>
           </div>
 
