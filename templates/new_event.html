@@ -1,0 +1,110 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+      <div class="campaigns-title">
+        <h3 class="campaigns-heading edit-campaign-heading">NEW EVENT DATA</h1>
+      </div>
+
+      <hr class="campaigns-divider">
+      <p class="flavour-text">UWC-6-00 // Event::Index </p>
+  
+
+      <form class="edit-form" method="POST" action="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+        {{ form.csrf_token }}
+
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Date</h4>
+          </div>
+          <p class="flavour-text">UWC-6-01 //  Event::Date yyyy-mm-dd 00:00:00</p>
+        </label>
+
+        {{ form.date(class_="campaign-input event-input") }}
+
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Event Title</h4>
+          </div>
+          <p class="flavour-text">UWC-6-02 //  Event::Operation Designation</p>
+        </label>
+
+        {{ form.title(class_="campaign-input event-input") }}
+
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Type</h4>
+          </div>
+          <p class="flavour-text">UWC-6-03 //  Event::Category</p>
+        </label>
+
+        {{ form.type(class_="campaign-input event-input") }}
+        
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Location</h4>
+          </div>
+          <p class="flavour-text">UWC-6-04 //  Event::Location</p>
+        </label>
+
+        {{ form.location(class_="campaign-input event-input") }}
+
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Belligerents</h4>
+          </div>
+          <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
+        </label>
+
+        {{ form.belligerents(class_="campaign-input event-input") }}
+
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Description</h4>
+          </div>
+          <p class="flavour-text">UWC-6-06 //  Event::Overview:</p>
+        </label>
+
+        {{ form.body(class_="campaign-input large-input event-input") }}
+
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Result</h4>
+          </div>
+          <p class="flavour-text">UWC-6-07 //  Event::Outcome</p>
+        </label>
+
+        {{ form.result(class_="campaign-input event-input") }}
+
+        <div class="campaign-submit-area event-submit-area">
+          {{ form.submit(class_="campaign-input campaign-submit") }}
+        </div>  
+          
+        
+      </form>
+
+    <div class="form-flash">
+      {% include 'base/flash.html' %}
+    </div>
+
+    <div class="flavour-text-area">
+      <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
+      <img src="/static/images/logo-red.png" class="top-logo">
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

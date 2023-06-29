@@ -1570,3 +1570,14 @@ span::after {
   }
 
 }
+
+/* Events Form */
+
+.event-input {
+  padding: 5px;
+  margin-bottom: 0px;
+}
+
+.event-submit-area {
+  margin-top: 20px;
+}
