@@ -1,0 +1,30 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+    <button>
+      ADD EVENT
+    </button>
+  </a>
+  
+
+
+  {% for event in events %}
+
+    {{event.title}}
+
+    {{event.date}}
+
+
+  {% endfor %}
+
+
+
+
+
+</div>
+
+{% endblock %}

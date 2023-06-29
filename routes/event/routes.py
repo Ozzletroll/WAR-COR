@@ -30,7 +30,7 @@ def add_event(campaign_name):
 
     target_campaign_id = request.args["campaign_id"]
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name, id=target_campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     if campaign in current_user.permissions:
@@ -65,7 +65,7 @@ def add_event(campaign_name):
                                     campaign_name=campaign.title,
                                     campaign_id=campaign.id))
 
-        return render_template("new_event.html", form=form)
+        return render_template("new_event.html", form=form, campaign=campaign)
 
     else:
         # Redirect to homepage if the user is somehow trying to edit a campaign that they

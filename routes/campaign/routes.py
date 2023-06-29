@@ -26,7 +26,11 @@ def show_timeline(campaign_name, campaign_id):
 
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
-    return render_template("timeline.html", campaign=campaign)
+    # Sort events into date order
+    events = campaign.events
+    events.sort(key=lambda event: event.date)
+
+    return render_template("timeline.html", campaign=campaign, events=events)
 
 
 # Create new campaign
