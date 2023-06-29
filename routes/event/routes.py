@@ -27,7 +27,8 @@ def view_event(campaign_name, event_name):
 @bp.route("/campaigns/<campaign_name>/new_event", methods=["GET", "POST"])
 @login_required
 def add_event(campaign_name):
-    target_campaign_id = session.get("campaign_id", None)
+
+    target_campaign_id = request.args["campaign_id"]
 
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
 
@@ -43,8 +44,8 @@ def add_event(campaign_name):
             event.title = request.form["title"]
             event.type = request.form["type"]
 
-            date = request.form["date"]
             # Convert date to datetime object
+            date = request.form["date"]
             date_format = '%Y-%m-%d %H:%M:%S'
             date_obj = datetime.strptime(date, date_format)
             event.date = date_obj
@@ -60,10 +61,9 @@ def add_event(campaign_name):
             db.session.add(event)
             db.session.commit()
 
-            session["campaign_id"] = campaign.id
-
             return redirect(url_for("campaign.show_timeline",
-                                    campaign_name=campaign.title))
+                                    campaign_name=campaign.title,
+                                    campaign_id=campaign.id))
 
         return render_template("new_event.html", form=form)
 
