@@ -298,7 +298,7 @@ def delete_user(username):
                     flash("Authentication failed. Incorrect password.")
                     return redirect(url_for("user.user_page", username=current_user.username))
             else:
-                flash("Username not found. Please check username and password.")
+                flash("Authentication failed. Incorrect username.")
                 return redirect(url_for("user.user_page", username=current_user.username))
         else:
             # Change LoginForm submit button text
