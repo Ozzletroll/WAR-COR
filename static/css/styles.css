@@ -923,6 +923,10 @@ h5 {
   border-style: none;
 }
 
+.user-delete-button {
+  width: 200px;
+}
+
 .submit-button:hover {
   background-color: var(--bright_red);
   color: #ffffff;

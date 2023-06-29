@@ -301,8 +301,8 @@ def delete_user(username):
                 flash("Username not found. Please check username and password.")
                 return redirect(url_for("user.user_page", username=current_user.username))
         else:
-            # Change LoginForm submit button text to 'delete'
-            form.submit.label.text = "Terminate"
+            # Change LoginForm submit button text
+            form.submit.label.text = "Terminate Contract"
 
             return render_template("delete_user.html", form=form)
 
