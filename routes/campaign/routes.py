@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
+from itertools import groupby
 
 import forms
 import models
@@ -30,7 +31,12 @@ def show_timeline(campaign_name, campaign_id):
     events = campaign.events
     events.sort(key=lambda event: event.date)
 
-    return render_template("timeline.html", campaign=campaign, events=events)
+    # Structure events into dictionary, grouped by year
+    groups = groupby(events, key=lambda event: (event.date.strftime("%Y")))
+
+    grouped_events = {year: list(group) for year, group in groups}
+
+    return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
 
 
 # Create new campaign
