@@ -69,6 +69,8 @@ def add_event(campaign_name):
         for field_name, errors in form.errors.items():
                 for error_message in errors:
                     flash(field_name + ": " + error_message)
+                    if field_name == "date":
+                        flash("Please use YYYY-MM-DD HH:MM:SS format.")
 
         return render_template("new_event.html", form=form, campaign=campaign)
 
