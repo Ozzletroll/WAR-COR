@@ -940,31 +940,6 @@ h5 {
   transition: 0.1s;
 }
 
-/* Edit campaign form */
-
-.scrollpage .edit-campaign-content {
-  width: 80%;
-}
-
-@media screen and (max-width: 700px){
-
-  .scrollpage .edit-campaign-content {
-    width: 70%;
-  }
-}
-
-.edit-campaign-heading {
-    font-size: min(7vw, 48px);
-    width: 100%;
-}
-
-@media screen and (max-width: 600px){
-
-  .edit-campaign-heading {
-    text-align: left;
-  }
-}
-
 .edit-form {
   display: flex;
   flex-direction: column;
@@ -1005,6 +980,30 @@ h5 {
 }  
 
 
+/* Edit campaign form */
+
+.scrollpage .edit-campaign-content {
+  width: 80%;
+}
+
+@media screen and (max-width: 700px){
+
+  .scrollpage .edit-campaign-content {
+    width: 70%;
+  }
+}
+
+.edit-campaign-heading {
+    font-size: min(7vw, 48px);
+    width: 100%;
+}
+
+@media screen and (max-width: 600px){
+
+  .edit-campaign-heading {
+    text-align: left;
+  }
+}
 
 .campaign-form-label {
   display: flex;
