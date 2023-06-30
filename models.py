@@ -84,7 +84,7 @@ class Event(db.Model):
 
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
-    date = db.Column(db.String(250), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
     location = db.Column(db.String(250), nullable=False)
     belligerents = db.Column(db.String(250), nullable=True)
     body = db.Column(db.String(250), nullable=False)
