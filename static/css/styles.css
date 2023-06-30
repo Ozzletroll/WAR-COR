@@ -111,6 +111,7 @@ body {
   list-style-type: none;
   color: var(--darker_red);
   text-transform: uppercase;
+  padding: 0;
 }
 
 .icon {
@@ -969,6 +970,42 @@ h5 {
   flex-direction: column;
 }
 
+@media screen and (min-width: 800px){
+
+  .event-form {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .form-container {
+    width: 45%;
+  }
+  
+  .form-container-large {
+    width: 100%;
+  }
+  
+  .form-container-footer {
+    width: 100%;
+  }
+
+  .campaign-submit-area {
+    width: 100%;
+  }
+
+}
+
+@media screen and (max-width: 600px){
+
+  .edit-form .campaign-input {
+    font-size: min(4vw, 16px);
+  }
+
+}  
+
+
+
 .campaign-form-label {
   display: flex;
   flex-direction: column;
@@ -1576,8 +1613,12 @@ span::after {
 .event-input {
   padding: 5px;
   margin-bottom: 0px;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .event-submit-area {
   margin-top: 20px;
 }
+

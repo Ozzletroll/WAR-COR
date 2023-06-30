@@ -13,59 +13,75 @@
       <hr class="campaigns-divider">
       <p class="flavour-text">UWC-6-00 // Event::Index </p>
   
-      <form class="edit-form" method="POST" action="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+      <form class="edit-form event-form" method="POST" action="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
         {{ form.csrf_token }}
 
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-            <h4 class="campaign-form label-title">Date</h4>
-          </div>
-          <p class="flavour-text">UWC-6-01 //  Event::Date yyyy-mm-dd 00:00:00</p>
-        </label>
-
-        {{ form.date(class_="campaign-input event-input") }}
-
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-            <h4 class="campaign-form label-title">Event Title</h4>
-          </div>
-          <p class="flavour-text">UWC-6-02 //  Event::Operation Designation</p>
-        </label>
-
-        {{ form.title(class_="campaign-input event-input") }}
-
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-            <h4 class="campaign-form label-title">Type</h4>
-          </div>
-          <p class="flavour-text">UWC-6-03 //  Event::Category</p>
-        </label>
-
-        {{ form.type(class_="campaign-input event-input") }}
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Date</h4>
+            </div>
+            <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
+          </label>
         
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-            <h4 class="campaign-form label-title">Location</h4>
-          </div>
-          <p class="flavour-text">UWC-6-04 //  Event::Location</p>
-        </label>
+          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY-MM-DD HH:MM:SS") }}
 
-        {{ form.location(class_="campaign-input event-input") }}
+        </div>
 
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-            <h4 class="campaign-form label-title">Belligerents</h4>
-          </div>
-          <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
-        </label>
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Event Title</h4>
+            </div>
+            <p class="flavour-text">UWC-6-02 //  Event::Operation Designation</p>
+          </label>
 
-        {{ form.belligerents(class_="campaign-input event-input") }}
+          {{ form.title(class_="campaign-input event-input") }}
 
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Type</h4>
+            </div>
+            <p class="flavour-text">UWC-6-03 //  Event::Category</p>
+          </label>
+
+          {{ form.type(class_="campaign-input event-input") }}
+        
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Location</h4>
+            </div>
+            <p class="flavour-text">UWC-6-04 //  Event::Location</p>
+          </label>
+
+          {{ form.location(class_="campaign-input event-input") }}
+
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Belligerents</h4>
+            </div>
+            <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
+          </label>
+
+          {{ form.belligerents(class_="campaign-input event-input") }}
+
+        </div>
+
+        <div class="form-container form-container-large">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
@@ -76,6 +92,9 @@
 
         {{ form.body(class_="campaign-input large-input event-input") }}
 
+        </div>
+
+        <div class="form-container form-container-footer">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
@@ -85,6 +104,8 @@
         </label>
 
         {{ form.result(class_="campaign-input event-input") }}
+
+        </div>
 
         <div class="campaign-submit-area event-submit-area">
           {{ form.submit(class_="campaign-input campaign-submit") }}
