@@ -40,7 +40,7 @@ class CreateCampaignForm(FlaskForm):
 class CreateEventForm(FlaskForm):
     title = StringField("Event Title", validators=[DataRequired()])
     type = StringField("Event Type", validators=[DataRequired()])
-    date = DateTimeField("Event Date", format='%Y-%m-%d %H:%M:%S')
+    date = DateTimeField("Event Date", format='%Y-%m-%d %H:%M:%S', validators=[InputRequired()])
     location = StringField("Location", validators=[DataRequired()])
     belligerents = StringField("Belligerents", validators=[DataRequired()])
     body = TextAreaField("Description", validators=[DataRequired()])
