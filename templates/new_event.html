@@ -12,6 +12,10 @@
 
       <hr class="campaigns-divider">
       <p class="flavour-text">UWC-6-00 // Event::Index </p>
+
+      <div class="form-flash">
+        {% include 'base/flash.html' %}
+      </div>
   
       <form class="edit-form event-form" method="POST" action="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
         {{ form.csrf_token }}
@@ -112,10 +116,6 @@
         </div>  
           
       </form>
-
-    <div class="form-flash">
-      {% include 'base/flash.html' %}
-    </div>
 
     <div class="flavour-text-area">
       <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>

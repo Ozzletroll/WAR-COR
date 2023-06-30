@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, session
+from flask import render_template, redirect, request, url_for, session, flash
 from sqlalchemy import select
 from flask_login import login_required, current_user
 from datetime import datetime
@@ -64,6 +64,11 @@ def add_event(campaign_name):
             return redirect(url_for("campaign.show_timeline",
                                     campaign_name=campaign.title,
                                     campaign_id=campaign.id))
+
+        # Flash form errors
+        for field_name, errors in form.errors.items():
+                for error_message in errors:
+                    flash(field_name + ": " + error_message)
 
         return render_template("new_event.html", form=form, campaign=campaign)
 
