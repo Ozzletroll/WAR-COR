@@ -38,8 +38,8 @@ def show_timeline(campaign_name, campaign_id):
 
     # Group each years events into months
     for year in grouped_events:
-        months = groupby(grouped_events[year], key=lambda event: (event.date.strftime("%m")))
-        grouped_months = {x: list(month) for x, month in months}
+        groups = groupby(grouped_events[year], key=lambda event: (event.date.strftime("%m")))
+        grouped_months = {month: list(group) for month, group in groups}
         grouped_events[year] = grouped_months
 
     # Final example structure:
