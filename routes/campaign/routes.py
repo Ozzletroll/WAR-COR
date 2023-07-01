@@ -38,12 +38,9 @@ def show_timeline(campaign_name, campaign_id):
 
     # Group each years events into months
     for year in grouped_events:
-        print(grouped_events[year])
         months = groupby(grouped_events[year], key=lambda event: (event.date.strftime("%m")))
         grouped_months = {x: list(month) for x, month in months}
         grouped_events[year] = grouped_months
-
-        print(grouped_events[year])
 
     # Final example structure:
     # grouped_events: {5016: {06: [<Event 1>, <Event 2>], 
