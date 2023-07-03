@@ -577,7 +577,7 @@ h5 {
     flex-direction: column-reverse;
   }
 
-  h3 {
+  .features-header h3 {
     width: auto;
     text-align: center;
   }
@@ -1620,4 +1620,61 @@ span::after {
 .event-submit-area {
   margin-top: 20px;
 }
+
+/* Edit members page */
+
+.members-content h3 {
+  width: 80%;
+}
+
+.members-content .flavour-text {
+	margin-top: 0;
+	margin-bottom: 25px;
+}
+.edit-members-container {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.edit-members-container .campaign-members-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-members-container .members-list-admin, 
+.edit-members-container .members-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  background-position: left;
+}
+
+.members-right {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+@media screen and (max-width: 800px) { 
+  
+.edit-members-container .members-list-admin, 
+.edit-members-container .members-list-item {
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 30px;
+  background-position: top left;
+}
+
+}
+
+@media screen and (max-width: 500px) { 
+  
+  .members-right {
+    flex-direction: column;
+  }
+
+}  
 

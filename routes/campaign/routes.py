@@ -62,7 +62,6 @@ def create_campaign():
         user = current_user
 
         new_campaign = models.Campaign()
-
         new_campaign.title = request.form["title"]
         new_campaign.description = request.form["description"]
 
@@ -109,11 +108,11 @@ def edit_campaign(campaign_name, campaign_id):
 
 
 # Edit campaign users
-@bp.route("/campaigns/<campaign_name>/add_users", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>/edit_members", methods=["GET", "POST"])
 @login_required
-def add_campaign_users(campaign_name):
+def edit_campaign_users(campaign_name):
 
-    target_campaign_id = session.get("campaign_id", None)
+    target_campaign_id = request.args["campaign_id"]
 
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
 
@@ -132,12 +131,11 @@ def add_campaign_users(campaign_name):
             # Get campaign and add user as member
             user.campaigns.append(campaign)
             db.session.commit()
+            flash(f"{user.username} added to campaign.")
         else:
-            print("User not in database, please check username.")
             flash("User not in database, please check username.")
-        return redirect(url_for("campaign.edit_campaign", campaign_name=campaign_name))
 
-    return render_template("edit_campaign.html", form=form)
+    return render_template("campaign_members.html", campaign=campaign, form=form)
 
 
 
@@ -146,7 +144,7 @@ def add_campaign_users(campaign_name):
 @login_required
 def remove_campaign_users(campaign_name, username):
 
-    target_campaign_id = session.get("campaign_id", None)
+    target_campaign_id = request.args["campaign_id"]
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
@@ -161,16 +159,13 @@ def remove_campaign_users(campaign_name, username):
         # Check is user is actually a member of the campaign
         if user in campaign.members:
             user.campaigns.remove(campaign)
-            flash(f"Removed user {user} from campaign.")
-            print(f"Removed user {user} from campaign.")
+            flash(f"Removed {user.username} from campaign.")
         # Remove editing permissions if they exist
         if campaign in user.permissions:
             user.permissions.remove(campaign)
-            flash(f"Removed user {user}'s campaign permissions.")
-            print(f"Removed user {user}'s campaign permissions.")
+            flash(f"Removed {user.username}'s campaign permissions.")
         db.session.commit()
     else:
-        print("User not in database, please check username.")
         flash("User not in database, please check username.")
-    return redirect(url_for("campaign.edit_campaign", campaign_name=campaign_name))
+    return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
 

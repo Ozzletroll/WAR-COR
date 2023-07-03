@@ -60,7 +60,7 @@
             </div>
             <div class="entry-buttons-right">
               {% if campaign in current_user.permissions %}
-                <a href="{{ url_for('campaign.add_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">EDIT MEMBERS</button></a>
+                <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}"><button class="entry-button">EDIT MEMBERS</button></a>
               {% endif %}
             </div>
           </div>

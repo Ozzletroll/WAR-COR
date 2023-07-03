@@ -1,0 +1,102 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content members-content">
+
+    <div class="campaigns-title">
+      <h3 class="campaigns-heading">{{campaign.title}}</h1>
+    </div>
+    <hr class="campaigns-divider">
+    <p class="flavour-text">CNF-{{campaign.id}}-00 // {{campaign.title}}::Participants </p>
+
+    <div class="form-flash">
+      {% include 'base/flash.html' %}
+    </div>
+
+    <!-- Tab 1 -->
+    <div class="settings-area">
+      <button class="callsign-deploy-button" id="t1-button">
+        <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
+        <h2 class="campaign-entry-title">Current Members</h2>
+      </button>
+
+      <div class="callsign-content-area" id="tab-1">
+
+        <p class="flavour-text">CNF-{{campaign.id}}-01 // {{campaign.title}}::Active Personnel </p>
+
+        <div class="campaign-members edit-members-container">
+          <ul class="campaign-members-list">
+            {% for user in campaign.members %}
+              {% if campaign in user.permissions %}
+              <li class="members-list-admin">
+                {% else %}
+              <li class="members-list-item">
+              {% endif %}
+                <div class="members-left">
+                {{user.username.upper()}}:
+                {% for entry in user.campaign_associations %}
+                  {%if entry.campaign_id == campaign.id%}
+                    {% if entry.callsign is not none %}
+                      [{{entry.callsign.upper()}}]
+                    {% endif %}
+                  {%endif%}
+                {% endfor %}
+                {% if campaign in user.permissions %}
+                [ADMIN]
+                {% endif %}
+                </div>
+                <div class="members-right">
+                  {% if not campaign in user.permissions%}
+                  <a href=""><button class="entry-button">Make Admin</button></a>
+                  {% endif %}
+                  <a href="{{ url_for('campaign.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username) }}"><button class="entry-button">Remove</button></a>
+                </div>
+              </li> 
+            {% endfor %} 
+          </ul>
+        </div> 
+
+      </div>
+
+    </div>
+
+    <!-- Tab 2 -->
+
+    <div class="settings-area">
+      <button class="callsign-deploy-button" id="t2-button">
+        <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
+        <h2 class="campaign-entry-title">Add New Members</h2>
+      </button>
+
+      <div class="callsign-content-area" id="tab-2">
+
+        <p class="flavour-text">CNF-{{campaign.id}}-02 // {{campaign.title}}::Recruitment </p>
+
+        <form id="form-1" class="add-member-form" method="POST" action="">
+          {{ form.csrf_token }}
+          <div class="user-form-container">
+            {{ form.username(class_="callsign-input", placeholder="USERNAME SEARCH") }}
+            {{ form.submit(class_="submit-button callsign-submit") }}
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+    
+
+      
+
+
+  </div>
+
+
+</div>
+
+ <!-- Javascript -->
+ <script src="/static/js/campaign_members.js"></script> 
+
+{% endblock %}
