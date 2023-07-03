@@ -164,6 +164,12 @@ def remove_campaign_users(campaign_name, username):
         if campaign in user.permissions:
             user.permissions.remove(campaign)
             flash(f"Removed {user.username}'s campaign permissions.")
+        # Check if campaign is left with no users, and delete if so
+        if len(campaign.members) == 0:
+            db.session.delete(campaign)
+            db.session.commit()
+            return redirect(url_for("campaign.campaigns"))
+
         db.session.commit()
     else:
         flash("User not in database, please check username.")
