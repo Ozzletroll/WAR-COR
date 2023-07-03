@@ -4,6 +4,7 @@ from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
 from werkzeug.security import generate_password_hash
 
+import auth
 import forms
 import models
 
@@ -106,7 +107,6 @@ def login():
 @login_required
 def logout():
     logout_user()
-    print("Logged out")
     return redirect(url_for("home.home"))
 
 
@@ -118,21 +118,17 @@ def user_page(username) :
     user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
 
     # Check if the user is actually the owner of the account they are trying to modify
-    if user.id == current_user.id:
+    auth.user_verification(user)
 
-        callsign_form = forms.ChangeCallsignForm()
-        username_form = forms.ChangeUsernameForm()
-        password_form = forms.ChangePasswordForm()
+    callsign_form = forms.ChangeCallsignForm()
+    username_form = forms.ChangeUsernameForm()
+    password_form = forms.ChangePasswordForm()
 
-        # Otherwise, render the user page.
-        return render_template("user_page.html", 
-                               user=user, 
-                               callsign_form=callsign_form,
-                               username_form=username_form,
-                               password_form=password_form)
-
-    # Redirect to homepage if the user is not the owner of the account
-    return redirect(url_for("home.home"))
+    return render_template("user_page.html", 
+                            user=user, 
+                            callsign_form=callsign_form,
+                            username_form=username_form,
+                            password_form=password_form)
 
 
 @bp.route("/user/<username>/update_callsign", methods=["GET", "POST"])
@@ -155,67 +151,56 @@ def update_callsign(username):
 
         flash("Callsign updated")
 
-        # Redirect back to user page
-        return redirect(url_for("user.user_page", username=username))
-
     else:
         # Flash any form errors  
         for field_name, errors in callsign_form.errors.items():
             for error_message in errors:
                 flash(field_name + ": " + error_message)
 
-        # Redirect back to user page
-        return redirect(url_for("user.user_page", username=username))   
+    # Redirect back to user page
+    return redirect(url_for("user.user_page", username=username))   
 
 
 @bp.route("/user/<username>/change_username", methods=["GET", "POST"])
 @login_required
 def change_username(username):
 
-    user_id = request.args["user_id"]
-    user = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
+    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    auth.user_verification(user)
+    username_form = forms.ChangeUsernameForm()
 
-    # Check if the user matching given parameters exists in database
-    if user:
+    if username_form.validate_on_submit():
+        
+        new_username = request.form["new_username"]
 
-        username_form = forms.ChangeUsernameForm()
+        # Check if new username is not already in use
+        username_check = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
+        if not username_check:
 
-        if username_form.validate_on_submit():
-            
-            new_username = request.form["new_username"]
-
-            # Check if new username is not already in use
-            username_check = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
-            if not username_check:
-
-                # Set username to new value
-                user.username = new_username
-
-                db.session.commit()
-                flash("Username updated")
-                return redirect(url_for("user.user_page", username=user.username))
-            
-            # Otherwise, redirect back to user page
-            else:
-                flash("Username already in use, please choose another")
-                return redirect(url_for("user.user_page", username=user.username))
-
+            # Set username to new value
+            user.username = new_username
+            db.session.commit()
+            flash("Username updated")
+        
+        # Otherwise, redirect back to user page
         else:
-            # Flash any form errors
-            for field_name, errors in username_form.errors.items():
-                for error_message in errors:
-                    flash(error_message)      
+            flash("Username already in use, please choose another")
 
-    return redirect(url_for("user.user_page", username=username))
+    else:
+        # Flash any form errors
+        for field_name, errors in username_form.errors.items():
+            for error_message in errors:
+                flash(error_message)      
+
+    return redirect(url_for("user.user_page", username=user.username))
         
 
 @bp.route("/user/<username>/change_password", methods=["GET", "POST"])
 @login_required
 def change_password(username):
 
-    user_id = request.args["user_id"]
-
-    user = db.session.execute(select(models.User).filter_by(username=username, id=user_id)).scalar()
+    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    auth.user_verification(user)
 
     # Check if the user matching given parameters exists in database
     if user:
@@ -264,49 +249,44 @@ def change_password(username):
 @login_required
 def delete_user(username):
 
-    user_id = int(request.args["user_id"])
+    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    auth.user_verification(user)
 
-    # Check user is the owner of the account they are attempting to delete
-    if current_user.id == user_id:
+    # Create login form to check credentials
+    form = forms.LoginForm()
 
-        # Create login form to check credentials
-        form = forms.LoginForm()
+    if form.validate_on_submit():
 
-        if form.validate_on_submit():
+        search_username = request.form["username"]
+        password = request.form["password"]
 
-            search_username = request.form["username"]
-            password = request.form["password"]
+        search_user = db.session.execute(select(models.User).filter_by(username=search_username)).scalar()
 
-            user = db.session.execute(select(models.User).filter_by(id=user_id, username=search_username)).scalar()
-
-            if user:
-                if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
-                    
-                    # Check if user deletion will leave any campaigns without any members
-                    for campaign in user.campaigns:
-                        if len(campaign.members) == 1:
-                            db.session.delete(campaign)
-                    
-                    # Delete user from database
-                    logout_user()
-                    db.session.delete(user)
-                    
-                    # Commit changes
-                    db.session.commit()
-                    return redirect(url_for("home.home"))
-                else:
-                    flash("Authentication failed. Incorrect password.")
-                    return redirect(url_for("user.user_page", username=current_user.username))
+        if search_user:
+            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+                
+                # Check if user deletion will leave any campaigns without any members
+                for campaign in user.campaigns:
+                    if len(campaign.members) == 1:
+                        db.session.delete(campaign)
+                
+                # Delete user from database
+                logout_user()
+                db.session.delete(user)
+                
+                # Commit changes
+                db.session.commit()
+                return redirect(url_for("home.home"))
             else:
-                flash("Authentication failed. Incorrect username.")
+                flash("Authentication failed. Incorrect password.")
                 return redirect(url_for("user.user_page", username=current_user.username))
         else:
-            # Change LoginForm submit button text
-            form.submit.label.text = "Terminate Contract"
-
-            return render_template("delete_user.html", form=form)
-
-    # Redirect if a user is trying to access another user's delete route
+            flash("Authentication failed. Incorrect username.")
+            return redirect(url_for("user.user_page", username=current_user.username))
     else:
-        return redirect(url_for("home.home"))
+        # Change LoginForm submit button text
+        form.submit.label.text = "Terminate Contract"
+
+        return render_template("delete_user.html", form=form)
+
 

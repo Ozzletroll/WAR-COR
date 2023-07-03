@@ -45,7 +45,8 @@ def show_timeline(campaign_name, campaign_id):
 
     # Final example structure:
     # grouped_events: {5016: {06: [<Event 1>, <Event 2>], 
-    #                         07: [<Event 3>, <Event 4>]}}
+    #                         07: [<Event 3>, <Event 4>]},
+    #                  5017: {01: [<Event 6>, <Event 7>]}}
 
     return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
 
@@ -155,6 +156,7 @@ def remove_campaign_users(campaign_name, username):
 
     # Check if username exists
     user = db.session.execute(select(models.User).filter_by(username=user_to_remove)).scalar()
+
     if user:
         # Check is user is actually a member of the campaign
         if user in campaign.members:

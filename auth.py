@@ -9,3 +9,14 @@ def permission_required(campaign):
     else:
         abort(403) 
 
+
+def user_verification(user):
+    """Function for checking if current user is the user they are trying to edit"""
+    try: 
+        if user.id == current_user.id:
+            return True
+        else:
+            abort(403) 
+    except AttributeError:
+        abort(403) 
+        
