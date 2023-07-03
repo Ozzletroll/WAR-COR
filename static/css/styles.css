@@ -1652,6 +1652,10 @@ span::after {
   background-position: left;
 }
 
+.members-left {
+  font-size: 16px;
+}
+
 .members-right {
   display: flex;
   justify-content: flex-end;
@@ -1665,6 +1669,7 @@ span::after {
   flex-direction: column;
   align-items: flex-start;
   padding-left: 30px;
+  background-size: 20px;
   background-position: top left;
 }
 
