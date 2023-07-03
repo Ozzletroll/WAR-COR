@@ -3,6 +3,7 @@ from sqlalchemy import select
 from flask_login import login_required, current_user
 from itertools import groupby
 
+import auth
 import forms
 import models
 
@@ -81,30 +82,29 @@ def create_campaign():
 
 # Edit campaign data
 @bp.route("/campaigns/<campaign_name>/<campaign_id>/edit", methods=["GET", "POST"])
+@login_required
 def edit_campaign(campaign_name, campaign_id):
 
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    if campaign in current_user.permissions:
+    auth.permission_required(campaign)
 
-        form = forms.CreateCampaignForm(obj=campaign)
-        form.submit.label.text = "Update Campaign Data"
+    form = forms.CreateCampaignForm(obj=campaign)
+    form.submit.label.text = "Update Campaign Data"
 
-        if form.validate_on_submit():
+    if form.validate_on_submit():
 
-            campaign.title = request.form["title"]
-            campaign.description = request.form["description"]
+        campaign.title = request.form["title"]
+        campaign.description = request.form["description"]
 
-            db.session.add(campaign)
-            db.session.commit()
+        db.session.add(campaign)
+        db.session.commit()
 
-            return redirect(url_for("campaign.campaigns"))
+        return redirect(url_for("campaign.campaigns"))
 
-        return render_template("edit_campaign.html", form=form, campaign=campaign)
+    return render_template("edit_campaign.html", form=form, campaign=campaign)
 
-    # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
-    return redirect(url_for("home.home"))
 
 
 # Edit campaign users
@@ -117,29 +117,27 @@ def add_campaign_users(campaign_name):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    if campaign in current_user.permissions:
+    auth.permission_required(campaign)
 
-        form = forms.AddUserForm()
+    form = forms.AddUserForm()
 
-        if form.validate_on_submit():
+    if form.validate_on_submit():
 
-            user_to_add = request.form["username"]
+        user_to_add = request.form["username"]
 
-            # Check if username exists
-            user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
-            if user:
-                # Get campaign and add user as member
-                user.campaigns.append(campaign)
-                db.session.commit()
-            else:
-                print("User not in database, please check username.")
-                flash("User not in database, please check username.")
-            return redirect(url_for("campaign.edit_campaign", campaign_name=campaign_name))
+        # Check if username exists
+        user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+        if user:
+            # Get campaign and add user as member
+            user.campaigns.append(campaign)
+            db.session.commit()
+        else:
+            print("User not in database, please check username.")
+            flash("User not in database, please check username.")
+        return redirect(url_for("campaign.edit_campaign", campaign_name=campaign_name))
 
-        return render_template("edit_campaign.html", form=form)
+    return render_template("edit_campaign.html", form=form)
 
-    # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
-    return redirect(url_for("home.home"))
 
 
 # Remove campaign users
@@ -151,28 +149,26 @@ def remove_campaign_users(campaign_name, username):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    if campaign in current_user.permissions:
+    auth.permission_required(campaign)
 
-        user_to_remove = username
+    user_to_remove = username
 
-        # Check if username exists
-        user = db.session.execute(select(models.User).filter_by(username=user_to_remove)).scalar()
-        if user:
-            # Check is user is actually a member of the campaign
-            if user in campaign.members:
-                user.campaigns.remove(campaign)
-                flash(f"Removed user {user} from campaign.")
-                print(f"Removed user {user} from campaign.")
-            # Remove editing permissions if they exist
-            if campaign in user.permissions:
-                user.permissions.remove(campaign)
-                flash(f"Removed user {user}'s campaign permissions.")
-                print(f"Removed user {user}'s campaign permissions.")
-            db.session.commit()
-        else:
-            print("User not in database, please check username.")
-            flash("User not in database, please check username.")
-        return redirect(url_for("campaign.edit_campaign", campaign_name=campaign_name))
+    # Check if username exists
+    user = db.session.execute(select(models.User).filter_by(username=user_to_remove)).scalar()
+    if user:
+        # Check is user is actually a member of the campaign
+        if user in campaign.members:
+            user.campaigns.remove(campaign)
+            flash(f"Removed user {user} from campaign.")
+            print(f"Removed user {user} from campaign.")
+        # Remove editing permissions if they exist
+        if campaign in user.permissions:
+            user.permissions.remove(campaign)
+            flash(f"Removed user {user}'s campaign permissions.")
+            print(f"Removed user {user}'s campaign permissions.")
+        db.session.commit()
+    else:
+        print("User not in database, please check username.")
+        flash("User not in database, please check username.")
+    return redirect(url_for("campaign.edit_campaign", campaign_name=campaign_name))
 
-    # Redirect to homepage if user is trying to access a campaign they don't have permissions for.
-    return redirect(url_for("home.home"))
