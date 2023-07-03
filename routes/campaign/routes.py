@@ -107,7 +107,7 @@ def edit_campaign(campaign_name, campaign_id):
 
 
 
-# Edit campaign users
+# View and add campaign users
 @bp.route("/campaigns/<campaign_name>/edit_members", methods=["GET", "POST"])
 @login_required
 def edit_campaign_users(campaign_name):
@@ -128,10 +128,14 @@ def edit_campaign_users(campaign_name):
         # Check if username exists
         user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
         if user:
-            # Get campaign and add user as member
-            user.campaigns.append(campaign)
-            db.session.commit()
-            flash(f"{user.username} added to campaign.")
+            # Check if user isn't already a member
+            if campaign not in user.campaigns:
+                # Add user as campaign member
+                user.campaigns.append(campaign)
+                db.session.commit()
+                flash(f"{user.username} added to campaign.")
+            else:
+                flash(f"{user.username} is already a member of this campaign.")
         else:
             flash("User not in database, please check username.")
 
