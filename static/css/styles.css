@@ -1707,9 +1707,14 @@ span::after {
   flex-direction: column;
 }
 
+.timeline-year {
+  scroll-margin-top: 53px;
+}
+
 .timeline-event {
   display: flex;
   flex-direction: column;
+  scroll-margin-top: 53px;
 }
 
 .timeline-event:hover {
