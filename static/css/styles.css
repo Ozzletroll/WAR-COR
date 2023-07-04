@@ -1698,6 +1698,10 @@ span::after {
 
 /* Timeline */
 
+.timeline-overview {
+  margin-top: 20px;
+}
+
 .placeholder-timeline {
   display: flex;
   flex-direction: column;
