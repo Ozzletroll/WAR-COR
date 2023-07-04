@@ -2,28 +2,94 @@
 
 {% block content %}
 
-<div class="scrollpage">
+<div class="sidebar-page">
+  {% include "base/sidebar.html" %}
 
-  <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-    <button>
-      ADD EVENT
-    </button>
-  </a>
-  
+  <div class="scrollpage">
+
+    <div class="campaigns-content">
+      <div class="campaigns-title">
+        <h3 class="campaigns-heading">{{campaign.title}}</h1>
+      </div>
+
+      <hr class="campaigns-divider">
+      <p class="flavour-text">UWC-21-{{campaign.id}} // Campaign::Timeline</p>
+
+      <!-- Overview and members list -->
+      <div class="campaign-entry-container">
+        <div class="campaign-overview">
+          <h4 class="campaign-entry-title">Overview:</h4>
+          <p>{{ campaign.description }}</p>
+        </div>
+        <div class="campaign-members">
+          <h4 class="campaign-entry-title">Members:</h2>
+          <ul class="campaign-members-list">
+            {% for user in campaign.members %}
+              {% if campaign in user.permissions %}
+              <li class="members-list-admin">
+                {% else %}
+              <li class="members-list-item">
+              {% endif %}
+                {{user.username.upper()}}:
+                {% for entry in user.campaign_associations %}
+                  {%if entry.campaign_id == campaign.id%}
+                    {% if entry.callsign is not none %}
+                      [{{entry.callsign.upper()}}]
+                    {% endif %}
+                  {%endif%}
+                {% endfor %}
+                {% if campaign in user.permissions %}
+                [ADMIN]
+                {% endif %}
+              </li> 
+            {% endfor %} 
+          </ul>
+        </div> 
+      </div>
+
+      <!-- Placeholder add event button -->
+      {% if campaign in current_user.permissions %}
+      <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+        <button>
+          ADD EVENT
+        </button>
+      </a>
+      {% endif %}
 
 
-  {% for event in events %}
+      <!-- Timeline -->
+      <div class="placeholder-timeline">
+      {% for year in timeline_data %}
 
-    {{event.title}}
+        <h3 id="year-{{year}}" class="timeline-year">
+        {{ year + "u"}}
+        </h3> 
+        
+        {% for month in timeline_data[year] %}
 
-    {{event.date}}
+          <h5>
+            {{ month }}
+          </h5> 
+          
+          {% for event in timeline_data[year][month] %}
+
+          <div id="event-{{event.id}}" class="timeline-event">
+            <p>{{event.date.strftime("%d")}}</p>
+            <p>{{event.date.strftime("%H:%M:%S")}}</p>
+            <p>{{event.title}}</p>
+          </div>
+
+          {% endfor %}
+
+        {% endfor %}
+
+      {% endfor %}
+      </div>
 
 
-  {% endfor %}
+    </div>
 
-
-
-
+  </div>
 
 </div>
 

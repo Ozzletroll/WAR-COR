@@ -1,0 +1,36 @@
+<div id="sidebar" class="sidebar sidebar-outer">
+  
+  {% for year in timeline_data %}
+
+    <a class="sidebar-button" href="#year-{{year}}">
+      <button class="year-button entry-button">
+        {{ year + "u"}}
+        </button> 
+    </a>
+    
+        
+      {% for month in timeline_data[year] %}
+
+
+        {% for event in timeline_data[year][month] %}
+
+        <a class="sidebar-button" href="#event-{{event.id}}">
+          <button class="event-button">
+            {{event.title}}
+          </button>
+        </a>
+
+        {% endfor %}
+
+      {% endfor %}
+
+    {% endfor %}
+
+  
+</div>
+<div id="sidebar-deploy" class="sidebar-deploy">
+  <img id="sidebar-icon" class="icon" src="/static/images/icons/chevron_right.svg">
+</div>
+
+ <!-- Javascript -->
+ <script src="/static/js/sidebar.js"></script> 

@@ -77,6 +77,10 @@
   align-items: center;
 }
 
+.sidebar-page {
+  display: flex;
+}
+
 .border {
   display: flex;
   flex: 1 1 auto;
@@ -1683,3 +1687,87 @@ span::after {
 
 }  
 
+/* Timeline */
+
+.placeholder-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-event {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-event:hover {
+  background-color: var(--bg_colour2);
+}
+
+/* Sidebar */
+
+.sidebar {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  background-color: var(--bg_colour2);
+  height: 100vh;
+  width: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  transition: 0.5s;
+  display: flex;
+  align-self: flex-start;
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+.sidebar-deploy {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dark_red);
+  color: var(--text_normal);
+  height: 200px;
+  width: 50px;
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  transition: 0.5s;
+  margin-right: -50px;
+  clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
+}
+
+.sidebar-deploy:hover {
+  background-color: var(--bright_red);
+}
+
+.sidebar-button > * {
+  width: 100%;
+}
+
+.year-button {
+  background-color: var(--dark_red);
+  margin-bottom: 0;
+  clip-path: none;
+}
+
+.year-button:hover {
+  background-color: var(--bright_red);
+}
+
+.event-button {
+  min-width: 0;
+  overflow-x: hidden;
+  text-align: left;
+  border-style: none;
+  height: 100%;
+  padding: 0;
+  padding: 10px;
+}
+
+.deploy-text {
+  font-weight: 500;
+  writing-mode: sideways-lr;
+}
