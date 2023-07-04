@@ -1771,6 +1771,7 @@ span::after {
   background-color: var(--dark_red);
   margin-bottom: 0;
   clip-path: none;
+  transition: 0.2s;
 }
 
 .year-button:hover {
@@ -1786,12 +1787,14 @@ span::after {
   padding: 0;
   padding: 10px;
   background-color: var(--bg_colour2);
+  transition: 0.2s;
 }
 
 .event-button:hover {
   background-color: var(--bg_colour3);
+  color: var(--dark_red);
 }
 
 .event-button:active {
-  color: var(--text_bright);
+  color: var(--bright_red);
 }
