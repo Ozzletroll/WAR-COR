@@ -7,6 +7,7 @@ class Tab {
   }) {
     this.tab = document.getElementById(tab);
     this.button = button;
+    this.button_elem = document.getElementById(button);
     this.state = false
     this.icon = document.getElementById(icon);
 
@@ -22,13 +23,15 @@ class Tab {
   }
   
   openTab() {
-    this.tab.style.width = "300px"
+    this.tab.style.transform = "translateX(0)"
+    this.button_elem.style.transform = "translateX(0)"
     this.state = true
     this.icon.src = "/static/images/icons/chevron_left.svg"
   }
 
   closeTab() {
-    this.tab.style.width = "0"
+    this.tab.style.transform = "translateX(-300px)"
+    this.button_elem.style.transform = "translateX(-300px)"
     this.state = false
     this.icon.src = "/static/images/icons/chevron_right.svg"
   }
