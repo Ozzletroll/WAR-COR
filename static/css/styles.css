@@ -122,6 +122,10 @@ body {
   width: 20px;
 }
 
+.icon-large {
+  width: 40px;
+}
+
 button {
   font-family: "Roboto Mono", monospace;
   cursor: pointer;
