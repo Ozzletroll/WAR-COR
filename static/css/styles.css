@@ -142,6 +142,10 @@ button {
   padding-left: min(50px, 2%);
   padding-right: min(50px, 2%);
   min-height: 53px;
+  top: 0;
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 1;
 }
 
 .logo-area {
@@ -1714,14 +1718,14 @@ span::after {
   flex: 1 0 auto;
   flex-direction: column;
   background-color: var(--bg_colour2);
-  height: 100vh;
+  height: calc(100vh - 53px);
   width: 0;
   min-width: 0;
   overflow-x: hidden;
   transition: 0.5s;
   display: flex;
   align-self: flex-start;
-  top: 0;
+  top: 53px;
   position: -webkit-sticky;
   position: sticky;
 }
@@ -1735,7 +1739,7 @@ span::after {
   color: var(--text_normal);
   height: 200px;
   width: 50px;
-  top: 0;
+  top: 53px;
   position: -webkit-sticky;
   position: sticky;
   transition: 0.5s;
