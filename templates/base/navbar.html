@@ -25,7 +25,7 @@
         <li>
           <a href="{{ url_for('user.user_page', username=current_user.username) }}">
             <img class="icon campaign-form-icon" src="/static/images/icons/user_white.svg">
-            {{ current_user.username.upper() }}
+            {{ current_user.username }}
           </a>
         </li>
         {% endif %}
@@ -53,7 +53,7 @@
     <a class="h-menu-item" href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
     {% endif %}
     {% if request.path != url_for('user.user_page', username=current_user.username) %}
-    <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username.upper() }}</a>
+    <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username}}</a>
     {% endif %}
     <a class="h-menu-item" href="{{ url_for('user.logout') }}">LOGOUT</a>
     {% else %}
