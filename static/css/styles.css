@@ -1724,7 +1724,6 @@ span::after {
   top: 0;
   position: -webkit-sticky;
   position: sticky;
-  /* box-shadow: 1px 1px var(--dark_red); */
 }
 
 .sidebar-deploy {
@@ -1782,6 +1781,15 @@ span::after {
   height: 100%;
   padding: 0;
   padding: 10px;
+  background-color: var(--bg_colour2);
+}
+
+.event-button:hover {
+  background-color: var(--bg_colour3);
+}
+
+.event-button:active {
+  color: var(--text_bright);
 }
 
 .deploy-text {
