@@ -1795,8 +1795,3 @@ span::after {
 .event-button:active {
   color: var(--text_bright);
 }
-
-.deploy-text {
-  font-weight: 500;
-  writing-mode: sideways-lr;
-}
