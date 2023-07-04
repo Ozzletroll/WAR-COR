@@ -1723,6 +1723,7 @@ span::after {
   width: 300px;
   transform: translateX(-300px);
   min-width: 0;
+  margin-right: -300px;
   overflow-x: hidden;
   transition: 0.5s;
   display: flex;
@@ -1739,7 +1740,7 @@ span::after {
   align-items: center;
   background-color: var(--dark_red);
   color: var(--text_normal);
-  transform: translateX(-300px);
+  transform: translateX(0);
   height: 200px;
   width: 50px;
   top: 53px;
