@@ -1698,10 +1698,6 @@ span::after {
 
 /* Timeline */
 
-.flavour-text.timeline-margin {
-  margin-bottom: 114px;
-}
-
 .placeholder-timeline {
   display: flex;
   flex-direction: column;
