@@ -1778,6 +1778,7 @@ span::after {
 
 .sidebar-button > * {
   width: 100%;
+  min-height: 40px;
 }
 
 .year-button {
