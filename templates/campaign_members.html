@@ -75,13 +75,22 @@
 
         <p class="flavour-text">CNF-{{campaign.id}}-02 // {{campaign.title}}::Recruitment </p>
 
-        <form id="form-1" class="add-member-form" method="POST" action="">
+        <form id="form-1" class="add-member-form" onsubmit="return false" novalidate>
           {{ form.csrf_token }}
           <div class="user-form-container">
-            {{ form.username(class_="callsign-input", placeholder="USERNAME SEARCH") }}
-            {{ form.submit(class_="submit-button callsign-submit") }}
+            {{ form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH") }}
+            {{ form.submit(class_="submit-button callsign-submit", onClick="user_search(target_url)") }}
           </div>
         </form>
+
+        <div id="results-area" class="user-results-area">
+          
+          <!-- This marker is just a reference node for the insertBefore() method -->
+          <div id="results-marker"></div>
+        </div>
+
+
+
 
       </div>
 
@@ -101,5 +110,8 @@
 
  <!-- Javascript -->
  <script src="/static/js/campaign_members.js"></script> 
+ <script>
+  const target_url = "{{ url_for('campaign.user_search', campaign_name=campaign.title, campaign_id=campaign.id) }}"        
+ </script>
 
 {% endblock %}

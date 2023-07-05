@@ -50,7 +50,7 @@ class CreateEventForm(FlaskForm):
 
 class AddUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
-    submit = SubmitField("Invite")
+    submit = SubmitField("Search")
 
 
 class ChangeCallsignForm(FlaskForm):

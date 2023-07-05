@@ -36,34 +36,34 @@ class Tab {
 
 }
 
-// Toggle button class
+// Dropdown user results class
 class ToggleButton {
   constructor({
-    form,
+    area,
     button,
   }) {
-    this.form = document.getElementById(form);
+    this.area = document.getElementById(area);
     this.button = button;
     this.state = false
 
     document.getElementById(this.button).onclick = event => {
       
       if (this.state == false) {
-        this.openForm(event)
+        this.openArea(event)
       }
       else if (this.state == true) {
-        this.closeForm(event)
+        this.closeArea(event)
       }
     } 
   }
   
-  openForm() {
-    this.form.style.display = "flex"
+  openArea() {
+    this.area.style.display = "flex"
     this.state = true
   }
 
-  closeForm() {
-    this.form.style.display = "none"
+  closeArea() {
+    this.area.style.display = "none"
     this.state = false
   }
 
@@ -80,19 +80,86 @@ const tab_2 = new Tab({
   button: "t2-button",
 })
 
-const tab_3 = new Tab({
-  tab: "tab-3",
-  button: "t3-button",
-})
+// const toggle_1 = new ToggleButton({
+//   form: "area-1",
+//   button: "a1-button"
+// })
 
-// Create toggle buttons
 
-const toggle_1 = new ToggleButton({
-  form: "form-1",
-  button: "f1-button"
-})
+// Search for users when NewUserForm is submitted
+function user_search(url) {
 
-const toggle_2 = new ToggleButton({
-  form: "form-2",
-  button: "f2-button"
-})
+  var target_url = url
+  var username = document.getElementById("username-search")
+
+  var data = new FormData()
+  data.append("username", username.value)
+
+  // Send fetch request to target url
+  fetch(target_url, {
+    "method": "POST",
+    "body" : data,
+  })
+  .then(function(response) {
+    if (response.status !== 200){
+      
+      // Create "No matching users found, check username entry"
+
+      return ;
+    }
+    
+    // Create results elements
+    response.json().then(function(data) {
+      
+      // Get the results area div element
+      const resultsAreaDiv = document.getElementById("results-area");
+
+      // Delete any existing dynamic elements
+      resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
+
+      let index = 0
+      for (let user in data) {
+
+        // Create the new elements
+        const newDiv = Object.assign(
+          document.createElement("div"), 
+          {id: "results-" + user ,
+          className: "results-area"}
+          );
+
+        const newHeading = Object.assign(
+          document.createElement("h4"), 
+          {className: "results-username",
+          innerHTML: "User: " + user}
+          );
+
+        const newButton = Object.assign(
+          document.createElement("a"), 
+          {className: "submit-button callsign-submit",
+          innerHTML: "Invite",
+          href: data[user][1]}
+          );
+
+        // Add the elements as child
+        newDiv.appendChild(newHeading);
+        newDiv.appendChild(newButton);
+
+        // Add the newly created elements
+        if (index == 0) {
+          const startingDiv = document.getElementById("results-marker");
+          resultsAreaDiv.insertBefore(newDiv, startingDiv);
+        }
+        else {
+          const currentDiv = document.getElementById("results-" + user);
+          resultsAreaDiv.insertBefore(newDiv, currentDiv);
+        }
+        
+        index += 1
+
+      }
+
+    })
+
+  })
+
+}

@@ -15,7 +15,7 @@ from routes.event import bp
 
 
 # View event
-@bp.route("/campaigns/<campaign_name>/<event_name>")
+@bp.route("/campaigns/<campaign_name>/events/<event_name>")
 def view_event(campaign_name, event_name):
     target_event_id = session.get("event_id", None)
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
@@ -24,7 +24,7 @@ def view_event(campaign_name, event_name):
 
 
 # Add new event
-@bp.route("/campaigns/<campaign_name>/new_event", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>/events/new_event", methods=["GET", "POST"])
 @login_required
 def add_event(campaign_name):
 
@@ -81,7 +81,7 @@ def add_event(campaign_name):
 
 
 # Edit existing event
-@bp.route("/campaigns/<campaign_name>/<event_name>/edit", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>/events/<event_name>/edit", methods=["GET", "POST"])
 @login_required
 def edit_event(campaign_name, event_name):
     target_campaign_id = session.get("campaign_id", None)
@@ -132,7 +132,7 @@ def edit_event(campaign_name, event_name):
 
 
 # Delete existing event
-@bp.route("/campaigns/<campaign_name>/<event_name>/delete", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>/events/<event_name>/delete", methods=["GET"])
 @login_required
 def delete_event(campaign_name, event_name):
     target_campaign_id = session.get("campaign_id", None)

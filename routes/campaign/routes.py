@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, session
+from flask import render_template, redirect, request, url_for, flash, jsonify, make_response
 from sqlalchemy import select
 from flask_login import login_required, current_user
 from itertools import groupby
@@ -23,7 +23,7 @@ def campaigns():
 
 
 # View campaign overview
-@bp.route("/campaigns/<campaign_name>/<campaign_id>")
+@bp.route("/campaigns/<campaign_name>/timeline/<campaign_id>")
 def show_timeline(campaign_name, campaign_id):
 
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
@@ -121,24 +121,6 @@ def edit_campaign_users(campaign_name):
 
     form = forms.AddUserForm()
 
-    if form.validate_on_submit():
-
-        user_to_add = request.form["username"]
-
-        # Check if username exists
-        user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
-        if user:
-            # Check if user isn't already a member
-            if campaign not in user.campaigns:
-                # Add user as campaign member
-                user.campaigns.append(campaign)
-                db.session.commit()
-                flash(f"{user.username} added to campaign.")
-            else:
-                flash(f"{user.username} is already a member of this campaign.")
-        else:
-            flash("User not in database, please check username.")
-
     return render_template("campaign_members.html", campaign=campaign, form=form)
 
 
@@ -179,3 +161,56 @@ def remove_campaign_users(campaign_name, username):
         flash("User not in database, please check username.")
     return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
 
+
+# Function called by user searching for new members on edit members page
+@bp.route("/campaigns/<campaign_name>/user_search", methods=["POST"])
+@login_required
+def user_search(campaign_name):
+
+    target_campaign_id = request.args["campaign_id"]
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+    search = request.form["username"]
+    users = db.session.execute(select(models.User).filter_by(username=search)).scalars()
+
+    if users is not None:
+        response = make_response(jsonify(
+            {user.username: [user.id, url_for('campaign.add_user', 
+                                              campaign_name=campaign.title, 
+                                              campaign_id=campaign.id, 
+                                              username=user.username)] 
+                                              for user in users if user not in campaign.members}), 200)
+        return response
+    else:
+        response = make_response(jsonify({"message": "No users found"}), 200)
+        return response
+    
+
+# Function called when adding a new user
+@bp.route("/campaigns/<campaign_name>/add_user", methods=["GET"])
+@login_required
+def add_user(campaign_name):
+
+    user_to_add = request.args["username"]
+    target_campaign_id = request.args["campaign_id"]
+
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
+    # Check if username exists
+    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+    if user:
+        # Check if user isn't already a member
+        if campaign not in user.campaigns:
+            # Add user as campaign member
+            user.campaigns.append(campaign)
+            db.session.commit()
+            flash(f"{user.username} added to campaign.")
+        else:
+            flash(f"{user.username} is already a member of this campaign.")
+    else:
+        flash("User not in database, please check username.")
+
+    return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
