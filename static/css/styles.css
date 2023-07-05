@@ -67,6 +67,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .onepage-content {
@@ -503,7 +504,7 @@ h3 {
   font-size: min(7vw, 48px);
   font-weight: 400;
   color: var(--darker_red);
-  width: 70%;
+  width: 100%;
   padding-bottom: 0%;
   padding-left: 5%;
   margin-bottom: 0%;
@@ -1730,6 +1731,7 @@ span::after {
   background-color: var(--bg_colour2);
   height: calc(100vh - 53px);
   width: 300px;
+  max-width: 300px;
   transform: translateX(-300px);
   min-width: 0;
   margin-right: -300px;
@@ -1752,6 +1754,7 @@ span::after {
   transform: translateX(0);
   height: 200px;
   width: 50px;
+  max-width: 50px;
   top: 53px;
   position: -webkit-sticky;
   position: sticky;
