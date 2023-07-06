@@ -10,6 +10,7 @@ import models
 from app import db
 from routes.campaign import bp
 
+
 #   =======================================
 #                  Campaign
 #   =======================================
@@ -25,7 +26,6 @@ def campaigns():
 # View campaign overview
 @bp.route("/campaigns/<campaign_name>/timeline/<campaign_id>")
 def show_timeline(campaign_name, campaign_id):
-
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Sort events into date order
@@ -55,7 +55,6 @@ def show_timeline(campaign_name, campaign_id):
 @bp.route("/campaigns/create_campaign", methods=["GET", "POST"])
 @login_required
 def create_campaign():
-
     form = forms.CreateCampaignForm()
 
     if form.validate_on_submit():
@@ -84,8 +83,7 @@ def create_campaign():
 @bp.route("/campaigns/<campaign_name>/<campaign_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_campaign(campaign_name, campaign_id):
-
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -94,7 +92,6 @@ def edit_campaign(campaign_name, campaign_id):
     form.submit.label.text = "Update Campaign Data"
 
     if form.validate_on_submit():
-
         campaign.title = request.form["title"]
         campaign.description = request.form["description"]
 
@@ -106,15 +103,14 @@ def edit_campaign(campaign_name, campaign_id):
     return render_template("edit_campaign.html", form=form, campaign=campaign)
 
 
-
 # View and add campaign users
 @bp.route("/campaigns/<campaign_name>/edit_members", methods=["GET", "POST"])
 @login_required
 def edit_campaign_users(campaign_name):
-
     target_campaign_id = request.args["campaign_id"]
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -124,14 +120,13 @@ def edit_campaign_users(campaign_name):
     return render_template("campaign_members.html", campaign=campaign, form=form)
 
 
-
 # Remove campaign users
 @bp.route("/campaigns/<campaign_name>/remove_users/<username>", methods=["GET"])
 @login_required
 def remove_campaign_users(campaign_name, username):
-
     target_campaign_id = request.args["campaign_id"]
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -166,31 +161,30 @@ def remove_campaign_users(campaign_name, username):
 @bp.route("/campaigns/<campaign_name>/user_search", methods=["POST"])
 @login_required
 def user_search(campaign_name):
-
     target_campaign_id = request.args["campaign_id"]
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
 
     search = request.form["username"]
     users = db.session.execute(select(models.User).filter_by(username=search)).scalars()
 
     if users is not None:
         response = make_response(jsonify(
-            {user.username: [user.id, url_for('campaign.add_user', 
-                                              campaign_name=campaign.title, 
-                                              campaign_id=campaign.id, 
-                                              username=user.username)] 
-                                              for user in users if user not in campaign.members}), 200)
+            {user.username: [user.id, url_for('campaign.add_user',
+                                              campaign_name=campaign.title,
+                                              campaign_id=campaign.id,
+                                              username=user.username)]
+             for user in users if user not in campaign.members}), 200)
         return response
     else:
         response = make_response(jsonify({"message": "No users found"}), 200)
         return response
-    
+
 
 # Function called when adding a new user
 @bp.route("/campaigns/<campaign_name>/add_user", methods=["GET"])
 @login_required
 def add_user(campaign_name):
-
     user_to_add = request.args["username"]
     target_campaign_id = request.args["campaign_id"]
 
