@@ -1655,7 +1655,6 @@ span::after {
 .edit-members-container .campaign-members-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
 .edit-members-container .members-list-admin, 
@@ -1676,6 +1675,10 @@ span::after {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
+}
+
+.members-right .entry-button {
+  margin-bottom: 0;
 }
 
 @media screen and (max-width: 800px) { 
@@ -1702,6 +1705,7 @@ span::after {
 .results-area {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -1711,6 +1715,9 @@ span::after {
 
 .results-area a {
   text-decoration: none;
+  height: 20px;
+  font-size: 14px;
+  margin-left: 20px;
 }
 
 /* Timeline */
