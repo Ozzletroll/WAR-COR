@@ -188,8 +188,6 @@ def user_search(campaign_name):
     return response
 
 
-
-
 # Function called when adding a new user
 @bp.route("/campaigns/<campaign_name>/add_user", methods=["GET"])
 @login_required
