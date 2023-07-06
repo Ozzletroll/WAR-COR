@@ -141,8 +141,8 @@ button {
   justify-content: space-between;
   align-items: center;
   background-color: var(--darker_red);
-  padding-left: min(50px, 2%);
-  padding-right: min(50px, 2%);
+  padding-left: min(10px, 2%);
+  padding-right: min(10px, 2%);
   min-height: 53px;
   top: 0;
   position: -webkit-sticky;
@@ -248,7 +248,7 @@ button {
   align-items: center;
   gap: 10%;
   padding-left: max(25px, 2%);
-  padding-right: max(25px, 2%);
+  padding-right: max(10px, 2%);
 }
 
 .navbutton {
