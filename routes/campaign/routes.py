@@ -165,8 +165,11 @@ def user_search(campaign_name):
     campaign = db.session.execute(
         select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
 
+    # Query database for users with similar usernames
     search = request.form["username"]
-    users = db.session.execute(select(models.User).filter_by(username=search)).scalars()
+    search_format = "%{}%".format(search)
+    users = db.session.execute(select(models.User)
+                               .filter(models.User.username.like(search_format))).scalars()
 
     if users is not None:
         response = make_response(jsonify(
