@@ -1435,6 +1435,7 @@ span::after {
 .user-campaigns-headings {
   font-size: clamp(14px, 4vw, 20px);
   text-transform: uppercase;
+  max-width: 340px;
 }
 
 .callsign-entry-area {
