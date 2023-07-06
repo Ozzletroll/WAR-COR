@@ -215,3 +215,27 @@ def add_user(campaign_name):
         flash("User not in database, please check username.")
 
     return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
+
+
+# Function called when granting a user campaign editing permissions
+@bp.route("/campaigns/<campaign_name>/grant_permission", methods=["GET"])
+@login_required
+def add_permission(campaign_name):
+
+    user_to_add = request.args["username"]
+    user_id = request.args["user_id"]
+    target_campaign_id = request.args["campaign_id"]
+
+    user = db.session.execute(select(models.User).filter_by(username=user_to_add, id=user_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
+    # Give user editing permissions
+    if campaign not in user.permissions:
+            user.permissions.append(campaign)
+            db.session.commit()
+
+    flash(f"Granted {user.username} campaign editing permissions.")
+    return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
