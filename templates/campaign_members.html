@@ -52,7 +52,15 @@
                   {% if not campaign in user.permissions%}
                   <a href="{{ url_for('campaign.add_permission', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username, user_id=user.id) }}"><button class="entry-button">Make Admin</button></a>
                   {% endif %}
-                  <a href="{{ url_for('campaign.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username) }}"><button class="entry-button">Remove</button></a>
+                  <a href="{{ url_for('campaign.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username) }}">
+                    <button class="entry-button">
+                      {% if user.id == current_user.id %}
+                        Leave
+                      {% else %}
+                        Remove
+                      {% endif %}
+                    </button>
+                  </a>
                 </div>
               </li> 
             {% endfor %} 
