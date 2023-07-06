@@ -1699,6 +1699,20 @@ span::after {
 
 }  
 
+.results-area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.results-username {
+  margin: 2px;
+}
+
+.results-area a {
+  text-decoration: none;
+}
+
 /* Timeline */
 
 .timeline-overview {
