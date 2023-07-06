@@ -248,7 +248,6 @@ button {
   align-items: center;
   gap: 10%;
   padding-left: max(25px, 2%);
-  padding-right: max(10px, 2%);
 }
 
 .navbutton {
