@@ -171,17 +171,23 @@ def user_search(campaign_name):
     users = db.session.execute(select(models.User)
                                .filter(models.User.username.like(search_format))).scalars()
 
-    if users is not None:
-        response = make_response(jsonify(
-            {user.username: [user.id, url_for('campaign.add_user',
-                                              campaign_name=campaign.title,
-                                              campaign_id=campaign.id,
-                                              username=user.username)]
-             for user in users if user not in campaign.members}), 200)
-        return response
+    # Format results as dict
+    results = {user.username: [user.id, url_for('campaign.add_user',
+                                            campaign_name=campaign.title,
+                                            campaign_id=campaign.id,
+                                            username=user.username)]
+            for user in users if user not in campaign.members}
+    
+    # Check if query returned no results
+    if len(results) == 0:
+        response = make_response(jsonify({"message": "No users found"}), 404)
+    # Otherwise, send good response
     else:
-        response = make_response(jsonify({"message": "No users found"}), 200)
-        return response
+        response = make_response(results, 200)
+        
+    return response
+
+
 
 
 # Function called when adding a new user

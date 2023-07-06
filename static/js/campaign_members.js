@@ -103,7 +103,28 @@ function user_search(url) {
   .then(function(response) {
     if (response.status !== 200){
       
-      // Create "No matching users found, check username entry"
+      // Get the results area div element
+      const resultsAreaDiv = document.getElementById("results-area");
+
+      // Delete any existing dynamic elements
+      resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
+
+      // Create no users found entry
+      const newDiv = Object.assign(
+        document.createElement("div"), 
+        {id: "results-none",
+        className: "results-area"}
+        );
+
+      const newHeading = Object.assign(
+        document.createElement("h4"), 
+        {className: "results-username",
+        innerHTML: "No users found"}
+        );
+
+        newDiv.appendChild(newHeading);
+        const startingDiv = document.getElementById("results-marker");
+        resultsAreaDiv.insertBefore(newDiv, startingDiv);
 
       return ;
     }
