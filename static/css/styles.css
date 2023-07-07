@@ -1221,15 +1221,7 @@ h5 {
 
 .campaign-entry-buttons {
   display: flex;
-  justify-content: space-between;
-}
-
-.entry-buttons-left {
-  width: 50%;
-}
-
-.entry-buttons-right {
-  width: 40%;
+  gap: 15px;
 }
 
 @media screen and (max-width: 750px) {
@@ -1284,11 +1276,43 @@ h5 {
     width: 100%;
   }
 
+  .entry-buttons-deploy {
+    margin-left: 0;
+  }
+
 }
+
+/* Deployable edit menu */
+
+.dropdown-area {
+  width: fit-content;
+}
+
+.edit-button {
+  transition: 0.1s ease-in-out;
+}
+
+.deploy-button {
+  border-radius: 0;
+  width: 150px;
+  padding: 5px;
+}
+
+.entry-buttons-deploy {
+  height: 0px;
+  width: 150px;
+  overflow: hidden;
+  transition: 0.5s ease-in;
+}
+
+.deploy-button {
+  border-style: none;
+}
+
+/*  */
 
 .new-campaign-area {
   display: flex;
-  /* clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%); */
   padding: 25px;
   text-decoration: none;
   position: relative;
