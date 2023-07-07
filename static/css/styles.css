@@ -1241,7 +1241,7 @@ h5 {
 }
 
 .entry-button {
-  width: 150px;
+  width: 160px;
   padding: 10px;
   background-color: var(--darker_red);
   color: var(--text_normal);
@@ -1294,19 +1294,30 @@ h5 {
 
 .deploy-button {
   border-radius: 0;
-  width: 150px;
+  width: 160px;
   padding: 5px;
 }
 
 .entry-buttons-deploy {
   height: 0px;
-  width: 150px;
+  width: 160px;
   overflow: hidden;
   transition: 0.5s ease-in;
 }
 
 .deploy-button {
+  display: flex;
   border-style: none;
+  text-transform: uppercase;
+  gap: 5px;
+}
+
+.entry-buttons-deploy a {
+  text-decoration: none;
+}
+
+.deploy-button:active {
+  color: var(--bright_red);
 }
 
 /*  */

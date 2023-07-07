@@ -60,16 +60,28 @@
                 <button id="button-{{campaign.id}}" class="entry-button edit-button">EDIT</button>
                 <div id="dropdown-{{campaign.id}}" class="entry-buttons-deploy">
                   <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                    <button class="deploy-button">Title/Overview</button>
+                    <button class="deploy-button">
+                      <img class="icon icon-small" src="/static/images/icons/edit.svg"> 
+                      Title/Overview
+                    </button>
                   </a>
                   <a href="">
-                    <button class="deploy-button">Timeline</button>
+                    <button class="deploy-button">
+                      <img class="icon icon-small" src="/static/images/icons/docs.svg"> 
+                      Events
+                    </button>
                   </a>
                   <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                    <button class="deploy-button">Members</button>
+                    <button class="deploy-button">
+                      <img class="icon icon-small" src="/static/images/icons/user_management_dark.svg"> 
+                      Members
+                    </button>
                   </a>
                   <a href="">
-                    <button class="deploy-button">Backup</button>
+                    <button class="deploy-button">
+                      <img class="icon icon-small" src="/static/images/icons/database.svg"> 
+                      Data Backup
+                    </button>
                   </a>
                 </div>   
               </div>
