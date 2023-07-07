@@ -234,8 +234,8 @@ def add_permission(campaign_name):
 
     # Give user editing permissions
     if campaign not in user.permissions:
-            user.permissions.append(campaign)
-            db.session.commit()
+        user.permissions.append(campaign)
+        db.session.commit()
 
     flash(f"Granted {user.username} campaign editing permissions.")
     return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
