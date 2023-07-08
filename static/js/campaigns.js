@@ -28,7 +28,7 @@ class Dropdown {
 
   closeDropdown() {
     this.button.style.marginBottom = "5px"
-    this.button.style.transitionDelay = "0.5s"
+    this.button.style.transitionDelay = "0.3s"
     this.dropdown.style.height = "0"
     this.state = false
   }
