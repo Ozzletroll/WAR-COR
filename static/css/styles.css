@@ -1468,6 +1468,8 @@ span::after {
 }
 
 .user-campaigns-headings {
+  display: flex;
+  flex: 1 1 0;
   font-size: clamp(14px, 4vw, 20px);
   text-transform: uppercase;
   max-width: 340px;
