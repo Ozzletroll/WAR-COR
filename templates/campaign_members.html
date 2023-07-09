@@ -6,8 +6,17 @@
 
   <div class="campaigns-content members-content">
 
+    <div class="navigation-area">
+      <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
+        <h5 class="navigation-heading">/CAMPAIGNS</h5>
+      </a>
+      <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
+        <h5 class="navigation-heading">/{{campaign.title}}/</h5>
+      </a>
+    </div>
+
     <div class="campaigns-title">
-      <h3 class="campaigns-heading">{{campaign.title}}</h1>
+      <h3 class="campaigns-heading">Edit Members</h3>
     </div>
     <hr class="campaigns-divider">
     <p class="flavour-text">CNF-{{campaign.id}}-00 // {{campaign.title}}::Participants </p>

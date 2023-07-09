@@ -133,6 +133,10 @@ button {
   cursor: pointer;
 }
 
+.heading-top {
+  margin-top: 25px;
+}
+
 /* Navbar */
 
 .navbar {
@@ -509,7 +513,7 @@ h3 {
   width: 100%;
   padding-bottom: 0%;
   padding-left: 5%;
-  margin-bottom: 0%;
+  margin: 0;
 }
 
 .features-grid {
@@ -995,6 +999,32 @@ h5 {
 
 }  
 
+/* Top of page navigation elements */
+
+.navigation-area {
+  display: inline;
+  width: fit-content;
+  gap: 0;
+  /* This hides the whitepsace created by the inline display */
+  font-size: 0;
+}
+
+.navigation-url {
+  text-decoration: none;
+  text-transform: uppercase;
+  color: var(--darker_red);
+  width: fit-content;
+}
+
+.navigation-url:hover {
+  color: var(--dark_red);
+}
+
+.navigation-heading {
+  display: inline;
+  width: fit-content;
+  font-size: min(18px, 3vw);
+}
 
 /* Edit campaign form */
 
