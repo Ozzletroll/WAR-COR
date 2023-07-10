@@ -80,12 +80,6 @@ const tab_2 = new Tab({
   button: "t2-button",
 })
 
-// const toggle_1 = new ToggleButton({
-//   form: "area-1",
-//   button: "a1-button"
-// })
-
-
 // Search for users when NewUserForm is submitted
 function user_search(url) {
 
