@@ -1018,14 +1018,23 @@ h5 {
   width: fit-content;
 }
 
-.navigation-url:hover {
-  color: var(--dark_red);
-}
-
 .navigation-heading {
   display: inline;
   width: fit-content;
   font-size: min(18px, 3vw);
+  font-weight: 300;
+}
+
+.navigation-url:hover {
+  color: var(--dark_red);
+}
+
+.navigation-heading:hover {
+  font-weight: 500;
+}
+
+.navigation-heading:active {
+  color: var(--bright_red);
 }
 
 /* Edit campaign form */
