@@ -1194,7 +1194,6 @@ h5 {
   display: flex;
   flex-direction: row;
   gap: 5vw;
-  padding-bottom: 10px;
 }
 
 .campaign-overview {
@@ -1289,6 +1288,14 @@ h5 {
 
 .entry-button:active {
   background-color: var(--bright_red);
+}
+
+.last-edited-area {
+  padding-bottom: 10px;
+}
+
+.last-updated-text {
+  color: var(--darker_red);
 }
 
 @media screen and (max-width: 750px) { 
