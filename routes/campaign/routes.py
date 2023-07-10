@@ -2,6 +2,7 @@ from flask import render_template, redirect, request, url_for, flash, jsonify, m
 from sqlalchemy import select
 from flask_login import login_required, current_user
 from itertools import groupby
+from datetime import datetime
 
 import auth
 import forms
@@ -20,7 +21,11 @@ from routes.campaign import bp
 @bp.route("/campaigns")
 @login_required
 def campaigns():
-    return render_template("campaigns.html")
+
+    campaigns = current_user.campaigns
+    campaigns.sort(key=lambda campaign: campaign.last_edited, reverse=True)
+
+    return render_template("campaigns.html", campaigns=campaigns)
 
 
 # View campaign overview
@@ -63,6 +68,7 @@ def create_campaign():
         new_campaign = models.Campaign()
         new_campaign.title = request.form["title"]
         new_campaign.description = request.form["description"]
+        new_campaign.last_edited = datetime.now()
 
         # Add new campaign to database
         db.session.add(new_campaign)
@@ -94,6 +100,7 @@ def edit_campaign(campaign_name, campaign_id):
     if form.validate_on_submit():
         campaign.title = request.form["title"]
         campaign.description = request.form["description"]
+        campaign.last_edited = datetime.now()
 
         db.session.add(campaign)
         db.session.commit()

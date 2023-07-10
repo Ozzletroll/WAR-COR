@@ -56,6 +56,7 @@ def add_event(campaign_name):
             event.result = request.form["result"]
 
             event.parent_campaign = campaign
+            event.parent_campaign.last_edited = datetime.now()
 
             # Add event to database
             db.session.add(event)
@@ -111,6 +112,8 @@ def edit_event(campaign_name, event_name):
             event.body = request.form["body"]
             event.result = request.form["result"]
 
+            event.parent_campaign.last_edited = datetime.now()
+
             # Update the database
             db.session.add(event)
             db.session.commit()
@@ -143,6 +146,9 @@ def delete_event(campaign_name, event_name):
 
     # Check if the user has permissions to edit the target campaign.
     if campaign in current_user.permissions:
+
+        campaign.last_edited = datetime.now()
+
         db.session.delete(event)
         db.session.commit()
 

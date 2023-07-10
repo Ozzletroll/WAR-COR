@@ -39,7 +39,7 @@ class User(UserMixin, db.Model):
     campaigns = db.relationship("Campaign",
                                 secondary="user_campaign",
                                 back_populates="members")
-
+    
     # Association between User -> UserCampaign -> Campaign
     campaign_associations = db.relationship("UserCampaign",
                                             back_populates="user",
@@ -47,7 +47,6 @@ class User(UserMixin, db.Model):
                                             viewonly=True)
 
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
-
     comments = db.relationship("Comment", back_populates="author")
 
 
@@ -58,6 +57,7 @@ class Campaign(db.Model):
 
     title = db.Column(db.String(250))
     description = db.Column(db.String(250), nullable=False)
+    last_edited = db.Column(db.DateTime, nullable=False)
 
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
@@ -95,7 +95,6 @@ class Event(db.Model):
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     comments = db.relationship("Comment", back_populates="parent_event")
-
     parent_campaign = db.relationship("Campaign", back_populates="events")
 
 
