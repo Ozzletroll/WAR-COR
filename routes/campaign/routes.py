@@ -3,6 +3,7 @@ from sqlalchemy import select
 from flask_login import login_required, current_user
 from itertools import groupby
 from datetime import datetime
+import werkzeug
 
 import auth
 import forms
@@ -108,6 +109,47 @@ def edit_campaign(campaign_name, campaign_id):
         return redirect(url_for("campaign.campaigns"))
 
     return render_template("edit_campaign.html", form=form, campaign=campaign)
+
+
+# Delete campaign
+@bp.route("/campaigns/<campaign_name>/<campaign_id>/delete", methods=["GET", "POST"])
+@login_required
+def delete_campaign(campaign_name, campaign_id):
+
+    campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name, id=campaign_id)).scalar()
+    auth.permission_required(campaign)
+
+    # Create login form to check credentials
+    form = forms.LoginForm()
+
+    if form.validate_on_submit():
+
+        search_username = request.form["username"]
+        password = request.form["password"]
+
+        user = current_user
+        search_user = db.session.execute(select(models.User).filter_by(username=search_username)).scalar()
+
+        if search_user:
+            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+                
+                # Delete campaign from database
+                db.session.delete(campaign)
+                # Commit changes
+                db.session.commit()
+                return redirect(url_for("campaign.campaigns"))
+            else:
+                flash("Authentication failed. Incorrect password.")
+                return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
+        else:
+            flash("Authentication failed. Incorrect username.")
+            return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
+
+    else:
+        # Change LoginForm submit button text
+        form.submit.label.text = "Delete Campaign"
+
+        return render_template("delete_campaign.html", form=form, campaign=campaign)
 
 
 # View and add campaign users

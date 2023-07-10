@@ -84,6 +84,12 @@
                       Data Backup
                     </button>
                   </a>
+                  <a href="{{ url_for('campaign.delete_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+                    <button class="deploy-button">
+                      <img class="icon icon-small" src="/static/images/icons/bin.svg"> 
+                      Delete
+                    </button>
+                  </a>
                 </div>   
               </div>
 
