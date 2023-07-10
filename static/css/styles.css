@@ -1194,6 +1194,7 @@ h5 {
   display: flex;
   flex-direction: row;
   gap: 5vw;
+  padding-bottom: 10px;
 }
 
 .campaign-overview {

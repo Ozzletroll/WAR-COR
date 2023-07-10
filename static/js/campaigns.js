@@ -22,7 +22,7 @@ class Dropdown {
   openDropdown() {
     this.button.style.marginBottom = "0"
     this.button.style.transitionDelay = "0s"
-    this.dropdown.style.height = "140px"
+    this.dropdown.style.height = "150px"
     this.state = true
   }
 
