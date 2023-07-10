@@ -95,7 +95,7 @@
         <form id="form-1" class="add-member-form" onsubmit="return false" novalidate>
           {{ form.csrf_token }}
           <div class="user-form-container">
-            {{ form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH") }}
+            {{ form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH", autocomplete='off') }}
             {{ form.submit(class_="submit-button callsign-submit", onClick="user_search(target_url)") }}
           </div>
         </form>
