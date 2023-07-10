@@ -175,6 +175,7 @@ button {
   font-size: 28px;
   font-weight: 700;
   text-decoration: none;
+  transition: 0.5s;
 }
 
 .logo-title:hover {
@@ -250,7 +251,6 @@ button {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-left: max(25px, 2%);
 }
 
 .navbar-buttons a {
