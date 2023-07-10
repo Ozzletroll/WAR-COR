@@ -1005,6 +1005,7 @@ h5 {
   display: inline;
   width: fit-content;
   gap: 0;
+  min-height: 25px;
   /* This hides the whitepsace created by the inline display */
   font-size: 0;
 }
