@@ -1075,7 +1075,7 @@ h5 {
 
 .campaign-form-label-container {
   display: flex;
-
+  width: 100%;
 }
 
 .campaign-form.label-title {
@@ -1731,6 +1731,26 @@ span::after {
 
 .event-submit-area {
   margin-top: 20px;
+}
+
+.random-button-area {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: right;
+}
+
+.random-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+  border: 1px solid var(--darker_red);
+  background-color: var(--bg_colour1);
+  transition: 0.1s;
+}
+
+.random-button:active {
+  background-color: var(--bright_red);
 }
 
 /* Edit members page */
