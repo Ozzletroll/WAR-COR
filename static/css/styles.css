@@ -1244,6 +1244,15 @@ h5 {
   color: var(--dark_red);
 }
 
+.members-list-admin {
+  display: flex;
+}
+
+.admin-tag {
+  color: var(--bright_red);
+  padding-left: 6px;
+}
+
 .campaign-members-list .members-list-item {
   background-image: url("/static/images/icons/user.svg");
 	background-repeat: no-repeat;
