@@ -1,7 +1,8 @@
 from flask import jsonify, make_response
+from random import randint
 
 from routes.generator import bp
-
+from utils.generators import Generator, create_data
 
 #   =======================================
 #                Generators
@@ -11,8 +12,8 @@ from routes.generator import bp
 def random_event_title():
     """View which generates a random event title"""
 
-    result = "Event Title Goes Here"
-
-    response = make_response(result, 200)
-
+    generator = Generator()
+    result = generator.generate_operation()
+    response = make_response(jsonify({"Result": result}), 200)
+    
     return response

@@ -4,6 +4,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+from utils.generators import create_data
+
 db = SQLAlchemy()
 
 
@@ -50,6 +52,25 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     @login_manager.user_loader
     def load_user(user_id):
         return db.session.get(models.User, user_id)
+    
+    # Create data for random name generator
+    try:
+        with open("utils/data/nouns.json", "r") as file:
+            pass
+    except FileNotFoundError:
+        create_data()
+
+    try:
+        with open("utils/data/adjectives.json", "r") as file:
+            pass
+    except FileNotFoundError:
+        create_data()    
+
+    try:
+        with open("utils/data/verbs.json", "r") as file:
+            pass
+    except FileNotFoundError:
+        create_data()
 
     return app
 

@@ -3,19 +3,16 @@ function user_search(url) {
 
   var target_url = url
 
-  // Send fetch request to target url
-  fetch(target_url, {
-    "method": "GET"
-  })
-  .then(function(response) {
-    if (response.status == 200){
-      
-      // Get the form event title div element
-      const titleInput = document.getElementById("event-title");
-      titleInput.value = response;
+// Send fetch request to target url
 
-    }
-    
-  })
+  fetch(target_url)
+    .then(response => response.json())
+    .then(data => {
+
+        // Update form input to use result
+        const titleInput = document.getElementById("event-title");
+        titleInput.value = data["Result"];
+
+    })
 
 }
