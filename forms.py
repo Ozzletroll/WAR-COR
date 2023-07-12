@@ -1,7 +1,22 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, DateTimeField
-from wtforms.validators import DataRequired, InputRequired, EqualTo
+from wtforms.validators import DataRequired, InputRequired, EqualTo, ValidationError
 from flask_ckeditor import CKEditorField
+import re
+
+
+# Custom validators
+def date_format():
+
+    message = "Not a valid date format, please use the format 'YYYY-MM-DD HH:MM:SS'"
+    format = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
+
+    def _date_format(form, field):
+
+        if not re.match(format, field.data):
+            raise ValidationError(message)
+
+    return _date_format
 
 
 class RegisterUserForm(FlaskForm):
@@ -39,7 +54,7 @@ class CreateCampaignForm(FlaskForm):
 class CreateEventForm(FlaskForm):
     title = StringField("Event Title", validators=[DataRequired()])
     type = StringField("Event Type", validators=[DataRequired()])
-    date = DateTimeField("Event Date", format='%Y-%m-%d %H:%M:%S', validators=[InputRequired()])
+    date = StringField("Event Date", validators=[InputRequired(), date_format()])
     location = StringField("Location", validators=[DataRequired()])
     belligerents = StringField("Belligerents", validators=[DataRequired()])
     body = TextAreaField("Description", validators=[DataRequired()])

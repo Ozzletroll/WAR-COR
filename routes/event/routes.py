@@ -43,13 +43,7 @@ def add_event(campaign_name):
             event = models.Event()
             event.title = request.form["title"]
             event.type = request.form["type"]
-
-            # Convert date to datetime object
-            date = request.form["date"]
-            date_format = '%Y-%m-%d %H:%M:%S'
-            date_obj = datetime.strptime(date, date_format)
-            event.date = date_obj
-
+            event.date = request.form["date"]
             event.location = request.form["location"]
             event.belligerents = request.form["belligerents"]
             event.body = request.form["body"]
@@ -68,10 +62,8 @@ def add_event(campaign_name):
 
         # Flash form errors
         for field_name, errors in form.errors.items():
-                for error_message in errors:
-                    flash(field_name + ": " + error_message)
-                    if field_name == "date":
-                        flash("Please use YYYY-MM-DD HH:MM:SS format.")
+            for error_message in errors:
+                flash(field_name + ": " + error_message)
 
         return render_template("new_event.html", form=form, campaign=campaign)
 
