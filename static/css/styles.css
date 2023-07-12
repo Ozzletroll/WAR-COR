@@ -1746,11 +1746,13 @@ span::after {
   border-radius: 0;
   border: 1px solid var(--darker_red);
   background-color: var(--bg_colour1);
-  transition: 0.1s;
+  transition: 0.05s;
+  width: 30px;
+  height: 30px;
 }
 
 .random-button:active {
-  background-color: var(--bright_red);
+  background-color: var(--darker_red);
 }
 
 /* Edit members page */
