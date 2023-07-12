@@ -1079,6 +1079,9 @@ h5 {
 }
 
 .campaign-form.label-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   color: var(--text_dark);
 }
@@ -1737,6 +1740,7 @@ span::after {
   display: flex;
   flex: 1 0 auto;
   justify-content: right;
+  align-items: center;
 }
 
 .random-button {
