@@ -49,6 +49,7 @@ def create_data():
 
 
 class Generator:
+    """Random generator for creating Event Titles"""
 
     def __init__(self):
         with open("utils/data/nouns.json", "r") as file:
@@ -63,15 +64,15 @@ class Generator:
     def generate_operation(self):
 
         def random_noun():
-            noun_choice = self.nouns[random.randint(0, len(self.nouns) - 1)].title()
+            noun_choice = random.choice(self.nouns).title()
             return noun_choice
 
         def random_verb():
-            verb_choice = self.verbs[random.randint(0, len(self.verbs) - 1)].title()
+            verb_choice = random.choice(self.verbs).title()
             return verb_choice
 
         def random_adjective():
-            adj_choice = self.adjectives[random.randint(0, len(self.adjectives) - 1)].title()
+            adj_choice = random.choice(self.adjectives).title()
             return adj_choice
 
         format_1 = "Operation " + random_verb() + " " + random_noun()
@@ -79,8 +80,8 @@ class Generator:
         format_3 = "Operation " + random_adjective() + " " + random_noun()
 
         formats = [format_1, format_2, format_3]
-        choice = random.randint(0, 2)
-        return formats[choice]
+        choice = random.choice(formats)
+        return choice
 
 
 
