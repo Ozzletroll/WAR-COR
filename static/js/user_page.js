@@ -106,15 +106,30 @@ const toggle_2 = new ToggleButton({
 // Function called when toggling between different themes
 function themeToggle() {
 
+  // Get the stylesheet
+  var stylesheet = document.styleSheets[0];
+  var iconRule
+  
+  // Iterate through all the rules and get the icon rule
+  for(let i = 0; i < stylesheet.cssRules.length; i++) {
+    if(stylesheet.cssRules[i].selectorText === '.icon-invert') {
+      iconRule = stylesheet.cssRules[i];
+    }
+  }
+
   var targetTheme = document.querySelector('input[name="theme"]:checked').value;
   
   if (targetTheme == "light") {
     targetTheme = null;
+    iconRule.style.setProperty("filter", 'none');
+  }
+  else {
+    iconRule.style.setProperty("filter", 'invert(100)');
   }
 
   var currentTheme = document.documentElement.getAttribute("theme");
 
-  if (currentTheme == null || "null") {
+  if (currentTheme == null || currentTheme == "null") {
     document.documentElement.setAttribute('theme', targetTheme);
   }
   else if (currentTheme == "dark") {

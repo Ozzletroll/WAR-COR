@@ -121,6 +121,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  transition: 1s;
 }
 
 .onepage-content {
@@ -164,6 +165,7 @@ body {
   background-color: var(--bg_colour1);
   overflow-y: scroll;
   overflow-x: hidden;
+  transition: 1s;
 }
 
 .flashes {
@@ -179,6 +181,10 @@ body {
 
 .icon-large {
   width: 40px;
+}
+
+.icon-invert {
+  filter: invert(50);
 }
 
 button {
@@ -1316,20 +1322,9 @@ h5 {
   padding-left: 6px;
 }
 
-.campaign-members-list .members-list-item {
-  background-image: url("/static/images/icons/user.svg");
-	background-repeat: no-repeat;
-	background-position: left;
-	background-size: 15px;
-  padding-left: 15px;
-}
-
-.campaign-members-list .members-list-admin {
-  background-image: url("/static/images/icons/admin.svg");
-	background-repeat: no-repeat;
-	background-position: left;
-	background-size: 15px;
-  padding-left: 15px;
+.campaign-members-list .members-list-item, .campaign-members-list .members-list-admin {
+  display: flex;
+  align-items: center;
 }
 
 .campaign-entry-buttons {
@@ -1659,7 +1654,7 @@ span::after {
   padding: 5px;
   outline: none;
   position: relative;
-  color: var(--dark_red);
+  color: var(--text_flavour_bright);
 }
 
 .callsign-input:hover {
@@ -1938,6 +1933,7 @@ span::after {
 
 .results-username {
   margin: 2px;
+  color: var(--text_dark);
 }
 
 .results-area a {
@@ -2054,6 +2050,7 @@ span::after {
   padding: 0;
   padding: 10px;
   background-color: var(--bg_colour2);
+  color: var(--text_bright);
   transition: 0.2s;
 }
 

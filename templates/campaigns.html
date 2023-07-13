@@ -32,8 +32,10 @@
                 {% for user in campaign.members %}
                   {% if campaign in user.permissions %}
                   <li class="members-list-admin">
+                    <img class="icon icon-invert" src="/static/images/icons/admin.svg">
                     {% else %}
                   <li class="members-list-item">
+                    <img class="icon icon-invert" src="/static/images/icons/user.svg">
                   {% endif %}
                     {{user.username.upper()}}:
                     {% for entry in user.campaign_associations %}
