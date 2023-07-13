@@ -13,7 +13,7 @@ def random_event_title():
     """View which generates a random event title"""
 
     generator = Generator()
-    result = generator.generate_operation()
+    result = generator.random_event_title()
     response = make_response(jsonify({"Result": result}), 200)
     
     return response

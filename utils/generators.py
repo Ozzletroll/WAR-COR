@@ -61,7 +61,7 @@ class Generator:
         with open("utils/data/adjectives.json", "r") as file:
             self.adjectives = json.load(file)
 
-    def generate_operation(self):
+    def random_event_title(self):
 
         def random_noun():
             noun_choice = random.choice(self.nouns).title()
