@@ -1860,8 +1860,12 @@ span::after {
   height: 30px;
 }
 
+.random-button:hover {
+  background-color: var(--elem_dark);
+}
+
 .random-button:active {
-  background-color: var(--darker_red);
+  background-color: var(--elem_bright);
 }
 
 /* Edit members page */
