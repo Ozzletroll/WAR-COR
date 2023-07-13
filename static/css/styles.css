@@ -7,6 +7,7 @@
   --elem_dark: #E5E5E5;
   --elem_mid: #F5F5F5;
   --elem_bright: #ffffff;
+  --elem_trans: #ffffff80;
 
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
@@ -40,6 +41,7 @@
   --elem_dark: #111111;
   --elem_mid: #1f1f1f;
   --elem_bright: #3d3d3d;
+  --elem_trans: #aaaaaa2d;
 
   --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
@@ -56,8 +58,8 @@
   --dark_red: #b30000;
   --darker_red: #9C1717;
 
-  --gradient1: #ffffff;
-  --gradient2: #d1d1d1;
+  --gradient1: #2B2B2B;
+  --gradient2: #1f1f1f;
 }
 
 [theme="ironbow"] {
@@ -68,13 +70,14 @@
   --elem_dark: #111111;
   --elem_mid: #1f1f1f;
   --elem_bright: #ffffff;
+  --elem_trans: #ffffff80;
 
   --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
   --text_flavour: #e42e00;
   --text_flavour_bright: #ff3300;
-  --text_header: #b30000;
+  --text_header: #db5000;
   --text_header_contrast: #ffffff;
 
   --dark_grey: #2B2B2B;
@@ -927,7 +930,7 @@ h5 {
 }
 
 .form {
-  background-color: #ffffff80;
+  background-color: var(--elem_trans);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -965,7 +968,7 @@ h5 {
   align-items: center;
   margin: 20px;
   margin-bottom: 0px;
-  background-color: #00000018;
+  background-color: var(--elem_dark);
 }
 
 .form-icon {
@@ -982,18 +985,19 @@ h5 {
 }
 
 .form-field {
-  color: #9C1717;
+  color: var(--darker_red);
   border-style: none;
-  background-color: #e2e2e2;
+  background-color: var(--elem_dark);
   font-family: "Roboto Mono", monospace;
   font-size: 18px;
   padding: 3px;
   outline: none;
+  transition: 0.3s;
 }
 
 .form-field:hover {
-  color: #db0000;
-  background-color: #0000001c;
+  color: var(--bright_red);
+  background-color: var(--elem_mid);
 }
 
 .submit-button {
@@ -1700,6 +1704,7 @@ span::after {
   gap: 15px;
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
   color: var(--text_dark);
+  transition: 0.3s;
 }
 
 .delete-button {
@@ -1707,7 +1712,7 @@ span::after {
 }
 
 .user-settings-button:hover {
-  background-color: var(--gradient2);
+  background-color: var(--elem_bright);
 }
 
 .user-settings-button:active {
@@ -2050,7 +2055,7 @@ span::after {
   padding: 0;
   padding: 10px;
   background-color: var(--bg_colour2);
-  color: var(--text_bright);
+  color: var(--text_dark);
   transition: 0.2s;
 }
 
