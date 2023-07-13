@@ -69,15 +69,6 @@ class ToggleButton {
 
 }
 
-
-function themeToggle() {
-
-  var theme = document.querySelector('input[name="theme"]:checked').value;
-  console.log(theme);
-
-}
-
-
 // Create tabs
 const tab_1 = new Tab({
   tab: "tab-1",
@@ -110,3 +101,48 @@ const toggle_2 = new ToggleButton({
   form: "form-2",
   button: "f2-button"
 })
+
+function themeToggle() {
+
+  var targetTheme = document.querySelector('input[name="theme"]:checked').value;
+  
+  if (targetTheme == "light") {
+    targetTheme = null;
+  }
+
+  var currentTheme = document.documentElement.getAttribute("theme");
+
+  if (currentTheme == null || "null") {
+    document.documentElement.setAttribute('theme', targetTheme);
+  }
+  else if (currentTheme == "dark") {
+    document.documentElement.setAttribute('theme', targetTheme);
+  }
+  else if (currentTheme == "ironbow") {
+    document.documentElement.setAttribute('theme', targetTheme);
+  }
+
+  localStorage.setItem('theme', targetTheme);
+
+}
+
+// Set theme radio button to show the current theme
+var storedTheme = localStorage.getItem('theme')
+if (storedTheme) {
+
+  var radio;
+
+  if (storedTheme == "light" || storedTheme == "null") {
+    radio = "theme-1";
+  }
+  else if (storedTheme == "dark") {
+    radio = "theme-2";
+  }
+  else if (storedTheme == "ironbow") {
+    radio = "theme-3";
+  }
+  
+  
+  document.getElementById(radio).checked = true;
+
+}

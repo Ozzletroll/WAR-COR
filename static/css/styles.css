@@ -7,6 +7,7 @@
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
   --text_dark: #000000;
+  --text_flavour: #9C1717;
 
   --dark_grey: #2B2B2B;
   --black: #000000;
@@ -35,7 +36,7 @@
 }
 
 [theme="ironbow"] {
-  --bg_colour1: #2B2B2B;
+  --bg_colour1: #211e24;
   --bg_colour2: #E5E5E5;
   --bg_colour3: #F5F5F5;
 
