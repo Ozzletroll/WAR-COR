@@ -102,6 +102,8 @@ const toggle_2 = new ToggleButton({
   button: "f2-button"
 })
 
+
+// Function called when toggling between different themes
 function themeToggle() {
 
   var targetTheme = document.querySelector('input[name="theme"]:checked').value;
