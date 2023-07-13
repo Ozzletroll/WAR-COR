@@ -76,4 +76,3 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
 
 
 
-
