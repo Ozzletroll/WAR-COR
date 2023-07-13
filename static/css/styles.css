@@ -4,10 +4,17 @@
   --bg_colour2: #E5E5E5;
   --bg_colour3: #F5F5F5;
 
+  --elem_dark: #E5E5E5;
+  --elem_mid: #F5F5F5;
+  --elem_bright: #ffffff;
+
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
   --text_dark: #000000;
   --text_flavour: #9C1717;
+  --text_flavour_bright: #ff0000;
+  --text_header: #9C1717;
+  --text_header_contrast: #ffffff;
 
   --dark_grey: #2B2B2B;
   --black: #000000;
@@ -19,7 +26,7 @@
   --gradient1: #ffffff;
   --gradient2: #d1d1d1;
 
-  scrollbar-color: rgb(207, 27, 27) rgb(20, 25, 27);
+  scrollbar-color: var(--bright_red) rgb(20, 25, 27);
   scroll-behavior: smooth;
   
 }
@@ -27,22 +34,58 @@
 /* Dark Mode Colours */
 [theme="dark"] {
   --bg_colour1: #2B2B2B;
-  --bg_colour2: #E5E5E5;
+  --bg_colour2: #464646;
   --bg_colour3: #F5F5F5;
 
-  --text_bright: #ffffff;
+  --elem_dark: #111111;
+  --elem_mid: #1f1f1f;
+  --elem_bright: #3d3d3d;
+
+  --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
+  --text_flavour: #ff0000;
+  --text_flavour_bright: #ffffff;
+  --text_header: #b30000;
+  --text_header_contrast: #ffffff;
+
+  --dark_grey: #2B2B2B;
+  --black: #000000;
+  --bright_red: #ff0000;
+  --red: #db0000;
+  --dark_red: #b30000;
+  --darker_red: #9C1717;
+
+  --gradient1: #ffffff;
+  --gradient2: #d1d1d1;
 }
 
 [theme="ironbow"] {
-  --bg_colour1: #211e24;
-  --bg_colour2: #E5E5E5;
+  --bg_colour1: #1c1a1f;
+  --bg_colour2: #393144;
   --bg_colour3: #F5F5F5;
 
-  --text_bright: #ffffff;
+  --elem_dark: #111111;
+  --elem_mid: #1f1f1f;
+  --elem_bright: #ffffff;
+
+  --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
+  --text_flavour: #e42e00;
+  --text_flavour_bright: #ff3300;
+  --text_header: #b30000;
+  --text_header_contrast: #ffffff;
+
+  --dark_grey: #2B2B2B;
+  --black: #000000;
+  --bright_red: #ff3300;
+  --red: #6e2e56;
+  --dark_red: #63203f;
+  --darker_red: #2f233d;
+
+  --gradient1: #ffffff;
+  --gradient2: #d1d1d1;
 }
 
 /* Chrome Scrollbar */
@@ -145,6 +188,10 @@ button {
 
 .heading-top {
   margin-top: 25px;
+}
+
+p {
+  color: var(--text_dark);
 }
 
 /* Navbar */
@@ -510,6 +557,7 @@ h1 {
   flex-direction: column;
   text-align: left;
   scroll-margin-top: 50px;
+  background-color: var(--elem_bright);
 }
 
 .features-header {
@@ -520,7 +568,7 @@ h1 {
 h3 {
   font-size: min(7vw, 48px);
   font-weight: 400;
-  color: var(--darker_red);
+  color: var(--text_header);
   width: 100%;
   padding-bottom: 0%;
   padding-left: 5%;
@@ -951,7 +999,7 @@ h5 {
   width: 120px;
   font-family: "Roboto Mono", monospace;
   background-color: #9C1717;
-  color: var(--text_bright);
+  color: var(--text_header_contrast);
   border-style: none;
 }
 
@@ -1102,16 +1150,17 @@ h5 {
   font-family: "Roboto Mono", monospace;
   border-style: none;
   transition: 0.5s;
-  background-color: var(--bg_colour3);
+  background-color: var(--elem_mid);
   padding: 20px;
   margin-top: 5px;
   margin-bottom: 20px;
   outline: none;
   position: relative;
+  color: var(--text_dark);
 }
 
 .campaign-input:hover {
-  background-color: var(--bg_colour2);
+  background-color: var(--elem_dark);
 }
 
 .campaign-input:focus {
@@ -1158,7 +1207,7 @@ h5 {
   font-size: min(2vw, 11px);
   font-weight: 200;
   width: min(400px, 60vw);
-  color: var(--darker_red);
+  color: var(--text_flavour);
   text-transform: uppercase;
 }
 
@@ -1210,6 +1259,7 @@ h5 {
 
 .campaign-entry-title {
   text-transform: uppercase;
+  color: var(--text_dark);
 }
 
 .campaign-entry-container {
@@ -1254,7 +1304,7 @@ h5 {
   margin: 0;
   padding-left: 0;
   list-style: none;
-  color: var(--dark_red);
+  color: var(--text_flavour);
 }
 
 .members-list-admin {
@@ -1262,7 +1312,7 @@ h5 {
 }
 
 .admin-tag {
-  color: var(--bright_red);
+  color: var(--text_flavour_bright);
   padding-left: 6px;
 }
 
@@ -1326,7 +1376,7 @@ h5 {
 }
 
 .last-updated-text {
-  color: var(--darker_red);
+  color: var(--text_flavour);
 }
 
 @media screen and (max-width: 750px) { 
@@ -1510,9 +1560,13 @@ span::after {
 .callsigns-area, .settings-area {
   display: flex;
   flex-direction: column;
-  background-color: var(--bg_colour3);
+  background-color: var(--elem_mid);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-bottom: 50px;
+}
+
+.settings-area .campaign-entry-title, .callsigns-area .campaign-entry-title {
+  color: var(--text_header_contrast);
 }
 
 .callsign-content-area {
@@ -1544,6 +1598,7 @@ span::after {
   font-size: clamp(14px, 4vw, 20px);
   text-transform: uppercase;
   max-width: 340px;
+  color: var(--text_dark);
 }
 
 .callsign-entry-area {
@@ -1600,7 +1655,7 @@ span::after {
   border: 2px solid;
   border-color: var(--bg_colour2);
   transition: 0.5s;
-  background-color: var(--bg_colour1);
+  background-color: var(--elem_bright);
   padding: 5px;
   outline: none;
   position: relative;
@@ -1608,7 +1663,7 @@ span::after {
 }
 
 .callsign-input:hover {
-  background-color: var(--bg_colour2);
+  background-color: var(--elem_mid);
 }
 
 .callsign-input:focus {
@@ -1649,6 +1704,7 @@ span::after {
   justify-content: left;
   gap: 15px;
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
+  color: var(--text_dark);
 }
 
 .delete-button {
@@ -1701,6 +1757,7 @@ span::after {
 .theme-label {
   font-size: 14px;
   font-weight: 300;
+  color: var(--text_dark);
 }
 
 .theme-radio {
