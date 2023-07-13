@@ -21,8 +21,8 @@ class Tab {
   
   openTab() {
     this.tab.style.marginTop = "20px";
-    this.tab.style.display = "flex"
-    this.tab.style.flexDirection = "column"
+    this.tab.style.display = "flex";
+    this.tab.style.flexDirection = "column";
     this.tab.style.maxHeight = "fit-content";
     this.state = true
   }
@@ -30,8 +30,8 @@ class Tab {
   closeTab() {
     this.tab.style.maxHeight = "0";
     this.tab.style.marginTop = "-20px";
-    this.tab.style.display = "none"
-    this.state = false
+    this.tab.style.display = "none";
+    this.state = false;
   }
 
 }
@@ -44,30 +44,39 @@ class ToggleButton {
   }) {
     this.form = document.getElementById(form);
     this.button = button;
-    this.state = false
+    this.state = false;
 
     document.getElementById(this.button).onclick = event => {
       
       if (this.state == false) {
-        this.openForm(event)
+        this.openForm(event);
       }
       else if (this.state == true) {
-        this.closeForm(event)
+        this.closeForm(event);
       }
     } 
   }
   
   openForm() {
-    this.form.style.display = "flex"
-    this.state = true
+    this.form.style.display = "flex";
+    this.state = true;
   }
 
   closeForm() {
-    this.form.style.display = "none"
-    this.state = false
+    this.form.style.display = "none";
+    this.state = false;
   }
 
 }
+
+
+function themeToggle() {
+
+  var theme = document.querySelector('input[name="theme"]:checked').value;
+  console.log(theme);
+
+}
+
 
 // Create tabs
 const tab_1 = new Tab({
@@ -86,6 +95,11 @@ const tab_3 = new Tab({
 })
 
 // Create toggle buttons
+
+const pref_1 = new ToggleButton({
+  form: "pref-1",
+  button: "p1-button"
+})
 
 const toggle_1 = new ToggleButton({
   form: "form-1",

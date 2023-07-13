@@ -23,16 +23,6 @@
   
 }
  
-/* Chrome Scrollbar */
-::-webkit-scrollbar {
-  background: var(--dark_grey);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bright_red);
-}
-
-
 /* Dark Mode Colours */
 [theme="dark"] {
   --bg_colour1: #2B2B2B;
@@ -42,6 +32,25 @@
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
+}
+
+[theme="ironbow"] {
+  --bg_colour1: #2B2B2B;
+  --bg_colour2: #E5E5E5;
+  --bg_colour3: #F5F5F5;
+
+  --text_bright: #ffffff;
+  --text_normal: #E5E5E5;
+  --text_dark: #ffffff;
+}
+
+/* Chrome Scrollbar */
+::-webkit-scrollbar {
+  background: var(--dark_grey);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bright_red);
 }
 
 /* Page Layout */
@@ -1673,6 +1682,44 @@ span::after {
 
 .user-icon-trans {
   background-color: transparent;
+}
+
+/* Theme selector */
+
+.preferences-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.pref-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.theme-label {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.theme-radio {
+  appearance: none;
+  padding: 10px;
+  border: 1px solid var(--dark_red);
+  transition: 0.3s;
+}
+
+.theme-radio:checked {
+  background-color: var(--dark_red);
+  border-color: var(--bright_red);
+}
+
+.theme-radio:hover {
+  background-color: var(--bright_red);
+}
+
+.theme-radio:active {
+  background-color: var(--text_bright);
 }
 
 @media screen and (min-width: 800px) { 

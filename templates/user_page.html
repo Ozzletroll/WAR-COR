@@ -82,9 +82,51 @@
 
       <div class="callsign-content-area" id="tab-2">
 
-        <p class="flavour-text">UWC-16-02 // Personnel::Biometric Data </p>
+        <p class="flavour-text">UWC-16-02 // Personnel::User Preferences </p>
 
+        <div class="user-buttons">
 
+          <div class="user-form-container">
+            <button id="p1-button" class="user-settings-button">
+              <img class="icon callsign-form-icon user-icon-trans" src="/static/images/icons/dark_mode.svg">
+              INTERFACE THEME
+            </button>
+            <p class="flavour-text user-form-flavour">//Imaging::Wavelength </p>
+          </div>
+
+          <div id="pref-1" class="change-password-form">
+
+            <div class="user-form-container">
+
+              <form class="preferences-form">
+
+                <div class="pref-item">
+                  <input id="theme-1" value="theme-1" type="radio" label="AAA" name="theme" class="theme-radio" onclick="themeToggle()">
+                  <label class="theme-label">
+                    UWC Visible Spectrum Optics
+                  </label>
+                </div>
+
+                <div class="pref-item">
+                  <input id="theme-2" value="theme-2" type="radio" name="theme" class="theme-radio" onclick="themeToggle()">
+                  <label class="theme-label">
+                    GMS Thermal White Hot
+                  </label>
+                </div>
+
+                <div class="pref-item">
+                  <input id="theme-3" value="theme-3" type="radio" name="theme" class="theme-radio" onclick="themeToggle()">
+                  <label class="theme-label">
+                    HA Ironbow
+                  </label>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
 
       </div>
 
