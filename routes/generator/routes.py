@@ -12,8 +12,8 @@ from utils.generators import Generator, create_data
 def random_event_title():
     """View which generates a random event title"""
 
-    generator = Generator()
-    result = generator.random_event_title()
+    generate = Generator()
+    result = generate.random_event_title()
     response = make_response(jsonify({"Result": result}), 200)
     
     return response
