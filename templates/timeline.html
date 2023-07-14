@@ -39,11 +39,15 @@
               <li class="members-list-item">
                 <img class="icon icon-invert" src="/static/images/icons/user.svg">
               {% endif %}
-                {{user.username.upper()}}:
+                <h6 class="callsign-text">
+                  {{user.username.upper()}}:
+                </h6>
                 {% for entry in user.campaign_associations %}
                   {%if entry.campaign_id == campaign.id%}
                     {% if entry.callsign is not none %}
-                      [{{entry.callsign.upper()}}]
+                      <h6 class="callsign-text">
+                        [{{entry.callsign.upper()}}]
+                      </h6>
                     {% endif %}
                   {%endif%}
                 {% endfor %}

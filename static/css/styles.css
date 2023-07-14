@@ -1336,7 +1336,7 @@ h5 {
 
 .callsign-text {
   display: flex;
-  font-size: min(12px, 3vw);
+  font-size: min(14px, 3vw);
   font-weight: 400;
   margin: 0;
 }
