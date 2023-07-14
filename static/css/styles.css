@@ -1994,6 +1994,8 @@ span::after {
 .timeline-year-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  flex: 1 0 0;
 }
 
 .timeline-horizontal {
@@ -2006,8 +2008,7 @@ span::after {
 .timeline-line {
   height: 100%;
   color: var(--bright_red);
-  margin-top: 0;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .timeline-year-header {
@@ -2020,7 +2021,7 @@ span::after {
 .timeline-months-container {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  flex: 3 0 0;
 }
 
 .timeline-month {
