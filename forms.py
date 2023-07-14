@@ -9,7 +9,7 @@ import re
 def date_format():
 
     message = "Not a valid date format, please use the format 'YYYY-MM-DD HH:MM:SS'"
-    format = r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
+    format = r"^\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
 
     def _date_format(form, field):
 
