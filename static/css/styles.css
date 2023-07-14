@@ -1334,6 +1334,13 @@ h5 {
   display: flex;
 }
 
+.callsign-text {
+  display: flex;
+  font-size: min(12px, 3vw);
+  font-weight: 400;
+  margin: 0;
+}
+
 .admin-tag {
   color: var(--text_flavour_bright);
   padding-left: 6px;
