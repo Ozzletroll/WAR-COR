@@ -1978,19 +1978,62 @@ span::after {
   margin-top: 20px;
 }
 
-.placeholder-timeline {
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+
+.timeline-year {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.timeline-year-container {
   display: flex;
   flex-direction: column;
 }
 
-.timeline-year {
+.timeline-horizontal {
+  width: 30px;
+  color: var(--bright_red);
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.timeline-line {
+  height: 100%;
+  color: var(--bright_red);
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.timeline-year-header {
+  display: flex;
   scroll-margin-top: 53px;
+  padding-left: 0;
+  width: fit-content;
+}
+
+.timeline-months-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.timeline-month {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .timeline-event {
   display: flex;
   flex-direction: column;
-  scroll-margin-top: 53px;
+  scroll-margin-top: calc(53px + 30vh);
 }
 
 .timeline-event:hover {

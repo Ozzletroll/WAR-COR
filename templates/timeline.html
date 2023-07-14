@@ -71,32 +71,45 @@
 
 
       <!-- Timeline -->
-      <div class="placeholder-timeline">
-      {% for year in timeline_data %}
+      <div class="timeline-container">
 
-        <h3 id="year-{{year}}" class="timeline-year">
-        {{ year + "u"}}
-        </h3> 
-        
-        {% for month in timeline_data[year] %}
+        {% for year in timeline_data %}
+        <div class="timeline-year">
 
-          <h5>
-            {{ month }}
-          </h5> 
-          
-          {% for event in timeline_data[year][month] %}
-
-          <div id="event-{{event.id}}" class="timeline-event">
-            <p>{{ event.date.split("-")[2].split()[0] }}</p>
-            <p>{{ event.date.split("-")[2].split()[1] }}</p>
-            <p>{{event.title}}</p>
+          <div class="timeline-year-container">
+            <h3 class="timeline-year-header" id="year-{{year}}">
+            {{ year + "u"}}
+            </h3> 
+            <hr class="timeline-horizontal">
+            <hr class="timeline-line">
+            <hr class="timeline-horizontal">
           </div>
 
-          {% endfor %}
+          <div class="timeline-months-container">
+            {% for month in timeline_data[year] %}
+            <div class="timeline-month">
+              <h5>
+                {{ month }}
+              </h5> 
+              
+              {% for event in timeline_data[year][month] %}
 
+              <div id="event-{{event.id}}" class="timeline-event">
+                <p>{{ event.date.split("-")[2].split()[0] }}</p>
+
+                <p>{{event.title}}</p>
+              </div>
+
+              {% endfor %}
+
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+        
         {% endfor %}
 
-      {% endfor %}
       </div>
 
 
