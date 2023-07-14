@@ -96,29 +96,37 @@
                 <div class="connector-date">
                   {{ month }}
                 </div>
-                <div class="line line-right"></div>
+                <div class="line"></div>
+
               </div>
 
               <div class="timeline-month">
                 
                 {% for event in timeline_data[year][month] %}
 
-                <div class="timeline-event-container">
-
-                  <!-- Connecting line between month marker and event-->
                   {% if loop.length == 1 %}
+                  <div class="timeline-event-container">
                   <div class="event-line event-line-solo"></div>
                   {% elif loop.first  %}
+                  <div class="timeline-event-container">
                   <div class="event-line event-line-top"></div>
                   {% elif loop.last %}
+                  <div class="timeline-event-container">
                   <div class="event-line event-line-bottom"></div>
                   {% else %}
+                  <div class="timeline-event-container event-container-mid">
                   <div class="event-line event-line-mid"></div>
                   {% endif %}
 
                     <div id="event-{{event.id}}" class="timeline-event">
-                      <p>{{ event.date }}</p>
-                      <p>{{event.title}}</p>
+                      <div class="event-header">
+                        {{ event.title }}
+                      </div>
+                      <div class="event-body">
+                        <p>{{event.date}}</p>
+                        <p>{{event.body}}</p>
+                      </div>
+
                     </div>
 
                   </div>
