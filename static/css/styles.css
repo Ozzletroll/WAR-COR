@@ -400,7 +400,10 @@ p {
 
 .hamburger-menu {
   display: none;
+  position: -webkit-sticky;
+  position: sticky;
   z-index: 1;
+  top: 53px;
 }
 
 .hamburger-button {
