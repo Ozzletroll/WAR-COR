@@ -2017,6 +2017,7 @@ span::after {
 }
 
 .timeline-year-header {
+  font-size: min(5vw, 46px);
   display: flex;
   scroll-margin-top: 53px;
   padding-left: 0;
@@ -2035,7 +2036,7 @@ span::after {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: left;
   margin-top: 25%;
   flex: 1 0 0;
 }
@@ -2083,7 +2084,7 @@ span::after {
 }
 
 .event-container-mid {
-  padding-top: 100px;
+  margin-top: 100px;
   border-left: 1px solid var(--bright_red);
   box-sizing: border-box;
 }
@@ -2094,7 +2095,8 @@ span::after {
 
 .event-line {
   display: flex;
-  flex: 1 2 0;
+  flex: 0 0 7vw;
+  width: 7vw;
   border: 1px solid var(--bright_red);
   margin-top: 12px;
   box-sizing: border-box;
@@ -2126,23 +2128,32 @@ span::after {
 
 .timeline-event {
   display: flex;
-  flex: 3 1 0;
-  min-width: 50%;
+  flex: 0 1 35vw;
   background-color: var(--elem_mid);
   flex-direction: column;
   scroll-margin-top: 53px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
   margin-bottom: 50px;
+
+  /* To animate */
+  transition: 0.5s;
+
 }
 
 .event-header {
   display: flex;
+  font-size: min(16px, 2vw);
   font-weight: 600;
   padding: 10px;
   text-transform: uppercase;
   color: var(--text_header_contrast);
   background-color: var(--darker_red);
+  transition: 0.3s;
+}
+
+.event-header:hover {
+  background-color: var(--dark_red);
 }
 
 .event-body {
@@ -2158,8 +2169,11 @@ span::after {
 }
 
 .event-description {
+  display: flex;
+  min-width: 1px;
+  word-break: break-word;
   font-weight: 300;
-  font-size: min(14px, 2vw);
+  font-size: min(12px, 1.5vw);
   margin: 10px;
   margin-left: 25px;
   margin-right: 25px;
@@ -2171,6 +2185,14 @@ span::after {
   padding: 16px;
 }
 
+@media screen and (max-width: 800px) { 
+
+  .connector-date {
+    margin-left: -25px;
+  }
+
+}
+
 @media screen and (max-width: 600px) { 
 
   .connector-date {
@@ -2179,6 +2201,19 @@ span::after {
 
   .month-connector {
     margin-top: 12px;
+    flex: 1 0 10vw;
+  }
+
+}
+
+@media screen and (max-width: 400px) { 
+
+  .month-connector {
+    display: none;
+  }
+
+  .event-line {
+    display: none;
   }
 
 }
@@ -2227,7 +2262,7 @@ span::after {
   clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
 }
 
-@media screen  and (max-width: 700px) {
+@media screen  and (max-width: 800px) {
 
   .sidebar-deploy {
     display: none;
