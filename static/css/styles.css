@@ -2080,6 +2080,16 @@ span::after {
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   padding: 2px 5px 2px 5px;
+  min-width: 49px;
+  clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
+}
+
+.connector-date-outline {
+  display: flex;
+  justify-content: center;
+  background-color: var(--bright_red);
+  color: var(--text_header_contrast);
+  padding: 1px 1px 1px 1px;
   min-width: 50px;
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
 }
@@ -2113,14 +2123,14 @@ span::after {
   flex: 0 0 7vw;
   width: 7vw;
   border: 1px solid var(--bright_red);
-  margin-top: 12px;
+  margin-top: 13px;
   box-sizing: border-box;
 }
 
 .event-line-top {
   border-bottom: 0;
   border-right: 0;
-  margin-top: 12px;
+  margin-top: 13px;
 }
 
 .event-line-bottom {
@@ -2185,8 +2195,6 @@ span::after {
 
 }
 
-
-
 .event-date {
   display: flex;
   justify-content: center;
@@ -2210,22 +2218,18 @@ span::after {
   padding: 16px;
 }
 
-@media screen and (max-width: 800px) { 
-
-  .connector-date {
-    margin-left: -25px;
-  }
-
-}
-
 @media screen and (max-width: 600px) { 
 
   .connector-date {
     display: none;
   }
 
+  .connector-date-outline {
+    display: none;
+  }
+
   .month-connector {
-    margin-top: 12px;
+    margin-top: 13px;
     flex: 1 0 10vw;
   }
 
