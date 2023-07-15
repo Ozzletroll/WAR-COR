@@ -22,53 +22,61 @@
       <hr class="campaigns-divider">
       <p class="flavour-text timeline-margin">UWC-21-{{campaign.id}} // Campaign::Timeline</p>
 
-      <!-- Overview and members list -->
-      <div class="campaign-entry-container timeline-overview">
-        <div class="campaign-overview">
-          <h4 class="campaign-entry-title">Overview:</h4>
-          <p>{{ campaign.description }}</p>
-        </div>
-        <div class="campaign-members">
-          <h4 class="campaign-entry-title">Members:</h2>
-          <ul class="campaign-members-list">
-            {% for user in campaign.members %}
-              {% if campaign in user.permissions %}
-              <li class="members-list-admin">
-                <img class="icon icon-invert" src="/static/images/icons/admin.svg">
-                {% else %}
-              <li class="members-list-item">
-                <img class="icon icon-invert" src="/static/images/icons/user.svg">
-              {% endif %}
-                <h6 class="callsign-text">
-                  {{user.username.upper()}}:
-                </h6>
-                {% for entry in user.campaign_associations %}
-                  {%if entry.campaign_id == campaign.id%}
-                    {% if entry.callsign is not none %}
-                      <h6 class="callsign-text">
-                        [{{entry.callsign.upper()}}]
-                      </h6>
-                    {% endif %}
-                  {%endif%}
-                {% endfor %}
+      <section class="campaign-entry">
+
+        <!-- Overview and members list -->
+        <div class="campaign-entry-container timeline-overview">
+          <div class="campaign-overview">
+            <h4 class="campaign-entry-title">Overview:</h4>
+            <p>{{ campaign.description }}</p>
+          </div>
+          <div class="campaign-members">
+            <h4 class="campaign-entry-title">Members:</h2>
+            <ul class="campaign-members-list">
+              {% for user in campaign.members %}
                 {% if campaign in user.permissions %}
-                [ADMIN]
+                <li class="members-list-admin">
+                  <img class="icon icon-invert" src="/static/images/icons/admin.svg">
+                  {% else %}
+                <li class="members-list-item">
+                  <img class="icon icon-invert" src="/static/images/icons/user.svg">
                 {% endif %}
-              </li> 
-            {% endfor %} 
-          </ul>
-        </div> 
-      </div>
+                  <h6 class="callsign-text">
+                    {{user.username.upper()}}:
+                  </h6>
+                  {% for entry in user.campaign_associations %}
+                    {%if entry.campaign_id == campaign.id%}
+                      {% if entry.callsign is not none %}
+                        <h6 class="callsign-text">
+                          [{{entry.callsign.upper()}}]
+                        </h6>
+                      {% endif %}
+                    {%endif%}
+                  {% endfor %}
+                  {% if campaign in user.permissions %}
+                  [ADMIN]
+                  {% endif %}
+                </li> 
+              {% endfor %} 
+            </ul>
+          </div> 
+        </div>
 
-      <!-- Placeholder add event button -->
-      {% if campaign in current_user.permissions %}
-      <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-        <button>
-          ADD EVENT
-        </button>
-      </a>
-      {% endif %}
+        <div class="campaign-overview last-edited-area">
+          <h4 class="campaign-entry-title">Last Updated:</h4>
+          <p class="last-updated-text">{{ campaign.last_edited }}</p>
+        </div>
 
+        <!-- Placeholder add event button -->
+        {% if campaign in current_user.permissions %}
+        <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+          <button>
+            ADD EVENT
+          </button>
+        </a>
+        {% endif %}
+
+      </section>
 
       <!-- Timeline -->
       <div class="timeline-container">
