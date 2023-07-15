@@ -74,6 +74,7 @@
       <div class="timeline-container">
 
         {% for year in timeline_data %}
+
         <div class="timeline-year">
 
           <div class="timeline-year-container">
@@ -111,7 +112,7 @@
                   <div class="timeline-event-container">
                   <div class="event-line event-line-top"></div>
                   {% elif loop.last %}
-                  <div class="timeline-event-container">
+                  <div class="timeline-event-container event-container-bottom">
                   <div class="event-line event-line-bottom"></div>
                   {% else %}
                   <div class="timeline-event-container event-container-mid">
@@ -120,11 +121,20 @@
 
                     <div id="event-{{event.id}}" class="timeline-event">
                       <div class="event-header">
-                        {{ event.title }}
+                        //{{ event.title }}
                       </div>
                       <div class="event-body">
-                        <p>{{event.date}}</p>
-                        <p>{{event.body}}</p>
+                        <p class="event-date">{{event.date[:-8]}}</p>
+                        <p class="event-date">{{event.date[-8:]}}</p>
+                        <p class="event-description">
+                          {{event.body[:180]}}
+                          {% if event.body|length > 180 %}
+                            ...
+                          {% endif %}
+                        </p>
+                        <div class="event-button-area">
+                          <a href=""><button class="entry-button">VIEW</button></a>
+                        </div>
                       </div>
 
                     </div>
