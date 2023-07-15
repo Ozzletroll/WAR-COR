@@ -7,6 +7,7 @@
   --elem_dark: #E5E5E5;
   --elem_mid: #F5F5F5;
   --elem_bright: #ffffff;
+  --elem_hover: #dadada;
   --elem_trans: #ffffff80;
   --elem_border: #9C1717;
 
@@ -47,6 +48,7 @@
   --elem_dark: #111111;
   --elem_mid: #1f1f1f;
   --elem_bright: #3d3d3d;
+  --elem_hover: #1f1f1f;
   --elem_trans: #aaaaaa2d;
   --elem_border: #ff0000;
 
@@ -77,6 +79,7 @@
   --elem_dark: #111111;
   --elem_mid: #1f1f1f;
   --elem_bright: #3d3d3d;
+  --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
   --elem_border: #ff3300;
 
@@ -1014,7 +1017,7 @@ h5 {
 
 .form-field:hover {
   color: var(--bright_red);
-  background-color: var(--elem_mid);
+  background-color: var(--elem_hover);
 }
 
 .submit-button {
@@ -1316,7 +1319,7 @@ h5 {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  width: 40%;
+  width: 30%;
   margin: 0;
   gap: 15px;
   flex-wrap: nowrap;
@@ -1454,10 +1457,16 @@ h5 {
   border-style: none;
   text-transform: uppercase;
   gap: 5px;
+  background-color: var(--elem_mid);
+  color: var(--text_dark);
 }
 
 .entry-buttons-deploy a {
   text-decoration: none;
+}
+
+.deploy-button:hover {
+  background-color: var(--elem_dark);
 }
 
 .deploy-button:active {
@@ -1736,7 +1745,7 @@ span::after {
 }
 
 .user-settings-button:hover {
-  background-color: var(--elem_bright);
+  background-color: var(--elem_hover);
 }
 
 .user-settings-button:active {
@@ -2006,6 +2015,8 @@ span::after {
 .timeline-horizontal {
   width: 30px;
   color: var(--bright_red);
+  border-color: var(--bright_red);
+
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -2013,6 +2024,7 @@ span::after {
 .timeline-line {
   height: 100%;
   color: var(--bright_red);
+  border-color: var(--bright_red);
   margin: 0;
 }
 
@@ -2030,6 +2042,7 @@ span::after {
   display: flex;
   flex-direction: column;
   flex: 3 0 0;
+  padding-bottom: 100px;
 }
 
 .month-outer {
@@ -2051,6 +2064,7 @@ span::after {
 
 .line {
   background-color: var(--bright_red);
+  border-color: var(--bright_red);
   height: 1px;
   transition: 0.3s;
   flex: 1 0 0;
@@ -2072,7 +2086,7 @@ span::after {
 
 .timeline-month {
   display: flex;
-  flex: 3 0 0;
+  flex: 1 0 0;
   min-width: 280px;
   flex-direction: column;
 }
@@ -2091,6 +2105,7 @@ span::after {
 
 .event-container-bottom {
   padding-top: 100px;
+  padding-bottom: 50px;
 }
 
 .event-line {
@@ -2128,7 +2143,7 @@ span::after {
 
 .timeline-event {
   display: flex;
-  flex: 0 1 35vw;
+  flex: 0 1 35%;
   background-color: var(--elem_mid);
   flex-direction: column;
   scroll-margin-top: 53px;
@@ -2160,7 +2175,17 @@ span::after {
   display: flex;
   flex-direction: column;
   padding: 10px;
+  height: 0;
+  overflow-y: hidden;
+  /* To animate */
+  padding-top: 0;
+  padding-bottom: 0;
+  /* And increase width of header*/
+
+
 }
+
+
 
 .event-date {
   display: flex;
