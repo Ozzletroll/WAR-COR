@@ -11,7 +11,11 @@
         <div class="secondary-title">
           <h2>Frontline reporting in the year 5016u</h2>
         </div>
+        {% if current_user.is_authenticated %}
+        <a href="{{url_for('campaign.campaigns')}}"><button type="button" class="feature-button">View Campaigns</button></a>
+        {% else %}
         <a href="{{ url_for('user.register') }}"><button type="button" class="feature-button">Enlist today</button></a>
+        {% endif %}
       </div>
       <a href=#main-features class="down-area">
         <img src="/static/images/down_arrow.svg" class="down-arrow">
