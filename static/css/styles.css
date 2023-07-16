@@ -2085,13 +2085,9 @@ span::after {
 }
 
 .connector-date-outline {
-  display: flex;
-  justify-content: center;
   background-color: var(--bright_red);
-  color: var(--text_header_contrast);
   padding: 1px 1px 1px 1px;
   min-width: 50px;
-  clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
 }
 
 .timeline-month {
