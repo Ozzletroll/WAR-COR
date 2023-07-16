@@ -2030,10 +2030,12 @@ span::after {
 
 .timeline-year-header {
   font-size: min(5vw, 46px);
+  width: 10vw;
   display: flex;
+  justify-content: center;
   scroll-margin-top: 53px;
   padding-left: 0;
-  width: fit-content;
+  /* width: fit-content; */
   margin-left: -50px;
   margin-right: -50px;
 }
