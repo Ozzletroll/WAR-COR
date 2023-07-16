@@ -2052,7 +2052,7 @@ span::after {
   flex-direction: row;
   align-items: flex-start;
   justify-content: left;
-  margin-top: 10%;
+  margin-top: 5vh;
   margin-bottom: max(50px, 5%);
   flex: 1 0 0;
 }
@@ -2129,7 +2129,7 @@ span::after {
 
 .date-label-area {
   display: flex;
-  flex: 0 0 1;
+  flex: 1 0 0;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -2175,8 +2175,13 @@ span::after {
 .timeline-month {
   display: flex;
   flex: 3 0 0;
-  min-width: 280px;
   flex-direction: column;
+}
+
+.event-group-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
 }
 
 .timeline-day-container {
@@ -2253,11 +2258,12 @@ span::after {
 
 .event-outline {
   display: flex;
+  width: 180px;
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
   margin-bottom: 50px;
+  flex: 1 1 0;
 }
-
 
 .event-header {
   display: flex;
