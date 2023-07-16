@@ -172,8 +172,7 @@
                                 //{{event.title}}
                               </div>
                               <div class="event-body">
-                                <p class="event-date">{{event.date[:-8]}}</p>
-                                <p class="event-date">{{event.date[-8:]}}</p>
+                                <p class="event-date">{{event.type}}</p>
                                 <p class="event-description">
                                   {{event.body[:180]}}
                                   {% if event.body|length > 180 %}

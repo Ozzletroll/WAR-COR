@@ -2253,8 +2253,6 @@ span::after {
 
 .event-outline {
   display: flex;
-  flex: 1 1 auto;
-  max-width: clamp(150px, 20vw, 30vw);
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
   margin-bottom: 50px;
@@ -2281,6 +2279,7 @@ span::after {
   flex-direction: column;
   padding: 10px;
   height: 0;
+  /* min-height: 200px; */
   overflow-y: hidden;
   /* To animate */
   padding-top: 0;
@@ -2296,7 +2295,6 @@ span::after {
 
 .event-description {
   display: flex;
-  min-width: 1px;
   word-break: break-word;
   font-weight: 300;
   font-size: min(12px, 3vw);
@@ -2313,14 +2311,6 @@ span::after {
 
 @media screen and (max-width: 600px) { 
 
-  .right-branch-label {
-    margin-top: -15px;
-  }
-
-}
-
-@media screen and (max-width: 600px) { 
-
   .connector-date {
     display: none;
   }
@@ -2331,7 +2321,7 @@ span::after {
 
   .month-connector {
     margin-top: 13px;
-    flex: 1 0 10vw;
+    flex: 1 0 5vw;
   }
 
   .right-branch-label {
@@ -2362,6 +2352,10 @@ span::after {
 
   .timeline-months-container {
     display: inline-flex;
+  }
+
+  .event-outline {
+    width: 70%;
   }
 
 }
