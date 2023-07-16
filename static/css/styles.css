@@ -2186,6 +2186,10 @@ span::after {
   flex-direction: column;
 }
 
+.day-container-solo {
+  padding-bottom: 150px;
+}
+
 .day-container-mid {
   margin-top: 100px;
   border-left: 1px solid var(--bright_red);
