@@ -89,9 +89,12 @@
 
             {% for month in timeline_data[year] %}
 
+            {% if loop.first %}
+            <div class="month-outer month-outer-top">
+            {% else %}
             <div class="month-outer">
+            {% endif %}
 
-              
               <div class="month-connector">
                 <div class="line"></div>
                 <div class="connector-date connector-date-outline">
@@ -125,7 +128,7 @@
                         <div class="line"></div>
                         <div class="connector-date connector-date-outline">
                           <div class="connector-date">
-                            {{event.date[:-8]}}
+                            {{event.date.split("-")[2].split()[0]}}
                           </div>
                         </div>
                         <div class="line line-spacer"></div>
