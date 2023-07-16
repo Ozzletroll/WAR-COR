@@ -129,6 +129,18 @@
                   <div class="event-line event-line-mid"></div>
                   {% endif %}
 
+                    <div class="right-branch-label">
+                      <div class="date-label-area">
+                        <div class="line"></div>
+                        <div class="connector-date connector-date-outline">
+                          <div class="connector-date">
+                            {{event.date[:-8]}}
+                          </div>
+                        </div>
+                        <div class="line line-spacer"></div>
+                      </div>
+                    </div>
+
                     <div class="timeline-event event-outline">
                       <div id="event-{{event.id}}" class="timeline-event">
                         <div class="event-header">
@@ -154,7 +166,7 @@
                   </div>
 
                   <!-- Create new event button for last event in month group -->
-                  {% if  loop.index == loop.length - 1 %}
+                  {% if  campaign in current_user.permissions and loop.index == loop.length - 1 %}
                   <div class="event-between between-last">
                     <div class="line line-dashed"></div>
                     <div class="new-timeline-item">
@@ -162,7 +174,7 @@
                     </div>
                   </div>
                   <!-- Create new event button after the month group -->
-                  {% elif not loop.last %}
+                  {% elif campaign in current_user.permissions and not loop.last %}
                   <div class="event-between">
                     <div class="line line-dashed"></div>
                     <div class="new-timeline-item">
