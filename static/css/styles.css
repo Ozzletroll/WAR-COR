@@ -1459,7 +1459,7 @@ h5 {
   text-transform: uppercase;
   gap: 5px;
   background-color: var(--elem_mid);
-  color: var(--text_dark);
+  color: var(--text_flavour);
 }
 
 .entry-buttons-deploy a {
