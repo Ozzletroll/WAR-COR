@@ -1992,9 +1992,15 @@ span::after {
   margin-top: 20px;
 }
 
+.timeline-centring {
+  display: flex;
+  justify-content: center;
+}
+
 .timeline-container {
   display: flex;
   flex-direction: column;
+  flex: 1 0 0;
   margin-top: 150px;
   margin-bottom: 150px;
 }
@@ -2005,12 +2011,26 @@ span::after {
   justify-content: space-between;
 }
 
+.timeline-left-marker {
+  padding-top: 5vw;
+  display: flex;
+  font-size: min(3vw, 32px);
+  font-weight: 200;
+  align-items: center;
+  color: var(--text_normal);
+  opacity: 50%;
+  justify-content: center;
+  text-orientation: sideways-right;
+  writing-mode: sideways-lr;
+}
+
 .timeline-year-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1 0 0;
   margin-right: -14.33%;
+  margin-left: -45px;
 }
 
 .timeline-horizontal {
@@ -2044,7 +2064,6 @@ span::after {
   display: flex;
   flex-direction: column;
   flex: 3 0 0;
-  padding-bottom: 100px;
 }
 
 .month-outer {
@@ -2052,7 +2071,7 @@ span::after {
   flex-direction: row;
   align-items: flex-start;
   justify-content: left;
-  margin-top: 10%;
+  margin-top: 5vh;
   margin-bottom: max(50px, 5%);
   flex: 1 0 0;
 }
@@ -2124,12 +2143,12 @@ span::after {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  flex: 1 0 0;
+  flex: 2 0 0;
 }
 
 .date-label-area {
   display: flex;
-  flex: 0 0 1;
+  flex: 1 0 0;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -2140,7 +2159,7 @@ span::after {
   border-color: var(--bright_red);
   height: 1px;
   transition: 0.3s;
-  flex: 1 0 0;
+  flex: 0.5 0 0;
 }
 
 .line-dashed {
@@ -2149,7 +2168,11 @@ span::after {
 }
 
 .line-spacer {
-  width: 5vw;
+  width: 3vw;
+}
+
+.line-first {
+  flex: 0.5;
 }
 
 .connector-date {
@@ -2171,30 +2194,44 @@ span::after {
 .timeline-month {
   display: flex;
   flex: 3 0 0;
-  min-width: 280px;
   flex-direction: column;
 }
 
-.timeline-event-container {
+.event-group-container {
   display: flex;
-  flex-direction: row;
-  margin-bottom: -112px;
+  flex-direction: column;
+  flex: 1 0 0;
 }
 
-.event-container-mid {
+.timeline-day-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: -113px;
+}
+
+.day-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.day-container-solo {
+  padding-bottom: 113px;
+}
+
+.day-container-mid {
   margin-top: 100px;
   border-left: 1px solid var(--bright_red);
   box-sizing: border-box;
 }
 
-.event-container-bottom {
+.day-container-bottom {
   padding-top: 100px;
-  padding-bottom: 50px;
+  padding-bottom: 150px;
 }
 
 .event-line {
   display: flex;
-  flex: 0 0 3vw;
+  flex: 0 0 1px;
   border: 1px solid var(--bright_red);
   margin-top: 13px;
   box-sizing: border-box;
@@ -2230,7 +2267,7 @@ span::after {
   display: flex;
   background-color: var(--elem_mid);
   flex-direction: column;
-  scroll-margin-top: 53px;
+  scroll-margin-top: 54px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
   /* To animate */
@@ -2239,12 +2276,13 @@ span::after {
 }
 
 .event-outline {
-  max-width: 70%;
+  display: flex;
+  max-width: 300px;
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
   margin-bottom: 50px;
+  flex: 1 1 0;
 }
-
 
 .event-header {
   display: flex;
@@ -2266,7 +2304,7 @@ span::after {
   flex-direction: column;
   padding: 10px;
   height: 0;
-  width: 0;
+  /* min-height: 200px; */
   overflow-y: hidden;
   /* To animate */
   padding-top: 0;
@@ -2282,10 +2320,9 @@ span::after {
 
 .event-description {
   display: flex;
-  min-width: 1px;
   word-break: break-word;
   font-weight: 300;
-  font-size: min(12px, 1.5vw);
+  font-size: min(12px, 3vw);
   margin: 10px;
   margin-left: 25px;
   margin-right: 25px;
@@ -2297,15 +2334,15 @@ span::after {
   padding: 16px;
 }
 
-@media screen and (max-width: 600px) { 
+@media screen and (max-width: 650px) { 
 
-  .right-branch-label {
-    margin-top: -15px;
+  .timeline-left-marker {
+    display: none;
   }
 
-}
-
-@media screen and (max-width: 600px) { 
+  .timeline-year-container {
+    margin-left: 0;
+  }
 
   .connector-date {
     display: none;
@@ -2317,7 +2354,7 @@ span::after {
 
   .month-connector {
     margin-top: 13px;
-    flex: 1 0 10vw;
+    flex: 1 0 5vw;
   }
 
   .right-branch-label {
@@ -2342,12 +2379,25 @@ span::after {
 
 
   .timeline-year-container {
-    margin-right: -16px;
-    margin-left: 3vw;
+    margin-right: -11vw;
+    margin-left: 0;
   }
 
   .timeline-months-container {
     display: inline-flex;
+  }
+
+  .event-outline {
+    width: 70%;
+  }
+
+  .day-container-mid {
+    border: none;
+    padding-bottom: 100px;
+  }
+
+  .day-container-solo {
+    padding-bottom: 100px;
   }
 
 }
@@ -2394,6 +2444,7 @@ span::after {
   transition: 0.5s;
   margin-right: -50px;
   clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
+  z-index: 1;
 }
 
 @media screen  and (max-width: 800px) {

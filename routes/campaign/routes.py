@@ -59,10 +59,15 @@ def show_timeline(campaign_name, campaign_id):
         grouped_months = {month: list(group) for month, group in groups}
         grouped_events[year] = grouped_months
 
+    # Group each months events into days
+    for year in grouped_events:
+        for month in grouped_events[year]:
+            groups = groupby(grouped_events[year][month], key=lambda event: (event.date.split("-")[2].split()[0]))
+            grouped_days = {day: list(group) for day, group in groups}
+            grouped_events[year][month] = grouped_days
+
     # Final example structure:
-    # grouped_events: {5016: {06: [<Event 1>, <Event 2>], 
-    #                         07: [<Event 3>, <Event 4>]},
-    #                  5017: {01: [<Event 6>, <Event 7>]}}
+    # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
 
     return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
 
