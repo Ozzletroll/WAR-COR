@@ -2229,6 +2229,11 @@ span::after {
   padding-bottom: 150px;
 }
 
+.day-container-edgecase {
+  padding-top: 100px;
+  margin-bottom: -100px;
+}
+
 .event-line {
   display: flex;
   flex: 0 0 1px;

@@ -74,14 +74,17 @@
 
         <div class="timeline-container">
 
+          
           {% for year in timeline_data %}
 
           <div class="timeline-year">
 
+            <!-- Year left hand marker -->
             <div class="timeline-left-marker">
               {{year}}u
             </div>
 
+            <!-- Year main axis -->
             <div class="timeline-year-container">
               <h3 class="timeline-year-header" id="year-{{year}}">
               {{ year + "u"}}
@@ -93,13 +96,14 @@
 
             <div class="timeline-months-container">
 
+              <!-- Month branch of each year -->
               {% for month in timeline_data[year] %}
 
-              {% if loop.first %}
-              <div class="month-outer month-outer-top">
-              {% else %}
-              <div class="month-outer">
-              {% endif %}
+                {% if loop.first %}
+                <div class="month-outer month-outer-top">
+                {% else %}
+                <div class="month-outer">
+                {% endif %}
 
                 <div class="month-connector">
                   <div class="line line-first"></div>
@@ -112,7 +116,8 @@
                 </div>
 
                 <div class="timeline-month">
-                  
+
+                  <!-- Day sub branches within each month -->
                   {% for day in timeline_data[year][month] %}
 
 
@@ -122,6 +127,9 @@
                       {% elif loop.first  %}
                       <div class="timeline-day-container">
                         <div class="event-line event-line-top"></div>
+                      {% elif loop.last and loop.length == 2 %}
+                      <div class="timeline-day-container day-container-edgecase">
+                        <div class="event-line event-line-bottom"></div>
                       {% elif loop.last %}
                       <div class="timeline-day-container day-container-bottom">
                         <div class="event-line event-line-bottom"></div>
