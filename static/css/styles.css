@@ -2140,7 +2140,7 @@ span::after {
   border-color: var(--bright_red);
   height: 1px;
   transition: 0.3s;
-  flex: 1 0 0;
+  flex: 0.5 0 0;
 }
 
 .line-dashed {
@@ -2149,7 +2149,11 @@ span::after {
 }
 
 .line-spacer {
-  width: 5vw;
+  width: 3vw;
+}
+
+.line-first {
+  flex: 0.5;
 }
 
 .connector-date {
@@ -2203,7 +2207,7 @@ span::after {
 
 .event-line {
   display: flex;
-  flex: 0 0 3vw;
+  flex: 0 0 1px;
   border: 1px solid var(--bright_red);
   margin-top: 13px;
   box-sizing: border-box;
@@ -2239,7 +2243,7 @@ span::after {
   display: flex;
   background-color: var(--elem_mid);
   flex-direction: column;
-  scroll-margin-top: 53px;
+  scroll-margin-top: 54px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
   /* To animate */
@@ -2248,7 +2252,9 @@ span::after {
 }
 
 .event-outline {
-  max-width: 70%;
+  display: flex;
+  flex: 1 1 auto;
+  max-width: clamp(150px, 20vw, 30vw);
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
   margin-bottom: 50px;
@@ -2275,7 +2281,6 @@ span::after {
   flex-direction: column;
   padding: 10px;
   height: 0;
-  width: 0;
   overflow-y: hidden;
   /* To animate */
   padding-top: 0;
@@ -2294,7 +2299,7 @@ span::after {
   min-width: 1px;
   word-break: break-word;
   font-weight: 300;
-  font-size: min(12px, 1.5vw);
+  font-size: min(12px, 3vw);
   margin: 10px;
   margin-left: 25px;
   margin-right: 25px;
