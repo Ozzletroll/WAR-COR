@@ -67,9 +67,7 @@ def show_timeline(campaign_name, campaign_id):
             grouped_events[year][month] = grouped_days
 
     # Final example structure:
-    # grouped_events: {5016: {06: [<Event 1>, <Event 2>], 
-    #                         07: [<Event 3>, <Event 4>]},
-    #                  5017: {01: [<Event 6>, <Event 7>]}}
+    # grouped_events = {"5016": {"06": {"01": [<Event 1>, <Event 2>]}}}
 
     return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
 
