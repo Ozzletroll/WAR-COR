@@ -2175,21 +2175,26 @@ span::after {
   flex-direction: column;
 }
 
-.timeline-event-container {
+.timeline-day-container {
   display: flex;
   flex-direction: row;
   margin-bottom: -112px;
 }
 
-.event-container-mid {
+.day-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.day-container-mid {
   margin-top: 100px;
   border-left: 1px solid var(--bright_red);
   box-sizing: border-box;
 }
 
-.event-container-bottom {
+.day-container-bottom {
   padding-top: 100px;
-  padding-bottom: 50px;
+  padding-bottom: 150px;
 }
 
 .event-line {
