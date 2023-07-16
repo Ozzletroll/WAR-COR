@@ -2011,12 +2011,26 @@ span::after {
   justify-content: space-between;
 }
 
+.timeline-left-marker {
+  padding-top: 5vw;
+  display: flex;
+  font-size: min(3vw, 32px);
+  font-weight: 200;
+  align-items: center;
+  color: var(--text_normal);
+  opacity: 50%;
+  justify-content: center;
+  text-orientation: sideways-right;
+  writing-mode: sideways-lr;
+}
+
 .timeline-year-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1 0 0;
   margin-right: -14.33%;
+  margin-left: -45px;
 }
 
 .timeline-horizontal {
@@ -2050,7 +2064,6 @@ span::after {
   display: flex;
   flex-direction: column;
   flex: 3 0 0;
-  padding-bottom: 100px;
 }
 
 .month-outer {
@@ -2193,7 +2206,7 @@ span::after {
 .timeline-day-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: -112px;
+  margin-bottom: -113px;
 }
 
 .day-container {
@@ -2321,7 +2334,15 @@ span::after {
   padding: 16px;
 }
 
-@media screen and (max-width: 600px) { 
+@media screen and (max-width: 650px) { 
+
+  .timeline-left-marker {
+    display: none;
+  }
+
+  .timeline-year-container {
+    margin-left: 0;
+  }
 
   .connector-date {
     display: none;
@@ -2358,8 +2379,8 @@ span::after {
 
 
   .timeline-year-container {
-    margin-right: -16px;
-    margin-left: 3vw;
+    margin-right: -11vw;
+    margin-left: 0;
   }
 
   .timeline-months-container {
@@ -2368,6 +2389,15 @@ span::after {
 
   .event-outline {
     width: 70%;
+  }
+
+  .day-container-mid {
+    border: none;
+    padding-bottom: 100px;
+  }
+
+  .day-container-solo {
+    padding-bottom: 100px;
   }
 
 }
