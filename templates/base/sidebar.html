@@ -12,13 +12,15 @@
       {% for month in timeline_data[year] %}
 
 
-        {% for event in timeline_data[year][month] %}
+        {% for day in timeline_data[year][month] %}
 
-        <a class="sidebar-button" href="#event-{{event.id}}">
-          <button class="event-button">
-            {{event.title}}
-          </button>
-        </a>
+          {% for event in timeline_data[year][month][day]  %}
+            <a class="sidebar-button" href="#event-{{event.id}}">
+              <button class="event-button">
+                {{event.title}}
+              </button>
+            </a>
+          {% endfor %}
 
         {% endfor %}
 
