@@ -2340,10 +2340,15 @@ span::after {
     display: none;
   }
 
+
   .timeline-year-container {
     margin-right: -16px;
+    margin-left: 3vw;
   }
 
+  .timeline-months-container {
+    display: inline-flex;
+  }
 
 }
 
