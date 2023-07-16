@@ -150,14 +150,46 @@
 
                       </div>
                     </div>
-
+                    
                   </div>
+
+                  <!-- Create new event button for last event in month group -->
+                  {% if  loop.index == loop.length - 1 %}
+                  <div class="event-between between-last">
+                    <div class="line line-dashed"></div>
+                    <div class="new-timeline-item">
+                      +
+                    </div>
+                  </div>
+                  <!-- Create new event button after the month group -->
+                  {% elif not loop.last %}
+                  <div class="event-between">
+                    <div class="line line-dashed"></div>
+                    <div class="new-timeline-item">
+                      +
+                    </div>
+                  </div>
+                  {% endif %}
+
+      
 
                 {% endfor %}
 
               </div>
 
-           </div>
+            </div>
+
+              <!-- Create new event buttons for end of each year -->
+              {% if campaign in current_user.permissions %}
+              <div class="month-between">
+                <div class="line line-dashed"></div>
+                <div class="new-timeline-item">
+                  +
+                </div>
+              </div>
+              {% endif %}
+
+
             {% endfor %}
           </div>
 

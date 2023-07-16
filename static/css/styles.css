@@ -2016,7 +2016,6 @@ span::after {
   width: 30px;
   color: var(--bright_red);
   border-color: var(--bright_red);
-
   margin-bottom: 0;
   margin-top: 0;
 }
@@ -2056,6 +2055,58 @@ span::after {
   flex: 1 0 0;
 }
 
+.month-between {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  width: 25%;
+}
+
+.event-between {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 80px;
+  margin-bottom: -100px;
+  width: 25%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-left: 1px solid var(--bright_red);
+}
+
+.between-last {
+  margin-bottom: -114px;
+  z-index: 1;
+  /* Z index is set otherwise the item
+  cannot be hovered, due to negative margins */
+}
+
+.new-timeline-item {
+  display: flex;
+  font-size: min(14px, 2vw);
+  font-weight: 300;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border: 2px dashed var(--bright_red);
+  text-transform: uppercase;
+  color: var(--text_header_contrast);
+  transition: 0.5s;
+  width: 20px;
+  height: 20px;
+}
+
+.new-timeline-item:hover {
+  background-color: var(--elem_hover);
+  color: var(--text_header);
+}
+
+.new-timeline-item:active {
+  background-color: var(--elem_bright);
+}
+
 .month-connector {
   display: flex;
   flex-direction: row;
@@ -2070,6 +2121,11 @@ span::after {
   height: 1px;
   transition: 0.3s;
   flex: 1 0 0;
+}
+
+.line-dashed {
+  border-top: 2px dashed var(--bright_red);
+  background-color: transparent;
 }
 
 .line-right {
@@ -2151,19 +2207,18 @@ span::after {
 
 .timeline-event {
   display: flex;
-  flex: 0 1 35%;
   background-color: var(--elem_mid);
   flex-direction: column;
   scroll-margin-top: 53px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
-  
   /* To animate */
   transition: 0.5s;
 
 }
 
 .event-outline {
+  max-width: 70%;
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
   margin-bottom: 50px;
@@ -2174,7 +2229,7 @@ span::after {
   display: flex;
   font-size: min(16px, 2vw);
   font-weight: 600;
-  padding: 10px;
+  padding: 10px 15px 10px 15px;
   text-transform: uppercase;
   color: var(--text_header_contrast);
   background-color: var(--darker_red);
@@ -2190,12 +2245,11 @@ span::after {
   flex-direction: column;
   padding: 10px;
   height: 0;
+  width: 0;
   overflow-y: hidden;
   /* To animate */
   padding-top: 0;
   padding-bottom: 0;
-  /* And increase width of header*/
-
 
 }
 
