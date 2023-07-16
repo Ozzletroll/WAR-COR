@@ -2155,12 +2155,18 @@ span::after {
   scroll-margin-top: 53px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
-  margin-bottom: 50px;
-
+  
   /* To animate */
   transition: 0.5s;
 
 }
+
+.event-outline {
+  padding: 9px 1px 1px 1px;
+  background-color: var(--bright_red);
+  margin-bottom: 50px;
+}
+
 
 .event-header {
   display: flex;

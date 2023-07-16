@@ -129,24 +129,26 @@
                   <div class="event-line event-line-mid"></div>
                   {% endif %}
 
-                    <div id="event-{{event.id}}" class="timeline-event">
-                      <div class="event-header">
-                        //{{event.title}}
-                      </div>
-                      <div class="event-body">
-                        <p class="event-date">{{event.date[:-8]}}</p>
-                        <p class="event-date">{{event.date[-8:]}}</p>
-                        <p class="event-description">
-                          {{event.body[:180]}}
-                          {% if event.body|length > 180 %}
-                          ...
-                          {% endif %}
-                        </p>
-                        <div class="event-button-area">
-                          <a href=""><button class="entry-button">VIEW</button></a>
+                    <div class="timeline-event event-outline">
+                      <div id="event-{{event.id}}" class="timeline-event">
+                        <div class="event-header">
+                          //{{event.title}}
                         </div>
-                      </div>
+                        <div class="event-body">
+                          <p class="event-date">{{event.date[:-8]}}</p>
+                          <p class="event-date">{{event.date[-8:]}}</p>
+                          <p class="event-description">
+                            {{event.body[:180]}}
+                            {% if event.body|length > 180 %}
+                            ...
+                            {% endif %}
+                          </p>
+                          <div class="event-button-area">
+                            <a href=""><button class="entry-button">VIEW</button></a>
+                          </div>
+                        </div>
 
+                      </div>
                     </div>
 
                   </div>
