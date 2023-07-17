@@ -101,6 +101,8 @@
 
                 {% if loop.first %}
                 <div class="month-outer month-outer-top">
+                {% elif loop.last %}
+                <div class="month-outer month-outer-bottom">
                 {% else %}
                 <div class="month-outer">
                 {% endif %}
