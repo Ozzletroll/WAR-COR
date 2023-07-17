@@ -2332,6 +2332,10 @@ span::after {
   background-color: var(--dark_red);
 }
 
+.event-header:active {
+  background-color: var(--bright_red);
+}
+
 .event-body {
   display: flex;
   flex-direction: column;
@@ -2370,11 +2374,11 @@ span::after {
 @media screen and (max-width: 650px) { 
 
   .timeline-left-marker {
-    display: none;
+    font-size: 18px;
   }
 
   .timeline-year-container {
-    margin-left: 0;
+    margin-left: -15px;
   }
 
   .connector-date {
@@ -2407,13 +2411,16 @@ span::after {
   }
 
   .right-branch-label {
+    /* display: none; */
+  }
+
+  .timeline-day-container .right-branch-label {
     display: none;
   }
 
-
   .timeline-year-container {
     margin-right: -11vw;
-    margin-left: 0;
+    /* margin-left: -2vw; */
   }
 
   .timeline-months-container {
@@ -2426,11 +2433,19 @@ span::after {
 
   .day-container-mid {
     border: none;
-    padding-bottom: 100px;
+    padding-bottom: 20px;
   }
 
   .day-container-solo {
-    padding-bottom: 100px;
+    padding-bottom: 20px;
+  }
+
+}
+
+@media screen and (max-width: 320px) { 
+
+  .timeline-year-container {
+    margin-right: -6vw;
   }
 
 }
