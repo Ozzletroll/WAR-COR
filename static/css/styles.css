@@ -2024,6 +2024,10 @@ span::after {
   writing-mode: sideways-lr;
 }
 
+.marker-invis {
+  opacity: 0;
+}
+
 .timeline-year-container {
   display: flex;
   flex-direction: column;

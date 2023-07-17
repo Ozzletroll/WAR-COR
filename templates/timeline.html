@@ -80,9 +80,15 @@
           <div class="timeline-year">
 
             <!-- Year left hand marker -->
+            {%if timeline_data[year]|length > 2 %}
             <div class="timeline-left-marker">
               {{year}}u
             </div>
+            {% else %}
+            <div class="timeline-left-marker marker-invis">
+              {{year}}u
+            </div>
+            {% endif %}
 
             <!-- Year main axis -->
             <div class="timeline-year-container">
