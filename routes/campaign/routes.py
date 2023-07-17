@@ -128,15 +128,19 @@ def delete_campaign(campaign_name, campaign_id):
         search_user = db.session.execute(select(models.User).filter_by(username=search_username)).scalar()
 
         if search_user:
-            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
-                
-                # Delete campaign from database
-                db.session.delete(campaign)
-                # Commit changes
-                db.session.commit()
-                return redirect(url_for("campaign.campaigns"))
+            if search_user.id == current_user.id:
+                if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+                    
+                    # Delete campaign from database
+                    db.session.delete(campaign)
+                    # Commit changes
+                    db.session.commit()
+                    return redirect(url_for("campaign.campaigns"))
+                else:
+                    flash("Authentication failed. Incorrect password.")
+                    return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
             else:
-                flash("Authentication failed. Incorrect password.")
+                flash("Authentication failed. Incorrect username.")
                 return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
         else:
             flash("Authentication failed. Incorrect username.")
