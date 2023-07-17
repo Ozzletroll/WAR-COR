@@ -2410,10 +2410,6 @@ span::after {
     display: none;
   }
 
-  .right-branch-label {
-    /* display: none; */
-  }
-
   .timeline-day-container .right-branch-label {
     display: none;
   }
