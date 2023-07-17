@@ -2017,6 +2017,25 @@ span::after {
   margin-bottom: 150px;
 }
 
+.no-events {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-transform: uppercase;
+}
+
+.no-events-header {
+  font-size: min(48px, 5vw);
+  width: 80%;
+  padding: 0;
+}
+
+.no-events-hr {
+  width: 100%;
+  color: var(--elem_border);
+}
+
 .timeline-year {
   display: flex;
   flex-direction: row;
