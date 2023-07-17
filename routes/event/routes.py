@@ -17,7 +17,7 @@ from routes.event import bp
 # View event
 @bp.route("/campaigns/<campaign_name>/events/<event_name>")
 def view_event(campaign_name, event_name):
-    target_event_id = session.get("event_id", None)
+    target_event_id = request.args["event_id"]
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
     return render_template("event.html", event=event)
