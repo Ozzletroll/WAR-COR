@@ -219,9 +219,14 @@
                           <!-- Between events new event button -->
                           <div class="event-between">
                             <div class="line line-dashed"></div>
-                            <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
-                              <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                            </button>
+                            <a href="{{ url_for('event.add_event', 
+                                        campaign_name=campaign.title, 
+                                        campaign_id=campaign.id, 
+                                        date=event.date) }}">
+                              <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
+                                <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+                              </button>
+                             </a>
                           </div>
 
                         {% endfor %}
@@ -238,9 +243,15 @@
                 <!-- End of month new event button -->
                 <div class="month-between">
                   <div class="line line-dashed line-dashed-heavy"></div>
-                  <button id="new_event-{{year}}-{{month}}" class="new-timeline-item">
-                    <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                  </button>
+                  <a href="{{ url_for('event.add_event', 
+                                        campaign_name=campaign.title,
+                                        new_month = True, 
+                                        campaign_id=campaign.id, 
+                                        date=year + '-' + month) }}">
+                    <button id="new_event-{{year}}-{{month}}" class="new-timeline-item">
+                      <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+                    </button>
+                  </a>
                 </div>
 
               {% endfor %}

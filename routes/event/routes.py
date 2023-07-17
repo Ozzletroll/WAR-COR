@@ -5,6 +5,7 @@ from datetime import datetime
 
 import forms
 import models
+import auth
 
 from app import db
 from routes.event import bp
@@ -32,45 +33,72 @@ def add_event(campaign_name):
 
     campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name, id=target_campaign_id)).scalar()
 
-    # Check if the user has permissions to edit the target campaign.
-    if campaign in current_user.permissions:
+    auth.permission_required(campaign)
 
+    # Check if date argument given
+    if "date" in request.args:
+        # Create placeholder event to prepopulate form
+        event = models.Event()
+        event.title = ""
+        event.type = ""
+        datestring = request.args["date"]
+
+        # Check if the requested datestring is complete
+        if "new_month" in request.args:
+
+            year_format = len(datestring.split("-")[0])
+            year = int(datestring.split("-")[0])
+            month = int(datestring.split("-")[1])
+
+            # Add 1 month to the date if possible, or rollover to next year
+            # 99 is the max month value, due to non-standard calendar support
+            if month < 99:
+                month += 1
+            else:
+                year += 1
+
+            # Format date as string for form field
+            datestring = str(year).zfill(year_format) + "-" + str(month).zfill(2) + "-" + "01 00:00:00"
+
+        event.date = datestring
+        event.body = ""
+        
+        form = forms.CreateEventForm(obj=event)
+
+    # Otherwise, create default empty form
+    else:
         form = forms.CreateEventForm()
 
-        # Check if user has submitted a new event
-        if form.validate_on_submit():
-            # Create new event object using form data
-            event = models.Event()
-            event.title = request.form["title"]
-            event.type = request.form["type"]
-            event.date = request.form["date"]
-            event.location = request.form["location"]
-            event.belligerents = request.form["belligerents"]
-            event.body = request.form["body"]
-            event.result = request.form["result"]
+    # Check if user has submitted a new event
+    if form.validate_on_submit():
+        # Create new event object using form data
+        event = models.Event()
+        event.title = request.form["title"]
+        event.type = request.form["type"]
+        event.date = request.form["date"]
+        event.location = request.form["location"]
+        event.belligerents = request.form["belligerents"]
+        event.body = request.form["body"]
+        event.result = request.form["result"]
 
-            event.parent_campaign = campaign
-            event.parent_campaign.last_edited = datetime.now()
+        event.parent_campaign = campaign
+        event.parent_campaign.last_edited = datetime.now()
 
-            # Add event to database
-            db.session.add(event)
-            db.session.commit()
+        # Add event to database
+        db.session.add(event)
+        db.session.commit()
 
-            return redirect(url_for("campaign.show_timeline",
-                                    campaign_name=campaign.title,
-                                    campaign_id=campaign.id))
+        return redirect(url_for("campaign.edit_timeline",
+                                campaign_name=campaign.title,
+                                campaign_id=campaign.id))
 
-        # Flash form errors
-        for field_name, errors in form.errors.items():
-            for error_message in errors:
-                flash(field_name + ": " + error_message)
+    # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
 
-        return render_template("new_event.html", form=form, campaign=campaign)
+    return render_template("new_event.html", form=form, campaign=campaign)
 
-    else:
-        # Redirect to homepage if the user is somehow trying to edit a campaign that they
-        # do not have permission for.
-        return redirect(url_for("home.home"))
 
 
 # Edit existing event
@@ -84,46 +112,33 @@ def edit_event(campaign_name, event_name):
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    if campaign in current_user.permissions:
+    auth.permission_required(campaign)
 
-        form = forms.CreateEventForm(obj=event)
+    form = forms.CreateEventForm(obj=event)
 
-        if form.validate_on_submit():
-            # Update event object using form data
-            event.title = request.form["title"]
-            event.type = request.form["type"]
+    if form.validate_on_submit():
+        # Update event object using form data
+        event.title = request.form["title"]
+        event.type = request.form["type"]
+        event.date = request.form["date"]
+        event.location = request.form["location"]
+        event.belligerents = request.form["belligerents"]
+        event.body = request.form["body"]
+        event.result = request.form["result"]
 
-            date = request.form["date"]
-            # Convert date to datetime object
-            date_format = '%Y-%m-%d %H:%M:%S'
-            date_obj = datetime.strptime(date, date_format)
-            event.date = date_obj
+        event.parent_campaign.last_edited = datetime.now()
 
-            event.location = request.form["location"]
-            event.belligerents = request.form["belligerents"]
-            event.body = request.form["body"]
-            event.result = request.form["result"]
+        # Update the database
+        db.session.add(event)
+        db.session.commit()
 
-            event.parent_campaign.last_edited = datetime.now()
+        return redirect(url_for("event.view_event",
+                                campaign_name=campaign_name,
+                                event_name=event.title))
 
-            # Update the database
-            db.session.add(event)
-            db.session.commit()
-
-            session["campaign_id"] = target_campaign_id
-            session["event_id"] = event.id
-
-            return redirect(url_for("event.view_event",
-                                    campaign_name=campaign_name,
-                                    event_name=event.title))
-
-        return render_template("edit_event.html",
-                               campaign_name=campaign_name,
-                               event_name=event_name)
-
-    # Redirect to homepage if the user is somehow trying to edit an event that they
-    # do not have permission for.
-    return redirect(url_for("home.home"))
+    return render_template("edit_event.html",
+                            campaign_name=campaign_name,
+                            event_name=event_name)
 
 
 # Delete existing event
@@ -137,11 +152,11 @@ def delete_event(campaign_name, event_name):
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    if campaign in current_user.permissions:
+    auth.permission_required(campaign)
 
-        campaign.last_edited = datetime.now()
+    campaign.last_edited = datetime.now()
 
-        db.session.delete(event)
-        db.session.commit()
+    db.session.delete(event)
+    db.session.commit()
 
     return redirect(url_for("campaign.show_timeline", campaign_name=campaign_name))
