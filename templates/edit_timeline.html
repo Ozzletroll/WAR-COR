@@ -137,19 +137,19 @@
 
                     {% if loop.length == 1 %}
                     <div class="timeline-day-container">
-                      <div class="event-line event-line-solo"></div>
+                      <div class="event-line event-line-solo event-line-solo-edit"></div>
                     {% elif loop.first  %}
                     <div class="timeline-day-container">
-                      <div class="event-line event-line-top"></div>
+                      <div class="event-line event-line-top event-line-top-edit"></div>
                     {% elif loop.last and loop.length == 2 %}
                     <div class="timeline-day-container day-container-edgecase">
-                      <div class="event-line event-line-bottom"></div>
+                      <div class="event-line event-line-bottom event-line-bottom-edit"></div>
                     {% elif loop.last %}
                     <div class="timeline-day-container day-container-bottom">
-                      <div class="event-line event-line-bottom"></div>
+                      <div class="event-line event-line-bottom event-line-bottom-edit"></div>
                     {% else %}
                     <div class="timeline-day-container day-container-mid">
-                      <div class="event-line event-line-mid"></div>
+                      <div class="event-line event-line-mid event-line-mid-edit"></div>
                     {% endif %}
 
                       <div class="right-branch-label">
@@ -234,6 +234,21 @@
                       </div>
 
                    </div>
+
+                   <!-- Between days event button -->
+                   <div class="event-between">
+                    <div class="line line-dashed"></div>
+                    <a href="{{ url_for('event.add_event', 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id,
+                                new_day=True, 
+                                date=year + '-' + month + '-' + day) }}">
+                      <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
+                        <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+                      </button>
+                     </a>
+                  </div>
+
                   {% endfor %}
 
                 </div>
@@ -245,7 +260,7 @@
                   <div class="line line-dashed line-dashed-heavy"></div>
                   <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title,
-                                        new_month = True, 
+                                        new_month=True, 
                                         campaign_id=campaign.id, 
                                         date=year + '-' + month) }}">
                     <button id="new_event-{{year}}-{{month}}" class="new-timeline-item">
@@ -271,5 +286,12 @@
   </div>
 
 </div>
+
+  <!-- Scroll to newly created event -->
+  {% if "scroll_target" in request.args %}
+    <script>
+      document.getElementById('{{ request.args["scroll_target"] }}').scrollIntoView();
+    </script>
+  {% endif %}
 
 {% endblock %}
