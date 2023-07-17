@@ -1992,6 +1992,18 @@ span::after {
   margin-top: 20px;
 }
 
+.new-event {
+  margin: 0 max(25px, 15vw) 0 max(25px, 15vw);
+}
+
+.new-event h2 {
+  color: var(--text_flavour);
+}
+
+.new-event:active h2 {
+  color: var(--text_flavour_bright);
+}
+
 .timeline-centring {
   display: flex;
   justify-content: center;
@@ -2001,7 +2013,7 @@ span::after {
   display: flex;
   flex-direction: column;
   flex: 1 0 0;
-  margin-top: 150px;
+  margin-top: 50px;
   margin-bottom: 150px;
 }
 
