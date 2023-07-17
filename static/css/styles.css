@@ -2064,6 +2064,9 @@ span::after {
   display: flex;
   flex-direction: column;
   flex: 3 0 0;
+  justify-content: center;
+  margin-top: 150px;
+  margin-bottom: 25px;
 }
 
 .month-outer {
@@ -2071,13 +2074,7 @@ span::after {
   flex-direction: row;
   align-items: flex-start;
   justify-content: left;
-  margin-top: 5vh;
-  margin-bottom: max(50px, 5%);
-  flex: 1 0 0;
-}
-
-.month-outer-top {
-  margin-top: 20%;
+  flex: 1 0 1;
 }
 
 .month-between {
@@ -2206,35 +2203,10 @@ span::after {
 .timeline-day-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: -113px;
+  margin-bottom: 25px;
 }
 
-.day-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.day-container-solo {
-  padding-bottom: 113px;
-}
-
-.day-container-mid {
-  margin-top: 100px;
-  border-left: 1px solid var(--bright_red);
-  box-sizing: border-box;
-}
-
-.day-container-bottom {
-  padding-top: 100px;
-  padding-bottom: 150px;
-}
-
-.day-container-edgecase {
-  padding-top: 100px;
-  margin-bottom: -100px;
-}
-
-.event-line {
+ .event-line {
   display: flex;
   flex: 0 0 1px;
   border: 1px solid var(--bright_red);
@@ -2245,7 +2217,8 @@ span::after {
 .event-line-top {
   border-bottom: 0;
   border-right: 0;
-  margin-top: 13px;
+  /* margin-top: 13px; */
+  margin-bottom: -39px;
 }
 
 .event-line-bottom {
@@ -2258,8 +2231,7 @@ span::after {
 .event-line-mid {
   border-right: 0;
   border-bottom: 0;
-  border-left: 0;
-  margin-bottom: -5px;
+  margin-bottom: -39px;
 }
 
 .event-line-solo {
@@ -2285,7 +2257,6 @@ span::after {
   max-width: 300px;
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
-  margin-bottom: 50px;
   flex: 1 1 0;
 }
 
