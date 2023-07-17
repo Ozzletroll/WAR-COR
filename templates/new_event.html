@@ -10,7 +10,7 @@
       <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
         <h5 class="navigation-heading">/CAMPAIGNS</h5>
       </a>
-      <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
+      <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
         <h5 class="navigation-heading">/{{campaign.title}}/</h5>
       </a>
     </div>
