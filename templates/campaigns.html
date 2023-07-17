@@ -77,7 +77,7 @@
                       Title/Overview
                     </button>
                   </a>
-                  <a href="">
+                  <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
                     <button class="deploy-button">
                       <img class="icon icon-small icon-invert" src="/static/images/icons/docs.svg"> 
                       Event Data

@@ -8,6 +8,7 @@ import werkzeug
 import auth
 import forms
 import models
+import utils.organisers as organisers
 
 from app import db
 from routes.campaign import bp
@@ -34,42 +35,23 @@ def campaigns():
 def show_timeline(campaign_name, campaign_id):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
-    # Sort events into date order
-    def custom_sort(event):
-
-        year = event.date.split("-")[0]
-        month = event.date.split("-")[1]
-        day = event.date.split("-")[2].split()[0]
-        hours = event.date.split("-")[2].split()[1].split(":")[0]
-        minutes = event.date.split("-")[2].split()[1].split(":")[1]
-        seconds = event.date.split("-")[2].split()[1].split(":")[2]
-        
-        return int(year), int(month), int(day), int(hours), int(minutes), int(seconds)
-
-    sorted_events = sorted(campaign.events, key=custom_sort)
-
-    # Structure events into dictionary, grouped by year
-    groups = groupby(sorted_events, key=lambda event: (event.date.split("-")[0]))
-
-    grouped_events = {year: list(group) for year, group in groups}
-
-    # Group each years events into months
-    for year in grouped_events:
-        groups = groupby(grouped_events[year], key=lambda event: (event.date.split("-")[1]))
-        grouped_months = {month: list(group) for month, group in groups}
-        grouped_events[year] = grouped_months
-
-    # Group each months events into days
-    for year in grouped_events:
-        for month in grouped_events[year]:
-            groups = groupby(grouped_events[year][month], key=lambda event: (event.date.split("-")[2].split()[0]))
-            grouped_days = {day: list(group) for day, group in groups}
-            grouped_events[year][month] = grouped_days
-
-    # Final example structure:
-    # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
+    grouped_events = organisers.campaign_sort(campaign)
 
     return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
+
+
+# View campaign editing page
+@bp.route("/campaigns/<campaign_name>/timeline/edit/<campaign_id>")
+@login_required
+def edit_timeline(campaign_name, campaign_id):
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+    
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
+    grouped_events = organisers.campaign_sort(campaign)
+
+    return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events)
 
 
 # Create new campaign

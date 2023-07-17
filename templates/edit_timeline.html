@@ -67,150 +67,187 @@
           <p class="last-updated-text">{{ campaign.last_edited }}</p>
         </div>
 
-        <!-- Placeholder add event button -->
-        {% if campaign in current_user.permissions %}
-        <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-          <button>
-            ADD EVENT
-          </button>
-        </a>
-        {% endif %}
-
       </section>
 
       <!-- Timeline -->
-      <div class="timeline-container">
+      <section class="timeline-centring">
 
-        {% for year in timeline_data %}
+        <div class="timeline-container">
 
-        <div class="timeline-year">
+          
+          {% for year in timeline_data %}
 
-          <div class="timeline-year-container">
-            <h3 class="timeline-year-header" id="year-{{year}}">
-            {{ year + "u"}}
-            </h3> 
-            <hr class="timeline-horizontal">
-            <hr class="timeline-line">
-            <hr class="timeline-horizontal">
-          </div>
+          <div class="timeline-year">
 
-          <div class="timeline-months-container">
+            <!-- Year left hand marker -->
+            {%if timeline_data[year]|length > 2 %}
+            <div class="timeline-left-marker">
+              {{year}}u
+            </div>
+            {% else %}
+            <div class="timeline-left-marker marker-invis">
+              {{year}}u
+            </div>
+            {% endif %}
 
-            {% for month in timeline_data[year] %}
-
-            <div class="month-outer">
-
-              
-              <div class="month-connector">
-                <div class="line"></div>
-                <div class="connector-date connector-date-outline">
-                  <div class="connector-date">
-                    {{ month }}
-                  </div>
-                </div>
-                <div class="line"></div>
-              </div>
-
-              <div class="timeline-month">
-                
-                {% for event in timeline_data[year][month] %}
-
-                  {% if loop.length == 1 %}
-                  <div class="timeline-event-container">
-                  <div class="event-line event-line-solo"></div>
-                  {% elif loop.first  %}
-                  <div class="timeline-event-container">
-                  <div class="event-line event-line-top"></div>
-                  {% elif loop.last %}
-                  <div class="timeline-event-container event-container-bottom">
-                  <div class="event-line event-line-bottom"></div>
-                  {% else %}
-                  <div class="timeline-event-container event-container-mid">
-                  <div class="event-line event-line-mid"></div>
-                  {% endif %}
-
-                    <div class="right-branch-label">
-                      <div class="date-label-area">
-                        <div class="line"></div>
-                        <div class="connector-date connector-date-outline">
-                          <div class="connector-date">
-                            {{event.date[:-8]}}
-                          </div>
-                        </div>
-                        <div class="line line-spacer"></div>
-                      </div>
-                    </div>
-
-                    <div class="timeline-event event-outline">
-                      <div id="event-{{event.id}}" class="timeline-event">
-                        <div class="event-header">
-                          //{{event.title}}
-                        </div>
-                        <div class="event-body">
-                          <p class="event-date">{{event.date[:-8]}}</p>
-                          <p class="event-date">{{event.date[-8:]}}</p>
-                          <p class="event-description">
-                            {{event.body[:180]}}
-                            {% if event.body|length > 180 %}
-                            ...
-                            {% endif %}
-                          </p>
-                          <div class="event-button-area">
-                            <a href=""><button class="entry-button">VIEW</button></a>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    
-                  </div>
-
-                  <!-- Create new event button for last event in month group -->
-                  {% if  campaign in current_user.permissions and loop.index == loop.length - 1 %}
-                  <div class="event-between between-last">
-                    <div class="line line-dashed"></div>
-                    <div class="new-timeline-item">
-                      <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                    </div>
-                  </div>
-                  <!-- Create new event button after the month group -->
-                  {% elif campaign in current_user.permissions and not loop.last %}
-                  <div class="event-between">
-                    <div class="line line-dashed"></div>
-                    <div class="new-timeline-item">
-                      <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                    </div>
-                  </div>
-                  {% endif %}
-
-      
-
-                {% endfor %}
-
-              </div>
-
+            <!-- Year main axis -->
+            <div class="timeline-year-container">
+              <h3 class="timeline-year-header" id="year-{{year}}">
+              {{ year + "u"}}
+              </h3> 
+              <hr class="timeline-horizontal">
+              <hr class="timeline-line">
+              <hr class="timeline-horizontal">
             </div>
 
-              <!-- Create new event buttons for end of each year -->
-              {% if campaign in current_user.permissions %}
-              <div class="month-between">
-                <div class="line line-dashed"></div>
-                <div class="new-timeline-item">
-                  <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+            <div class="timeline-months-container">
+
+              <!-- Month branch of each year -->
+              {% for month in timeline_data[year] %}
+
+                {% if loop.first %}
+                <div class="month-outer month-outer-top">
+                {% elif loop.last %}
+                <div class="month-outer month-outer-bottom">
+                {% else %}
+                <div class="month-outer">
+                {% endif %}
+
+                <div class="month-connector">
+                  <div class="line line-first"></div>
+                  <div class="connector-date connector-date-outline">
+                    <div class="connector-date">
+                      {{ month }}
+                    </div>
+                  </div>
+                  <div class="line"></div>
                 </div>
+
+                <div class="timeline-month">
+
+                  <!-- Day sub branches within each month -->
+                  {% for day in timeline_data[year][month] %}
+
+
+                    {% if loop.length == 1 %}
+                    <div class="timeline-day-container">
+                      <div class="event-line event-line-solo"></div>
+                    {% elif loop.first  %}
+                    <div class="timeline-day-container">
+                      <div class="event-line event-line-top"></div>
+                    {% elif loop.last and loop.length == 2 %}
+                    <div class="timeline-day-container day-container-edgecase">
+                      <div class="event-line event-line-bottom"></div>
+                    {% elif loop.last %}
+                    <div class="timeline-day-container day-container-bottom">
+                      <div class="event-line event-line-bottom"></div>
+                    {% else %}
+                    <div class="timeline-day-container day-container-mid">
+                      <div class="event-line event-line-mid"></div>
+                    {% endif %}
+
+                      <div class="right-branch-label">
+                        <div class="date-label-area">
+                          <div class="line line-first"></div>
+                          <div class="connector-date connector-date-outline">
+                            <div class="connector-date">
+                              {{day}}
+                            </div>
+                          </div>
+                          <div class="line line-spacer"></div>
+                        </div>
+                      </div>
+
+                      <div class="event-group-container">
+                        
+                        {% for event in timeline_data[year][month][day]%}
+
+                          {% if loop.length == 1 %}
+                          <div class="timeline-day-container day-container-solo">
+                            <div class="event-line event-line-solo event-line-solo-edit"></div>
+                          {% elif loop.first  %}
+                          <div class="timeline-day-container">
+                            <div class="event-line event-line-top event-line-top-edit"></div>
+                          {% elif loop.last %}
+                          <div class="timeline-day-container day-container-bottom">
+                            <div class="event-line event-line-bottom event-line-bottom-edit"></div>
+                          {% else %}
+                          <div class="timeline-day-container day-container-mid">
+                            <div class="event-line event-line-mid event-line-mid-edit"></div>
+                          {% endif %}
+
+                            <div class="right-branch-label">
+                              <div class="date-label-area">
+                                <div class="line line-first"></div>
+                                <div class="connector-date connector-date-outline">
+                                  <div class="connector-date">
+                                    {{event.date[-8:]}}
+                                  </div>
+                                </div>
+                                <div class="line line-spacer"></div>
+                              </div>
+                            </div>
+
+                            <div class="timeline-event event-outline">
+                              <div id="event-{{event.id}}" class="timeline-event">
+                                <div class="event-header">
+                                  //{{event.title}}
+                                </div>
+                                <div class="event-body">
+                                  <p class="event-date">{{event.type}}</p>
+                                  <p class="event-description">
+                                    {{event.body[:180]}}
+                                    {% if event.body|length > 180 %}
+                                    ...
+                                    {% endif %}
+                                  </p>
+                                  <div class="event-button-area">
+                                    <a href=""><button class="entry-button">VIEW</button></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <!-- Between events new event button -->
+                          <div class="event-between">
+                            <div class="line line-dashed"></div>
+                            <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
+                              <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+                            </button>
+                          </div>
+
+                        {% endfor %}
+                      
+                      </div>
+
+                   </div>
+                  {% endfor %}
+
+                </div>
+
               </div>
-              {% endif %}
 
+                <!-- End of month new event button -->
+                <div class="month-between">
+                  <div class="line line-dashed line-dashed-heavy"></div>
+                  <button id="new_event-{{year}}-{{month}}" class="new-timeline-item">
+                    <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+                  </button>
+                </div>
 
-            {% endfor %}
+              {% endfor %}
+              
+            </div>
+
           </div>
+          
+          {% endfor %}
 
         </div>
-        
-        {% endfor %}
 
-      </div>
-
+      </section>
 
     </div>
 

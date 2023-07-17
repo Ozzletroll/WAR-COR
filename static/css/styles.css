@@ -2083,30 +2083,23 @@ span::after {
 
 .month-between {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  margin-top: 100px;
   width: 25%;
+  margin-bottom: 60px;
 }
 
 .event-between {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  margin-top: 80px;
-  margin-bottom: -100px;
   width: 25%;
-  padding-top: 25px;
-  padding-bottom: 50px;
-  border-left: 1px solid var(--bright_red);
+  height: 20px;
+  margin-bottom: 35px;
 }
 
 .between-last {
-  margin-bottom: -114px;
-  padding-bottom: 70px;
   z-index: 1;
-  /* Z index is set otherwise the item
-  cannot be hovered, due to negative margins */
 }
 
 .new-timeline-item {
@@ -2119,10 +2112,11 @@ span::after {
   padding: 10px;
   border: 2px dashed var(--bright_red);
   text-transform: uppercase;
+  background-color: var(--elem_mid);
   color: var(--text_header_contrast);
   transition: 0.5s;
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
 }
 
 .new-timeline-item:active {
@@ -2137,6 +2131,12 @@ span::after {
 
 @keyframes pulse2 {
   0% { box-shadow: 0 0 0 0 var(--bright_red); }
+}
+
+.timeline-between-events {
+  border: 1px dashed var(--bright_red);
+  height: 25px;
+  width: 25px;
 }
 
 .month-connector {
@@ -2164,8 +2164,12 @@ span::after {
 }
 
 .line-dashed {
-  border-top: 2px dashed var(--bright_red);
+  border-top: 1px dashed var(--bright_red);
   background-color: transparent;
+}
+
+.line-dashed-heavy {
+  border-top: 2px dashed var(--bright_red);
 }
 
 .line-spacer {
@@ -2221,8 +2225,11 @@ span::after {
 .event-line-top {
   border-bottom: 0;
   border-right: 0;
-  /* margin-top: 13px; */
   margin-bottom: -39px;
+}
+
+.event-line-top-edit {
+   margin-bottom: -94px;
 }
 
 .event-line-bottom {
@@ -2232,16 +2239,30 @@ span::after {
   border-left: 0;
 }
 
+.event-line-bottom-edit {
+  border-left: 1px dashed var(--bright_red);
+  margin-bottom: -35px;
+}
+
 .event-line-mid {
   border-right: 0;
   border-bottom: 0;
   margin-bottom: -39px;
 }
 
+.event-line-mid-edit {
+  margin-bottom: 60px;
+}
+
 .event-line-solo {
   border-right: 0;
   border-bottom: 0;
   border-left: 0;
+}
+
+.event-line-solo-edit {
+  border-left: 1px dashed var(--bright_red);
+  margin-bottom: -35px;
 }
 
 .timeline-event {
@@ -2284,7 +2305,7 @@ span::after {
   flex-direction: column;
   padding: 10px;
   height: 0;
-  /* min-height: 200px; */
+  /* min-height: 250px; */
   overflow-y: hidden;
   /* To animate */
   padding-top: 0;
