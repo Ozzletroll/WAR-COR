@@ -2137,6 +2137,7 @@ span::after {
   border: 1px dashed var(--bright_red);
   height: 25px;
   width: 25px;
+  padding: 15px;
 }
 
 .month-connector {
