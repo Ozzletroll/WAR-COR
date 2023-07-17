@@ -2017,7 +2017,7 @@ span::after {
   font-size: min(3vw, 32px);
   font-weight: 200;
   align-items: center;
-  color: var(--text_normal);
+  color: var(--text_dark);
   opacity: 50%;
   justify-content: center;
   text-orientation: sideways-right;
