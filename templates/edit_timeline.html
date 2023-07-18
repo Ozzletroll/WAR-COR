@@ -269,7 +269,12 @@
                       </button>
                      </a>
                      {% if day|int + 1 == 100 %}
-                      <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
+                      {% set month =  month|int + 1 %}
+                      {% if month > 99 %}
+                        {% set month =  1 %}
+                        {% set year = year|int + 1 %}
+                      {% endif %}
+                      <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{'%02d' % month}}-01</p>
                      {% else %}
                       <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{month}}-{{'%02d' % (day|int + 1)}}</p>
                      {% endif %}
@@ -282,6 +287,8 @@
 
               </div>
 
+
+                {% if loop.last %}
                 <!-- End of month new event button -->
                 <div class="month-between event-between-years">
                   <div class="between-months-elements">
@@ -296,8 +303,20 @@
                       <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                     </button>
                   </a>
+                  {% if month|int + 1 == 100 %}
+                      {% set year =  year|int + 1 %}
+                      {% if month|int > 99 %}
+                        {% set month =  1 %}
+                        {% set year = year|int + 1 %}
+                      {% endif %}
+                  <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-01-01</p>
+                  {% else %}
                   <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
+                  {% endif %}
+
                 </div>
+                {% endif %}
+
 
               {% endfor %}
               

@@ -89,9 +89,9 @@ def format_event_datestring(datestring, args):
         else:
             day = 1
             month += 1
-        if month == 100:
+        if month > 99:
             month = 1
-
+            year += 1
 
         # Format date as string for form field
         datestring = str(year).zfill(year_format) + "-" + str(month).zfill(2) + "-" + str(day).zfill(2) + " 00:00:00"
