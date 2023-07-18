@@ -23,4 +23,7 @@ if (storedTheme) {
   }
 
 }
-
+else {
+  document.documentElement.setAttribute('theme', null)
+  localStorage.setItem('theme', null);
+}
