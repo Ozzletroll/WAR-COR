@@ -54,10 +54,10 @@ def get_year_markers(grouped_events):
         if len(grouped_events[year]) >= 3:
             marker = True
         for month in grouped_events[year]:
-            if len(grouped_events[year][month]) >= 3:
+            if len(grouped_events[year][month]) >= 5:
                 marker = True
             for day in grouped_events[year][month]:
-                if len(grouped_events[year][month][day]) >= 3:
+                if len(grouped_events[year][month][day]) >= 5:
                     marker = True
         
         if marker:

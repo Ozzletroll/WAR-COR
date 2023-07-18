@@ -86,8 +86,8 @@
 
           <div class="timeline-year">
 
-            <!-- Year left hand marker -->
-            {%if timeline_data[year]|length > 2 %}
+            <!-- Check if the timeline data is long enough to warrant an extra year marker -->
+            {%if year_markers[loop.index0] %}
             <div class="timeline-left-marker">
               {{year}}u
             </div>
