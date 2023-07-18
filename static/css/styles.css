@@ -2064,7 +2064,7 @@ span::after {
   flex-direction: column;
   align-items: center;
   flex: 1 0 0;
-  margin-right: -14.33%;
+  margin-right: -11%;
   margin-left: -45px;
 }
 
@@ -2098,7 +2098,7 @@ span::after {
 .timeline-months-container {
   display: flex;
   flex-direction: column;
-  flex: 3 0 0;
+  flex: 4 0 0;
   justify-content: center;
   margin-top: 150px;
   margin-bottom: 25px;
