@@ -2085,6 +2085,7 @@ span::after {
   align-items: center;
   flex: 0 0 10%;
   margin-right: calc((0.50 * 10%) * -1);
+  margin-left: calc((0.25 * 10%) * -1);
   max-width: 144px;
 }
 
@@ -2171,7 +2172,7 @@ span::after {
 
 .new-event-flavour {
   flex: 2 0 0;
-  max-width: 300px;
+  width: auto;
 }
 
 .between-last {
@@ -2437,6 +2438,14 @@ span::after {
   padding: 16px;
 }
 
+@media screen and (min-width: 1400px) { 
+
+  .event-outline {
+    max-width: 100%;
+  }
+
+}
+
 @media screen and (max-width: 650px) { 
 
   .event-outline {
@@ -2486,6 +2495,10 @@ span::after {
 
   .event-line {
     display: none;
+  }
+
+  .timeline-year-container {
+    margin-left: 20px;
   }
 
   .timeline-day-container .right-branch-label {
