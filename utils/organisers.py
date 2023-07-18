@@ -66,3 +66,47 @@ def get_year_markers(grouped_events):
             year_markers.append(False)
 
     return year_markers
+
+
+
+def format_event_datestring(datestring, args):
+    """Function that takes a datestring, and a list of all request.args, 
+    and returns the next day/week/month/year date as a string,
+    ready for form prepopulation."""
+
+    # Move to the next day and format the string
+    if "new_day" in args:
+
+        year_format = len(datestring.split("-")[0])
+        year = int(datestring.split("-")[0])
+        month = int(datestring.split("-")[1])
+        day = int(datestring.split("-")[2].split()[0])
+
+        # Add 1 month to the date if possible, or rollover to next year
+        # 99 is the max month value, due to non-standard calendar support
+        if day < 99:
+            day += 1
+        else:
+            month += 1
+
+        # Format date as string for form field
+        datestring = str(year).zfill(year_format) + "-" + str(month).zfill(2) + "-" + str(day).zfill(2) + " 00:00:00"
+
+    # Move to the next month and format the string
+    if "new_month" in args:
+
+        year_format = len(datestring.split("-")[0])
+        year = int(datestring.split("-")[0])
+        month = int(datestring.split("-")[1])
+
+        # Add 1 month to the date if possible, or rollover to next year
+        # 99 is the max month value, due to non-standard calendar support
+        if month < 99:
+            month += 1
+        else:
+            year += 1
+
+        # Format date as string for form field
+        datestring = str(year).zfill(year_format) + "-" + str(month).zfill(2) + "-" + "01 00:00:00"
+
+    return datestring
