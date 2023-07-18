@@ -225,7 +225,7 @@
                           </div>
 
                           <!-- Between events new event button -->
-                          <div class="event-between">
+                          <div class="event-between event-between-events">
                             <div class="line line-dashed"></div>
                             <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title, 
@@ -235,6 +235,7 @@
                                 <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                               </button>
                              </a>
+                             <p class="flavour-text new-event-flavour">//EVENT:{{ event.date }}</p>
                           </div>
 
                         {% endfor %}
@@ -244,7 +245,7 @@
                    </div>
 
                    <!-- Between days event button -->
-                   <div class="event-between">
+                   <div class="event-between event-between-days">
                     <div class="line line-dashed"></div>
                     <a href="{{ url_for('event.add_event', 
                                 campaign_name=campaign.title, 
@@ -255,6 +256,12 @@
                         <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                       </button>
                      </a>
+                     {% if day|int + 1 == 100 %}
+                      <p class="flavour-text new-event-flavour">//EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
+                     {% else %}
+                      <p class="flavour-text new-event-flavour">//EVENT:{{year}}-{{month}}-{{'%02d' % (day|int + 1)}}</p>
+                     {% endif %}
+
                   </div>
 
                   {% endfor %}
@@ -264,7 +271,7 @@
               </div>
 
                 <!-- End of month new event button -->
-                <div class="month-between">
+                <div class="month-between event-between-years">
                   <div class="line line-dashed line-dashed-heavy"></div>
                   <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title,
@@ -275,6 +282,7 @@
                       <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                     </button>
                   </a>
+                  <p class="flavour-text new-event-flavour">//EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
                 </div>
 
               {% endfor %}

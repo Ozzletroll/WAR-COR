@@ -2129,6 +2129,34 @@ span::after {
   margin-bottom: 35px;
 }
 
+.event-between-events {
+  width: 80%;
+}
+
+.event-between a {
+  margin-right: 15px;
+}
+
+.event-between p {
+  width: 80px;
+}
+
+.month-between a {
+  margin-right: 15px;
+}
+
+.event-between-days {
+  width: 50%;
+}
+
+.event-between-years {
+  width: 75%;
+}
+
+.new-event-flavour {
+  flex: 2 0 0;
+}
+
 .between-last {
   z-index: 1;
 }
@@ -2415,7 +2443,7 @@ span::after {
   }
 
   .timeline-year-container {
-    margin-right: -11vw;
+    margin-right: -9vw;
     /* margin-left: -2vw; */
   }
 
@@ -2438,10 +2466,10 @@ span::after {
 
 }
 
-@media screen and (max-width: 320px) { 
+@media screen and (max-width: 300px) { 
 
   .timeline-year-container {
-    margin-right: -6vw;
+    margin-right: -5vw;
   }
 
 }
