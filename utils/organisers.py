@@ -40,3 +40,29 @@ def campaign_sort(campaign):
     # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
 
     return grouped_events
+
+
+
+def get_year_markers(grouped_events):
+    """Parses timeline data, determining if jinja should render extra year markers.
+    Returns a list of booleans, to be iterate through alongside the 'years'. """
+
+    year_markers = []
+
+    for year in grouped_events:
+        marker = False
+        if len(grouped_events[year]) >= 3:
+            marker = True
+        for month in grouped_events[year]:
+            if len(grouped_events[year][month]) >= 3:
+                marker = True
+            for day in grouped_events[year][month]:
+                if len(grouped_events[year][month][day]) >= 3:
+                    marker = True
+        
+        if marker:
+            year_markers.append(True)
+        else:
+            year_markers.append(False)
+
+    return year_markers

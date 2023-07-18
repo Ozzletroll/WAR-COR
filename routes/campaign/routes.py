@@ -49,9 +49,11 @@ def edit_timeline(campaign_name, campaign_id):
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
+    # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)
+    year_markers = organisers.get_year_markers(grouped_events)
 
-    return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events)
+    return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events, year_markers=year_markers)
 
 
 # Create new campaign
