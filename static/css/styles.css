@@ -2065,6 +2065,7 @@ span::after {
   align-items: center;
   flex: 0 0 10%;
   margin-right: calc((0.50 * 10%) * -1);
+  max-width: 144px;
 }
 
 .timeline-horizontal {
