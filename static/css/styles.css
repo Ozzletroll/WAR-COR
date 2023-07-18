@@ -1320,7 +1320,7 @@ h5 {
   display: flex;
   flex: 0 0 auto;
   flex-direction: column;
-  width: 30%;
+  width: 40%;
   margin: 0;
   gap: 15px;
   flex-wrap: nowrap;
@@ -1356,7 +1356,11 @@ h5 {
 
 .campaign-members-list .members-list-item, .campaign-members-list .members-list-admin {
   display: flex;
-  align-items: center;
+}
+
+.members-list-admin .icon, .members-list-item .icon {
+  display: flex;
+  height: 20px;
 }
 
 .campaign-entry-buttons {
