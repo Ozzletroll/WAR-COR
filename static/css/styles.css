@@ -2349,12 +2349,10 @@ span::after {
   display: flex;
   background-color: var(--elem_mid);
   flex-direction: column;
-  scroll-margin-top: 54px;
+  scroll-margin-top: 50vh;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
-  /* To animate */
   transition: 0.5s;
-
 }
 
 .event-outline {
