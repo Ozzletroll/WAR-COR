@@ -2086,8 +2086,10 @@ span::after {
   flex: 0 0 10%;
   margin-right: calc((0.50 * 10%) * -1);
   margin-left: calc((0.25 * 10%) * -1);
-  max-width: 144px;
+  /* max-width: 144px; */
 }
+
+
 
 .timeline-horizontal {
   width: 30px;
@@ -2436,6 +2438,15 @@ span::after {
   display: flex;
   justify-content: center;
   padding: 16px;
+}
+
+@media screen and (min-width: 2200px) { 
+
+  .timeline-year-container {
+    margin-right: -72px;
+    max-width: 144px;
+  }
+
 }
 
 @media screen and (min-width: 1400px) { 
