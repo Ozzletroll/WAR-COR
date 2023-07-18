@@ -2043,16 +2043,36 @@ span::after {
 }
 
 .timeline-left-marker {
-  padding-top: 5vw;
+  padding-bottom: 4vh;
   display: flex;
-  font-size: min(3vw, 32px);
-  font-weight: 200;
   align-items: center;
+  justify-content: center;
   color: var(--text_dark);
   opacity: 50%;
   justify-content: center;
   writing-mode: vertical-lr;
   transform: rotate(-180deg);
+}
+
+.year-marker {
+  font-size: min(3vw, 32px);
+  font-weight: 200;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.year-marker-line {
+  display: flex;
+  /* flex: 1 0 0; */
+  height: 35%;
+  background-color: var(--dark_grey);
+  width: 1px;
+}
+
+.year-marker-hr {
+  height: 1px;
+  background-color: var(--dark_grey);
+  width: 9px;
 }
 
 .marker-invis {
@@ -2453,7 +2473,7 @@ span::after {
 @media screen and (max-width: 450px) { 
 
   .timeline-year-container-edit {
-    margin-left: 15px;
+    margin-left: 5px;
   }
 
 }

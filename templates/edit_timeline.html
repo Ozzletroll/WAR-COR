@@ -96,11 +96,19 @@
             <!-- Check if the timeline data is long enough to warrant an extra year marker -->
             {%if year_markers[loop.index0] %}
             <div class="timeline-left-marker">
-              {{year}}u
+              <div class="year-marker-hr"></div>
+              <div class="year-marker-line"></div>
+              <h5 class="year-marker">{{year}}u</h5>
+              <div class="year-marker-line"></div>
+              <div class="year-marker-hr"></div>
             </div>
             {% else %}
             <div class="timeline-left-marker marker-invis">
-              {{year}}u
+              <div class="year-marker-hr marker-invis"></div>
+              <div class="year-marker-line marker-invis"></div>
+              <h5 class="year-marker marker-invis">{{year}}u</h5>
+              <div class="year-marker-line marker-invis"></div>
+              <div class="year-marker-hr marker-invis"></div>
             </div>
             {% endif %}
 
@@ -288,7 +296,7 @@
                       <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                     </button>
                   </a>
-                  <p class="flavour-text new-event-flavour">// NEW EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
+                  <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
                 </div>
 
               {% endfor %}
