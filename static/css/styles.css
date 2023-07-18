@@ -2051,8 +2051,8 @@ span::after {
   color: var(--text_dark);
   opacity: 50%;
   justify-content: center;
-  text-orientation: sideways-right;
-  writing-mode: sideways-lr;
+  writing-mode: vertical-lr;
+  transform: rotate(-180deg);
 }
 
 .marker-invis {
