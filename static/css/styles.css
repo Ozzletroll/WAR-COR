@@ -2063,9 +2063,8 @@ span::after {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1 0 0;
-  margin-right: -11%;
-  margin-left: -45px;
+  flex: 0 0 10%;
+  margin-right: calc((0.50 * 10%) * -1);
 }
 
 .timeline-horizontal {
@@ -2130,15 +2129,11 @@ span::after {
 }
 
 .event-between-events {
-  width: 80%;
+  width: 100%;
 }
 
 .event-between a {
   margin-right: 15px;
-}
-
-.event-between p {
-  width: 80px;
 }
 
 .month-between a {
@@ -2155,6 +2150,7 @@ span::after {
 
 .new-event-flavour {
   flex: 2 0 0;
+  max-width: 300px;
 }
 
 .between-last {
@@ -2229,7 +2225,30 @@ span::after {
 }
 
 .line-dashed-heavy {
+  flex: 1 0 0;
   border-top: 2px dashed var(--bright_red);
+}
+
+.between-events-elements {
+  display: flex;
+  flex: 0.5 0 0;
+  max-width: calc(30px + 1.5vw);
+}
+
+.between-days-elements {
+  display: flex;
+  flex: 0.5 0 0;
+  max-width: calc(15px + 1.5vw);
+}
+
+.between-months-elements {
+  display: flex;
+  flex: 0.5 0 0;
+  max-width: calc(15px + 1.5vw);
+}
+
+.line-edit {
+  flex: 1 0 0;
 }
 
 .line-spacer {
@@ -2339,7 +2358,7 @@ span::after {
 
 .event-outline {
   display: flex;
-  max-width: 300px;
+  max-width: min(50%, 300px);
   padding: 9px 1px 1px 1px;
   background-color: var(--bright_red);
   flex: 1 1 0;
@@ -2401,6 +2420,10 @@ span::after {
 
 @media screen and (max-width: 650px) { 
 
+  .event-outline {
+    max-width: 95%;
+  }
+
   .timeline-left-marker {
     font-size: 18px;
   }
@@ -2428,6 +2451,14 @@ span::after {
 
 }
 
+@media screen and (max-width: 450px) { 
+
+  .timeline-year-container-edit {
+    margin-left: 15px;
+  }
+
+}
+
 @media screen and (max-width: 400px) { 
 
   .month-connector {
@@ -2440,11 +2471,6 @@ span::after {
 
   .timeline-day-container .right-branch-label {
     display: none;
-  }
-
-  .timeline-year-container {
-    margin-right: -9vw;
-    /* margin-left: -2vw; */
   }
 
   .timeline-months-container {
@@ -2464,16 +2490,9 @@ span::after {
     padding-bottom: 20px;
   }
 
-}
 
-@media screen and (max-width: 300px) { 
-
-  .timeline-year-container {
-    margin-right: -5vw;
-  }
 
 }
-
 
 /* Sidebar */
 

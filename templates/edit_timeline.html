@@ -105,7 +105,7 @@
             {% endif %}
 
             <!-- Year main axis -->
-            <div class="timeline-year-container">
+            <div class="timeline-year-container timeline-year-container-edit">
               <h3 class="timeline-year-header" id="year-{{year}}">
               {{ year + "u"}}
               </h3> 
@@ -226,7 +226,9 @@
 
                           <!-- Between events new event button -->
                           <div class="event-between event-between-events">
-                            <div class="line line-dashed"></div>
+                            <div class="between-events-elements">
+                              <div class="line line-dashed line-edit"></div>
+                           </div>
                             <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title, 
                                         campaign_id=campaign.id, 
@@ -235,7 +237,7 @@
                                 <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                               </button>
                              </a>
-                             <p class="flavour-text new-event-flavour">//EVENT:{{ event.date }}</p>
+                             <p class="flavour-text new-event-flavour">//NEW EVENT:{{ event.date }}</p>
                           </div>
 
                         {% endfor %}
@@ -246,7 +248,9 @@
 
                    <!-- Between days event button -->
                    <div class="event-between event-between-days">
-                    <div class="line line-dashed"></div>
+                    <div class="between-days-elements">
+                      <div class="line line-dashed line-edit"></div>
+                   </div>
                     <a href="{{ url_for('event.add_event', 
                                 campaign_name=campaign.title, 
                                 campaign_id=campaign.id,
@@ -257,9 +261,9 @@
                       </button>
                      </a>
                      {% if day|int + 1 == 100 %}
-                      <p class="flavour-text new-event-flavour">//EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
+                      <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
                      {% else %}
-                      <p class="flavour-text new-event-flavour">//EVENT:{{year}}-{{month}}-{{'%02d' % (day|int + 1)}}</p>
+                      <p class="flavour-text new-event-flavour">//NEW EVENT:{{year}}-{{month}}-{{'%02d' % (day|int + 1)}}</p>
                      {% endif %}
 
                   </div>
@@ -272,7 +276,9 @@
 
                 <!-- End of month new event button -->
                 <div class="month-between event-between-years">
-                  <div class="line line-dashed line-dashed-heavy"></div>
+                  <div class="between-months-elements">
+                    <div class="line line-dashed line-dashed-heavy"></div>
+                 </div>
                   <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title,
                                         new_month=True, 
@@ -282,7 +288,7 @@
                       <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                     </button>
                   </a>
-                  <p class="flavour-text new-event-flavour">//EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
+                  <p class="flavour-text new-event-flavour">// NEW EVENT:{{year}}-{{'%02d' % (month|int + 1)}}-01</p>
                 </div>
 
               {% endfor %}
