@@ -70,7 +70,7 @@ def get_year_markers(grouped_events):
 
 
 def format_event_datestring(datestring, args):
-    """Function that takes a datestring, and a list of all request.args, 
+    """Function that takes a datestring, and the dictionary from request.args, 
     and returns the next day/week/month/year date as a string,
     ready for form prepopulation."""
 
@@ -87,7 +87,11 @@ def format_event_datestring(datestring, args):
         if day < 99:
             day += 1
         else:
+            day = 1
             month += 1
+        if month == 100:
+            month = 1
+
 
         # Format date as string for form field
         datestring = str(year).zfill(year_format) + "-" + str(month).zfill(2) + "-" + str(day).zfill(2) + " 00:00:00"
@@ -104,6 +108,7 @@ def format_event_datestring(datestring, args):
         if month < 99:
             month += 1
         else:
+            month = 1
             year += 1
 
         # Format date as string for form field
