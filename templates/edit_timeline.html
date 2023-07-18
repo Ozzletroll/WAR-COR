@@ -80,6 +80,15 @@
 
         <div class="timeline-container">
 
+          {% if timeline_data|length == 0 %}
+            <div class="no-events">
+              <h3 class="no-events-header">No Conflict Data</h3>
+              <hr class="no-events-hr">
+              <p class="flavour-text">UWC-20-4 // Data:Awaiting Upload</p>
+              <p class="flavour-text">Please enter conflict data</p>
+            </div>
+          {% endif %}
+
           {% for year in timeline_data %}
 
           <div class="timeline-year">
