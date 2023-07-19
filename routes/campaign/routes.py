@@ -68,6 +68,7 @@ def create_campaign():
 
         new_campaign = models.Campaign()
         new_campaign.title = request.form["title"]
+        new_campaign.date_suffix = request.form["date_suffix"]
         new_campaign.description = request.form["description"]
         new_campaign.last_edited = datetime.now()
 
@@ -101,6 +102,7 @@ def edit_campaign(campaign_name, campaign_id):
     if form.validate_on_submit():
         campaign.title = request.form["title"]
         campaign.description = request.form["description"]
+        campaign.date_suffix = request.form["date_suffix"]
         campaign.last_edited = datetime.now()
 
         db.session.add(campaign)

@@ -91,7 +91,7 @@
             <div class="timeline-left-marker">
               <div class="year-marker-hr"></div>
               <div class="year-marker-line"></div>
-              <h5 class="year-marker">{{year}}u</h5>
+              <h5 class="year-marker">{{ year + campaign.date_suffix}}</h5>
               <div class="year-marker-line"></div>
               <div class="year-marker-hr"></div>
             </div>
@@ -99,7 +99,7 @@
             <div class="timeline-left-marker marker-invis">
               <div class="year-marker-hr marker-invis"></div>
               <div class="year-marker-line marker-invis"></div>
-              <h5 class="year-marker marker-invis">{{year}}u</h5>
+              <h5 class="year-marker marker-invis">{{ year + campaign.date_suffix}}</h5>
               <div class="year-marker-line marker-invis"></div>
               <div class="year-marker-hr marker-invis"></div>
             </div>
@@ -108,7 +108,7 @@
             <!-- Year main axis -->
             <div class="timeline-year-container">
               <h3 class="timeline-year-header" id="year-{{year}}">
-              {{ year + "u"}}
+              {{ year + campaign.date_suffix}}
               </h3> 
               <hr class="timeline-horizontal">
               <hr class="timeline-line">

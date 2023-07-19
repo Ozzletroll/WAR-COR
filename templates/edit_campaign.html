@@ -23,31 +23,55 @@
     <p class="flavour-text">UWC-5-00 // Campaign::Index </p>
 
 
-    <form class="edit-form" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+    <form class="edit-form form-column" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
       {{ form.csrf_token }}
 
-      <label class="campaign-form-label form-icon">
-        <div class="campaign-form-label-container">
-          <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-          <h4 class="campaign-form label-title">Campaign Title</h4>
-        </div>
-        <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
-      </label>
+      <div class="form-container form-container-small">
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Campaign Title</h4>
+          </div>
+          <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
+        </label>
 
-      {{ form.title(class_="campaign-input") }}
+        {{ form.title(class_="campaign-input form-input", autocomplete="off") }}
 
-      <label class="campaign-form-label form-icon">
-        <div class="campaign-form-label-container">
-          <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
-          <h4 class="campaign-form label-title">Description</h4>
-        </div>
-        <p class="flavour-text">UWC-5-02 //  Campaign::Conflict Overview</p>
-      </label>
+      </div>
 
-      {{ form.description(class_="campaign-input large-input") }}
+      <div class="form-container form-container-small">
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container label-split">
+            <div class="label-left">
+              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Date Suffix</h4>
+            </div>
+            <div class="label-right">
+              <h4 class="campaign-form label-title label-example">Example: 5016</h4>
+              <h4 id="example-date" class="campaign-form label-title label-example">{{campaign.date_suffix}}</h4>
+            </div>
+          </div>
+          <p class="flavour-text">UWC-5-02 //  Campaign::Calendar Suffix</p>
+        </label>
+
+        {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8) }}
+
+      </div>
       
+      <div class="form-container form-container-large">
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Description</h4>
+          </div>
+          <p class="flavour-text">UWC-5-03 //  Campaign::Conflict Overview</p>
+        </label>
+
+        {{ form.description(class_="campaign-input large-input", autocomplete="off") }}
+        
+      </div>
       
-      <div class="campaign-submit-area">
+      <div class="campaign-submit-area event-submit-area">
         {{ form.submit(class_="campaign-input campaign-submit") }}
       </div>  
         
@@ -66,5 +90,7 @@
   </div>
 
 </div>
+
+<script src="/static/js/forms.js"></script>
 
 {% endblock %}

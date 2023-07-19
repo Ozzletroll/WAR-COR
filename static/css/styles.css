@@ -958,6 +958,9 @@ h5 {
   clip-path: polygon(0 0,calc(100% - 20.00px) 0,100% 20.00px,100% 100%,0 100%);
 }
 
+.form-input {
+  width: 100%;
+}
 
 .form-heading {
   color: var(--text_normal);
@@ -1057,7 +1060,7 @@ h5 {
 
 @media screen and (min-width: 800px){
 
-  .event-form {
+  .form-column {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -1079,6 +1082,7 @@ h5 {
     width: 100%;
   }
 
+  
 }
 
 @media screen and (max-width: 600px){
@@ -1167,12 +1171,31 @@ h5 {
   width: 100%;
 }
 
+.label-split {
+  justify-content: space-between;
+}
+
+.label-left {
+  display: flex;
+}
+
+.label-right {
+  display: flex;
+  align-items: end;
+  padding-bottom: 2px;
+}
+
 .campaign-form.label-title {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
   color: var(--text_dark);
+}
+
+.label-example {
+  font-size: min(12px, 3vw);
+  text-transform: none;
 }
 
 .campaign-input {
@@ -1201,6 +1224,7 @@ h5 {
 .large-input {
   resize: none;
   min-height: 300px;
+  width: 100%;
 }
 
 .campaign-submit-area {

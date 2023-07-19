@@ -58,6 +58,7 @@ class Campaign(db.Model):
     title = db.Column(db.String(250))
     description = db.Column(db.String(250), nullable=False)
     last_edited = db.Column(db.DateTime, nullable=False)
+    date_suffix = db.Column(db.String(8), nullable=True)
 
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
