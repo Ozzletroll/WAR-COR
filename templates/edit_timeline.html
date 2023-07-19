@@ -249,7 +249,8 @@
                            </div>
                             <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title, 
-                                        campaign_id=campaign.id, 
+                                        campaign_id=campaign.id,
+                                        new_hour=True, 
                                         date=event.date) }}">
                               <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
                                 <img class="icon icon-invert" src="/static/images/icons/plus.svg">
@@ -273,7 +274,7 @@
                                 campaign_name=campaign.title, 
                                 campaign_id=campaign.id,
                                 new_day=True, 
-                                date=year + '-' + month + '-' + day) }}">
+                                date=year + '-' + month + '-' + day + ' 00:00:00') }}">
                       <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
                         <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                       </button>
@@ -307,8 +308,8 @@
                   <a href="{{ url_for('event.add_event', 
                                         campaign_name=campaign.title,
                                         new_month=True, 
-                                        campaign_id=campaign.id, 
-                                        date=year + '-' + month) }}">
+                                        campaign_id=campaign.id,
+                                        date=year + '-' + month + '-' + '01' + ' 00:00:00') }}">
                     <button id="new_event-{{year}}-{{month}}" class="new-timeline-item">
                       <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                     </button>
