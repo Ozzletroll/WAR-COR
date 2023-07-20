@@ -138,6 +138,9 @@ function themeToggle() {
   else if (currentTheme == "ironbow") {
     document.documentElement.setAttribute('theme', targetTheme);
   }
+  else if (currentTheme == "green") {
+    document.documentElement.setAttribute('theme', targetTheme);
+  }
 
   localStorage.setItem('theme', targetTheme);
 
@@ -157,6 +160,9 @@ if (storedTheme) {
   }
   else if (storedTheme == "ironbow") {
     radio = "theme-3";
+  }
+  else if (storedTheme == "green") {
+    radio = "theme-4";
   }
   
   

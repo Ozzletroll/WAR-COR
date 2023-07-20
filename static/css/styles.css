@@ -102,6 +102,37 @@
   --gradient2: #2f233d;
 }
 
+[theme="green"] {
+  --bg_colour1: #2B2B2B;
+  --bg_colour2: #464646;
+  --bg_colour3: #76e482;
+
+  --elem_dark: #181516;
+  --elem_mid: #272025;
+  --elem_bright: #3d3d3d;
+  --elem_hover: #3d3d3d;
+  --elem_trans: #aaaaaa2d;
+  --elem_border: #ff3300;
+
+  --text_bright: #30362f;
+  --text_normal: #E5E5E5;
+  --text_dark: #ffffff;
+  --text_flavour: #8dff9a;
+  --text_flavour_bright: #9af5a4;
+  --text_header: #9af5a4;
+  --text_header_dark: #30362f;
+  --text_header_contrast: #dcffd4;
+
+  --black: #000000;
+  --bright_red: #9af5a4;
+  --red: #76e482;
+  --dark_red: #698d6d;
+  --darker_red:#2f3d30;
+
+  --gradient1: #2b2b2b;
+  --gradient2: #2f3d30;;
+}
+
 /* Chrome Scrollbar */
 ::-webkit-scrollbar {
   background: var(--dark_grey);
@@ -1234,7 +1265,7 @@ h5 {
 
 .campaign-submit {
   background-color: var(--darker_red);
-  color: var(--text_bright);
+  color: var(--text_header_contrast);
 }
 
 .campaign-submit:hover {
@@ -2462,6 +2493,7 @@ span::after {
 
 .event-header-highlight {
   background-color: var(--bright_red);
+  color: var(--text_bright);
 }
 
 .event-body {
