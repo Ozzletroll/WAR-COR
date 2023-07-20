@@ -70,6 +70,11 @@ def add_event(campaign_name):
         event.body = request.form["body"]
         event.result = request.form["result"]
 
+        if form.header.data:
+            event.header = True
+        else:
+            event.header = False    
+
         event.parent_campaign = campaign
         event.parent_campaign.last_edited = datetime.now()
 

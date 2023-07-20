@@ -174,7 +174,13 @@
                         <div class="event-line event-line-mid"></div>
                       {% endif %}
 
+                      {# Check if the first event in the month is a header event, and their are no sub events #}
+                      {% if (timeline_data[year][month][day][0].header) and (timeline_data[year][month][day] | length == 1) and (loop.first) %}
+                      <div class="right-branch-label hidden-date">
+                      {% else %}
                       <div class="right-branch-label">
+                      {% endif %}
+
                         <div class="date-label-area">
                           <div class="line line-first"></div>
                           <div class="connector-date connector-date-outline">
@@ -205,7 +211,12 @@
                           {% endif %}
 
                             <div class="right-branch-label">
+                              {# Check if the first event in the day is a header event #}
+                              {% if event.header and loop.first %}
+                              <div class="date-label-area hidden-date">
+                              {% else %}
                               <div class="date-label-area">
+                              {% endif %}
                                 <div class="line line-first"></div>
                                 <div class="connector-date connector-date-outline">
                                   <div class="connector-date">
@@ -218,9 +229,16 @@
 
                             <div class="timeline-event event-outline">
                               <div id="event-{{event.id}}" class="timeline-event">
+                                {# Check if event is a header event #}
+                                {% if (event.header) and (loop.first) %}
+                                <div class="event-header event-header-highlight">
+                                  //{{event.title}}
+                                </div>
+                                {% else %}
                                 <div class="event-header">
                                   //{{event.title}}
                                 </div>
+                                {% endif %}
                                 <div class="event-body">
                                   <p class="event-date">{{event.type}}</p>
                                   <p class="event-description">

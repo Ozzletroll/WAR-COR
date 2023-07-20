@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField, DateTimeField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, BooleanField
 from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError
 from flask_ckeditor import CKEditorField
 import re
@@ -60,6 +60,7 @@ class CreateEventForm(FlaskForm):
     belligerents = StringField("Belligerents", validators=[DataRequired()])
     body = TextAreaField("Description", validators=[DataRequired()])
     result = StringField("Result", validators=[DataRequired()])
+    header = BooleanField("Header", default=False, validators=[Optional()])
     submit = SubmitField("Create Event")
 
 

@@ -32,7 +32,7 @@
         <div class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Date</h4>
             </div>
             <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
@@ -45,12 +45,12 @@
         <div class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Event Title</h4>
 
-              <div class="random-button-area">
+              <div class="form-extra-button-area">
                 
-                <div type="button" class="random-button" onClick="user_search(target_url)">
+                <div type="button" class="form-button" onClick="user_search(target_url)">
                   <img class="icon campaign-form-icon" src="/static/images/icons/random.svg">
                 </div>
                 
@@ -67,7 +67,7 @@
         <div class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Type</h4>
             </div>
             <p class="flavour-text">UWC-6-03 //  Event::Category</p>
@@ -80,7 +80,7 @@
         <div class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Location</h4>
             </div>
             <p class="flavour-text">UWC-6-04 //  Event::Location</p>
@@ -93,7 +93,7 @@
         <div class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Belligerents</h4>
             </div>
             <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
@@ -103,13 +103,35 @@
 
         </div>
 
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Event Group Header</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div type="button" class="form-button" onClick="">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
+                </div>
+                
+              </div>
+
+            </div>
+            <p class="flavour-text">UWC-6-06 //  Event::Formatting</p>
+          </label>
+
+          {{ form.header(class_="campaign-input event-input input-checkbox theme-radio", autocomplete="off") }}
+
+        </div>
+
         <div class="form-container form-container-large">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
             <h4 class="campaign-form label-title">Description</h4>
           </div>
-          <p class="flavour-text">UWC-6-06 //  Event::Overview:</p>
+          <p class="flavour-text">UWC-6-07 //  Event::Overview</p>
         </label>
 
         {{ form.body(class_="campaign-input large-input event-input", autocomplete="off") }}
@@ -119,10 +141,10 @@
         <div class="form-container form-container-footer">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
             <h4 class="campaign-form label-title">Result</h4>
           </div>
-          <p class="flavour-text">UWC-6-07 //  Event::Outcome</p>
+          <p class="flavour-text">UWC-6-08 //  Event::Outcome</p>
         </label>
 
         {{ form.result(class_="campaign-input event-input", autocomplete="off") }}

@@ -1903,14 +1903,14 @@ span::after {
   margin-top: 20px;
 }
 
-.random-button-area {
+.form-extra-button-area {
   display: flex;
   flex: 1 0 auto;
   justify-content: right;
   align-items: center;
 }
 
-.random-button {
+.form-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1922,12 +1922,19 @@ span::after {
   height: 30px;
 }
 
-.random-button:hover {
+.form-button:hover {
   background-color: var(--elem_dark);
 }
 
-.random-button:active {
+.form-button:active {
   background-color: var(--elem_bright);
+}
+
+.input-checkbox {
+  width: 25px;
+  height: 25px;
+  padding: 5px;
+  margin: 5px;
 }
 
 /* Edit members page */
@@ -2279,6 +2286,10 @@ span::after {
   align-items: center;
 }
 
+.hidden-date {
+  display: none;
+}
+
 .line {
   background-color: var(--bright_red);
   border-color: var(--bright_red);
@@ -2446,6 +2457,10 @@ span::after {
 }
 
 .event-header:active {
+  background-color: var(--bright_red);
+}
+
+.event-header-highlight {
   background-color: var(--bright_red);
 }
 

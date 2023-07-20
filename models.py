@@ -90,6 +90,7 @@ class Event(db.Model):
     belligerents = db.Column(db.String(250), nullable=True)
     body = db.Column(db.String(250), nullable=False)
     result = db.Column(db.String(250), nullable=True)
+    header = db.Column(db.Boolean(), nullable=False, default=False)
 
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments.
