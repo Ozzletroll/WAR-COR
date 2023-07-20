@@ -2128,7 +2128,7 @@ span::after {
 }
 
 .timeline-horizontal {
-  width: 30px;
+  width: 100%;
   color: var(--bright_red);
   border-color: var(--bright_red);
   margin-bottom: 0;
