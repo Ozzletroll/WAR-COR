@@ -105,10 +105,10 @@
 [theme="green"] {
   --bg_colour1: #2B2B2B;
   --bg_colour2: #464646;
-  --bg_colour3: #76e482;
+  --bg_colour3: #F5F5F5;
 
   --elem_dark: #181516;
-  --elem_mid: #272025;
+  --elem_mid: #161616;
   --elem_bright: #3d3d3d;
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
@@ -215,7 +215,7 @@ body {
 
 .flashes {
   list-style-type: none;
-  color: var(--darker_red);
+  color: var(--text_header);
   text-transform: uppercase;
   padding: 0;
 }
@@ -329,10 +329,6 @@ p {
   position: relative;
   color: var(--text_normal);
   text-decoration: none;
-}
-
-.navbar-links a:hover {
-  color: var(--text_bright)
 }
 
 .navbar-links a::before {
