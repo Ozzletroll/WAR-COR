@@ -2077,6 +2077,7 @@ span::after {
   flex: 1 0 0;
   margin-top: 50px;
   margin-bottom: 150px;
+  transition: 0.3s;
 }
 
 .no-events {
@@ -2528,14 +2529,6 @@ span::after {
   padding: 16px;
 }
 
-@media screen and (max-width: 850px) { 
-
-  .connector-date {
-    font-size: 10px;
-  }
-
-}
-
 @media screen and (max-width: 650px) { 
 
   .timeline-left-marker {
@@ -2657,6 +2650,10 @@ span::after {
 
   .sidebar-deploy {
     display: none;
+  }
+
+  .timeline-centring .timeline-container {
+    margin-left: 0;
   }
 
   .sidebar {
