@@ -56,7 +56,7 @@
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
   --text_flavour: #ff0000;
-  --text_flavour_bright: #ffffff;
+  --text_flavour_bright: #ff0000;
   --text_header: #b30000;
   --text_header_dark: #9C1717;
   --text_header_contrast: #ffffff;
@@ -114,13 +114,13 @@
   --elem_trans: #aaaaaa2d;
   --elem_border: #ff3300;
 
-  --text_bright: #30362f;
+  --text_bright: #000000;
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
   --text_flavour: #8dff9a;
   --text_flavour_bright: #9af5a4;
   --text_header: #9af5a4;
-  --text_header_dark: #30362f;
+  --text_header_dark: #698d6d;
   --text_header_contrast: #dcffd4;
 
   --black: #000000;
@@ -1134,7 +1134,7 @@ h5 {
 .navigation-url {
   text-decoration: none;
   text-transform: uppercase;
-  color: var(--darker_red);
+  color: var(--text_header_dark);
   width: fit-content;
 }
 
@@ -1146,7 +1146,7 @@ h5 {
 }
 
 .navigation-url:hover {
-  color: var(--dark_red);
+  color: var(--text_flavour_bright);
 }
 
 .navigation-heading:hover {
