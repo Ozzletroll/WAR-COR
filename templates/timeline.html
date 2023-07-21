@@ -47,7 +47,7 @@
                   {% for entry in user.campaign_associations %}
                     {%if entry.campaign_id == campaign.id%}
                       {% if entry.callsign is not none %}
-                        <h6 class="callsign-text">
+                        <h6 class="callsign-text callsign-break">
                           [{{entry.callsign.upper()}}]
                         </h6>
                       {% endif %}

@@ -4,7 +4,7 @@ class Tab {
     tab,
     button,
     icon,
-    timeline
+    timeline,
   }) {
     this.tab = document.getElementById(tab);
     this.button = button;
@@ -61,5 +61,5 @@ const sidebar = new Tab({
   tab: "sidebar",
   button: "sidebar-deploy",
   icon: "sidebar-icon",
-  timeline: "timeline-container"
+  timeline: "timeline-container",
 })

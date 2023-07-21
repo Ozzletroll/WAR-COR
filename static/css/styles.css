@@ -1400,6 +1400,10 @@ h5 {
   margin: 0;
 }
 
+.callsign-text.callsign-break {
+  word-break: break-all;
+}
+
 .admin-tag {
   color: var(--text_flavour_bright);
   padding-left: 6px;
@@ -1461,7 +1465,7 @@ h5 {
   color: var(--text_flavour);
 }
 
-@media screen and (max-width: 750px) { 
+@media screen and (max-width: 850px) { 
   
   .campaign-entry-container {
     flex-direction: column;
