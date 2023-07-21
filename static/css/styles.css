@@ -2480,15 +2480,16 @@ span::after {
 }
 
 .event-header:hover {
-  background-color: var(--dark_red);
+  background-color: var(--bright_red);
+  color: var(--text_bright);
 }
 
 .event-header:active {
-  background-color: var(--bright_red);
+  background-color: var(--darker_red);
 }
 
 .event-header-highlight {
-  background-color: var(--bright_red);
+  background-color: var(--dark_red);
   color: var(--text_bright);
 }
 
