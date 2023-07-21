@@ -2186,7 +2186,7 @@ span::after {
 }
 
 .timeline-year-header {
-  font-size: min(5vw, 46px);
+  font-size: min(4vw, 46px);
   width: 10vw;
   display: flex;
   justify-content: center;
@@ -2530,6 +2530,11 @@ span::after {
 }
 
 @media screen and (max-width: 650px) { 
+
+  .timeline-year-header {
+    justify-content: flex-start;
+    font-size: min(10vw, 48px);
+  }
 
   .timeline-left-marker {
     font-size: 18px;
