@@ -7,7 +7,6 @@ class Year:
     def __init__(self):
         self.name = ""
         self.months = []
-        self.header = False
         self.marker = False
 
 
