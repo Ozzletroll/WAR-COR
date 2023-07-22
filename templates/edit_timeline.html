@@ -97,17 +97,17 @@
             <div class="timeline-year-container">
 
               <h3 class="timeline-year-header" id="year-{{year}}">
-                {{ year + campaign.date_suffix}}
+                {{ year.name + campaign.date_suffix}}
               </h3> 
 
               <div class="timeline-columns">
 
                 <!-- Check if the timeline data is long enough to warrant an extra year marker -->
-                {%if year_markers[loop.index0] %}
+                {%if year.marker %}
                 <div class="timeline-left-marker">
                   <div class="year-marker-hr"></div>
                   <div class="year-marker-line"></div>
-                  <h5 class="year-marker">{{ year + campaign.date_suffix}}</h5>
+                  <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
                   <div class="year-marker-line"></div>
                   <div class="year-marker-hr"></div>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="timeline-left-marker marker-invis">
                   <div class="year-marker-hr marker-invis"></div>
                   <div class="year-marker-line marker-invis"></div>
-                  <h5 class="year-marker marker-invis">{{ year + campaign.date_suffix}}</h5>
+                  <h5 class="year-marker marker-invis">{{ year.name + campaign.date_suffix}}</h5>
                   <div class="year-marker-line marker-invis"></div>
                   <div class="year-marker-hr marker-invis"></div>
                 </div>
@@ -135,7 +135,7 @@
             <div class="timeline-months-container">
 
               <!-- Month branch of each year -->
-              {% for month in timeline_data[year] %}
+              {% for month in year.months %}
 
                 {% if loop.first %}
                 <div class="month-outer month-outer-top">
@@ -145,11 +145,16 @@
                 <div class="month-outer">
                 {% endif %}
 
+
+                {% if month.header and loop.first %}
+                <div class="month-connector hidden-date">
+                {% else %}
                 <div class="month-connector">
+                {% endif %}
                   <div class="line line-first"></div>
                   <div class="connector-date connector-date-outline">
                     <div class="connector-date">
-                      {{ month }}
+                      {{ month.name }}
                     </div>
                   </div>
                   <div class="line"></div>
@@ -158,7 +163,7 @@
                 <div class="timeline-month">
 
                   <!-- Day sub branches within each month -->
-                  {% for day in timeline_data[year][month] %}
+                  {% for day in month.days %}
 
                     {% if loop.length == 1 %}
                     <div class="timeline-day-container">
@@ -178,7 +183,7 @@
                     {% endif %}
 
                       {# Check if the first event in the month is a header event, and their are no sub events #}
-                      {% if (timeline_data[year][month][day][0].header) and (timeline_data[year][month][day] | length == 1) and (loop.first) %}
+                      {% if day.header and loop.first %}
                       <div class="right-branch-label hidden-date">
                       {% else %}
                       <div class="right-branch-label">
@@ -188,7 +193,7 @@
                           <div class="line line-first"></div>
                           <div class="connector-date connector-date-outline">
                             <div class="connector-date">
-                              {{day}}
+                              {{day.name}}
                             </div>
                           </div>
                           <div class="line line-spacer"></div>
@@ -197,7 +202,7 @@
 
                       <div class="event-group-container">
                         
-                        {% for event in timeline_data[year][month][day]%}
+                        {% for event in day.events %}
 
                           {% if loop.length == 1 %}
                           <div class="timeline-day-container day-container-solo">
@@ -215,7 +220,7 @@
 
                             <div class="right-branch-label">
                               {# Check if the first event in the day is a header event #}
-                              {% if event.header and loop.first %}
+                              {% if day.header and loop.first %}
                               <div class="date-label-area hidden-date">
                               {% else %}
                               <div class="date-label-area">
@@ -233,7 +238,7 @@
                             <div class="timeline-event event-outline">
                               <div id="event-{{event.id}}" class="timeline-event">
                                 {# Check if event is a header event #}
-                                {% if (event.header) and (loop.first) %}
+                                {% if event.header and loop.first %}
                                 <div class="event-header event-header-highlight">
                                   //{{event.title}}
                                 </div>
@@ -269,7 +274,7 @@
                                         campaign_id=campaign.id,
                                         new_hour=True, 
                                         date=event.date) }}">
-                              <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
+                              <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
                                 <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                               </button>
                              </a>
@@ -291,8 +296,8 @@
                                 campaign_name=campaign.title, 
                                 campaign_id=campaign.id,
                                 new_day=True, 
-                                date=year + '-' + month + '-' + day + ' 00:00:00') }}">
-                      <button id="new_event-{{year}}-{{month}}" class="new-timeline-item timeline-between-events">
+                                date=year.name + '-' + month.name + '-' + day.name + ' 00:00:00') }}">
+                      <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
                         <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                       </button>
                      </a>
@@ -317,8 +322,8 @@
                                         campaign_name=campaign.title,
                                         new_month=True, 
                                         campaign_id=campaign.id,
-                                        date=year + '-' + month + '-' + '01' + ' 00:00:00') }}">
-                    <button id="new_event-{{year}}-{{month}}" class="new-timeline-item">
+                                        date=year.name + '-' + month.name + '-' + '01' + ' 00:00:00') }}">
+                    <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
                       <img class="icon icon-invert" src="/static/images/icons/plus.svg">
                     </button>
                   </a>

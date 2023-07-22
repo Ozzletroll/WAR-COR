@@ -36,9 +36,8 @@ def show_timeline(campaign_name, campaign_id):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     grouped_events = organisers.campaign_sort(campaign)
-    year_markers = organisers.get_year_markers(grouped_events)
 
-    return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events, year_markers=year_markers)
+    return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
 
 
 # View campaign editing page
@@ -52,9 +51,8 @@ def edit_timeline(campaign_name, campaign_id):
 
     # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)
-    year_markers = organisers.get_year_markers(grouped_events)
 
-    return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events, year_markers=year_markers)
+    return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events)
 
 
 # Create new campaign
