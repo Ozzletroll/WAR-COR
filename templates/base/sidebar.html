@@ -4,17 +4,17 @@
 
     <a class="sidebar-button" href="#year-{{year}}">
       <button class="year-button entry-button">
-        {{ year + campaign.date_suffix}}
+        {{ year.name + campaign.date_suffix}}
         </button> 
     </a>
     
         
-      {% for month in timeline_data[year] %}
+      {% for month in year.months %}
 
 
-        {% for day in timeline_data[year][month] %}
+        {% for day in month.days %}
 
-          {% for event in timeline_data[year][month][day]  %}
+          {% for event in day.events  %}
             <a class="sidebar-button" href="#event-{{event.id}}">
               <button class="event-button">
                 {{event.title}}

@@ -1,6 +1,35 @@
 from itertools import groupby
 
 
+
+class Year:
+
+    def __init__(self):
+        self.name = ""
+        self.months = []
+        self.header = False
+        self.marker = False
+
+
+
+class Month:
+
+    def __init__(self):
+        self.name = ""
+        self.days = []
+        self.header = False
+
+
+
+class Day:
+
+    def __init__(self):
+        self.name = ""
+        self.events = []
+        self.header = False
+
+
+
 def split_date(datestring):
     """Function that splits a datestring into individual values,
     returns a list of integers"""
@@ -17,7 +46,8 @@ def split_date(datestring):
 
 
 def campaign_sort(campaign):
-    """Function that structures campaign event data for timeline rendering"""
+    """Function that structures campaign event data for timeline rendering. Returns
+    a list of year objects."""
     
     def custom_sort(event):
         """Function that splits a datestring into individual integers"""
@@ -53,36 +83,92 @@ def campaign_sort(campaign):
             grouped_days = {day: list(group) for day, group in groups}
             grouped_events[year][month] = grouped_days
 
-    # Final example structure:
+
+    # Current structure:
     # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
 
-    return grouped_events
-
-
-
-def get_year_markers(grouped_events):
-    """Parses timeline data, determining if jinja should render extra year markers.
-    Returns a list of booleans, to be iterate through alongside the 'years'. """
-
-    year_markers = []
+    # Turn each level of the heirarchy into an object, with the level below as a list held in a property
+    year_list = []
 
     for year in grouped_events:
-        marker = False
-        if len(grouped_events[year]) >= 3:
-            marker = True
-        for month in grouped_events[year]:
-            if len(grouped_events[year][month]) >= 5:
-                marker = True
-            for day in grouped_events[year][month]:
-                if len(grouped_events[year][month][day]) >= 5:
-                    marker = True
-        
-        if marker:
-            year_markers.append(True)
-        else:
-            year_markers.append(False)
 
-    return year_markers
+        year_object = Year()
+        year_object.name = year
+        year_object.marker = check_year_marker(grouped_events[year])
+
+        for month in grouped_events[year]:
+
+            month_object = Month()
+            month_object.name = month
+
+            for day in grouped_events[year][month]:
+
+                day_object = Day()
+                day_object.name = day
+
+                for event in grouped_events[year][month][day]:
+
+                    # Append the event to the day object
+                    day_object.events.append(event)
+
+                # Append the day object to the month object
+                month_object.days.append(day_object)
+
+            # Append the month object to the year object
+            year_object.months.append(month_object)
+
+        # Append the year object to the formatted list
+        year_list.append(year_object)
+
+        # Finally, take the list of year objects and check them for header status
+        check_headers(year_list)
+
+    return year_list
+
+
+
+def check_year_marker(year):
+    """Check if a given year is long enough to warrant a year marker """
+
+    year_markers = []
+    marker = False
+
+    if len(year) >= 3:
+        marker = True
+        
+    for month in year:
+        if len(year[month]) >= 5:
+            marker = True
+        for day in year[month]:
+            if len(year[month][day]) >= 5:
+                marker = True
+    
+    if marker:
+        return True
+    else:
+        return False
+
+
+
+def check_headers(year_list):
+    """Takes the list of year objects and checks each month and day within them,
+    flagging the header properties."""
+
+    for year_index, year in enumerate(year_list):
+
+        for month_index, month in enumerate(year.months):
+
+            for day_index, day in enumerate(month.days):
+
+                # Give the day the header property, if the month has only one day,
+                # and that day has only one event with the header property.
+                if len(month.days) == 1 and len(day.events) == 1 and day.events[0].header:
+                    day.header = True
+
+            # Give the month the header property, if the year has only one month,
+            # and that month's first day has the header property.
+            if len(year.months) == 1 and month.days[0].header:
+                month.header = True
 
 
 
