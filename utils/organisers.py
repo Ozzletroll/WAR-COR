@@ -96,35 +96,32 @@ def campaign_sort(campaign):
         year_object.name = year
         year_object.marker = check_year_marker(grouped_events[year])
 
-        for month, month_value in grouped_events[year].items():
+        for month in grouped_events[year]:
 
             month_object = Month()
             month_object.name = month
 
-            for day, day_value in grouped_events[year][month].items():
+            for day in grouped_events[year][month]:
 
                 day_object = Day()
                 day_object.name = day
 
                 for event in grouped_events[year][month][day]:
 
-                    # Check if the event is a header event
-                    day_object.header = check_header(event, event_layer=True)
-                    # Finally, append the event to the day object
+                    # Append the event to the day object
                     day_object.events.append(event)
 
-                # Check if the day is header day
-                day_object.header = check_header(day_value, day_layer=True)
-                # Finally, append the day object to the month object
+                # Append the day object to the month object
                 month_object.days.append(day_object)
 
-            # Check if the month is a header month
-            month_object.header = check_header(month_value, month_layer=True)
-            # Finally, append the month object to the year object
+            # Append the month object to the year object
             year_object.months.append(month_object)
 
-        # Finally, append the year object to the formatted list
+        # Append the year object to the formatted list
         year_list.append(year_object)
+
+        # Finally, take the list of year objects and check them for header status
+        check_headers(year_list)
 
     return year_list
 
@@ -153,28 +150,26 @@ def check_year_marker(year):
 
 
 
-def check_header(group_data, month_layer=False, day_layer=False, event_layer=False):
-    """Check if a given group from campaign_sort necessitates a header property."""
-    if month_layer:
-        # If the first event of the first day of the first month has the header property
-        # and each layer beneath has no sub elements
-        for index, day in enumerate(group_data.values()):
-            if index == 0:
-                for day_index, event in enumerate(day):
-                    if day_index == 0 and len(group_data) == 1 and event.header:
-                        return True
+def check_headers(year_list):
+    """Takes the list of year objects and checks each month and day within them,
+    flagging the header properties."""
 
-    if day_layer:
-        # If the first event of the day has the header property
-        # and each layer beneath has no sub elements
-        for index, event in enumerate(group_data):
-            if index == 0 and len(group_data) == 1 and event.header:
-                return True
+    for year_index, year in enumerate(year_list):
 
-    if event_layer:
-        # If the given event has the header property
-        if group_data.header:
-            return True
+        for month_index, month in enumerate(year.months):
+
+            for day_index, day in enumerate(month.days):
+
+                # Give the day the header property, if the month has only one day,
+                # and that day has only one event with the header property.
+                if len(month.days) == 1 and len(day.events) == 1 and day.events[0].header:
+                    day.header = True
+
+            # Give the month the header property, if the year has only one month,
+            # and that month's first day has the header property.
+            if len(year.months) == 1 and month.days[0].header:
+                month.header = True
+
 
 
 def format_event_datestring(datestring, args):

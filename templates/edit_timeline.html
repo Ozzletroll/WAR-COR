@@ -145,8 +145,9 @@
                 <div class="month-outer">
                 {% endif %}
 
-
-                {% if month.header and loop.first %}
+                {# Check if the year has only one month, and that month has the header property #}
+                {% if month.header %}
+                {# If so, hide the month connector element #}
                 <div class="month-connector hidden-date">
                 {% else %}
                 <div class="month-connector">
@@ -183,7 +184,7 @@
                     {% endif %}
 
                       {# Check if the first event in the month is a header event, and their are no sub events #}
-                      {% if day.header and loop.first %}
+                      {% if day.header %}
                       <div class="right-branch-label hidden-date">
                       {% else %}
                       <div class="right-branch-label">
@@ -220,7 +221,7 @@
 
                             <div class="right-branch-label">
                               {# Check if the first event in the day is a header event #}
-                              {% if day.header and loop.first %}
+                              {% if event.header and loop.first %}
                               <div class="date-label-area hidden-date">
                               {% else %}
                               <div class="date-label-area">

@@ -141,7 +141,7 @@
                 <div class="month-outer">
                 {% endif %}
 
-                {% if month.header and loop.first %}
+                {% if month.header %}
                 <div class="month-connector hidden-date">
                 {% else %}
                 <div class="month-connector">
@@ -178,7 +178,7 @@
                       {% endif %}
 
                       {# Check if the first event in the month is a header event, and their are no sub events #}
-                      {% if day.header and loop.first %}
+                      {% if day.header %}
                       <div class="right-branch-label hidden-date">
                       {% else %}
                       <div class="right-branch-label">
