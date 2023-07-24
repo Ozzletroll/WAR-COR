@@ -111,7 +111,7 @@
 
               <div class="form-extra-button-area">
                 
-                <div type="button" class="form-button" onClick="">
+                <div id="event-format-help-button" type="button" class="form-button">
                   <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
                 </div>
                 
@@ -123,6 +123,25 @@
 
           {{ form.header(class_="campaign-input event-input input-checkbox theme-radio", autocomplete="off") }}
 
+        </div>
+
+        {# Event Formatting Help Modal #}
+
+        <div id="modal-1" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Event Group Headers</h2>
+              <span id="close-1" class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+              <p>This makes the current event act as a visual header for any events below it within
+                the same branch of the timeline.
+              </p>
+              <img class="modal-img" src="/static/images/Event Header Example.jpg">
+              <p> If the first event of the day is a header event, it will omit the time marker of the event,
+                leaving subsequent events below it in the day to branch off as normal.</p>
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-large">
@@ -166,6 +185,7 @@
 
 </div>
 
+<script src="/static/js/event_form.js"></script>
 <script src="/static/js/event_gen.js"></script> 
 <script>
   const target_url = "{{ url_for('generator.random_event_title') }}"        

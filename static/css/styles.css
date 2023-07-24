@@ -833,7 +833,7 @@ h5 {
 .modal-content {
   display: flex;
   flex-direction: column;
-  background-color: var(--bg_colour1);
+  background-color: var(--elem_mid);
   margin: auto;
   padding: 0;
   width: min(80%, 500px);
@@ -863,9 +863,8 @@ h5 {
   display: flex;
   padding: 10%;
   max-height: calc(100vh - 150px);
-  overflow-y: auto;
+  overflow-y: scroll;
   flex-direction: column;
-  justify-content: space-evenly;
   font-weight: 300;
 }
 
