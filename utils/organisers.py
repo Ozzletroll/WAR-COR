@@ -61,6 +61,49 @@ def campaign_sort(campaign):
         return int(year), int(month), int(day), int(hours), int(minutes), int(seconds)
 
 
+    def check_year_marker(year):
+        """Check if a given year is long enough to warrant a year marker """
+
+        year_markers = []
+        marker = False
+
+        if len(year) >= 3:
+            marker = True
+            
+        for month in year:
+            if len(year[month]) >= 5:
+                marker = True
+            for day in year[month]:
+                if len(year[month][day]) >= 5:
+                    marker = True
+        
+        if marker:
+            return True
+        else:
+            return False
+
+
+    def check_headers(year_list):
+        """Takes the list of year objects and checks each month and day within them,
+        flagging the header properties."""
+
+        for year_index, year in enumerate(year_list):
+
+            for month_index, month in enumerate(year.months):
+
+                for day_index, day in enumerate(month.days):
+
+                    # Give the day the header property if it is the first day of the month,
+                    # and that day has only one event, which has the header property.
+                    if day_index == 0 and len(day.events) == 1 and day.events[0].header:
+                        day.header = True
+
+                # Give the month the header property, if the year has only one month,
+                # and that month's first day has the header property.
+                if len(year.months) == 1 and month.days[0].header:
+                    month.header = True
+
+
     # Sort events into date order
     sorted_events = sorted(campaign.events, key=custom_sort)
 
@@ -123,52 +166,6 @@ def campaign_sort(campaign):
         check_headers(year_list)
 
     return year_list
-
-
-
-def check_year_marker(year):
-    """Check if a given year is long enough to warrant a year marker """
-
-    year_markers = []
-    marker = False
-
-    if len(year) >= 3:
-        marker = True
-        
-    for month in year:
-        if len(year[month]) >= 5:
-            marker = True
-        for day in year[month]:
-            if len(year[month][day]) >= 5:
-                marker = True
-    
-    if marker:
-        return True
-    else:
-        return False
-
-
-
-def check_headers(year_list):
-    """Takes the list of year objects and checks each month and day within them,
-    flagging the header properties."""
-
-    for year_index, year in enumerate(year_list):
-
-        for month_index, month in enumerate(year.months):
-
-            for day_index, day in enumerate(month.days):
-
-                # Give the day the header property, if the month has only one day,
-                # and that day has only one event with the header property.
-                if len(month.days) == 1 and len(day.events) == 1 and day.events[0].header:
-                    day.header = True
-
-            # Give the month the header property, if the year has only one month,
-            # and that month's first day has the header property.
-            if len(year.months) == 1 and month.days[0].header:
-                month.header = True
-
 
 
 def format_event_datestring(datestring, args):
