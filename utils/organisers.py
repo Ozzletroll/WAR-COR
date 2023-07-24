@@ -199,25 +199,26 @@ def format_event_datestring(datestring, args):
 
 
     values = split_date(datestring)
+    year_format = len(datestring.split("-")[0])
 
     if "new_hour" in args:
         incremented_values = increment(values, 2)
 
         # Format date as string for form field
-        datestring = str(incremented_values[0]).zfill(2) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " " + str(incremented_values[3]).zfill(2) + ":00:00"
+        datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " " + str(incremented_values[3]).zfill(2) + ":00:00"
 
     # Move to the next day and format the string
     if "new_day" in args:
         incremented_values = increment(values, 3)
 
         # Format date as string for form field
-        datestring = str(incremented_values[0]).zfill(2) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " 00:00:00"
+        datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " 00:00:00"
 
     # Move to the next month and format the string
     if "new_month" in args:
         incremented_values = increment(values, 4)
 
         # Format date as string for form field
-        datestring = str(incremented_values[0]).zfill(2) + "-" + str(incremented_values[1]).zfill(2) + "-" + "01 00:00:00"
+        datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + "01 00:00:00"
 
     return datestring
