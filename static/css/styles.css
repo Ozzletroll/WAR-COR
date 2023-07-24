@@ -2500,8 +2500,11 @@ span::after {
 .event-body {
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 10px;
+  min-height: 0;
   height: 0;
+  transition: 0.3s ease;
   /* min-height: 250px; */
   overflow-y: hidden;
   /* To animate */
@@ -2510,10 +2513,11 @@ span::after {
 
 }
 
-.event-date {
+.event-type {
   display: flex;
   justify-content: center;
   font-weight: 300;
+  text-transform: uppercase;
 }
 
 .event-description {
