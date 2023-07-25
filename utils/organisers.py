@@ -1,7 +1,7 @@
 from itertools import groupby
 
 
-
+# Classes used for timeline data organisation
 class Year:
 
     def __init__(self):
