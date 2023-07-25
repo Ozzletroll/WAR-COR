@@ -251,7 +251,7 @@
                                     {% endif %}
                                   </p>
                                   <div class="event-button-area">
-                                    <a href=""><button class="entry-button">VIEW</button></a>
+                                    <a href="{{ url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id) }}"><button class="entry-button">VIEW</button></a>
                                   </div>
                                 </div>
                               </div>

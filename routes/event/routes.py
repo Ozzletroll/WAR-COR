@@ -21,8 +21,9 @@ from routes.event import bp
 def view_event(campaign_name, event_name):
     target_event_id = request.args["event_id"]
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+    campaign = event.parent_campaign
 
-    return render_template("event.html", event=event)
+    return render_template("event.html", event=event, campaign=campaign)
 
 
 # Add new event

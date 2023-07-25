@@ -2715,3 +2715,39 @@ span::after {
 .event-button:active {
   color: var(--bright_red);
 }
+
+/* Event Page */
+
+.event-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.event-page-elem {
+  display: flex;
+  width: 50%;
+  align-items: center;
+  gap: 5%;
+  color: var(--text_dark);
+}
+
+.event-elem-large {
+  width: 100%;
+}
+
+.event-elem-centre {
+  width: 100%;
+  justify-content: center;
+}
+
+@media screen and (min-width: 800px){
+
+  .event-page-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+}

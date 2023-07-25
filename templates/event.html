@@ -1,21 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{event.title}}</title>
-</head>
-<body>
-    <!-- {{event.type}}
-    {{event.date}}
-    {{event.location}}
-    {{event.belligerents}}
-    {{event.body}}
-    {{event.result}}
-    <br>
-    {{event.parent_campaign.title}}
-    <br>
-    {{event.parent_campaign.members}}
-    <br>
-    {{event.comments}} -->
-</body>
-</html>
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+    <div class="campaigns-content">
+
+        <div class="navigation-area">
+          <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
+            <h5 class="navigation-heading">/CAMPAIGNS</h5>
+          </a>
+          <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
+            <h5 class="navigation-heading">/{{campaign.title}}/</h5>
+          </a>
+          
+        </div>
+  
+        <div class="campaigns-title">
+          <h3 class="campaigns-heading">{{event.title}}</h1>
+        </div>
+  
+        <hr class="campaigns-divider">
+        <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{event.id}} // Event::Data</p>
+  
+
+        <div class="event-page-container">
+
+            <div class="event-page-elem">
+
+                <h4>Date</h4>
+                {{event.date}}
+
+            </div>
+
+            <div class="event-page-elem">
+
+                <h4>Type:</h4>
+                {{event.type}}
+                
+            </div>
+
+            <div class="event-page-elem">
+
+                <h4>Location:</h4>
+                {{event.location}}
+                
+            </div>
+
+            <div class="event-page-elem">
+
+                <h4>Belligerents:</h4>
+                {{event.belligerents}}
+                
+            </div>
+
+            <div class="event-page-elem event-elem-large">
+
+                <h4>Description:</h4>
+                {{event.body}}
+                
+            </div>
+
+            <div class="event-page-elem event-elem-centre">
+
+                <h4>Result:</h4>
+                {{event.result}}
+                
+            </div>
+
+ 
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+{% endblock %}
