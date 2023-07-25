@@ -24,6 +24,16 @@ class Event {
     var contentHeight = this.dropdown.scrollHeight;
     this.dropdown.style.minHeight = contentHeight + "px";
     this.state = true
+
+    // Update contentHeight to account for sidebar resizing
+    setInterval(() => {
+      const updatedContentHeight = this.dropdown.scrollHeight;
+      if (contentHeight !== updatedContentHeight && this.state == true) {
+        contentHeight = updatedContentHeight;
+        this.dropdown.style.minHeight = contentHeight + "px";
+      }
+    }, 300);
+
   }
 
   closeDropdown() {
