@@ -221,7 +221,7 @@
 
                             <div class="right-branch-label">
                               {# Check if the first event in the day is a header event #}
-                              {% if event.header and loop.first %}
+                              {% if event.header %}
                               <div class="date-label-area hidden-date">
                               {% else %}
                               <div class="date-label-area">
@@ -248,8 +248,8 @@
                                   //{{event.title}}
                                 </div>
                                 {% endif %}
-                                <div class="event-body">
-                                  <p class="event-date">{{event.type}}</p>
+                                <div id="dropdown-{{event.id}}" class="event-body">
+                                  <p class="event-type">{{event.type}}</p>
                                   <p class="event-description">
                                     {{event.body[:180]}}
                                     {% if event.body|length > 180 %}
@@ -258,6 +258,9 @@
                                   </p>
                                   <div class="event-button-area">
                                     <a href=""><button class="entry-button">VIEW</button></a>
+                                  </div>
+                                  <div class="event-button-area">
+                                    <a href=""><button class="entry-button">EDIT</button></a>
                                   </div>
                                 </div>
                               </div>
@@ -351,7 +354,8 @@
 
 </div>
 
-  <!-- Scroll to newly created event -->
+
+<script src="/static/js/timeline.js"></script>
   {% if "scroll_target" in request.args %}
     <script>
       document.getElementById('{{ request.args["scroll_target"] }}').scrollIntoView();
