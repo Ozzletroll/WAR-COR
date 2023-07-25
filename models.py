@@ -8,6 +8,12 @@ user_edit_permissions = db.Table("user_edit_permissions",
                                  db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
 
 
+# Association table that defines user to message relationship.
+user_messages = db.Table("user_messages",
+                         db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
+                         db.Column("message_id", db.Integer, db.ForeignKey("message.id")))
+
+
 # Association Object that defines user to campaign membership, and allows
 # users to have a unique callsign for each campaign.
 class UserCampaign(db.Model):
@@ -48,6 +54,9 @@ class User(UserMixin, db.Model):
 
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
     comments = db.relationship("Comment", back_populates="author")
+    messages = db.relationship("Message", secondary=user_messages)
+    sent_messages = db.relationship("Message", back_populates="author")
+
 
 
 class Campaign(db.Model):
@@ -96,8 +105,9 @@ class Event(db.Model):
     # An event is part of a campaign, and may contain multiple comments.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
-    comments = db.relationship("Comment", back_populates="parent_event")
     parent_campaign = db.relationship("Campaign", back_populates="events")
+    comments = db.relationship("Comment", back_populates="parent_event")
+
 
 
 class Comment(db.Model):
@@ -114,3 +124,17 @@ class Comment(db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     author = db.relationship("User", back_populates="comments")
+
+
+class Message(db.Model):
+    __tablename__ = "message"
+
+    id = db.Column(db.Integer, primary_key=True)
+    invite = db.Column(db.Boolean(), default=False)
+    notification = db.Column(db.Boolean(), default=False)
+    body = db.Column(db.String(250))
+    link = db.Column(db.String(250))
+
+    # Database relationships
+    author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    author = db.relationship("User", back_populates="sent_messages")
