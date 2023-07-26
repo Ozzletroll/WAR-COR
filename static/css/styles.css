@@ -322,7 +322,7 @@ p {
   font-size: 16px;
 }
 
-.navbar-links a {
+.navbar-links .navbar-link-item {
   display: flex;
   gap: 5px;
   align-items: center;
@@ -331,7 +331,7 @@ p {
   text-decoration: none;
 }
 
-.navbar-links a::before {
+.navbar-links .navbar-link-item::before {
   content: "";
   position: absolute;
   display: block;
@@ -345,7 +345,7 @@ p {
   transition: transform 0.3s ease;
 }
 
-.navbar-links a:hover::before {
+.navbar-links .navbar-link-item:hover::before {
   transform: scaleX(1);
 }
 
