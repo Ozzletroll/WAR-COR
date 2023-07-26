@@ -267,10 +267,11 @@ def add_user(campaign_name):
             message.body = f"{current_user.username} has invited you to the campaign: {campaign.title}"
             message.target_user = user
             message.target_campaign = campaign
-            message.link = url_for("campaign.accept_invite", campaign_name=campaign.title, campaign_id=message.target_campaign.id, message_id=message.id)
 
-            # Add message to database
+            # Add message to user's message list
+            db.session.add(message)
             user.messages.append(message)
+            current_user.sent_messages.append(message)
             db.session.commit()
 
             flash(f"{user.username} invited to campaign.")
@@ -302,11 +303,35 @@ def accept_invite(campaign_name):
             # Delete message
             db.session.delete(message)
             db.session.commit()
+            flash(f"Accepted invitation to campaign: {campaign.title}")
 
         else:
             flash(f"Already a member of campaign: {campaign.title}")
 
     return redirect(url_for("campaign.campaigns"))
+
+
+
+# Function called when user declines a campaign invitation
+@bp.route("/campaigns/<campaign_name>/decline_invite", methods=["GET"])
+@login_required
+def decline_invite(campaign_name):
+
+    message_id = request.args["message_id"]
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+
+    # Check if target message is actually for the current user
+    if message.target_user == current_user:
+
+        campaign_name_flash = message.target_campaign.title
+
+        db.session.delete(message)
+        db.session.commit()
+
+        flash(f"Declined invitation to campaign: {campaign_name_flash}")
+
+    return redirect(url_for("campaign.campaigns"))
+
 
 
 # Function called when granting a user campaign editing permissions
