@@ -296,11 +296,15 @@ def accept_invite(campaign_name):
     # Check if the campaign invitation is valid and for the current user
     if message in campaign.pending_invites and message.target_user == current_user:
 
+        if current_user not in campaign.members:
             # Add user to campaign
             message.target_user.campaigns.append(campaign)
             # Delete message
             db.session.delete(message)
             db.session.commit()
+
+        else:
+            flash(f"Already a member of campaign: {campaign.title}")
 
     return redirect(url_for("campaign.campaigns"))
 
