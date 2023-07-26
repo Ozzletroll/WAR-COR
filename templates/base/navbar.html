@@ -30,10 +30,10 @@
         </li>
         {% endif %}
         <li>
-          <a href="">
+          <button id="messages-button" class="messages-button">
             <img class="icon campaign-form-icon" src="/static/images/icons/message.svg">
             {{ current_user.messages|length }}
-          </a>
+          </button>
         </li>
       {% elif request.path == "/" %}
         <li><a href="#main-features">>SITREP</a></li>
@@ -69,6 +69,60 @@
     <a class="h-menu-item" href="">COMMS</a>
   {% endif %}
 </div>
+
+
+<div id="messages-tab" class="notifications-dropdown">
+  
+  <ul class="notifications-list">
+  {% if current_user.messages | length == 0 %}
+    
+    <li class="message-item">
+      <h5 class="no-message-header">NO MESSAGES</h5>
+    </li>
+
+  {% endif %}
+  {% for message in current_user.messages %}
+
+    {% if message.invite %}
+
+      <h5 class="message-date">{{message.date}}</h5>
+
+      <li class="message-item">
+        <h4 class="message-header">INVITE</h4>
+        
+        <div class=message-body>{{message.body}}</div>
+
+        <div class="message-button-area">
+          <a href="{{url_for('campaign.accept_invite', campaign_name=message.target_campaign.title, campaign_id=message.target_campaign.id, message_id=message.id)}}">
+            <button class="message-button">ACCEPT</button>
+          </a>
+
+          <a href="{{url_for('campaign.decline_invite', campaign_name=message.target_campaign.title, message_id=message.id)}}">
+            <button class="message-button">DECLINE</button>
+          </a>
+        </div>
+
+      </li>
+      
+
+    {% elif message.notification %}
+
+    <li>
+      <h4 class="message-header">NOTIFICATION</h4>
+      {{message.body}}
+    </li>
+
+    {% endif %}
+
+
+    
+  {% endfor %}
+  </ul>
+
+</div>
+
+
+
 
 <!-- Javascript -->
 <script src="/static/js/navbar.js"></script> 
