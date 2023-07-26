@@ -267,6 +267,7 @@ def add_user(campaign_name):
             message.body = f"{current_user.username} has invited you to the campaign: {campaign.title}"
             message.target_user = user
             message.target_campaign = campaign
+            message.date = datetime.now()
 
             # Add message to user's message list
             db.session.add(message)
