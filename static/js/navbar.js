@@ -23,6 +23,7 @@ class messageTab {
     this.tab.style.marginBottom = "-300px"
     this.tab.style.height = "300px"
     this.tab.style.borderBottom = "1px solid var(--elem_border)"
+    this.tab.style.borderTop = "1px solid var(--elem_border)"
     this.state = true
   }
 
@@ -30,6 +31,8 @@ class messageTab {
     this.tab.style.marginBottom = "0"
     this.tab.style.height = "0"
     this.tab.style.borderBottom = "0px solid var(--elem_border)"
+    this.tab.style.borderTop = "0px solid var(--elem_border)"
+
     this.state = false
   }
 
