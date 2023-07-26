@@ -29,6 +29,12 @@
           </a>
         </li>
         {% endif %}
+        <li>
+          <a href="">
+            <img class="icon campaign-form-icon" src="/static/images/icons/message.svg">
+            {{ current_user.messages|length }}
+          </a>
+        </li>
       {% elif request.path == "/" %}
         <li><a href="#main-features">>SITREP</a></li>
         <li><a href="">>COMMS</a></li>
