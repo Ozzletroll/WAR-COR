@@ -55,7 +55,8 @@ class User(UserMixin, db.Model):
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
     comments = db.relationship("Comment", back_populates="author")
     messages = db.relationship("Message", secondary=user_messages)
-    sent_messages = db.relationship("Message", back_populates="author")
+    sent_messages = db.relationship("Message", back_populates="author", foreign_keys="[Message.author_id]")
+    open_invites = db.relationship("Message", back_populates="target_user", foreign_keys="[Message.target_user_id]")
 
 
 
@@ -71,9 +72,10 @@ class Campaign(db.Model):
 
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
-    # permission.
+    # permission. 
 
     events = db.relationship("Event", back_populates="parent_campaign")
+    pending_invites = db.relationship("Message", back_populates="target_campaign")
 
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     members = db.relationship("User",
@@ -137,4 +139,10 @@ class Message(db.Model):
 
     # Database relationships
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
-    author = db.relationship("User", back_populates="sent_messages")
+    author = db.relationship("User", back_populates="sent_messages", foreign_keys=[author_id])
+
+    target_campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
+    target_campaign = db.relationship("Campaign", back_populates="pending_invites")
+
+    target_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    target_user = db.relationship("User", back_populates="open_invites", foreign_keys=[target_user_id])

@@ -258,16 +258,51 @@ def add_user(campaign_name):
     if user:
         # Check if user isn't already a member
         if campaign not in user.campaigns:
-            # Add user as campaign member
-            user.campaigns.append(campaign)
+
+            # Send invite message
+            message = models.Message()
+
+            message.author = current_user
+            message.invite = True
+            message.body = f"{current_user.username} has invited you to the campaign: {campaign.title}"
+            message.target_user = user
+            message.target_campaign = campaign
+            message.link = url_for("campaign.accept_invite", campaign_name=campaign.title, campaign_id=message.target_campaign.id, message_id=message.id)
+
+            # Add message to database
+            user.messages.append(message)
             db.session.commit()
-            flash(f"{user.username} added to campaign.")
+
+            flash(f"{user.username} invited to campaign.")
         else:
             flash(f"{user.username} is already a member of this campaign.")
     else:
         flash("User not in database, please check username.")
 
     return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
+
+
+# Function called when user accepts a campaign invitation
+@bp.route("/campaigns/<campaign_name>/accept_invite", methods=["GET"])
+@login_required
+def accept_invite(campaign_name):
+
+    message_id = request.args["message_id"]
+    target_campaign_id = request.args["campaign_id"]
+
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+    # Check if the campaign invitation is valid and for the current user
+    if message in campaign.pending_invites and message.target_user == current_user:
+
+            # Add user to campaign
+            message.target_user.campaigns.append(campaign)
+            # Delete message
+            db.session.delete(message)
+            db.session.commit()
+
+    return redirect(url_for("campaign.campaigns"))
 
 
 # Function called when granting a user campaign editing permissions
