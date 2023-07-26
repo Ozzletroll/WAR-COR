@@ -135,7 +135,8 @@ class Message(db.Model):
     invite = db.Column(db.Boolean(), default=False)
     notification = db.Column(db.Boolean(), default=False)
     body = db.Column(db.String(250))
-    link = db.Column(db.String(250))
+    date = db.Column(db.DateTime, nullable=False)
+
 
     # Database relationships
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
