@@ -258,16 +258,81 @@ def add_user(campaign_name):
     if user:
         # Check if user isn't already a member
         if campaign not in user.campaigns:
-            # Add user as campaign member
-            user.campaigns.append(campaign)
+
+            # Send invite message
+            message = models.Message()
+
+            message.author = current_user
+            message.invite = True
+            message.body = f"{current_user.username} has invited you to the campaign: {campaign.title}"
+            message.target_user = user
+            message.target_campaign = campaign
+            message.date = datetime.now()
+
+            # Add message to user's message list
+            db.session.add(message)
+            user.messages.append(message)
+            current_user.sent_messages.append(message)
             db.session.commit()
-            flash(f"{user.username} added to campaign.")
+
+            flash(f"{user.username} invited to campaign.")
         else:
             flash(f"{user.username} is already a member of this campaign.")
     else:
         flash("User not in database, please check username.")
 
     return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
+
+
+# Function called when user accepts a campaign invitation
+@bp.route("/campaigns/<campaign_name>/accept_invite", methods=["GET"])
+@login_required
+def accept_invite(campaign_name):
+
+    message_id = request.args["message_id"]
+    target_campaign_id = request.args["campaign_id"]
+
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+    # Check if the campaign invitation is valid and for the current user
+    if message in campaign.pending_invites and message.target_user == current_user:
+
+        if current_user not in campaign.members:
+            # Add user to campaign
+            message.target_user.campaigns.append(campaign)
+            # Delete message
+            db.session.delete(message)
+            db.session.commit()
+            flash(f"Accepted invitation to campaign: {campaign.title}")
+
+        else:
+            flash(f"Already a member of campaign: {campaign.title}")
+
+    return redirect(url_for("campaign.campaigns"))
+
+
+
+# Function called when user declines a campaign invitation
+@bp.route("/campaigns/<campaign_name>/decline_invite", methods=["GET"])
+@login_required
+def decline_invite(campaign_name):
+
+    message_id = request.args["message_id"]
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+
+    # Check if target message is actually for the current user
+    if message.target_user == current_user:
+
+        campaign_name_flash = message.target_campaign.title
+
+        db.session.delete(message)
+        db.session.commit()
+
+        flash(f"Declined invitation to campaign: {campaign_name_flash}")
+
+    return redirect(url_for("campaign.campaigns"))
+
 
 
 # Function called when granting a user campaign editing permissions

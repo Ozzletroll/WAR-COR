@@ -8,6 +8,12 @@ user_edit_permissions = db.Table("user_edit_permissions",
                                  db.Column("campaign_id", db.Integer, db.ForeignKey("campaign.id")))
 
 
+# Association table that defines user to message relationship.
+user_messages = db.Table("user_messages",
+                         db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
+                         db.Column("message_id", db.Integer, db.ForeignKey("message.id")))
+
+
 # Association Object that defines user to campaign membership, and allows
 # users to have a unique callsign for each campaign.
 class UserCampaign(db.Model):
@@ -48,6 +54,10 @@ class User(UserMixin, db.Model):
 
     permissions = db.relationship("Campaign", secondary=user_edit_permissions)
     comments = db.relationship("Comment", back_populates="author")
+    messages = db.relationship("Message", secondary=user_messages)
+    sent_messages = db.relationship("Message", back_populates="author", foreign_keys="[Message.author_id]")
+    open_invites = db.relationship("Message", back_populates="target_user", foreign_keys="[Message.target_user_id]")
+
 
 
 class Campaign(db.Model):
@@ -62,9 +72,10 @@ class Campaign(db.Model):
 
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
-    # permission.
+    # permission. 
 
     events = db.relationship("Event", back_populates="parent_campaign")
+    pending_invites = db.relationship("Message", back_populates="target_campaign")
 
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     members = db.relationship("User",
@@ -96,8 +107,9 @@ class Event(db.Model):
     # An event is part of a campaign, and may contain multiple comments.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
-    comments = db.relationship("Comment", back_populates="parent_event")
     parent_campaign = db.relationship("Campaign", back_populates="events")
+    comments = db.relationship("Comment", back_populates="parent_event")
+
 
 
 class Comment(db.Model):
@@ -114,3 +126,24 @@ class Comment(db.Model):
 
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     author = db.relationship("User", back_populates="comments")
+
+
+class Message(db.Model):
+    __tablename__ = "message"
+
+    id = db.Column(db.Integer, primary_key=True)
+    invite = db.Column(db.Boolean(), default=False)
+    notification = db.Column(db.Boolean(), default=False)
+    body = db.Column(db.String(250))
+    date = db.Column(db.DateTime, nullable=False)
+
+
+    # Database relationships
+    author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    author = db.relationship("User", back_populates="sent_messages", foreign_keys=[author_id])
+
+    target_campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
+    target_campaign = db.relationship("Campaign", back_populates="pending_invites")
+
+    target_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    target_user = db.relationship("User", back_populates="open_invites", foreign_keys=[target_user_id])
