@@ -221,11 +221,9 @@
 
                             <div class="right-branch-label">
                               {# Check if the first event in the day is a header event #}
-                              {% if event.header %}
+                              {% if event.header and loop.first %}
+
                               <div class="date-label-area hidden-date">
-                              {% else %}
-                              <div class="date-label-area">
-                              {% endif %}
                                 <div class="line line-first"></div>
                                 <div class="connector-date connector-date-outline">
                                   <div class="connector-date">
@@ -234,6 +232,27 @@
                                 </div>
                                 <div class="line line-spacer"></div>
                               </div>
+
+                              {% elif event.header %}
+
+                              <div class="date-label-area hidden-align">
+                                <div class="line line-first"></div>
+                                <div class="line line-spacer"></div>
+                              </div>
+
+                              {% else %}
+
+                              <div class="date-label-area">
+                                <div class="line line-first"></div>
+                                <div class="connector-date connector-date-outline">
+                                  <div class="connector-date">
+                                    {{event.date[-8:]}}
+                                  </div>
+                                </div>
+                                <div class="line line-spacer"></div>
+                              </div>
+                              
+                              {% endif %}
                             </div>
 
                             <div class="timeline-event event-outline">

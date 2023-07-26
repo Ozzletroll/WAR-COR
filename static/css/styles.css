@@ -2435,6 +2435,10 @@ span::after {
   display: none;
 }
 
+.hidden-align {
+  height: 27px;
+}
+
 .line {
   background-color: var(--bright_red);
   border-color: var(--bright_red);
@@ -2680,6 +2684,10 @@ span::after {
 
   .right-branch-label {
     margin-top: 13px;
+  }
+
+  .hidden-align {
+    height: 0;
   }
 
 }
