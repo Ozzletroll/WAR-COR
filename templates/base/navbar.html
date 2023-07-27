@@ -119,7 +119,7 @@
       <div class=message-body>{{message.body}}</div>
 
       <div class="message-button-area">
-        <a href="">
+        <a href="{{ url_for('user.dismiss_message', message_id=message.id, username=current_user.username, current_url=url_for('campaign.show_timeline', campaign_name=message.target_campaign.title, campaign_id=message.target_campaign.id)) }}">
           <button class="message-button">VIEW</button>
         </a>
         <a href="{{ url_for('user.dismiss_message', message_id=message.id, username=current_user.username, current_url=request.url) }}">
