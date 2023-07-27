@@ -295,6 +295,11 @@ def accept_invite(campaign_name):
             db.session.commit()
             flash(f"Accepted invitation to campaign: {campaign.title}")
 
+            # Create new member notification
+            messengers.send_new_member_notification(sender=current_user, 
+                                recipients=campaign.members,
+                                campaign=campaign)
+
         else:
             flash(f"Already a member of campaign: {campaign.title}")
 

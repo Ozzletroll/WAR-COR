@@ -25,6 +25,25 @@ def send_invite_message(sender, recipient, campaign):
   db.session.commit()
 
 
+def send_new_member_notification(sender, recipients, campaign):
+  """Function called to create a new member notification"""
+
+  message = models.Message()
+
+  message.author = sender
+  message.notification = True
+  message.body = f"{sender.username} has joined the campaign: {campaign.title}"
+  message.target_campaign = campaign
+  message.date = datetime.now()
+
+  db.session.add(message)
+
+  for user in recipients:
+    user.messages.append(message)
+    
+  db.session.commit()
+
+
 def send_event_notification(sender, recipients, campaign, event):
   """Function for creating new event notifications. Takes a user model object as sender, and
   a list of user model objects as recipients, along with a campaign object, and an event object."""
