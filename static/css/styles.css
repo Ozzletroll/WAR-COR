@@ -532,6 +532,7 @@ p {
   border-style: none;
   padding: 5px;
   transition: 0.3s;
+  width: 100px;
 }
 
 .message-button:hover {
