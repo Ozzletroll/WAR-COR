@@ -145,5 +145,8 @@ class Message(db.Model):
     target_campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     target_campaign = db.relationship("Campaign", back_populates="pending_invites")
 
+    target_event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
+    target_event = db.relationship("Event", back_populates="")
+
     target_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     target_user = db.relationship("User", back_populates="open_invites", foreign_keys=[target_user_id])
