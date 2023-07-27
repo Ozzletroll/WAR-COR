@@ -7,6 +7,7 @@ import forms
 import models
 import auth
 import utils.organisers as organisers
+import utils.messengers as messengers
 
 from app import db
 from routes.event import bp
@@ -82,6 +83,12 @@ def add_event(campaign_name):
         # Add event to database
         db.session.add(event)
         db.session.commit()
+        
+        # Create notification message
+        messengers.send_event_notification(current_user,
+                                           recipients=campaign.members,
+                                           campaign=campaign,
+                                           event=event)
 
         scroll_target = f"event-{event.id}"
 

@@ -9,6 +9,7 @@ import auth
 import forms
 import models
 import utils.organisers as organisers
+import utils.messengers as messengers
 
 from app import db
 from routes.campaign import bp
@@ -259,21 +260,9 @@ def add_user(campaign_name):
         # Check if user isn't already a member
         if campaign not in user.campaigns:
 
-            # Send invite message
-            message = models.Message()
-
-            message.author = current_user
-            message.invite = True
-            message.body = f"{current_user.username} has invited you to the campaign: {campaign.title}"
-            message.target_user = user
-            message.target_campaign = campaign
-            message.date = datetime.now()
-
-            # Add message to user's message list
-            db.session.add(message)
-            user.messages.append(message)
-            current_user.sent_messages.append(message)
-            db.session.commit()
+            messengers.send_invite_message(sender=current_user, 
+                                           recipient=user,
+                                           campaign=campaign)
 
             flash(f"{user.username} invited to campaign.")
         else:
