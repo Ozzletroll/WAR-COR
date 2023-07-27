@@ -290,3 +290,26 @@ def delete_user(username):
         return render_template("delete_user.html", form=form)
 
 
+# Function called when dimissing a notification
+@bp.route("/user/<username>/dimiss_message", methods=["GET"])
+@login_required
+def dismiss_message(username):
+
+    message_id = request.args["message_id"]
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+
+    # Remove notification from user's messages
+    if message in current_user.messages:
+        current_user.messages.remove(message)
+        db.session.commit()
+
+    # Check if message is still in any users messages list by querying association table
+    message_query = db.session.execute(select(models.user_messages.c.user_id).where(models.user_messages.c.message_id == message_id)).scalar()
+    # If message is no longer needed, delete it
+    if not message_query:
+        db.session.delete(message)
+        db.session.commit()
+
+    redirect_url = request.args["current_url"]
+
+    return redirect(redirect_url)

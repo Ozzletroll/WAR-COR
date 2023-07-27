@@ -111,9 +111,22 @@
 
     {% elif message.notification %}
 
-    <li>
-      <h4 class="message-header">NOTIFICATION</h4>
-      {{message.body}}
+    <h5 class="message-date">{{message.date}}</h5>
+
+    <li class="message-item">
+      <h4 class="message-header">ALERT</h4>
+      
+      <div class=message-body>{{message.body}}</div>
+
+      <div class="message-button-area">
+        <a href="">
+          <button class="message-button">VIEW</button>
+        </a>
+        <a href="{{ url_for('user.dismiss_message', message_id=message.id, username=current_user.username, current_url=request.url) }}">
+          <button class="message-button">DISMISS</button>
+        </a>
+      </div>
+
     </li>
 
     {% endif %}
