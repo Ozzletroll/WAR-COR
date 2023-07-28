@@ -14,7 +14,7 @@
     <ul class="navbar-links">
       {% if current_user.is_authenticated %}
         {% if request.path != "/campaigns" %}
-        <li>
+        <li class="link-toggle">
           <a class="navbar-link-item" href="{{ url_for('campaign.campaigns') }}">
             <img class="icon campaign-form-icon" src="/static/images/icons/list.svg">
             Campaigns
@@ -22,24 +22,24 @@
         </li>
         {% endif %}
         {% if request.path != url_for('user.user_page', username=current_user.username) %}
-        <li>
+        <li class="link-toggle">
           <a class="navbar-link-item" href="{{ url_for('user.user_page', username=current_user.username) }}">
             <img class="icon campaign-form-icon" src="/static/images/icons/user_white.svg">
             {{ current_user.username }}
           </a>
         </li>
         {% endif %}
-        <li>
+        <li class="">
           <button class="navbar-link-item messages-button" id="messages-button">
             <img class="icon campaign-form-icon" src="/static/images/icons/message.svg">
             {{ current_user.messages|length }}
           </button>
         </li>
       {% elif request.path == "/" %}
-        <li>
+        <li class="link-toggle">
           <a class="navbar-link-item" href="#main-features">>SITREP</a>
         </li>
-        <li>
+        <li class="link-toggle">
           <a class="navbar-link-item" href="">>COMMS</a>
         </li>
       {% endif %}

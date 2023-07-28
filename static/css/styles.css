@@ -256,7 +256,7 @@ p {
   background-color: var(--darker_red);
   padding-left: min(10px, 2%);
   padding-right: min(10px, 2%);
-  min-height: 53px;
+  min-height: 54px;
   top: 0;
   position: -webkit-sticky;
   position: sticky;
@@ -471,6 +471,7 @@ p {
 
 .notifications-list {
   display: flex;
+  align-items: center;
   padding: 20px;
   list-style: none;
   flex-direction: column;
@@ -492,6 +493,7 @@ p {
 .message-item {
   display: flex;
   flex-direction: column;
+  width: 100%;
   background-color: var(--elem_dark);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
@@ -559,6 +561,24 @@ p {
   background-color: var(--bright_red);
 }
 
+@media screen and (max-width: 700px) {
+  
+
+
+  .notifications-dropdown {
+    width: 100vw;
+  }
+
+  .message-item {
+    width: max(70%, 150px);
+  }
+
+  .message-button {
+    width: 25vw;
+  }
+
+}
+
 /* Hamburger Menu */
 
 .hamburger-menu {
@@ -588,12 +608,13 @@ p {
 
 @media screen and (max-width: 700px) { 
 
-  .navbar-links {
+  .navbar-links .link-toggle {
     display: none;
   }
 
   .hamburger-button {
     display: flex;
+    align-items: center;
     justify-content: center;
     width: 50px;
     text-decoration: none;
@@ -608,7 +629,7 @@ p {
     flex-direction: column;
     justify-content: right;
     text-align: right;
-    background-color: var(--dark_grey);
+    background-color: var(--elem_mid);
   }
 
   .h-menu-item:link {
@@ -2788,7 +2809,7 @@ span::after {
   height: 200px;
   width: 50px;
   max-width: 50px;
-  top: 53px;
+  top: 54px;
   position: -webkit-sticky;
   position: sticky;
   transition: 0.5s;
