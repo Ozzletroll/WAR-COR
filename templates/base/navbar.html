@@ -82,6 +82,11 @@
     
     <li class="message-item">
       <h5 class="no-message-header">NO MESSAGES</h5>
+      <div class="no-message-text-area">
+        <p class="flavour-text no-message-flavour">//Communications:Online</p>
+        <p class="flavour-text no-message-flavour">//Satellite:Lock</p>
+        <p class="flavour-text no-message-flavour no-message-spacer">>Awaiting Uplink_</p>
+      </div>
     </li>
 
   {% endif %}
@@ -108,7 +113,6 @@
 
       </li>
       
-
     {% elif message.notification %}
 
     <h5 class="message-date">{{message.date}}</h5>
@@ -131,8 +135,6 @@
 
     {% endif %}
 
-
-    
   {% endfor %}
   </ul>
 

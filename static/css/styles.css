@@ -509,7 +509,23 @@ p {
 .no-message-header {
   display: flex;
   justify-content: center;
-  color: var(--text_header_dark);
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+}
+
+.no-message-text-area {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.flavour-text.no-message-flavour {
+  width: auto;
+  margin: 0;
+}
+
+.no-message-spacer {
+  padding-bottom: 100px;
 }
 
 .message-body {
