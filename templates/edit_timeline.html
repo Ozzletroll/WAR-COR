@@ -255,7 +255,11 @@
                               {% endif %}
                             </div>
 
+                            {% if event.header and loop.first %}
+                            <div class="timeline-event event-outline event-offset">
+                            {% else %}
                             <div class="timeline-event event-outline">
+                            {% endif %}
                               <div id="event-{{event.id}}" class="timeline-event">
                                 {# Check if event is a header event #}
                                 {% if event.header and loop.first %}

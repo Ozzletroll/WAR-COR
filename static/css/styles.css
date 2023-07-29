@@ -2654,6 +2654,10 @@ span::after {
   flex: 1 1 0;
 }
 
+.event-offset {
+  margin-left: -1px;
+}
+
 .event-header {
   display: flex;
   font-size: clamp(12px, 2vw, 16px);
@@ -2795,7 +2799,9 @@ span::after {
     padding-bottom: 20px;
   }
 
-
+  .event-offset {
+    margin-left: 0;
+  }
 
 }
 
