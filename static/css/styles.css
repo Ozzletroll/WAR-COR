@@ -1486,8 +1486,27 @@ h5 {
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 15px;
   margin-bottom: 50px;
+  background-color: var(--elem_mid);
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
+  box-sizing: border-box;
+  padding: 1px;
+}
+
+.campaign-header {
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+  margin: 0;
+  padding: 20px 50px 20px 50px;
+  text-transform: uppercase;
+}
+
+.campaign-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 50px 20px 50px;
+  border: 1px solid var(--darker_red);
 }
 
 .campaign-entry-title {
@@ -1574,10 +1593,11 @@ h5 {
   gap: 15px;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 550px) {
 
   .campaign-entry-buttons {
     flex-direction: column;
+    align-items: center;
   }
 
   .entry-button {
@@ -1668,7 +1688,7 @@ h5 {
   border-style: none;
   text-transform: uppercase;
   gap: 5px;
-  background-color: var(--elem_mid);
+  background-color: var(--elem_dark);
   color: var(--text_flavour);
 }
 
@@ -1677,7 +1697,7 @@ h5 {
 }
 
 .deploy-button:hover {
-  background-color: var(--elem_dark);
+  background-color: var(--elem_bright);
 }
 
 .deploy-button:active {
@@ -1699,7 +1719,8 @@ h5 {
   box-sizing: content-box;
   margin-bottom: 50px;
   margin-top: 70px;
-  color: var(--text_dark)
+  color: var(--text_dark);
+  clip-path: none;
 }
 
 .new-campaign-area::before, .new-campaign-area::after, span::before, span::after {
@@ -2204,6 +2225,11 @@ span::after {
 }
 
 /* Timeline */
+
+.timeline-upper {
+  background-color: var(--bg_colour1);
+  gap: 15px;
+}
 
 .timeline-overview {
   margin-top: 20px;
