@@ -313,3 +313,26 @@ def dismiss_message(username):
     redirect_url = request.args["current_url"]
 
     return redirect(redirect_url)
+
+
+# Function called when dismissing all messages
+@bp.route("/user/<username>/dismiss_all", methods=["GET"])
+@login_required
+def dismiss_all():
+
+    messages = current_user.messages
+
+    for message in messages:
+        current_user.messages.remove(message)
+        db.session.commit()
+
+        # Check if message is still in any users messages list by querying association table
+        message_query = db.session.execute(select(models.user_messages.c.user_id).where(models.user_messages.c.message_id == message.id)).scalar()
+        # If message is no longer needed, delete it
+        if not message_query:
+            db.session.delete(message)
+            db.session.commit()
+
+    redirect_url = request.args["current_url"]
+
+    return redirect(redirect_url)
