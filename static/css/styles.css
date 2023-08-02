@@ -510,7 +510,7 @@ p {
 
 .message-count {
   display: flex;
-  color: var(--text_header_contrast);
+  color: var(--text_header);
   margin: 0;
   text-transform: uppercase;
   font-weight: 300;
