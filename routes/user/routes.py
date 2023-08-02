@@ -318,11 +318,12 @@ def dismiss_message(username):
 # Function called when dismissing all messages
 @bp.route("/user/<username>/dismiss_all", methods=["GET"])
 @login_required
-def dismiss_all():
+def dismiss_all(username):
 
-    messages = current_user.messages
+    messages = list(current_user.messages)
 
     for message in messages:
+        
         current_user.messages.remove(message)
         db.session.commit()
 
@@ -332,7 +333,7 @@ def dismiss_all():
         if not message_query:
             db.session.delete(message)
             db.session.commit()
-
+     
     redirect_url = request.args["current_url"]
 
     return redirect(redirect_url)
