@@ -507,7 +507,15 @@ p {
   margin-bottom: 5px;
   margin-top: 0;
 }
- 
+
+.message-count {
+  display: flex;
+  color: var(--text_header_contrast);
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
 .no-message-header {
   display: flex;
   justify-content: center;
