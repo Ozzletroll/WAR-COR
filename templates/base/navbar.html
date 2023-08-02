@@ -90,6 +90,17 @@
     </li>
 
   {% endif %}
+
+  {% if current_user.messages | length >= 2 %}
+
+  <h4 class="message-count">{{current_user.messages | length}} New Messages</h4>
+  
+  <a href="{{ url_for('user.dismiss_all', username=current_user.username, current_url=request.url) }}">
+    <button class="message-button">DISMISS ALL</button>
+  </a>
+
+  {% endif %}
+
   {% for message in current_user.messages %}
 
     {% if message.invite %}
