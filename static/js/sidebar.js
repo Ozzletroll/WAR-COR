@@ -34,6 +34,7 @@ class Tab {
     this.tab.style.marginRight = "0"
     this.state = true
     this.icon.src = "/static/images/icons/chevron_left.svg"
+    this.updateTimelineMargin();
   }
 
   closeTab() {
