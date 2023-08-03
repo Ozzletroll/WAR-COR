@@ -121,6 +121,28 @@
         </section>
       {% endfor %}
 
+      {# New user introduction, if user.campaigns is empty #}
+      {% if not campaigns %}
+        
+      <section class="campaign-entry">
+
+        <h2 class="campaign-header">Welcome, {{current_user.username}}</h2>
+
+          <div class="campaign-body">
+
+            <p class="flavour-text">UCR-{{current_user.id}}-00 // Correspondent::Briefing </p>
+
+            <div class="campaign-overview campaign-list-empty">
+              <h4 class="campaign-entry-title">Getting Started:</h4>
+              <p>As a new UWC Correspondent, you can get started by reaching out to your GM for a campaign invitation, or by creating a new campaign with the button below.</p>
+              <p>As a representative of the UWC, you stand on the frontlines of the battle for objective reporting in military conflict, but you do not stand alone. </p>
+              <p>There is no limit to the number of active campaigns you can join or create, and there is no limit to the number of members you can invite.</p>
+            </div>
+
+      </section>
+
+      {% endif %}
+
       <!-- New Campaign Button -->
       <a href="{{ url_for('campaign.create_campaign')}}" class="campaign-entry new-campaign-area">
         <span>

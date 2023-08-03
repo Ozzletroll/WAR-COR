@@ -1669,6 +1669,14 @@ h5 {
 
 }
 
+/* Empty campaigns list area */
+
+.campaign-list-empty {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+
 /* Deployable edit menu */
 
 .dropdown-area {
