@@ -219,3 +219,19 @@ def format_event_datestring(datestring, args):
         datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + "01 00:00:00"
 
     return datestring
+
+
+def separate_belligerents(belligerents):
+    """Takes a given event.belligerents string and separates it.
+    Returns an ampersand separated list of comma separated lists."""
+
+    separated_belligerents = belligerents.split(",")
+    groups = []
+
+    for group in separated_belligerents:
+        allied_belligerents = []
+        for element in group.split("&"):
+            allied_belligerents.append(element)
+        groups.append(allied_belligerents)
+        
+    return groups

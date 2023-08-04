@@ -24,7 +24,10 @@ def view_event(campaign_name, event_name):
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
     campaign = event.parent_campaign
 
-    return render_template("event.html", event=event, campaign=campaign)
+    # Comma separate belligerents
+    belligerents = organisers.separate_belligerents(event.belligerents) 
+
+    return render_template("event.html", event=event, campaign=campaign, belligerents=belligerents)
 
 
 # Add new event
