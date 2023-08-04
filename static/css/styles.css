@@ -1687,12 +1687,6 @@ h5 {
   transition: 0.1s ease-in-out;
 }
 
-.deploy-button {
-  border-radius: 0;
-  width: 160px;
-  padding: 5px;
-}
-
 .entry-buttons-deploy {
   height: 0px;
   width: 160px;
@@ -1705,8 +1699,11 @@ h5 {
   border-style: none;
   text-transform: uppercase;
   gap: 5px;
-  background-color: var(--elem_dark);
+  background-color: var(--elem_bright);
   color: var(--text_flavour);
+  border-radius: 0;
+  width: 160px;
+  padding: 5px;
 }
 
 .entry-buttons-deploy a {
@@ -1714,7 +1711,7 @@ h5 {
 }
 
 .deploy-button:hover {
-  background-color: var(--elem_bright);
+  background-color: var(--elem_dark);
 }
 
 .deploy-button:active {
