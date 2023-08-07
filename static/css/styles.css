@@ -2931,29 +2931,122 @@ span::after {
   margin-top: 20px;
 }
 
+.event-page-upper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.event-page-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 20px;
+  border-top: 1px solid var(--elem_border);
+}
+
+.event-body-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+}
+
 .event-page-elem {
   display: flex;
-  width: 50%;
-  align-items: center;
-  gap: 5%;
+  flex-direction: column;
+  flex: 1 1 1;
+  width: 45%;
   color: var(--text_dark);
+  box-sizing: border-box;
+}
+
+.event-date-area {
+  justify-content: center;
+}
+
+.event-elem-header {
+  display: flex;
+  background-color: var(--darker_red);
+  width: 100%;
+  margin: 0;
+}
+
+.event-elem-h {
+  padding: 10px 20px 10px 20px;
+  margin: 0;
+  color: var(--text_header_contrast);
+  text-transform: uppercase;
+}
+
+.event-elem-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px 10px 20px;
+  box-sizing: border-box;
+  gap: 20px;
+  background-color: var(--elem_mid);
 }
 
 .event-elem-large {
   width: 100%;
 }
 
+.event-description {
+  margin: 20px 0 20px 0;
+}
+
 .event-elem-centre {
+  display: flex;
   width: 100%;
   justify-content: center;
 }
 
-@media screen and (min-width: 800px){
+.event-page-date {
+  font-size: min(5vw, 35px);
+  font-weight: 500;
+  margin: 0;
+  color: var(--text_dark);
+}
 
-  .event-page-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
+.type-area {
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0;
+}
 
+.event-page-type {
+  font-size: min(5vw, 35px);
+  font-weight: 500;
+  margin: 0;
+  text-transform: uppercase;
+  padding: 10px 20px 10px 20px;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
+}
+
+.ally-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ally-elem {
+  text-align: center;
+}
+
+.event-desc-header {
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.event-desc {
+  font-size: min(3vw, 14px);
+  font-weight: 300;
 }
