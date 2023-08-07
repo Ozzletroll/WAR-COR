@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, make_response
 
 
 
@@ -27,6 +27,11 @@ def data_export(campaign):
                      "events": events_data,
                      }
 
-    data = jsonify(campaign_data)
+    response = make_response(jsonify(campaign_data))
 
-    return data
+        # Set headers for downloading
+    filename = "WAR_COR_Backup " + campaign.title
+    response.headers["Content-Disposition"] = f"attachment; filename={filename}"
+    response.headers["Content-Type"] = "application/json"
+
+    return response

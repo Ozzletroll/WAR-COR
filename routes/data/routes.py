@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response
+from flask import render_template, redirect, request, url_for, send_file
 from sqlalchemy import select
 from flask_login import login_required
 
@@ -37,7 +37,6 @@ def backup_page(campaign_name):
 @login_required
 def campaign_backup(campaign_name):
 
-
     target_campaign_id = request.args["campaign_id"]
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
 
@@ -45,15 +44,15 @@ def campaign_backup(campaign_name):
     auth.permission_required(campaign)
 
     # Export campaign data as json file.
-    serialisers.data_export(campaign)
+    json = serialisers.data_export(campaign)
 
-    return redirect(url_for("campaign.campaigns"))
+    return json
 
 
 # Import campaign backup
 @bp.route("/campaigns/<campaign_name>/data/import")
 @login_required
-def import_campaign(campaign_name):
+def restore_from_backup(campaign_name):
 
     target_campaign_id = request.args["campaign_id"]
 
