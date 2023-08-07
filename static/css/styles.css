@@ -3081,7 +3081,7 @@ span::after {
   flex: 1 1 0;
   padding: 5vw;
   border-radius: 0;
-  border: 2px solid var(--elem_dark);
+  border: 2px solid var(--elem_border);
   background-color: var(--bg_colour1);
   transition: 0.3s;
 }
