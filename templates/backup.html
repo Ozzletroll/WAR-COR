@@ -20,9 +20,38 @@
       <h3 class="campaigns-heading">DATA BACKUP</h1>
     </div>
     <hr class="campaigns-divider">
+    <p class="flavour-text">UWC-44-{{campaign.id}} // DATA::BACKUP </p>
 
     <div class="backup-area">
-      
+
+      <div class="backup-ctrl export-area">
+
+        <a class="backup-link" href="{{ url_for('data.campaign_backup', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+          <button class="backup-button">
+            <h3 class="backup-title">BACKUP</h3>
+            <img class="icon icon-xlarge icon-comp" src="/static/images/icons/egress.svg">
+          </button>
+        </a>
+
+        <p class="backup-text">>Export data as JSON</p>
+
+      </div>
+
+      <div class="backup-ctrl import-area">
+
+        <a class="backup-link" href="{{ url_for('data.restore_from_backup', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+          <button class="backup-button">
+            <h3 class="backup-title">RESTORE</h3>
+            <img class="icon icon-xlarge icon-backup-offset" src="/static/images/icons/ingress.svg">
+          </button>
+        </a>
+
+        <p class="backup-text">>Import data from JSON</p>
+        <p class="backup-text backup-text-alert">WARNING:</p>
+        <p class="backup-text backup-text-alert">This will overwrite current campaign data</p>
+
+      </div>
+
     </div>
 
 
