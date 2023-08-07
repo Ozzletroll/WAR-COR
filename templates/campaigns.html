@@ -97,7 +97,7 @@
                         Members
                       </button>
                     </a>
-                    <a href="">
+                    <a href="{{ url_for('data.backup_page', campaign_name=campaign.title, campaign_id=campaign.id) }}">
                       <button class="deploy-button">
                         <img class="icon icon-small icon-invert" src="/static/images/icons/database.svg"> 
                         Data Backup
