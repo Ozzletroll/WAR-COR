@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+    <div class="navigation-area">
+      <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
+        <h5 class="navigation-heading">/CAMPAIGNS</h5>
+      </a>
+      <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
+        <h5 class="navigation-heading">/{{campaign.title}}/</h5>
+      </a>
+      
+    </div>
+
+    <div class="campaigns-title">
+      <h3 class="campaigns-heading">DATA BACKUP</h1>
+    </div>
+    <hr class="campaigns-divider">
+
+    <div class="backup-area">
+      
+    </div>
+
+
+  </div>
+
+</div>
+
+{% endblock %}
