@@ -16,7 +16,11 @@
 
           {% for event in day.events  %}
             <a class="sidebar-button" href="#event-{{event.id}}">
+              {% if event.header %}
+              <button class="event-button event-button-header">
+              {% else %}
               <button class="event-button">
+              {% endif %}
                 {{event.title}}
               </button>
             </a>
