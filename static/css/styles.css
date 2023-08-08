@@ -3165,6 +3165,24 @@ span::after {
   margin: 0;
 }
 
+.file-label {
+  display: flex;
+  justify-content: center;
+}
+
+.file-upload {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  color: var(--text_dark);
+  margin-top: 16px;
+  font-family: monospace;
+}
+
+.form-hidden {
+  display: none;
+}
+
 @media screen and (max-width: 800px) {
   
   .backup-area {
