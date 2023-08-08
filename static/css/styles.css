@@ -2949,6 +2949,7 @@ span::after {
 .event-page-body {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
@@ -2959,17 +2960,21 @@ span::after {
 .event-body-top {
   display: flex;
   width: 100%;
-  justify-content: space-between;
-
+  justify-content: center;
+  margin-top: 50px;
 }
 
 .event-page-elem {
   display: flex;
   flex-direction: column;
-  flex: 1 1 1;
-  width: 45%;
+  max-width: 70%;
   color: var(--text_dark);
   box-sizing: border-box;
+}
+
+.event-belligerents {
+  flex: 1 1 auto;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
 .event-date-area {
@@ -2993,12 +2998,15 @@ span::after {
 .event-elem-body {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
-  width: 100%;
   padding: 10px 20px 10px 20px;
   box-sizing: border-box;
-  gap: 20px;
   background-color: var(--elem_mid);
+}
+
+.event-belligerents.event-elem-body {
+  flex: 1 0 auto;
 }
 
 .event-elem-large {
@@ -3029,7 +3037,7 @@ span::after {
 }
 
 .event-page-type {
-  font-size: min(5vw, 35px);
+  font-size: min(4vw, 35px);
   font-weight: 500;
   margin: 0;
   text-transform: uppercase;
@@ -3042,11 +3050,26 @@ span::after {
 .ally-group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex: 1 0 0;
+  height: 100%;
 }
 
 .ally-elem {
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
   text-align: center;
+  font-weight: 300;
+  font-size: min(14px, 3vw);
+}
+
+.vs-area {
+  display: flex;
+  flex: 0.5 0 0;
+  justify-content: center;
 }
 
 .event-desc-header {
@@ -3057,6 +3080,16 @@ span::after {
 .event-desc {
   font-size: min(3vw, 14px);
   font-weight: 300;
+}
+
+@media screen and (max-width: 900px) {
+  
+  .event-page-elem {
+
+    max-width: 100%;
+  }
+
+
 }
 
 /* Data backup page */

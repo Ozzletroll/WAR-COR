@@ -36,7 +36,7 @@
     
                 <div class="event-page-elem type-area">
     
-                    <h4 class="event-page-type">TYPE: {{event.type}}</h4>
+                    <h4 class="event-page-type">{{event.type}}</h4>
     
                 </div>
     
@@ -62,7 +62,7 @@
         
                     {# Only render if it is needed #}
                     {% if event.belligerents | length > 0 %}
-                    <div class="event-page-elem">
+                    <div class="event-page-elem event-belligerents">
         
                         <div class="event-elem-header">
                             <h4 class="event-elem-h">Belligerents</h4>
@@ -78,11 +78,11 @@
                                 {% endfor %}
                                 </div>
         
-                                <div class="vs-area">
+                                
                                 {% if not loop.last %}
-                                    vs.
+                                 <div class="vs-area">vs</div>
                                 {% endif %}
-                                </div>
+                                
         
                             {% endfor %}
                         </div>
