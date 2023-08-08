@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, BooleanField, FileField
 from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError
 from flask_ckeditor import CKEditorField
@@ -22,14 +23,7 @@ def date_format():
 
 def file_format():
 
-    message = "Not a valid .JSON backup file format."
-    format = r"^[^/\].json$"
-
-    def _file_format(field):
-
-        # Check if file has .json filename
-        if not re.match(format, field.data):
-            raise ValidationError(message)
+    def _file_format(form, field):
 
         # Check if filesize is below 5MB
         if field.data:
@@ -96,5 +90,5 @@ class ChangeCallsignForm(FlaskForm):
     
 
 class UploadJsonForm(FlaskForm):
-    file = FileField("Backup JSON", validators=[DataRequired(), file_format()])
+    file = FileField("Backup JSON", validators=[DataRequired(), FileAllowed(["json"], "Please select a valid WAR/COR JSON file"), file_format()])
     submit = SubmitField("Restore")

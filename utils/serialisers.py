@@ -1,5 +1,8 @@
 from flask import jsonify, make_response
+from flask_login import current_user
+from datetime import datetime
 
+import models
 
 
 def data_export(campaign):
@@ -35,3 +38,33 @@ def data_export(campaign):
     response.headers["Content-Type"] = "application/json"
 
     return response
+
+
+
+def campaign_import(json, campaign):
+    """Updates campaign object with json campaign data."""
+
+    campaign.title = json["title"]
+    campaign.description = json["description"]
+    campaign.date_suffix = json["date_suffix"]
+    campaign.last_edited = datetime.now()
+
+    return campaign
+
+
+
+def events_import(event):
+    """Creates a new event object from json events list item."""
+
+    new_event = models.Event()
+
+    new_event.title = event["title"]
+    new_event.date = event["date"]
+    new_event.type = event["type"]
+    new_event.belligerents = event["belligerents"]
+    new_event.body = event["body"]
+    new_event.header = event["header"]
+    new_event.location = event["location"]
+    new_event.result = event["result"]
+
+    return new_event

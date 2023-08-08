@@ -37,20 +37,31 @@
 
       </div>
 
-      <div class="backup-ctrl import-area">
+      <form class="backup-ctrl import-area" method="POST" enctype="multipart/form-data">
 
-        <a class="backup-link" href="{{ url_for('data.restore_from_backup', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+        {{ form.csrf_token }}
+
+        <label for="backup-restore" class="backup-link">
           <button class="backup-button">
             <h3 class="backup-title">RESTORE</h3>
             <img class="icon icon-invert icon-xlarge icon-comp-r" src="/static/images/icons/ingress.svg">
           </button>
-        </a>
+        </label>
+
+        {{form.submit(id_="backup-restore", class="form-hidden")}}
 
         <p class="backup-text">>Import data from JSON</p>
         <p class="backup-text backup-text-alert">WARNING:</p>
         <p class="backup-text backup-text-alert">This will overwrite current campaign data</p>
 
-      </div>
+        {{ form.file(id_="file-upload", class_="file-upload") }}
+
+        <div class="form-flash">
+          {% include 'base/flash.html' %}
+        </div>
+
+
+      </form>
 
     </div>
 
