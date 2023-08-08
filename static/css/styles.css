@@ -3063,23 +3063,28 @@ span::after {
 
 .backup-area {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding: 5vw;
 }
 
 .backup-ctrl {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 40%;
   align-items: center;
+}
+
+.backup-link {
+  width: 100%;
 }
 
 .backup-button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1 1 0;
-  padding: 5vw;
+  flex: 1 0 auto;
+  width: 100%;
+  padding: 40px;
   border-radius: 0;
   border: 2px solid var(--elem_border);
   background-color: var(--bg_colour1);
@@ -3106,12 +3111,8 @@ span::after {
   transition: 0.3s;
 }
 
-.icon-backup-offset {
+.icon-comp-r {
   margin-right: 10px;
-}
-
-.icon-comp {
-  margin: 0 5px 0 5px;
 }
 
 .backup-link {

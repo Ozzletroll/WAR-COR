@@ -29,7 +29,7 @@
         <a class="backup-link" href="{{ url_for('data.campaign_backup', campaign_name=campaign.title, campaign_id=campaign.id) }}">
           <button class="backup-button">
             <h3 class="backup-title">BACKUP</h3>
-            <img class="icon icon-invert icon-xlarge icon-comp" src="/static/images/icons/egress.svg">
+            <img class="icon icon-invert icon-xlarge icon-comp-r" src="/static/images/icons/egress.svg">
           </button>
         </a>
 
@@ -42,7 +42,7 @@
         <a class="backup-link" href="{{ url_for('data.restore_from_backup', campaign_name=campaign.title, campaign_id=campaign.id) }}">
           <button class="backup-button">
             <h3 class="backup-title">RESTORE</h3>
-            <img class="icon icon-invert icon-xlarge icon-backup-offset" src="/static/images/icons/ingress.svg">
+            <img class="icon icon-invert icon-xlarge icon-comp-r" src="/static/images/icons/ingress.svg">
           </button>
         </a>
 
