@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField, BooleanField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, BooleanField, FileField
 from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError
 from flask_ckeditor import CKEditorField
 import re
@@ -17,6 +17,27 @@ def date_format():
             raise ValidationError(message)
 
     return _date_format
+
+
+
+def file_format():
+
+    message = "Not a valid .JSON backup file format."
+    format = r"^[^/\].json$"
+
+    def _file_format(field):
+
+        # Check if file has .json filename
+        if not re.match(format, field.data):
+            raise ValidationError(message)
+
+        # Check if filesize is below 5MB
+        if field.data:
+            max_size = 5 * 1024 * 1024  # 5MB
+            if field.data.content_length > max_size:
+                raise ValidationError('File size must be less than 5MB.')
+
+    return _file_format
 
 
 class RegisterUserForm(FlaskForm):
@@ -73,3 +94,7 @@ class ChangeCallsignForm(FlaskForm):
     callsign = StringField("New Callsign", validators=[DataRequired()])
     submit = SubmitField("Update")
     
+
+class UploadJsonForm(FlaskForm):
+    file = FileField("Backup JSON", validators=[DataRequired(), file_format()])
+    submit = SubmitField("Restore")
