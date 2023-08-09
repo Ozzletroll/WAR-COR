@@ -2961,12 +2961,13 @@ span::after {
   width: 100%;
   justify-content: center;
   margin-top: 50px;
+  gap: 25px;
 }
 
 .event-page-elem {
   display: flex;
   flex-direction: column;
-  max-width: 70%;
+  max-width: 100%;
   color: var(--text_dark);
   box-sizing: border-box;
 }
@@ -3012,8 +3013,25 @@ span::after {
   width: 100%;
 }
 
-.event-description {
+.event-page-description {
+  flex-direction: row;
   margin: 20px 0 20px 0;
+  border: 1px solid var(--elem_border);
+  border-radius: 5px;
+}
+
+.entry-left-padding {
+  width: 10px;
+  height: 100%;
+  background-color: var(--elem_border);
+  opacity: 60%;
+}
+
+.description-body {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  padding: 20px 20px 20px 20px;
 }
 
 .event-elem-centre {
@@ -3072,6 +3090,7 @@ span::after {
 }
 
 .event-desc-header {
+  font-size: min(16px, 3vw);
   text-transform: uppercase;
   margin: 0;
 }
