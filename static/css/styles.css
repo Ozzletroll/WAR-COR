@@ -2958,18 +2958,22 @@ span::after {
 
 .event-body-top {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  justify-content: center;
-  margin-top: 50px;
+  margin-top: 20px;
   gap: 25px;
 }
 
 .event-page-elem {
   display: flex;
   flex-direction: column;
-  max-width: 100%;
   color: var(--text_dark);
   box-sizing: border-box;
+}
+
+.event-location {
+  flex: 1 1 auto;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
 .event-belligerents {
@@ -2998,7 +3002,7 @@ span::after {
 .event-elem-body {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 10px 20px 10px 20px;
   box-sizing: border-box;
@@ -3064,6 +3068,11 @@ span::after {
   clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
 }
 
+.event-page-result {
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
+  width: 100%;
+}
+
 .ally-group {
   display: flex;
   flex-direction: column;
@@ -3079,7 +3088,7 @@ span::after {
   flex: 1 0 0;
   align-items: center;
   text-align: center;
-  font-weight: 300;
+  font-weight: 400;
   font-size: min(14px, 3vw);
 }
 
@@ -3100,13 +3109,15 @@ span::after {
   font-weight: 300;
 }
 
-@media screen and (max-width: 900px) {
-  
-  .event-page-elem {
+@media screen and (min-width: 900px) {
 
-    max-width: 100%;
+  .event-body-top {
+    flex-direction: row;
   }
 
+  .event-location .event-elem-body {
+    height: 100%;
+  }
 
 }
 

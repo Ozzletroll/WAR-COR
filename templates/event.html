@@ -48,7 +48,7 @@
 
                     {# Only render if it is needed #}
                     {% if event.location | length > 0 %}
-                    <div class="event-page-elem">
+                    <div class="event-page-elem event-location">
         
                         <div class="event-elem-header">
                             <h4 class="event-elem-h">Location</h4>
@@ -87,7 +87,6 @@
                             {% endfor %}
                         </div>
                         
-        
                     </div>
                     {% endif %}
 
@@ -108,7 +107,7 @@
                 {# Only render if it is needed #}
                 {% if event.result | length > 0 %}  
                 <div class="event-elem-centre">
-                    <div class="event-page-elem elem-body">
+                    <div class="event-page-elem elem-body event-page-result">
     
                         <div class="event-elem-header">
                             <h4 class="event-elem-h">RESULT</h4>
@@ -120,7 +119,6 @@
                     </div>
                 </div>
                 {% endif %}
-
 
             </div>
 
