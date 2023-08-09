@@ -101,7 +101,6 @@
                         <p class="event-desc">{{event.body}}</p>
                     </div>
                     
-                    
                 </div>
     
                 {# Only render if it is needed #}
@@ -123,7 +122,54 @@
             </div>
 
             
+            <div class="comments-area">
 
+                <h3 class="comments-heading">::COMMS CHANNEL</h3>
+                <hr class="campaigns-divider">
+            
+                {# for comment in event.comments #}
+
+                  <ol class="comments-list">
+
+                    <li class="event-comment">
+
+                      <p class="comment-date">2023-08-09 14:56:24.248643</p>
+
+                      <div class="comment-header">
+                        <img class="icon" src="/static/images/icons/user_white.svg">
+                        <h5 class="comment-username">{# comment.author.username #}USERNAME</h5>
+                        <h6 class="comment-callsign">[CALLSIGN]</h5>
+
+                        {#  
+
+                        {% for entry in comment.author.campaign_associations %}
+                          {%if entry.campaign_id == campaign.id%}
+                            {% if entry.callsign is not none %}
+                              <h6 class="callsign-text callsign-break">
+                                [{{entry.callsign.upper()}}]
+                              </h6>
+                            {% endif %}
+                          {%endif%}
+                        {% endfor %}
+
+                        #}
+
+                      </div>
+
+                      <div class="comment-body">
+                        <p class="comment-text">>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                      </div>
+
+                    </li>
+
+
+
+                  </ol>
+
+                {# endfor  #}
+
+
+            </div>
  
 
         </div>

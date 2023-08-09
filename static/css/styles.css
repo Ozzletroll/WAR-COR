@@ -2947,9 +2947,8 @@ span::after {
 
 .event-page-body {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  flex-wrap: wrap;
   width: 100%;
   box-sizing: border-box;
   padding-top: 20px;
@@ -3026,7 +3025,6 @@ span::after {
 
 .entry-left-padding {
   width: 10px;
-  height: 100%;
   background-color: var(--elem_border);
   opacity: 60%;
 }
@@ -3035,7 +3033,7 @@ span::after {
   display: flex;
   flex: 1 1 0;
   flex-direction: column;
-  padding: 20px 20px 20px 20px;
+  padding: 20px;
 }
 
 .event-elem-centre {
@@ -3069,7 +3067,7 @@ span::after {
 }
 
 .event-page-result {
-  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   width: 100%;
 }
 
@@ -3109,6 +3107,74 @@ span::after {
   font-weight: 300;
 }
 
+.comments-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 200px;
+  width: 75%;
+}
+
+.comments-heading {
+  font-size: min(30px, 3vw);
+  font-weight: 300;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0;
+}
+
+.comments-list {
+  display: flex;
+  width: 75%;
+  list-style: none;
+  padding: 0;
+}
+
+.event-comment {
+  width: 100%;
+  margin-bottom: 100px;
+}
+
+.comment-date {
+  display: flex;
+  justify-content: center;
+  font-size: min(12px, 3vw);
+  font-weight: 300;
+  color: var(--text_flavour);
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  background-color: var(--darker_red);
+  padding: 10px;
+  gap: 10px;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+}
+
+.comment-username {
+  font-size: min(16px, 3vw);
+  color: var(--text_header_contrast);
+}
+
+.comment-callsign {
+  font-size: min(14px, 2.8vw);
+  font-weight: 300;
+  color: var(--text_header_contrast);
+  margin: 0;
+}
+
+.comment-body {
+  background-color: var(--elem_mid);
+}
+
+.comment-text {
+  margin: 0;
+  padding: 10px;
+  font-size: min(14px, 3vw);
+  font-weight: 300;
+}
+
 @media screen and (min-width: 900px) {
 
   .event-body-top {
@@ -3119,6 +3185,14 @@ span::after {
     height: 100%;
   }
 
+}
+
+@media screen and (max-width: 800px) {
+
+  .comments-area {
+    width: 100%;
+  }
+  
 }
 
 /* Data backup page */
