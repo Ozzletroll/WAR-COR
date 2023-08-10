@@ -18,16 +18,37 @@ from routes.event import bp
 
 
 # View event
-@bp.route("/campaigns/<campaign_name>/events/<event_name>")
+@bp.route("/campaigns/<campaign_name>/events/<event_name>", methods=["GET", "POST"])
 def view_event(campaign_name, event_name):
     target_event_id = request.args["event_id"]
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
     campaign = event.parent_campaign
 
-    # Comma separate belligerents
+    # Format belligerents data
     belligerents = organisers.separate_belligerents(event.belligerents) 
 
-    return render_template("event.html", event=event, campaign=campaign, belligerents=belligerents)
+    form = forms.CommentForm()
+
+    if form.validate_on_submit():
+        
+        auth.permission_required(campaign)
+
+        # Create new comment
+        comment = models.Comment()
+        comment.body = request.form["body"]
+        comment.author = current_user
+        comment.date = datetime.now()
+        comment.parent_event = event
+
+        # Add to db
+        db.session.add(comment)
+        db.session.commit()
+
+    return render_template("event.html", 
+                           event=event, 
+                           campaign=campaign, 
+                           belligerents=belligerents,
+                           form=form)
 
 
 # Add new event

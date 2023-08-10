@@ -4,11 +4,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_ckeditor import CKEditor
 
 from utils.generators import create_data
 
 db = SQLAlchemy()
-
+ckeditor = CKEditor()
 
 # Application factory
 def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
@@ -75,6 +76,9 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
             pass
     except FileNotFoundError:
         create_data()
+
+    # Initialise CKEditor
+    ckeditor.init_app(app)
 
     return app
 

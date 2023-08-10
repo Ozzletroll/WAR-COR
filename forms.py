@@ -92,3 +92,8 @@ class ChangeCallsignForm(FlaskForm):
 class UploadJsonForm(FlaskForm):
     file = FileField("Backup JSON", validators=[DataRequired(), FileAllowed(["json"], "Please select a valid WAR/COR JSON file"), file_format()])
     submit = SubmitField("Restore")
+
+
+class CommentForm(FlaskForm):
+    body = CKEditorField("Comment", validators=[DataRequired()])
+    submit = SubmitField("Submit")

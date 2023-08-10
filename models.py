@@ -116,7 +116,8 @@ class Comment(db.Model):
     __tablename__ = "comment"
 
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(250))
+    body = db.Column(db.String(250), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
 
     # Database relationships
     # A comment is attached to an event, and has an author.

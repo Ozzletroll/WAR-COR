@@ -124,7 +124,7 @@
             
             <div class="comments-area">
 
-                <h3 class="comments-heading">::COMMS CHANNEL</h3>
+                <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
                 <hr class="campaigns-divider">
             
                 {# for comment in event.comments #}
@@ -168,6 +168,19 @@
 
                 {# endfor  #}
 
+              <!-- New Comment Area -->
+              {% if current_user.is_authenticated and current_user in campaign.members %}
+
+                <h4 class="new-comment-heading">//NEW COMMUNICATION</h4>
+
+                <form class="form comment-form" method="post">
+                  {{ form.body(class_="ckeditor") }}
+                  {{ form.submit(class_="comment-submit") }}
+                </form>
+                {{ ckeditor.load() }}
+                {{ ckeditor.config(name="body") }}
+
+              {% endif %}
 
             </div>
  
