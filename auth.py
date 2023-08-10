@@ -20,3 +20,11 @@ def user_verification(user):
     except AttributeError:
         abort(403) 
         
+
+def check_membership(campaign):
+    """Function for checking if the current user is actually a member of a given campaign"""
+    if campaign in current_user.campaigns:
+        return True
+    else:
+        abort(403)
+        
