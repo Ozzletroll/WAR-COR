@@ -242,6 +242,10 @@ button {
   cursor: pointer;
 }
 
+.button {
+  cursor: pointer;
+}
+
 .heading-top {
   margin-top: 25px;
 }
@@ -3116,7 +3120,7 @@ h5 {
 }
 
 .comments-heading {
-  font-size: min(30px, 3vw);
+  font-size: min(30px, 4vw);
   font-weight: 300;
   text-transform: uppercase;
   text-align: center;
@@ -3132,7 +3136,7 @@ h5 {
 
 .event-comment {
   width: 100%;
-  margin-bottom: 100px;
+  margin-bottom: 20px;
 }
 
 .comments-count {
@@ -3150,11 +3154,35 @@ h5 {
 
 .comment-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   background-color: var(--darker_red);
   padding: 10px;
-  gap: 10px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+}
+
+.comment-header-left, .comment-header-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.delete-comment-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-right: 30px;
+
+}
+
+.delete-comment-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  border-style: none;
+  background-color: var(--darker_red);
 }
 
 .comment-username {
@@ -3226,6 +3254,15 @@ h5 {
     width: 100%;
   }
   
+}
+
+@media screen and (max-width: 500px) {
+
+  .delete-comment-button {
+    margin-right: 5px;
+    font-size: min(12px, 2.5vw);
+  }
+
 }
 
 /* Data backup page */

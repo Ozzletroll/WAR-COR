@@ -140,25 +140,38 @@
                       <p class="comment-date">2023-08-09 14:56:24.248643</p>
 
                       <div class="comment-header">
-                        <img class="icon" src="/static/images/icons/user_white.svg">
-                        <h5 class="comment-username">{{ comment.author.username }}</h5>
+                        <div class="comment-header-left">
+                          <img class="icon" src="/static/images/icons/user_white.svg">
+                          <h5 class="comment-username">{{ comment.author.username }}</h5>
+  
+                          {% for entry in comment.author.campaign_associations %}
+                            {%if entry.campaign_id == campaign.id%}
+                              {% if entry.callsign is not none %}
+                                <h6 class="comment-callsign">
+                                  [{{entry.callsign.upper()}}]
+                                </h6>
+                              {% endif %}
+                            {%endif%}
+                          {% endfor %}
+                        </div>
 
-                        {% for entry in comment.author.campaign_associations %}
-                          {%if entry.campaign_id == campaign.id%}
-                            {% if entry.callsign is not none %}
-                              <h6 class="comment-callsign">
-                                [{{entry.callsign.upper()}}]
-                              </h6>
-                            {% endif %}
-                          {%endif%}
-                        {% endfor %}
+                        <div class="comment-header-right">
+                          {% if campaign in current_user.permissions or comment.author == current_user %}
+                            <a class="delete-comment-link" href="">
+                              <button class="button delete-comment-button">
+                                <img class="icon" src="/static/images/icons/bin_white.svg">
+                              </button>
+                            </a>
+                          {% endif %}
+                        </div>
 
-              
                       </div>
 
                       <div class="comment-body">
+                        <p class="flavour-text">MSG-{{comment.author.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
                         {{ comment.body | safe }}
                       </div>
+
 
                     </li>
 
@@ -176,7 +189,7 @@
                 <form class="form comment-form" method="post">
                   {{ form.csrf_token }}
                   {{ form.body(class_="ckeditor") }}
-                  {{ form.submit(class_="comment-submit") }}
+                  {{ form.submit(class_="button comment-submit") }}
                 </form>
                 {{ ckeditor.load() }}
                 {{ ckeditor.config(name="body") }}
