@@ -192,3 +192,26 @@ def delete_event(campaign_name, event_name):
     db.session.commit()
 
     return redirect(url_for("campaign.show_timeline", campaign_name=campaign_name))
+
+
+# Delete comment
+@bp.route("/campaigns/<campaign_name>/events/<event_name>/comments/<comment_id>/delete")
+@login_required
+def delete_comment(campaign_name, event_name, comment_id):
+    
+    target_campaign_id = request.args["campaign_id"]
+    target_event_id = request.args["event_id"]
+    target_comment_id = comment_id
+
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+    comment = db.session.execute(select(models.Comment).filter_by(id=target_comment_id)).scalar()
+
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
+    # Delete the comment
+    db.session.delete(comment)
+    db.session.commit()
+
+    return redirect(url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id))
