@@ -32,7 +32,7 @@ def view_event(campaign_name, event_name):
     if form.validate_on_submit():
         
         # Check user is a member of the campaign
-        auth.permission_required(campaign)
+        auth.check_membership(campaign)
 
         # Create new comment
         comment = models.Comment()
