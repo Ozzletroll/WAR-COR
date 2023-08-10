@@ -31,6 +31,7 @@ def view_event(campaign_name, event_name):
 
     if form.validate_on_submit():
         
+        # Check user is a member of the campaign
         auth.permission_required(campaign)
 
         # Create new comment
@@ -43,6 +44,8 @@ def view_event(campaign_name, event_name):
         # Add to db
         db.session.add(comment)
         db.session.commit()
+
+        return redirect(url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id))
 
     return render_template("event.html", 
                            event=event, 

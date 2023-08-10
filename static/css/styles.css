@@ -3135,6 +3135,11 @@ h5 {
   margin-bottom: 100px;
 }
 
+.comments-count {
+  color: var(--text_dark);
+  font-size: min(14px, 3vw);
+}
+
 .comment-date {
   display: flex;
   justify-content: center;
@@ -3165,14 +3170,10 @@ h5 {
 }
 
 .comment-body {
-  background-color: var(--elem_mid);
-}
-
-.comment-text {
-  margin: 0;
-  padding: 10px;
   font-size: min(14px, 3vw);
   font-weight: 300;
+  padding: 10px 20px 10px 20px;
+  background-color: var(--elem_mid);
 }
 
 .new-comment-heading {
