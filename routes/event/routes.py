@@ -207,8 +207,12 @@ def delete_comment(campaign_name, event_name, comment_id):
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
     comment = db.session.execute(select(models.Comment).filter_by(id=target_comment_id)).scalar()
 
-    # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    # Check if it is the comment author who is deleting the comment
+    if comment.author == current_user:
+        auth.check_membership(campaign)
+    else:
+        # Check if the user has permissions to edit the target campaign.
+        auth.permission_required(campaign)
 
     # Delete the comment
     db.session.delete(comment)
