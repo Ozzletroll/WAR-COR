@@ -73,7 +73,7 @@ class CreateEventForm(FlaskForm):
     date = StringField("Event Date", validators=[InputRequired(), date_format()])
     location = StringField("Location", validators=[Optional()])
     belligerents = StringField("Belligerents", validators=[Optional()])
-    body = TextAreaField("Description", validators=[DataRequired()])
+    body = CKEditorField("Body", validators=[DataRequired()])
     result = StringField("Result", validators=[Optional()])
     header = BooleanField("Header", default=False, validators=[Optional()])
     submit = SubmitField("Create Event")

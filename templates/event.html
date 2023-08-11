@@ -215,7 +215,7 @@
                   {{ form.body(class_="ckeditor") }}
                   {{ form.submit(class_="button comment-submit") }}
                 </form>
-                {{ ckeditor.load() }}
+                {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
                 {{ ckeditor.config(name="body") }}
 
               {% endif %}
