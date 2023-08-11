@@ -157,11 +157,9 @@
 
                         <div class="comment-header-right">
                           {% if campaign in current_user.permissions or comment.author == current_user %}
-                            <a class="delete-comment-link" href="{{ url_for('event.delete_comment', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id, comment_id=comment.id) }}">
-                              <button class="button delete-comment-button">
-                                <img class="icon" src="/static/images/icons/bin_white.svg">
-                              </button>
-                            </a>
+                            <button id="button-{{loop.index}}" class="button delete-comment-button">
+                              <img class="icon" src="/static/images/icons/bin_white.svg">
+                            </button>
                           {% endif %}
                         </div>
 
@@ -178,6 +176,28 @@
 
 
                   </ol>
+
+                  {# Delete comment confirm modal #}
+
+                  <div id="modal-{{loop.index}}" class="modal">
+                    <div class="modal-content modal-content-small">
+                      <div class="modal-header">
+                        <h2 class="modal-header-small">//Delete Comment</h2>
+                        <span id="close-{{loop.index}}" class="close">&times;</span>
+                      </div>
+                      <div class="modal-body modal-body-small">
+                        <p class="flavour-text modal-flavour">MSG-{{event.id}}-{{loop.index}} // DELETION::CONFIRM</p>
+                        <p class="modal-text">Confirm comment termination:</p>
+
+                        <a class="delete-comment-link" href="{{ url_for('event.delete_comment', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id, comment_id=comment.id) }}">
+                          <button class="button modal-confirm-button">
+                            DELETE
+                          </button>
+                        </a>
+
+                      </div>
+                    </div>
+                  </div>
 
                 {% endfor  %}
 
@@ -207,5 +227,8 @@
     </div>
 
 </div>
+
+ <!-- Javascript -->
+ <script src="/static/js/event.js"></script> 
 
 {% endblock %}

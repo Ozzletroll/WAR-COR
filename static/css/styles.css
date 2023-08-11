@@ -1016,6 +1016,11 @@ h5 {
   clip-path: polygon(0 0,calc(100% - 20.00px) 0,100% 20.00px,100% 100%,0 100%);
 }
 
+.modal-content-small {
+  width: min(60%, 400px);
+  height: fit-content;
+}
+
 .modal-header {
   display: flex;
   align-items: center;
@@ -1026,6 +1031,11 @@ h5 {
   padding-bottom: 2%;
   background-color: var(--dark_red);
   color: var(--text_bright);
+  text-transform: uppercase;
+}
+
+.modal-header-small {
+  margin: 0;
 }
 
 .modal-body {
@@ -1037,15 +1047,41 @@ h5 {
   font-weight: 300;
 }
 
+.modal-body-small {
+  display: flex;
+  align-items: center;
+  padding: 5%;
+}
+
 .modal-body p{
   margin-top: 30px;
   margin-bottom: 30px;
 }
 
+.modal-body .modal-flavour {
+  display: flex;
+  margin: 0;
+  width: 100%;
+}
+
 .modal-image {
   display: flex;
   padding: 5%;
-  
+}
+
+.modal-confirm-button {
+  padding: 5px 10px;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+  border: 1px solid var(--bright_red);
+  font-weight: 500;
+  margin: 0;
+  transition: 0.3s;
+}
+
+.modal-confirm-button:hover {
+  background-color: var(--dark_red);
+  color: var(--text_flavour_bright);
 }
 
 /* Add Animation */
@@ -3172,8 +3208,8 @@ h5 {
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin-right: 30px;
-
+  width: fit-content;
+  margin-bottom: 20px;
 }
 
 .delete-comment-button {
@@ -3183,6 +3219,7 @@ h5 {
   font-weight: 500;
   border-style: none;
   background-color: var(--darker_red);
+  margin-right: 10px;
 }
 
 .comment-username {
