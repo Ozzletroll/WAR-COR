@@ -144,9 +144,10 @@
                     <h6 class="comments-count">[NO MESSAGE DATA]</h5>
                   {% endif %}
 
+                  <ol class="comments-list">
                   {% for comment in event.comments %}
 
-                    <ol class="comments-list">
+                    
 
                       <li class="event-comment">
 
@@ -192,7 +193,7 @@
 
 
 
-                    </ol>
+                    
 
                     {# Delete comment confirm modal #}
 
@@ -217,6 +218,7 @@
                     </div>
 
                   {% endfor  %}
+                </ol>
 
                 <!-- New Comment Area -->
                 {% if current_user.is_authenticated and current_user in campaign.members %}
