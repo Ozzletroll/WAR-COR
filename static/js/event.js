@@ -49,3 +49,15 @@ buttons.forEach((button, index) => {
   // Append object to array
   modalItems.push(modal)
 });
+
+
+// Centre img elements in user submitted p elements
+const elements = document.querySelectorAll(".event-desc p");
+
+elements.forEach(element => {
+  if (element.querySelector("img")) {
+   element.style.display = "flex";
+   element.style.width = "auto";
+   element.style.justifyContent = "center";
+  }
+});

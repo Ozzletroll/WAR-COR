@@ -3417,13 +3417,7 @@ pre {
   padding: 0;
 }
 
-.event-desc p {
-  display: flex;
-  justify-content: center;
-}
-
 .event-desc p img {
-  display: flex;
   width: auto;
   margin: 20px;
 }
