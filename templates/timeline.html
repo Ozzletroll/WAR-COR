@@ -10,9 +10,11 @@
     <div class="campaigns-content">
 
       <div class="navigation-area">
+        {% if current_user.is_authenticated %}
         <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
-          <h5 class="navigation-heading">/CAMPAIGNS/</h5>
+          <h5 class="navigation-heading">CAMPAIGNS/</h5>
         </a>
+        {% endif %}
       </div>
 
       <div class="campaigns-title">
