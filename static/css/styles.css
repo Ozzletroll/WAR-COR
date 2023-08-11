@@ -2982,15 +2982,19 @@ h5 {
 
 .back-button {
   border: none;
-  background-color: transparent;
-  filter: invert(100%);
-  opacity: 50%;
+  background-color: var(--darker_red);
+  mask-image: url(/static/images/icons/chevron_left.svg);
+  -webkit-mask-image: url(/static/images/icons/chevron_left.svg);
+  mask-position: center;
+  mask-size: contain;
   transition: 0.3s;
   padding: 0;
+  width: 80px;
+  height: 80px;
 }
 
 .back-button:hover {
-  opacity: 100%;
+  background-color: var(--bright_red);
 }
 
 @media screen and (max-width: 800px) {
@@ -3170,6 +3174,7 @@ h5 {
   font-size: min(16px, 3vw);
   text-transform: uppercase;
   margin: 0;
+  color: var(--text_flavour_bright);
 }
 
 .event-desc {
