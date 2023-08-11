@@ -3236,18 +3236,36 @@ h5 {
   background-color: var(--elem_mid);
 }
 
+.new-comment-area {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-bottom: 200px;
+}
+
+.new-comment-area-header {
+  display: flex;
+  justify-content: center;
+  background-color: var(--darker_red);
+  width: 100%;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  padding: 6px;
+  box-sizing: border-box;
+}
+
 .new-comment-heading {
-  color: var(--text_header);
+  margin: 0;
+  color: var(--text_header_contrast);
 }
 
 .comment-form {
-  margin-bottom: 200px;
   clip-path: none;
-  background-color: var(--bg_colour1);
+  background-color: var(--elem_mid);
+  border: 1px solid var(--darker_red);
 }
 
 .comment-submit {
-  margin-top: 20px;
+  margin: 20px;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   padding: 10px 20px 10px 20px;
@@ -3295,6 +3313,12 @@ h5 {
     font-size: min(12px, 2.5vw);
   }
 
+}
+
+/* CKEditor */
+
+.comment-form .cke_chrome {
+  border: none;
 }
 
 /* Comment HTML Elements */
