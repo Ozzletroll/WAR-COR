@@ -3324,7 +3324,7 @@ pre {
   color: var(--text_dark);
 }
 
-/* Event HTML Elements */
+/* Comment HTML Elements */
 
 .comment-body h1 {
   font-size: min(24px, 5vw);
@@ -3351,7 +3351,7 @@ pre {
   color: var(--text_dark);
 }
 
-/* Timeline HTML Elements */
+/* Event HTML Elements */
 
 .event-desc h1 {
   font-size: min(24px, 5vw);
@@ -3372,6 +3372,17 @@ pre {
   color: var(--text_header);
   margin: 6;
   padding: 0;
+}
+
+.event-desc p {
+  display: flex;
+  justify-content: center;
+}
+
+.event-desc p img {
+  display: flex;
+  width: auto;
+  margin: 20px;
 }
 
 /* Data backup page */
