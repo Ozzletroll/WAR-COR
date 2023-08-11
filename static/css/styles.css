@@ -3197,6 +3197,10 @@ h5 {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
+.comment-header-user {
+  background-color: var(--dark_red);
+}
+
 .comment-header-left, .comment-header-right {
   display: flex;
   justify-content: center;
@@ -3218,7 +3222,7 @@ h5 {
   align-items: center;
   font-weight: 500;
   border-style: none;
-  background-color: var(--darker_red);
+  background: transparent;
   margin-right: 10px;
 }
 
