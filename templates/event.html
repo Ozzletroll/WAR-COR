@@ -98,7 +98,9 @@
 
                     <div class="description-body">
                         <h4 class="event-desc-header">Compendium Entry:</h4>
-                        <p class="event-desc">{{event.body}}</p>
+                        <div class="event-desc">
+                          {{event.body | safe }}
+                        </div>
                     </div>
                     
                 </div>
