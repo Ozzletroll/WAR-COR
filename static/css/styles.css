@@ -2962,6 +2962,41 @@ h5 {
 
 /* Event Page */
 
+.event-back-button-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  height: 100px;
+  width: 100px;
+  margin-right: -100px;
+}
+
+.back-link {
+  display: flex;
+}
+
+.back-button {
+  border: none;
+  background-color: transparent;
+  filter: invert(100%);
+  opacity: 50%;
+  transition: 0.3s;
+  padding: 0;
+}
+
+.back-button:hover {
+  opacity: 100%;
+}
+
+@media screen and (max-width: 800px) {
+  
+  .event-back-button-area {
+    display: none;
+  }
+
+}
+
 .event-page-container {
   display: flex;
   flex-direction: column;
@@ -3144,6 +3179,7 @@ h5 {
   align-items: center;
   margin-top: 200px;
   width: 75%;
+  margin-bottom: 200px;
 }
 
 .comments-heading {
@@ -3240,7 +3276,6 @@ h5 {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  margin-bottom: 200px;
 }
 
 .new-comment-area-header {
