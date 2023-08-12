@@ -3063,6 +3063,7 @@ h5 {
   background-color: var(--darker_red);
   width: 100%;
   margin: 0;
+  font-size: min(18px, 4vw);
 }
 
 .event-elem-h {
@@ -3080,6 +3081,7 @@ h5 {
   padding: 10px 20px 10px 20px;
   box-sizing: border-box;
   background-color: var(--elem_mid);
+  font-size: min(14px, 3vw);
 }
 
 .event-belligerents.event-elem-body {
