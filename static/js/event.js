@@ -54,7 +54,7 @@ buttons.forEach((button, index) => {
 // Apply styling to user submitted image links
 const elements = document.querySelectorAll(".event-desc p");
 
-elements.forEach(element => {
+elements.forEach((element, index) => {
   if (element.querySelector("img")) {
 
     // Create surrounding element
@@ -76,7 +76,7 @@ elements.forEach(element => {
     // Create header
     const newHeader = document.createElement("div");
     newHeader.classList.add("user-image-header");
-    newHeader.textContent = "Image Data";
+    newHeader.textContent = `Image::Data ${String(index + 1).padStart(2, "0")}`;
 
     // Insert the header
     element.parentNode.insertBefore(newHeader, element);
