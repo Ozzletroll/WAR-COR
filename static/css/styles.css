@@ -3449,6 +3449,7 @@ pre {
   padding: 10px;
   text-transform: uppercase;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  color: var(--text_header_contrast);
 }
 
 /* Data backup page */
