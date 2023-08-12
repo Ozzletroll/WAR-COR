@@ -3394,6 +3394,11 @@ pre {
   color: var(--text_dark);
 }
 
+.comment-body p img {
+  max-width: 250px !important;
+  height: auto !important;
+}
+
 /* Event HTML Elements */
 
 .event-desc h1 {
@@ -3418,8 +3423,32 @@ pre {
 }
 
 .event-desc p img {
-  width: auto;
+  max-width: calc(100% - 1px) !important;
+  height: auto !important;
+  box-sizing: border-box;
+  border: 1px solid var(--darker_red);
+}
+
+.user-image-area {
+  display: flex;
+  justify-content: center;
   margin: 20px;
+}
+
+.user-image-elem {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  box-sizing: border-box;
+}
+
+.user-image-header {
+  font-weight: 500;
+  background-color: var(--darker_red);
+  height: 20px;
+  padding: 10px;
+  text-transform: uppercase;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
 /* Data backup page */

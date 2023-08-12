@@ -51,13 +51,57 @@ buttons.forEach((button, index) => {
 });
 
 
-// Centre img elements in user submitted p elements
+// Apply styling to user submitted image links
 const elements = document.querySelectorAll(".event-desc p");
 
 elements.forEach(element => {
   if (element.querySelector("img")) {
+
+    // Create surrounding element
+    const newDiv1 = document.createElement("div");
+    newDiv1.classList.add("user-image-area");
+
+    // Wrap the element within the new div
+    element.parentNode.insertBefore(newDiv1, element);
+    newDiv1.appendChild(element);
+
+    // Create surrounding element
+    const newDiv2 = document.createElement("div");
+    newDiv2.classList.add("user-image-elem");
+
+    // Wrap the element within the new div
+    element.parentNode.insertBefore(newDiv2, element);
+    newDiv2.appendChild(element);
+
+    // Create header
+    const newHeader = document.createElement("div");
+    newHeader.classList.add("user-image-header");
+    newHeader.textContent = "Image Data";
+
+    // Insert the header
+    element.parentNode.insertBefore(newHeader, element);
+
+  // Centre img elements in user submitted p elements
    element.style.display = "flex";
    element.style.width = "auto";
    element.style.justifyContent = "center";
+   element.style.margin = "0"
   }
+
+});
+
+
+// Apply styling to comment images
+const images = document.querySelectorAll(".comment-body p");
+
+images.forEach(element => {
+  if (element.querySelector("img")) {
+
+  // Centre img elements
+   element.style.display = "flex";
+   element.style.width = "auto";
+   element.style.justifyContent = "center";
+   element.style.margin = "20px"
+  }
+
 });
