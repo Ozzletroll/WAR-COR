@@ -3395,7 +3395,7 @@ pre {
 }
 
 .comment-body p img {
-  max-width: 250px !important;
+  max-width: min(250px, 100%) !important;
   height: auto !important;
 }
 
@@ -3423,7 +3423,7 @@ pre {
 }
 
 .event-desc p img {
-  max-width: calc(100% - 1px) !important;
+  max-width: 100% !important;
   height: auto !important;
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
