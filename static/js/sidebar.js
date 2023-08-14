@@ -5,6 +5,7 @@ class Tab {
     button,
     icon,
     timeline,
+    monthConnectors,
   }) {
     this.tab = document.getElementById(tab);
     this.button = button;
@@ -12,6 +13,7 @@ class Tab {
     this.state = false
     this.icon = document.getElementById(icon);
     this.timeline = document.getElementById(timeline);
+    this.monthConnectors = document.getElementsByClassName("month-connector");
 
     this.updateTimelineMargin();
 
@@ -34,6 +36,12 @@ class Tab {
     this.tab.style.marginRight = "0"
     this.state = true
     this.icon.src = "/static/images/icons/chevron_left.svg"
+
+    // Iterate through all month connectors, and alter width
+    for (let i = 0; i < this.monthConnectors.length; i++) {
+      this.monthConnectors[i].style.minWidth = "15%";
+    }
+
     this.updateTimelineMargin();
   }
 
@@ -43,6 +51,12 @@ class Tab {
     this.tab.style.marginRight = "-300px"
     this.state = false
     this.icon.src = "/static/images/icons/chevron_right.svg"
+
+      // Iterate through all month connectors, and alter width
+      for (let i = 0; i < this.monthConnectors.length; i++) {
+        this.monthConnectors[i].style.minWidth = "30%";
+      }
+
     this.timeline.style.marginLeft = "0"
   }
 
@@ -63,4 +77,5 @@ const sidebar = new Tab({
   button: "sidebar-deploy",
   icon: "sidebar-icon",
   timeline: "timeline-container",
+  monthConnectors: "month-connector",
 })
