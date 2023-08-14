@@ -53,42 +53,43 @@ buttons.forEach((button, index) => {
 
 // Apply styling to user submitted image links
 const elements = document.querySelectorAll(".event-desc p");
+let imageCount = 0;
 
-elements.forEach((element, index) => {
+elements.forEach((element) => {
   if (element.querySelector("img")) {
+    imageCount++;
 
-    // Create surrounding element
-    const newDiv1 = document.createElement("div");
-    newDiv1.classList.add("user-image-area");
+  // Create surrounding element
+  const newDiv1 = document.createElement("div");
+  newDiv1.classList.add("user-image-area");
 
-    // Wrap the element within the new div
-    element.parentNode.insertBefore(newDiv1, element);
-    newDiv1.appendChild(element);
+  // Wrap the element within the new div
+  element.parentNode.insertBefore(newDiv1, element);
+  newDiv1.appendChild(element);
 
-    // Create surrounding element
-    const newDiv2 = document.createElement("div");
-    newDiv2.classList.add("user-image-elem");
+  // Create surrounding element
+  const newDiv2 = document.createElement("div");
+  newDiv2.classList.add("user-image-elem");
 
-    // Wrap the element within the new div
-    element.parentNode.insertBefore(newDiv2, element);
-    newDiv2.appendChild(element);
+  // Wrap the element within the new div
+  element.parentNode.insertBefore(newDiv2, element);
+  newDiv2.appendChild(element);
 
-    // Create header
-    const newHeader = document.createElement("div");
-    newHeader.classList.add("user-image-header");
-    newHeader.textContent = `Image::Data ${String(index + 1).padStart(2, "0")}`;
+  // Create header
+  const newHeader = document.createElement("div");
+  newHeader.classList.add("user-image-header");
+  newHeader.textContent = `Image::Data_${String(imageCount).padStart(2, "0")}`;
 
-    // Insert the header
-    element.parentNode.insertBefore(newHeader, element);
+  // Insert the header
+  element.parentNode.insertBefore(newHeader, element);
 
   // Centre img elements in user submitted p elements
-   element.style.display = "flex";
-   element.style.width = "auto";
-   element.style.justifyContent = "center";
-   element.style.margin = "0"
-  }
+  element.style.display = "flex";
+  element.style.width = "auto";
+  element.style.justifyContent = "center";
+  element.style.margin = "0";
 
-});
+}});
 
 
 // Apply styling to comment images
