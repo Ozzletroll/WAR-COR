@@ -29,6 +29,9 @@ def view_event(campaign_name, event_name):
 
     form = forms.CommentForm()
 
+    # Set scroll_to target for back button
+    scroll_target = f"event-{event.id}"
+
     if form.validate_on_submit():
         
         # Check user is a member of the campaign
@@ -45,13 +48,18 @@ def view_event(campaign_name, event_name):
         db.session.add(comment)
         db.session.commit()
 
-        return redirect(url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id))
+        return redirect(url_for('event.view_event', 
+                                campaign_name=campaign.title, 
+                                event_name=event.title, 
+                                event_id=event.id,
+                                scroll_target=scroll_target))
 
     return render_template("event.html", 
                            event=event, 
                            campaign=campaign, 
                            belligerents=belligerents,
-                           form=form)
+                           form=form,
+                           scroll_target=scroll_target)
 
 
 # Add new event
