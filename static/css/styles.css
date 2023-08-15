@@ -2703,6 +2703,23 @@ h5 {
   margin-bottom: -35px;
 }
 
+.event-outer-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.event-small-date {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--text_header_contrast);
+  height: 20px;
+  margin: -38px 0 20px 0;
+  font-weight: 300;
+  font-size: 12px;
+}
+
 .timeline-event {
   display: flex;
   background-color: var(--elem_mid);
@@ -2789,6 +2806,10 @@ h5 {
 
 @media screen and (max-width: 650px) { 
 
+  .event-outer-container .event-small-date {
+    display: flex;
+  }
+
   .timeline-year-header {
     justify-content: flex-start;
     font-size: min(10vw, 48px);
@@ -2800,6 +2821,22 @@ h5 {
 
   .timeline-year-container {
     margin-left: -15px;
+  }
+
+  .event-outer-container {
+    margin-bottom: 25px;
+  }
+
+  .event-between {
+    margin-bottom: 55px;
+  }
+
+  .event-line-top-edit {
+    margin-bottom: -113px;
+  }
+
+  .event-line-mid-edit {
+    margin-bottom: -113px;
   }
 
   .connector-date {
@@ -2851,14 +2888,6 @@ h5 {
     display: inline-flex;
   }
 
-  .event-outline {
-    width: 70%;
-  }
-
-  .day-container-mid {
-    border: none;
-    padding-bottom: 20px;
-  }
 
   .day-container-solo {
     padding-bottom: 20px;

@@ -252,31 +252,33 @@
 
                             </div>
 
-                            {% if event.header and loop.first %}
-                            <div class="timeline-event event-outline event-offset">
-                            {% else %}
-                            <div class="timeline-event event-outline">
-                            {% endif %}
-                              <div id="event-{{event.id}}" class="timeline-event">
-                                {# Check if event is a header event #}
-                                {% if event.header and loop.first %}
-                                <div class="event-header event-header-highlight">
-                                  {{event.title}}
-                                </div>
-                                {% else %}
-                                <div class="event-header">
-                                  //{{event.title}}
-                                </div>
-                                {% endif %}
-                                <div id="dropdown-{{event.id}}" class="event-body">
-                                  <p class="event-type">{{event.type}}</p>
-                                  <div class="event-button-area">
-                                    <a href="{{ url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id) }}"><button class="entry-button timeline-view-button">VIEW</button></a>
+                            <div class="event-outer-container">
+                              <h4 class="event-small-date">{{event.date}}</h4>
+                              {% if event.header and loop.first %}
+                              <div class="timeline-event event-outline event-offset">
+                              {% else %}
+                              <div class="timeline-event event-outline">
+                              {% endif %}
+                                <div id="event-{{event.id}}" class="timeline-event">
+                                  {# Check if event is a header event #}
+                                  {% if event.header and loop.first %}
+                                  <div class="event-header event-header-highlight">
+                                    {{event.title}}
+                                  </div>
+                                  {% else %}
+                                  <div class="event-header">
+                                    //{{event.title}}
+                                  </div>
+                                  {% endif %}
+                                  <div id="dropdown-{{event.id}}" class="event-body">
+                                    <p class="event-type">{{event.type}}</p>
+                                    <div class="event-button-area">
+                                      <a href="{{ url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id) }}"><button class="entry-button timeline-view-button">VIEW</button></a>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-
                           </div>
 
                       {% endfor %}
