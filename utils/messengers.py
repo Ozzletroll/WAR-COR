@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlalchemy import select
 
 import models
 from app import db
@@ -54,6 +55,7 @@ def send_event_notification(sender, recipients, campaign, event):
   message.notification = True
   message.body = f"The campaign: {campaign.title} has been updated with the new event: {event.title}"
   message.target_campaign = campaign
+  message.target_event = event
   message.date = datetime.now()
 
   db.session.add(message)
@@ -62,3 +64,49 @@ def send_event_notification(sender, recipients, campaign, event):
     user.messages.append(message)
     
   db.session.commit()
+
+
+def send_comment_notification(sender, recipients, campaign, event):
+  """Function for creating new comment notifications. Creates a new message object
+  if no message for the specific campaign and event exists, otherwise creates a new one.
+  Message is added to all recipients messages list."""
+
+  def format_message(message):
+    message.author = sender
+    message.notification = True
+    message.body = f"New comments for event: '{event.title}' in campaign: '{campaign.title}'."
+    message.target_campaign = campaign
+    message.target_event = event
+    message.date = datetime.now()
+
+    # Add message to all recipients messages list, unless they are already a recipient
+    for user in recipients:
+      if message not in user.messages:
+        user.messages.append(message)
+
+
+  # Check for existing comment messages
+  messages = db.session.execute(
+      select(models.Message)
+      .filter(models.Message.target_campaign.has(id=campaign.id))
+      .filter(models.Message.target_event.has(id=event.id))
+      .filter(models.Message.notification == True)
+  ).scalars()
+
+  # Convert the query result to a list to avoid ResourceClosedError
+  messages_list = list(messages)  
+
+  if len(messages_list) > 0:
+    for message in messages_list:
+      format_message(message)
+
+  else:
+    # Otherwise, create new comment message
+    message = models.Message()
+    format_message(message)
+    db.session.add(message)
+
+    
+  # Finally, commit all changes to db
+  db.session.commit()
+

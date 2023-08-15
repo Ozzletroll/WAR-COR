@@ -32,6 +32,7 @@ def view_event(campaign_name, event_name):
     # Set scroll_to target for back button
     scroll_target = f"event-{event.id}"
 
+    # Check if new comment submitted
     if form.validate_on_submit():
         
         # Check user is a member of the campaign
@@ -43,10 +44,17 @@ def view_event(campaign_name, event_name):
         comment.author = current_user
         comment.date = datetime.now()
         comment.parent_event = event
+        comment.new = True
 
         # Add to db
         db.session.add(comment)
         db.session.commit()
+
+        # Create new comment notification
+        messengers.send_comment_notification(sender=current_user,
+                                             recipients=campaign.members,
+                                             campaign=campaign,
+                                             event=event)
 
         return redirect(url_for('event.view_event', 
                                 campaign_name=campaign.title, 

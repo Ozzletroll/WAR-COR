@@ -118,6 +118,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(250), nullable=False)
     date = db.Column(db.DateTime, nullable=False)
+    new = db.Column(db.Boolean(), default=False)
 
     # Database relationships
     # A comment is attached to an event, and has an author.
@@ -137,7 +138,7 @@ class Message(db.Model):
     notification = db.Column(db.Boolean(), default=False)
     body = db.Column(db.String(250))
     date = db.Column(db.DateTime, nullable=False)
-
+    
 
     # Database relationships
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -147,7 +148,7 @@ class Message(db.Model):
     target_campaign = db.relationship("Campaign", back_populates="pending_invites")
 
     target_event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
-    target_event = db.relationship("Event", back_populates="")
+    target_event = db.relationship("Event")
 
     target_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     target_user = db.relationship("User", back_populates="open_invites", foreign_keys=[target_user_id])
