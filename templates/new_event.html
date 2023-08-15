@@ -16,6 +16,14 @@
     </div>
 
       <div class="campaigns-title">
+
+        <div class="event-back-button-area">
+          <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="back-link">
+            <button class="back-button">
+            </button>
+          </a>
+        </div>
+
         <h3 class="campaigns-heading edit-campaign-heading">NEW EVENT DATA</h1>
       </div>
 
