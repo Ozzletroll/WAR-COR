@@ -3,12 +3,7 @@
 {% block content %}
 
 <div class="sidebar-page">
-  <div class="event-back-button-area">
-    <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target)}}" class="back-link">
-      <button class="back-button">
-      </button>
-    </a>
-  </div>
+  
 
   <div class="scrollpage">
 
@@ -27,6 +22,14 @@
           </div>
     
           <div class="campaigns-title">
+            
+            <div class="event-back-button-area">
+              <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target)}}" class="back-link">
+                <button class="back-button">
+                </button>
+              </a>
+            </div>
+
             <h3 class="campaigns-heading">{{event.title}}</h1>
           </div>
     

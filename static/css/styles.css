@@ -1521,6 +1521,7 @@ h5 {
 
 .campaigns-title {
   display: flex;
+  align-items: center;
   text-align: left;
   width: 90%;
 }
@@ -2982,14 +2983,9 @@ h5 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 32px;
-  height: 100px;
-  width: 100px;
-  margin-right: -100px;
-}
-
-.back-link {
-  display: flex;
+  width: 63px;
+  height: 63px;
+  margin-left: -63px;
 }
 
 .back-button {
@@ -2999,20 +2995,44 @@ h5 {
   -webkit-mask-image: url(/static/images/icons/chevron_left.svg);
   mask-position: center;
   mask-size: contain;
+  mask-repeat: no-repeat;
   transition: 0.3s;
   padding: 0;
   width: 80px;
   height: 80px;
+  margin-right: 10px;
 }
 
 .back-button:hover {
   background-color: var(--bright_red);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 600px) {
   
   .event-back-button-area {
-    display: none;
+    width: 40px;
+    height: 40px;
+    margin-left: -40px;
+  }
+
+  .back-button {
+    width: 40px;
+    
+  }
+
+}
+
+@media screen and (max-width: 400px) {
+  
+  .event-back-button-area {
+    width: 30px;
+    height: 30px;
+    margin-left: -30px;
+  }
+
+  .back-button {
+    width: 30px;
+    
   }
 
 }
