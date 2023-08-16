@@ -81,7 +81,7 @@ def send_comment_notification(sender, recipients, campaign, event):
 
     # Add message to all recipients messages list, unless they are already a recipient
     for user in recipients:
-      if message not in user.messages:
+      if message not in user.messages and user.id != sender.id:
         user.messages.append(message)
 
 
