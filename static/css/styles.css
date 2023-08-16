@@ -2798,7 +2798,7 @@ h5 {
 @media screen and (min-width: 1200px) {
   
   .month-connector {
-    flex: 2 1 0;
+    flex: 2.5 1 0;
   }
 
 }
