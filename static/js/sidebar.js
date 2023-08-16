@@ -36,7 +36,7 @@ class Tab {
     this.tab.style.marginRight = "0"
     this.state = true
     this.icon.src = "/static/images/icons/chevron_left.svg"
-
+    this.adjustMonthConnectors()
     this.updateTimelineMargin();
   }
 
@@ -46,7 +46,7 @@ class Tab {
     this.tab.style.marginRight = "-300px"
     this.state = false
     this.icon.src = "/static/images/icons/chevron_right.svg"
-
+    this.adjustMonthConnectors()
     this.timeline.style.marginLeft = "0"
   }
 
@@ -54,21 +54,29 @@ class Tab {
   updateTimelineMargin() {
     if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
       this.timeline.style.marginLeft = "-15%";
-      
+      this.adjustMonthConnectors()
+    } else {
+      this.timeline.style.marginLeft = "";
+      this.adjustMonthConnectors()
+    }
+  }
+
+  adjustMonthConnectors() {
+    if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
       // Iterate through all month connectors, and alter width
       for (let i = 0; i < this.monthConnectors.length; i++) {
         this.monthConnectors[i].style.minWidth = "15%";
       }
-
-    } else {
-      this.timeline.style.marginLeft = "";
-
+    }
+    else {
       // Iterate through all month connectors, and alter width
       for (let i = 0; i < this.monthConnectors.length; i++) {
         this.monthConnectors[i].style.minWidth = "30%";
       }
     }
+
   }
+
 }
 
 
