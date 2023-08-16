@@ -2713,7 +2713,7 @@ h5 {
   display: none;
   align-items: center;
   justify-content: center;
-  color: var(--text_header_contrast);
+  color: var(--text_dark);
   height: 20px;
   margin: -38px 0 20px 0;
   font-weight: 300;
