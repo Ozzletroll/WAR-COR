@@ -3035,6 +3035,21 @@ h5 {
   background-color: var(--bright_red);
 }
 
+@media screen and (max-width: 800px) {
+  
+  .event-back-button-area {
+    width: 60px;
+    height: 60px;
+    margin-left: -60px;
+  }
+
+  .back-button {
+    width: 60px;
+    
+  }
+
+}
+
 @media screen and (max-width: 600px) {
   
   .event-back-button-area {
