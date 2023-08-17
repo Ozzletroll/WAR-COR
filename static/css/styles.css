@@ -3011,28 +3011,40 @@ h5 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 63px;
-  height: 63px;
-  margin-left: -63px;
+  margin-left: -80px;
+  transition: 0.3s;
 }
 
 .back-button {
   border: none;
-  background-color: var(--darker_red);
-  mask-image: url(/static/images/icons/chevron_left.svg);
-  -webkit-mask-image: url(/static/images/icons/chevron_left.svg);
-  mask-position: center;
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  transition: 0.3s;
   padding: 0;
-  width: 80px;
-  height: 80px;
   margin-right: 10px;
+  background-color: var(--bg_colour1);
 }
 
-.back-button:hover {
-  background-color: var(--bright_red);
+.back-link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+}
+
+.icon-back-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  width: 80px;
+}
+
+.back-button:hover .icon-colour-var {
+  fill: var(--bright_red);
+}
+
+.icon-colour-var {
+  fill: var(--darker_red);
+  transition: 0.3s;
 }
 
 @media screen and (max-width: 800px) {
@@ -3043,9 +3055,13 @@ h5 {
     margin-left: -60px;
   }
 
-  .back-button {
+  .icon-back-button {
+    height: 60px;
     width: 60px;
-    
+  }
+
+  .back-link {
+    width: 60px;
   }
 
 }
@@ -3058,9 +3074,13 @@ h5 {
     margin-left: -40px;
   }
 
-  .back-button {
+  .icon-back-button {
+    height: 40px;
     width: 40px;
-    
+  }
+
+  .back-link {
+    width: 40px;
   }
 
 }
@@ -3073,9 +3093,13 @@ h5 {
     margin-left: -30px;
   }
 
-  .back-button {
+  .icon-back-button {
+    height: 30px;
     width: 30px;
-    
+  }
+
+  .back-link {
+    width: 30px;
   }
 
 }
