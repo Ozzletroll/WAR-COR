@@ -58,6 +58,15 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     @login_manager.user_loader
     def load_user(user_id):
         return db.session.get(models.User, user_id)
+    
+    # Disable browser caching
+    if app.config["DEBUG"]:
+        @app.after_request
+        def after_request(response):
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+            response.headers["Expires"] = 0
+            response.headers["Pragma"] = "no-cache"
+            return response
 
     # Create data for random name generator
     try:
