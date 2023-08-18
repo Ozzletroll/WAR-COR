@@ -1630,7 +1630,7 @@ h5 {
 }
 
 .callsign-text.callsign-break {
-  word-break: break-all;
+  word-break: normal;
 }
 
 .admin-tag {
@@ -1653,6 +1653,14 @@ h5 {
 }
 
 @media screen and (max-width: 550px) {
+
+  .campaign-header {
+    padding: 20px 10vw;
+  }
+
+  .campaign-body {
+    padding: 20px 10vw;
+  }
 
   .campaign-entry-buttons {
     flex-direction: column;
