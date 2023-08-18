@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
@@ -123,6 +123,10 @@ def user_page(username) :
     callsign_form = forms.ChangeCallsignForm()
     username_form = forms.ChangeUsernameForm()
     password_form = forms.ChangePasswordForm()
+
+    # Set url for back button as session variable
+    if request.referrer and "/user" not in request.referrer:
+        session["previous_url"] = request.referrer
 
     return render_template("user_page.html", 
                             user=user, 
@@ -288,6 +292,26 @@ def delete_user(username):
         form.submit.label.text = "Terminate Contract"
 
         return render_template("delete_user.html", form=form)
+
+
+# Back button on the user page
+@bp.route("/back", methods=['GET'])
+def back():
+    """Function to handle redirects for the back button on the user page.
+    Uses request.referrer normally, or defers to stored session variable
+    upon form submission."""
+
+    # If the previous URL is stored in session, use it as the referrer
+    if 'previous_url' in session:
+        referrer = session['previous_url']
+    elif request.referrer:
+        # Use a fallback URL if the previous URL is not available
+        referrer = request.referrer
+    else:
+        # If no session var or referrer, redirect to homepage
+        referrer = url_for('home.home')
+
+    return redirect(referrer)
 
 
 # Function called when dimissing a notification
