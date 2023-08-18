@@ -125,6 +125,9 @@ def user_page(username) :
     password_form = forms.ChangePasswordForm()
 
     # Set url for back button as session variable
+    # Only updates if not redirecting from inside the user page
+    # to avoid overwriting the referrer page during user page
+    # form submission.
     if request.referrer and "/user" not in request.referrer:
         session["previous_url"] = request.referrer
 
