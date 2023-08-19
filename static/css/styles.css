@@ -1649,6 +1649,7 @@ h5 {
 .campaign-entry-buttons {
   display: flex;
   gap: 15px;
+  margin-bottom: 11px;
 }
 
 @media screen and (max-width: 550px) {
