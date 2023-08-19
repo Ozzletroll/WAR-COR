@@ -1582,7 +1582,7 @@ h5 {
 .campaign-overview {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 50%;
   gap: 15px;
 }
 
@@ -1598,9 +1598,8 @@ h5 {
 
 .campaign-members {
   display: flex;
-  flex: 0 0 auto;
   flex-direction: column;
-  width: 40%;
+  width: 50%;
   margin: 0;
   gap: 15px;
   flex-wrap: nowrap;
