@@ -1630,7 +1630,7 @@ h5 {
 }
 
 .callsign-text.callsign-break {
-  word-break: normal;
+  word-break: break-all;
 }
 
 .admin-tag {
