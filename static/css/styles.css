@@ -1667,14 +1667,19 @@ h5 {
     align-items: center;
   }
 
-  .entry-button {
-    margin-bottom: 5px;
-  }
-
   .members-list-item, .members-list-admin {
     margin-bottom: 5px;
   }
 
+}
+
+.entry-button-outline {
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  padding: 1px;
+  background-color: var(--elem_border);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
 .entry-button {
@@ -1682,9 +1687,8 @@ h5 {
   padding: 10px;
   background-color: var(--darker_red);
   color: var(--text_normal);
-  border-style: none;
+  border: none;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-  margin-bottom: 5px;
 }
 
 .entry-button:hover {
@@ -1754,14 +1758,17 @@ h5 {
 
 .deploy-button {
   display: flex;
-  border-style: none;
+  border: none;
   text-transform: uppercase;
   gap: 5px;
   background-color: var(--elem_bright);
   color: var(--text_flavour);
-  border-radius: 0;
   width: 160px;
   padding: 5px;
+}
+
+.deploy-button-first {
+  border-top: 1px solid var(--elem_border);
 }
 
 .entry-buttons-deploy a {
