@@ -3035,7 +3035,7 @@ h5 {
   border: none;
   padding: 0;
   margin-right: 10px;
-  background-color: var(--bg_colour1);
+  background: none;
 }
 
 .back-link {
@@ -3055,11 +3055,11 @@ h5 {
 }
 
 .back-button:hover .icon-colour-var {
-  fill: var(--bright_red);
+  fill: var(--text_header_dark);
 }
 
 .icon-colour-var {
-  fill: var(--darker_red);
+  fill: var(--text_header);
   transition: 0.3s;
 }
 
