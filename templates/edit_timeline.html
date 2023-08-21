@@ -378,7 +378,9 @@
 <script src="/static/js/timeline.js"></script>
   {% if "scroll_target" in request.args %}
     <script>
-      document.getElementById('{{ request.args["scroll_target"] }}').scrollIntoView();
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('{{ request.args["scroll_target"] }}').scrollIntoView();
+      });
     </script>
   {% endif %}
 
