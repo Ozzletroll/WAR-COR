@@ -2,7 +2,7 @@
   
   {% for year in timeline_data %}
 
-    <a class="sidebar-button" href="#year-{{year}}">
+    <a class="sidebar-button" href="#year-{{year.name}}">
       <button class="year-button entry-button">
         {{ year.name + campaign.date_suffix}}
         </button> 
