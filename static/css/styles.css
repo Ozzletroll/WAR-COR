@@ -1765,7 +1765,7 @@ h5 {
   border: none;
   text-transform: uppercase;
   gap: 5px;
-  background-color: var(--elem_bright);
+  background-color: var(--elem_dark);
   color: var(--text_flavour);
   width: 160px;
   padding: 5px;
@@ -1780,7 +1780,7 @@ h5 {
 }
 
 .deploy-button:hover {
-  background-color: var(--elem_dark);
+  background-color: var(--elem_bright);
 }
 
 .deploy-button:active {
