@@ -1,0 +1,214 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+    <div class="navigation-area">
+      <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
+        <h5 class="navigation-heading">/CAMPAIGNS</h5>
+      </a>
+      <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
+        <h5 class="navigation-heading">/{{campaign.title}}/</h5>
+      </a>
+    </div>
+
+      <div class="campaigns-title">
+
+        <div class="event-back-button-area">
+          <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target)}}" class="back-link">
+            <button class="back-button">
+
+              <svg class="icon icon-back-button" width="80px" height="80px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                <title>double-chevron-left</title>
+                <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g class="icon-colour-var" id="add" transform="translate(108.603733, 144.171733)">
+                        <path d="M127.978667,121.834667 L249.6,243.648 L279.872,213.333333 L188.16,121.834667 L279.872,30.3146667 L249.6,2.84217094e-14 L127.978667,121.834667 Z M1.42108547e-14,121.834667 L121.578667,243.648 L151.872,213.333333 L60.1386667,121.834667 L151.872,30.3146667 L121.578667,2.84217094e-14 L1.42108547e-14,121.834667 Z" id="arrow-double-left"></path>
+                      </g>
+                  </g>
+              </svg>
+              
+            </button>
+          </a>
+        </div>
+
+        <h3 class="campaigns-heading edit-campaign-heading">EDIT EVENT DATA</h1>
+      </div>
+
+      <hr class="campaigns-divider">
+      <p class="flavour-text">UWC-6-00 // Event::Index </p>
+
+      <div class="form-flash">
+        {% include 'base/flash.html' %}
+      </div>
+  
+      <form class="edit-form form-column" method="POST">
+        {{ form.csrf_token }}
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Date</h4>
+            </div>
+            <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
+          </label>
+        
+          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY-MM-DD HH:MM:SS", autocomplete="off") }}
+
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Event Title</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div type="button" class="form-button" onClick="user_search(target_url)">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/random.svg">
+                </div>
+                
+              </div>
+              
+            </div>
+            <p class="flavour-text">UWC-6-02 //  Event::Operation Designation</p>
+          </label>
+
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title") }}
+
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Type</h4>
+            </div>
+            <p class="flavour-text">UWC-6-03 //  Event::Category</p>
+          </label>
+
+          {{ form.type(class_="campaign-input event-input", autocomplete="off") }}
+        
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Location</h4>
+            </div>
+            <p class="flavour-text">UWC-6-04 //  Event::Location</p>
+          </label>
+
+          {{ form.location(class_="campaign-input event-input", autocomplete="off") }}
+
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Belligerents</h4>
+            </div>
+            <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
+          </label>
+
+          {{ form.belligerents(class_="campaign-input event-input", autocomplete="off") }}
+
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Event Group Header</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div id="event-format-help-button" type="button" class="form-button">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
+                </div>
+                
+              </div>
+
+            </div>
+            <p class="flavour-text">UWC-6-06 //  Event::Formatting</p>
+          </label>
+
+          {{ form.header(class_="campaign-input event-input input-checkbox theme-radio", autocomplete="off") }}
+
+        </div>
+
+        {# Event Formatting Help Modal #}
+
+        <div id="modal-1" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Event Group Headers</h2>
+              <span id="close-1" class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+              <p>This makes the current event act as a visual header for any events below it within
+                the same branch of the timeline.
+              </p>
+              <img class="modal-img" src="/static/images/Event Header Example.jpg">
+              <p>Header events will hide the month, day and time markers of their branch if they are not needed. This can be useful for creating events that represent the start of a specific epoch, rather than one of an exact date and time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-container form-container-large">
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Description</h4>
+          </div>
+          <p class="flavour-text">UWC-6-07 //  Event::Overview</p>
+        </label>
+
+        {{ form.body(class_="campaign-input large-input event-input", autocomplete="off") }}
+        
+        {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+        {{ ckeditor.config(name="body") }}
+
+        </div>
+
+        <div class="form-container form-container-footer">
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+            <h4 class="campaign-form label-title">Result</h4>
+          </div>
+          <p class="flavour-text">UWC-6-08 //  Event::Outcome</p>
+        </label>
+
+        {{ form.result(class_="campaign-input event-input", autocomplete="off") }}
+
+        </div>
+
+        <div class="campaign-submit-area event-submit-area">
+          {{ form.submit(class_="campaign-input campaign-submit", ) }}
+        </div>  
+          
+      </form>
+
+    <div class="flavour-text-area">
+      <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
+      <img src="/static/images/logo-red.png" class="top-logo">
+    </div>
+
+  </div>
+
+</div>
+
+<script src="/static/js/event_form.js"></script>
+<script src="/static/js/event_gen.js"></script> 
+<script>
+  const target_url = "{{ url_for('generator.random_event_title') }}"        
+</script>
+
+{% endblock %}

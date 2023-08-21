@@ -267,7 +267,8 @@
                                   {% if event.header and loop.first %}
 
                                   <a href="{{ url_for('event.edit_event', 
-                                              campaign_name=campaign.title, 
+                                              campaign_name=campaign.title,
+                                              campaign_id=campaign.id, 
                                               event_name=event.title, 
                                               event_id=event.id) }}">
                                     
@@ -280,7 +281,8 @@
                                   {% else %}
 
                                   <a href="{{ url_for('event.edit_event', 
-                                              campaign_name=campaign.title, 
+                                              campaign_name=campaign.title,
+                                              campaign_id=campaign.id, 
                                               event_name=event.title, 
                                               event_id=event.id) }}">
                                     
