@@ -167,7 +167,7 @@
             </div>
             <div class="modal-body">
               <p>An event's belligerents list represents active combatants and participants.</p>
-              <p>Allied belligerents should be ampersand "& separated, whilst opposing forces should be comma "," separated.</p>
+              <p>Allied belligerents should be ampersand "&" separated, whilst opposing forces should be comma "," separated.</p>
               <p>Example: "Ally Faction 1 & Ally Faction 2, Enemy Faction"</p>
             </div>
           </div>
@@ -218,7 +218,7 @@
             <h4 class="campaign-form label-title">Description</h4>
             <div class="form-extra-button-area">
                 
-              <div type="button" class="form-button form-preview-button" onClick="htmlPreview()">
+              <div id="html-preview-button" type="button" class="form-button form-preview-button">
                 HTML PREVIEW
               </div>
               
@@ -228,11 +228,24 @@
           <p class="flavour-text">UWC-6-07 //  Event::Overview</p>
         </label>
 
-        {{ form.body(class_="campaign-input large-input event-input", autocomplete="off") }}
+        {{ form.body(id="form-contents", class_="campaign-input large-input event-input", autocomplete="off") }}
         
         {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-        {{ ckeditor.config(name="body") }}
 
+        </div>
+
+        {# HTML Preview Modal #}
+
+        <div id="modal-preview" class="modal">
+          <div class="modal-content modal-preview-content">
+            <div class="modal-header">
+              <h2>HTML Preview</h2>
+              <span id="close-preview" class="close">&times;</span>
+            </div>
+            <div id="preview-modal-body" class="modal-body modal-body-preview">
+              {# Modal text goes here #}
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-footer">
@@ -263,10 +276,12 @@
 
 </div>
 
+
 <script src="/static/js/event_form.js"></script>
 <script src="/static/js/event_gen.js"></script> 
 <script>
   const target_url = "{{ url_for('generator.random_event_title') }}"        
 </script>
+
 
 {% endblock %}
