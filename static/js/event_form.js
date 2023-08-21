@@ -32,6 +32,26 @@ class Modal {
 // Create modals
 const modal_1 = new Modal({
   modal: "modal-1",
-  button: "event-format-help-button",
+  button: "event-date-help-button",
   span: "close-1",
 })
+
+// Create modals
+const modal_2 = new Modal({
+  modal: "modal-2",
+  button: "event-belligerents-help-button",
+  span: "close-2",
+})
+
+// Create modals
+const modal_3 = new Modal({
+  modal: "modal-3",
+  button: "event-format-help-button",
+  span: "close-3",
+})
+
+
+function htmlPreview() {
+  console.log("Preview")
+
+}
