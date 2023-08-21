@@ -80,6 +80,37 @@ class Tab {
 }
 
 
+// Function to animate the highlight for scrollTo behavior
+function scrollToAnim(targetEvent) {
+  console.log(targetEvent)
+
+  // Get the scrollTo target
+  var parentElem = document.getElementById(targetEvent);
+  // Select the header element for animation
+  var headerElem = parentElem.querySelector('.event-header');
+  headerElem.style.transition = "0.1s"
+
+  var count = 0;
+  var interval = setInterval(function() {
+    if (count >= 6) {
+      clearInterval(interval); // Stop the flashing after 3 cycles
+      headerElem.style.backgroundColor = ""; // Reset the background color
+      headerElem.style.transition = "" // Reset transition 
+      return;
+    }
+
+    // Alternate between two CSS variables
+    if (count % 2 === 0) {
+      headerElem.style.backgroundColor = "var(--darker_red)";
+    } else {
+      headerElem.style.backgroundColor = "var(--bright_red)";   
+    }
+
+    count++;
+  }, 200); // Flashing interval in milliseconds
+}
+
+
 // Create sidebar
 const sidebar = new Tab({
   tab: "sidebar",
@@ -88,3 +119,6 @@ const sidebar = new Tab({
   timeline: "timeline-container",
   monthConnectors: "month-connector",
 })
+
+
+

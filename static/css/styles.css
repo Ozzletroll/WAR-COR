@@ -2766,7 +2766,7 @@ h5 {
   text-transform: uppercase;
   color: var(--text_header_contrast);
   background-color: var(--darker_red);
-  transition: 0.3s;
+  transition: 0.3s ease-in-out;
 }
 
 .event-header:hover {

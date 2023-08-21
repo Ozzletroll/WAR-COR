@@ -17,9 +17,9 @@
           {% for event in day.events  %}
             <a class="sidebar-button" href="#event-{{event.id}}">
               {% if event.header %}
-              <button class="event-button event-button-header">
+              <button class="event-button event-button-header" onclick="scrollToAnim('event-{{event.id}}')">
               {% else %}
-              <button class="event-button">
+              <button class="event-button" onclick="scrollToAnim('event-{{event.id}}')">
               {% endif %}
                 {{event.title}}
               </button>
