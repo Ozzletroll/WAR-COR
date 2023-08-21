@@ -2762,6 +2762,10 @@ h5 {
   margin-left: -1px;
 }
 
+.timeline-event a {
+  text-decoration: none;
+}
+
 .event-header {
   display: flex;
   font-size: clamp(12px, 2vw, 16px);
