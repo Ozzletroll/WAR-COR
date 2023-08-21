@@ -18,6 +18,7 @@
   --text_flavour_bright: #ff0000;
   --text_header: #9C1717;
   --text_header_dark: #9C1717;
+  --text_header_hover: #ff0000;
   --text_header_contrast: #ffffff;
 
   --black: #000000;
@@ -59,6 +60,7 @@
   --text_flavour_bright: #ff0000;
   --text_header: #b30000;
   --text_header_dark: #9C1717;
+  --text_header_hover: #ff0000;
   --text_header_contrast: #ffffff;
 
   --black: #000000;
@@ -90,6 +92,7 @@
   --text_flavour_bright: #ff491b;
   --text_header: #db5000;
   --text_header_dark: #9C1717;
+  --text_header_hover: #ff8717;
   --text_header_contrast: #ffffff;
 
   --black: #000000;
@@ -121,6 +124,7 @@
   --text_flavour_bright: #9af5a4;
   --text_header: #9af5a4;
   --text_header_dark: #698d6d;
+  --text_header_hover: #52ff27;
   --text_header_contrast: #dcffd4;
 
   --black: #000000;
@@ -2740,7 +2744,7 @@ h5 {
   display: flex;
   background-color: var(--elem_mid);
   flex-direction: column;
-  scroll-margin-top: 50vh;
+  scroll-margin-top: 33vh;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-top: -8px;
   transition: 0.5s;
@@ -3055,7 +3059,7 @@ h5 {
 }
 
 .back-button:hover .icon-colour-var {
-  fill: var(--text_header_dark);
+  fill: var(--text_header_hover);
 }
 
 .icon-colour-var {
