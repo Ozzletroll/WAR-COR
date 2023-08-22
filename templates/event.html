@@ -174,7 +174,7 @@
                             {% for entry in comment.author.campaign_associations %}
                               {%if entry.campaign_id == campaign.id%}
                                 {% if entry.callsign is not none %}
-                                  <h6 class="comment-callsign">
+                                  <h6 class="comment-callsign callsign-break">
                                     [{{entry.callsign.upper()}}]
                                   </h6>
                                 {% endif %}
