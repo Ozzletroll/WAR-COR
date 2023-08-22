@@ -1006,23 +1006,34 @@ h5 {
 .modal-content {
   display: flex;
   flex-direction: column;
-  background-color: var(--elem_mid);
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bright_red);
   margin: auto;
-  padding: 0;
+  padding: 0px;
   width: min(80%, 500px);
   height: min(70%, 700px);
   overflow-y: initial;
-  box-shadow: 0 8px 12px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: modalanim;
   -webkit-animation-duration: 0.4s;
   animation-name: modalanim;
-  animation-duration: 0.5s;
-  clip-path: polygon(0 0,calc(100% - 20.00px) 0,100% 20.00px,100% 100%,0 100%);
+  animation-duration: 0.3s;
+  clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 100% 100% ,0 100%);
+  box-sizing: border-box;
+}
+
+.modal-content-inner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  box-sizing: border-box;
 }
 
 .modal-content-small {
   width: min(60%, 400px);
-  height: fit-content;
+  height: 220px;
 }
 
 .modal-preview-content {
@@ -1034,33 +1045,35 @@ h5 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 10%;
-  padding-right: 10%;
-  padding-top: 2%;
-  padding-bottom: 2%;
-  background-color: var(--dark_red);
-  color: var(--text_bright);
+  padding: 10px 5%;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
   text-transform: uppercase;
+  height: fit-content;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
 .modal-header-small {
+  font-size: min(18px, 4vw);
   margin: 0;
 }
 
 .modal-body {
   display: flex;
-  padding: 10%;
-  max-height: calc(100vh - 150px);
-  overflow-y: scroll;
+  flex: 1 0 0;
+  padding: calc(10% + 1px);
+  overflow-y: auto;
   flex-direction: column;
   font-weight: 300;
+  background-color: var(--elem_mid);
+  box-sizing: border-box;
 }
 
 .modal-body-small {
   display: flex;
   align-items: center;
-  padding: 5%;
-  overflow-y: auto;
+  padding: calc(5% + 1px);
+  overflow-y: hidden;
 }
 
 .modal-body p{
@@ -1070,6 +1083,14 @@ h5 {
 
 .modal-text {
   text-align: center;
+}
+
+.modal-highlight-text {
+  color: var(--text_flavour_bright);
+}
+
+.modal-text-upper {
+  text-transform: uppercase;
 }
 
 .modal-body .modal-flavour {
@@ -1110,10 +1131,9 @@ h5 {
 }
 
 .close {
-  color: white;
-  float: right;
-  font-size: 48px;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
 
 .close:hover,

@@ -29,7 +29,7 @@ class Modal {
 
 }
 
-// Create array to hold dropdown objects
+// Create array to hold modal objects
 const modalItems = []
 
 // Select all dropdown elements
@@ -48,7 +48,16 @@ buttons.forEach((button, index) => {
 
   // Append object to array
   modalItems.push(modal)
+
+  // Add click event listener to close the modal when clicking outside
+  window.addEventListener('click', function(event) {
+    if (event.target == modal.modal) {
+      modal.closeModal();
+    }
+  });
+  
 });
+
 
 
 // Apply styling to user submitted image links
@@ -106,3 +115,4 @@ images.forEach(element => {
   }
 
 });
+
