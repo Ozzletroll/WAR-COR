@@ -65,11 +65,11 @@
                 {%if entry.campaign_id == campaign.id%}
                   
                     <div class="callsign-entry-area">
-                      <h4 class="callsign-entry-title">Current callsign: </h4>
+                      <h4 class="callsign-entry-title">Current callsign:</h4>
                       {% if entry.callsign is not none %}
-                        [{{entry.callsign.upper()}}]
+                        <h6 class="callsign callsign-large callsign-break">[{{entry.callsign.upper()}}]</h6>
                       {% else %}
-                        [NO CALLSIGN REGISTERED]
+                        <h6 class="callsign callsign-large callsign-word-break">[NO CALLSIGN REGISTERED]</h6>
                       {% endif %}
                     </div>
                     

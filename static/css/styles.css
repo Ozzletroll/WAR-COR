@@ -1661,6 +1661,10 @@ h5 {
   word-break: break-all;
 }
 
+.callsign-word-break {
+  word-wrap: break-word;
+}
+
 .admin-tag {
   color: var(--text_flavour_bright);
   padding-left: 6px;
@@ -1968,7 +1972,7 @@ h5 {
 .user-campaigns-headings {
   display: flex;
   flex: 1 1 0;
-  font-size: clamp(14px, 4vw, 20px);
+  font-size: clamp(14px, 5vw, 20px);
   text-transform: uppercase;
   max-width: 340px;
   color: var(--text_dark);
@@ -1992,8 +1996,8 @@ h5 {
 .user-service-record-entry {
   display: flex;
   flex-direction: column;
-  width: fit-content;
   margin-bottom: 25px;
+  flex: 1 1 400px;
 }
 
 .user-callsigns {
@@ -2003,6 +2007,13 @@ h5 {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.callsign-large {
+  display: flex;
+  justify-content: center;
+  font-size: min(16px, 4vw);
+  font-weight: 400;
 }
 
 .callsign-form {
@@ -2163,6 +2174,15 @@ h5 {
 
 }
 
+@media screen and (max-width: 800px) { 
+
+    
+  .user-service-record-entry {
+    flex: none;
+  }
+
+}
+
 @media screen and (max-width: 500px) { 
   
   .user-service-record-entry {
@@ -2176,6 +2196,7 @@ h5 {
 
   .callsign-input {
     text-align: center;
+    width: 100%;
   }
 
   .callsign-form {
@@ -2189,6 +2210,21 @@ h5 {
   .user-form-container {
     flex-direction: column;
     align-items: center;
+  }
+
+  .callsign-entry-title {
+    justify-content: center;
+    width: 40%;
+  }
+
+  .callsign-entry-area {
+    flex-direction: row;
+    width: 80%;
+    justify-content: space-between;
+  }
+
+  .callsign-large {
+    width: 50%;
   }
 
 }
