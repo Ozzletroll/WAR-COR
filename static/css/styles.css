@@ -1657,7 +1657,7 @@ h5 {
   margin: 0;
 }
 
-.callsign-text.callsign-break {
+.callsign-break {
   word-break: break-all;
 }
 
@@ -3405,6 +3405,11 @@ h5 {
   gap: 10px;
 }
 
+.comment-header-left {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
 .delete-comment-link {
   display: flex;
   align-items: center;
@@ -3508,6 +3513,8 @@ h5 {
   .comments-area {
     width: 100%;
   }
+
+
   
 }
 
