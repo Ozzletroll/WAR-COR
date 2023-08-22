@@ -1797,6 +1797,7 @@ h5 {
   background-color: var(--elem_dark);
   color: var(--text_flavour);
   width: 160px;
+  height: 30px;
   padding: 5px;
 }
 
@@ -1810,10 +1811,13 @@ h5 {
 
 .deploy-button:hover {
   background-color: var(--elem_bright);
+  transition: 0.1s;
+  outline: 1px solid var(--elem_border);
 }
 
 .deploy-button:active {
   color: var(--bright_red);
+  background-color: var(--bright_red);
 }
 
 /*  */
