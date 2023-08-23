@@ -1031,6 +1031,10 @@ h5 {
   box-sizing: border-box;
 }
 
+.modal-content-mid {
+  height: 280px;
+}
+
 .modal-content-small {
   width: min(60%, 400px);
   height: 220px;
@@ -1071,6 +1075,7 @@ h5 {
 
 .modal-body-small {
   display: flex;
+  height: fit-content;
   align-items: center;
   padding: calc(5% + 1px);
   overflow-y: hidden;
@@ -1722,6 +1727,7 @@ h5 {
   color: var(--text_normal);
   border: none;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  text-transform: uppercase;
 }
 
 .entry-button:hover {
