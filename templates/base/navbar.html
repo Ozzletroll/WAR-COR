@@ -101,7 +101,7 @@
 
   {% endif %}
 
-  {% for message in current_user.messages %}
+  {% for message in current_user.messages | sort(attribute="date") | reverse %}
 
     {% if message.invite %}
 
