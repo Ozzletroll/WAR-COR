@@ -10,20 +10,36 @@ def send_invite_message(sender, recipient, campaign):
   association. Takes a user object for both sender and recipient, and
   a campaign object."""
 
-  message = models.Message()
+  # Check for existing pending invite
+  message = db.session.execute(
+      select(models.Message)
+      .filter(models.Message.target_campaign.has(id=campaign.id))
+      .filter(models.Message.target_user.has(id=recipient.id))
+      .filter(models.Message.invite == True)
+  ).scalar()
 
-  message.author = sender
-  message.invite = True
-  message.body = f"{sender.username} has invited you to the campaign: {campaign.title}"
-  message.target_user = recipient
-  message.target_campaign = campaign
-  message.date = datetime.now()
+  # If invitation message already exists, update date
+  # to push to top of notifications list
+  if message:
+    message.date = datetime.now()
+    db.session.commit()
 
-  # Add message to user's message list
-  db.session.add(message)
-  recipient.messages.append(message)
-  sender.sent_messages.append(message)
-  db.session.commit()
+  # Otherwise, create a new message
+  else:
+    message = models.Message()
+
+    message.author = sender
+    message.invite = True
+    message.body = f"{sender.username} has invited you to the campaign: {campaign.title}"
+    message.target_user = recipient
+    message.target_campaign = campaign
+    message.date = datetime.now()
+
+    # Add message to user's message list
+    db.session.add(message)
+    recipient.messages.append(message)
+    sender.sent_messages.append(message)
+    db.session.commit()
 
 
 def send_new_member_notification(sender, recipients, campaign):
