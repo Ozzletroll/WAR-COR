@@ -57,7 +57,7 @@ def send_new_member_notification(sender, recipients, campaign):
 
   for user in recipients:
     user.messages.append(message)
-    
+
   db.session.commit()
 
 

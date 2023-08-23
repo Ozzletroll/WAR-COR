@@ -290,14 +290,19 @@ def accept_invite(campaign_name):
         if current_user not in campaign.members:
             # Add user to campaign
             message.target_user.campaigns.append(campaign)
+            # Remove message from user.messages list
+            message.target_user.messages.remove(message)
             # Delete message
             db.session.delete(message)
             db.session.commit()
             flash(f"Accepted invitation to campaign: {campaign.title}")
 
-            # Create new member notification
+            # Create recipients list, omitting the accepting user themselves
+            recipients = [user for user in campaign.members if user.id != message.target_user.id]
+
+            # Send new campaign member notification
             messengers.send_new_member_notification(sender=current_user, 
-                                recipients=campaign.members,
+                                recipients=recipients,
                                 campaign=campaign)
 
         else:

@@ -135,17 +135,21 @@
 
       <div class="message-button-area">
         
-        {% set scroll_target = "event" ~ "-" ~ message.target_event.id | string %}
+        {% if message.target_event is not none %}
         <a href="{{ url_for('user.dismiss_message',
-                            message_id=message.id,
-                            username=current_user.username,
-                            current_url=url_for('event.view_event',
-                                                campaign_name=message.target_campaign.title,
-                                                event_name=message.target_event.title,
-                                                event_id=message.target_event.id,
-                                                scroll_target=scroll_target)) }}">
+        message_id=message.id,
+        username=current_user.username,
+        current_url=url_for('event.view_event',
+                            campaign_name=message.target_campaign.title,
+                            event_name=message.target_event.title,
+                            event_id=message.target_event.id,
+                            scroll_target=scroll_target)) }}">
           <button class="message-button">VIEW</button>
         </a>
+        {% endif %}
+
+        {% set scroll_target = "event" ~ "-" ~ message.target_event.id | string %}
+        
         <a href="{{ url_for('user.dismiss_message', message_id=message.id, username=current_user.username, current_url=request.url) }}">
           <button class="message-button">DISMISS</button>
         </a>
