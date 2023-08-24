@@ -35,6 +35,10 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     login_manager = LoginManager()
     login_manager.init_app(app)
 
+    # Set login_required redirect page
+    login_manager.login_view = "user.login"
+    login_manager.login_message = "Please log in to access this page"
+
     # Register blueprints
     from routes.home import bp as home_bp
     app.register_blueprint(home_bp)
