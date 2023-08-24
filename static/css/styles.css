@@ -10,6 +10,7 @@
   --elem_hover: #dadada;
   --elem_trans: #ffffff80;
   --elem_border: #9C1717;
+  --elem_shadow: #4b4b4b6e;
 
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
@@ -52,6 +53,7 @@
   --elem_hover: #1f1f1f;
   --elem_trans: #aaaaaa2d;
   --elem_border: #ff0000;
+  --elem_shadow: #1111118c;
 
   --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
@@ -84,6 +86,7 @@
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
   --elem_border: #ff3300;
+  --elem_shadow: #181516;
 
   --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
@@ -116,6 +119,7 @@
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
   --elem_border: #ff3300;
+  --elem_shadow: #181516a6;
 
   --text_bright: #000000;
   --text_normal: #E5E5E5;
@@ -273,6 +277,7 @@ p {
   position: -webkit-sticky;
   position: sticky;
   z-index: 1;
+  box-shadow: 0px 1px 1px var(--elem_shadow);
 }
 
 .logo-area {
@@ -466,12 +471,9 @@ p {
   position: sticky;
   z-index: 1;
   overflow-y: scroll;
-  
   margin-bottom: 0;
-
   width: 300px;
   height: 0;
-
   background-color: var(--elem_mid);
   border-top: 0px solid;
   border-left: 1px solid;
@@ -480,6 +482,7 @@ p {
   border-color: var(--elem_border);
   box-sizing: border-box;
   transition: 0.3s;
+  box-shadow: -1px 2px 3px var(--elem_shadow);
 }
 
 .notifications-list {
@@ -2558,6 +2561,7 @@ h5 {
   align-items: flex-start;
   justify-content: left;
   flex: 1 0 1;
+  filter: drop-shadow(1px 2px 3px var(--elem_shadow));
 }
 
 .month-between {
