@@ -8,7 +8,7 @@
 
     <div class="navigation-area">
       <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
-        <h5 class="navigation-heading">/CAMPAIGNS</h5>
+        <h5 class="navigation-heading">CAMPAIGNS</h5>
       </a>
       <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
         <h5 class="navigation-heading">/{{campaign.title}}/</h5>
@@ -16,6 +16,23 @@
     </div>
 
     <div class="campaigns-title">
+
+      <div class="event-back-button-area">
+        <a href="{{ url_for('campaign.campaigns') }}" class="back-link">
+          <button class="back-button">
+
+            <svg class="icon icon-back-button" width="80px" height="80px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g class="icon-colour-var" id="add" transform="translate(108.603733, 144.171733)">
+                      <path d="M127.978667,121.834667 L249.6,243.648 L279.872,213.333333 L188.16,121.834667 L279.872,30.3146667 L249.6,2.84217094e-14 L127.978667,121.834667 Z M1.42108547e-14,121.834667 L121.578667,243.648 L151.872,213.333333 L60.1386667,121.834667 L151.872,30.3146667 L121.578667,2.84217094e-14 L1.42108547e-14,121.834667 Z" id="arrow-double-left"></path>
+                    </g>
+                </g>
+            </svg>
+            
+          </button>
+        </a>
+      </div>
+
       <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
     </div>
 
@@ -29,7 +46,7 @@
       <div class="form-container form-container-small">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
             <h4 class="campaign-form label-title">Campaign Title</h4>
           </div>
           <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
@@ -43,7 +60,7 @@
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Date Suffix</h4>
             </div>
             <div class="label-right">
@@ -61,7 +78,7 @@
       <div class="form-container form-container-large">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon" src="/static/images/icons/edit.svg">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
             <h4 class="campaign-form label-title">Description</h4>
           </div>
           <p class="flavour-text">UWC-5-03 //  Campaign::Conflict Overview</p>

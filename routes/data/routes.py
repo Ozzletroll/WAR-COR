@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required
 
@@ -7,8 +7,6 @@ import json
 import forms
 import auth
 import models
-import utils.organisers as organisers
-import utils.messengers as messengers
 import utils.serialisers as serialisers
 
 from routes.data import bp
@@ -85,6 +83,10 @@ def backup_page(campaign_name):
     for field_name, errors in form.errors.items():
         for error_message in errors:
             flash(error_message)
+
+    # Set back button scroll target
+    scroll_target = f"campaign-{campaign.id}"
+    session["scroll_target"] = scroll_target
 
     return render_template("backup.html", campaign=campaign, form=form)
 

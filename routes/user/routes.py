@@ -310,8 +310,11 @@ def back():
     elif request.referrer:
         # Use a fallback URL if the previous URL is not available
         referrer = request.referrer
+    elif current_user.is_authenticated:
+        # If no session var or referrer, and is is logged in, redirect to homepage
+        referrer = url_for('campaign.campaigns')
     else:
-        # If no session var or referrer, redirect to homepage
+        # Otherwise, redirect to homepage
         referrer = url_for('home.home')
 
     return redirect(referrer)

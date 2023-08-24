@@ -22,7 +22,7 @@
       {% for campaign in campaigns %}
         <section class="campaign-entry">
 
-          <h2 class="campaign-header">{{ campaign.title }}</h2>
+          <h2 id="campaign-{{ campaign.id }}" class="campaign-header">{{ campaign.title }}</h2>
 
           <div class="campaign-body">
 
@@ -169,5 +169,15 @@
 
 <!-- Javascript -->
 <script src="/static/js/campaigns.js"></script> 
+
+<!-- Scroll to target element if scroll_target is set -->
+{% if "scroll_target" %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('{{ scroll_target }}').scrollIntoView();
+  });
+</script>
+
+{% endif %}
 
 {% endblock %}

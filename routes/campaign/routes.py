@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response
+from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
 from itertools import groupby
@@ -28,7 +28,16 @@ def campaigns():
     campaigns = current_user.campaigns
     campaigns.sort(key=lambda campaign: campaign.last_edited, reverse=True)
 
-    return render_template("campaigns.html", campaigns=campaigns)
+    # Check for scroll_target variable
+    if "scroll_target" in session:
+        scroll_target = session["scroll_target"]
+        del session["scroll_target"]
+    else:
+        scroll_target = None
+
+    return render_template("campaigns.html", 
+                           campaigns=campaigns, 
+                           scroll_target=scroll_target)
 
 
 # View campaign overview
@@ -38,7 +47,13 @@ def show_timeline(campaign_name, campaign_id):
 
     grouped_events = organisers.campaign_sort(campaign)
 
-    return render_template("timeline.html", campaign=campaign, timeline_data=grouped_events)
+    # Set back button scroll target
+    scroll_target = f"campaign-{campaign.id}"
+    session["scroll_target"] = scroll_target 
+
+    return render_template("timeline.html", 
+                           campaign=campaign, 
+                           timeline_data=grouped_events)
 
 
 # View campaign editing page
@@ -52,6 +67,10 @@ def edit_timeline(campaign_name, campaign_id):
 
     # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)
+
+    # Set back button scroll target
+    scroll_target = f"campaign-{campaign.id}"
+    session["scroll_target"] = scroll_target 
 
     return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events)
 
@@ -90,6 +109,7 @@ def create_campaign():
 @bp.route("/campaigns/<campaign_name>/<campaign_id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_campaign(campaign_name, campaign_id):
+
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
@@ -109,7 +129,13 @@ def edit_campaign(campaign_name, campaign_id):
 
         return redirect(url_for("campaign.campaigns"))
 
-    return render_template("edit_campaign.html", form=form, campaign=campaign)
+    # Set back button scroll target
+    scroll_target = f"campaign-{campaign.id}"
+    session["scroll_target"] = scroll_target 
+
+    return render_template("edit_campaign.html", 
+                           form=form, 
+                           campaign=campaign)
 
 
 # Delete campaign
@@ -170,6 +196,10 @@ def edit_campaign_users(campaign_name):
     auth.permission_required(campaign)
 
     form = forms.AddUserForm()
+
+    # Set back button scroll target
+    scroll_target = f"campaign-{campaign.id}"
+    session["scroll_target"] = scroll_target
 
     return render_template("campaign_members.html", campaign=campaign, form=form)
 
@@ -304,6 +334,10 @@ def accept_invite(campaign_name):
             messengers.send_new_member_notification(sender=current_user, 
                                 recipients=recipients,
                                 campaign=campaign)
+            
+            # Set back button scroll target
+            scroll_target = f"campaign-{campaign.id}"
+            session["scroll_target"] = scroll_target 
 
         else:
             flash(f"Already a member of campaign: {campaign.title}")
