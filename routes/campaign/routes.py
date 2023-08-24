@@ -1,7 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
-from itertools import groupby
 from datetime import datetime
 import werkzeug
 
@@ -72,7 +71,9 @@ def edit_timeline(campaign_name, campaign_id):
     scroll_target = f"campaign-{campaign.id}"
     session["scroll_target"] = scroll_target 
 
-    return render_template("edit_timeline.html", campaign=campaign, timeline_data=grouped_events)
+    return render_template("edit_timeline.html", 
+                           campaign=campaign, 
+                           timeline_data=grouped_events)
 
 
 # Create new campaign
@@ -100,9 +101,13 @@ def create_campaign():
         db.session.commit()
 
         campaign = db.session.execute(select(models.Campaign).filter_by(id=new_campaign.id)).scalar()
-        return redirect(url_for("campaign.edit_timeline", campaign_name=campaign.title, campaign_id=campaign.id))
 
-    return render_template("new_campaign.html", form=form)
+        return redirect(url_for("campaign.edit_timeline", 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id))
+
+    return render_template("new_campaign.html", 
+                           form=form)
 
 
 # Edit campaign data
@@ -168,19 +173,27 @@ def delete_campaign(campaign_name, campaign_id):
                     return redirect(url_for("campaign.campaigns"))
                 else:
                     flash("Authentication failed. Incorrect password.")
-                    return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
+                    return redirect(url_for("campaign.delete_campaign", 
+                                            campaign_name=campaign_name, 
+                                            campaign_id=campaign_id))
             else:
                 flash("Authentication failed. Incorrect username.")
-                return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
+                return redirect(url_for("campaign.delete_campaign", 
+                                        campaign_name=campaign_name, 
+                                        campaign_id=campaign_id))
         else:
             flash("Authentication failed. Incorrect username.")
-            return redirect(url_for("campaign.delete_campaign", campaign_name=campaign_name, campaign_id=campaign_id))
+            return redirect(url_for("campaign.delete_campaign", 
+                                    campaign_name=campaign_name, 
+                                    campaign_id=campaign_id))
 
     else:
         # Change LoginForm submit button text
         form.submit.label.text = "Delete Campaign"
 
-        return render_template("delete_campaign.html", form=form, campaign=campaign)
+        return render_template("delete_campaign.html", 
+                               form=form, 
+                               campaign=campaign)
 
 
 # View and add campaign users
@@ -201,7 +214,9 @@ def edit_campaign_users(campaign_name):
     scroll_target = f"campaign-{campaign.id}"
     session["scroll_target"] = scroll_target
 
-    return render_template("campaign_members.html", campaign=campaign, form=form)
+    return render_template("campaign_members.html", 
+                           campaign=campaign, 
+                           form=form)
 
 
 # Remove campaign users
@@ -238,7 +253,9 @@ def remove_campaign_users(campaign_name, username):
         db.session.commit()
     else:
         flash("User not in database, please check username.")
-    return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
+    return redirect(url_for("campaign.edit_campaign_users", 
+                            campaign_name=campaign_name, 
+                            campaign_id=campaign.id))
 
 
 # Function called by user searching for new members on edit members page
@@ -300,7 +317,9 @@ def add_user(campaign_name):
     else:
         flash("User not in database, please check username.")
 
-    return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
+    return redirect(url_for("campaign.edit_campaign_users", 
+                            campaign_name=campaign_name, 
+                            campaign_id=campaign.id))
 
 
 # Function called when user accepts a campaign invitation
@@ -389,4 +408,6 @@ def add_permission(campaign_name):
         db.session.commit()
 
     flash(f"Granted {user.username} campaign editing permissions.")
-    return redirect(url_for("campaign.edit_campaign_users", campaign_name=campaign_name, campaign_id=campaign.id))
+    return redirect(url_for("campaign.edit_campaign_users", 
+                            campaign_name=campaign_name, 
+                            campaign_id=campaign.id))
