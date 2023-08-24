@@ -8,7 +8,7 @@
 
     <div class="navigation-area">
       <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
-        <h5 class="navigation-heading">/CAMPAIGNS</h5>
+        <h5 class="navigation-heading">CAMPAIGNS</h5>
       </a>
       <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
         <h5 class="navigation-heading">/{{campaign.title}}/</h5>
@@ -44,7 +44,7 @@
         {% include 'base/flash.html' %}
       </div>
   
-      <form class="edit-form form-column" method="POST" action="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+      <form class="edit-form form-column" method="POST">
         {{ form.csrf_token }}
 
         <div class="form-container form-container-small">
@@ -52,12 +52,44 @@
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Date</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div id="event-date-help-button" type="button" class="form-button">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
+                </div>
+                
+              </div>
+              
             </div>
             <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
           </label>
         
           {{ form.date(class_="campaign-input event-input", placeholder_="YYYY-MM-DD HH:MM:SS", autocomplete="off") }}
 
+        </div>
+
+        {# Date Help Modal #}
+
+        <div id="modal-1" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Event Date</h2>
+                <span id="close-1" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>WAR/COR organises all events in chronological order. Dates should be entered in a "YEAR-MONTH-DAY HOUR:MINUTE:SECONDS" format.</p>
+                <p>In order to handle a variety of non-standard galactic calendars, WAR/COR does not
+                  enforce standard year/month/day lengths.</p>
+                <p>The year value can be any value of 1-9 digits. For formatting consistency, we advise 'zero padding' year values. EG. "0015u"</p>
+                <p>The month, day, hour and seconds entries can be any value from 00-99.</p>
+                <p class="modal-highlight-text">Example: "5016-15-40 25:00:00" is a valid date.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-small">
@@ -113,12 +145,40 @@
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">Belligerents</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div id="event-belligerents-help-button" type="button" class="form-button">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
+                </div>
+                
+              </div>
             </div>
             <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
           </label>
 
           {{ form.belligerents(class_="campaign-input event-input", autocomplete="off") }}
 
+        </div>
+
+        {# Belligerents Help Modal #}
+
+        <div id="modal-2" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Belligerents</h2>
+                <span id="close-2" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>An event's belligerents list represents active combatants and participants.</p>
+                <p>Allied belligerents should be ampersand "&" separated, whilst opposing forces should be comma "," separated.</p>
+                <p class="modal-highlight-text">Example: "Ally Faction 1 & Ally Faction 2, Enemy Faction"</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-small">
@@ -145,18 +205,19 @@
 
         {# Event Formatting Help Modal #}
 
-        <div id="modal-1" class="modal">
+        <div id="modal-3" class="modal">
           <div class="modal-content">
-            <div class="modal-header">
-              <h2>Event Group Headers</h2>
-              <span id="close-1" class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-              <p>This makes the current event act as a visual header for any events below it within
-                the same branch of the timeline.
-              </p>
-              <img class="modal-img" src="/static/images/Event Header Example.jpg">
-              <p>Header events will hide the month, day and time markers of their branch if they are not needed. This can be useful for creating events that represent the start of a specific epoch, rather than one of an exact date and time.</p>
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Event Group Headers</h2>
+                <span id="close-3" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>An event with the "header" tag will extend across the timeline to represent the header of a block of events.</p>
+                <img class="modal-img" src="/static/images/Event Header Example.jpg">
+              </div>
             </div>
           </div>
         </div>
@@ -165,16 +226,42 @@
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+        
             <h4 class="campaign-form label-title">Description</h4>
+            <div class="form-extra-button-area">
+                
+              <div id="html-preview-button" type="button" class="form-button form-preview-button">
+                HTML PREVIEW
+              </div>
+              
+            </div>
+            
           </div>
           <p class="flavour-text">UWC-6-07 //  Event::Overview</p>
         </label>
 
-        {{ form.body(class_="campaign-input large-input event-input", autocomplete="off") }}
+        {{ form.body(id="form-contents", class_="campaign-input large-input event-input", autocomplete="off") }}
         
         {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-        {{ ckeditor.config(name="body") }}
 
+        </div>
+
+        {# HTML Preview Modal #}
+
+        <div id="modal-preview" class="modal">
+          <div class="modal-content modal-preview-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">HTML Preview</h2>
+                <span id="close-preview" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div id="preview-modal-body" class="modal-body modal-body-preview">
+                {# Modal text goes here #}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-footer">
@@ -191,7 +278,7 @@
         </div>
 
         <div class="campaign-submit-area event-submit-area">
-          {{ form.submit(class_="campaign-input campaign-submit") }}
+          {{ form.submit(class_="campaign-input campaign-submit", ) }}
         </div>  
           
       </form>
@@ -205,10 +292,12 @@
 
 </div>
 
+
 <script src="/static/js/event_form.js"></script>
 <script src="/static/js/event_gen.js"></script> 
 <script>
   const target_url = "{{ url_for('generator.random_event_title') }}"        
 </script>
+
 
 {% endblock %}
