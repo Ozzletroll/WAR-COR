@@ -24,6 +24,11 @@ class Tab {
     this.tab.style.display = "flex";
     this.tab.style.flexDirection = "column";
     this.tab.style.maxHeight = "fit-content";
+
+    document.getElementById(this.button).style.borderBottomLeftRadius = "0px";
+    document.getElementById(this.button).style.borderBottomRightRadius = "0px";
+
+
     this.state = true
   }
 
@@ -31,6 +36,11 @@ class Tab {
     this.tab.style.maxHeight = "0";
     this.tab.style.marginTop = "-20px";
     this.tab.style.display = "none";
+
+    document.getElementById(this.button).style.borderBottomLeftRadius = "5px";
+    document.getElementById(this.button).style.borderBottomRightRadius = "5px";
+
+
     this.state = false;
   }
 

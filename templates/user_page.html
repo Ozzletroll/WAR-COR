@@ -46,6 +46,8 @@
 
     <!-- Tab 1 -->
 
+    <div class="user-page-tabs">
+
     <div class="callsigns-area">
       <button class="callsign-deploy-button" id="t1-button">
         <img class="icon campaign-form-icon" src="/static/images/icons/callsigns.svg">
@@ -67,9 +69,9 @@
                     <div class="callsign-entry-area">
                       <h4 class="callsign-entry-title">Current callsign:</h4>
                       {% if entry.callsign is not none %}
-                        <h6 class="callsign callsign-large callsign-break">[{{entry.callsign.upper()}}]</h6>
+                        <h6 class="callsign callsign-large">[{{entry.callsign.upper()}}]</h6>
                       {% else %}
-                        <h6 class="callsign callsign-large callsign-word-break">[NO CALLSIGN REGISTERED]</h6>
+                        <h6 class="callsign callsign-large">[NO CALLSIGN REGISTERED]</h6>
                       {% endif %}
                     </div>
                     
@@ -230,6 +232,7 @@
 
     </div>
 
+  </div>
 
     <div class="flavour-text-area">
       <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>

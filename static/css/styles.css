@@ -10,7 +10,7 @@
   --elem_hover: #dadada;
   --elem_trans: #ffffff80;
   --elem_border: #9C1717;
-  --elem_shadow: #4b4b4b6e;
+  --elem_shadow: #4b4b4b3b;
 
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
@@ -1933,6 +1933,10 @@ h5 {
 
 /* User page */
 
+.user-page-tabs {
+  filter: drop-shadow(5px 1px 5px var(--elem_shadow));
+}
+
 .callsign-deploy-button {
   display: flex;
   align-items: center;
@@ -1945,6 +1949,10 @@ h5 {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   transition: 0.5s;
   gap: 15px;
+
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .callsign-deploy-button:hover {
@@ -1980,6 +1988,7 @@ h5 {
   background-color: var(--elem_mid);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   margin-bottom: 50px;
+  border-radius: 5px;
 }
 
 .settings-area .campaign-entry-title, .callsigns-area .campaign-entry-title {
@@ -2056,6 +2065,7 @@ h5 {
   font-size: min(16px, 4vw);
   font-weight: 400;
   margin: 0;
+  width: max-content;
 }
 
 .callsign-form {
