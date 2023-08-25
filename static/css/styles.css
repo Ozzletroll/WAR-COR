@@ -3747,6 +3747,11 @@ pre {
   font-size: min(3vw, 14px);
 }
 
+.modal-body-preview img {
+  width: 100% !important;
+  height: auto !important;
+}
+
 /* Data backup page */
 
 .backup-area {
