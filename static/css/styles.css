@@ -3677,6 +3677,10 @@ pre {
 
 /* Event preview HTML elements */
 
+.modal-body-preview {
+  padding: 10px;
+}
+
 .modal-body-preview h1 {
   font-size: min(24px, 5vw);
   color: var(--text_header);
