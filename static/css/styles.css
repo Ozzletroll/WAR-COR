@@ -1615,14 +1615,13 @@ h5 {
 
 .campaign-entry-container {
   display: flex;
-  flex-direction: row;
-  gap: 5vw;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .campaign-overview {
   display: flex;
   flex-direction: column;
-  width: 50%;
   gap: 15px;
 }
 
@@ -1639,10 +1638,9 @@ h5 {
 .campaign-members {
   display: flex;
   flex-direction: column;
-  width: 50%;
   margin: 0;
   gap: 15px;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .campaign-members .campaign-entry-title {
@@ -1655,6 +1653,8 @@ h5 {
   padding-left: 0;
   list-style: none;
   color: var(--text_flavour);
+  flex-wrap: wrap;
+  justify-content: stretch;
 }
 
 .members-list-admin {
@@ -1663,22 +1663,34 @@ h5 {
 
 .callsign-text {
   display: flex;
+  flex: 2 1 0px;
   font-size: min(14px, 3vw);
   font-weight: 400;
   margin: 0;
+  flex-wrap: wrap;
+}
+
+.callsign-username {
+  flex: 1 1 0;
+}
+
+.admin-tag {
+  flex: 1 0 0;
 }
 
 .callsign-break {
-  word-break: break-all;
-}
-
-.callsign-word-break {
+  flex: 1 1 0;
   word-wrap: break-word;
 }
 
 .admin-tag {
   color: var(--text_flavour_bright);
   padding-left: 6px;
+}
+
+.members-list-item {
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .campaign-members-list .members-list-item, .campaign-members-list .members-list-admin {
@@ -1694,6 +1706,19 @@ h5 {
   display: flex;
   gap: 15px;
   margin-bottom: 11px;
+}
+
+@media screen and (min-width: 1200px) {
+
+  .campaign-members-list {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .members-list-item {
+    width: 50%;
+  }
+
 }
 
 @media screen and (max-width: 550px) {
@@ -2030,6 +2055,7 @@ h5 {
   justify-content: center;
   font-size: min(16px, 4vw);
   font-weight: 400;
+  margin: 0;
 }
 
 .callsign-form {
