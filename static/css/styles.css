@@ -1233,6 +1233,7 @@ h5 {
 
 .form-input {
   width: 100%;
+  box-sizing: border-box;
 }
 
 .form-heading {
@@ -1484,6 +1485,7 @@ h5 {
   outline: none;
   position: relative;
   color: var(--text_dark);
+  box-sizing: border-box;
 }
 
 .campaign-input:hover {
