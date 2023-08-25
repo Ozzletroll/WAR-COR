@@ -80,12 +80,48 @@
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
             <h4 class="campaign-form label-title">Description</h4>
+
+            <div class="form-extra-button-area">
+                
+              <div id="html-preview-button" type="button" class="form-button form-preview-button">
+                HTML PREVIEW
+              </div>
+              
+            </div>
+
           </div>
           <p class="flavour-text">UWC-5-03 //  Campaign::Conflict Overview</p>
         </label>
 
-        {{ form.description(class_="campaign-input large-input", autocomplete="off") }}
+        {{ form.description(id="form-contents", class_="campaign-input large-input", autocomplete="off") }}
         
+        {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+        
+      </div>
+
+      {# HTML Preview Modal #}
+
+      <div id="modal-preview" class="modal">
+        <div class="modal-content modal-preview-content">
+          <div class="modal-content-inner">
+            <div class="modal-header">
+              <h2 class="modal-header-small">HTML Preview</h2>
+              <span id="close-preview" class="close">
+                <img class="icon" src="/static/images/icons/cancel.svg">
+              </span>
+            </div>
+
+            <div class="modal-body">
+
+              <div id="preview-modal-body" class="modal-body modal-body-preview">
+                {# Modal text goes here #}
+              </div>
+               
+            </div>
+
+            
+          </div>
+        </div>
       </div>
       
       <div class="campaign-submit-area event-submit-area">
@@ -108,6 +144,6 @@
 
 </div>
 
-<script src="/static/js/forms.js"></script>
+<script src="/static/js/campaign_form.js"></script>
 
 {% endblock %}

@@ -31,7 +31,7 @@
             <div class="campaign-entry-container">
               <div class="campaign-overview">
                 <h4 class="campaign-entry-title">Overview:</h4>
-                <p>{{ campaign.description }}</p>
+                {{ campaign.description | safe }}
               </div>
               <div class="campaign-members">
                 <h4 class="campaign-entry-title">Members:</h2>

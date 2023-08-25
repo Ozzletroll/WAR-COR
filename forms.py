@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField, BooleanField, FileField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField
 from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError
 from flask_ckeditor import CKEditorField
 import re
@@ -62,7 +62,7 @@ class ChangePasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
-    description = TextAreaField("Description", validators=[DataRequired()])
+    description = CKEditorField("Description", validators=[DataRequired()])
     date_suffix = StringField("Campaign Title", validators=[Optional()])
     submit = SubmitField("Create Campaign")
 
