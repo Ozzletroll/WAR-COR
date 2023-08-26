@@ -8,39 +8,43 @@
 
   <div class="onepage-content">
 
-    <h1 class="form-heading">>REGISTER</h1>
+    <h1 class="form-heading">REGISTER</h1>
         <div class="flavour-text-area login-flavour-text">
           <p class="flavour-text flavour-text-centre">UWC-3-01 // Correspondent::Identification</p>
     </div>
 
-    <form class="form register-form" method="POST" action="/register">
-      {{ form.csrf_token }}
-      <div class="form-header">
-        <h4>/Register</h3>
-      </div>
-        
-      <div class="form-layout">
-        <div class="form-elem">
-          <label class="form-icon">
-            <img class="icon icon-invert" src="/static/images/icons/user.svg">
-          </label>
-          {{ form.username(placeholder_='USERNAME', class_='form-field', autocomplete='off') }}
+    <div class="form-area">
+
+      <form class="form register-form" method="POST" action="/register">
+        {{ form.csrf_token }}
+        <div class="form-header">
+          <h4 class="auth-form-header">/Register</h3>
         </div>
-        <div class="form-elem">
-          <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock.svg"></label>
-          {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
-        </div>
-        <div class="form-elem">
-          <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock_key.svg"></label>
-          {{ form.confirm_password(placeholder_='CONFIRM_PASSWORD', class_='form-field') }}
-        </div>
-        <div class="form-submit">
-          <div class="form-elem elem-centre">
-            {{ form.submit(class_="submit-button") }}
+          
+        <div class="form-layout">
+          <div class="form-elem">
+            <label class="form-icon">
+              <img class="icon icon-invert" src="/static/images/icons/user.svg">
+            </label>
+            {{ form.username(placeholder_='USERNAME', class_='form-field', autocomplete='off') }}
+          </div>
+          <div class="form-elem">
+            <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock.svg"></label>
+            {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
+          </div>
+          <div class="form-elem">
+            <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock_key.svg"></label>
+            {{ form.confirm_password(placeholder_='CONFIRM_PASSWORD', class_='form-field') }}
+          </div>
+          <div class="form-submit">
+            <div class="form-elem elem-centre">
+              {{ form.submit(class_="submit-button") }}
+            </div>
           </div>
         </div>
-      </div>
-    </form>
+      </form>
+
+    </div>
 
     <div class="form-flash">
       {% include 'base/flash.html' %}

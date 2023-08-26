@@ -1217,6 +1217,13 @@ h5 {
 
 /* Forms */
 
+.form-area {
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(1px 3px 3px var(--elem_shadow));
+  width: min(280px, 80vw);
+}
+
 .form-flash {
   display: flex;
   justify-content: center;
@@ -1228,7 +1235,8 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  clip-path: polygon(0 0,calc(100% - 20.00px) 0,100% 20.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 100% 100%, 0 100%);
+  border-radius: 5px;
 }
 
 .form-input {
@@ -1238,7 +1246,16 @@ h5 {
 
 .form-heading {
   color: var(--text_normal);
+  opacity: 55%;
   font-size: min(14vw, 140px);
+}
+
+.auth-form-header {
+  font-size: min(5vw, 20px);
+  margin: 0;
+  margin-left: 10px;
+  padding: 15px;
+  color: var(--text_header_contrast);
 }
 
 .form-header {
@@ -1249,10 +1266,7 @@ h5 {
   text-transform: uppercase;
   font-size: min(5vw, 20px);
   width: 100%;
-}
-
-.form-header h4 {
-  margin-left: 45px;
+  border-top-left-radius: 5px;
 }
 
 .form-layout {
@@ -1283,6 +1297,7 @@ h5 {
 }
 
 .form-field {
+  display: flex;
   color: var(--text_header_dark);
   border-style: none;
   background-color: var(--elem_dark);
@@ -1291,6 +1306,7 @@ h5 {
   padding: 3px;
   outline: none;
   transition: 0.3s;
+  width: 100%;
 }
 
 .form-field:hover {
