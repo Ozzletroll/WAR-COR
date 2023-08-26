@@ -3587,6 +3587,7 @@ h5 {
   clip-path: none;
   background-color: var(--elem_mid);
   border: 1px solid var(--darker_red);
+  border-radius: 0px;
 }
 
 .comment-submit {
