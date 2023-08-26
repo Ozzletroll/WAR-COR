@@ -10,7 +10,7 @@
   --elem_hover: #dadada;
   --elem_trans: #ffffff80;
   --elem_border: #9C1717;
-  --elem_shadow: #4b4b4b3b;
+  --elem_shadow: #0000001a;
 
   --text_bright: #ffffff;
   --text_normal: #E5E5E5;
@@ -104,7 +104,7 @@
   --dark_red: #63203f;
   --darker_red: #2f233d;
 
-  --gradient1: #2b2b2b;
+  --gradient1: #2e2e2e;
   --gradient2: #2f233d;
 }
 
@@ -165,7 +165,6 @@
 }
 
 .onepage {
-  background: linear-gradient(var(--gradient1), var(--gradient2));
   height: 100vh;
 }
 
@@ -1235,7 +1234,7 @@ h5 {
 }
 
 .form {
-  background-color: var(--elem_trans);
+  background-color: var(--elem_mid);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1598,6 +1597,7 @@ h5 {
 
 .campaigns-list {
   padding-left: 0;
+  filter: drop-shadow(0px 3px 3px var(--elem_shadow));
 }
 
 .campaign-entry {
@@ -1607,8 +1607,7 @@ h5 {
   margin-bottom: 50px;
   background-color: var(--elem_mid);
   clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
-  box-sizing: border-box;
-  padding: 1px;
+  border-radius: 5px;
 }
 
 .campaign-header {
@@ -1618,6 +1617,12 @@ h5 {
   padding: 20px 50px 20px 50px;
   text-transform: uppercase;
   scroll-margin: 25vh;
+  border-top-left-radius: 5px;
+  transition: 0.3s;
+}
+
+.campaign-header:hover {
+  background-color: var(--dark_red);
 }
 
 .campaign-body {
@@ -1625,7 +1630,7 @@ h5 {
   flex-direction: column;
   gap: 15px;
   padding: 20px 50px 20px 50px;
-  border: 1px solid var(--darker_red);
+  box-sizing: border-box;
 }
 
 .campaign-entry-title {
@@ -1767,7 +1772,7 @@ h5 {
   height: fit-content;
   flex-direction: column;
   padding: 1px;
-  background-color: var(--elem_border);
+  background-color: var(--dark_red);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
 }
 
@@ -2453,7 +2458,7 @@ h5 {
 /* Timeline */
 
 .timeline-upper {
-  background-color: var(--bg_colour1);
+  background-color: transparent;
   gap: 15px;
 }
 
