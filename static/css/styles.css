@@ -1682,6 +1682,10 @@ h5 {
   justify-content: stretch;
 }
 
+.username-cell {
+  display: flex;
+}
+
 .members-list-admin {
   display: flex;
 }
@@ -1696,7 +1700,8 @@ h5 {
 }
 
 .callsign-username {
-  flex: 1 1 0;
+  flex: 0 1 100px;
+  min-width: 25%;
 }
 
 .admin-tag {
