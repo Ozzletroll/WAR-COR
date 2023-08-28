@@ -106,7 +106,12 @@ def login():
 @bp.route("/logout")
 @login_required
 def logout():
+    # Flask-login logout
     logout_user()
+
+    # Clear session
+    session.clear()
+
     return redirect(url_for("home.home"))
 
 
