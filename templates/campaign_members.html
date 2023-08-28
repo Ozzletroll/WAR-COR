@@ -54,10 +54,10 @@
         <p class="flavour-text">CNF-{{campaign.id}}-01 // {{campaign.title}}::Active Personnel </p>
 
         <div class="campaign-members edit-members-container">
-          <ul class="campaign-members-list">
+          <ul class="campaign-members-list current-members-list">
             {% for user in campaign.members %}
               {% if campaign in user.permissions %}
-              <li class="members-list-admin">
+              <li class="members-list-item members-list-admin">
                 {% else %}
               <li class="members-list-item">
               {% endif %}
@@ -76,7 +76,11 @@
                 </div>
                 <div class="members-right">
                   {% if not campaign in user.permissions%}
-                  <a href="{{ url_for('campaign.add_permission', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username, user_id=user.id) }}"><button class="entry-button">Make Admin</button></a>
+                  <a href="{{ url_for('campaign.add_permission', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username, user_id=user.id) }}">
+                    <button class="entry-button">Make Admin</button>
+                  </a>
+                  {% else %}
+                  <div class="members-button-spacer"></div>
                   {% endif %}
                   
                   <button id ="button-{{ loop.index }}" class="entry-button">

@@ -2401,6 +2401,10 @@ h5 {
   background-position: left;
 }
 
+.members-button-spacer {
+  width: 140px;
+}
+
 .members-left {
   font-size: 16px;
 }
@@ -2415,21 +2419,35 @@ h5 {
   margin-bottom: 0;
 }
 
+.current-members-list .members-list-item {
+  width: 100%;
+}
+
+.current-members-list .entry-button {
+  width: 140px;
+}
+
+.members-left {
+  display: flex;
+  word-break: break-all;
+}
+
 @media screen and (max-width: 800px) { 
   
 .edit-members-container .members-list-admin, 
 .edit-members-container .members-list-item {
   flex-direction: column;
   align-items: flex-start;
-  padding-left: 30px;
-  background-size: 20px;
-  background-position: top left;
 }
 
 }
 
 @media screen and (max-width: 500px) { 
   
+  .settings-area .members-list-item {
+    align-items: center;
+  }
+
   .members-right {
     flex-direction: column;
   }
