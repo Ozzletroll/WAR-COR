@@ -40,8 +40,9 @@
                 <table>
                   {% for user in campaign.members %}
                     <tr class="table-row">
-                      <th class="table-cell">
-                        <div class="username-cell">
+                      
+                      <th class="table-cell username-cell">
+                        <div class="username-cell-inner">
                           {% if campaign in user.permissions %}
                             <img class="icon icon-invert" src="/static/images/icons/admin.svg">
                           {% else %}
@@ -64,14 +65,16 @@
                         {% endfor %}
                       </th>
 
-                      <th class="table-cell">
+                      <th class="table-cell username-cell">
                         {% if campaign in user.permissions %}
                         <h6 class="callsign-text admin-tag">[WARCOR]</h6>
                         {% else %}
                         <h6 class="callsign-text admin-tag admin-tag-blank"></h6>
                         {% endif %}
                       </th>
+
                     </tr>
+                    
                   {% endfor %}
 
                 </table>

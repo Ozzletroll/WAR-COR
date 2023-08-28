@@ -1682,7 +1682,15 @@ h5 {
   justify-content: stretch;
 }
 
+.table-cell {
+  vertical-align: top;
+}
+
 .username-cell {
+  align-items: flex-start;
+}
+
+.username-cell-inner {
   display: flex;
 }
 
@@ -1711,6 +1719,7 @@ h5 {
 .callsign-break {
   flex: 1 1 0;
   word-wrap: break-word;
+  word-break: break-all;
 }
 
 .admin-tag {
