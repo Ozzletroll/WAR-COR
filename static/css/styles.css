@@ -3853,6 +3853,8 @@ pre {
   height: auto !important;
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .user-image-area {
@@ -3872,10 +3874,12 @@ pre {
   font-weight: 500;
   background-color: var(--darker_red);
   height: 20px;
-  padding: 10px;
+  padding: 5px;
   text-transform: uppercase;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   color: var(--text_header_contrast);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 /* Event preview HTML elements */
