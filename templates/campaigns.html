@@ -38,7 +38,7 @@
       {% include 'base/flash.html' %}
     </div>
 
-    <ul class="campaigns-list">
+    <div class="campaigns-list">
 
       {% for campaign in campaigns %}
         <section class="campaign-entry">
@@ -196,14 +196,14 @@
 
       {% endif %}
 
-      <!-- New Campaign Button -->
-      <a href="{{ url_for('campaign.create_campaign')}}" class="campaign-entry new-campaign-area">
-        <span class="new-campaign-span">
-        <h2 class="campaign-entry-title new-campaign-heading">New Campaign</h2>
-        </span>
-      </a>
+    </div>
 
-    </ul>
+    <!-- New Campaign Button -->
+    <a href="{{ url_for('campaign.create_campaign')}}" class="campaign-entry new-campaign-area">
+      <span class="new-campaign-span">
+      <h2 class="campaign-entry-title new-campaign-heading">New Campaign</h2>
+      </span>
+    </a>
 
   </div>
 </div>
