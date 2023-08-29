@@ -1581,13 +1581,54 @@ h5 {
   display: flex;
   align-items: center;
   text-align: left;
-  width: 90%;
 }
 
 .campaigns-heading {
   text-transform: uppercase;
   font-weight: 700;
   padding: 0;
+}
+
+.view-toggles {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border: 1px solid var(--dark_red);
+  border-radius: 3px;
+  margin-top: 25px;
+  padding: 1px;
+  transition: 0.15s;
+  background-color: var(--darker_red);
+}
+
+.campaign-view-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid var(--elem_dark);
+  box-sizing: border-box;
+  transition: 0.15s;
+  background-color: var(--elem_dark);
+  stroke: var(--darker_red);
+}
+
+.campaign-view-toggle:hover {
+  filter: brightness(120%);
+}
+
+.campaign-view-toggle:active {
+  filter: brightness(80%);
+}
+
+.radio-hidden {
+  opacity: 0;
+  margin: 0;
+  position: absolute;
+  height: 0;
+  width: 0;
 }
 
 .campaigns-divider {
