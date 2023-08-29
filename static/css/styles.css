@@ -1811,6 +1811,7 @@ h5 {
   display: flex;
   gap: 15px;
   margin-bottom: 11px;
+  flex-wrap: wrap;
 }
 
 @media screen and (min-width: 1200px) {
