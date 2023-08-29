@@ -3414,6 +3414,7 @@ h5 {
   flex: 1 1 0;
   flex-direction: column;
   padding: 20px;
+  background-color: var(--elem_mid);
 }
 
 .event-elem-centre {
