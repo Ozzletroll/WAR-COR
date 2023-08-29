@@ -38,12 +38,17 @@
       {% include 'base/flash.html' %}
     </div>
 
-    <div class="campaigns-list">
+    <div id="campaigns-list" class="campaigns-list">
 
       {% for campaign in campaigns %}
         <section class="campaign-entry">
 
-          <h2 id="campaign-{{ campaign.id }}" class="campaign-header">{{ campaign.title }}</h2>
+          <div class="campaign-header-section">
+            <h2 id="campaign-{{ campaign.id }}" class="campaign-header">{{ campaign.title }}</h2>
+            <div class="campaign-corner"></div>
+          </div>
+
+
 
           <div class="campaign-body">
 
@@ -122,45 +127,43 @@
 
               {% if campaign in current_user.permissions %}
               
-                <div class = "dropdown-area">
+                <div class="dropdown-area">
 
                   <div class="entry-button-outline">
                     <button id="button-{{campaign.id}}" class="entry-button edit-button">EDIT</button>
-                  
-                      <div id="dropdown-{{campaign.id}}" class="entry-buttons-deploy">
-                        <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                          <button class="deploy-button deploy-button-first">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/edit.svg"> 
-                            Title/Overview
-                          </button>
-                        </a>
-                        <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                          <button class="deploy-button">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/docs.svg"> 
-                            Event Data
-                          </button>
-                        </a>
-                        <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                          <button class="deploy-button">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/user_management_dark.svg"> 
-                            Members
-                          </button>
-                        </a>
-                        <a href="{{ url_for('data.backup_page', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-                          <button class="deploy-button">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/database.svg"> 
-                            Data Backup
-                          </button>
-                        </a>
-                        <a href="{{ url_for('campaign.delete_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-                          <button class="deploy-button deploy-button-last">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/bin.svg"> 
-                            Delete
-                          </button>
-                        </a>
-                      </div>   
-
-                    </div>
+                  </div>
+                  <div id="dropdown-{{campaign.id}}" class="entry-buttons-deploy">
+                    <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+                      <button class="deploy-button deploy-button-first">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/edit.svg"> 
+                        Title/Overview
+                      </button>
+                    </a>
+                    <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+                      <button class="deploy-button">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/docs.svg"> 
+                        Event Data
+                      </button>
+                    </a>
+                    <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+                      <button class="deploy-button">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/user_management_dark.svg"> 
+                        Members
+                      </button>
+                    </a>
+                    <a href="{{ url_for('data.backup_page', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+                      <button class="deploy-button">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/database.svg"> 
+                        Data Backup
+                      </button>
+                    </a>
+                    <a href="{{ url_for('campaign.delete_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+                      <button class="deploy-button deploy-button-last">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/bin.svg"> 
+                        Delete
+                      </button>
+                    </a>
+                  </div>  
                 </div>
 
               {% endif %}

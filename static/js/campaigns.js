@@ -20,9 +20,10 @@ class Dropdown {
   }
   
   openDropdown() {
-    this.button.style.marginBottom = "0"
     this.button.style.transitionDelay = "0s"
     this.dropdown.style.height = "150px"
+    this.dropdown.style.border = "1px solid var(--dark_red)"
+    this.dropdown.style.borderTop = ""
     this.state = true
   }
 
@@ -34,6 +35,7 @@ class Dropdown {
     // Disable transition delay after 0.3s
   setTimeout(() => {
     this.button.style.transitionDelay = "0s";
+    this.dropdown.style.border = ""
   }, 300);
   }
 
@@ -63,6 +65,10 @@ buttons.forEach((button, index) => {
 const radioList = document.getElementById("campaign-toggle-list");
 const radioGrid = document.getElementById("campaign-toggle-grid");
 
+// Get campaigns list elements
+const campaignsList = document.getElementById("campaigns-list");
+const campaignsEntries = document.getElementsByClassName("campaign-entry")
+
 // Add event listener to each radio button
 radioList.addEventListener("click", toggleLabelBackground);
 radioGrid.addEventListener("click", toggleLabelBackground);
@@ -76,12 +82,27 @@ function toggleLabelBackground() {
   const labelList = document.querySelector('label[for="campaign-toggle-list"]');
   const labelGrid = document.querySelector('label[for="campaign-toggle-grid"]');
 
+
+
   // Change label background based on checked status
   if (radioList.checked) {
     labelList.style.backgroundColor = "var(--elem_bright)";
     labelGrid.style.backgroundColor = "";
+
+    // Set layout style
+    campaignsList.style.flexDirection = "column"
+    Array.from(campaignsEntries).forEach((entry) => {
+      entry.style.width = "100%";
+    });
+    
   } else if (radioGrid.checked) {
     labelList.style.backgroundColor = "";
     labelGrid.style.backgroundColor = "var(--elem_bright)";
+
+    // Set layout style
+    campaignsList.style.flexDirection = "row"
+    Array.from(campaignsEntries).forEach((entry) => {
+      entry.style.width = "45%";
+    });
   }
 }
