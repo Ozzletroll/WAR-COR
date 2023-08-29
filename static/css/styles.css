@@ -1596,9 +1596,7 @@ h5 {
   border: 1px solid var(--dark_red);
   border-radius: 3px;
   margin-top: 25px;
-  padding: 1px;
   transition: 0.15s;
-  background-color: var(--darker_red);
 }
 
 .campaign-view-toggle {
@@ -1613,6 +1611,16 @@ h5 {
   transition: 0.15s;
   background-color: var(--elem_dark);
   stroke: var(--darker_red);
+}
+
+.view-toggle-left {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.view-toggle-right {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .campaign-view-toggle:hover {
