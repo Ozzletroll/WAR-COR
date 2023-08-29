@@ -3485,6 +3485,7 @@ h5 {
   flex-direction: column;
   padding: 20px;
   background-color: var(--elem_mid);
+  border-radius: 5px;
 }
 
 .event-elem-centre {
