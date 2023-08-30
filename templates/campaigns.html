@@ -8,6 +8,27 @@
     
     <div class="campaigns-title">
       <h3 class="campaigns-heading heading-top">Campaigns</h1>
+      <div class="view-toggles">
+
+        <label class="toggle campaign-view-toggle view-toggle-left" for="campaign-toggle-list">
+          <input class="radio radio-hidden" type="radio" id="campaign-toggle-list" name="view" value="HTML" checked>
+          <svg class="icon" width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+            <path class="icon-colour-var" d="M3.5 20.5L3.5 13.5L20.5 13.5V20.5H3.5Z" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="icon-colour-var" d="M3.5 10.5L3.5 3.5L20.5 3.5V10.5L3.5 10.5Z" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </label>
+
+        <label class="toggle campaign-view-toggle view-toggle-right" for="campaign-toggle-grid">
+          <input class="radio radio-hidden" type="radio" id="campaign-toggle-grid" name="view" value="HTML">
+          <svg class="icon" width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path class="icon-colour-var" d="M3.5 3.5H10.5V10.5H3.5V3.5Z" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="icon-colour-var" d="M3.5 13.5H10.5V20.5H3.5V13.5Z" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="icon-colour-var" d="M13.5 3.5H20.5V10.5H13.5V3.5Z" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="icon-colour-var" d="M13.5 13.5H20.5V20.5H13.5V13.5Z" stroke="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>       
+        </label>
+
+      </div>
     </div>
 
     <hr class="campaigns-divider">
@@ -17,12 +38,17 @@
       {% include 'base/flash.html' %}
     </div>
 
-    <ul class="campaigns-list">
+    <div id="campaigns-list" class="campaigns-list">
 
       {% for campaign in campaigns %}
         <section class="campaign-entry">
 
-          <h2 id="campaign-{{ campaign.id }}" class="campaign-header">{{ campaign.title }}</h2>
+          <div class="campaign-header-section">
+            <h2 id="campaign-{{ campaign.id }}" class="campaign-header">{{ campaign.title }}</h2>
+            <div class="campaign-corner"></div>
+          </div>
+
+
 
           <div class="campaign-body">
 
@@ -101,45 +127,43 @@
 
               {% if campaign in current_user.permissions %}
               
-                <div class = "dropdown-area">
+                <div class="dropdown-area">
 
                   <div class="entry-button-outline">
                     <button id="button-{{campaign.id}}" class="entry-button edit-button">EDIT</button>
-                  
-                      <div id="dropdown-{{campaign.id}}" class="entry-buttons-deploy">
-                        <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                          <button class="deploy-button deploy-button-first">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/edit.svg"> 
-                            Title/Overview
-                          </button>
-                        </a>
-                        <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                          <button class="deploy-button">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/docs.svg"> 
-                            Event Data
-                          </button>
-                        </a>
-                        <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-                          <button class="deploy-button">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/user_management_dark.svg"> 
-                            Members
-                          </button>
-                        </a>
-                        <a href="{{ url_for('data.backup_page', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-                          <button class="deploy-button">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/database.svg"> 
-                            Data Backup
-                          </button>
-                        </a>
-                        <a href="{{ url_for('campaign.delete_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-                          <button class="deploy-button deploy-button-last">
-                            <img class="icon icon-small icon-invert" src="/static/images/icons/bin.svg"> 
-                            Delete
-                          </button>
-                        </a>
-                      </div>   
-
-                    </div>
+                  </div>
+                  <div id="dropdown-{{campaign.id}}" class="entry-buttons-deploy">
+                    <a href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+                      <button class="deploy-button deploy-button-first">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/edit.svg"> 
+                        Title/Overview
+                      </button>
+                    </a>
+                    <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+                      <button class="deploy-button">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/docs.svg"> 
+                        Event Data
+                      </button>
+                    </a>
+                    <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+                      <button class="deploy-button">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/user_management_dark.svg"> 
+                        Members
+                      </button>
+                    </a>
+                    <a href="{{ url_for('data.backup_page', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+                      <button class="deploy-button">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/database.svg"> 
+                        Data Backup
+                      </button>
+                    </a>
+                    <a href="{{ url_for('campaign.delete_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+                      <button class="deploy-button deploy-button-last">
+                        <img class="icon icon-small icon-invert" src="/static/images/icons/bin.svg"> 
+                        Delete
+                      </button>
+                    </a>
+                  </div>  
                 </div>
 
               {% endif %}
@@ -175,20 +199,21 @@
 
       {% endif %}
 
-      <!-- New Campaign Button -->
-      <a href="{{ url_for('campaign.create_campaign')}}" class="campaign-entry new-campaign-area">
-        <span class="new-campaign-span">
-        <h2 class="campaign-entry-title new-campaign-heading">New Campaign</h2>
-        </span>
-      </a>
+    </div>
 
-    </ul>
+    <!-- New Campaign Button -->
+    <a href="{{ url_for('campaign.create_campaign')}}" class="campaign-entry new-campaign-area">
+      <span class="new-campaign-span">
+      <h2 class="campaign-entry-title new-campaign-heading">New Campaign</h2>
+      </span>
+    </a>
 
   </div>
 </div>
 
 <!-- Javascript -->
-<script src="/static/js/campaigns.js"></script> 
+<script src="/static/js/campaigns.js"></script>
+<script src="/static/js/campaigns_layout.js"></script> 
 
 <!-- Scroll to target element if scroll_target is set -->
 {% if scroll_target %}

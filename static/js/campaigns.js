@@ -20,9 +20,10 @@ class Dropdown {
   }
   
   openDropdown() {
-    this.button.style.marginBottom = "0"
     this.button.style.transitionDelay = "0s"
     this.dropdown.style.height = "150px"
+    this.dropdown.style.border = "1px solid var(--dark_red)"
+    this.dropdown.style.borderTop = ""
     this.state = true
   }
 
@@ -34,6 +35,7 @@ class Dropdown {
     // Disable transition delay after 0.3s
   setTimeout(() => {
     this.button.style.transitionDelay = "0s";
+    this.dropdown.style.border = ""
   }, 300);
   }
 

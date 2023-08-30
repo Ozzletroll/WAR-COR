@@ -1581,7 +1581,6 @@ h5 {
   display: flex;
   align-items: center;
   text-align: left;
-  width: 90%;
 }
 
 .campaigns-heading {
@@ -1590,27 +1589,97 @@ h5 {
   padding: 0;
 }
 
+.view-toggles {
+  display: none;
+  flex-direction: row;
+  justify-content: center;
+  border: 1px solid var(--dark_red);
+  border-radius: 3px;
+  margin-top: 25px;
+  transition: 0.15s;
+}
+
+@media screen and (min-width: 1200px) {
+
+  .view-toggles {
+    display: flex;
+  }
+  
+}
+
+.campaign-view-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid var(--elem_dark);
+  box-sizing: border-box;
+  transition: 0.15s;
+  background-color: var(--elem_bright);
+  stroke: var(--darker_red);
+}
+
+.view-toggle-left {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.view-toggle-right {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.campaign-view-toggle:hover {
+  filter: brightness(90%);
+}
+
+.campaign-view-toggle:active {
+  filter: brightness(70%);
+}
+
+.radio-hidden {
+  opacity: 0;
+  margin: 0;
+  position: absolute;
+  height: 0;
+  width: 0;
+}
+
 .campaigns-divider {
   color: var(--bg_colour3);
   width: 100%;
 }
 
 .campaigns-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding-left: 0;
   filter: drop-shadow(0px 3px 3px var(--elem_shadow));
+  gap: 50px;
+  margin-top: 50px;
 }
 
 .campaign-entry {
   display: flex;
   flex-direction: column;
   text-align: left;
-  margin-bottom: 50px;
-  background-color: var(--elem_mid);
-  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
   border-radius: 5px;
 }
 
+
+
+.campaign-header-section {
+  display: flex;
+  flex-direction: row;
+}
+
 .campaign-header {
+  display: flex;
+  width: 100%;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   margin: 0;
@@ -1621,16 +1690,21 @@ h5 {
   transition: 0.3s;
 }
 
-.campaign-header:hover {
-  background-color: var(--dark_red);
+.campaign-corner {
+  display: flex;
+  background-color: var(--darker_red);
+  width: 50px;
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
 }
 
 .campaign-body {
   display: flex;
+  height: 100%;
   flex-direction: column;
   gap: 15px;
   padding: 20px 50px 20px 50px;
   box-sizing: border-box;
+  background-color: var(--elem_mid);
 }
 
 .campaign-entry-title {
@@ -1745,6 +1819,7 @@ h5 {
   display: flex;
   gap: 15px;
   margin-bottom: 11px;
+  flex-wrap: wrap;
 }
 
 @media screen and (min-width: 1200px) {
@@ -1809,6 +1884,9 @@ h5 {
 }
 
 .last-edited-area {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
   padding-bottom: 10px;
 }
 
@@ -1859,10 +1937,13 @@ h5 {
 }
 
 .entry-buttons-deploy {
+  position: absolute;
   height: 0px;
-  width: 160px;
+  width: 162px;
   overflow: hidden;
+  z-index: 1;
   transition: 0.3s ease-in;
+  box-sizing: border-box;
 }
 
 .deploy-button {
@@ -1872,13 +1953,10 @@ h5 {
   gap: 5px;
   background-color: var(--elem_dark);
   color: var(--text_flavour);
-  width: 160px;
+  width: 100%;
   height: 30px;
   padding: 5px;
-}
-
-.deploy-button-first {
-  border-top: 1px solid var(--elem_border);
+  z-index: 1;
 }
 
 .entry-buttons-deploy a {
@@ -1888,12 +1966,11 @@ h5 {
 .deploy-button:hover {
   background-color: var(--elem_bright);
   transition: 0.1s;
-  outline: 1px solid var(--elem_border);
 }
 
 .deploy-button:active {
   color: var(--bright_red);
-  background-color: var(--bright_red);
+  background-color: var(--dark_red);
 }
 
 /*  */
@@ -2492,6 +2569,7 @@ h5 {
 .timeline-upper {
   background-color: transparent;
   gap: 15px;
+  margin-bottom: 50px;
 }
 
 .timeline-overview {
@@ -3415,6 +3493,7 @@ h5 {
   flex-direction: column;
   padding: 20px;
   background-color: var(--elem_mid);
+  border-radius: 5px;
 }
 
 .event-elem-centre {
@@ -3782,6 +3861,8 @@ pre {
   height: auto !important;
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .user-image-area {
@@ -3801,10 +3882,12 @@ pre {
   font-weight: 500;
   background-color: var(--darker_red);
   height: 20px;
-  padding: 10px;
+  padding: 5px;
   text-transform: uppercase;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   color: var(--text_header_contrast);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
 }
 
 /* Event preview HTML elements */
