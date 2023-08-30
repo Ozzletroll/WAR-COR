@@ -225,7 +225,7 @@
 <!-- Scroll to target element if scroll_target is set -->
 {% if scroll_target %}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load', function() {
     document.getElementById('{{ scroll_target }}').scrollIntoView();
   });
 </script>
