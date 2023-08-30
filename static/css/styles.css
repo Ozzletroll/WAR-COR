@@ -325,6 +325,14 @@ p {
   gap: 25px;
 }
 
+@media screen and (max-width: 500px) {
+
+  .navbar-right {
+    gap: 5px;
+  }
+  
+}
+
 /* Navbar Links */
 
 .navbar-links {
