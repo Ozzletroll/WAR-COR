@@ -61,48 +61,4 @@ buttons.forEach((button, index) => {
 });
 
 
-// Get the radio buttons
-const radioList = document.getElementById("campaign-toggle-list");
-const radioGrid = document.getElementById("campaign-toggle-grid");
 
-// Get campaigns list elements
-const campaignsList = document.getElementById("campaigns-list");
-const campaignsEntries = document.getElementsByClassName("campaign-entry")
-
-// Add event listener to each radio button
-radioList.addEventListener("click", toggleLabelBackground);
-radioGrid.addEventListener("click", toggleLabelBackground);
-
-// Add event listener for page load
-document.addEventListener("DOMContentLoaded", toggleLabelBackground);
-
-// Function to toggle label background
-function toggleLabelBackground() {
-  // Get the labels
-  const labelList = document.querySelector('label[for="campaign-toggle-list"]');
-  const labelGrid = document.querySelector('label[for="campaign-toggle-grid"]');
-
-
-
-  // Change label background based on checked status
-  if (radioList.checked) {
-    labelList.style.backgroundColor = "var(--elem_bright)";
-    labelGrid.style.backgroundColor = "";
-
-    // Set layout style
-    campaignsList.style.flexDirection = "column"
-    Array.from(campaignsEntries).forEach((entry) => {
-      entry.style.width = "100%";
-    });
-    
-  } else if (radioGrid.checked) {
-    labelList.style.backgroundColor = "";
-    labelGrid.style.backgroundColor = "var(--elem_bright)";
-
-    // Set layout style
-    campaignsList.style.flexDirection = "row"
-    Array.from(campaignsEntries).forEach((entry) => {
-      entry.style.width = "45%";
-    });
-  }
-}

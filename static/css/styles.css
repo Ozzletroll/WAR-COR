@@ -1590,13 +1590,21 @@ h5 {
 }
 
 .view-toggles {
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: center;
   border: 1px solid var(--dark_red);
   border-radius: 3px;
   margin-top: 25px;
   transition: 0.15s;
+}
+
+@media screen and (min-width: 1200px) {
+
+  .view-toggles {
+    display: flex;
+  }
+  
 }
 
 .campaign-view-toggle {
