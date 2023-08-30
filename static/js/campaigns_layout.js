@@ -47,18 +47,39 @@ function matchOverviewHeight() {
 
   // Set matching height of overview elements for each pair of campaign cards
   var campaignOverviewElements = document.querySelectorAll(".campaign-entry-container .campaign-overview");
+  var campaignHeaderElements = document.querySelectorAll(".campaign-header");
+
 
   for (var index = 0; index + 1 < campaignOverviewElements.length; index += 2) {
     var firstElement = campaignOverviewElements[index];
     var secondElement = campaignOverviewElements[index + 1];
 
-    // Reset height values to default, for comparison
+    // Reset height values to default, for true comparison
+    // This prevents the elements from never being able to shrink
     firstElement.style.minHeight = "";
     secondElement.style.minHeight = "";
 
+ 
+    // Get the height of the campaign card headers
+    var firstHeaderElement = campaignHeaderElements[index];
+    var secondHeaderElement = campaignHeaderElements[index + 1];
+
+    firstHeaderElement.style.height = "";
+    secondHeaderElement.style.height = "";
+    
+    // Match the header element heights
+
+    var firstHeaderHeight = firstHeaderElement.clientHeight;
+    var secondHeaderHeight = secondHeaderElement.clientHeight;
+    var maxHeaderHeight = Math.max(firstHeaderHeight, secondHeaderHeight);
+
+    firstHeaderElement.style.height = maxHeaderHeight + "px";
+    secondHeaderElement.style.height = maxHeaderHeight + "px";
+
+
+    // Match card overview element heights
     var firstElementHeight = firstElement.clientHeight;
     var secondElementHeight = secondElement.clientHeight;
-
     var maxHeight = Math.max(firstElementHeight, secondElementHeight);
 
     firstElement.style.minHeight = maxHeight + "px";
@@ -68,12 +89,19 @@ function matchOverviewHeight() {
 
 function undoOverviewHeight() {
 
-  // Set matching height of overview elements for each pair of campaign cards
+  // Reset height of overview elements for each pair of campaign cards
   var campaignOverviewElements = document.querySelectorAll(".campaign-entry-container .campaign-overview");
 
   for (var index = 0; index < campaignOverviewElements.length; index ++) {
     campaignOverviewElements[index].style.minHeight = "0px";
   }
+
+  // Reset height of header elements for each campaign card
+  campaignHeaderElements = document.querySelectorAll(".campaign-header");
+
+  for (var index = 0; index < campaignHeaderElements.length; index ++) {
+    campaignHeaderElements[index].style.height = "";
+    }
 
 }
 

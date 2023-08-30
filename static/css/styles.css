@@ -1688,6 +1688,7 @@ h5 {
   scroll-margin: 25vh;
   border-top-left-radius: 5px;
   transition: 0.3s;
+  box-sizing: border-box;
 }
 
 .campaign-corner {
