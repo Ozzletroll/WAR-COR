@@ -10,12 +10,16 @@ const campaignsEntries = document.getElementsByClassName("campaign-entry")
 radioList.addEventListener("click", toggleLayout);
 radioGrid.addEventListener("click", toggleLayout);
 
-// Add event listener for page load
-document.addEventListener("DOMContentLoaded", toggleLayout);
+// Add event listeners for page load
+window.addEventListener("load", toggleLayout);
 
-// Add event listener on page resize
+// Add event listeners on page resize
 window.addEventListener("resize", toggleLayout);
-
+window.addEventListener("resize", function() {
+  if (window.innerWidth >= 1200) {
+    matchOverviewHeight();
+  }
+});
 
 function getLocalStorage() {
 
@@ -23,18 +27,56 @@ function getLocalStorage() {
     previousLayout = localStorage.getItem('campaign_layout');
 
     if (previousLayout == "grid") {
-      console.log("grid set")
       radioList.checked = false;
       radioGrid.checked = true;
     }
     else if (previousLayout == "list") {
-      console.log("list set")
       radioList.checked = true;
       radioGrid.checked = false;
     }
 }
 
+// Initial function call for localStorage
 getLocalStorage();
+
+
+/**
+ * Function to set campaigns overviews to match heights
+ */
+function matchOverviewHeight() {
+
+  // Set matching height of overview elements for each pair of campaign cards
+  var campaignOverviewElements = document.querySelectorAll(".campaign-entry-container .campaign-overview");
+
+  for (var index = 0; index + 1 < campaignOverviewElements.length; index += 2) {
+    var firstElement = campaignOverviewElements[index];
+    var secondElement = campaignOverviewElements[index + 1];
+
+    // Reset height values to default, for comparison
+    firstElement.style.minHeight = "";
+    secondElement.style.minHeight = "";
+
+    var firstElementHeight = firstElement.clientHeight;
+    var secondElementHeight = secondElement.clientHeight;
+
+    var maxHeight = Math.max(firstElementHeight, secondElementHeight);
+
+    firstElement.style.minHeight = maxHeight + "px";
+    secondElement.style.minHeight = maxHeight + "px";
+  }
+}
+
+function undoOverviewHeight() {
+
+  // Set matching height of overview elements for each pair of campaign cards
+  var campaignOverviewElements = document.querySelectorAll(".campaign-entry-container .campaign-overview");
+
+  for (var index = 0; index < campaignOverviewElements.length; index ++) {
+    campaignOverviewElements[index].style.minHeight = "0px";
+  }
+
+}
+
 
 // Function to toggle label background
 function toggleLayout() {
@@ -44,6 +86,9 @@ function toggleLayout() {
   const labelGrid = document.querySelector('label[for="campaign-toggle-grid"]');
   const buttonAreas = document.querySelectorAll(".campaign-entry-buttons");
 
+  /**
+   * Function to set campaigns page layout to "list" mode
+   */
   function setListLayout() {
     // Set button style
     labelList.style.backgroundColor = "var(--elem_dark)";
@@ -55,13 +100,21 @@ function toggleLayout() {
       entry.style.width = "100%";
     });
 
+    // Reset button area styling
     Array.from(buttonAreas).forEach((entry) => {
       entry.style.justifyContent = "flex-start";
     });
 
+    // Reset overview height matching
+    undoOverviewHeight();
+
   }
 
+  /**
+   * Function to set campaigns page layout to "grid" mode
+   */
   function setGridLayout() {
+
     // Set button style
     labelList.style.backgroundColor = "";
     labelGrid.style.backgroundColor = "var(--elem_dark)";
@@ -71,32 +124,38 @@ function toggleLayout() {
     Array.from(campaignsEntries).forEach((entry) => {
       entry.style.width = "45%";
     });
-
+    
+    // Set button area styling
     Array.from(buttonAreas).forEach((entry) => {
         entry.style.justifyContent = "space-between";
     });
+
+    // Make overview areas heights match
+    matchOverviewHeight();
   }
 
-  if (radioList.checked) {
+    if (radioList.checked) {
 
-    // Set user preference to "list"
-    localStorage.setItem('campaign_layout', "list");
+      // Set user preference to "list"
+      localStorage.setItem('campaign_layout', "list");
 
-    setListLayout();
-    
-  } else if (radioGrid.checked ) {
-
-    // Set user preference to "grid"
-    localStorage.setItem('campaign_layout', "grid");
-
-    // Check if screen is wide enough to allow grid layout
-    if (window.innerWidth >= 1200) {
-      setGridLayout();
-    }
-    // Otherwise, toggle back to list layout
-    else {
       setListLayout();
-    }
+      
+    } else if (radioGrid.checked ) {
+
+      // Set user preference to "grid"
+      localStorage.setItem('campaign_layout', "grid");
+
+      // Check if screen is wide enough to allow grid layout
+      if (window.innerWidth >= 1200) {
+        setGridLayout();
+      }
+      // Otherwise, toggle back to list layout
+      else {
+        setListLayout();
+        // Reset overview height matching
+        undoOverviewHeight();
+      }
     
 
   }
