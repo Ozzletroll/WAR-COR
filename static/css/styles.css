@@ -1789,10 +1789,6 @@ h5 {
   min-width: 25%;
 }
 
-.admin-tag {
-  flex: 1 0 0;
-}
-
 .callsign-break {
   flex: 1 1 0;
   word-wrap: break-word;
@@ -1800,8 +1796,8 @@ h5 {
 }
 
 .admin-tag {
+  flex: 1 0 0;
   color: var(--text_flavour_bright);
-  padding-left: 6px;
 }
 
 .members-list-item {
