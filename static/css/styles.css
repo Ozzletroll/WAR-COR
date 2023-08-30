@@ -1617,7 +1617,7 @@ h5 {
   border: 1px solid var(--elem_dark);
   box-sizing: border-box;
   transition: 0.15s;
-  background-color: var(--elem_dark);
+  background-color: var(--elem_bright);
   stroke: var(--darker_red);
 }
 
@@ -1632,11 +1632,11 @@ h5 {
 }
 
 .campaign-view-toggle:hover {
-  filter: brightness(120%);
+  filter: brightness(90%);
 }
 
 .campaign-view-toggle:active {
-  filter: brightness(80%);
+  filter: brightness(70%);
 }
 
 .radio-hidden {

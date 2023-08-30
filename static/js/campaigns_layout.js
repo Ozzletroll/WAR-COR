@@ -45,7 +45,7 @@ function toggleLayout() {
 
   function setListLayout() {
     // Set button style
-    labelList.style.backgroundColor = "var(--elem_bright)";
+    labelList.style.backgroundColor = "var(--elem_dark)";
     labelGrid.style.backgroundColor = "";
 
     // Set layout style
@@ -58,7 +58,7 @@ function toggleLayout() {
   function setGridLayout() {
     // Set button style
     labelList.style.backgroundColor = "";
-    labelGrid.style.backgroundColor = "var(--elem_bright)";
+    labelGrid.style.backgroundColor = "var(--elem_dark)";
 
     // Set layout style
     campaignsList.style.flexDirection = "row"
@@ -69,21 +69,23 @@ function toggleLayout() {
 
   if (radioList.checked) {
 
-    setListLayout();
+    // Set user preference to "list"
     localStorage.setItem('campaign_layout', "list");
+
+    setListLayout();
     
   } else if (radioGrid.checked ) {
+
+    // Set user preference to "grid"
+    localStorage.setItem('campaign_layout', "grid");
 
     // Check if screen is wide enough to allow grid layout
     if (window.innerWidth >= 1200) {
       setGridLayout();
-      localStorage.setItem('campaign_layout', "grid");
     }
     // Otherwise, toggle back to list layout
     else {
-      radioList.checked = true;
-      radioGrid.checked = false;
-      toggleLayout();
+      setListLayout();
     }
     
 
