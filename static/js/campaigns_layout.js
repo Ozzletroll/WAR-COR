@@ -16,7 +16,7 @@ window.addEventListener("load", toggleLayout);
 // Add event listeners on page resize
 window.addEventListener("resize", toggleLayout);
 window.addEventListener("resize", function() {
-  if (window.innerWidth >= 1200) {
+  if (localStorage.getItem('campaign_layout') == "grid" && window.innerWidth >= 1200) {
     matchOverviewHeight();
   }
 });
