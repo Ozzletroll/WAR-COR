@@ -18,8 +18,6 @@ window.addEventListener("resize", toggleLayout);
 // Function to toggle label background
 function toggleLayout() {
 
-  console.log("Function called")
-
   // Get the labels
   const labelList = document.querySelector('label[for="campaign-toggle-list"]');
   const labelGrid = document.querySelector('label[for="campaign-toggle-grid"]');
@@ -60,7 +58,7 @@ function toggleLayout() {
     }
     // Otherwise, toggle back to list layout
     else {
-      console.log("AAA")
+      
       radioList.checked = true;
       radioGrid.checked = false;
       toggleLayout();
