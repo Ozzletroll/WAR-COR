@@ -10,10 +10,31 @@ const campaignsEntries = document.getElementsByClassName("campaign-entry")
 radioList.addEventListener("click", toggleLayout);
 radioGrid.addEventListener("click", toggleLayout);
 
-// Add event listener for page load and page refresh
+// Add event listener for page load
 document.addEventListener("DOMContentLoaded", toggleLayout);
+
+// Add event listener on page resize
 window.addEventListener("resize", toggleLayout);
 
+
+function getLocalStorage() {
+
+    // Check localstorage for previous set layout
+    previousLayout = localStorage.getItem('campaign_layout');
+
+    if (previousLayout == "grid") {
+      console.log("grid set")
+      radioList.checked = false;
+      radioGrid.checked = true;
+    }
+    else if (previousLayout == "list") {
+      console.log("list set")
+      radioList.checked = true;
+      radioGrid.checked = false;
+    }
+}
+
+getLocalStorage();
 
 // Function to toggle label background
 function toggleLayout() {
@@ -49,16 +70,17 @@ function toggleLayout() {
   if (radioList.checked) {
 
     setListLayout();
+    localStorage.setItem('campaign_layout', "list");
     
   } else if (radioGrid.checked ) {
 
     // Check if screen is wide enough to allow grid layout
     if (window.innerWidth >= 1200) {
       setGridLayout();
+      localStorage.setItem('campaign_layout', "grid");
     }
     // Otherwise, toggle back to list layout
     else {
-      
       radioList.checked = true;
       radioGrid.checked = false;
       toggleLayout();
