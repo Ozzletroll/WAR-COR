@@ -1689,6 +1689,8 @@ h5 {
   border-top-left-radius: 5px;
   transition: 0.3s;
   box-sizing: border-box;
+  /* Prevent subpixel rendering bug causing visible line */
+  margin-right: -1px;
 }
 
 .campaign-corner {
