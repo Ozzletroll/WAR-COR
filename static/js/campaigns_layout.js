@@ -42,6 +42,7 @@ function toggleLayout() {
   // Get the labels
   const labelList = document.querySelector('label[for="campaign-toggle-list"]');
   const labelGrid = document.querySelector('label[for="campaign-toggle-grid"]');
+  const buttonAreas = document.querySelectorAll(".campaign-entry-buttons");
 
   function setListLayout() {
     // Set button style
@@ -53,6 +54,11 @@ function toggleLayout() {
     Array.from(campaignsEntries).forEach((entry) => {
       entry.style.width = "100%";
     });
+
+    Array.from(buttonAreas).forEach((entry) => {
+      entry.style.justifyContent = "flex-start";
+    });
+
   }
 
   function setGridLayout() {
@@ -64,6 +70,10 @@ function toggleLayout() {
     campaignsList.style.flexDirection = "row"
     Array.from(campaignsEntries).forEach((entry) => {
       entry.style.width = "45%";
+    });
+
+    Array.from(buttonAreas).forEach((entry) => {
+        entry.style.justifyContent = "space-between";
     });
   }
 
