@@ -187,7 +187,11 @@
         
       <section class="campaign-entry">
 
-        <h2 class="campaign-header">Welcome, {{current_user.username}}</h2>
+        <div class="campaign-header-section">
+          <h2 class="campaign-header">Welcome, {{current_user.username}}</h2>
+          <div class="campaign-corner"></div>
+        </div>
+        
 
           <div class="campaign-body">
 
@@ -196,9 +200,42 @@
             <div class="campaign-overview campaign-list-empty">
               <h4 class="campaign-entry-title">Getting Started:</h4>
               <p>As a new UWC Correspondent, you can get started by reaching out to your GM for a campaign invitation, or by creating a new campaign with the button below.</p>
-              <p>As a representative of the UWC, you stand on the frontlines of the battle for objective reporting in military conflict, but you do not stand alone. </p>
-              <p>There is no limit to the number of active campaigns you can join or create, and there is no limit to the number of members you can invite.</p>
-              <p>Good luck, Warcor.</p>
+              <p>
+                You can view pending campaign invitations from the messages panel 
+                
+                <span class="nowrap">
+                [
+                  <svg class="icon icon-small icon-inline" width="15px" height="15px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <title>mail</title>
+                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <g class="icon-colour-text" id="email" fill="none" transform="translate(42.666667, 85.333333)">
+                            <path d="M3.55271368e-14,1.42108547e-14 L3.55271368e-14,341.333333 L426.666667,341.333333 L426.666667,1.42108547e-14 L3.55271368e-14,1.42108547e-14 Z M349.226667,42.6666667 L213.333333,163.413333 L77.44,42.6666667 L349.226667,42.6666667 Z M42.6666667,298.666667 L42.6666667,68.9066667 L213.333333,220.586667 L384,68.9066667 L384,298.666667 L42.6666667,298.666667 Z"></path>
+                          </g>
+                      </g>
+                  </svg>
+                ]
+                </span>
+                at the top right of the screen.
+              
+              </p>
+              <p>
+                Once you have joined or created a campaign, you can set your callsign - a campaign specific identifier - 
+                from the user page 
+                
+                <span class="nowrap">
+                [
+                <svg class="icon icon-small icon-inline" width="15px" height="15px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <title>user</title>
+                  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                      <g class="icon-colour-text" id="icon" fill="none" transform="translate(85.333333, 42.666667)">
+                          <path d="M170.666667,170.666667 C217.794965,170.666667 256,132.461632 256,85.3333333 C256,38.2050347 217.794965,7.10542736e-15 170.666667,7.10542736e-15 C123.538368,7.10542736e-15 85.3333333,38.2050347 85.3333333,85.3333333 C85.3333333,132.461632 123.538368,170.666667 170.666667,170.666667 Z M170.666667,42.6666667 C194.230816,42.6666667 213.333333,61.769184 213.333333,85.3333333 C213.333333,108.897483 194.230816,128 170.666667,128 C147.102517,128 128,108.897483 128,85.3333333 C128,61.769184 147.102517,42.6666667 170.666667,42.6666667 Z M213.333333,213.333333 L128,213.333333 C57.307552,213.333333 1.42108547e-14,270.640885 1.42108547e-14,341.333333 L1.42108547e-14,426.666667 L341.333333,426.666667 L341.333333,341.333333 C341.333333,270.640885 284.025781,213.333333 213.333333,213.333333 Z M298.666667,384 L42.6666667,384 L42.6666667,341.333333 C42.6666667,294.205035 80.8717013,256 128,256 L213.333333,256 C260.461632,256 298.666667,294.205035 298.666667,341.333333 L298.666667,384 Z" id="user"></path>
+                          </g>
+                      </g>
+                  </svg>
+                ]
+                </span>
+
+              </p>
 
             </div>
 

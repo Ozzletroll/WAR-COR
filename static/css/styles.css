@@ -1616,7 +1616,7 @@ h5 {
   outline: none
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 500px) {
 
   .search-bar {
     display: none;
@@ -3388,6 +3388,11 @@ h5 {
   transition: 0.3s;
 }
 
+.icon-colour-text{
+  fill: var(--text_dark);
+  transition: 0.3s;
+}
+
 @media screen and (max-width: 800px) {
   
   .event-back-button-area {
@@ -3849,14 +3854,22 @@ h5 {
 
 .campaign-overview p img {
   width: 100% !important;
-  height: auto !important;
-}
-
-.campaign-overview p img {
   max-width: 100% !important;
   height: auto !important;
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
+}
+
+.campaign-overview p .icon.icon-inline {
+  display: inline-block;
+  height: 20px !important;
+  width: 20px !important;
+  border: none;
+  vertical-align: top;
+}
+
+.nowrap {
+  white-space: nowrap;
 }
 
 /* Comment HTML Elements */
