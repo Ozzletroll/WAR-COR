@@ -98,16 +98,16 @@ window.onclick = function(event) {
 
 
 // Get the date suffix input field and the element to update
-var inputField = document.getElementById("suffix-input");
+var SearchBar = document.getElementById("suffix-input");
 var exampleDate = document.getElementById("example-date");
 
 // Store the initial suffix text
 var suffixText = exampleDate.textContent;
 
 // Add event listener to the input field
-inputField.addEventListener("input", function() {
+SearchBar.addEventListener("input", function() {
   // Get the input value
-  var inputValue = inputField.value;
+  var inputValue = SearchBar.value;
 
   // If the input value is shorter than the stored suffix text,
   // remove the last character from the suffix text

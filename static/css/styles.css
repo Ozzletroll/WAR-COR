@@ -1576,6 +1576,62 @@ h5 {
   padding-bottom: 15px;
 }
 
+/* Search bar */
+
+.search-bar-area {
+  display: flex;
+  gap: 10px;
+  justify-content: right;
+  align-items: center;
+}
+
+.search-label {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  color: var(--text_flavour);
+  width: 200px;
+  background-color: var(--elem_mid);
+  text-transform: uppercase;
+  border: 1px solid var(--bg_colour2);
+  border-radius: 3px;
+  height: 32px;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.15s;
+  padding: 10px;
+}
+
+.search-bar:hover{
+  background-color: var(--elem_hover);
+}
+
+.search-bar:active{
+  background-color: var(--elem_bright);
+}
+
+.search-bar:focus {
+  outline: none
+}
+
+@media screen and (max-width: 700px) {
+
+  .search-bar {
+    display: none;
+  }
+  
+  .search-label {
+    display: none;
+  }
+
+  .search-bar-area {
+    height: 22px;
+  }
+
+}
+
 /* Campaigns Page */
 
 .campaigns-content {
@@ -1603,7 +1659,6 @@ h5 {
   justify-content: center;
   border: 1px solid var(--dark_red);
   border-radius: 3px;
-  margin-top: 25px;
   transition: 0.15s;
 }
 

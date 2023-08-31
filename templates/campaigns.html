@@ -6,8 +6,15 @@
 
   <div class="campaigns-content">
     
+    <div class="search-bar-area">
+      <label class="search-label" for="search-bar">
+        <img class="icon icon-invert" src="/static/images/icons/search.svg">
+      </label>
+      <input id="search-bar" class="search-bar" placeholder="SEARCH">
+    </div>
+
     <div class="campaigns-title">
-      <h3 class="campaigns-heading heading-top">Campaigns</h1>
+      <h3 class="campaigns-heading">Campaigns</h1>
       <div class="view-toggles">
 
         <label class="toggle campaign-view-toggle view-toggle-left" for="campaign-toggle-list">
@@ -213,12 +220,13 @@
 
 <!-- Javascript -->
 <script src="/static/js/campaigns.js"></script>
-<script src="/static/js/campaigns_layout.js"></script> 
+<script src="/static/js/campaigns_layout.js"></script>
+<script src="/static/js/campaign_search.js"></script> 
 
 <!-- Scroll to target element if scroll_target is set -->
 {% if scroll_target %}
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load', function() {
     document.getElementById('{{ scroll_target }}').scrollIntoView();
   });
 </script>
