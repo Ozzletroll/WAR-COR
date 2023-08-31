@@ -1734,7 +1734,6 @@ h5 {
 }
 
 
-
 .campaign-header-section {
   display: flex;
   flex-direction: row;
@@ -1753,7 +1752,7 @@ h5 {
   transition: 0.3s;
   box-sizing: border-box;
   /* Prevent subpixel rendering bug causing visible line */
-  margin-right: -1px;
+  margin-right: -10px;
 }
 
 .campaign-corner {
