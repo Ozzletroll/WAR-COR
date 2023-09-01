@@ -1,5 +1,5 @@
 {# Component Macro imports #}
-{% import "components/page_upper_area.html" as component %}
+{% import "components/page_upper_area.html" as page_upper_area %}
 
 {% extends "base/base.html" %}
 
@@ -13,10 +13,10 @@
 
     {% set urls = ["/UWC IDENT SERVICE/"] %}
 
-    {{ component.page_upper_area(navigation_urls=urls, 
-                             is_link=false, 
-                             searchbar=false,
-                             current_user=current_user) }}
+    {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                       is_link=false, 
+                                       searchbar=false,
+                                       current_user=current_user) }}
 
 
     <div class="user-title">

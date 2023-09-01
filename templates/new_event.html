@@ -1,5 +1,5 @@
 {# Component Macro imports #}
-{% import "components/page_upper_area.html" as component %}
+{% import "components/page_upper_area.html" as page_upper_area %}
 
 {% extends "base/base.html" %}
 
@@ -11,11 +11,11 @@
 
     {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
 
-    {{ component.page_upper_area(navigation_urls=urls, 
-            is_link=true, 
-            searchbar=false,
-            current_user=current_user,
-            campaign=campaign) }}
+    {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                       is_link=true, 
+                                       searchbar=false,
+                                       current_user=current_user,
+                                       campaign=campaign) }}
 
       <div class="campaigns-title">
 
