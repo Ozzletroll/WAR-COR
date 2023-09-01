@@ -1,5 +1,6 @@
 {# Component Macro imports #}
-{% import "components/page_upper_area.html" as component %}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/members_list.html" as members_list %}
 
 {% extends "base/base.html" %}
 
@@ -16,7 +17,7 @@
 
       {% set urls = [url_for('campaign.campaigns')] %}
 
-      {{ component.page_upper_area(navigation_urls=urls, 
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                               is_link=true, 
                               searchbar=true,
                               current_user=current_user,
@@ -47,56 +48,10 @@
             <h4 class="campaign-entry-title">Overview:</h4>
               {{ campaign.description | safe }}
           </div>
-          <div class="campaign-members">
-            <h4 class="campaign-entry-title">Members:</h2>
+          
+          {# Members list #}
+          {{ members_list.members_list(campaign) }}
 
-              <div class="campaign-members-list">
-
-                <table>
-                  {% for user in campaign.members %}
-                    <tr class="table-row">
-                      
-                      <th class="table-cell username-cell">
-                        <div class="username-cell-inner">
-                          {% if campaign in user.permissions %}
-                            <img class="icon icon-invert" src="/static/images/icons/admin.svg">
-                          {% else %}
-                            <img class="icon icon-invert" src="/static/images/icons/user.svg">
-                          {% endif %}
-                          <h6 class="callsign-text callsign-username">
-                          {{user.username.upper()}}:
-                        </div>
-                      </th>
-
-                      <th class="table-cell">
-                        {% for entry in user.campaign_associations %}
-                          {%if entry.campaign_id == campaign.id%}
-                            {% if entry.callsign is not none %}
-                              <h6 class="callsign-text callsign-break">
-                                [{{entry.callsign.upper()}}]
-                              </h6>
-                            {% endif %}
-                          {%endif%}
-                        {% endfor %}
-                      </th>
-
-                      <th class="table-cell username-cell">
-                        {% if campaign in user.permissions %}
-                        <h6 class="callsign-text admin-tag">[WARCOR]</h6>
-                        {% else %}
-                        <h6 class="callsign-text admin-tag admin-tag-blank"></h6>
-                        {% endif %}
-                      </th>
-
-                    </tr>
-                    
-                  {% endfor %}
-
-                </table>
-
-              </div>
-
-          </div> 
         </div>
 
         <div class="campaign-overview last-edited-area">

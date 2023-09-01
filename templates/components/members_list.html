@@ -1,0 +1,65 @@
+{# 
+
+  MEMBERS LIST COMPONENT
+  
+  This component renders a list of a campaigns members,
+  formatted in a table.
+  
+  Takes a campaign object as an argument.
+
+#}
+
+{% macro members_list(campaign) %}
+
+<div class="campaign-members">
+  <h4 class="campaign-entry-title">Members:</h2>
+
+    <div class="campaign-members-list">
+
+      <table>
+        {% for user in campaign.members %}
+          <tr class="table-row">
+            
+            <th class="table-cell username-cell">
+              <div class="username-cell-inner">
+                {% if campaign in user.permissions %}
+                  <img class="icon icon-invert" src="/static/images/icons/admin.svg">
+                {% else %}
+                  <img class="icon icon-invert" src="/static/images/icons/user.svg">
+                {% endif %}
+                <h6 class="callsign-text callsign-username">
+                {{user.username.upper()}}:
+              </div>
+            </th>
+
+            <th class="table-cell">
+              {% for entry in user.campaign_associations %}
+                {%if entry.campaign_id == campaign.id%}
+                  {% if entry.callsign is not none %}
+                    <h6 class="callsign-text callsign-break">
+                      [{{entry.callsign.upper()}}]
+                    </h6>
+                  {% endif %}
+                {%endif%}
+              {% endfor %}
+            </th>
+
+            <th class="table-cell username-cell">
+              {% if campaign in user.permissions %}
+              <h6 class="callsign-text admin-tag">[WARCOR]</h6>
+              {% else %}
+              <h6 class="callsign-text admin-tag admin-tag-blank"></h6>
+              {% endif %}
+            </th>
+
+          </tr>
+          
+        {% endfor %}
+
+      </table>
+
+    </div>
+
+</div>
+
+{%- endmacro %}
