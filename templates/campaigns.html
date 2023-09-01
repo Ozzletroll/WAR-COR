@@ -1,6 +1,7 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
+{% import "components/back_button.html" as back_button %}
 
 {% extends "base/base.html" %}
 
@@ -21,14 +22,10 @@
 
     <div class="campaigns-title">
 
-      {# Blank back button area area #}
-      <div class="event-back-button-area" aria-hidden="true">
-        <a class="back-link no-click">
-          <button class="back-button">
-            <div class="icon icon-back-button"></div>
-          </button>
-        </a>
-      </div>
+      {# Blank back button area area. No url needed. #}
+      {% set url = "" %}
+
+      {{ back_button.back_button(url=url, blank=true) }}
 
       <h3 class="campaigns-heading">Campaigns</h1>
       <div class="view-toggles">

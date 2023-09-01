@@ -1,5 +1,6 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/back_button.html" as back_button %}
 
 {% extends "base/base.html" %}
 
@@ -18,25 +19,19 @@
                                        searchbar=false,
                                        current_user=current_user) }}
 
-
     <div class="user-title">
 
-      {% if request.referrer %}
-      <div class="event-back-button-area">
-        <a href="{{ url_for('user.back') }}" class="back-link">
-          <button class="back-button">
+      {# Back Button Area #}
 
-            <svg class="icon icon-back-button" width="80px" height="80px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <g class="icon-colour-var" id="add" transform="translate(108.603733, 144.171733)">
-                      <path d="M127.978667,121.834667 L249.6,243.648 L279.872,213.333333 L188.16,121.834667 L279.872,30.3146667 L249.6,2.84217094e-14 L127.978667,121.834667 Z M1.42108547e-14,121.834667 L121.578667,243.648 L151.872,213.333333 L60.1386667,121.834667 L151.872,30.3146667 L121.578667,2.84217094e-14 L1.42108547e-14,121.834667 Z" id="arrow-double-left"></path>
-                    </g>
-                </g>
-            </svg>
-            
-          </button>
-        </a>
-      </div>
+      {# Only render usable back button if referrer has a url #}
+      {% if request.referrer %}
+        {# User page back button #}
+        {% set url = url_for('user.back') %}
+        {{ back_button.back_button(url=url, blank=false) }}
+      {% else %}
+        {# Blank back button area area. No url needed. #}
+        {% set url = "" %}
+        {{ back_button.back_button(url=url, blank=true) }}
       {% endif %}
 
       <h3 class="user-heading heading-line-2">{{ user.username }}</h3>
