@@ -1,3 +1,6 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as upper %}
+
 {% extends "base/base.html" %}
 
 {% block content %}
@@ -6,11 +9,14 @@
 
   <div class="campaigns-content">
 
-    <div class="navigation-area">
-      <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
-        <h5 class="navigation-heading">/CAMPAIGNS/</h5>
-      </a>
-    </div>
+    {# Create navigation url bar #}
+
+    {% set urls = [url_for('campaign.campaigns')] %}
+
+    {{ upper.page_upper_area(navigation_urls=urls, 
+            is_link=true, 
+            searchbar=false,
+            current_user=current_user) }}
 
     <div class="campaigns-title">
 

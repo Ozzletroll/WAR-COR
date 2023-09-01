@@ -1,0 +1,94 @@
+{# 
+  
+  PAGE UPPER AREA COMPONENT
+  
+  This component is placed at the top of the page.
+  It is comprised of the navigation url links area,
+  with space for the search bar and campaigns list/grid
+  toggle buttons. 
+  
+  "navigation_urls" is a list of strings generated using
+  url_for.
+  
+  "is_link" is a boolean value, that represents if the
+  given strings in navigation_urls are valid urls,
+  or should simply be rendered as 'flavour text', as
+  in the case of the user page.
+
+  "seachbar" is a boolean value that determines if the 
+  searchbar is rendered.
+
+  "current_user" takes the flask_login current_user,
+  for the purposes of determining if the user is 
+  logged in.
+  
+  "campaign" is the campaign object, for the purposes of 
+  accessing id/title etc.
+
+  "campaign" is the event object, for the purposes of 
+  accessing id/title etc.
+
+  #}
+
+{% macro page_upper_area(navigation_urls, 
+                         is_link=False, 
+                         searchbar=False, 
+                         current_user=current_user,
+                         campaign=none,
+                         event=none) %}
+
+<div class="page-upper-area">
+  <div class="navigation-area">
+    <div class="navigation-url">
+
+      {# Navigation urls #}
+
+      {# If the given urls are actually valid urls #}
+      {% if is_link %}
+
+        {% for url in navigation_urls %}
+
+          {# First url is always root campaigns page #}
+          {% if loop.first and current_user.is_authenticated %}
+          <a href="{{ url }}" class="navigation-url">
+            <h5 class="navigation-heading">CAMPAIGNS/</h5>
+          </a>
+
+          {# Second url #}
+          {% else %}
+
+            <a href="{{ url }}" class="navigation-url">
+              <h5 class="navigation-heading">{{campaign.title}}/</h5>
+            </a>
+
+          {% endif %}
+
+        {% endfor %}
+
+      {# Otherwise, if it is the user page, put the 'false' url #}
+      {% elif current_user.is_authenticated %}
+
+       {% if request.path == url_for('user.user_page', username=current_user.username) %} 
+
+          <h5 class="navigation-heading" aria-hidden="true">    
+
+            {{ navigation_urls[0] }}
+
+          </h5>
+
+        {% endif %}
+
+      {% endif %}
+
+    </div>
+  </div>
+
+  {# Search bar area #}
+  {% if searchbar %}
+    {% include "components/searchbar.html" %}
+  {% endif %}
+
+
+</div>
+
+{%- endmacro %}

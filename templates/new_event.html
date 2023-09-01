@@ -1,3 +1,6 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as upper %}
+
 {% extends "base/base.html" %}
 
 {% block content %}
@@ -6,14 +9,13 @@
 
   <div class="campaigns-content">
 
-    <div class="navigation-area">
-      <a href="{{url_for('campaign.campaigns')}}" class="navigation-url">
-        <h5 class="navigation-heading">CAMPAIGNS</h5>
-      </a>
-      <a href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}" class="navigation-url">
-        <h5 class="navigation-heading">/{{campaign.title}}/</h5>
-      </a>
-    </div>
+    {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+
+    {{ upper.page_upper_area(navigation_urls=urls, 
+            is_link=true, 
+            searchbar=false,
+            current_user=current_user,
+            campaign=campaign) }}
 
       <div class="campaigns-title">
 
