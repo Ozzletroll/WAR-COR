@@ -1,5 +1,5 @@
 {# Component Macro imports #}
-{% import "components/page_upper_area.html" as upper %}
+{% import "components/page_upper_area.html" as component %}
 
 {% extends "base/base.html" %}
 
@@ -16,7 +16,7 @@
 
       {% set urls = [url_for('campaign.campaigns')] %}
 
-      {{ upper.page_upper_area(navigation_urls=urls, 
+      {{ component.page_upper_area(navigation_urls=urls, 
                               is_link=true, 
                               searchbar=true,
                               current_user=current_user,
