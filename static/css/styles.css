@@ -2500,7 +2500,8 @@ h5 {
   align-items: center;
   border-radius: 0;
   border: 1px solid var(--darker_red);
-  background-color: var(--bg_colour1);
+  border-radius: 3px;
+  background-color: var(--elem_mid);
   transition: 0.05s;
   width: 30px;
   height: 30px;
@@ -2516,11 +2517,11 @@ h5 {
 }
 
 .form-button:hover {
-  background-color: var(--elem_dark);
+  background-color: var(--elem_hover);
 }
 
 .form-button:active {
-  background-color: var(--elem_bright);
+  background-color: var(--elem_dark);
 }
 
 .input-checkbox {
