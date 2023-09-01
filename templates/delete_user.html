@@ -43,7 +43,7 @@
           </div>
 
           <div class="form-flash">
-            {% include 'base/flash.html' %}
+            {% include 'components/flash.html' %}
             <ul class = flashes>
               {% for error in form.password.errors %}
                 <li>{{ error }}</li>
