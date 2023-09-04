@@ -150,6 +150,11 @@
   background: var(--bright_red);
 }
 
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(/static/fonts/RobotoMono-VariableFont_wght.ttf);
+}
+
 /* Page Layout */
 
 .layout {
