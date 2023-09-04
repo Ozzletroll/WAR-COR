@@ -50,9 +50,9 @@ class Tab {
     this.timeline.style.marginLeft = "0"
   }
 
-  // Adjust margin if sidebar deployed and screen between 800 and 850px
+  // Adjust margin if sidebar deployed and screen between 800 and 1000px
   updateTimelineMargin() {
-    if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
+    if (window.innerWidth >= 800 && window.innerWidth <= 1000 && this.state == true) {
       this.timeline.style.marginLeft = "-15%";
       this.adjustMonthConnectors()
     } else {
