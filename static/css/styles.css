@@ -1506,7 +1506,7 @@ h5 {
   border-style: none;
   transition: 0.5s;
   background-color: var(--elem_mid);
-  padding: 20px;
+  padding: 5px;
   margin-top: 5px;
   margin-bottom: 20px;
   outline: none;
@@ -1535,6 +1535,7 @@ h5 {
 }
 
 .campaign-submit {
+  padding: 20px;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
 }
