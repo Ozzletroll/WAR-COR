@@ -10,36 +10,41 @@
 
   <div class="user-content">
 
-    {# Create navigation url bar #}
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
 
-    {% set urls = ["/UWC IDENT SERVICE/"] %}
+      {# Create navigation url bar #}
 
-    {{ page_upper_area.page_upper_area(navigation_urls=urls, 
-                                       is_link=false, 
-                                       searchbar=false,
-                                       current_user=current_user) }}
+      {% set urls = ["/UWC IDENT SERVICE/"] %}
 
-    <div class="user-title">
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=false, 
+                                        searchbar=false,
+                                        current_user=current_user) }}
 
-      {# Back Button Area #}
+      <div class="user-title">
 
-      {# Only render usable back button if referrer has a url #}
-      {% if request.referrer %}
-        {# User page back button #}
-        {% set url = url_for('user.back') %}
-        {{ back_button.back_button(url=url, blank=false) }}
-      {% else %}
-        {# Blank back button area area. No url needed. #}
-        {% set url = "" %}
-        {{ back_button.back_button(url=url, blank=true) }}
-      {% endif %}
+        {# Back Button Area #}
 
-      <h3 class="user-heading heading-line-2">{{ user.username }}</h3>
+        {# Only render usable back button if referrer has a url #}
+        {% if request.referrer %}
+          {# User page back button #}
+          {% set url = url_for('user.back') %}
+          {{ back_button.back_button(url=url, blank=false) }}
+        {% else %}
+          {# Blank back button area area. No url needed. #}
+          {% set url = "" %}
+          {{ back_button.back_button(url=url, blank=true) }}
+        {% endif %}
+
+        <h3 class="user-heading heading-line-2">{{ user.username }}</h3>
+      </div>
+
+      <hr class="campaigns-divider">
+
+      <p class="flavour-text">UWC-16-00 // Personnel::Correspondent Profile</p>
+
     </div>
-
-    <hr class="campaigns-divider">
-
-    <p class="flavour-text">UWC-16-00 // Personnel::Correspondent Profile</p>
 
     <div class="form-flash">
       {% include 'components/flash.html' %}
@@ -47,7 +52,7 @@
 
     <!-- Tab 1 -->
 
-    <div class="user-page-tabs">
+    <div class="user-page-tabs fade-in-block-2">
 
     <div class="callsigns-area">
       <button class="callsign-deploy-button" id="t1-button">
@@ -235,7 +240,7 @@
 
   </div>
 
-    <div class="flavour-text-area">
+    <div class="flavour-text-area fade-in-block-3">
       <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>
       <img src="/static/images/logo-red.png" class="top-logo">
     </div>

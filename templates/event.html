@@ -13,234 +13,238 @@
 
       <div class="campaigns-content">
 
-        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target)] %}
+        {# Animation fade in group 1 #}
+        <div class="fade-in-block-1">
 
-        {{ page_upper_area.page_upper_area(navigation_urls=urls, 
-                                           is_link=true, 
-                                           searchbar=false,
-                                           current_user=current_user,
-                                           campaign=campaign) }}
+          {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target)] %}
 
-          <div class="campaigns-title">
-            
-            {# Back button #}
-            {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target) %}
-            {{ back_button.back_button(url=url, blank=false) }}
+          {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                            is_link=true, 
+                                            searchbar=false,
+                                            current_user=current_user,
+                                            campaign=campaign) }}
 
-            <h3 class="campaigns-heading">{{event.title}}</h1>
-          </div>
+            <div class="campaigns-title">
+              
+              {# Back button #}
+              {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target) %}
+              {{ back_button.back_button(url=url, blank=false) }}
+
+              <h3 class="campaigns-heading">{{event.title}}</h1>
+            </div>
+      
+            <hr class="campaigns-divider">
+            <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{event.id}} // Event::Data</p>
     
-          <hr class="campaigns-divider">
-          <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{event.id}} // Event::Data</p>
+        </div>
+
+        <div class="event-page-container fade-in-block-2">
+
+            <div class="event-page-upper">
+
+                <div class="event-page-elem event-date-area">
+
+                    <h4 class="event-page-date">{{event.date}}</h4>
     
-
-          <div class="event-page-container">
-
-              <div class="event-page-upper">
-
-                  <div class="event-page-elem event-date-area">
-
-                      <h4 class="event-page-date">{{event.date}}</h4>
-      
-                  </div>
-      
-                  <div class="event-page-elem type-area">
-      
-                      <h4 class="event-page-type">{{event.type}}</h4>
-      
-                  </div>
-      
-              </div>
-
-              <div class="event-page-body">
-
-                  <div class="event-body-top">
-
-                      {# Only render if it is needed #}
-                      {% if event.location | length > 0 %}
-                      <div class="event-page-elem event-location">
-          
-                          <div class="event-elem-header">
-                              <h4 class="event-elem-h">Location</h4>
-                          </div>
-                          <div class="event-elem-body">
-                              {{event.location}}
-                          </div>
-                          
-                      </div>
-                      {% endif %}
-          
-                      {# Only render if it is needed #}
-                      {% if event.belligerents | length > 0 %}
-                      <div class="event-page-elem event-belligerents">
-          
-                          <div class="event-elem-header">
-                              <h4 class="event-elem-h">Belligerents</h4>
-                          </div>
-                          <div class="event-elem-body">
-                              {% for group in belligerents %}
-          
-                                  <div class="ally-group">
-                                  {% for ally in group %}
-                                      <div class="ally-elem">
-                                          {{ally}}
-                                      </div>
-                                  {% endfor %}
-                                  </div>
-          
-                                  
-                                  {% if not loop.last %}
-                                  <div class="vs-area">vs</div>
-                                  {% endif %}
-                                  
-          
-                              {% endfor %}
-                          </div>
-                          
-                      </div>
-                      {% endif %}
-
-                  </div>
-      
-                  <div class="event-page-elem event-elem-large elem-body event-page-description">
-      
-                      <div class="entry-left-padding"></div>
-
-                      <div class="description-body">
-                          <h4 class="event-desc-header">Compendium Entry:</h4>
-                          <div class="event-desc">
-                            {{event.body | safe }}
-                          </div>
-                      </div>
-                      
-                  </div>
-      
-                  {# Only render if it is needed #}
-                  {% if event.result | length > 0 %}  
-                  <div class="event-elem-centre">
-                      <div class="event-page-elem elem-body event-page-result">
-      
-                          <div class="event-elem-header">
-                              <h4 class="event-elem-h">RESULT</h4>
-                          </div>
-                          <div class="event-elem-body">
-                              {{event.result}}
-                          </div>
-                          
-                      </div>
-                  </div>
-                  {% endif %}
-
-              </div>
-
-              <!-- User comments area -->
-              <div class="comments-area">
-
-                  <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
-                  <hr class="campaigns-divider">
-                
-                  {% if event.comments | length == 0 %}
-                    <h6 class="comments-count">[NO MESSAGE DATA]</h5>
-                  {% endif %}
-
-                  <ol class="comments-list">
-                  {% for comment in event.comments %}
-
-                      <li class="event-comment">
-
-                        <p class="comment-date">{{ comment.date }}</p>
-
-                        {% if comment.author == current_user %}
-                        <div class="comment-header comment-header-user">
-                        {% else %}
-                        <div class="comment-header">
-                        {% endif %}
-                          <div class="comment-header-left">
-                            <img class="icon" src="/static/images/icons/user_white.svg">
-                            <h5 class="comment-username">{{ comment.author.username }}</h5>
+                </div>
     
-                            {% for entry in comment.author.campaign_associations %}
-                              {%if entry.campaign_id == campaign.id%}
-                                {% if entry.callsign is not none %}
-                                  <h6 class="comment-callsign callsign-break">
-                                    [{{entry.callsign.upper()}}]
-                                  </h6>
+                <div class="event-page-elem type-area">
+    
+                    <h4 class="event-page-type">{{event.type}}</h4>
+    
+                </div>
+    
+            </div>
+
+            <div class="event-page-body">
+
+                <div class="event-body-top">
+
+                    {# Only render if it is needed #}
+                    {% if event.location | length > 0 %}
+                    <div class="event-page-elem event-location">
+        
+                        <div class="event-elem-header">
+                            <h4 class="event-elem-h">Location</h4>
+                        </div>
+                        <div class="event-elem-body">
+                            {{event.location}}
+                        </div>
+                        
+                    </div>
+                    {% endif %}
+        
+                    {# Only render if it is needed #}
+                    {% if event.belligerents | length > 0 %}
+                    <div class="event-page-elem event-belligerents">
+        
+                        <div class="event-elem-header">
+                            <h4 class="event-elem-h">Belligerents</h4>
+                        </div>
+                        <div class="event-elem-body">
+                            {% for group in belligerents %}
+        
+                                <div class="ally-group">
+                                {% for ally in group %}
+                                    <div class="ally-elem">
+                                        {{ally}}
+                                    </div>
+                                {% endfor %}
+                                </div>
+        
+                                
+                                {% if not loop.last %}
+                                <div class="vs-area">vs</div>
                                 {% endif %}
-                              {%endif%}
+                                
+        
                             {% endfor %}
-                          </div>
+                        </div>
+                        
+                    </div>
+                    {% endif %}
 
-                          <div class="comment-header-right">
-                            {% if campaign in current_user.permissions or comment.author == current_user %}
-                              <button id="button-{{loop.index}}" class="button delete-comment-button">
-                                <img class="icon" src="/static/images/icons/bin_white.svg">
-                              </button>
-                            {% endif %}
-                          </div>
+                </div>
+    
+                <div class="event-page-elem event-elem-large elem-body event-page-description">
+    
+                    <div class="entry-left-padding"></div>
 
+                    <div class="description-body">
+                        <h4 class="event-desc-header">Compendium Entry:</h4>
+                        <div class="event-desc">
+                          {{event.body | safe }}
+                        </div>
+                    </div>
+                    
+                </div>
+    
+                {# Only render if it is needed #}
+                {% if event.result | length > 0 %}  
+                <div class="event-elem-centre">
+                    <div class="event-page-elem elem-body event-page-result">
+    
+                        <div class="event-elem-header">
+                            <h4 class="event-elem-h">RESULT</h4>
+                        </div>
+                        <div class="event-elem-body">
+                            {{event.result}}
+                        </div>
+                        
+                    </div>
+                </div>
+                {% endif %}
+
+            </div>
+
+            <!-- User comments area -->
+            <div class="comments-area fade-in-block-3">
+
+                <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
+                <hr class="campaigns-divider">
+              
+                {% if event.comments | length == 0 %}
+                  <h6 class="comments-count">[NO MESSAGE DATA]</h5>
+                {% endif %}
+
+                <ol class="comments-list">
+                {% for comment in event.comments %}
+
+                    <li class="event-comment">
+
+                      <p class="comment-date">{{ comment.date }}</p>
+
+                      {% if comment.author == current_user %}
+                      <div class="comment-header comment-header-user">
+                      {% else %}
+                      <div class="comment-header">
+                      {% endif %}
+                        <div class="comment-header-left">
+                          <img class="icon" src="/static/images/icons/user_white.svg">
+                          <h5 class="comment-username">{{ comment.author.username }}</h5>
+  
+                          {% for entry in comment.author.campaign_associations %}
+                            {%if entry.campaign_id == campaign.id%}
+                              {% if entry.callsign is not none %}
+                                <h6 class="comment-callsign callsign-break">
+                                  [{{entry.callsign.upper()}}]
+                                </h6>
+                              {% endif %}
+                            {%endif%}
+                          {% endfor %}
                         </div>
 
-                        <div class="comment-body">
-                          <p class="flavour-text">MSG-{{event.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
-                          {{ comment.body | safe }}
+                        <div class="comment-header-right">
+                          {% if campaign in current_user.permissions or comment.author == current_user %}
+                            <button id="button-{{loop.index}}" class="button delete-comment-button">
+                              <img class="icon" src="/static/images/icons/bin_white.svg">
+                            </button>
+                          {% endif %}
                         </div>
 
-                      </li>
+                      </div>
+
+                      <div class="comment-body">
+                        <p class="flavour-text">MSG-{{event.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
+                        {{ comment.body | safe }}
+                      </div>
+
+                    </li>
 
 
-                    {# Delete comment confirm modal #}
+                  {# Delete comment confirm modal #}
 
-                    <div id="modal-{{loop.index}}" class="modal">
-                      <div class="modal-content modal-content-small">
-                        <div class="modal-content-inner">
-                          <div class="modal-header">
-                            <h2 class="modal-header-small">Delete Comment</h2>
-                            <span id="close-{{loop.index}}" class="close">
-                              <img class="icon" src="/static/images/icons/cancel.svg">
-                            </span>
-                          </div>
-                          <div class="modal-body modal-body-small">
-                            <p class="flavour-text modal-flavour">MSG-{{event.id}}-{{loop.index}} // DELETION::CONFIRM</p>
-                            <p class="modal-text modal-text-upper">Confirm comment termination:</p>
-  
-                            <a class="delete-comment-link" href="{{ url_for('event.delete_comment', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id, comment_id=comment.id) }}">
-                              <button class="button modal-confirm-button">
-                                DELETE
-                              </button>
-                            </a>
-  
-                          </div>
+                  <div id="modal-{{loop.index}}" class="modal">
+                    <div class="modal-content modal-content-small">
+                      <div class="modal-content-inner">
+                        <div class="modal-header">
+                          <h2 class="modal-header-small">Delete Comment</h2>
+                          <span id="close-{{loop.index}}" class="close">
+                            <img class="icon" src="/static/images/icons/cancel.svg">
+                          </span>
+                        </div>
+                        <div class="modal-body modal-body-small">
+                          <p class="flavour-text modal-flavour">MSG-{{event.id}}-{{loop.index}} // DELETION::CONFIRM</p>
+                          <p class="modal-text modal-text-upper">Confirm comment termination:</p>
+
+                          <a class="delete-comment-link" href="{{ url_for('event.delete_comment', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id, comment_id=comment.id) }}">
+                            <button class="button modal-confirm-button">
+                              DELETE
+                            </button>
+                          </a>
+
                         </div>
                       </div>
                     </div>
-
-                  {% endfor  %}
-                </ol>
-
-                <!-- New Comment Area -->
-                {% if current_user.is_authenticated and current_user in campaign.members %}
-
-                <div class="new-comment-area">
-                  <div class="new-comment-area-header">
-                    <h4 class="new-comment-heading">//COMMENT</h4>
                   </div>
 
-                  <form class="form comment-form" method="post">
-                    {{ form.csrf_token }}
-                    {{ form.body(class_="ckeditor") }}
-                    {{ form.submit(class_="button comment-submit") }}
-                  </form>
-                  {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-                  {{ ckeditor.config(name="body") }}
+                {% endfor  %}
+              </ol>
+
+              <!-- New Comment Area -->
+              {% if current_user.is_authenticated and current_user in campaign.members %}
+
+              <div class="new-comment-area">
+                <div class="new-comment-area-header">
+                  <h4 class="new-comment-heading">//COMMENT</h4>
                 </div>
-                  
 
-                {% endif %}
-
+                <form class="form comment-form" method="post">
+                  {{ form.csrf_token }}
+                  {{ form.body(class_="ckeditor") }}
+                  {{ form.submit(class_="button comment-submit") }}
+                </form>
+                {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+                {{ ckeditor.config(name="body") }}
               </div>
-  
+                
 
-          </div>
+              {% endif %}
+
+            </div>
+
+
+        </div>
 
 
 

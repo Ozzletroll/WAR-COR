@@ -632,6 +632,9 @@ p {
 .hamburger-button {
   display: none;
   font-size: 36px;
+  border: none;
+  background-color: transparent;
+  border-style: none;
 }
 
 @media screen and (max-width: 800px) { 
@@ -1637,6 +1640,48 @@ h5 {
     height: 22px;
   }
 
+}
+
+/* Animation Block */
+
+.fade-in-block-1 {
+  opacity: 0;
+  -moz-animation: 0.1s ease-out 0s 1 fadein;
+  animation: 0.1s ease-out 0s 1 fadein;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.fade-in-block-2 {
+  opacity: 0;
+  -moz-animation: 0.5s ease-out 0.1s 1 fadein;
+  animation: 0.5s ease-out 0.1s 1 fadein;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.fade-in-block-3 {
+  opacity: 0;
+  -moz-animation: 0.3s ease-out 0.2s 1 fadein;
+  animation: 0.3s ease-out 0.2s 1 fadein;
+  -webkit-animation-fill-mode:forwards;
+  animation-fill-mode: forwards;
+}
+
+.z-index-anim {
+  /* Prevents animation overruling modal z-index */
+  z-index: -1;
+}
+
+/* Add Animation */
+@-webkit-keyframes fadein {
+  from {opacity:0} 
+  to {opacity:1}
+}
+
+@keyframes fadein {
+  from {opacity:0}
+  to {opacity:1}
 }
 
 /* Campaigns Page */
@@ -4048,7 +4093,7 @@ pre {
   flex: 1 0 auto;
   width: 100%;
   padding: 40px;
-  border-radius: 0;
+  border-radius: 5px;
   border: 2px solid var(--elem_border);
   background-color: var(--bg_colour1);
   transition: 0.3s;

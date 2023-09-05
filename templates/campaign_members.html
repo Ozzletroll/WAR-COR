@@ -10,31 +10,37 @@
 
   <div class="campaigns-content members-content">
 
-    {# Create navigation url bar #}
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
 
-    {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {# Create navigation url bar #}
 
-    {{ page_upper_area.page_upper_area(navigation_urls=urls, 
-                                       is_link=true, 
-                                       searchbar=false,
-                                       current_user=current_user,
-                                       campaign=campaign) }}
+      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
 
-    <div class="campaigns-title">
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=true, 
+                                        searchbar=false,
+                                        current_user=current_user,
+                                        campaign=campaign) }}
 
-      {# Back button #}
-      {% set url = url_for('campaign.campaigns') %}
-      {{ back_button.back_button(url=url, blank=false) }}
+      <div class="campaigns-title">
 
-      <h3 class="campaigns-heading">Edit Members</h3>
+        {# Back button #}
+        {% set url = url_for('campaign.campaigns') %}
+        {{ back_button.back_button(url=url, blank=false) }}
+
+        <h3 class="campaigns-heading">Edit Members</h3>
+      </div>
+      <hr class="campaigns-divider">
+      <p class="flavour-text">CNF-{{campaign.id}}-00 // {{campaign.title}}::Participants </p>
+
     </div>
-    <hr class="campaigns-divider">
-    <p class="flavour-text">CNF-{{campaign.id}}-00 // {{campaign.title}}::Participants </p>
 
     <div class="form-flash">
       {% include 'components/flash.html' %}
     </div>
 
+    <div class="fade-in-block-2">
     <!-- Tab 1 -->
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t1-button">
@@ -128,9 +134,11 @@
       </div>
 
     </div>
+
+  </div>
     
-    <div class="flavour-text-area">
-      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that misusing Campaign Administrator priveleges is a galactic crime, and carries a maximum sentence of 0.031536GS.</p>
+    <div class="flavour-text-area fade-in-block-3">
+      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that misusing Campaign Administrator priveleges is a galactic crime and carries a maximum sentence of 0.031536GS.</p>
       <img src="/static/images/logo-red.png" class="top-logo">
     </div>
       

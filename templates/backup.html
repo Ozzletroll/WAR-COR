@@ -10,29 +10,34 @@
 
   <div class="campaigns-content">
 
-    {# Create navigation url bar #}
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
 
-    {% set urls = [url_for('campaign.campaigns'), 
-                   url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {# Create navigation url bar #}
 
-    {{ page_upper_area.page_upper_area(navigation_urls=urls, 
-                                       is_link=true, 
-                                       searchbar=false,
-                                       current_user=current_user,
-                                       campaign=campaign) }}
+      {% set urls = [url_for('campaign.campaigns'), 
+                    url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
 
-    <div class="campaigns-title">
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=true, 
+                                        searchbar=false,
+                                        current_user=current_user,
+                                        campaign=campaign) }}
 
-      {# Back button #}
-      {% set url = url_for('campaign.campaigns') %}
-      {{ back_button.back_button(url=url, blank=false) }}
+      <div class="campaigns-title">
 
-      <h3 class="campaigns-heading">DATA BACKUP</h1>
+        {# Back button #}
+        {% set url = url_for('campaign.campaigns') %}
+        {{ back_button.back_button(url=url, blank=false) }}
+
+        <h3 class="campaigns-heading">DATA BACKUP</h1>
+      </div>
+      <hr class="campaigns-divider">
+      <p class="flavour-text">UWC-44-{{campaign.id}} // DATA::BACKUP </p>
+
     </div>
-    <hr class="campaigns-divider">
-    <p class="flavour-text">UWC-44-{{campaign.id}} // DATA::BACKUP </p>
 
-    <div class="backup-area">
+    <div class="backup-area fade-in-block-2">
 
       <div class="backup-ctrl export-area">
 
@@ -73,8 +78,13 @@
 
       </form>
 
+      
     </div>
 
+    <div class="flavour-text-area fade-in-block-3">
+      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded not to allow NHP access to UWC backups that contain data from [REDACTED] Class endogenous Cascade events. </p>
+      <img src="/static/images/logo-red.png" class="top-logo">
+    </div>
 
   </div>
 

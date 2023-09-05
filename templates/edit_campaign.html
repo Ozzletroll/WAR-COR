@@ -10,30 +10,34 @@
 
   <div class="campaigns-content">
 
-    {# Create navigation url bar #}
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
 
-    {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {# Create navigation url bar #}
 
-    {{ page_upper_area.page_upper_area(navigation_urls=urls, 
-                                       is_link=true, 
-                                       searchbar=false,
-                                       current_user=current_user,
-                                       campaign=campaign) }}
+      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
 
-    <div class="campaigns-title">
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=true, 
+                                        searchbar=false,
+                                        current_user=current_user,
+                                        campaign=campaign) }}
 
-      {# Back button #}
-      {% set url = url_for('campaign.campaigns') %}
-      {{ back_button.back_button(url=url, blank=false) }}
+      <div class="campaigns-title">
 
-      <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
+        {# Back button #}
+        {% set url = url_for('campaign.campaigns') %}
+        {{ back_button.back_button(url=url, blank=false) }}
+
+        <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
+      </div>
+
+      <hr class="campaigns-divider">
+      <p class="flavour-text">UWC-5-00 // Campaign::Index </p>
+
     </div>
 
-    <hr class="campaigns-divider">
-    <p class="flavour-text">UWC-5-00 // Campaign::Index </p>
-
-
-    <form class="edit-form form-column" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+    <form class="edit-form form-column fade-in-block-2" method="POST" action="{{ url_for('campaign.edit_campaign', campaign_name=campaign.title, campaign_id=campaign.id)}}">
       {{ form.csrf_token }}
 
       <div class="form-container form-container-small">
@@ -128,7 +132,7 @@
       {% include 'components/flash.html' %}
     </div>
 
-    <div class="flavour-text-area">
+    <div class="flavour-text-area fade-in-block-3 z-index-anim">
       <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
       <img src="/static/images/logo-red.png" class="top-logo">
     </div>

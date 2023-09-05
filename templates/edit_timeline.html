@@ -14,29 +14,34 @@
 
     <div class="campaigns-content">
 
-      {# Create navigation url bar #}
+      {# Animation fade in group 1 #}
+      <div class="fade-in-block-1">
 
-      {% set urls = [url_for('campaign.campaigns')] %}
+        {# Create navigation url bar #}
 
-      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
-                                         is_link=true, 
-                                         searchbar=true,
-                                         current_user=current_user,
-                                         campaign=campaign) }}
+        {% set urls = [url_for('campaign.campaigns')] %}
 
-      <div class="campaigns-title">
+        {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                          is_link=true, 
+                                          searchbar=true,
+                                          current_user=current_user,
+                                          campaign=campaign) }}
 
-        {# Blank back button area area. No url needed. #}
-        {% set url = "" %}
-        {{ back_button.back_button(url=url, blank=true) }}
+        <div class="campaigns-title">
 
-        <h3 class="campaigns-heading">{{campaign.title}}</h1>
+          {# Blank back button area area. No url needed. #}
+          {% set url = "" %}
+          {{ back_button.back_button(url=url, blank=true) }}
+
+          <h3 class="campaigns-heading">{{campaign.title}}</h1>
+        </div>
+
+        <hr class="campaigns-divider">
+        <p class="flavour-text timeline-margin">UWC-21-{{campaign.id}} // Campaign::Timeline</p>
+
       </div>
 
-      <hr class="campaigns-divider">
-      <p class="flavour-text timeline-margin">UWC-21-{{campaign.id}} // Campaign::Timeline</p>
-
-      <section class="campaign-entry timeline-upper">
+      <section class="campaign-entry timeline-upper fade-in-block-2">
 
         <!-- Overview and members list -->
         <div class="campaign-entry-container timeline-overview">
@@ -57,14 +62,14 @@
 
       </section>
 
-      <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}" class="campaign-entry new-campaign-area new-event">
+      <a href="{{ url_for('event.add_event', campaign_name=campaign.title, campaign_id=campaign.id) }}" class="campaign-entry new-campaign-area new-event fade-in-block-2">
         <span class="new-campaign-span">
         <h2 class="campaign-entry-title new-campaign-heading">Add New Event</h2>
         </span>
       </a>
 
       <!-- Timeline -->
-      <section class="timeline-centring">
+      <section class="timeline-centring fade-in-block-3">
 
         <div id="timeline-container" class="timeline-container">
 
