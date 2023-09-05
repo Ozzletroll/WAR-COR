@@ -1882,6 +1882,7 @@ h5 {
 
 .table-cell {
   vertical-align: top;
+  padding-right: 10px;
 }
 
 .username-cell {
@@ -1899,7 +1900,7 @@ h5 {
 .callsign-text {
   display: flex;
   flex: 2 1 0px;
-  font-size: min(14px, 3vw);
+  font-size: min(14px, 2.5vw);
   font-weight: 400;
   margin: 0;
   flex-wrap: wrap;
