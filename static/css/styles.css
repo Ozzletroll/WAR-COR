@@ -1662,8 +1662,8 @@ h5 {
 
 .fade-in-block-3 {
   opacity: 0;
-  -moz-animation: 0.3s ease-out 0.2s 1 fadein;
-  animation: 0.3s ease-out 0.2s 1 fadein;
+  -moz-animation: 0.5s ease-out 0.2s 1 fadein;
+  animation: 0.5s ease-out 0.2s 1 fadein;
   -webkit-animation-fill-mode:forwards;
   animation-fill-mode: forwards;
 }
