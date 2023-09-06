@@ -20,6 +20,12 @@ class SearchEngine {
     // Check if old results are still valid
     this.resultsCheck(searchQuery);
 
+    // Clear results and end operation if searchbar cleared
+    if (searchQuery.length == 0){
+      this.results = [];
+      return;
+    }
+
     var monthOuters = document.getElementsByClassName("month-outer");
   
     // Iterate through all month-outer elements
@@ -50,6 +56,11 @@ class SearchEngine {
               headerIndex: headerIndex,
               resultBelow: null,
               scrollTarget: eventHeaders[headerIndex].closest('.timeline-event'),
+              elements: {
+                headerElement: eventHeaders[headerIndex], 
+                rightBranchLabel: eventHeaders[headerIndex].closest('.right-branch-label'), 
+                eventLine: eventHeaders[headerIndex].closest('.event-line'),
+              }
             })
 
             // Append new result object to result list
@@ -57,18 +68,32 @@ class SearchEngine {
 
           }
 
-        
         }
           
-      }
-  
-    }
+      } 
 
-    console.log("End of timeline search function:")
-    console.log(this.results)
+      // Check if month outer has any matching results
+      this.results.forEach((result, index) => {
+
+        // Check if result is from current month outer
+        if (result.outerIndex == outerIndex) {
+          // Reset any styling that other searches may have applied
+          container.style.opacity = "100%";
+        }
+
+        // If month outer has no resuls within it, set opacity to 50%
+        else {
+          container.style.opacity = "50%";
+        }
+  
+      });
+
+    }
 
 
   }
+
+
 
   /**
   * Method to iterate through all current results objects
@@ -85,8 +110,10 @@ class SearchEngine {
 
     });
 
-}
+  }
 
+
+  
 }
 
 
@@ -97,12 +124,32 @@ class Result {
     headerIndex, 
     resultBelow, 
     scrollTarget,
+    elements,
   }) {
     this.elementText = elementText;
     this.outerIndex = outerIndex;
     this.headerIndex = headerIndex;
     this.resultBelow = resultBelow;
     this.scrollTarget = scrollTarget;
+    this.elements = elements;
+  }
+
+  /**
+    * Method to style result object
+    */
+  styleResult(result) {
+
+    result.elements["headerElement"].style.opacity = "100%";
+
+  }
+
+  /**
+  * Method to style negative result object
+  */
+  styleNegativeResult(result) {
+
+    result.elements["headerElement"].style.opacity = "50%";
+
   }
 
 
