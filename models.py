@@ -21,7 +21,7 @@ class UserCampaign(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), primary_key=True)
-    callsign = db.Column(db.String(50))
+    callsign = db.Column(db.String(30))
 
     # Association between UserCampaign -> User
     user = db.relationship('User', back_populates="campaign_associations", viewonly=True)

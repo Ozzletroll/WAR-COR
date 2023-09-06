@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField
-from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError, Length
 from flask_ckeditor import CKEditorField
 import re
 
@@ -35,7 +35,7 @@ def file_format():
 
 
 class RegisterUserForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Password", validators=[DataRequired(), EqualTo("confirm_password",
                                                                              message="Password must match")])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired()])
@@ -43,13 +43,13 @@ class RegisterUserForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Login")
 
 
 class ChangeUsernameForm(FlaskForm):
-    new_username = StringField("New Username", validators=[DataRequired()])
+    new_username = StringField("New Username", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("Update")
 
 
@@ -85,7 +85,7 @@ class AddUserForm(FlaskForm):
 
 
 class ChangeCallsignForm(FlaskForm):
-    callsign = StringField("New Callsign", validators=[DataRequired()])
+    callsign = StringField("New Callsign", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("Update")
     
 
