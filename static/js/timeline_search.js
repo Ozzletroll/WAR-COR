@@ -60,13 +60,13 @@ class Result {
 
 class Day {
   constructor({
-    element,
+    elements,
     dayLine,
     events,
     daysBelow,
     containsPositiveResult,
   }) {
-    this.element = element;
+    this.elements = elements;
     this.dayLine = dayLine;
     this.events = events;
     this.daysBelow = daysBelow;
@@ -80,6 +80,9 @@ class Day {
     const containsPositiveEvent = this.events.some(event => event.positive === true);
     if (containsPositiveEvent) {
       this.containsPositiveResult = true;
+    }
+    else {
+      this.containsPositiveResult = false;
     }
   }
 
@@ -113,7 +116,8 @@ class Day {
     // Set day block opacity to 50% if it contains no positive results
     const anyPositiveEvent = this.events.some(event => event.positive === true);
     if (!anyPositiveEvent) {
-      this.element.style.opacity = fadeValue;
+      this.elements["rightBranchLabel"].style.opacity = fadeValue;
+      this.elements["eventGroupContainer"].style.opacity = fadeValue;
     }
 
     // If day block contains positive results, style each result accordingly
@@ -136,7 +140,8 @@ class Day {
   * Method to clear all styling from search result within the month
   */
   resetStyles() {
-    this.element.style.opacity = "";
+    this.elements["rightBranchLabel"].style.opacity = "";
+    this.elements["eventGroupContainer"].style.opacity = "";
     this.dayLine.style.opacity = "";
 
     this.events.forEach(result => {
@@ -312,7 +317,10 @@ class SearchEngine {
 
         // Create day object instance
         var day = new Day({
-          element: dayContainer,
+          elements: {
+            rightBranchLabel: dayContainer.querySelector(".right-branch-label"),
+            eventGroupContainer: dayContainer.querySelector(".event-group-container"),
+          },
           dayLine: dayContainer.querySelector(".event-line"),
           events: [],
           daysBelow: false,
@@ -387,15 +395,18 @@ class SearchEngine {
 
   applyStyles() {
 
+    // Finalise data structure
     this.months.forEach(month => {
 
       month.days.forEach(day => {
-
+        // For each day in month, determine if day contains positive results
         day.checkDaysResults();
+        // For each day in month, determine if each event has a positive result after it in the block
         day.checkResultsBelow();
-
       });
 
+      // For each month, check if each day within month has a day containing positive results after it
+      month.checkDaysBelow();
 
 
       // Set styling for each month block
