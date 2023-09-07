@@ -154,19 +154,19 @@
                   {% for day in month.days %}
 
                       {% if loop.length == 1 %}
-                      <div class="timeline-day-container">
+                      <div class="timeline-day-outer">
                         <div class="event-line event-line-solo"></div>
                       {% elif loop.first  %}
-                      <div class="timeline-day-container">
+                      <div class="timeline-day-outer">
                         <div class="event-line event-line-top"></div>
                       {% elif loop.last and loop.length == 2 %}
-                      <div class="timeline-day-container day-container-edgecase">
+                      <div class="timeline-day-outer day-container-edgecase">
                         <div class="event-line event-line-bottom"></div>
                       {% elif loop.last %}
-                      <div class="timeline-day-container day-container-bottom">
+                      <div class="timeline-day-outer day-container-bottom">
                         <div class="event-line event-line-bottom"></div>
                       {% else %}
-                      <div class="timeline-day-container day-container-mid">
+                      <div class="timeline-day-outer day-container-mid">
                         <div class="event-line event-line-mid"></div>
                       {% endif %}
 

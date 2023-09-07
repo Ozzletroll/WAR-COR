@@ -3046,6 +3046,15 @@ h5 {
   flex: 1 0 0;
 }
 
+/* Different class name to .timeline=day-container 
+for selection in timeline_search.js */
+.timeline-day-outer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+  flex: 1 0 0;
+}
+
 .timeline-day-container {
   display: flex;
   flex-direction: row;

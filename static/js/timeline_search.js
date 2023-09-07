@@ -24,7 +24,7 @@ class Result {
     * Method to style result object
     */
   stylePositive() {
-
+  // Reset styling for self
     this.styleReset();
 
     if (this.resultsBelow == false) {
@@ -36,9 +36,8 @@ class Result {
   * Method to style negative result object
   */
   styleNegative() {
-
+    // Reset styling for self
     this.styleReset();
-
     // Style downwards line if there are no results below it in the block
     if (this.resultsBelow == false) {
       this.elements["eventLine"].style.opacity = fadeValue;
@@ -46,7 +45,6 @@ class Result {
 
     this.elements["eventOutline"].style.opacity = fadeValue;
     this.elements["rightBranchLabel"].style.opacity = fadeValue;
-
   }
 
   styleReset() {
@@ -57,6 +55,98 @@ class Result {
   }
 
 }
+
+
+
+class Day {
+  constructor({
+    element,
+    dayLine,
+    events,
+    daysBelow,
+    containsPositiveResult,
+  }) {
+    this.element = element;
+    this.dayLine = dayLine;
+    this.events = events;
+    this.daysBelow = daysBelow;
+    this.containsPositiveResult = containsPositiveResult;
+  }
+
+  /**
+  * Method to determine if day contains any events which have the property event.positive
+  */
+  checkDaysResults() {
+    const containsPositiveEvent = this.events.some(event => event.positive === true);
+    if (containsPositiveEvent) {
+      this.containsPositiveResult = true;
+    }
+  }
+
+
+  /**
+    * Method to determine if each event in day has elements below it
+    * in order to determine appropriate line styling.
+    */
+  checkResultsBelow() {
+    // Set the resultsBelow attribute for days event objects to "true" if there are positive results below it
+    this.events.forEach((result, index) => {
+      result.resultsBelow = this.events.some((nextResult, nextIndex) =>
+        nextIndex > index && nextResult.positive
+      );
+    });
+  }
+
+  /**
+  * Method to style all search results within month
+  */
+  setStyle() {
+
+    // Reset day opacity
+    this.resetStyles();
+
+    // If there are no days containing results below, set vertical line opacity to 50%
+    if (this.daysBelow == false) {
+      this.dayLine.style.opacity = fadeValue;
+    }
+
+    // Set day block opacity to 50% if it contains no positive results
+    const anyPositiveEvent = this.events.some(event => event.positive === true);
+    if (!anyPositiveEvent) {
+      this.element.style.opacity = fadeValue;
+    }
+
+    // If day block contains positive results, style each result accordingly
+    if (anyPositiveEvent) { 
+
+      // Reset any styling that may already be applied to result
+      this.events.forEach(result => {
+        result.styleReset();
+        if (result.positive) {
+          result.stylePositive();
+        }
+        else {
+          result.styleNegative();
+        }
+      });
+    }
+  }
+
+  /**
+  * Method to clear all styling from search result within the month
+  */
+  resetStyles() {
+    this.element.style.opacity = "";
+    this.dayLine.style.opacity = "";
+
+    this.events.forEach(result => {
+      result.styleReset();
+    });
+  }
+
+}
+
+
 
 
 class Month {
@@ -74,7 +164,7 @@ class Month {
   * Method to determine if Month has any days that contain positive
   * search query results.
   */
-  checkDays() {
+  checkDaysResults() {
 
     const hasPositiveEvent = this.days.some((day) => {
       const positiveEvent = day.events.find((event) => event.positive === true);
@@ -90,6 +180,23 @@ class Month {
 
   }
 
+
+   /**
+    * Method to determine if each day object in this.days has 
+    * a day containing positive results below it.
+    */
+   checkDaysBelow() {
+    this.days.forEach((day, index) => {
+
+      day.checkResultsBelow();
+
+      day.daysBelow = this.days.some((nextDay, nextIndex) =>
+        nextIndex > index && nextDay.containsPositiveResult
+      );
+    });
+  }
+
+
   /**
   * Method to style all search results within month
   */
@@ -97,86 +204,47 @@ class Month {
 
       // Reset month opacity
       this.element.style.opacity = "";
-  
-      this.checkDays();
 
-      if (this.containsPositiveResult == true) {
+      // Check if each day object contains positive results
+      this.checkDaysResults();
+
+      // Check if each day object has day objects containing positive results below it.
+      this.checkDaysBelow();
+
+      // If no positive results, set to fade value
+      if (this.containsPositiveResult == false) {
         this.element.style.opacity = fadeValue;
+        this.days.forEach(day => {
+          day.resetStyles();
+        });
       }
-  
+      // If day block does contain positive results, style each day within month
+      else {
+        this.days.forEach(day => {
+          day.resetStyles();
+          day.setStyle();
+        });
+      }
+      
+    
     }
 
-}
+    resetStyles() {
+      // Reset month opacity
+      this.element.style.opacity = "";
 
-
-
-class Day {
-  constructor({
-    element,
-    events,
-  }) {
-    this.element = element;
-    this.events = events;
-  }
-
-  /**
-    * Method to determine if each event in month has elements below it
-    * in order to determine appropriate line styling.
-    */
-  checkResultsBelow() {
-    // Set the resultsBelow attribute to "true" if there are positive results below it
-    this.events.forEach((result, index) => {
-      result.resultsBelow = this.events.some((nextResult, nextIndex) =>
-        nextIndex > index && nextResult.positive
-      );
-    });
-
-  }
-
-
-  /**
-  * Method to style all search results within month
-  */
-  setStyle() {
-
-    // Reset month opacity
-    this.element.style.opacity = "";
-    this.resetAllStyles();
-
-    // Set month block opacity to 50% if it contains no positive results
-    const anyPositiveEvent = this.events.some(event => event.positive === true);
-    if (!anyPositiveEvent) {
-      this.element.style.opacity = fadeValue;
-    }
-
-    // If a block contains positive results, style each result accordingly
-    if (anyPositiveEvent) { 
-
-      // Reset any styling that may already be applied to result
-      this.events.forEach(result => {
-        result.styleReset();
-
-        if (result.positive) {
-          result.stylePositive();
-        }
-        else {
-          result.styleNegative();
-        }
+      // Reset styles for all days
+      this.days.forEach(day => {
+        day.resetStyles();
       });
     }
-  }
 
-
-  /**
-  * Method to clear all styling from search result within the month
-  */
-  resetAllStyles() {
-    this.events.forEach(result => {
-      result.styleReset();
-    });
-  }
 
 }
+
+
+
+
 
 /**
 * Search engine class
@@ -208,13 +276,16 @@ class SearchEngine {
 
       // Reset styling for each month block
       this.months.forEach(month => {
-        month.resetAllStyles();
+        month.resetStyles();
       });
       // Clear all existing search attributes
       this.months = [];
       this.results = [];
       return;
     }
+
+    this.months = [];
+    this.results = [];
 
     var monthOuters = document.getElementsByClassName("month-outer");
   
@@ -231,7 +302,7 @@ class SearchEngine {
       })
 
       // Get all the days within the month
-      var days = monthOuter.querySelectorAll(".timeline-day-container");
+      var days = monthOuter.querySelectorAll(".timeline-day-outer");
 
       // Iterate through all days
       for (var dayIndex = 0; dayIndex < days.length; dayIndex++) {
@@ -242,7 +313,10 @@ class SearchEngine {
         // Create day object instance
         var day = new Day({
           element: dayContainer,
+          dayLine: dayContainer.querySelector(".event-line"),
           events: [],
+          daysBelow: false,
+          containsPositiveEvent: false,
         })
 
         // Find all the elements with the class "event-header" within the container
@@ -297,31 +371,37 @@ class SearchEngine {
         month.days.push(day);
 
       }
-
-      
+    
       // Add month to searchEngine month list
       this.months.push(month);
 
     }
 
 
-    // Set styling for each month block
-    this.months.forEach(month => {
-
-      month.setStyle();
-      
-      // Set styling for each day within month
-      month.days.forEach(day => {
-        day.checkResultsBelow();
-        day.setStyle();
-      });
-
-    });
-
+    // Apply styles to all elements
+    this.applyStyles();
     
 
   }
 
+
+  applyStyles() {
+
+    this.months.forEach(month => {
+
+      month.days.forEach(day => {
+
+        day.checkDaysResults();
+        day.checkResultsBelow();
+
+      });
+
+
+
+      // Set styling for each month block
+      month.setStyle();
+    });
+  }
 
 
   /**
