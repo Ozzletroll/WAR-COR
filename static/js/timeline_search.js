@@ -24,7 +24,7 @@ class Result {
     * Method to style result object
     */
   stylePositive() {
-
+  // Reset styling for self
     this.styleReset();
 
     if (this.resultsBelow == false) {
@@ -36,9 +36,8 @@ class Result {
   * Method to style negative result object
   */
   styleNegative() {
-
+    // Reset styling for self
     this.styleReset();
-
     // Style downwards line if there are no results below it in the block
     if (this.resultsBelow == false) {
       this.elements["eventLine"].style.opacity = fadeValue;
@@ -46,7 +45,6 @@ class Result {
 
     this.elements["eventOutline"].style.opacity = fadeValue;
     this.elements["rightBranchLabel"].style.opacity = fadeValue;
-
   }
 
   styleReset() {
@@ -58,58 +56,72 @@ class Result {
 
 }
 
-// NOTE: Refactor this to have month.days attribute, that then contains day.events.
-// This will allow the day marker to get greyed out properly when a day contains 
-// no positive matches.
 
-// Search for "op" and look at "ASD" event for example of bugged behaviour!
 
-class Month {
+class Day {
   constructor({
     element,
+    dayLine,
     events,
+    daysBelow,
+    containsPositiveResult,
   }) {
     this.element = element;
+    this.dayLine = dayLine;
     this.events = events;
+    this.daysBelow = daysBelow;
+    this.containsPositiveResult = containsPositiveResult;
   }
 
   /**
-    * Method to determine if each event in month has elements below it
+  * Method to determine if day contains any events which have the property event.positive
+  */
+  checkDaysResults() {
+    const containsPositiveEvent = this.events.some(event => event.positive === true);
+    if (containsPositiveEvent) {
+      this.containsPositiveResult = true;
+    }
+  }
+
+
+  /**
+    * Method to determine if each event in day has elements below it
     * in order to determine appropriate line styling.
     */
   checkResultsBelow() {
-    // Set the resultsBelow attribute to "true" if there are positive results below it
+    // Set the resultsBelow attribute for days event objects to "true" if there are positive results below it
     this.events.forEach((result, index) => {
       result.resultsBelow = this.events.some((nextResult, nextIndex) =>
         nextIndex > index && nextResult.positive
       );
     });
-
   }
-
 
   /**
   * Method to style all search results within month
   */
   setStyle() {
 
-    // Reset month opacity
-    this.element.style.opacity = "";
-    this.resetAllStyles();
+    // Reset day opacity
+    this.resetStyles();
 
-    // Set month block opacity to 50% if it contains no positive results
+    // If there are no days containing results below, set vertical line opacity to 50%
+    if (this.daysBelow == false) {
+      this.dayLine.style.opacity = fadeValue;
+    }
+
+    // Set day block opacity to 50% if it contains no positive results
     const anyPositiveEvent = this.events.some(event => event.positive === true);
     if (!anyPositiveEvent) {
       this.element.style.opacity = fadeValue;
     }
 
-    // If a block contains positive results, style each result accordingly
+    // If day block contains positive results, style each result accordingly
     if (anyPositiveEvent) { 
 
       // Reset any styling that may already be applied to result
       this.events.forEach(result => {
         result.styleReset();
-
         if (result.positive) {
           result.stylePositive();
         }
@@ -120,17 +132,119 @@ class Month {
     }
   }
 
-
   /**
   * Method to clear all styling from search result within the month
   */
-  resetAllStyles() {
+  resetStyles() {
+    this.element.style.opacity = "";
+    this.dayLine.style.opacity = "";
+
     this.events.forEach(result => {
       result.styleReset();
     });
   }
 
 }
+
+
+
+
+class Month {
+  constructor({
+    element,
+    days,
+    containsPositiveResult,
+  }) {
+    this.element = element;
+    this.days = days;
+    this.containsPositiveResult = containsPositiveResult;
+  }
+
+  /**
+  * Method to determine if Month has any days that contain positive
+  * search query results.
+  */
+  checkDaysResults() {
+
+    const hasPositiveEvent = this.days.some((day) => {
+      const positiveEvent = day.events.find((event) => event.positive === true);
+      return positiveEvent !== undefined;
+    });
+  
+    if (hasPositiveEvent) {
+      this.containsPositiveResult = true;
+    } 
+    else {
+      this.containsPositiveResult = false;
+    }
+
+  }
+
+
+   /**
+    * Method to determine if each day object in this.days has 
+    * a day containing positive results below it.
+    */
+   checkDaysBelow() {
+    this.days.forEach((day, index) => {
+
+      day.checkResultsBelow();
+
+      day.daysBelow = this.days.some((nextDay, nextIndex) =>
+        nextIndex > index && nextDay.containsPositiveResult
+      );
+    });
+  }
+
+
+  /**
+  * Method to style all search results within month
+  */
+    setStyle() {
+
+      // Reset month opacity
+      this.element.style.opacity = "";
+
+      // Check if each day object contains positive results
+      this.checkDaysResults();
+
+      // Check if each day object has day objects containing positive results below it.
+      this.checkDaysBelow();
+
+      // If no positive results, set to fade value
+      if (this.containsPositiveResult == false) {
+        this.element.style.opacity = fadeValue;
+        this.days.forEach(day => {
+          day.resetStyles();
+        });
+      }
+      // If day block does contain positive results, style each day within month
+      else {
+        this.days.forEach(day => {
+          day.resetStyles();
+          day.setStyle();
+        });
+      }
+      
+    
+    }
+
+    resetStyles() {
+      // Reset month opacity
+      this.element.style.opacity = "";
+
+      // Reset styles for all days
+      this.days.forEach(day => {
+        day.resetStyles();
+      });
+    }
+
+
+}
+
+
+
+
 
 /**
 * Search engine class
@@ -162,7 +276,7 @@ class SearchEngine {
 
       // Reset styling for each month block
       this.months.forEach(month => {
-        month.resetAllStyles();
+        month.resetStyles();
       });
       // Clear all existing search attributes
       this.months = [];
@@ -170,87 +284,124 @@ class SearchEngine {
       return;
     }
 
+    this.months = [];
+    this.results = [];
+
     var monthOuters = document.getElementsByClassName("month-outer");
   
     // Iterate through all month-outer elements
     for (var outerIndex = 0; outerIndex < monthOuters.length; outerIndex++) {
 
       // Get the current month-outer element
-      var container = monthOuters[outerIndex];
+      var monthOuter = monthOuters[outerIndex];
 
       var month = new Month({
-        element: container,
-        events: [],
+        element: monthOuter,
+        days: [],
+        containsPositiveResult: false,
       })
 
-      // Find all the elements with the class "event-header" within the container
-      var eventHeaders = container.querySelectorAll(".event-header");
-  
-      // Iterate through all the event-header elements
-      for (var headerIndex = 0; headerIndex < eventHeaders.length; headerIndex++) {
-        var eventHeader = eventHeaders[headerIndex];
-        var elementText = eventHeader.innerText.toLowerCase();
+      // Get all the days within the month
+      var days = monthOuter.querySelectorAll(".timeline-day-outer");
 
-        // Get result elements for styling
-        var outerContainer = eventHeaders[headerIndex].closest('.event-outer-container');
-        var rightBranchLabel = outerContainer.previousElementSibling;
-        var eventLine = rightBranchLabel.previousElementSibling;
-  
-        // Create instance of result object
-        var result = new Result({
-          positive: false,
-          elementText: elementText,
-          outerIndex: outerIndex,
-          headerIndex: headerIndex,
-          resultsBelow: false,
-          scrollTarget: eventHeaders[headerIndex].closest('.timeline-event'),
-          elements: {
-            monthOuter: container,
-            headerElement: eventHeaders[headerIndex],
-            eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
-            rightBranchLabel: rightBranchLabel, 
-            eventLine: eventLine,
-          }
+      // Iterate through all days
+      for (var dayIndex = 0; dayIndex < days.length; dayIndex++) {
+
+        // Current day
+        var dayContainer = days[dayIndex];
+
+        // Create day object instance
+        var day = new Day({
+          element: dayContainer,
+          dayLine: dayContainer.querySelector(".event-line"),
+          events: [],
+          daysBelow: false,
+          containsPositiveEvent: false,
         })
 
-        // Compare searchQuery against event header text
-        if (elementText.includes(searchQuery)) {
+        // Find all the elements with the class "event-header" within the container
+        var eventHeaders = dayContainer.querySelectorAll(".event-header");
+          
+        // Iterate through all the event-header elements
+        for (var headerIndex = 0; headerIndex < eventHeaders.length; headerIndex++) {
+          var eventHeader = eventHeaders[headerIndex];
+          var elementText = eventHeader.innerText.toLowerCase();
 
-          // Check if result is already in results array
-          var exists = this.results.some(result => result.elementText === elementText);
-          if (!exists) {
-            // Append new result object to searchEngine result array
-            this.results.push(result)
+          // Get result elements for styling
+          var outerContainer = eventHeaders[headerIndex].closest('.event-outer-container');
+          var rightBranchLabel = outerContainer.previousElementSibling;
+          var eventLine = rightBranchLabel.previousElementSibling;
+
+          // Create instance of result object
+          var result = new Result({
+            positive: false,
+            elementText: elementText,
+            outerIndex: outerIndex,
+            headerIndex: headerIndex,
+            resultsBelow: false,
+            scrollTarget: eventHeaders[headerIndex].closest('.timeline-event'),
+            elements: {
+              monthOuter: monthOuter,
+              headerElement: eventHeaders[headerIndex],
+              eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
+              rightBranchLabel: rightBranchLabel, 
+              eventLine: eventLine,
+            }
+          })
+
+          // Compare searchQuery against event header text
+          if (elementText.includes(searchQuery)) {
+
+            // Check if result is already in results array
+            var exists = this.results.some(result => result.elementText === elementText);
+            if (!exists) {
+              // Append new result object to searchEngine result array
+              this.results.push(result)
+            }
+
+            // Flag result as positive query match
+            result.positive = true;
           }
 
-          // Flag result as positive query match
-          result.positive = true;
-
-          // Append new result object to month objects events array
-          month.events.push(result);
+          // Append new result object to day objects events array
+          day.events.push(result); 
         }
 
-        // If result does not match query
-        else {
-          // Append new result object to month objects positive results array
-          month.events.push(result);
-        }
-          
+        // Append day object to month objects day array
+        month.days.push(day);
+
       }
-      
+    
       // Add month to searchEngine month list
       this.months.push(month);
 
     }
 
-    // Set styling for each month block
-    this.months.forEach(month => {
-      month.checkResultsBelow();
-      month.setStyle();
-    });
+
+    // Apply styles to all elements
+    this.applyStyles();
+    
 
   }
 
+
+  applyStyles() {
+
+    this.months.forEach(month => {
+
+      month.days.forEach(day => {
+
+        day.checkDaysResults();
+        day.checkResultsBelow();
+
+      });
+
+
+
+      // Set styling for each month block
+      month.setStyle();
+    });
+  }
 
 
   /**

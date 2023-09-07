@@ -2857,6 +2857,7 @@ h5 {
   align-items: flex-start;
   justify-content: left;
   flex: 1 0 1;
+  transition: 0.5s;
 }
 
 .month-between {
@@ -3046,6 +3047,15 @@ h5 {
   flex: 1 0 0;
 }
 
+/* Different class name to .timeline=day-container 
+for selection in timeline_search.js */
+.timeline-day-outer {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25px;
+  flex: 1 0 0;
+}
+
 .timeline-day-container {
   display: flex;
   flex-direction: row;
@@ -3059,6 +3069,7 @@ h5 {
   border: 1px solid var(--bright_red);
   margin-top: 13px;
   box-sizing: border-box;
+  margin-left: -1px;
 }
 
 .event-line-top {
@@ -3299,6 +3310,10 @@ h5 {
 
   .event-offset {
     margin-left: 0;
+  }
+
+  .right-branch-label {
+    display: none;
   }
 
 }
