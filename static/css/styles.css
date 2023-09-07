@@ -2955,6 +2955,10 @@ h5 {
   transition: 0.5s;
 }
 
+.right-branch-label {
+  transition: 0.5S;
+}
+
 .date-label-area {
   display: flex;
   flex: 1 0 0;
@@ -3070,6 +3074,7 @@ for selection in timeline_search.js */
   margin-top: 13px;
   box-sizing: border-box;
   margin-left: -1px;
+  transition: 0.5s;
 }
 
 .event-line-top {
