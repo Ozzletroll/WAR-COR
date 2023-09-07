@@ -50,6 +50,7 @@ class Result {
   }
 
   styleReset() {
+    this.elements["headerElement"].style.opacity = "";
     this.elements["eventOutline"].style.opacity = "";
     this.elements["eventLine"].style.opacity = "";
     this.elements["rightBranchLabel"].style.opacity = "";
