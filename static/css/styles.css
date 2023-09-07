@@ -2857,6 +2857,7 @@ h5 {
   align-items: flex-start;
   justify-content: left;
   flex: 1 0 1;
+  transition: 0.5s;
 }
 
 .month-between {
@@ -3068,6 +3069,7 @@ for selection in timeline_search.js */
   border: 1px solid var(--bright_red);
   margin-top: 13px;
   box-sizing: border-box;
+  margin-left: -1px;
 }
 
 .event-line-top {
@@ -3308,6 +3310,10 @@ for selection in timeline_search.js */
 
   .event-offset {
     margin-left: 0;
+  }
+
+  .right-branch-label {
+    display: none;
   }
 
 }
