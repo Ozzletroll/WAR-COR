@@ -2848,6 +2848,7 @@ h5 {
   justify-content: center;
   margin-top: 150px;
   margin-bottom: 25px;
+  filter: drop-shadow(1px 2px 3px var(--elem_shadow));
 }
 
 .month-outer {
@@ -2856,7 +2857,6 @@ h5 {
   align-items: flex-start;
   justify-content: left;
   flex: 1 0 1;
-  filter: drop-shadow(1px 2px 3px var(--elem_shadow));
 }
 
 .month-between {
