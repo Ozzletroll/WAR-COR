@@ -58,13 +58,59 @@ class Result {
 
 }
 
-// NOTE: Refactor this to have month.days attribute, that then contains day.events.
-// This will allow the day marker to get greyed out properly when a day contains 
-// no positive matches.
-
-// Search for "op" and look at "ASD" event for example of bugged behaviour!
 
 class Month {
+  constructor({
+    element,
+    days,
+    containsPositiveResult,
+  }) {
+    this.element = element;
+    this.days = days;
+    this.containsPositiveResult = containsPositiveResult;
+  }
+
+  /**
+  * Method to determine if Month has any days that contain positive
+  * search query results.
+  */
+  checkDays() {
+
+    const hasPositiveEvent = this.days.some((day) => {
+      const positiveEvent = day.events.find((event) => event.positive === true);
+      return positiveEvent !== undefined;
+    });
+  
+    if (hasPositiveEvent) {
+      this.containsPositiveResult = true;
+    } 
+    else {
+      this.containsPositiveResult = false;
+    }
+
+  }
+
+  /**
+  * Method to style all search results within month
+  */
+    setStyle() {
+
+      // Reset month opacity
+      this.element.style.opacity = "";
+  
+      this.checkDays();
+
+      if (this.containsPositiveResult == true) {
+        this.element.style.opacity = fadeValue;
+      }
+  
+    }
+
+}
+
+
+
+class Day {
   constructor({
     element,
     events,
@@ -176,78 +222,103 @@ class SearchEngine {
     for (var outerIndex = 0; outerIndex < monthOuters.length; outerIndex++) {
 
       // Get the current month-outer element
-      var container = monthOuters[outerIndex];
+      var monthOuter = monthOuters[outerIndex];
 
       var month = new Month({
-        element: container,
-        events: [],
+        element: monthOuter,
+        days: [],
+        containsPositiveResult: false,
       })
 
-      // Find all the elements with the class "event-header" within the container
-      var eventHeaders = container.querySelectorAll(".event-header");
-  
-      // Iterate through all the event-header elements
-      for (var headerIndex = 0; headerIndex < eventHeaders.length; headerIndex++) {
-        var eventHeader = eventHeaders[headerIndex];
-        var elementText = eventHeader.innerText.toLowerCase();
+      // Get all the days within the month
+      var days = monthOuter.querySelectorAll(".timeline-day-container");
 
-        // Get result elements for styling
-        var outerContainer = eventHeaders[headerIndex].closest('.event-outer-container');
-        var rightBranchLabel = outerContainer.previousElementSibling;
-        var eventLine = rightBranchLabel.previousElementSibling;
-  
-        // Create instance of result object
-        var result = new Result({
-          positive: false,
-          elementText: elementText,
-          outerIndex: outerIndex,
-          headerIndex: headerIndex,
-          resultsBelow: false,
-          scrollTarget: eventHeaders[headerIndex].closest('.timeline-event'),
-          elements: {
-            monthOuter: container,
-            headerElement: eventHeaders[headerIndex],
-            eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
-            rightBranchLabel: rightBranchLabel, 
-            eventLine: eventLine,
-          }
+      // Iterate through all days
+      for (var dayIndex = 0; dayIndex < days.length; dayIndex++) {
+
+        // Current day
+        var dayContainer = days[dayIndex];
+
+        // Create day object instance
+        var day = new Day({
+          element: dayContainer,
+          events: [],
         })
 
-        // Compare searchQuery against event header text
-        if (elementText.includes(searchQuery)) {
+        // Find all the elements with the class "event-header" within the container
+        var eventHeaders = dayContainer.querySelectorAll(".event-header");
+          
+        // Iterate through all the event-header elements
+        for (var headerIndex = 0; headerIndex < eventHeaders.length; headerIndex++) {
+          var eventHeader = eventHeaders[headerIndex];
+          var elementText = eventHeader.innerText.toLowerCase();
 
-          // Check if result is already in results array
-          var exists = this.results.some(result => result.elementText === elementText);
-          if (!exists) {
-            // Append new result object to searchEngine result array
-            this.results.push(result)
+          // Get result elements for styling
+          var outerContainer = eventHeaders[headerIndex].closest('.event-outer-container');
+          var rightBranchLabel = outerContainer.previousElementSibling;
+          var eventLine = rightBranchLabel.previousElementSibling;
+
+          // Create instance of result object
+          var result = new Result({
+            positive: false,
+            elementText: elementText,
+            outerIndex: outerIndex,
+            headerIndex: headerIndex,
+            resultsBelow: false,
+            scrollTarget: eventHeaders[headerIndex].closest('.timeline-event'),
+            elements: {
+              monthOuter: monthOuter,
+              headerElement: eventHeaders[headerIndex],
+              eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
+              rightBranchLabel: rightBranchLabel, 
+              eventLine: eventLine,
+            }
+          })
+
+          // Compare searchQuery against event header text
+          if (elementText.includes(searchQuery)) {
+
+            // Check if result is already in results array
+            var exists = this.results.some(result => result.elementText === elementText);
+            if (!exists) {
+              // Append new result object to searchEngine result array
+              this.results.push(result)
+            }
+
+            // Flag result as positive query match
+            result.positive = true;
           }
 
-          // Flag result as positive query match
-          result.positive = true;
-
-          // Append new result object to month objects events array
-          month.events.push(result);
+          // Append new result object to day objects events array
+          day.events.push(result); 
         }
 
-        // If result does not match query
-        else {
-          // Append new result object to month objects positive results array
-          month.events.push(result);
-        }
-          
+        // Append day object to month objects day array
+        month.days.push(day);
+
       }
+
       
       // Add month to searchEngine month list
       this.months.push(month);
 
     }
 
+
     // Set styling for each month block
     this.months.forEach(month => {
-      month.checkResultsBelow();
+
       month.setStyle();
+      
+      // Set styling for each day within month
+      month.days.forEach(day => {
+        day.checkResultsBelow();
+        day.setStyle();
+      });
+
     });
+
+    
 
   }
 
