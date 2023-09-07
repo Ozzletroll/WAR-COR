@@ -38,24 +38,29 @@ class Result {
 
     this.styleReset();
 
+    // Style downwards line if there are no results below it in the block
     if (this.resultsBelow == false) {
       this.elements["eventLine"].style.opacity = "50%";
     }
 
-    this.elements["headerElement"].style.opacity = "50%";
+    this.elements["eventOutline"].style.opacity = "50%";
     this.elements["rightBranchLabel"].style.opacity = "50%";
 
   }
 
   styleReset() {
-    this.elements["headerElement"].style.opacity = "";
+    this.elements["eventOutline"].style.opacity = "";
     this.elements["eventLine"].style.opacity = "";
     this.elements["rightBranchLabel"].style.opacity = "";
   }
 
 }
 
+// NOTE: Refactor this to have month.days attribute, that then contains day.events.
+// This will allow the day marker to get greyed out properly when a day contains 
+// no positive matches.
 
+// Search for "op" and look at "ASD" event for example of bugged behaviour!
 
 class Month {
   constructor({
@@ -197,7 +202,8 @@ class SearchEngine {
           scrollTarget: eventHeaders[headerIndex].closest('.timeline-event'),
           elements: {
             monthOuter: container,
-            headerElement: eventHeaders[headerIndex], 
+            headerElement: eventHeaders[headerIndex],
+            eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
             rightBranchLabel: rightBranchLabel, 
             eventLine: eventLine,
           }
