@@ -1,3 +1,6 @@
+// Opacity value for negative result elements
+const fadeValue = "30%";
+
 class Result {
   constructor({
     positive,
@@ -24,10 +27,8 @@ class Result {
 
     this.styleReset();
 
-    this.elements["headerElement"].style.opacity = "100%";
-
     if (this.resultsBelow == false) {
-      this.elements["eventLine"].style.opacity = "50%";
+      this.elements["eventLine"].style.opacity = fadeValue;
     }
   }
 
@@ -40,11 +41,11 @@ class Result {
 
     // Style downwards line if there are no results below it in the block
     if (this.resultsBelow == false) {
-      this.elements["eventLine"].style.opacity = "50%";
+      this.elements["eventLine"].style.opacity = fadeValue;
     }
 
-    this.elements["eventOutline"].style.opacity = "50%";
-    this.elements["rightBranchLabel"].style.opacity = "50%";
+    this.elements["eventOutline"].style.opacity = fadeValue;
+    this.elements["rightBranchLabel"].style.opacity = fadeValue;
 
   }
 
@@ -98,7 +99,7 @@ class Month {
     // Set month block opacity to 50% if it contains no positive results
     const anyPositiveEvent = this.events.some(event => event.positive === true);
     if (!anyPositiveEvent) {
-      this.element.style.opacity = "50%";
+      this.element.style.opacity = fadeValue;
     }
 
     // If a block contains positive results, style each result accordingly
@@ -133,6 +134,8 @@ class Month {
 /**
 * Search engine class
 * Takes the search bar input element in the constructor.
+* Creates a list of results, as well as formats results into
+* Month/Day/Events structure.
 */
 class SearchEngine {
   constructor(searchBar) {
