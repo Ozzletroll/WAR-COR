@@ -1627,7 +1627,7 @@ h5 {
 }
 
 .searchbar-button .icon-colour-var {
-  fill: var(--darker_red);
+  fill: var(--text_header_dark);
 }
 
 .searchbar-button:hover .icon-colour-var {
