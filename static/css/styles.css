@@ -1687,7 +1687,7 @@ p {
 
 @media screen and (max-width: 500px) {
 
-  .search-bar {
+  .searchbar-border{
     display: none;
   }
   
@@ -2320,6 +2320,8 @@ p {
   padding: 0;
   width: 100%;
   text-align: left;
+  color: var(--text_header);
+  margin: 0;
 }
 
 .user-campaigns-headings {
@@ -2329,6 +2331,7 @@ p {
   text-transform: uppercase;
   max-width: 340px;
   color: var(--text_dark);
+  margin: 0;
 }
 
 .callsign-entry-area {
