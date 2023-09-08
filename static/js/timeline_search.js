@@ -263,6 +263,7 @@ class SearchEngine {
     this.hitsCounter = hitsCounter;
     this.results = [];
     this.months = [];
+    this.searchQuery = this.searchBar.value.toLowerCase();
   }
 
   /**
@@ -272,13 +273,13 @@ class SearchEngine {
   */
   timelineSearch() {
 
-    var searchQuery = this.searchBar.value.toLowerCase();
+    this.searchQuery = this.searchBar.value.toLowerCase();
 
     // Check if old results are still valid
-    this.resultsCheck(searchQuery);
+    this.resultsCheck(this.searchQuery);
 
     // Clear results and end operation if searchbar cleared
-    if (searchQuery.length == 0){
+    if (this.searchQuery.length == 0){
 
       // Reset styling for each month block
       this.months.forEach(month => {
@@ -360,7 +361,7 @@ class SearchEngine {
           })
 
           // Compare searchQuery against event header text
-          if (elementText.includes(searchQuery)) {
+          if (elementText.includes(this.searchQuery)) {
 
             // Check if result is already in results array
             var exists = this.results.some(result => result.elementText === elementText);
@@ -442,7 +443,12 @@ class SearchEngine {
   * Method to update ui hits counter
   */
   updateUI() {
-    this.hitsCounter.innerText = `${this.results.length} EVENTS`;
+    if (this.searchQuery.length == 0) {
+      this.hitsCounter.innerText = initialValue;
+    }
+    else {
+      this.hitsCounter.innerText = `${this.results.length} EVENTS`;
+    }
   }
 
 }
@@ -453,6 +459,7 @@ class SearchEngine {
 // Get searchbar and create search engine
 const searchBar = document.getElementById("search-bar");
 const hitsCounter = document.getElementById("hits-counter");
+const initialValue = hitsCounter.innerText;
 const searchEngine = new SearchEngine(searchBar, hitsCounter)
 
 // Add event listener to the input field

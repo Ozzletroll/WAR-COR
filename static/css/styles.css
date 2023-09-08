@@ -280,7 +280,7 @@ p {
   top: 0;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 1;
+  z-index: 3;
   box-shadow: 0px 1px 1px var(--elem_shadow);
 }
 
@@ -1592,25 +1592,47 @@ h5 {
   position: sticky;
   position: -webkit-sticky;
   top: 54px;
-  left: 100%;
+  left: 100vw;
   width: 350px;
   height: 80px;
   padding: 0px 1px 1px 1px;
-  background-color: var(--elem_bright);
+  background-color: var(--elem_mid);
   z-index: 1;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-bottom: -84px;
+  transform: translateX(310px);
+  transition: 0.3s;
 }
 
 .searchbar-outer {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 10px;
   background-color: var(--bg_colour1);
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
 }
 
+.searchbar-button {
+  display: flex;
+  height: 100%;
+  padding: 5px 10px;
+  background-color: transparent;
+  border: none;
+  transition: 0.3s;
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+}
+
+.searchbar-button > * {
+  cursor: pointer;
+}
+
+.searchbar-button .icon-colour-var {
+  fill: var(--darker_red);
+}
+
+.searchbar-button:hover .icon-colour-var {
+  fill: var(--bright_red);
+}
 
 .searchbar-area {
   display: flex;
