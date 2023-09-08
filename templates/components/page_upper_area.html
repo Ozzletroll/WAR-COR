@@ -48,11 +48,12 @@
         {% for url in navigation_urls %}
 
           {# First url is always root campaigns page #}
-          {% if loop.first and current_user.is_authenticated %}
-          <a href="{{ url }}" class="navigation-url">
-            <h5 class="navigation-heading">CAMPAIGNS/</h5>
-          </a>
-
+          {% if loop.first %}
+            {% if current_user.is_authenticated  %}
+              <a href="{{ url }}" class="navigation-url">
+                <h5 class="navigation-heading">CAMPAIGNS/</h5>
+              </a>
+            {% endif %}
           {# Second url #}
           {% else %}
 
