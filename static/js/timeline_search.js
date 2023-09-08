@@ -468,6 +468,7 @@ class SearchEngine {
     const element = this.results[this.scrollIndex];
     // Scroll to element
     element.scrollTarget.scrollIntoView(); 
+    this.hitsCounter.innerText = `${this.scrollIndex + 1} OF ${this.results.length} EVENTS`;
 
     // Increment the index for the next call
     this.scrollIndex++; 
