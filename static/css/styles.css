@@ -1599,7 +1599,7 @@ h5 {
   background-color: var(--elem_mid);
   z-index: 1;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
-  margin-bottom: -84px;
+  margin-bottom: -82px;
   transform: translateX(310px);
   transition: 0.3s;
 }
@@ -1775,7 +1775,7 @@ h5 {
   display: none;
   flex-direction: row;
   justify-content: center;
-  border: 1px solid var(--dark_red);
+  border: 1px solid var(--elem_border);
   border-radius: 3px;
   transition: 0.15s;
 }

@@ -264,6 +264,7 @@ class SearchEngine {
     this.results = [];
     this.months = [];
     this.searchQuery = this.searchBar.value.toLowerCase();
+    this.scrollIndex = 0;
   }
 
   /**
@@ -410,11 +411,8 @@ class SearchEngine {
 
       // For each month, check if each day within month has a day containing positive results after it
       month.checkDaysBelow();
-
-
       // Set styling for each month block
       month.setStyle();
-
       // Update UI counter
       this.updateUI();
     });
@@ -451,6 +449,30 @@ class SearchEngine {
     }
   }
 
+  /**
+  * Method to scroll through any results.
+  * Called via event listener.
+  */
+  scrollToResults() {
+
+    if (this.results.length === 0) {
+      // No results
+      return; 
+    }
+
+    if (this.scrollIndex >= this.results.length) {
+      // Reset index if reached the end
+      this.scrollIndex = 0; 
+    }
+
+    const element = this.results[this.scrollIndex];
+    // Scroll to element
+    element.scrollTarget.scrollIntoView(); 
+
+    // Increment the index for the next call
+    this.scrollIndex++; 
+  }
+
 }
 
 
@@ -464,4 +486,8 @@ const searchEngine = new SearchEngine(searchBar, hitsCounter)
 
 // Add event listener to the input field
 searchBar.addEventListener("input", () => searchEngine.timelineSearch());
-
+searchBar.addEventListener("keydown", function(event) {
+  if (event.key === "Enter" && searchBar.value.length > 0) {
+    searchEngine.scrollToResults();
+  }
+});
