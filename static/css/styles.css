@@ -708,7 +708,7 @@ p {
 
 /* Hero */
 
-h1 {
+.main-title {
   font-size: min(22vw, 180px);
   margin-bottom: 15px;
 	color: #F5F5F5;
@@ -811,7 +811,7 @@ h1 {
   padding-bottom: 0%;
 }
 
-h3 {
+.sub-title {
   font-size: min(7vw, 48px);
   font-weight: 400;
   color: var(--text_header);
@@ -829,7 +829,7 @@ h3 {
   padding: 5%;
 }
 
-h5 {
+.feature-title {
   font-size: 24px;
   margin: 0;
 }
@@ -979,7 +979,7 @@ h5 {
   align-items: center;
 }
 
-.bottom-cta h4 {
+.cta-text  {
   font-size: 20px;
   font-weight: 300;
   max-width: 50%;
@@ -1766,6 +1766,13 @@ h5 {
 }
 
 .campaigns-heading {
+  font-size: min(7vw, 48px);
+  font-weight: 400;
+  color: var(--text_header);
+  width: 100%;
+  padding-bottom: 0%;
+  padding-left: 5%;
+  margin: 0;
   text-transform: uppercase;
   font-weight: 700;
   padding: 0;
@@ -2889,6 +2896,11 @@ h5 {
 }
 
 .timeline-year-header {
+  font-weight: 400;
+  color: var(--text_header);
+  width: 100%;
+  padding-bottom: 0%;
+  margin: 0;
   font-size: min(4vw, 46px);
   width: 10vw;
   display: flex;
@@ -3787,6 +3799,7 @@ for selection in timeline_search.js */
 }
 
 .comments-heading {
+  color: var(--text_header);
   font-size: min(30px, 4vw);
   font-weight: 300;
   text-transform: uppercase;
@@ -3966,6 +3979,11 @@ for selection in timeline_search.js */
 
 /* CKEditor */
 
+.cke_editable {
+  padding: 20px;
+  font-family: "Roboto Mono", monospace;
+}
+
 .form-container .cke {
   border: none;
 }
@@ -3975,26 +3993,46 @@ for selection in timeline_search.js */
   box-sizing: border-box;
 }
 
+/* Editor styles */
+
+.cke_editable h1 {
+  font-size: min(24px, 5vw);
+  color: var(--text_header);
+  padding: 0;
+}
+
+.cke_editable h2 {
+  font-size: min(18px, 4vw);
+  color: var(--text_header);
+  padding: 0;
+}
+
+.cke_editable h3 {
+  font-size: min(15px, 3vw);
+  color: var(--text_header);
+  padding: 0;
+}
+
 /* Campaign Overview HTML Elements */
 
 .campaign-overview h1 {
   font-size: min(24px, 5vw);
   color: var(--text_header);
-  margin: 12;
+  margin: 0;
   padding: 0;
 }
 
 .campaign-overview h2 {
   font-size: min(20px, 4.5vw);
   color: var(--text_header);
-  margin: 8;
+  margin: 0;
   padding: 0;
 }
 
 .campaign-overview h3 {
   font-size: min(18px, 4vw);
   color: var(--text_header);
-  margin: 6;
+  margin: 0;
   padding: 0;
 }
 
@@ -4023,21 +4061,21 @@ for selection in timeline_search.js */
 .comment-body h1 {
   font-size: min(24px, 5vw);
   color: var(--text_header);
-  margin: 12;
+  margin: 0;
   padding: 0;
 }
 
 .comment-body h2 {
   font-size: min(20px, 4.5vw);
   color: var(--text_header);
-  margin: 8;
+  margin: 0;
   padding: 0;
 }
 
 .comment-body h3 {
   font-size: min(18px, 4vw);
   color: var(--text_header);
-  margin: 6;
+  margin: 0;
   padding: 0;
 }
 
@@ -4055,21 +4093,18 @@ pre {
 .event-desc h1 {
   font-size: min(24px, 5vw);
   color: var(--text_header);
-  margin: 12;
   padding: 0;
 }
 
 .event-desc h2 {
   font-size: min(20px, 4.5vw);
   color: var(--text_header);
-  margin: 8;
   padding: 0;
 }
 
 .event-desc h3 {
   font-size: min(18px, 4vw);
   color: var(--text_header);
-  margin: 6;
   padding: 0;
 }
 
@@ -4116,21 +4151,18 @@ pre {
 .modal-body-preview h1 {
   font-size: min(24px, 5vw);
   color: var(--text_header);
-  margin: 12;
   padding: 0;
 }
 
 .modal-body-preview h2 {
   font-size: min(20px, 4.5vw);
   color: var(--text_header);
-  margin: 8;
   padding: 0;
 }
 
 .modal-body-preview h3 {
   font-size: min(18px, 4vw);
   color: var(--text_header);
-  margin: 6;
   padding: 0;
 }
 
