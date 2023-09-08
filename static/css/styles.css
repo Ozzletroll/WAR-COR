@@ -1606,7 +1606,7 @@ h5 {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 22px 10px;
+  padding: 10px;
   background-color: var(--bg_colour1);
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
 }

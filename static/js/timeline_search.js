@@ -258,8 +258,9 @@ class Month {
 * Month/Day/Events structure.
 */
 class SearchEngine {
-  constructor(searchBar) {
+  constructor(searchBar, hitsCounter) {
     this.searchBar = searchBar;
+    this.hitsCounter = hitsCounter;
     this.results = [];
     this.months = [];
   }
@@ -286,6 +287,7 @@ class SearchEngine {
       // Clear all existing search attributes
       this.months = [];
       this.results = [];
+      this.updateUI();
       return;
     }
 
@@ -411,6 +413,9 @@ class SearchEngine {
 
       // Set styling for each month block
       month.setStyle();
+
+      // Update UI counter
+      this.updateUI();
     });
   }
 
@@ -432,6 +437,14 @@ class SearchEngine {
 
   }
 
+
+  /**
+  * Method to update ui hits counter
+  */
+  updateUI() {
+    this.hitsCounter.innerText = `${this.results.length} EVENTS`;
+  }
+
 }
 
 
@@ -439,7 +452,8 @@ class SearchEngine {
 
 // Get searchbar and create search engine
 const searchBar = document.getElementById("search-bar");
-const searchEngine = new SearchEngine(searchBar)
+const hitsCounter = document.getElementById("hits-counter");
+const searchEngine = new SearchEngine(searchBar, hitsCounter)
 
 // Add event listener to the input field
 searchBar.addEventListener("input", () => searchEngine.timelineSearch());
