@@ -481,10 +481,10 @@ p {
   left: 100vw;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 1;
+  z-index: 2;
   overflow-y: scroll;
   margin-bottom: 0;
-  width: 300px;
+  width: 350px;
   height: 0;
   background-color: var(--elem_mid);
   border-top: 0px solid;
@@ -1587,7 +1587,32 @@ h5 {
 
 /* Search bar */
 
-.search-bar-area {
+.searchbar-border {
+  display: flex;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 54px;
+  left: 100%;
+  width: 350px;
+  height: 80px;
+  padding: 0px 1px 1px 1px;
+  background-color: var(--elem_bright);
+  z-index: 1;
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+  margin-bottom: -84px;
+}
+
+.searchbar-outer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 22px 10px;
+  background-color: var(--bg_colour1);
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+}
+
+
+.searchbar-area {
   display: flex;
   gap: 10px;
   justify-content: right;
@@ -1624,6 +1649,18 @@ h5 {
 
 .search-bar:focus {
   outline: none
+}
+
+.hits-area {
+  display: flex;
+  color: var(--text_dark);
+  font-size: 12px;
+  margin-left: 10px;
+  opacity: 50%;
+}
+
+.hits-counter {
+  padding: 5px;
 }
 
 @media screen and (max-width: 500px) {

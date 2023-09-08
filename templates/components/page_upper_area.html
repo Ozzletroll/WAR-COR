@@ -32,7 +32,6 @@
 
 {% macro page_upper_area(navigation_urls, 
                          is_link=False, 
-                         searchbar=False, 
                          current_user=current_user,
                          campaign=none,
                          event=none) %}
@@ -82,12 +81,6 @@
 
     </div>
   </div>
-
-  {# Search bar area #}
-  {% if searchbar %}
-    {% include "components/searchbar.html" %}
-  {% endif %}
-
 
 </div>
 

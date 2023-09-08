@@ -7,6 +7,8 @@
 
 {% block content %}
 
+{% include "components/searchbar.html" %}
+
 <div class="sidebar-page">
   {% include "components/sidebar.html" %}
 
@@ -23,7 +25,6 @@
 
         {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                           is_link=true, 
-                                          searchbar=true,
                                           current_user=current_user,
                                           campaign=campaign) }}
 
