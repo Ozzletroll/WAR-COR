@@ -25,7 +25,7 @@ class SearchbarTab {
   }
 
   closeTab() {
-    this.tab.style.transform = "translateX(310px)";
+    this.tab.style.transform = "translateX(311px)";
     this.state = false;
   }
 
