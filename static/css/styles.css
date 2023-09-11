@@ -3405,7 +3405,7 @@ for selection in timeline_search.js */
   flex: 1 0 auto;
   flex-direction: column;
   background-color: var(--bg_colour2);
-  height: calc(100vh - 53px);
+  height: calc(100vh - 54px);
   width: 300px;
   max-width: 300px;
   transform: translateX(-300px);
