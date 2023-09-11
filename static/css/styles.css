@@ -1267,6 +1267,7 @@ p {
   color: var(--text_normal);
   opacity: 55%;
   font-size: min(14vw, 140px);
+  margin-bottom: 15px;
 }
 
 .auth-form-header {
