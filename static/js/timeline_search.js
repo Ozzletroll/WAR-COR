@@ -27,9 +27,23 @@ class Result {
   // Reset styling for self
     this.styleReset();
 
-    if (this.resultsBelow == false) {
-      this.elements["eventLine"].style.opacity = fadeValue;
+    // Edit Page Styling
+    if (editPage == true) {
+
+      // On edit page, no additional styling required
+
     }
+    // Normal Page Styling
+    else {
+
+      // If result has no results below it, set vertical line to fade opacity value
+      if (this.resultsBelow == false) {
+        this.elements["eventLine"].style.opacity = fadeValue;
+      }
+
+    }
+
+
   }
 
   /**
@@ -38,13 +52,36 @@ class Result {
   styleNegative() {
     // Reset styling for self
     this.styleReset();
-    // Style downwards line if there are no results below it in the block
-    if (this.resultsBelow == false) {
-      this.elements["eventLine"].style.opacity = fadeValue;
+
+    if (editPage == true) {
+
+      // Style downwards line if there are no results below it in the block
+      if (this.resultsBelow == false) {
+        this.elements["eventOutline"].style.opacity = fadeValue;
+        this.elements["rightBranchLabel"].style.opacity = fadeValue;
+      }
+      else {
+        this.elements["eventOutline"].style.opacity = fadeValue;
+        this.elements["rightBranchLabel"].style.opacity = fadeValue;
+      }
+
+    }
+    else {
+
+      // Style downwards line if there are no results below it in the block
+      if (this.resultsBelow == false) {
+        this.elements["eventLine"].style.opacity = fadeValue;
+        this.elements["eventOutline"].style.opacity = fadeValue;
+        this.elements["rightBranchLabel"].style.opacity = fadeValue;
+      }
+      else {
+        this.elements["eventLine"].style.opacity = "";
+        this.elements["eventOutline"].style.opacity = fadeValue;
+        this.elements["rightBranchLabel"].style.opacity = fadeValue;
+      }
+      
     }
 
-    this.elements["eventOutline"].style.opacity = fadeValue;
-    this.elements["rightBranchLabel"].style.opacity = fadeValue;
   }
 
   styleReset() {
@@ -52,6 +89,15 @@ class Result {
     this.elements["eventOutline"].style.opacity = "";
     this.elements["eventLine"].style.opacity = "";
     this.elements["rightBranchLabel"].style.opacity = "";
+
+    if (editPage == true) {
+      if (this.elements["betweenEvents"] != null) {
+        this.elements["betweenEvents"].style.opacity = "";
+      }
+      if (this.elements["lineLower"] != null) {
+        this.elements["lineLower"].style.opacity = "";
+      }
+    }
   }
 
 }
@@ -110,18 +156,24 @@ class Day {
 
     // If there are no days containing results below, set vertical line opacity to 50%
     if (this.daysBelow == false) {
-      this.dayLine.style.opacity = fadeValue;
+
+      if (editPage == true) {
+        this.dayLine.style.opacity = "";
+      }
+      else {
+        this.dayLine.style.opacity = fadeValue;
+      }
     }
 
     // Set day block opacity to 50% if it contains no positive results
-    const anyPositiveEvent = this.events.some(event => event.positive === true);
-    if (!anyPositiveEvent) {
+    if (this.containsPositiveResult == false) {
       this.elements["rightBranchLabel"].style.opacity = fadeValue;
       this.elements["eventGroupContainer"].style.opacity = fadeValue;
     }
 
+
     // If day block contains positive results, style each result accordingly
-    if (anyPositiveEvent) { 
+    if (this.containsPositiveResult == true) { 
 
       // Reset any styling that may already be applied to result
       this.events.forEach(result => {
@@ -338,11 +390,27 @@ class SearchEngine {
         for (var headerIndex = 0; headerIndex < eventHeaders.length; headerIndex++) {
           var eventHeader = eventHeaders[headerIndex];
           var elementText = eventHeader.innerText.toLowerCase();
-
+          
           // Get result elements for styling
           var outerContainer = eventHeaders[headerIndex].closest('.event-outer-container');
           var rightBranchLabel = outerContainer.previousElementSibling;
           var eventLine = rightBranchLabel.previousElementSibling;
+
+          // Get event-between container if it exists on the page (timeline edit page only)
+          try {
+            var betweenEvents = eventHeaders[headerIndex].closest('.timeline-day-container')
+            .nextElementSibling.querySelector(".event-between");
+            var lineLower = betweenEvents.previousElementSibling;
+            if (!betweenEvents.classList.contains("event-between")) {
+              betweenEvents = null;
+              lineLower = null;
+            }
+          }
+          catch (error) {
+            betweenEvents = null;
+            lineLower = null;
+          }
+
 
           // Create instance of result object
           var result = new Result({
@@ -358,6 +426,8 @@ class SearchEngine {
               eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
               rightBranchLabel: rightBranchLabel, 
               eventLine: eventLine,
+              betweenEvents: betweenEvents, 
+              lineLower: lineLower,
             }
           })
 
@@ -420,7 +490,7 @@ class SearchEngine {
 
 
   /**
-  * Method to iterate through all current results objects
+  * Method to iterate through all current results objects in this.results
   * and remove ones that no longer match the search query.
   */
   resultsCheck(searchQuery) {
@@ -476,8 +546,12 @@ class SearchEngine {
 
 }
 
-
-
+// Determine if we are on the edit page
+var editPageElem = document.getElementById("editPageVariable").getAttribute("editPage");
+editPage = false;
+if (editPageElem == "true") {
+  editPage = true;
+}
 
 // Get searchbar and create search engine
 const searchBar = document.getElementById("search-bar");

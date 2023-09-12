@@ -3124,6 +3124,7 @@ p {
   display: flex;
   flex-direction: column;
   flex: 1 0 0;
+  transition: 0.5s;
 }
 
 /* Different class name to .timeline=day-container 
@@ -3237,7 +3238,7 @@ for selection in timeline_search.js */
   margin-bottom: 0px;
   margin-left: -1px;
   width: 1px;
-  border-color: greenyellow;
+  transition: 0.5s;
 }
 
 .event-outer-container {
