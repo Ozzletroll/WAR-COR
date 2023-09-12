@@ -2155,7 +2155,7 @@ p {
 
 .deploy-button:active {
   color: var(--bright_red);
-  background-color: var(--dark_red);
+  background-color: var(--elem_hover);
 }
 
 /*  */
@@ -2949,7 +2949,7 @@ p {
   align-items: center;
   width: 25%;
   height: 20px;
-  margin-bottom: 35px;
+  margin-bottom: 50px;
 }
 
 .event-between-events {
@@ -3135,6 +3135,33 @@ for selection in timeline_search.js */
   flex: 1 0 0;
 }
 
+.day-line {
+  margin-top: 13px;
+  border-left: 1px solid var(--bright_red);
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  margin-left: -1px;
+}
+
+.day-line-solo-edit {
+  border-left: 1px dashed var(--bright_red);
+  margin-bottom: -35px;
+}
+
+.day-line-top-edit {
+  margin-bottom: -111px;
+}
+
+.day-line-mid-edit {
+  margin-bottom: -110px;
+}
+
+.day-line-bottom-edit {
+  border-left: 1px dashed var(--bright_red);
+  margin-bottom: -35px;
+}
+
 .timeline-day-container {
   display: flex;
   flex-direction: row;
@@ -3159,7 +3186,7 @@ for selection in timeline_search.js */
 }
 
 .event-line-top-edit {
-   margin-bottom: -94px;
+   margin-bottom: -35px;
 }
 
 .event-line-bottom {
@@ -3181,7 +3208,7 @@ for selection in timeline_search.js */
 }
 
 .event-line-mid-edit {
-  margin-bottom: -94px;
+  margin-bottom: -35px;
 }
 
 .event-line-solo {
@@ -3193,6 +3220,24 @@ for selection in timeline_search.js */
 .event-line-solo-edit {
   border-left: 1px dashed var(--bright_red);
   margin-bottom: -35px;
+}
+
+.edit-line-container {
+  display: flex;
+  margin-top: 0px;
+  margin-bottom: -15px;
+}
+
+.edit-line-lower {
+  display: flex;
+  flex: 1 0 0px;
+  border-left: 1px solid var(--bright_red);
+  box-sizing: border-box;
+  margin-top: 10px;
+  margin-bottom: 0px;
+  margin-left: -1px;
+  width: 1px;
+  border-color: greenyellow;
 }
 
 .event-outer-container {
@@ -3302,8 +3347,24 @@ for selection in timeline_search.js */
 
 @media screen and (max-width: 650px) { 
 
+  .day-line-top-edit {
+    margin-bottom: -135px;
+  }
+
+  .day-line-mid-edit {
+    margin-bottom: -135px;
+  }
+
   .event-outer-container .event-small-date {
     display: flex;
+  }
+
+  .event-outer-container {
+    margin-bottom: 25px;
+  }
+
+  .event-between {
+    margin-bottom: 75px;
   }
 
   .timeline-year-header {
@@ -3317,22 +3378,6 @@ for selection in timeline_search.js */
 
   .timeline-year-container {
     margin-left: -15px;
-  }
-
-  .event-outer-container {
-    margin-bottom: 25px;
-  }
-
-  .event-between {
-    margin-bottom: 55px;
-  }
-
-  .event-line-top-edit {
-    margin-bottom: -113px;
-  }
-
-  .event-line-mid-edit {
-    margin-bottom: -113px;
   }
 
   .connector-date {
@@ -3369,6 +3414,10 @@ for selection in timeline_search.js */
 @media screen and (max-width: 400px) { 
 
   .month-connector {
+    display: none;
+  }
+
+  .day-line {
     display: none;
   }
 

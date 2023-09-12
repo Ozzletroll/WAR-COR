@@ -162,19 +162,19 @@
 
                     {% if loop.length == 1 %}
                     <div class="timeline-day-outer">
-                      <div class="event-line event-line-solo event-line-solo-edit"></div>
+                      <div class="day-line day-line-solo-edit"></div>
                     {% elif loop.first  %}
                     <div class="timeline-day-outer">
-                      <div class="event-line event-line-top event-line-top-edit"></div>
+                      <div class="day-line day-line-top-edit"></div>
                     {% elif loop.last and loop.length == 2 %}
                     <div class="timeline-day-outer day-container-edgecase">
-                      <div class="event-line event-line-bottom event-line-bottom-edit"></div>
+                      <div class="day-line day-line-bottom-edit"></div>
                     {% elif loop.last %}
                     <div class="timeline-day-outer day-container-bottom">
-                      <div class="event-line event-line-bottom event-line-bottom-edit"></div>
+                      <div class="day-line day-line-bottom-edit"></div>
                     {% else %}
                     <div class="timeline-day-outer day-container-mid">
-                      <div class="event-line event-line-mid event-line-mid-edit"></div>
+                      <div class="day-line  day-line-mid-edit"></div>
                     {% endif %}
 
                       {# Check if the first event in the month is a header event, and their are no sub events #}
@@ -297,21 +297,30 @@
 
                           </div>
 
+                        
                           <!-- Between events new event button -->
-                          <div class="event-between event-between-events">
-                            <div class="between-events-elements">
-                              <div class="line line-dashed line-edit"></div>
-                           </div>
-                            <a href="{{ url_for('event.add_event', 
-                                        campaign_name=campaign.title, 
-                                        campaign_id=campaign.id,
-                                        new_hour=True, 
-                                        date=event.date) }}">
-                              <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
-                                <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                              </button>
-                             </a>
-                             <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
+                          <div class="edit-line-container">
+
+                            {% if not loop.last %}
+                            <div class="edit-line-lower"></div>
+                            {% endif %}
+                            <div class="event-between event-between-events">
+                              
+                              <div class="between-events-elements">
+                                <div class="line line-dashed line-edit"></div>
+                            </div>
+                              <a href="{{ url_for('event.add_event', 
+                                          campaign_name=campaign.title, 
+                                          campaign_id=campaign.id,
+                                          new_hour=True, 
+                                          date=event.date) }}">
+                                <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+                                  <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+                                </button>
+                              </a>
+                              <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
+                            </div>
+
                           </div>
 
                         {% endfor %}
