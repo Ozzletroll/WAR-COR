@@ -3926,6 +3926,7 @@ for selection in timeline_search.js */
 .comment-username {
   font-size: min(16px, 3vw);
   color: var(--text_header_contrast);
+  margin: 0;
 }
 
 .comment-callsign {
