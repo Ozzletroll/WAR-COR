@@ -552,6 +552,8 @@ p {
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   border-top-left-radius: 5px;
+  margin: 0;
+  padding: 5px;
 }
 
 .no-message-text-area {
