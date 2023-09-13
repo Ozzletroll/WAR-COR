@@ -203,8 +203,6 @@ function user_search(url, csrfToken) {
     }
     else if(response.status == 400) {
 
-      console.log(response)
-
       // Get the results area div element
       const resultsAreaDiv = document.getElementById("results-area");
       // Delete any existing dynamic elements
@@ -218,7 +216,6 @@ function user_search(url, csrfToken) {
         );
 
       var message = response.json().data;
-      console.log(message)
 
       const newHeading = Object.assign(
         document.createElement("h4"), 
