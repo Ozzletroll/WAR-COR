@@ -158,17 +158,20 @@ buttons.forEach((button, index) => {
 
 
 // Search for users when NewUserForm is submitted
-function user_search(url) {
+function user_search(url, csrfToken) {
 
-  var target_url = url
-  var username = document.getElementById("username-search")
+  var target_url = url;
+  var username = document.getElementById("username-search");
 
-  var data = new FormData()
-  data.append("username", username.value)
+  var data = new FormData();
+  data.append("username", username.value);
 
   // Send fetch request to target url
   fetch(target_url, {
     "method": "POST",
+    "headers": {
+      'X-CSRF-TOKEN': csrfToken,
+    },
     "body" : data,
   })
   .then(function(response) {
@@ -200,6 +203,8 @@ function user_search(url) {
     }
     else if(response.status == 400) {
 
+      console.log(response)
+
       // Get the results area div element
       const resultsAreaDiv = document.getElementById("results-area");
       // Delete any existing dynamic elements
@@ -212,17 +217,20 @@ function user_search(url) {
         className: "results-area"}
         );
 
+      var message = response.json().data;
+      console.log(message)
+
       const newHeading = Object.assign(
         document.createElement("h4"), 
         {className: "results-username",
-        innerHTML: "//400: Please enter a search query"}
+        innerHTML: `//400: ${message}`}
         );
 
-        newDiv.appendChild(newHeading);
-        const startingDiv = document.getElementById("results-marker");
-        resultsAreaDiv.insertBefore(newDiv, startingDiv);
+      newDiv.appendChild(newHeading);
+      const startingDiv = document.getElementById("results-marker");
+      resultsAreaDiv.insertBefore(newDiv, startingDiv);
 
-        return;
+      return;
     }
     
     // Create results elements

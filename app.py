@@ -5,10 +5,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_ckeditor import CKEditor
+from flask_wtf.csrf import CSRFProtect
 
 from utils.generators import create_data
 
 db = SQLAlchemy()
+csrf = CSRFProtect()
 ckeditor = CKEditor()
 
 # Application factory
@@ -30,6 +32,9 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
 
     # Initialise db migrations
     migrate = Migrate(app, db)
+
+    # Initialise CSRFProtect
+    csrf.init_app(app)
 
     # Initialise login manager
     login_manager = LoginManager()

@@ -268,6 +268,10 @@ def user_search(campaign_name):
 
     # Query database for users with similar usernames
     search = request.form["username"]
+    if len(search) == 0:
+        response = make_response(jsonify({"message": "Please enter a search query"}), 400)
+        return response
+    
     search_format = "%{}%".format(search)
     users = db.session.execute(select(models.User)
                                .filter(models.User.username.like(search_format))).scalars()
