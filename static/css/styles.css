@@ -2678,7 +2678,25 @@ p {
 }
 
 .members-button-spacer {
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bright_red);
+  box-sizing: border-box;
+  padding: 1px;
   width: 140px;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+}
+
+.spacer-inner {
+  display: flex;
+  flex: 1 0 0;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--elem_mid);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  padding: 10px;
 }
 
 .members-left {
