@@ -1621,6 +1621,7 @@ p {
   border: none;
   transition: 0.3s;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+  box-sizing: border-box;
 }
 
 .searchbar-button > * {
@@ -1678,7 +1679,7 @@ p {
   display: flex;
   color: var(--text_dark);
   font-size: 12px;
-  margin-left: 10px;
+  margin: 10px;
   opacity: 50%;
 }
 
@@ -1686,7 +1687,7 @@ p {
   padding: 5px;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 380px) {
 
   .searchbar-border{
     display: none;
