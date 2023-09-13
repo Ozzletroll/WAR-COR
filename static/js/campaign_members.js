@@ -172,11 +172,10 @@ function user_search(url) {
     "body" : data,
   })
   .then(function(response) {
-    if (response.status !== 200){
+    if (response.status == 404){
       
       // Get the results area div element
       const resultsAreaDiv = document.getElementById("results-area");
-
       // Delete any existing dynamic elements
       resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
 
@@ -190,7 +189,7 @@ function user_search(url) {
       const newHeading = Object.assign(
         document.createElement("h4"), 
         {className: "results-username",
-        innerHTML: "No users found"}
+        innerHTML: "//404: No users found"}
         );
 
         newDiv.appendChild(newHeading);
@@ -198,6 +197,32 @@ function user_search(url) {
         resultsAreaDiv.insertBefore(newDiv, startingDiv);
 
       return ;
+    }
+    else if(response.status == 400) {
+
+      // Get the results area div element
+      const resultsAreaDiv = document.getElementById("results-area");
+      // Delete any existing dynamic elements
+      resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
+
+      // Create no users found entry
+      const newDiv = Object.assign(
+        document.createElement("div"), 
+        {id: "results-none",
+        className: "results-area"}
+        );
+
+      const newHeading = Object.assign(
+        document.createElement("h4"), 
+        {className: "results-username",
+        innerHTML: "//400: Please enter a search query"}
+        );
+
+        newDiv.appendChild(newHeading);
+        const startingDiv = document.getElementById("results-marker");
+        resultsAreaDiv.insertBefore(newDiv, startingDiv);
+
+        return;
     }
     
     // Create results elements
