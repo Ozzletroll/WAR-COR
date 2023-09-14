@@ -1,0 +1,26 @@
+{# 
+
+EPOCH COMPONENT
+
+Placed dynamically on the timeline
+
+Takes an epoch object as argument
+
+#}
+
+{% macro epoch(epoch) %}
+
+  <div class="epoch-outer">
+
+    <div class="epoch-container">
+      <h3 class="epoch-header">{{ epoch.title }}</h3>
+      
+      <div class="epoch-body">
+        <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
+        <h6 class="epoch-description">{{ epoch.description }}</h6>
+      </div>
+    </div>
+
+  </div>
+
+{%- endmacro %}
