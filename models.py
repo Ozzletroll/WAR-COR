@@ -75,6 +75,7 @@ class Campaign(db.Model):
     # permission. 
 
     events = db.relationship("Event", back_populates="parent_campaign")
+    epochs = db.relationship("Epoch", back_populates="parent_campaign")
     pending_invites = db.relationship("Message", back_populates="target_campaign")
 
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
@@ -108,8 +109,30 @@ class Event(db.Model):
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     parent_campaign = db.relationship("Campaign", back_populates="events")
+
+    parent_epoch = db.relationship("Epoch", back_populates="events")
+
     comments = db.relationship("Comment", back_populates="parent_event")
 
+
+class Epoch(db.Model):
+    __tablename__ = "epoch"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    title = db.Column(db.String(250), nullable=False)
+    start_date = db.Column(db.String, nullable=False)
+    end_date = db.Column(db.String, nullable=False)
+    description = db.Column(db.String(250), nullable=True)
+
+    # Database relationships
+    # An epoch is part of a campaign, and may encapsulate multiple events.
+
+    campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
+    parent_campaign = db.relationship("Campaign", back_populates="epochs")
+
+    event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
+    events = db.relationship("Event", back_populates="parent_epoch")
 
 
 class Comment(db.Model):
