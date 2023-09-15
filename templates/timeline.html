@@ -310,7 +310,7 @@
 
                 {# End of epoch markers #}
                 {% if month.has_epoch_end %}
-                  {{ epoch.epoch_end(month.epochs) }}
+                  {{ epoch.epoch_end(month.end_epochs) }}
                 {% endif %}
 
               {% endfor %}

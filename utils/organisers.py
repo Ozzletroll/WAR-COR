@@ -20,6 +20,7 @@ class Month:
         self.has_epoch = False
         self.has_epoch_end = False
         self.epochs = []
+        self.end_epochs = []
 
 
 
@@ -204,7 +205,7 @@ def campaign_sort(campaign):
             if year in epochs_by_end_date:
                 if month in epochs_by_end_date[year]:
                     month_object.has_epoch_end = True
-                    month_object.epochs = (epochs_by_end_date[year][month])
+                    month_object.end_epochs = (epochs_by_end_date[year][month])
 
             # Append the month object to the year object
             year_object.months.append(month_object)   
