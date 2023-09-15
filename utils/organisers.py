@@ -272,41 +272,26 @@ def format_event_datestring(datestring, args):
     return datestring
 
 
-def increment_epoch(datestring):
-    """Increments a given epoch date's month value by 1.
-    Month rollover at 100."""
-
-    year = datestring.split("-")[0]
-    month = datestring.split("-")[1]
-
-    incremented_month = int(month) + 1
-    if incremented_month >= 100:
-        incremented_month = 0
-
-        year_format = len(year)
-        incremented_year = int(year) + 1 
-        year = str(incremented_year).zfill(year_format)
-
-    month = str(incremented_month).zfill(2)
-
-    incremented_datestring = year + "-" + month
-
-    return incremented_datestring
-
-
 def populate_epoch(epoch, campaign):
     """Compares an epoch's start and end date values against a campaigns
     events. Returns a list of all event's that fall within the epoch's 
-    date range."""
+    date range. Events that occur during the epochs end date month
+    are considered part of the epoch."""
 
     def is_in_epoch(event, epoch):
-        start_date = epoch.start_date
-        end_date = epoch.end_date
+        start_year, start_month = map(int, epoch.start_date.split("-"))
+        end_year, end_month = map(int, epoch.end_date.split("-"))
 
-        if start_date <= event.date <= end_date:
-            return True
+        event_year, event_month = map(int, event.date.split("-")[:2])
+
+        if start_year <= event_year <= end_year:
+
+            if start_month <= event_month <= end_month:
+                return True
+            else:
+                return False
         else:
-            return False
+            return False   
 
     events = [event for event in campaign.events if is_in_epoch(event, epoch)]
 

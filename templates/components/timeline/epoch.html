@@ -23,7 +23,11 @@ edit_timeline page.
       <div class="epoch-container">
         <h3 class="epoch-header">{{ epoch.title }}</h3>
         <div class="epoch-body">
-          <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
+          {% if epoch.start_date != epoch.end_date %}
+            <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
+          {% else %}
+            <h4 class="epoch-date">{{ epoch.start_date }}</h4>
+          {% endif %}
           <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
         </div>
       </div>

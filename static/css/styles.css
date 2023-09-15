@@ -2936,8 +2936,6 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 5px;
-  margin-left: 1px;
 }
 
 .epoch-elems {
@@ -2982,6 +2980,10 @@ p {
 .epoch-description {
   font-size: min(3vw, 12px);
   margin: 0;
+}
+
+.epoch-description p {
+  margin: 12px;
 }
 
 .epoch-between {

@@ -268,7 +268,7 @@ def new_epoch(campaign_name):
         epoch = models.Epoch()
 
         epoch.start_date = request.args["date"]
-        epoch.end_date = organisers.increment_epoch(request.args["date"])
+        epoch.end_date = request.args["date"]
         form = forms.CreateEpochForm(obj=epoch)
 
     # Otherwise, create default empty form
