@@ -2,6 +2,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/timeline/epoch.html" as epoch %}
 
 {% extends "base/base.html" %}
 
@@ -131,6 +132,11 @@
               <!-- Month branch of each year -->
               {% for month in year.months %}
 
+                {# Start of epoch markers #}
+                {% if month.has_epoch %}
+                    {{ epoch.epoch(month.epochs) }}
+                {% endif %}
+
                 {# New Epoch Element #}
                 <div class="epoch-between">
                   <div class="epoch-left-area">
@@ -150,6 +156,7 @@
 
                 </div>
 
+              
                 {% if loop.first %}
                 <div class="month-outer month-outer-top">
                 {% elif loop.last %}
@@ -392,13 +399,17 @@
                 </div>
                 {% endif %}
 
-
+                  {# End of epoch markers #}
+                  {% if month.has_epoch_end %}
+                    {{ epoch.epoch_end(month.end_epochs) }}
+                  {% endif %}
+        
               {% endfor %}
               
             </div>
 
           </div>
-          
+
           {% endfor %}
 
         </div>
