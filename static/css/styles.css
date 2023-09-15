@@ -2994,6 +2994,35 @@ p {
   transition: 0.5s;
 }
 
+.epoch-between {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.epoch-left-area {
+  display: flex;
+  flex: 1 0 0;
+}
+
+.epoch-centre-area {
+  display: flex;
+  flex: 3 0 0;
+  text-decoration: none;
+}
+
+.epoch-right-area {
+  flex: 1 0 0;
+}
+
+.epoch-button-text {
+  font-size: min(4vw, 24px);
+  text-transform: uppercase;
+  color: var(--text_header);
+  font-weight: 500;
+}
+
 .month-between {
   display: flex;
   justify-content: left;
@@ -3023,12 +3052,16 @@ p {
   margin-right: 15px;
 }
 
+.epoch-between a {
+  width: 100%;
+}
+
 .event-between-days {
   width: 100%;
 }
 
 .event-between-years {
-  width: 75%;
+  width: 100%;
 }
 
 .new-event-flavour {
@@ -3051,11 +3084,15 @@ p {
   padding: 10px;
   border: 2px dashed var(--bright_red);
   text-transform: uppercase;
-  background-color: var(--elem_mid);
+  background-color: transparent;
   color: var(--text_header_contrast);
   transition: 0.5s;
   width: 50px;
   height: 50px;
+}
+
+.epoch-between .new-timeline-item {
+  width: 100%;
 }
 
 .new-timeline-item:active {

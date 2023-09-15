@@ -30,6 +30,12 @@ class UserCampaign(db.Model):
     campaign = db.relationship('Campaign', back_populates="user_associations", viewonly=True)
 
 
+# Association table that defines event to epoch relationship
+epoch_events = db.Table("epoch_events",
+                        db.Column("epoch_id", db.Integer, db.ForeignKey("epoch.id")),
+                        db.Column("event_id", db.Integer, db.ForeignKey("event.id")))
+
+
 class User(UserMixin, db.Model):
     __tablename__ = "user"
 
@@ -110,7 +116,9 @@ class Event(db.Model):
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     parent_campaign = db.relationship("Campaign", back_populates="events")
 
-    parent_epoch = db.relationship("Epoch", back_populates="events")
+    epochs = db.relationship("Epoch",
+                              secondary="epoch_events",
+                              back_populates="events")
 
     comments = db.relationship("Comment", back_populates="parent_event")
 
@@ -131,9 +139,10 @@ class Epoch(db.Model):
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     parent_campaign = db.relationship("Campaign", back_populates="epochs")
 
-    event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
-    events = db.relationship("Event", back_populates="parent_epoch")
-
+    # Many-to-many relationship to User, bypassing the `UserCampaign` class
+    events = db.relationship("Event",
+                              secondary="epoch_events",
+                              back_populates="epochs")
 
 class Comment(db.Model):
     __tablename__ = "comment"

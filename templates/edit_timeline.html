@@ -131,6 +131,25 @@
               <!-- Month branch of each year -->
               {% for month in year.months %}
 
+                {# New Epoch Element #}
+                <div class="epoch-between">
+                  <div class="epoch-left-area">
+                    <div class="line line-dashed line-dashed-heavy"></div>
+                  </div>
+
+                  <a class="epoch-centre-area" href="{{ url_for('event.new_epoch', 
+                                        campaign_name=campaign.title,
+                                        campaign_id=campaign.id,
+                                        date=year.name + '-' + month.name) }}">
+                    <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
+                      <p class="epoch-button-text">NEW EPOCH</p>
+                    </button>
+                  </a>
+
+                  <div class="epoch-right-area"></div>
+
+                </div>
+
                 {% if loop.first %}
                 <div class="month-outer month-outer-top">
                 {% elif loop.last %}

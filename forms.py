@@ -7,10 +7,14 @@ import re
 
 
 # Custom validators
-def date_format():
+def date_format(format):
 
-    message = "Not a valid date format, please use the format 'YYYY-MM-DD HH:MM:SS'"
-    format = r"^\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
+    if format == "event":
+        message = "Not a valid date format, please use the format 'YYYY-MM-DD HH:MM:SS'"
+        format = r"^\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
+    elif format == "epoch":
+        message = "Not a valid date format, please use the format 'YYYY-MM'"
+        format = r"^\d{4}-\d{2}$"
 
     def _date_format(form, field):
 
@@ -70,7 +74,7 @@ class CreateCampaignForm(FlaskForm):
 class CreateEventForm(FlaskForm):
     title = StringField("Event Title", validators=[DataRequired()])
     type = StringField("Event Type", validators=[DataRequired()])
-    date = StringField("Event Date", validators=[InputRequired(), date_format()])
+    date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
     location = StringField("Location", validators=[Optional()])
     belligerents = StringField("Belligerents", validators=[Optional()])
     body = CKEditorField("Body", validators=[DataRequired()])
@@ -78,6 +82,13 @@ class CreateEventForm(FlaskForm):
     header = BooleanField("Header", default=False, validators=[Optional()])
     submit = SubmitField("Create Event")
 
+
+class CreateEpochForm(FlaskForm):
+    title = StringField("Event Title", validators=[DataRequired()])
+    start_date = StringField("Start Date", validators=[InputRequired(), date_format(format="epoch")])
+    end_date = StringField("End Date", validators=[InputRequired(), date_format(format="epoch")])
+    description = CKEditorField("Description")
+    submit = SubmitField("Create Epoch")
 
 class AddUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])

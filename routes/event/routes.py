@@ -194,7 +194,7 @@ def edit_event(campaign_name, event_name):
     form.submit.label.text = 'Update Event'
 
     return render_template("edit_event.html",
-                           campaign=campaign,
+                            campaign=campaign,
                             campaign_name=campaign.title,
                             event_name=event.title,
                             form=form,
@@ -247,3 +247,66 @@ def delete_comment(campaign_name, event_name, comment_id):
     db.session.commit()
 
     return redirect(url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id))
+
+
+
+# Add new epoch
+@bp.route("/campaigns/<campaign_name>/epochs/new_epoch", methods=["GET", "POST"])
+@login_required
+def new_epoch(campaign_name):
+
+    target_campaign_id = request.args["campaign_id"]
+    campaign = db.session.execute(select(models.Campaign)
+                                  .filter_by(title=campaign_name, 
+                                             id=target_campaign_id)).scalar()
+
+    auth.permission_required(campaign)
+
+    # Check if date argument given
+    if "date" in request.args:
+        # Create placeholder event to prepopulate form
+        epoch = models.Epoch()
+
+        epoch.start_date = request.args["date"]
+        epoch.end_date = organisers.increment_epoch(request.args["date"])
+        form = forms.CreateEpochForm(obj=epoch)
+
+    # Otherwise, create default empty form
+    else:
+        form = forms.CreateEpochForm()
+
+    if form.validate_on_submit():
+
+        epoch = models.Epoch()
+
+        epoch.title = request.form["title"]
+        epoch.start_date = request.form["start_date"]
+        epoch.end_date = request.form["end_date"]
+        epoch.description = request.form["description"]
+
+        epoch.parent_campaign = campaign
+
+        # Find events that take place during the epoch
+        matching_events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+        for event in matching_events:
+            epoch.events.append(event)
+
+        scroll_target = f"event-{epoch.id}"
+
+        db.session.add(epoch)
+        db.session.commit()
+
+        return redirect(url_for("campaign.edit_timeline", 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id, 
+                                scroll_target=scroll_target))
+    
+    # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
+
+    return render_template("new_epoch.html",
+                           campaign=campaign,
+                           campaign_name=campaign.title,
+                           form=form)

@@ -1,0 +1,187 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/back_button.html" as back_button %}
+
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
+
+      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=true,
+                                        current_user=current_user,
+                                        campaign=campaign) }}
+
+        <div class="campaigns-title">
+
+          {# Back button #}
+          {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {{ back_button.back_button(url=url, blank=false) }}
+
+          <h3 class="campaigns-heading edit-campaign-heading">NEW EPOCH DATA</h1>
+        </div>
+
+        <hr class="campaigns-divider">
+        <p class="flavour-text">UWC-17-00 // Epoch::Designation </p>
+
+    </div>
+
+      <div class="form-flash">
+        {% include 'components/flash.html' %}
+      </div>
+  
+      <form class="edit-form form-column fade-in-block-2" method="POST">
+        {{ form.csrf_token }}
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Start Date</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div id="event-date-help-button" type="button" class="form-button">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
+                </div>
+                
+              </div>
+              
+            </div>
+            <p class="flavour-text">UWC-17-01 //  Epoch::Start Marker</p>
+          </label>
+        
+          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY-MM", autocomplete="off") }}
+
+        </div>
+
+        {# Date Help Modal #}
+
+        <div id="modal-1" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Epoch</h2>
+                <span id="close-1" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>Epoch help text.</p>
+                <p class="modal-highlight-text">Example: "5016-15-40 25:00:00" is a valid date.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">End Date</h4>
+            </div>
+            <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
+          </label>
+        
+          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY-MM", autocomplete="off") }}
+
+        </div>
+
+        <div class="form-container form-container-small">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <h4 class="campaign-form label-title">Epoch Title</h4>
+            </div>
+            <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
+          </label>
+
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title") }}
+
+        </div>
+
+        <div class="form-container form-container-large">
+        <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+        
+            <h4 class="campaign-form label-title">Description</h4>
+            <div class="form-extra-button-area">
+                
+              <div id="html-preview-button" type="button" class="form-button form-preview-button">
+                HTML PREVIEW
+              </div>
+              
+            </div>
+            
+          </div>
+          <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
+        </label>
+
+        {{ form.description(id="form-contents", class_="campaign-input large-input event-input", autocomplete="off") }}
+        
+        {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+
+        </div>
+
+        {# HTML Preview Modal #}
+
+        <div id="modal-preview" class="modal">
+          <div class="modal-content modal-preview-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">HTML Preview</h2>
+                <span id="close-preview" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+
+              <div class="modal-body">
+                <div class="event-page-elem event-elem-large elem-body event-page-description">
+      
+                  <div class="entry-left-padding"></div>
+  
+                  <div class="description-body">
+                      <h4 class="event-desc-header">Compendium Entry:</h4>
+                      <div class="event-desc">
+                        <div id="preview-modal-body" class="modal-body modal-body-preview">
+                          {# Modal text goes here #}
+                        </div>
+                      </div>
+                  </div>
+                
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="campaign-submit-area event-submit-area">
+          {{ form.submit(class_="campaign-input campaign-submit", ) }}
+        </div>  
+          
+      </form>
+
+    <div class="flavour-text-area fade-in-block-3 z-index-anim">
+      <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
+      <img src="/static/images/logo-red.png" class="top-logo">
+    </div>
+
+  </div>
+
+</div>
+
+
+<script src="/static/js/epoch_form.js"></script>
+
+
+{% endblock %}
