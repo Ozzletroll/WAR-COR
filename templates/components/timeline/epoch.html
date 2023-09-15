@@ -4,23 +4,36 @@ EPOCH COMPONENT
 
 Placed dynamically on the timeline
 
-Takes an a months epochs list as an argument
+Takes an a months epochs list as an argument.
+Edit boolean is used to add extra elements for 
+edit_timeline page.
 
 #}
 
-{% macro epoch(epochs) %}
+{% macro epoch(epochs, edit=false) %}
 
   <div class="epoch-outer">
 
+    <div class="epoch-elems">
     {% for epoch in epochs %}
-    <div class="epoch-container">
-      <h3 class="epoch-header">{{ epoch.title }}</h3>
-      <div class="epoch-body">
-        <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
-        <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
+      {% if edit %}
+      <a class="edit-epoch" href="">
+      {% endif %}
+
+      <div class="epoch-container">
+        <h3 class="epoch-header">{{ epoch.title }}</h3>
+        <div class="epoch-body">
+          <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
+          <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
+        </div>
       </div>
-    </div>
+
+      {% if edit %}
+      </a>
+      {% endif %}
     {% endfor %}
+
+    </div>
 
   </div>
 

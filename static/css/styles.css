@@ -2940,6 +2940,13 @@ p {
   margin-left: 1px;
 }
 
+.epoch-elems {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 .epoch-container {
   display: flex;
   flex-direction: column;
@@ -2956,6 +2963,7 @@ p {
   padding: 10px;
   text-transform: uppercase;
   color: var(--text_header);
+  transition: 0.5s;
 }
 
 .epoch-body {
@@ -3051,6 +3059,25 @@ p {
   border-bottom: 1px solid var(--elem_border);
   border-left: 1px solid var(--elem_border);
   border-right: 1px solid var(--elem_border);
+}
+
+.edit-epoch {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-decoration: none;
+  border: 2px dashed var(--elem_border);
+  transition: 0.5s;
+}
+
+.edit-epoch:hover {
+  animation: 0.5s ease 0s 1 normal none running pulse2;
+  transition: all 0.5s ease 0s;
+  box-shadow: transparent 0px 0px 0px 1em;
+}
+
+.edit-epoch:hover .epoch-header {
+  color: var(--bright_red);
 }
 
 /* Months */

@@ -134,7 +134,7 @@
 
                 {# Start of epoch markers #}
                 {% if month.has_epoch %}
-                    {{ epoch.epoch(month.epochs) }}
+                    {{ epoch.epoch(month.epochs, edit=True) }}
                 {% endif %}
 
                 {# New Epoch Element #}
