@@ -129,6 +129,12 @@
               <!-- Month branch of each year -->
               {% for month in year.months %}
 
+                {% if month.has_epoch %}
+                  {% for item in month.epochs %}
+                    {{ epoch.epoch(item) }}
+                  {% endfor %}
+                {% endif %}
+
                 {% if loop.first %}
                 <div class="month-outer month-outer-top">
                 {% elif loop.last %}

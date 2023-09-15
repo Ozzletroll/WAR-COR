@@ -2933,8 +2933,10 @@ p {
 
 .epoch-outer {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin-bottom: 50px;
+  align-items: center;
+  margin-bottom: 5px;
   margin-left: 1px;
 }
 
@@ -2942,6 +2944,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 5px;
 }
 
 .epoch-header {
@@ -2970,28 +2973,7 @@ p {
 
 .epoch-description {
   font-size: min(3vw, 12px);
-
-}
-
-/* Months */
-
-.timeline-months-container {
-  display: flex;
-  flex-direction: column;
-  flex: 4 0 0;
-  justify-content: center;
-  margin-top: 150px;
-  margin-bottom: 25px;
-  filter: drop-shadow(1px 2px 3px var(--elem_shadow));
-}
-
-.month-outer {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: left;
-  flex: 1 0 1;
-  transition: 0.5s;
+  margin: 0;
 }
 
 .epoch-between {
@@ -3021,6 +3003,49 @@ p {
   text-transform: uppercase;
   color: var(--text_header);
   font-weight: 500;
+}
+
+.epoch-start-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.5s;
+}
+
+.epoch-vert-line {
+  height: 10px;
+  width: 1px;
+  background-color: var(--elem_border);
+}
+
+.epoch-hor-line {
+  height: 6px;
+  width: 50%;
+  border-top: 1px solid var(--elem_border);
+  border-left: 1px solid var(--elem_border);
+  border-right: 1px solid var(--elem_border);
+  margin-bottom: 50px;
+}
+
+/* Months */
+
+.timeline-months-container {
+  display: flex;
+  flex-direction: column;
+  flex: 4 0 0;
+  justify-content: center;
+  margin-top: 150px;
+  margin-bottom: 25px;
+  filter: drop-shadow(1px 2px 3px var(--elem_shadow));
+}
+
+.month-outer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: left;
+  flex: 1 0 1;
+  transition: 0.5s;
 }
 
 .month-between {
@@ -3496,6 +3521,10 @@ for selection in timeline_search.js */
 
   .hidden-align {
     height: 0;
+  }
+
+  .epoch-start-marker {
+    opacity: 0;
   }
 
 }

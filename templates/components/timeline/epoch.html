@@ -17,10 +17,15 @@ Takes an epoch object as argument
       
       <div class="epoch-body">
         <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
-        <h6 class="epoch-description">{{ epoch.description }}</h6>
+        <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
       </div>
     </div>
 
+  </div>
+
+  <div class="epoch-start-marker">
+    <div class="epoch-vert-line"></div>
+    <div class="epoch-hor-line"></div>
   </div>
 
 {%- endmacro %}
