@@ -17,6 +17,8 @@ class Month:
         self.name = ""
         self.days = []
         self.header = False
+        self.has_epoch = False
+        self.epochs = []
 
 
 
@@ -59,6 +61,15 @@ def campaign_sort(campaign):
         seconds = event.date.split("-")[2].split()[1].split(":")[2]
         
         return int(year), int(month), int(day), int(hours), int(minutes), int(seconds)
+
+
+    def custom_sort_epoch(epoch):
+        """Function to split a datestring in Epoch objects into individual integers"""
+
+        year = epoch.start_date.split("-")[0]
+        month = epoch.start_date.split("-")[1]
+
+        return int(year), int(month)
 
 
     def check_year_marker(year):
@@ -104,12 +115,25 @@ def campaign_sort(campaign):
                     month.header = True
 
 
+    # Sort epochs into date order
+    sorted_epochs = sorted(campaign.epochs, key=custom_sort_epoch)
+    # Structure epochs into dictionary, grouped by year
+    epoch_groups = groupby(sorted_epochs, key=lambda epoch: epoch.start_date.split("-")[0])
+    grouped_epochs = {year: list(group) for year, group in epoch_groups}
+
+    # Group each years epochs into months
+    for year in grouped_epochs:
+        groups = groupby(grouped_epochs[year], key=lambda epoch: (epoch.start_date.split("-")[1]))
+        grouped_months = {month: list(group) for month, group in groups}
+        grouped_epochs[year] = grouped_months
+
+    # Current epoch structure:
+    # grouped_epochs = {year: {month: [<Event 1>, <Event 2>]}
+
     # Sort events into date order
     sorted_events = sorted(campaign.events, key=custom_sort)
-
     # Structure events into dictionary, grouped by year
     groups = groupby(sorted_events, key=lambda event: (event.date.split("-")[0]))
-
     grouped_events = {year: list(group) for year, group in groups}
 
     # Group each years events into months
@@ -125,9 +149,9 @@ def campaign_sort(campaign):
             grouped_days = {day: list(group) for day, group in groups}
             grouped_events[year][month] = grouped_days
 
-
-    # Current structure:
+    # Current event structure:
     # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
+
 
     # Turn each level of the heirarchy into an object, with the level below as a list held in a property
     year_list = []
@@ -156,8 +180,14 @@ def campaign_sort(campaign):
                 # Append the day object to the month object
                 month_object.days.append(day_object)
 
+            # Check if any epochs occur in month
+            if year in grouped_epochs:
+                if month in grouped_epochs[year]:
+                    month_object.has_epoch = True
+                    month_object.epochs = (grouped_epochs[year][month])
+
             # Append the month object to the year object
-            year_object.months.append(month_object)
+            year_object.months.append(month_object)   
 
         # Append the year object to the formatted list
         year_list.append(year_object)
