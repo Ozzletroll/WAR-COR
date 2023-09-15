@@ -18,6 +18,7 @@ class Month:
         self.days = []
         self.header = False
         self.has_epoch = False
+        self.has_epoch_end = False
         self.epochs = []
 
 
@@ -115,17 +116,30 @@ def campaign_sort(campaign):
                     month.header = True
 
 
-    # Sort epochs into date order
-    sorted_epochs = sorted(campaign.epochs, key=custom_sort_epoch)
-    # Structure epochs into dictionary, grouped by year
-    epoch_groups = groupby(sorted_epochs, key=lambda epoch: epoch.start_date.split("-")[0])
-    grouped_epochs = {year: list(group) for year, group in epoch_groups}
+    def group_epochs(epochs, sort_key, year_key, month_key):
+        """Function to sort epochs into matching data structure to the timeline events.
+        Takes a list of a campaigns epochs, as well as a sort key."""
+        sorted_epochs = sorted(epochs, key=sort_key)
+        epoch_groups = groupby(sorted_epochs, key=year_key)
+        grouped_epochs = {year: list(group) for year, group in epoch_groups}
 
-    # Group each years epochs into months
-    for year in grouped_epochs:
-        groups = groupby(grouped_epochs[year], key=lambda epoch: (epoch.start_date.split("-")[1]))
-        grouped_months = {month: list(group) for month, group in groups}
-        grouped_epochs[year] = grouped_months
+        for year in grouped_epochs:
+            groups = groupby(grouped_epochs[year], key=month_key)
+            grouped_months = {month: list(group) for month, group in groups}
+            grouped_epochs[year] = grouped_months
+
+        return grouped_epochs
+
+
+    # Sort and group epochs by start date and end date
+    epochs_by_start_date = group_epochs(campaign.epochs, 
+                                        sort_key=lambda epoch: epoch.start_date,
+                                        year_key=lambda epoch: epoch.start_date.split("-")[0],
+                                        month_key=lambda epoch: epoch.start_date.split("-")[1])
+    epochs_by_end_date = group_epochs(campaign.epochs,
+                                      sort_key=lambda epoch: epoch.end_date,
+                                      year_key=lambda epoch: epoch.end_date.split("-")[0],
+                                      month_key=lambda epoch: epoch.end_date.split("-")[1])
 
     # Current epoch structure:
     # grouped_epochs = {year: {month: [<Event 1>, <Event 2>]}
@@ -180,11 +194,17 @@ def campaign_sort(campaign):
                 # Append the day object to the month object
                 month_object.days.append(day_object)
 
-            # Check if any epochs occur in month
-            if year in grouped_epochs:
-                if month in grouped_epochs[year]:
+            # Check if any epoch starts occur in month
+            if year in epochs_by_start_date:
+                if month in epochs_by_start_date[year]:
                     month_object.has_epoch = True
-                    month_object.epochs = (grouped_epochs[year][month])
+                    month_object.epochs = (epochs_by_start_date[year][month])
+
+            # Check if any epoch ends occur in month
+            if year in epochs_by_end_date:
+                if month in epochs_by_end_date[year]:
+                    month_object.has_epoch_end = True
+                    month_object.epochs = (epochs_by_end_date[year][month])
 
             # Append the month object to the year object
             year_object.months.append(month_object)   

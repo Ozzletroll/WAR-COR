@@ -129,10 +129,9 @@
               <!-- Month branch of each year -->
               {% for month in year.months %}
 
+                {# Start of epoch markers #}
                 {% if month.has_epoch %}
-                  {% for item in month.epochs %}
-                    {{ epoch.epoch(item) }}
-                  {% endfor %}
+                    {{ epoch.epoch(month.epochs) }}
                 {% endif %}
 
                 {% if loop.first %}
@@ -308,6 +307,11 @@
                 </div>
 
               </div>
+
+                {# End of epoch markers #}
+                {% if month.has_epoch_end %}
+                  {{ epoch.epoch_end(month.epochs) }}
+                {% endif %}
 
               {% endfor %}
             </div>

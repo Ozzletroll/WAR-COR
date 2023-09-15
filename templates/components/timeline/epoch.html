@@ -4,22 +4,23 @@ EPOCH COMPONENT
 
 Placed dynamically on the timeline
 
-Takes an epoch object as argument
+Takes an a months epochs list as an argument
 
 #}
 
-{% macro epoch(epoch) %}
+{% macro epoch(epochs) %}
 
   <div class="epoch-outer">
 
+    {% for epoch in epochs %}
     <div class="epoch-container">
       <h3 class="epoch-header">{{ epoch.title }}</h3>
-      
       <div class="epoch-body">
         <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
         <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
       </div>
     </div>
+    {% endfor %}
 
   </div>
 
@@ -27,5 +28,39 @@ Takes an epoch object as argument
     <div class="epoch-vert-line"></div>
     <div class="epoch-hor-line"></div>
   </div>
+
+{%- endmacro %}
+
+
+{# 
+
+EPOCH COMPONENT
+
+Placed dynamically on the timeline
+
+Takes an a months epochs list as an argument
+
+#}
+
+{% macro epoch_end(epochs) %}
+
+  <div class="epoch-end-marker">
+    <div class="epoch-hor-line-end"></div>
+    <div class="epoch-vert-line"></div>
+  </div>
+
+  <div class="epoch-outer epoch-end-outer">
+
+    <div class="epoch-container">
+      <div class="epoch-body">
+        {% for epoch in epochs %}
+          <h6 class="epoch-end-text epoch-description">End of {{ epoch.title }}</h6>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+  
 
 {%- endmacro %}

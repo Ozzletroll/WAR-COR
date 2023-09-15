@@ -3027,6 +3027,32 @@ p {
   margin-bottom: 50px;
 }
 
+.epoch-end-outer {
+  margin-bottom: 120px;
+}
+
+.epoch-end-text {
+  display: flex;
+  margin: 0;
+}
+
+.epoch-end-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.5s;
+  margin-bottom: 12px;
+  transition: 0.5s;
+}
+
+.epoch-hor-line-end {
+  height: 6px;
+  width: 50%;
+  border-bottom: 1px solid var(--elem_border);
+  border-left: 1px solid var(--elem_border);
+  border-right: 1px solid var(--elem_border);
+}
+
 /* Months */
 
 .timeline-months-container {
@@ -3523,8 +3549,12 @@ for selection in timeline_search.js */
     height: 0;
   }
 
-  .epoch-start-marker {
+  .epoch-start-marker, .epoch-end-marker {
     opacity: 0;
+  }
+
+  .epoch-end-marker {
+    height: 0px;
   }
 
 }
