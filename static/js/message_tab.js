@@ -20,8 +20,8 @@ class messageTab {
   }
 
   openTab() {
-    this.tab.style.marginBottom = "-300px"
-    this.tab.style.height = "300px"
+    this.tab.style.marginBottom = "-400px"
+    this.tab.style.height = "400px"
     this.tab.style.borderBottom = "1px solid var(--elem_border)"
     this.state = true
   }
