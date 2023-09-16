@@ -220,7 +220,7 @@ function user_search(url, csrfToken) {
       const newHeading = Object.assign(
         document.createElement("h4"), 
         {className: "results-username",
-        innerHTML: `//400: ${message}`}
+        innerHTML: `//400: Please enter a search query`}
         );
 
       newDiv.appendChild(newHeading);
