@@ -200,8 +200,6 @@ def campaign_sort(campaign):
         else:
             final_group[year] = month
 
-    
-
     # Turn each level of the heirarchy into an object, with the level below as a list held in a property
     year_list = []
 
@@ -325,20 +323,19 @@ def populate_epoch(epoch, campaign):
     are considered part of the epoch."""
 
     def is_in_epoch(event, epoch):
-        start_year, start_month = map(int, epoch.start_date.split("-"))
-        end_year, end_month = map(int, epoch.end_date.split("-"))
 
-        event_year, event_month = map(int, event.date.split("-")[:2])
+        epoch_start = float(epoch.start_date.replace("-", "."))
+        epoch_end = float(epoch.end_date.replace("-", "."))
 
-        if start_year <= event_year <= end_year:
+        event_year, event_month = event.date.split("-")[:2]
+        event_combined = event_year + "-" + event_month
+        event_date = float(event_combined.replace("-", "."))
 
-            if start_month <= event_month <= end_month:
-                return True
-            else:
-                return False
+        if epoch_start <= event_date <= epoch_end:
+            return True
         else:
-            return False   
-
+            return False
+    
     events = [event for event in campaign.events if is_in_epoch(event, epoch)]
 
     return events
