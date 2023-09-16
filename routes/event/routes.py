@@ -231,6 +231,12 @@ def delete_event(campaign_name, event_name):
     db.session.delete(event)
     db.session.commit()
 
+    # Update campaigns epochs
+    for epoch in campaign.epochs:
+        epoch.events.clear()
+        epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+        db.session.commit()
+
     return redirect(url_for("campaign.show_timeline", campaign_name=campaign_name))
 
 
