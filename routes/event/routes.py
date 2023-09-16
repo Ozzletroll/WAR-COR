@@ -126,6 +126,12 @@ def add_event(campaign_name):
         # Add event to database
         db.session.add(event)
         db.session.commit()
+
+        # Update campaigns epochs
+        for epoch in campaign.epochs:
+            epoch.events.clear()
+            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+            db.session.commit()
         
         # Create notification message
         messengers.send_event_notification(current_user,
@@ -187,6 +193,12 @@ def edit_event(campaign_name, event_name):
         # Update the database
         db.session.add(event)
         db.session.commit()
+
+        # Update campaigns epochs
+        for epoch in campaign.epochs:
+            epoch.events.clear()
+            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+            db.session.commit()
 
         return redirect(url_for("campaign.edit_timeline", campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target))
 
