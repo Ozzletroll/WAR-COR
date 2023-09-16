@@ -1,4 +1,5 @@
 from itertools import groupby
+import copy
 
 
 # Classes used for timeline data organisation
@@ -21,6 +22,7 @@ class Month:
         self.has_epoch_end = False
         self.epochs = []
         self.end_epochs = []
+        self.epoch_has_events = False
 
 
 
@@ -148,7 +150,19 @@ def campaign_sort(campaign):
                                       year_key=lambda epoch: epoch.end_date.split("-")[0],
                                       month_key=lambda epoch: epoch.end_date.split("-")[1])
     
-    combined_epochs = epochs_by_start_date | epochs_by_end_date
+    # Merge two dictionaries for year/month population
+    combined_epochs = {}
+
+    for year in epochs_by_start_date:
+        if year not in combined_epochs:
+            combined_epochs[year] = epochs_by_start_date[year]
+    for year in epochs_by_end_date:
+            if year not in combined_epochs:
+                combined_epochs[year] = epochs_by_end_date[year]
+
+
+    # Sort years again
+    combined_epochs = {key: value for key, value in sorted(combined_epochs.items())}
 
     # Current epoch structure:
     # grouped_epochs = {year: {month: [<Event 1>, <Event 2>]}
@@ -175,41 +189,53 @@ def campaign_sort(campaign):
     # Current event structure:
     # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
 
-    combined_events_and_epochs = combined_epochs | grouped_events
+    # Combine both dictionaries to determine timeline structure
+    final_group = copy.deepcopy(grouped_events)
+
+    for year, month in combined_epochs.items():
+        if year in final_group:
+            for month in combined_epochs[year]:
+                if month not in final_group[year]:
+                    final_group[year][month] = month
+             
+        else:
+            final_group[year] = month
+
+    
 
     # Turn each level of the heirarchy into an object, with the level below as a list held in a property
     year_list = []
 
-    for year in combined_events_and_epochs:
+    for year in final_group:
 
         year_object = Year()
         year_object.name = year
         try:
             year_object.marker = check_year_marker(grouped_events[year])
+        # Catch exception if year only has epoch and nothing else
         except KeyError:
             year_object.marker = False
 
-        for month in combined_events_and_epochs[year]:
+        for month in final_group[year]:
 
             month_object = Month()
             month_object.name = month
 
-            for day in combined_events_and_epochs[year][month]:
+            for day in final_group[year][month]:
 
                 day_object = Day()
                 day_object.name = day
 
                 try:
                     for event in grouped_events[year][month][day]:
-
                         # Append the event to the day object
                         day_object.events.append(event)
+                # Catch exception if month has no days (IE, only has epochs)
                 except KeyError:
                     continue
 
                 # Append the day object to the month object
                 month_object.days.append(day_object)
-
 
             # Check if any epoch starts occur in month
             if year in epochs_by_start_date:
@@ -222,6 +248,9 @@ def campaign_sort(campaign):
                 if month in epochs_by_end_date[year]:
                     month_object.has_epoch_end = True
                     month_object.end_epochs = (epochs_by_end_date[year][month])
+                    for epoch in month_object.end_epochs:
+                        if len(epoch.events) > 0:
+                            month_object.epoch_has_events = True
 
             # Append the month object to the year object
             year_object.months.append(month_object)   

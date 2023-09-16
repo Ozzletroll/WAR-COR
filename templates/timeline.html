@@ -131,7 +131,11 @@
 
                 {# Start of epoch markers #}
                 {% if month.has_epoch %}
+                  {% if month.days | length != 0 %}
                     {{ epoch.epoch(month.epochs) }}
+                  {% else %}
+                    {{ epoch.epoch(month.epochs, contents=false) }}
+                  {% endif %}
                 {% endif %}
 
                 
@@ -317,8 +321,12 @@
 
                 {# End of epoch markers #}
                 {% if month.has_epoch_end %}
-                  {{ epoch.epoch_end(month.end_epochs) }}
+                  {% if month.epoch_has_events %}
+                   {{ epoch.epoch_end(month.end_epochs) }}
+                  {% endif %}
+                
                 {% endif %}
+
 
               {% endfor %}
             </div>

@@ -10,7 +10,7 @@ edit_timeline page are rendered, and the current campaign.
 
 #}
 
-{% macro epoch(epochs, campaign, edit=false) %}
+{% macro epoch(epochs, campaign, edit=false, contents=true) %}
 
   <div class="epoch-outer">
 
@@ -45,17 +45,19 @@ edit_timeline page are rendered, and the current campaign.
 
   </div>
 
-  <div class="epoch-start-marker">
-    <div class="epoch-vert-line"></div>
-    <div class="epoch-hor-line"></div>
-  </div>
+  {% if contents %}
+    <div class="epoch-start-marker">
+      <div class="epoch-vert-line"></div>
+      <div class="epoch-hor-line"></div>
+    </div>
+  {% endif %}
 
 {%- endmacro %}
 
 
 {# 
 
-EPOCH COMPONENT
+EPOCH END COMPONENT
 
 Placed dynamically on the timeline
 

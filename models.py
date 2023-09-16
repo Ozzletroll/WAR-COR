@@ -143,6 +143,7 @@ class Epoch(db.Model):
     start_date = db.Column(db.String, nullable=False)
     end_date = db.Column(db.String, nullable=False)
     description = db.Column(db.String(250), nullable=True)
+    has_events = db.Column(db.Boolean(), nullable=False, default=False)
 
     # Database relationships
     # An epoch is part of a campaign, and may encapsulate multiple events.

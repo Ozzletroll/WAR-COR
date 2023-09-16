@@ -131,6 +131,8 @@ def add_event(campaign_name):
         for epoch in campaign.epochs:
             epoch.events.clear()
             epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+            if len(epoch.events) > 0:
+                epoch.has_events = True
             db.session.commit()
         
         # Create notification message
@@ -198,6 +200,8 @@ def edit_event(campaign_name, event_name):
         for epoch in campaign.epochs:
             epoch.events.clear()
             epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+            if len(epoch.events) > 0:
+                epoch.has_events = True
             db.session.commit()
 
         return redirect(url_for("campaign.edit_timeline", campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target))
@@ -235,6 +239,9 @@ def delete_event(campaign_name, event_name):
     for epoch in campaign.epochs:
         epoch.events.clear()
         epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+        if len(epoch.events) > 0:
+            epoch.has_events = True
+
         db.session.commit()
 
     return redirect(url_for("campaign.show_timeline", campaign_name=campaign_name))
@@ -309,6 +316,9 @@ def new_epoch(campaign_name):
         for event in matching_events:
             epoch.events.append(event)
 
+        if len(epoch.events) > 0:
+            epoch.has_events = True
+
         scroll_target = f"event-{epoch.id}"
 
         db.session.add(epoch)
@@ -363,6 +373,10 @@ def edit_epoch(campaign_name, epoch_title):
         for epoch in campaign.epochs:
             epoch.events.clear()
             epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+
+            if len(epoch.events) > 0:
+                epoch.has_events = True
+
             db.session.commit()
 
         scroll_target = f"event-{epoch.id}"
