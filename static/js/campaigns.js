@@ -20,22 +20,22 @@ class Dropdown {
   }
   
   openDropdown() {
-    this.button.style.transitionDelay = "0s"
-    this.dropdown.style.height = "150px"
-    this.dropdown.style.border = "1px solid var(--dark_red)"
-    this.dropdown.style.borderTop = ""
+    this.button.style.transitionDelay = "0s";
+    this.dropdown.style.height = "150px";
+    this.dropdown.style.border = "1px solid var(--dark_red)";
+    this.dropdown.style.borderTop = "0px";
     this.state = true
   }
 
   closeDropdown() {
-    this.button.style.transitionDelay = "0.3s"
-    this.dropdown.style.height = "0"
-    this.state = false
+    this.button.style.transitionDelay = "0.3s";
+    this.dropdown.style.height = "0";
+    this.state = false;
 
     // Disable transition delay after 0.3s
   setTimeout(() => {
     this.button.style.transitionDelay = "0s";
-    this.dropdown.style.border = ""
+    this.dropdown.style.border = "0px";
   }, 300);
   }
 
