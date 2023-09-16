@@ -134,27 +134,34 @@
                     {{ epoch.epoch(month.epochs) }}
                 {% endif %}
 
-                {% if loop.first %}
-                <div class="month-outer month-outer-top">
-                {% elif loop.last %}
-                <div class="month-outer month-outer-bottom">
-                {% else %}
-                <div class="month-outer">
-                {% endif %}
+                
 
-                {% if month.header %}
-                <div class="month-connector hidden-date">
-                {% else %}
-                <div class="month-connector">
-                {% endif %}
-                  <div class="line line-first"></div>
-                  <div class="connector-date connector-date-outline">
-                    <div class="connector-date">
-                      {{ month.name }}
+                  {% if loop.first %}
+                  <div class="month-outer month-outer-top">
+                  {% elif loop.last %}
+                  <div class="month-outer month-outer-bottom">
+                  {% else %}
+                  <div class="month-outer">
+                  {% endif %}
+
+                {% if month.days | length != 0 %}
+                
+                  {% if month.header %}
+                  <div class="month-connector hidden-date">
+                  {% else %}
+                  <div class="month-connector">
+                  {% endif %}
+                    <div class="line line-first"></div>
+                    <div class="connector-date connector-date-outline">
+                      <div class="connector-date">
+                        {{ month.name }}
+                      </div>
                     </div>
+                    <div class="line"></div>
                   </div>
-                  <div class="line"></div>
-                </div>
+
+                {% endif %}
+                
 
                 <div class="timeline-month">
 

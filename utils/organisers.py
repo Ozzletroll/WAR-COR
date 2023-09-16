@@ -104,17 +104,23 @@ def campaign_sort(campaign):
 
             for month_index, month in enumerate(year.months):
 
-                for day_index, day in enumerate(month.days):
+                try:
+                    for day_index, day in enumerate(month.days):
 
-                    # Give the day the header property if it is the first day of the month,
-                    # and that day has only one event, which has the header property.
-                    if day_index == 0 and len(day.events) == 1 and day.events[0].header:
-                        day.header = True
+                        # Give the day the header property if it is the first day of the month,
+                        # and that day has only one event, which has the header property.
+                        if day_index == 0 and len(day.events) == 1 and day.events[0].header:
+                            day.header = True
+                except KeyError:
+                    continue
 
                 # Give the month the header property, if the year has only one month,
                 # and that month's first day has the header property.
-                if len(year.months) == 1 and month.days[0].header:
-                    month.header = True
+                try:
+                    if len(year.months) == 1 and month.days[0].header:
+                        month.header = True
+                except IndexError:
+                    month.header = False
 
 
     def group_epochs(epochs, sort_key, year_key, month_key):
@@ -141,6 +147,8 @@ def campaign_sort(campaign):
                                       sort_key=lambda epoch: epoch.end_date,
                                       year_key=lambda epoch: epoch.end_date.split("-")[0],
                                       month_key=lambda epoch: epoch.end_date.split("-")[1])
+    
+    combined_epochs = epochs_by_start_date | epochs_by_end_date
 
     # Current epoch structure:
     # grouped_epochs = {year: {month: [<Event 1>, <Event 2>]}
@@ -167,33 +175,41 @@ def campaign_sort(campaign):
     # Current event structure:
     # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
 
+    combined_events_and_epochs = combined_epochs | grouped_events
 
     # Turn each level of the heirarchy into an object, with the level below as a list held in a property
     year_list = []
 
-    for year in grouped_events:
+    for year in combined_events_and_epochs:
 
         year_object = Year()
         year_object.name = year
-        year_object.marker = check_year_marker(grouped_events[year])
+        try:
+            year_object.marker = check_year_marker(grouped_events[year])
+        except KeyError:
+            year_object.marker = False
 
-        for month in grouped_events[year]:
+        for month in combined_events_and_epochs[year]:
 
             month_object = Month()
             month_object.name = month
 
-            for day in grouped_events[year][month]:
+            for day in combined_events_and_epochs[year][month]:
 
                 day_object = Day()
                 day_object.name = day
 
-                for event in grouped_events[year][month][day]:
+                try:
+                    for event in grouped_events[year][month][day]:
 
-                    # Append the event to the day object
-                    day_object.events.append(event)
+                        # Append the event to the day object
+                        day_object.events.append(event)
+                except KeyError:
+                    continue
 
                 # Append the day object to the month object
                 month_object.days.append(day_object)
+
 
             # Check if any epoch starts occur in month
             if year in epochs_by_start_date:
@@ -215,6 +231,8 @@ def campaign_sort(campaign):
 
         # Finally, take the list of year objects and check them for header status
         check_headers(year_list)
+
+    print(year_list)
 
     return year_list
 
