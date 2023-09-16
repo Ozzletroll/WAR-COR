@@ -196,8 +196,7 @@ def campaign_sort(campaign):
         if year in final_group:
             for month in combined_epochs[year]:
                 if month not in final_group[year]:
-                    final_group[year][month] = month
-             
+                    final_group[year][month] = month    
         else:
             final_group[year] = month
 
