@@ -407,12 +407,15 @@
                 </div>
                 {% endif %}
 
-                  {# End of epoch markers #}
-                  {% if month.has_epoch_end %}
-                    {% if month.epoch_has_events %}
+                  
+                {# End of epoch markers #}
+                {% if month.has_epoch_end %}
+                  {% if month.epoch_has_events %}
                     {{ epoch.epoch_end(month.end_epochs) }}
-                    {% endif %}
+                  {% else %}
+                    {{ epoch.epoch_end(month.end_epochs, contents=false) }}
                   {% endif %}
+                {% endif %}
         
               {% endfor %}
               

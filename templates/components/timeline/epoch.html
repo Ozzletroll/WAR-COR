@@ -65,12 +65,20 @@ Takes an a months epochs list as an argument
 
 #}
 
-{% macro epoch_end(epochs) %}
+{% macro epoch_end(epochs, contents=true) %}
 
-  <div class="epoch-end-marker">
-    <div class="epoch-hor-line-end"></div>
-    <div class="epoch-vert-line"></div>
-  </div>
+  {% if contents %}
+    <div class="epoch-end-marker">
+      <div class="epoch-hor-line-end"></div>
+      <div class="epoch-vert-line"></div>
+    </div>
+  {% else %}
+    <div class="epoch-body">
+      {% for epoch in epochs %}
+      <h4 class="epoch-date epoch-end-date">{{ epoch.end_date }}</h4>
+      {% endfor %}
+   </div>
+  {% endif %}
 
   <div class="epoch-outer epoch-end-outer">
 

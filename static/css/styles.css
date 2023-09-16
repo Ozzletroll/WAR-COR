@@ -2980,6 +2980,10 @@ p {
   margin: 0;
 }
 
+.epoch-end-date {
+  margin-bottom: 12px;
+}
+
 .epoch-description {
   font-size: min(3vw, 12px);
   margin: 0;
