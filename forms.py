@@ -14,7 +14,7 @@ def date_format(format):
         format = r"^\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
     elif format == "epoch":
         message = "Not a valid date format, please use the format 'YYYY-MM'"
-        format = r"^\d{4}-\d{2}$"
+        format = r"^\d{1,9}-\d{2}$"
 
     def _date_format(form, field):
 
@@ -22,7 +22,6 @@ def date_format(format):
             raise ValidationError(message)
 
     return _date_format
-
 
 
 def file_format():
@@ -36,6 +35,17 @@ def file_format():
                 raise ValidationError('File size must be less than 5MB.')
 
     return _file_format
+
+
+def date_is_after(form, field):
+    start_date = form.start_date.data
+    end_date = field.data
+
+    start_year, start_month = map(int, start_date.split("-"))
+    end_year, end_month = map(int, end_date.split("-"))
+
+    if start_year > end_year or (start_year == end_year and start_month > end_month):
+        raise ValidationError("End Date must be equal or greater than Start Date")
 
 
 class RegisterUserForm(FlaskForm):
@@ -86,7 +96,7 @@ class CreateEventForm(FlaskForm):
 class CreateEpochForm(FlaskForm):
     title = StringField("Event Title", validators=[DataRequired()])
     start_date = StringField("Start Date", validators=[InputRequired(), date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[InputRequired(), date_format(format="epoch")])
+    end_date = StringField("End Date", validators=[InputRequired(), date_is_after, date_format(format="epoch")])
     description = CKEditorField("Description")
     submit = SubmitField("Create Epoch")
 
