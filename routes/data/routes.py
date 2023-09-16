@@ -8,6 +8,7 @@ import forms
 import auth
 import models
 import utils.serialisers as serialisers
+import utils.organisers as organisers
 
 from routes.data import bp
 from app import db
@@ -55,7 +56,9 @@ def backup_page(campaign_name):
 
 
             else:
-                # Delete all existing current campaign events
+                # Delete all existing current campaign data
+                for epoch in campaign.epochs:
+                    db.session.delete(epoch)
                 for event in campaign.events:
                     db.session.delete(event)
 
@@ -68,6 +71,17 @@ def backup_page(campaign_name):
 
                     event.parent_campaign = campaign
                     db.session.add(event)
+
+                for item in data["epochs"]:
+                    epoch = serialisers.epochs_import(item)
+                    db.session.add(epoch)
+
+                    epoch.parent_campaign = campaign
+
+                    # Find events that take place during the epoch
+                    matching_events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+                    for event in matching_events:
+                        epoch.events.append(event)
 
             except KeyError:
                 flash("KeyError: Please check JSON file formatting")
