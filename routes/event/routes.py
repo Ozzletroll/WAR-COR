@@ -328,3 +328,62 @@ def new_epoch(campaign_name):
                            campaign=campaign,
                            campaign_name=campaign.title,
                            form=form)
+
+
+
+# Edit epoch
+@bp.route("/campaigns/<campaign_name>/epochs/<epoch_title>/edit", methods=["GET", "POST"])
+@login_required
+def edit_epoch(campaign_name, epoch_title):
+
+    target_campaign_id = request.args["campaign_id"]
+    epoch_id = request.args["epoch_id"]
+
+    campaign = db.session.execute(select(models.Campaign)
+                                  .filter_by(title=campaign_name, 
+                                             id=target_campaign_id)).scalar()
+
+    auth.permission_required(campaign)
+
+    epoch = db.session.execute(select(models.Epoch)
+                               .filter_by(title=epoch_title, 
+                                          id=epoch_id)).scalar()
+
+    form = forms.CreateEpochForm(obj=epoch)
+
+    if form.validate_on_submit():
+
+        epoch.title = request.form["title"]
+        epoch.start_date = request.form["start_date"]
+        epoch.end_date = request.form["end_date"]
+        epoch.description = request.form["description"]
+
+        # Clear epochs events
+        # Update campaigns epochs
+        for epoch in campaign.epochs:
+            epoch.events.clear()
+            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
+            db.session.commit()
+
+        scroll_target = f"event-{epoch.id}"
+
+        db.session.commit()
+
+        return redirect(url_for("campaign.edit_timeline", 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id, 
+                                scroll_target=scroll_target))
+    
+    # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
+
+    # Change form label to 'update'
+    form.submit.label.text = "Update Epoch"
+
+    return render_template("new_epoch.html",
+                           campaign=campaign,
+                           campaign_name=campaign.title,
+                           form=form,
+                           edit_page=True)

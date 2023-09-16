@@ -4,20 +4,24 @@ EPOCH COMPONENT
 
 Placed dynamically on the timeline
 
-Takes an a months epochs list as an argument.
-Edit boolean is used to add extra elements for 
-edit_timeline page.
+Takes an a months epochs list as an argument,
+a boolean value for "edit" to determine if extra elements for 
+edit_timeline page are rendered, and the current campaign.
 
 #}
 
-{% macro epoch(epochs, edit=false) %}
+{% macro epoch(epochs, campaign, edit=false) %}
 
   <div class="epoch-outer">
 
     <div class="epoch-elems">
     {% for epoch in epochs %}
       {% if edit %}
-      <a class="edit-epoch" href="">
+      <a class="edit-epoch" href="{{ url_for('event.edit_epoch', 
+                                     campaign_name=campaign.title, 
+                                     campaign_id=campaign.id,
+                                     epoch_title=epoch.title, 
+                                     epoch_id=epoch.id) }}">
       {% endif %}
 
       <div class="epoch-container">
