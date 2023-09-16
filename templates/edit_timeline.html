@@ -135,7 +135,7 @@
                 {# Start of epoch markers #}
                 {% if month.has_epoch %}
                   {% if month.days | length != 0 %}
-                    {{ epoch.epoch(month.epochs, campaign=campaign, edit=true) }}
+                    {{ epoch.epoch(month.epochs, campaign=campaign, contents=true, edit=true) }}
                   {% else %}
                     {{ epoch.epoch(month.epochs, campaign=campaign, contents=false, edit=true) }}
                   {% endif %}

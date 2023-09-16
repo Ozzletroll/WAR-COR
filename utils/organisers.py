@@ -196,9 +196,16 @@ def campaign_sort(campaign):
         if year in final_group:
             for month in combined_epochs[year]:
                 if month not in final_group[year]:
-                    final_group[year][month] = month    
+                    final_group[year][month] = combined_epochs[year][month]  
         else:
-            final_group[year] = month
+            final_group[year] = combined_epochs[year]
+
+    # Sort final grouping into year order
+    final_group = {key: value for key, value in sorted(final_group.items())}
+    # Sort final grouping months
+    for year in final_group:
+        for month in final_group[year]:
+            final_group[year] = {key: value for key, value in sorted(final_group[year].items())}
 
     # Turn each level of the heirarchy into an object, with the level below as a list held in a property
     year_list = []
@@ -238,13 +245,16 @@ def campaign_sort(campaign):
             if year in epochs_by_start_date:
                 if month in epochs_by_start_date[year]:
                     month_object.has_epoch = True
-                    month_object.epochs = (epochs_by_start_date[year][month])
+                    month_object.epochs = epochs_by_start_date[year][month]
+                    for epoch in month_object.epochs:
+                        if len(epoch.events) > 0:
+                            month_object.epoch_has_events = True
 
             # Check if any epoch ends occur in month
             if year in epochs_by_end_date:
                 if month in epochs_by_end_date[year]:
                     month_object.has_epoch_end = True
-                    month_object.end_epochs = (epochs_by_end_date[year][month])
+                    month_object.end_epochs = epochs_by_end_date[year][month]
                     for epoch in month_object.end_epochs:
                         if len(epoch.events) > 0:
                             month_object.epoch_has_events = True
@@ -257,8 +267,6 @@ def campaign_sort(campaign):
 
         # Finally, take the list of year objects and check them for header status
         check_headers(year_list)
-
-    print(year_list)
 
     return year_list
 
