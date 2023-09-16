@@ -14,6 +14,12 @@ user_messages = db.Table("user_messages",
                          db.Column("message_id", db.Integer, db.ForeignKey("message.id")))
 
 
+# Association table that defines event to epoch relationship
+epoch_events = db.Table("epoch_events",
+                        db.Column("epoch_id", db.Integer, db.ForeignKey("epoch.id")),
+                        db.Column("event_id", db.Integer, db.ForeignKey("event.id")))
+
+
 # Association Object that defines user to campaign membership, and allows
 # users to have a unique callsign for each campaign.
 class UserCampaign(db.Model):
@@ -29,11 +35,6 @@ class UserCampaign(db.Model):
     # Association between UserCampaign -> Campaign
     campaign = db.relationship('Campaign', back_populates="user_associations", viewonly=True)
 
-
-# Association table that defines event to epoch relationship
-epoch_events = db.Table("epoch_events",
-                        db.Column("epoch_id", db.Integer, db.ForeignKey("epoch.id")),
-                        db.Column("event_id", db.Integer, db.ForeignKey("event.id")))
 
 
 class User(UserMixin, db.Model):
@@ -80,9 +81,17 @@ class Campaign(db.Model):
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
     # permission. 
 
-    events = db.relationship("Event", back_populates="parent_campaign")
-    epochs = db.relationship("Epoch", back_populates="parent_campaign")
-    pending_invites = db.relationship("Message", back_populates="target_campaign")
+    events = db.relationship("Event", 
+                             back_populates="parent_campaign", 
+                             cascade="delete, delete-orphan")
+    
+    epochs = db.relationship("Epoch", 
+                             back_populates="parent_campaign", 
+                             cascade="delete, delete-orphan")
+    
+    pending_invites = db.relationship("Message", 
+                                      back_populates="target_campaign", 
+                                      cascade="delete, delete-orphan")
 
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     members = db.relationship("User",
@@ -120,7 +129,9 @@ class Event(db.Model):
                               secondary="epoch_events",
                               back_populates="events")
 
-    comments = db.relationship("Comment", back_populates="parent_event")
+    comments = db.relationship("Comment", 
+                               back_populates="parent_event",
+                               cascade="delete, delete-orphan")
 
 
 class Epoch(db.Model):
