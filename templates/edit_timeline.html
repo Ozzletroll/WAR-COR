@@ -2,7 +2,11 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
+
 {% import "components/timeline/epoch.html" as epoch %}
+{% import "components/timeline/event.html" as timeline_event %}
+
+
 
 {% extends "base/base.html" %}
 
@@ -233,105 +237,12 @@
                         
                         {% for event in day.events %}
 
-                          {% if loop.length == 1 %}
-                          <div class="timeline-day-container day-container-solo">
-                            <div class="event-line event-line-solo event-line-solo-edit"></div>
-                          {% elif loop.first  %}
-                          <div class="timeline-day-container">
-                            <div class="event-line event-line-top event-line-top-edit"></div>
-                          {% elif loop.last %}
-                          <div class="timeline-day-container day-container-bottom">
-                            <div class="event-line event-line-bottom event-line-bottom-edit"></div>
-                          {% else %}
-                          <div class="timeline-day-container day-container-mid">
-                            <div class="event-line event-line-mid event-line-mid-edit"></div>
-                          {% endif %}
+                          {{ timeline_event.event(campaign,
+                          event, 
+                          length=loop.length,
+                          index=loop.index0,
+                          edit=true) }}
 
-                            <div class="right-branch-label">
-                              {# Check if the first event in the day is a header event #}
-                              {% if event.header and loop.first %}
-
-                              <div class="date-label-area hidden-date">
-                                <div class="line line-first"></div>
-                                <div class="connector-date connector-date-outline">
-                                  <div class="connector-date">
-                                    {{event.date[-8:]}}
-                                  </div>
-                                </div>
-                                <div class="line line-spacer"></div>
-                              </div>
-
-                              {% elif event.header %}
-
-                              <div class="date-label-area hidden-align">
-                                <div class="line line-first"></div>
-                                <div class="line line-spacer"></div>
-                              </div>
-
-                              {% else %}
-
-                              <div class="date-label-area">
-                                <div class="line line-first"></div>
-                                <div class="connector-date connector-date-outline">
-                                  <div class="connector-date">
-                                    {{event.date[-8:]}}
-                                  </div>
-                                </div>
-                                <div class="line line-spacer"></div>
-                              </div>
-                              
-                              {% endif %}
-                            </div>
-
-                            <div class="event-outer-container">
-                                <h4 class="event-small-date">{{event.date}}</h4>
-                              {% if event.header and loop.first %}
-                              <div class="timeline-event event-outline event-offset">
-                              {% else %}
-                              <div class="timeline-event event-outline">
-                              {% endif %}
-                                <div id="event-{{event.id}}" class="timeline-event">
-                                  {# Check if event is a header event #}
-                                  {% if event.header and loop.first %}
-
-                                  <a href="{{ url_for('event.edit_event', 
-                                              campaign_name=campaign.title,
-                                              campaign_id=campaign.id, 
-                                              event_name=event.title, 
-                                              event_id=event.id) }}">
-                                    
-                                    <div class="event-header event-header-highlight">
-                                      //{{event.title}}
-                                    </div>
-                          
-                                  </a>
-
-                                  {% else %}
-
-                                  <a href="{{ url_for('event.edit_event', 
-                                              campaign_name=campaign.title,
-                                              campaign_id=campaign.id, 
-                                              event_name=event.title, 
-                                              event_id=event.id) }}">
-                                    
-                                    <div class="event-header">
-                                      //{{event.title}}
-                                    </div>
-                                    
-                                  </a>
-
-
-                                  {% endif %}
-                                  
-
-
-                                </div>
-                              </div>
-                            </div>
-
-                          </div>
-
-                        
                           <!-- Between events new event button -->
                           <div class="edit-line-container">
 
