@@ -3,7 +3,6 @@
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
 
-{% import "components/timeline/epoch.html" as epoch %}
 {% import "components/timeline/month.html" as timeline_month %}
 
 
@@ -73,7 +72,7 @@
 
         <div id="timeline-container" class="timeline-container">
 
-          {% if timeline_data|length == 0 %}
+          {% if timeline_data | length == 0 %}
             <div class="no-events">
               <h3 class="no-events-header">Conflict Data Not Found</h3>
               <hr class="no-events-hr">
@@ -132,7 +131,8 @@
                                           year,
                                           month,
                                           length=loop.length,
-                                          index=loop.index0) }}
+                                          index=loop.index0,
+                                          edit=edit) }}
   
                 {% endfor %}
               </div>
@@ -150,8 +150,11 @@
 
 </div>
 
-
-<div id="editPageVariable" class="hidden" editPage="false"></div>
+{% if edit %}
+  <div id="editPageVariable" class="hidden" editPage="true"></div>
+{% else %}
+  <div id="editPageVariable" class="hidden" editPage="false"></div>
+{% endif %}
 <script src="/static/js/timeline_search.js"></script>
 {% if "scroll_target" in request.args %}
 <script>
