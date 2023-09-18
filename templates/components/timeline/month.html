@@ -55,6 +55,7 @@ elements.
     </div>
   {% endif %}
 
+  <!-- Month {{ month.name }} -->
 
   {% if index == 0 %}
     <div class="month-outer month-outer-top">
@@ -86,7 +87,6 @@ elements.
 
   <div class="timeline-month">
 
-    <!-- Day sub branches within each month -->
     {% for day in month.days %}
 
       {% if edit %}

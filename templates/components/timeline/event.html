@@ -12,6 +12,8 @@ elements.
 
 {% macro event(campaign, year, month, day, event, length, index, edit=false) %}
 
+  <!-- Event {{ event.title }} -->
+
   {% if edit %}
 
     {# If event is the only event in the day #}

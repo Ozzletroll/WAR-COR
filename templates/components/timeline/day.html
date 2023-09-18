@@ -14,6 +14,8 @@ elements.
 
 {% macro day(campaign, year, month, day, length, index, edit=false) %}
 
+  <!-- Day {{ day.name }} -->
+
   {% if edit %}
     {% if length == 1 %}
     <div class="timeline-day-outer">

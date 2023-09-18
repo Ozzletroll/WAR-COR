@@ -83,6 +83,8 @@
 
           {% for year in timeline_data %}
 
+            <!-- Year {{  year.name }} -->
+
             <div class="timeline-year">
 
               <!-- Year main axis -->
@@ -94,7 +96,6 @@
 
                 <div class="timeline-columns">
 
-                  <!-- Check if the timeline data is long enough to warrant an extra year marker -->
                   {% if year.marker %}
                   <div id="timeline-left-marker" class="timeline-left-marker">
                     <div class="year-marker-hr"></div>
@@ -123,8 +124,8 @@
 
               </div>
           
+              <!-- Timeline months -->
               <div class="timeline-months-container">
-                <!-- Month branch of each year -->
                 {% for month in year.months %}
 
                   {{ timeline_month.month(campaign,
