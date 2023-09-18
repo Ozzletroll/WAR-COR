@@ -9,6 +9,14 @@
     <div class="onepage-content">
 
         <h1 class="form-heading">DELETE</h1>
+        <div class="form-flash">
+          {% include 'components/flash.html' %}
+          <ul class = flashes>
+            {% for error in form.password.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
         <div class="flavour-text-area login-flavour-text">
           <p class="flavour-text flavour-text-centre">UWC-75-01 // Record::Deletion</p>
         </div>
@@ -40,15 +48,6 @@
               </div>
             </form>
 
-          </div>
-
-          <div class="form-flash">
-            {% include 'components/flash.html' %}
-            <ul class = flashes>
-              {% for error in form.password.errors %}
-                <li>{{ error }}</li>
-              {% endfor %}
-            </ul>
           </div>
 
         <div class="flavour-text-area">

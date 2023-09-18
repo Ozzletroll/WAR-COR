@@ -1243,6 +1243,7 @@ p {
   flex-direction: column;
   filter: drop-shadow(1px 3px 3px var(--elem_shadow));
   width: min(280px, 80vw);
+  margin-bottom: 20px;
 }
 
 .form-flash {

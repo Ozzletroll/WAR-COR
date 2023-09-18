@@ -9,8 +9,16 @@
   <div class="onepage-content">
 
     <h1 class="form-heading">REGISTER</h1>
-        <div class="flavour-text-area login-flavour-text">
-          <p class="flavour-text flavour-text-centre">UWC-3-01 // Correspondent::Identification</p>
+    <div class="form-flash">
+      {% include 'components/flash.html' %}
+      <ul class = flashes>
+        {% for error in form.password.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="flavour-text-area login-flavour-text">
+      <p class="flavour-text flavour-text-centre">UWC-3-01 // Correspondent::Identification</p>
     </div>
 
     <div class="form-area">
@@ -44,15 +52,6 @@
         </div>
       </form>
 
-    </div>
-
-    <div class="form-flash">
-      {% include 'components/flash.html' %}
-      <ul class = flashes>
-        {% for error in form.password.errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
     </div>
 
     <div class="flavour-text-area">
