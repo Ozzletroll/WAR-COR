@@ -2927,7 +2927,6 @@ p {
   justify-content: center;
   scroll-margin-top: 53px;
   padding-left: 0;
-  /* width: fit-content; */
   margin-left: -50px;
   margin-right: -50px;
 }
@@ -2946,6 +2945,7 @@ p {
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  width: 50%;
 }
 
 .epoch-container {
@@ -2985,6 +2985,8 @@ p {
 }
 
 .epoch-description {
+  display: flex;
+  justify-content: center;
   font-size: min(3vw, 12px);
   margin: 0;
 }
@@ -3075,7 +3077,7 @@ p {
   justify-content: center;
   width: 100%;
   text-decoration: none;
-  border: 2px dashed var(--elem_border);
+  border: 2px dashed var(--bright_red);
   transition: 0.5s;
 }
 
