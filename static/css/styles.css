@@ -2965,6 +2965,7 @@ p {
   text-transform: uppercase;
   color: var(--text_header);
   transition: 0.5s;
+  text-align: center;
 }
 
 .epoch-body {
@@ -2987,6 +2988,7 @@ p {
 .epoch-description {
   display: flex;
   justify-content: center;
+  text-align: center;
   font-size: min(3vw, 12px);
   margin: 0;
 }
