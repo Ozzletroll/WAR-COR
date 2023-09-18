@@ -3,8 +3,7 @@
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
 
-{% import "components/timeline/epoch.html" as epoch %}
-{% import "components/timeline/day.html" as timeline_day %}
+{% import "components/timeline/month.html" as timeline_month %}
 
 
 
@@ -136,112 +135,13 @@
               <!-- Month branch of each year -->
               {% for month in year.months %}
 
-                {# Start of epoch markers #}
-                {% if month.has_epoch %}
-                 {% if month.epoch_has_events %}
-                    {{ epoch.epoch(month.epochs, campaign=campaign, contents=true, edit=true) }}
-                  {% else %}
-                    {{ epoch.epoch(month.epochs, campaign=campaign, contents=false, edit=true) }}
-                  {% endif %}
-                {% endif %}
+              {{ timeline_month.month(campaign,
+                                      year,
+                                      month,
+                                      length=loop.length,
+                                      index=loop.index0,
+                                      edit=true) }}
 
-                {# New Epoch Element #}
-                <div class="epoch-between">
-                  <div class="epoch-left-area">
-                    <div class="line line-dashed line-dashed-heavy"></div>
-                  </div>
-
-                  <a class="epoch-centre-area" href="{{ url_for('event.new_epoch', 
-                                        campaign_name=campaign.title,
-                                        campaign_id=campaign.id,
-                                        date=year.name + '-' + month.name) }}">
-                    <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
-                      <p class="epoch-button-text">NEW EPOCH</p>
-                    </button>
-                  </a>
-
-                  <div class="epoch-right-area"></div>
-
-                </div>
-
-              
-                {% if loop.first %}
-                <div class="month-outer month-outer-top">
-                {% elif loop.last %}
-                <div class="month-outer month-outer-bottom">
-                {% else %}
-                <div class="month-outer">
-                {% endif %}
-
-                {% if month.days | length != 0 %}
-
-                  {# Check if the year has only one month, and that month has the header property #}
-                  {% if month.header %}
-                  {# If so, hide the month connector element #}
-                  <div class="month-connector hidden-date">
-                  {% else %}
-                  <div class="month-connector">
-                  {% endif %}
-                    <div class="line line-first"></div>
-                    <div class="connector-date connector-date-outline">
-                      <div class="connector-date">
-                        {{ month.name }}
-                      </div>
-                    </div>
-                    <div class="line"></div>
-                  </div>
-
-                {% endif %}
-
-                <div class="timeline-month">
-
-                  <!-- Day sub branches within each month -->
-                  {% for day in month.days %}
-
-                    {{ timeline_day.day(campaign,
-                                        year,
-                                        month,
-                                        day,
-                                        length=loop.length,
-                                        index=loop.index0,
-                                        edit=true) }}
-
-                  {% endfor %}
-
-                </div>
-
-              </div>
-
-
-                {% if loop.last %}
-                <!-- End of month new event button -->
-                <div class="month-between event-between-years">
-                  <div class="between-months-elements">
-                    <div class="line line-dashed line-dashed-heavy"></div>
-                 </div>
-                  <a href="{{ url_for('event.add_event', 
-                                        campaign_name=campaign.title,
-                                        new_month=True, 
-                                        campaign_id=campaign.id,
-                                        date=year.name + '-' + month.name + '-' + '01' + ' 00:00:00') }}">
-                    <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
-                      <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                    </button>
-                  </a>
-                  <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Month</p>
-                </div>
-                {% endif %}
-
-                  
-                {# End of epoch markers #}
-                {% if month.has_epoch_end %}
-                  {% if month.epoch_has_events %}
-                    {{ epoch.epoch_end(month.end_epochs) }}
-                  {% else %}
-                    {{ epoch.epoch_end(month.end_epochs, contents=false) }}
-                  {% endif %}
-                {% endif %}
-        
               {% endfor %}
               
             </div>

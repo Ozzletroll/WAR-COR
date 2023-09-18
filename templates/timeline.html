@@ -4,7 +4,7 @@
 {% import "components/back_button.html" as back_button %}
 
 {% import "components/timeline/epoch.html" as epoch %}
-{% import "components/timeline/day.html" as timeline_day %}
+{% import "components/timeline/month.html" as timeline_month %}
 
 
 
@@ -84,124 +84,60 @@
 
           {% for year in timeline_data %}
 
-          <div class="timeline-year">
+            <div class="timeline-year">
 
-            <!-- Year main axis -->
-            <div class="timeline-year-container">
+              <!-- Year main axis -->
+              <div class="timeline-year-container">
 
-              <h3 class="timeline-year-header" id="year-{{year.name}}">
-                {{ year.name + campaign.date_suffix}}
-              </h3> 
+                <h3 class="timeline-year-header" id="year-{{year.name}}">
+                  {{ year.name + campaign.date_suffix}}
+                </h3> 
 
-              <div class="timeline-columns">
+                <div class="timeline-columns">
 
-                <!-- Check if the timeline data is long enough to warrant an extra year marker -->
-                {% if year.marker %}
-                <div id="timeline-left-marker" class="timeline-left-marker">
-                  <div class="year-marker-hr"></div>
-                  <div class="year-marker-line"></div>
-                  <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
-                  <div class="year-marker-line"></div>
-                  <div class="year-marker-hr"></div>
-                </div>
-                {% else %}
-                <div id="timeline-left-marker" class="timeline-left-marker marker-invis">
-                  <div class="year-marker-hr marker-invis"></div>
-                  <div class="year-marker-line marker-invis"></div>
-                  <h5 class="year-marker marker-invis">{{ year.name + campaign.date_suffix}}</h5>
-                  <div class="year-marker-line marker-invis"></div>
-                  <div class="year-marker-hr marker-invis"></div>
-                </div>
-                {% endif %}
-
-                <div class="timeline-right-marker">
-                  <hr class="timeline-horizontal">
-                  <hr class="timeline-line">
-                  <hr class="timeline-horizontal">
-                </div>
-
-
-              </div>
-
-            </div>
-          
-
-
-            <div class="timeline-months-container">
-
-              <!-- Month branch of each year -->
-              {% for month in year.months %}
-
-                {# Start of epoch markers #}
-                {% if month.has_epoch %}
-                  {% if month.epoch_has_events %}
-                    {{ epoch.epoch(month.epochs, contents=true) }}
+                  <!-- Check if the timeline data is long enough to warrant an extra year marker -->
+                  {% if year.marker %}
+                  <div id="timeline-left-marker" class="timeline-left-marker">
+                    <div class="year-marker-hr"></div>
+                    <div class="year-marker-line"></div>
+                    <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
+                    <div class="year-marker-line"></div>
+                    <div class="year-marker-hr"></div>
+                  </div>
                   {% else %}
-                    {{ epoch.epoch(month.epochs, contents=false) }}
-                  {% endif %}
-                {% endif %}
-
-                
-
-                  {% if loop.first %}
-                  <div class="month-outer month-outer-top">
-                  {% elif loop.last %}
-                  <div class="month-outer month-outer-bottom">
-                  {% else %}
-                  <div class="month-outer">
+                  <div id="timeline-left-marker" class="timeline-left-marker marker-invis">
+                    <div class="year-marker-hr marker-invis"></div>
+                    <div class="year-marker-line marker-invis"></div>
+                    <h5 class="year-marker marker-invis">{{ year.name + campaign.date_suffix}}</h5>
+                    <div class="year-marker-line marker-invis"></div>
+                    <div class="year-marker-hr marker-invis"></div>
+                  </div>
                   {% endif %}
 
-                {% if month.days | length != 0 %}
-                
-                  {% if month.header %}
-                  <div class="month-connector hidden-date">
-                  {% else %}
-                  <div class="month-connector">
-                  {% endif %}
-                    <div class="line line-first"></div>
-                    <div class="connector-date connector-date-outline">
-                      <div class="connector-date">
-                        {{ month.name }}
-                      </div>
-                    </div>
-                    <div class="line"></div>
+                  <div class="timeline-right-marker">
+                    <hr class="timeline-horizontal">
+                    <hr class="timeline-line">
+                    <hr class="timeline-horizontal">
                   </div>
 
-                {% endif %}
-                
-
-                <div class="timeline-month">
-
-                  <!-- Day sub branches within each month -->
-                  {% for day in month.days %}
-
-                    {{ timeline_day.day(campaign,
-                                        year,
-                                        month,
-                                        day,
-                                        length=loop.length,
-                                        index=loop.index0) }}
-
-                  {% endfor %}
-
                 </div>
 
               </div>
-
-                {# End of epoch markers #}
-                {% if month.has_epoch_end %}
-                  {% if month.epoch_has_events %}
-                    {{ epoch.epoch_end(month.end_epochs) }}
-                  {% else %}
-                    {{ epoch.epoch_end(month.end_epochs, contents=false) }}
-                  {% endif %}
-                {% endif %}
-
-              {% endfor %}
-            </div>
-
-          </div>
           
+              <div class="timeline-months-container">
+                <!-- Month branch of each year -->
+                {% for month in year.months %}
+
+                  {{ timeline_month.month(campaign,
+                                          year,
+                                          month,
+                                          length=loop.length,
+                                          index=loop.index0) }}
+  
+                {% endfor %}
+              </div>
+
+            </div>
           {% endfor %}
 
         </div>
