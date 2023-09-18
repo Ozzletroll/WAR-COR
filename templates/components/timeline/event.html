@@ -1,0 +1,161 @@
+{# 
+
+EVENT COMPONENT
+
+Placed dynamically on the timeline
+
+Takes the campaign object, year, month, day and event objects, jinja2 loop.length,
+jinja2 index0, and a boolean value to toggle edit page
+elements.
+
+#}
+
+{% macro event(campaign, year, month, day, event, length, index, edit=false) %}
+
+  <!-- Event {{ event.title }} -->
+
+  {% if edit %}
+
+    {# If event is the only event in the day #}
+    {% if length == 1 %}
+    <div class="timeline-day-container day-container-solo">
+      <div class="event-line event-line-solo event-line-solo-edit"></div>
+    {# If the event is the first in the day #}
+    {% elif index == 0 %}
+    <div class="timeline-day-container">
+      <div class="event-line event-line-top event-line-top-edit"></div>
+    {# If the event is the last in the day #}
+    {% elif index == length - 1 %}
+    <div class="timeline-day-container day-container-bottom">
+      <div class="event-line event-line-bottom event-line-bottom-edit"></div>
+    {# All other events #}
+    {% else %}
+    <div class="timeline-day-container day-container-mid">
+      <div class="event-line event-line-mid event-line-mid-edit"></div>
+    {% endif %}
+
+  {% else %}
+
+    {# If event is the only event in the day #}
+    {% if length == 1 %}
+    <div class="timeline-day-container day-container-solo">
+      <div class="event-line event-line-solo"></div>
+    {# If the event is the first in the day #}
+    {% elif index == 0  %}
+    <div class="timeline-day-container">
+      <div class="event-line event-line-top"></div>
+    {# If the event is the last in the day #}
+    {% elif index == length - 1 %}
+    <div class="timeline-day-container day-container-bottom">
+      <div class="event-line event-line-bottom"></div>
+    {# All other events #}
+    {% else %}
+    <div class="timeline-day-container day-container-mid">
+      <div class="event-line event-line-mid"></div>
+    {% endif %}
+
+  {% endif %}
+
+    <div class="right-branch-label">
+      {# Check if the event is a header event and is the first within the day #}
+      {% if event.header and index == 0 %}
+        <div class="date-label-area hidden-date">
+          <div class="line line-first"></div>
+          <div class="connector-date connector-date-outline">
+            <div class="connector-date">
+              {{event.date[-8:]}}
+            </div>
+          </div>
+          <div class="line line-spacer"></div>
+        </div>
+      {# Hide time label if header element but not first in day #}
+      {% elif event.header %}
+        <div class="date-label-area hidden-align">
+          <div class="line line-first"></div>
+          <div class="line line-spacer"></div>
+        </div>
+      {# Otherwise, show time label #}
+      {% else %}
+      <div class="date-label-area">
+        <div class="line line-first"></div>
+        <div class="connector-date connector-date-outline">
+          <div class="connector-date">
+            {{event.date[-8:]}}
+          </div>
+        </div>
+        <div class="line line-spacer"></div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="event-outer-container">
+      <h4 class="event-small-date">{{event.date}}</h4>
+      {# If event has header property and is first within day, offset #}
+      {% if event.header and index == 0 %}
+      <div class="timeline-event event-outline event-offset">
+      {# Otherwise, regular event #}
+      {% else %}
+      <div class="timeline-event event-outline">
+      {% endif %}
+        <div id="event-{{event.id}}" class="timeline-event">
+         
+          {% if edit %}
+            <a href="{{ url_for('event.edit_event', 
+                        campaign_name=campaign.title,
+                        campaign_id=campaign.id, 
+                        event_name=event.title, 
+                        event_id=event.id) }}"> 
+          {% else %}
+            <a href="{{ url_for('event.view_event', 
+            campaign_name=campaign.title, 
+            event_name=event.title, 
+            event_id=event.id) }}">      
+            {% endif %}
+
+            {# Check if event is a header event #}
+            {% if event.header and index == 0 %}
+            <div class="event-header event-header-highlight">
+              //{{event.title}}
+            </div>
+            {% else %}
+            <div class="event-header">
+              //{{event.title}}
+            </div>
+            {% endif %}
+          </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if edit %}
+    <!-- Between events new event button -->
+    <div class="edit-line-container">
+
+      {% if index != length - 1 %}
+      <div class="edit-line-lower"></div>
+      {% endif %}
+      <div class="event-between event-between-events">
+        
+        <div class="between-events-elements">
+          <div class="line line-dashed line-edit"></div>
+      </div>
+        <a href="{{ url_for('event.add_event', 
+                    campaign_name=campaign.title, 
+                    campaign_id=campaign.id,
+                    new_hour=True, 
+                    date=event.date) }}">
+          <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+            <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+          </button>
+        </a>
+        <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
+      </div>
+
+    </div>
+  {% endif %}
+
+{%- endmacro %}
+
+

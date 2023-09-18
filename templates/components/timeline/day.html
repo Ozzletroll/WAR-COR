@@ -1,0 +1,131 @@
+{% import "components/timeline/event.html" as timeline_event %}
+
+{# 
+
+DAY COMPONENT
+
+Placed dynamically on the timeline
+
+Takes the campaign object, year object, day object, jinja2 loop.length,
+jinja2 index0, and a boolean value to toggle edit page
+elements.
+
+#}
+
+{% macro day(campaign, year, month, day, length, index, edit=false) %}
+
+  <!-- Day {{ day.name }} -->
+
+  {% if edit %}
+    {% if length == 1 %}
+    <div class="timeline-day-outer">
+      <div class="day-line day-line-solo-edit"></div>
+    {% elif index == 0  %}
+    <div class="timeline-day-outer">
+      <div class="day-line day-line-top-edit"></div>
+    {% elif index == length - 1 and length == 2 %}
+    <div class="timeline-day-outer day-container-edgecase">
+      <div class="day-line day-line-bottom-edit"></div>
+    {% elif index == length - 1 %}
+    <div class="timeline-day-outer day-container-bottom">
+      <div class="day-line day-line-bottom-edit"></div>
+    {% else %}
+    <div class="timeline-day-outer day-container-mid">
+      <div class="day-line  day-line-mid-edit"></div>
+    {% endif %}
+  {% else %}
+    {# If day is the only day in the month #}
+    {% if length == 1 %}
+      <div class="timeline-day-outer">
+        <div class="event-line event-line-solo"></div>
+    {# If day is the first in the month #}
+    {% elif index == 0  %}
+    <div class="timeline-day-outer">
+      <div class="event-line event-line-top"></div>
+    {# If day is the last in the month and there are only two days #}
+    {% elif index == length - 1 and length == 2 %}
+    <div class="timeline-day-outer day-container-edgecase">
+      <div class="event-line event-line-bottom"></div>
+    {# If the day is the last in the month #}
+    {% elif index == length - 1 %}
+      <div class="timeline-day-outer day-container-bottom">
+        <div class="event-line event-line-bottom"></div>
+    {# All other days #}
+    {% else %}
+      <div class="timeline-day-outer day-container-mid">
+        <div class="event-line event-line-mid"></div>
+    {% endif %}
+  {% endif %}
+
+  {# Check if the first event in the month is a header event, and their are no sub events #}
+  {% if day.header %}
+    <div class="right-branch-label hidden-date">
+  {% else %}
+    <div class="right-branch-label">
+  {% endif %}
+
+    <div class="date-label-area">
+      <div class="line line-first"></div>
+      <div class="connector-date connector-date-outline">
+        <div class="connector-date">
+          {{day.name}}
+        </div>
+      </div>
+      <div class="line line-spacer"></div>
+    </div>
+
+  </div>
+
+    {# All events within day #}
+    <div class="event-group-container">
+      {% for event in day.events %}
+
+        {% if edit %}
+
+          {{ timeline_event.event(campaign,
+            year,
+            month,
+            day,
+            event, 
+            length=loop.length,
+            index=loop.index0,
+            edit=true) }}
+
+        {% else %}
+
+          {{ timeline_event.event(campaign,
+                                  year,
+                                  month,
+                                  day,
+                                  event, 
+                                  length=loop.length,
+                                  index=loop.index0) }}
+                    
+        {% endif %}
+
+      {% endfor %}
+    </div>
+
+  </div>
+
+  {% if edit %}
+    <!-- Between days event button -->
+    <div class="event-between event-between-days">
+      <div class="between-days-elements">
+        <div class="line line-dashed line-edit"></div>
+    </div>
+      <a href="{{ url_for('event.add_event', 
+                  campaign_name=campaign.title, 
+                  campaign_id=campaign.id,
+                  new_day=True, 
+                  date=year.name + '-' + month.name + '-' + day.name + ' 00:00:00') }}">
+        <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+          <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+        </button>
+      </a>
+        <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</p>
+
+    </div>
+  {% endif %}
+
+{%- endmacro %}

@@ -2965,6 +2965,7 @@ p {
   text-transform: uppercase;
   color: var(--text_header);
   transition: 0.5s;
+  text-align: center;
 }
 
 .epoch-body {
@@ -2987,6 +2988,7 @@ p {
 .epoch-description {
   display: flex;
   justify-content: center;
+  text-align: center;
   font-size: min(3vw, 12px);
   margin: 0;
 }
@@ -3018,6 +3020,12 @@ p {
 }
 
 .epoch-button-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 5px;
   font-size: min(4vw, 24px);
   text-transform: uppercase;
   color: var(--text_header);
@@ -3176,8 +3184,6 @@ p {
   background-color: transparent;
   color: var(--text_header_contrast);
   transition: 0.5s;
-  width: 50px;
-  height: 50px;
 }
 
 .epoch-between .new-timeline-item {

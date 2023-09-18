@@ -40,7 +40,7 @@ def campaigns():
 
 
 # View campaign overview
-@bp.route("/campaigns/<campaign_name>/timeline/<campaign_id>")
+@bp.route("/campaigns/<campaign_name>/<campaign_id>")
 def show_timeline(campaign_name, campaign_id):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
@@ -56,7 +56,7 @@ def show_timeline(campaign_name, campaign_id):
 
 
 # View campaign editing page
-@bp.route("/campaigns/<campaign_name>/timeline/edit/<campaign_id>")
+@bp.route("/campaigns/<campaign_name>/<campaign_id>/edit")
 @login_required
 def edit_timeline(campaign_name, campaign_id):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
@@ -71,9 +71,10 @@ def edit_timeline(campaign_name, campaign_id):
     scroll_target = f"campaign-{campaign.id}"
     session["scroll_target"] = scroll_target 
 
-    return render_template("edit_timeline.html", 
+    return render_template("timeline.html", 
                            campaign=campaign, 
-                           timeline_data=grouped_events)
+                           timeline_data=grouped_events,
+                           edit=True)
 
 
 # Create new campaign
@@ -111,7 +112,7 @@ def create_campaign():
 
 
 # Edit campaign data
-@bp.route("/campaigns/<campaign_name>/<campaign_id>/edit", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>/<campaign_id>/data/edit", methods=["GET", "POST"])
 @login_required
 def edit_campaign(campaign_name, campaign_id):
 
