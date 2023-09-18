@@ -4,11 +4,13 @@ EVENT COMPONENT
 
 Placed dynamically on the timeline
 
-
+Takes the campaign object, event object, jinja2 loop.length,
+jinja2 index0, and a boolean value to toggle edit page
+elements.
 
 #}
 
-{% macro event(campaign, event, length, index, edit=false) %}
+{% macro event(campaign, year, month, day, event, length, index, edit=false) %}
 
   {% if edit %}
 
@@ -124,6 +126,33 @@ Placed dynamically on the timeline
       </div>
     </div>
   </div>
+
+  {% if edit %}
+    <!-- Between events new event button -->
+    <div class="edit-line-container">
+
+      {% if index != length - 1 %}
+      <div class="edit-line-lower"></div>
+      {% endif %}
+      <div class="event-between event-between-events">
+        
+        <div class="between-events-elements">
+          <div class="line line-dashed line-edit"></div>
+      </div>
+        <a href="{{ url_for('event.add_event', 
+                    campaign_name=campaign.title, 
+                    campaign_id=campaign.id,
+                    new_hour=True, 
+                    date=event.date) }}">
+          <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+            <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+          </button>
+        </a>
+        <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
+      </div>
+
+    </div>
+  {% endif %}
 
 {%- endmacro %}
 

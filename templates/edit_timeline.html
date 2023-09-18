@@ -4,7 +4,7 @@
 {% import "components/back_button.html" as back_button %}
 
 {% import "components/timeline/epoch.html" as epoch %}
-{% import "components/timeline/event.html" as timeline_event %}
+{% import "components/timeline/day.html" as timeline_day %}
 
 
 
@@ -198,99 +198,13 @@
                   <!-- Day sub branches within each month -->
                   {% for day in month.days %}
 
-                    {% if loop.length == 1 %}
-                    <div class="timeline-day-outer">
-                      <div class="day-line day-line-solo-edit"></div>
-                    {% elif loop.first  %}
-                    <div class="timeline-day-outer">
-                      <div class="day-line day-line-top-edit"></div>
-                    {% elif loop.last and loop.length == 2 %}
-                    <div class="timeline-day-outer day-container-edgecase">
-                      <div class="day-line day-line-bottom-edit"></div>
-                    {% elif loop.last %}
-                    <div class="timeline-day-outer day-container-bottom">
-                      <div class="day-line day-line-bottom-edit"></div>
-                    {% else %}
-                    <div class="timeline-day-outer day-container-mid">
-                      <div class="day-line  day-line-mid-edit"></div>
-                    {% endif %}
-
-                      {# Check if the first event in the month is a header event, and their are no sub events #}
-                      {% if day.header %}
-                      <div class="right-branch-label hidden-date">
-                      {% else %}
-                      <div class="right-branch-label">
-                      {% endif %}
-
-                        <div class="date-label-area">
-                          <div class="line line-first"></div>
-                          <div class="connector-date connector-date-outline">
-                            <div class="connector-date">
-                              {{day.name}}
-                            </div>
-                          </div>
-                          <div class="line line-spacer"></div>
-                        </div>
-                      </div>
-
-                      <div class="event-group-container">
-                        
-                        {% for event in day.events %}
-
-                          {{ timeline_event.event(campaign,
-                          event, 
-                          length=loop.length,
-                          index=loop.index0,
-                          edit=true) }}
-
-                          <!-- Between events new event button -->
-                          <div class="edit-line-container">
-
-                            {% if not loop.last %}
-                            <div class="edit-line-lower"></div>
-                            {% endif %}
-                            <div class="event-between event-between-events">
-                              
-                              <div class="between-events-elements">
-                                <div class="line line-dashed line-edit"></div>
-                            </div>
-                              <a href="{{ url_for('event.add_event', 
-                                          campaign_name=campaign.title, 
-                                          campaign_id=campaign.id,
-                                          new_hour=True, 
-                                          date=event.date) }}">
-                                <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
-                                  <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                                </button>
-                              </a>
-                              <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
-                            </div>
-
-                          </div>
-
-                        {% endfor %}
-                      
-                      </div>
-
-                   </div>
-
-                   <!-- Between days event button -->
-                   <div class="event-between event-between-days">
-                    <div class="between-days-elements">
-                      <div class="line line-dashed line-edit"></div>
-                   </div>
-                    <a href="{{ url_for('event.add_event', 
-                                campaign_name=campaign.title, 
-                                campaign_id=campaign.id,
-                                new_day=True, 
-                                date=year.name + '-' + month.name + '-' + day.name + ' 00:00:00') }}">
-                      <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
-                        <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-                      </button>
-                     </a>
-                      <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</p>
-
-                  </div>
+                    {{ timeline_day.day(campaign,
+                                        year,
+                                        month,
+                                        day,
+                                        length=loop.length,
+                                        index=loop.index0,
+                                        edit=true) }}
 
                   {% endfor %}
 
