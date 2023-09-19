@@ -325,10 +325,10 @@ def new_epoch(campaign_name):
         if len(epoch.events) > 0:
             epoch.has_events = True
 
-        scroll_target = f"event-{epoch.id}"
-
         db.session.add(epoch)
         db.session.commit()
+
+        scroll_target = f"epoch-{epoch.id}"
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -385,7 +385,7 @@ def edit_epoch(campaign_name, epoch_title):
 
             db.session.commit()
 
-        scroll_target = f"event-{epoch.id}"
+        scroll_target = f"epoch-{epoch.id}"
 
         db.session.commit()
 
