@@ -14,12 +14,16 @@
     <div class="fade-in-block-1">
 
       {# Create navigation url bar #}
-
-      {% set urls = [url_for('campaign.campaigns')] %}
+      {% if edit %}
+        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% else %}
+        {% set urls = [url_for('campaign.campaigns')] %}
+      {% endif %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                         is_link=true,
-                                        current_user=current_user) }}
+                                        current_user=current_user,
+                                        campaign=campaign) }}
 
       <div class="campaigns-title">
 
@@ -27,7 +31,12 @@
         {% set url = url_for('campaign.campaigns') %}
         {{ back_button.back_button(url=url, blank=false) }}
 
-        <h3 class="campaigns-heading edit-campaign-heading">NEW CAMPAIGN DATA</h1>
+
+        {% if edit %}
+          <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
+        {% else %}
+          <h3 class="campaigns-heading edit-campaign-heading">NEW CAMPAIGN DATA</h1>
+        {% endif %}
       </div>
 
       <hr class="campaigns-divider">
@@ -35,7 +44,7 @@
 
     </div>
 
-    <form class="edit-form form-column fade-in-block-2" method="POST" action="{{ url_for('campaign.create_campaign')}}">
+    <form class="edit-form form-column fade-in-block-2" method="POST">
       {{ form.csrf_token }}
 
       <div class="form-container form-container-small">

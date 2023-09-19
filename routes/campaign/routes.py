@@ -139,9 +139,10 @@ def edit_campaign(campaign_name, campaign_id):
     scroll_target = f"campaign-{campaign.id}"
     session["scroll_target"] = scroll_target 
 
-    return render_template("edit_campaign.html", 
+    return render_template("new_campaign.html", 
                            form=form, 
-                           campaign=campaign)
+                           campaign=campaign,
+                           edit=True)
 
 
 # Delete campaign
