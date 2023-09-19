@@ -153,7 +153,9 @@ def add_event(campaign_name):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_event.html", form=form, campaign=campaign)
+    return render_template("new_event.html", 
+                           form=form, 
+                           campaign=campaign)
 
 
 
@@ -204,17 +206,21 @@ def edit_event(campaign_name, event_name):
                 epoch.has_events = True
             db.session.commit()
 
-        return redirect(url_for("campaign.edit_timeline", campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target))
+        return redirect(url_for("campaign.edit_timeline", 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id, 
+                                scroll_target=scroll_target))
 
     # Change form label to 'update'
     form.submit.label.text = 'Update Event'
 
-    return render_template("edit_event.html",
+    return render_template("new_event.html",
                             campaign=campaign,
                             campaign_name=campaign.title,
                             event_name=event.title,
                             form=form,
-                            scroll_target=scroll_target)
+                            scroll_target=scroll_target,
+                            edit=True)
 
 
 # Delete existing event

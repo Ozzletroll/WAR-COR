@@ -23,10 +23,19 @@
         <div class="campaigns-title">
 
           {# Back button #}
-          {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {% if edit %}
+           {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target) %}
+          {% else %}
+            {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {% endif %}
           {{ back_button.back_button(url=url, blank=false) }}
 
-          <h3 class="campaigns-heading edit-campaign-heading">NEW EVENT DATA</h1>
+          {% if edit %}
+            <h3 class="campaigns-heading edit-campaign-heading">EDIT EVENT DATA</h3>
+          {% else %}
+            <h3 class="campaigns-heading edit-campaign-heading">NEW EVENT DATA</h3>
+          {% endif %}
+
         </div>
 
         <hr class="campaigns-divider">
