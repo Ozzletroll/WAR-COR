@@ -25,7 +25,7 @@ property to represent if the epoch has child events.
                                      epoch_id=epoch.id) }}">
       {% endif %}
 
-      <div class="epoch-container">
+      <div id="epoch-{{epoch.id}}" class="epoch-container">
         <h3 class="epoch-header">{{ epoch.title }}</h3>
         <div class="epoch-body">
           {% if epoch.start_date != epoch.end_date %}
@@ -86,7 +86,7 @@ Takes an a months epochs list as an argument
     <div class="epoch-container">
       <div class="epoch-body">
         {% for epoch in epochs %}
-          <h6 class="epoch-end-text epoch-description">End of {{ epoch.title }}</h6>
+          <h6 id="epoch-end-{{epoch.id}}" class="epoch-end-text epoch-description">End of {{ epoch.title }}</h6>
         {% endfor %}
       </div>
     </div>

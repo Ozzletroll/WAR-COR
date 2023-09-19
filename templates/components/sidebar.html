@@ -19,6 +19,13 @@
         
       {% for month in year.months %}
 
+        {% if month.has_epoch %}
+          {% for epoch in month.epochs %}
+          <a class="sidebar-button" href="#epoch-{{epoch.id}}">
+            <button class="event-button epoch-button">-{{epoch.title}}-</button>
+          </a>
+          {% endfor %}
+        {% endif %}
 
         {% for day in month.days %}
 
@@ -35,6 +42,16 @@
           {% endfor %}
 
         {% endfor %}
+
+        {% if month.has_epoch_end %}
+          {% for epoch in month.end_epochs %}
+            {% if epoch.has_events %}
+            <a class="sidebar-button" href="#epoch-end-{{epoch.id}}">
+              <button class="event-button epoch-button">-End of {{epoch.title}}-</button>
+            </a>
+            {% endif %}
+          {% endfor %}
+       {% endif %}
 
       {% endfor %}
 

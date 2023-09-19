@@ -2954,6 +2954,7 @@ p {
   flex-direction: column;
   align-items: center;
   margin-bottom: 5px;
+  scroll-margin: 25vh;
 }
 
 .epoch-header {
@@ -3060,6 +3061,7 @@ p {
 }
 
 .epoch-end-text {
+  scroll-margin: 25vh;
   display: flex;
   margin: 0;
 }
@@ -3742,10 +3744,6 @@ for selection in timeline_search.js */
   transition: 0.2s;
 }
 
-.event-button.event-button-header {
-  font-weight: 600;
-}
-
 .event-button:hover {
   background-color: var(--bg_colour3);
   color: var(--dark_red);
@@ -3753,6 +3751,18 @@ for selection in timeline_search.js */
 
 .event-button:active {
   color: var(--bright_red);
+}
+
+.epoch-button {
+  text-transform: uppercase;
+  font-weight: 500;
+  text-align: center;
+  background-color: var(--elem_bright);
+  color: var(--text_header);
+}
+
+.epoch-button:hover {
+  color: var(--text_header_hover);
 }
 
 /* Event Page */
