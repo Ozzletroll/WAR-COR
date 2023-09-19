@@ -75,9 +75,7 @@ Takes an a months epochs list as an argument
     </div>
   {% else %}
     <div class="epoch-body">
-      {% for epoch in epochs %}
-      <h4 class="epoch-date epoch-end-date">{{ epoch.end_date }}</h4>
-      {% endfor %}
+      <h4 class="epoch-date epoch-end-date">{{ epochs[0].end_date }}</h4>
    </div>
   {% endif %}
 
