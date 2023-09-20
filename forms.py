@@ -94,9 +94,16 @@ class CreateEventForm(FlaskForm):
 
 
 class CreateEpochForm(FlaskForm):
+    # Register custom validators for error collection
+    class Meta:
+        validators = {
+            'start_date': [date_format(format="epoch")],
+            'end_date': [date_format(format="epoch")]
+        }
+
     title = StringField("Event Title", validators=[DataRequired()])
-    start_date = StringField("Start Date", validators=[InputRequired(), date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[InputRequired(), date_is_after, date_format(format="epoch")])
+    start_date = StringField("Start Date", validators=[date_format(format="epoch")])
+    end_date = StringField("End Date", validators=[date_format(format="epoch")])
     description = CKEditorField("Description")
     submit = SubmitField("Create Epoch")
 
