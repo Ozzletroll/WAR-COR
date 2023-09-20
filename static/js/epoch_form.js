@@ -30,18 +30,18 @@ class Modal {
 }
 
 
-// // Create modals
-// const modal_1 = new Modal({
-//   modal: "modal-1",
-//   button: "event-date-help-button",
-//   span: "close-1",
-// })
+// Create modals
+const modal_1 = new Modal({
+  modal: "modal-1",
+  button: "epoch-start-button",
+  span: "close-1",
+})
 
-// const modal_2 = new Modal({
-//   modal: "modal-2",
-//   button: "event-belligerents-help-button",
-//   span: "close-2",
-// })
+const modal_2 = new Modal({
+  modal: "modal-2",
+  button: "epoch-end-button",
+  span: "close-2",
+})
 
 
 const modal_delete = new Modal({
@@ -52,12 +52,12 @@ const modal_delete = new Modal({
 
 // Close modals if the user clicks anywhere else
 window.onclick = function(event) {
-  // if (event.target == modal_1.modal) {
-  //   modal_1.closeModal();
-  // }
-  // if (event.target == modal_2.modal) {
-  //   modal_2.closeModal();
-  // }
+  if (event.target == modal_1.modal) {
+    modal_1.closeModal();
+  }
+  if (event.target == modal_2.modal) {
+    modal_2.closeModal();
+  }
   if (event.target == modal_delete.modal) {
     modal_delete.closeModal();
   }

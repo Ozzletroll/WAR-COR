@@ -53,7 +53,7 @@
 
               <div class="form-extra-button-area">
                 
-                <div id="event-date-help-button" type="button" class="form-button">
+                <div id="epoch-start-button" type="button" class="form-button">
                   <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
                 </div>
                 
@@ -67,7 +67,7 @@
 
         </div>
 
-        {# Date Help Modal #}
+        {# Start Date Modal #}
 
         <div id="modal-1" class="modal">
           <div class="modal-content">
@@ -79,8 +79,12 @@
                 </span>
               </div>
               <div class="modal-body">
-                <p>Epoch help text.</p>
-                <p class="modal-highlight-text">Example: "5016-15-40 25:00:00" is a valid date.</p>
+                <p>An epoch represents an era or a time period during a campaign.
+                  Epochs are placed at the month level within the timeline, and encapsulate 
+                  all the events that take place within it.
+                </p>
+                <p>An epoch can contain other epochs.</p>
+                <p>The epoch marker is placed at the beginning of the START DATE month.</p>
               </div>
             </div>
           </div>
@@ -91,12 +95,39 @@
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
               <h4 class="campaign-form label-title">End Date</h4>
+
+              <div class="form-extra-button-area">
+                
+                <div id="epoch-end-button" type="button" class="form-button">
+                  <img class="icon campaign-form-icon" src="/static/images/icons/help.svg">
+                </div>
+                
+              </div>
             </div>
             <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
           </label>
         
           {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY-MM", autocomplete="off") }}
 
+        </div>
+
+        {# Start Date Modal #}
+
+        <div id="modal-2" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Epoch</h2>
+                <span id="close-2" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>The END DATE of the epoch specifies the position of the end of epoch marker.</p>
+                <p>Events that occur within the END DATE month are considered part of the epoch.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-small">
@@ -118,14 +149,7 @@
             <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
         
             <h4 class="campaign-form label-title">Description</h4>
-            <div class="form-extra-button-area">
-                
-              <div id="html-preview-button" type="button" class="form-button form-preview-button">
-                HTML PREVIEW
-              </div>
-              
-            </div>
-            
+
           </div>
           <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
         </label>
@@ -136,38 +160,6 @@
 
         </div>
 
-        {# HTML Preview Modal #}
-
-        <div id="modal-preview" class="modal">
-          <div class="modal-content modal-preview-content">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">HTML Preview</h2>
-                <span id="close-preview" class="close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
-                </span>
-              </div>
-
-              <div class="modal-body">
-                <div class="event-page-elem event-elem-large elem-body event-page-description">
-      
-                  <div class="entry-left-padding"></div>
-  
-                  <div class="description-body">
-                      <h4 class="event-desc-header">Compendium Entry:</h4>
-                      <div class="event-desc">
-                        <div id="preview-modal-body" class="modal-body modal-body-preview">
-                          {# Modal text goes here #}
-                        </div>
-                      </div>
-                  </div>
-                
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
 
         <div class="campaign-submit-area event-submit-area">
           {{ form.submit(class_="campaign-input campaign-submit", ) }}
