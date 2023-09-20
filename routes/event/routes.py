@@ -409,4 +409,32 @@ def edit_epoch(campaign_name, epoch_title):
                            campaign=campaign,
                            campaign_name=campaign.title,
                            form=form,
+                           epoch=epoch,
                            edit_page=True)
+
+
+
+# Delete epoch
+@bp.route("/campaigns/<campaign_name>/epochs/<epoch_title>/delete", methods=["GET", "POST"])
+@login_required
+def delete_epoch(campaign_name, epoch_title):
+
+    target_campaign_id = request.args["campaign_id"]
+    epoch_id = request.args["epoch_id"]
+
+    campaign = db.session.execute(select(models.Campaign)
+                                  .filter_by(title=campaign_name, 
+                                             id=target_campaign_id)).scalar()
+
+    auth.permission_required(campaign)
+
+    epoch = db.session.execute(select(models.Epoch)
+                               .filter_by(title=epoch_title, 
+                                          id=epoch_id)).scalar()
+
+    db.session.delete(epoch)
+    db.session.commit()
+
+    return redirect(url_for("campaign.edit_timeline", 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id))

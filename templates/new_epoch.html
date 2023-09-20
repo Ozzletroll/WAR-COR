@@ -175,6 +175,45 @@
           
       </form>
 
+      {% if edit_page %}
+        <div class="fade-in-block-2 campaign-submit-area event-submit-area">
+          <button id="button-delete" class="campaign-input campaign-submit">
+            Delete Epoch
+          </button>
+        </div> 
+
+        {# Delete event confirm modal #}
+
+        <div id="modal-delete" class="modal">
+          <div class="modal-content modal-content-small">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Delete Epoch</h2>
+                <span id="close-delete" class="close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body modal-body-small">
+                <p class="flavour-text modal-flavour">EPC-{{campaign.id}}-{{epoch.id}} // DELETION::CONFIRM</p>
+                <p class="modal-text modal-text-upper">Confirm termination of epoch: "{{epoch.title}}".</p>
+
+                <a class="delete-comment-link" href="{{ url_for('event.delete_epoch', 
+                                                        campaign_name=campaign.title, 
+                                                        campaign_id=campaign.id,
+                                                        epoch_title=epoch.title,
+                                                        epoch_id=epoch.id) }}">
+                  <button class="button modal-confirm-button">
+                    DELETE
+                  </button>
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      {% endif %}
+
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
       <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
       <img src="/static/images/logo-red.png" class="top-logo">
