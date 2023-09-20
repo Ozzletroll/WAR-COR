@@ -28,15 +28,15 @@ class Dropdown {
   }
 
   closeDropdown() {
-    this.button.style.transitionDelay = "0.3s";
+    this.button.style.transitionDelay = "0.1s";
     this.dropdown.style.height = "0";
     this.state = false;
 
-    // Disable transition delay after 0.3s
+    // Disable transition delay after 0.1s
   setTimeout(() => {
     this.button.style.transitionDelay = "0s";
     this.dropdown.style.border = "0px";
-  }, 300);
+  }, 100);
   }
 
 }
