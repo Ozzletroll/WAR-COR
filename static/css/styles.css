@@ -1525,6 +1525,7 @@ p {
   position: relative;
   color: var(--text_dark);
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .campaign-input:hover {
@@ -2605,8 +2606,30 @@ p {
 }
 
 .event-submit-area {
+  display: flex;
   margin-top: 20px;
+  gap: 50px;
 }
+
+.event-delete {
+  display: flex;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 500px) {
+
+  .event-submit-area {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .event-delete, .event-delete .campaign-input {
+    justify-content: center;
+    width: 100%;
+  }
+
+}
+
 
 .form-extra-button-area {
   display: flex;

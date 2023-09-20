@@ -148,6 +148,11 @@ const modal_preview = new PreviewModal({
   span: "close-preview",
 })
 
+const modal_delete = new Modal({
+  modal: "modal-delete",
+  button: "button-delete",
+  span: "close-delete",
+})
 
 // Close modals if the user clicks anywhere else
 window.onclick = function(event) {
@@ -162,6 +167,9 @@ window.onclick = function(event) {
   }
   if (event.target == modal_preview.modal) {
     modal_preview.closeModal();
+  }
+  if (event.target == modal_delete.modal) {
+    modal_delete.closeModal();
   }
 
 }

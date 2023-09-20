@@ -220,6 +220,7 @@ def edit_event(campaign_name, event_name):
                             event_name=event.title,
                             form=form,
                             scroll_target=scroll_target,
+                            event=event,
                             edit=True)
 
 
@@ -227,8 +228,8 @@ def edit_event(campaign_name, event_name):
 @bp.route("/campaigns/<campaign_name>/events/<event_name>/delete", methods=["GET"])
 @login_required
 def delete_event(campaign_name, event_name):
-    target_campaign_id = session.get("campaign_id", None)
-    target_event_id = session.get("event_id", None)
+    target_campaign_id = request.args["campaign_id"]
+    target_event_id = request.args["event_id"]
 
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
@@ -250,7 +251,9 @@ def delete_event(campaign_name, event_name):
 
         db.session.commit()
 
-    return redirect(url_for("campaign.show_timeline", campaign_name=campaign_name))
+    return redirect(url_for("campaign.edit_timeline", 
+                                campaign_name=campaign.title, 
+                                campaign_id=campaign.id))
 
 
 # Delete comment
