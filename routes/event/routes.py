@@ -214,6 +214,11 @@ def edit_event(campaign_name, event_name):
     # Change form label to 'update'
     form.submit.label.text = 'Update Event'
 
+    # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
+
     return render_template("new_event.html",
                             campaign=campaign,
                             campaign_name=campaign.title,
