@@ -108,20 +108,16 @@
       <h5 class="message-date">{{message.date}}</h5>
 
       <li class="message-item">
-        <h4 class="message-header">INVITE</h4>
-        
+        <h4 class="message-header">INVITE</h4>   
         <div class=message-body>{{message.body}}</div>
-
         <div class="message-button-area">
           <a href="{{url_for('campaign.accept_invite', campaign_name=message.target_campaign.title, campaign_id=message.target_campaign.id, message_id=message.id)}}">
             <button class="message-button">ACCEPT</button>
           </a>
-
           <a href="{{url_for('campaign.decline_invite', campaign_name=message.target_campaign.title, message_id=message.id)}}">
             <button class="message-button">DECLINE</button>
           </a>
         </div>
-
       </li>
       
     {% elif message.notification %}
@@ -130,11 +126,8 @@
 
     <li class="message-item">
       <h4 class="message-header">ALERT</h4>
-      
       <div class=message-body>{{message.body}}</div>
-
       <div class="message-button-area">
-        
         {% if message.target_event is not none %}
         <a href="{{ url_for('user.dismiss_message',
         message_id=message.id,
@@ -147,14 +140,11 @@
           <button class="message-button">VIEW</button>
         </a>
         {% endif %}
-
         {% set scroll_target = "event" ~ "-" ~ message.target_event.id | string %}
-        
         <a href="{{ url_for('user.dismiss_message', message_id=message.id, username=current_user.username, current_url=request.url) }}">
           <button class="message-button">DISMISS</button>
         </a>
       </div>
-
     </li>
 
     {% endif %}
