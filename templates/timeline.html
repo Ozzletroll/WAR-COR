@@ -74,7 +74,11 @@
 
           {% if timeline_data | length == 0 %}
             <div class="no-events">
+              {% if campaign in current_user.permissions %}
+              <h3 class="no-events-header">AWAITING CONFLICT DATA UPLOAD</h3>
+              {% else %}
               <h3 class="no-events-header">Conflict Data Not Found</h3>
+              {% endif %}
               <hr class="no-events-hr">
               <p class="flavour-text">UWC-40-4 // Data:Not Found</p>
 
@@ -89,12 +93,18 @@
                     campaign_id=campaign.id ) }}">
                     <button class="button first-event-button">CREATE NEW EPOCH</button>
                   </a>
+                  <p class="flavour-text">An epoch represents an era or a time period during a campaign.
+                    Epochs are placed at the month level within the timeline, and encapsulate 
+                    all the events that take place within it.</p>
                   <a class="first-event-link" 
                     href="{{ url_for('event.add_event', 
                     campaign_name=campaign.title,
                     campaign_id=campaign.id) }}">
                     <button class="button first-event-button">CREATE NEW EVENT</button>
                   </a>
+                  <p class="flavour-text">Events make up the main structure of the timeline. They represent events or occurences
+                    that take place at specific dates. Events are rendered in grouped year/month/day blocks.
+                  </p>
                 </div>
                 
               {% else %}
