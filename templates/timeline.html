@@ -77,7 +77,29 @@
               <h3 class="no-events-header">Conflict Data Not Found</h3>
               <hr class="no-events-hr">
               <p class="flavour-text">UWC-40-4 // Data:Not Found</p>
-              <p class="flavour-text">Please contact your campaign administrator</p>
+
+              {% if campaign in current_user.permissions %}
+                <p class="flavour-text">Add an event or epoch to get started</p>
+
+                <div class="new-timeline-data-buttons">
+
+                  <a class="first-event-link" 
+                    href="{{ url_for('event.new_epoch', 
+                    campaign_name=campaign.title,
+                    campaign_id=campaign.id ) }}">
+                    <button class="button first-event-button">CREATE NEW EPOCH</button>
+                  </a>
+                  <a class="first-event-link" 
+                    href="{{ url_for('event.add_event', 
+                    campaign_name=campaign.title,
+                    campaign_id=campaign.id) }}">
+                    <button class="button first-event-button">CREATE NEW EVENT</button>
+                  </a>
+                </div>
+                
+              {% else %}
+                <p class="flavour-text">Awaiting conflict data input</p>
+              {% endif %}
             </div>
           {% endif %}
 
