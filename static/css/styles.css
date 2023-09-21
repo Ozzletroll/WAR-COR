@@ -2826,7 +2826,7 @@ p {
   text-decoration: none;
 }
 
-.first-event-button {
+.first-event-button.new-timeline-item {
   display: flex;
   justify-content: center;
   width: 250px;
@@ -2837,8 +2837,7 @@ p {
   color: var(--text_header);
 }
 
-.first-event-button:hover {
-  background-color: var(--elem_hover);
+.first-event-button.new-timeline-item:hover {
   color: var(--text_header_hover);
 }
 
