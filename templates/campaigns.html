@@ -32,8 +32,6 @@
 
         <h3 class="campaigns-heading">Campaigns</h3>
 
-        {% include "components/view_toggles.html" %}
-
       </div>
 
       <hr class="campaigns-divider">
@@ -43,6 +41,16 @@
 
     <div class="form-flash">
       {% include 'components/flash.html' %}
+    </div>
+
+    <div class="campaigns-upper-bar">
+      <div class="bar-items-left">
+        <a href="{{ url_for('campaign.create_campaign')}}" class="">
+          <button class="create-campaign-button">NEW CAMPAIGN</button>
+        </a>
+      </div>
+
+      {% include "components/view_toggles.html" %}
     </div>
 
     {# Animation fade in group 2 #}
@@ -58,13 +66,6 @@
       {% endif %}
 
     </div>
-
-    <!-- New Campaign Button -->
-    <a href="{{ url_for('campaign.create_campaign')}}" class="campaign-entry new-campaign-area">
-      <span class="new-campaign-span">
-      <h2 class="campaign-entry-title new-campaign-heading">New Campaign</h2>
-      </span>
-    </a>
 
   </div>
 </div>

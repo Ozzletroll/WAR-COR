@@ -1782,7 +1782,7 @@ p {
   display: none;
   flex-direction: row;
   justify-content: center;
-  border: 1px solid var(--elem_border);
+  border: 1px solid var(--dark_red);
   border-radius: 3px;
   transition: 0.15s;
 }
@@ -1849,6 +1849,7 @@ p {
   filter: drop-shadow(0px 3px 3px var(--elem_shadow));
   gap: 50px;
   margin-top: 25px;
+  margin-bottom: 200px;
 }
 
 .campaign-entry {
@@ -1857,7 +1858,6 @@ p {
   text-align: left;
   border-radius: 5px;
 }
-
 
 .campaign-header-section {
   display: flex;
@@ -2157,78 +2157,34 @@ p {
   background-color: var(--elem_hover);
 }
 
-/*  */
+/* Campaigns Join/New campaign buttons */
 
-.new-campaign-area {
+.campaigns-upper-bar {
   display: flex;
-  padding: 25px;
-  text-decoration: none;
-  position: relative;
-  transition: 0.3s all;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  box-sizing: content-box;
-  margin-bottom: 50px;
-  margin-top: 70px;
-  color: var(--text_dark);
-  clip-path: none;
-}
-
-.new-campaign-area::before, .new-campaign-area::after, .new-campaign-span::before, .new-campaign-span::after {
-  display: block;
-  content: "";
-  width: 10px;
-  height: 10px;
-  position: absolute;
-}
-
-.new-campaign-area::before {
-  top: -5px;
-  left: -5px;
-  border-top: 5px solid var(--bg_colour2);
-  border-left: 5px solid var(--bg_colour2);
-  transition: 0.5s all;
-}
-.new-campaign-area::after {
-  top: -5px;
-  right: -5px;
-  border-top: 5px solid var(--bg_colour2);
-  border-right: 5px solid var(--bg_colour2);
-  transition: 0.5s all;
-}
-.new-campaign-span::before {
-  bottom: -5px;
-  left: -5px;
-  border-bottom: 5px solid var(--bg_colour2);
-  border-left: 5px solid var(--bg_colour2);
-  transition: 0.5s all;
-}
-.new-campaign-span::after {
-  bottom: -5px;
-  right: -5px;
-  border-bottom: 5px solid var(--bg_colour2);
-  border-right: 5px solid var(--bg_colour2);
-  transition: 0.5s all;
-}
-
-.new-campaign-heading {
-  display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
+  margin: 10px 0px 0px 0px;
+  gap: 10px;
 }
 
-/* New campaign button hover animations */
-
-.new-campaign-area:hover::before, .new-campaign-area:hover::after, .new-campaign-area:hover {
-  border-color: var(--bright_red);
-  color: var(--bright_red);
+.bar-items-left {
+  display: flex;
+  text-decoration: none;
+  gap: 10px;
 }
 
-.new-campaign-area:hover .new-campaign-span::before, .new-campaign-area:hover .new-campaign-span::after {
-  border-color: var(--bright_red)
+.create-campaign-button {
+  background-color: var(--elem_mid);
+  color: var(--text_dark);
+  border: 1px solid var(--dark_red);
+  border-radius: 3px;
+  padding: 7px 20px;
+  transition: 0.1s;
+}
+
+.create-campaign-button:hover {
+  background-color: var(--elem_hover);
+  color: var(--text_header_hover);
 }
 
 /* User page */
