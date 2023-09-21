@@ -237,6 +237,10 @@ body {
   transition: 0.3s;
 }
 
+.icon-small {
+  width: 10px;
+}
+
 .icon-large {
   width: 40px;
 }
@@ -2185,6 +2189,15 @@ p {
 .create-campaign-button:hover {
   background-color: var(--elem_hover);
   color: var(--text_header_hover);
+}
+
+.create-campaign-button .icon-colour-var {
+  fill: var(--text_dark);
+  transition: 0.1s;
+}
+
+.create-campaign-button:hover .icon-colour-var {
+  fill: var(--text_header_hover);
 }
 
 /* User page */
