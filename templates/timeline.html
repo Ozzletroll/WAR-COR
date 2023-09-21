@@ -74,7 +74,7 @@
 
           {% if timeline_data | length == 0 %}
             <div class="no-events">
-              {% if campaign in current_user.permissions %}
+              {% if edit and campaign in current_user.permissions %}
               <h3 class="no-events-header">AWAITING CONFLICT DATA UPLOAD</h3>
               {% else %}
               <h3 class="no-events-header">Conflict Data Not Found</h3>
@@ -82,7 +82,7 @@
               <hr class="no-events-hr">
               <p class="flavour-text">UWC-40-4 // Data:Not Found</p>
 
-              {% if campaign in current_user.permissions %}
+              {% if edit and campaign in current_user.permissions %}
                 <p class="flavour-text">Add an event or epoch to get started</p>
 
                 <div class="new-timeline-data-buttons">
