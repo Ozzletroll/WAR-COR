@@ -40,25 +40,18 @@
         <div class="event-page-container fade-in-block-2">
 
             <div class="event-page-upper">
-
                 <div class="event-page-elem event-date-area">
-
                     <h4 class="event-page-date">{{event.date}}</h4>
-    
                 </div>
-    
+  
                 <div class="event-page-elem type-area">
-    
                     <h4 class="event-page-type">{{event.type}}</h4>
-    
                 </div>
-    
             </div>
 
             <div class="event-page-body">
 
                 <div class="event-body-top">
-
                     {# Only render if it is needed #}
                     {% if event.location | length > 0 %}
                     <div class="event-page-elem event-location">
@@ -68,8 +61,7 @@
                         </div>
                         <div class="event-elem-body">
                             {{event.location}}
-                        </div>
-                        
+                        </div>  
                     </div>
                     {% endif %}
         
@@ -82,24 +74,19 @@
                         </div>
                         <div class="event-elem-body">
                             {% for group in belligerents %}
-        
                                 <div class="ally-group">
                                 {% for ally in group %}
                                     <div class="ally-elem">
                                         {{ally}}
                                     </div>
                                 {% endfor %}
-                                </div>
-        
-                                
+                                </div> 
                                 {% if not loop.last %}
                                 <div class="vs-area">vs</div>
                                 {% endif %}
-                                
-        
                             {% endfor %}
                         </div>
-                        
+                      
                     </div>
                     {% endif %}
 
@@ -122,14 +109,12 @@
                 {% if event.result | length > 0 %}  
                 <div class="event-elem-centre">
                     <div class="event-page-elem elem-body event-page-result">
-    
                         <div class="event-elem-header">
                             <h4 class="event-elem-h">RESULT</h4>
                         </div>
                         <div class="event-elem-body">
                             {{event.result}}
                         </div>
-                        
                     </div>
                 </div>
                 {% endif %}
