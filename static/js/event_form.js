@@ -188,6 +188,17 @@ window.onclick = function(event) {
 const headerField = document.getElementById("header-input");
 const hideTimeField = document.getElementById("hide-time-input");
 
+// Initialise checkbox values
+if (headerField.checked) {
+  hideTimeField.checked = true;
+  hideTimeField.disabled = true;
+  hideTimeField.style.opacity = "30%";
+}
+else {
+  hideTimeField.disabled = false;
+  hideTimeField.style.opacity = "";
+}
+
 // Listen for the change event on the header field
 headerField.addEventListener('change', function() {
 // Check if the header field is checked
@@ -196,7 +207,8 @@ if (headerField.checked) {
 hideTimeField.checked = true;
 hideTimeField.disabled = true;
 hideTimeField.style.opacity = "30%";
-} else {
+} 
+else {
 // If the header field is unchecked, enable the hide_time field
 hideTimeField.checked = false;
 hideTimeField.disabled = false;

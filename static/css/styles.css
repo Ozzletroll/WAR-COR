@@ -1522,6 +1522,7 @@ p {
 }
 
 .form-toggle-label {
+  cursor: pointer;
   color: var(--text_dark);
 }
 
@@ -2658,6 +2659,8 @@ p {
   height: 25px;
   padding: 5px;
   margin: 5px;
+  cursor: pointer;
+  background-color: var(--elem_dark);
 }
 
 /* Edit members page */
