@@ -2860,6 +2860,7 @@ p {
   display: flex;
   justify-content: center;
   width: 250px;
+  font-weight: 500;
   border: 1px dashed var(--elem_border);
   padding: 10px;
   transition: 0.1s;
