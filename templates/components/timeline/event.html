@@ -68,8 +68,8 @@ elements.
           </div>
           <div class="line line-spacer"></div>
         </div>
-      {# Hide time label if header element but not first in day #}
-      {% elif event.header %}
+      {# Hide time label if event is tagged with "hide_time" #}
+      {% elif event.hide_time %}
         <div class="date-label-area hidden-align">
           <div class="line line-first"></div>
           <div class="line line-spacer"></div>

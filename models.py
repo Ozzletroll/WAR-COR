@@ -118,6 +118,7 @@ class Event(db.Model):
     body = db.Column(db.String(250), nullable=False)
     result = db.Column(db.String(250), nullable=True)
     header = db.Column(db.Boolean(), nullable=False, default=False)
+    hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments.

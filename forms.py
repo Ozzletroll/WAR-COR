@@ -90,6 +90,7 @@ class CreateEventForm(FlaskForm):
     body = CKEditorField("Body", validators=[DataRequired()])
     result = StringField("Result", validators=[Optional()])
     header = BooleanField("Header", default=False, validators=[Optional()])
+    hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
     submit = SubmitField("Create Event")
 
 

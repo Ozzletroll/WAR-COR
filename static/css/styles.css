@@ -1515,6 +1515,16 @@ p {
   text-transform: none;
 }
 
+.form-toggle-inputs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.form-toggle-label {
+  color: var(--text_dark);
+}
+
 .campaign-input {
   display: flex;
   font-size: 16px;

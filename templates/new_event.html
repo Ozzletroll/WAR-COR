@@ -188,7 +188,7 @@
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
-              <h4 class="campaign-form label-title">Event Group Header</h4>
+              <h4 class="campaign-form label-title">Timeline Display</h4>
 
               <div class="form-extra-button-area">
                 
@@ -202,8 +202,13 @@
             <p class="flavour-text">UWC-6-06 //  Event::Formatting</p>
           </label>
 
-          {{ form.header(class_="campaign-input event-input input-checkbox theme-radio", autocomplete="off") }}
+          <div class="form-toggle-inputs">
+            {{ form.header(class_="campaign-input event-input input-checkbox theme-radio", id="header-input", autocomplete="off") }}
+            <label class="form-toggle-label" for="header-input">Block Header</label>
 
+            {{ form.hide_time(class_="campaign-input event-input input-checkbox theme-radio", id="hide-time-input", autocomplete="off") }}
+            <label class="form-toggle-label" for="hide-time-input">Hide Time</label>
+          </div>
         </div>
 
         {# Event Formatting Help Modal #}
@@ -218,8 +223,12 @@
                 </span>
               </div>
               <div class="modal-body">
-                <p>An event with the "header" tag will extend across the timeline to represent the header of a block of events.</p>
+                <p>An event with the "Block Header" tag will extend across the timeline to represent the header of a block of events.</p>
                 <img class="modal-img" src="/static/images/Event Header Example.jpg">
+                <p>NOTE: This will only apply visually if the event is the first within the current day.</p>
+                <p>An event with the "Hide Time" tag will not render the time label on the timeline - useful to represent events
+                  that take up the entire day, or do not require a specific time label.
+                </p>
               </div>
             </div>
           </div>

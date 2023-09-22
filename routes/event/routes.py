@@ -120,6 +120,11 @@ def add_event(campaign_name):
         else:
             event.header = False    
 
+        if form.hide_time.data:
+            event.hide_time = True
+        else:
+            event.hide_time = False
+
         event.parent_campaign = campaign
         event.parent_campaign.last_edited = datetime.now()
 
@@ -191,6 +196,11 @@ def edit_event(campaign_name, event_name):
             event.header = True
         else:
             event.header = False  
+
+        if form.hide_time.data:
+            event.hide_time = True
+        else:
+            event.hide_time = False    
 
         event.parent_campaign.last_edited = datetime.now()
 
