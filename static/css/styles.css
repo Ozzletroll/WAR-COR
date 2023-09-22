@@ -2178,7 +2178,7 @@ p {
 }
 
 .create-campaign-button {
-  background-color: var(--elem_mid);
+  background-color: transparent;
   color: var(--text_dark);
   border: 1px solid var(--dark_red);
   border-radius: 3px;
@@ -2187,7 +2187,7 @@ p {
 }
 
 .create-campaign-button:hover {
-  background-color: var(--elem_hover);
+  background-color: var(--elem_mid);
   color: var(--text_header_hover);
 }
 
@@ -2198,6 +2198,10 @@ p {
 
 .create-campaign-button:hover .icon-colour-var {
   fill: var(--text_header_hover);
+}
+
+.create-campaign-button:active {
+  background-color: var(--elem_bright);
 }
 
 /* User page */
