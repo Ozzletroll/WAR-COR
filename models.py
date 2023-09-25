@@ -121,10 +121,17 @@ class Event(db.Model):
     hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
     # Database relationships
-    # An event is part of a campaign, and may contain multiple comments.
+    # An event is part of a campaign, and may contain multiple comments. 
+    # Events have both following and preceding events.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     parent_campaign = db.relationship("Campaign", back_populates="events")
+
+    following_event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
+    following_event = db.relationship('Event', 
+                                      backref=db.backref('preceding_event', 
+                                                         uselist=False), 
+                                                         remote_side=[id])
 
     epochs = db.relationship("Epoch",
                               secondary="epoch_events",

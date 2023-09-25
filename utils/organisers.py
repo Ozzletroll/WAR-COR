@@ -1,5 +1,7 @@
 from itertools import groupby
 import copy
+from app import db
+
 
 
 # Classes used for timeline data organisation
@@ -363,3 +365,18 @@ def separate_belligerents(belligerents):
         groups.append(allied_belligerents)
         
     return groups
+
+
+def get_following_events(campaign):
+    """Takes all events in a given campaign, and updates each event
+    to reference the following event."""
+
+    sorted_campaign_events = sorted(campaign.events, key=lambda event: event.date)
+
+    for index, event in enumerate(sorted_campaign_events):
+
+        # Ignore last event in timeline as it has no following event
+        if index != len(sorted_campaign_events) - 1:
+            event.following_event = sorted_campaign_events[index + 1]
+
+    db.session.commit()

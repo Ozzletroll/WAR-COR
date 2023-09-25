@@ -42,7 +42,7 @@
 
           <div class="event-main-container">
 
-            {{ adjacent_event_button.adjacent_event_button(left=true) }}
+            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true) }}
 
             <div class="event-centre-container">
               <div class="event-page-upper">
@@ -129,7 +129,7 @@
 
             </div>
 
-            {{ adjacent_event_button.adjacent_event_button(right=true) }}
+            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true) }}
 
           </div>
 

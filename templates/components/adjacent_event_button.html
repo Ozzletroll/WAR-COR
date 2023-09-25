@@ -14,14 +14,17 @@
 #}
 
 {% macro adjacent_event_button(event=event,
-                               url=url,
+                               campaign=campaign,
                                left=false,
                                right=false) %}
 
-  {% if left %}
+  {% if left and event.preceding_event is not none %}
   <div class="adjacent-event-area area-left">
     <div class="adjacent-elem-container">
-      <a href="{{ url }}" class="adjacent-event-a">
+      <a href="{{ url_for('event.view_event', 
+                          campaign_name=campaign.title, 
+                          event_name=event.preceding_event.title, 
+                          event_id=event.preceding_event.id) }}" class="adjacent-event-a">
         <button class="adjacent-button">
 
           <svg class="icon adjacent-icon-left" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -34,19 +37,22 @@
         </button>
         <div class="adjacent-headers-left">
           <h5 class="adjacent-event-header">PRECEDED BY:</h5>
-          <h5 class="adjacent-event-header">OPERATION NAME</h5>
+          <h5 class="adjacent-event-header">{{ event.preceding_event.title }}</h5>
         </div>
       </a>
     </div>
   </div>
-{% elif right %}
+{% elif right and event.following_event is not none %}
 <div class="adjacent-event-area area-right">
   <div class="adjacent-elem-container">
   
-    <a href="{{ url }}" class="adjacent-event-a">
+    <a href="{{ url_for('event.view_event', 
+                         campaign_name=campaign.title, 
+                         event_name=event.following_event.title, 
+                         event_id=event.following_event.id) }}" class="adjacent-event-a">
       <div class="adjacent-headers-right">
         <h5 class="adjacent-event-header">FOLLOWED BY:</h5>
-        <h5 class="adjacent-event-header">OPERATION NAME</h5>
+        <h5 class="adjacent-event-header">{{ event.following_event.title }}</h5>
       </div>
       <button class="adjacent-button">
         <svg class="icon adjacent-icon-right" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -58,6 +64,13 @@
         </svg>
       </button>
     </a> 
+  </div>
+</div>
+{% else %}
+<div class="adjacent-event-area area-right">
+  <div class="adjacent-elem-container">
+  
+  
   </div>
 </div>
 {% endif %}

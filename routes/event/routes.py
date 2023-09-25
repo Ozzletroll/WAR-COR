@@ -132,6 +132,9 @@ def add_event(campaign_name):
         db.session.add(event)
         db.session.commit()
 
+        # Update "following_event" relationships for all events
+        organisers.get_following_events(campaign)
+
         # Update campaigns epochs
         for epoch in campaign.epochs:
             epoch.events.clear()
@@ -158,7 +161,7 @@ def add_event(campaign_name):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("event_page.html", 
+    return render_template("new_event.html", 
                            form=form, 
                            campaign=campaign)
 
@@ -208,6 +211,9 @@ def edit_event(campaign_name, event_name):
         db.session.add(event)
         db.session.commit()
 
+        # Update "following_event" relationships for all events
+        organisers.get_following_events(campaign)
+
         # Update campaigns epochs
         for epoch in campaign.epochs:
             epoch.events.clear()
@@ -229,7 +235,7 @@ def edit_event(campaign_name, event_name):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("event_page.html",
+    return render_template("new_event.html",
                             campaign=campaign,
                             campaign_name=campaign.title,
                             event_name=event.title,
