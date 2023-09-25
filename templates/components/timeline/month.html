@@ -67,13 +67,8 @@ elements.
 
   {% if month.days | length != 0 %}
 
-    {# Check if the year has only one month, and that month has the header property #}
-    {% if month.header %}
-    {# If so, hide the month connector element #}
-    <div class="month-connector hidden-date">
-    {% else %}
     <div class="month-connector">
-    {% endif %}
+
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">
         <div class="connector-date">
