@@ -263,6 +263,9 @@ def delete_event(campaign_name, event_name):
     db.session.delete(event)
     db.session.commit()
 
+    # Update "following_event" relationships for all events
+    organisers.get_following_events(campaign)
+
     # Update campaigns epochs
     for epoch in campaign.epochs:
         epoch.events.clear()
