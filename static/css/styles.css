@@ -4058,6 +4058,7 @@ for selection in timeline_search.js */
   width: 100%;
   margin: 0;
   font-size: min(18px, 4vw);
+  border-top-left-radius: 3px;
 }
 
 .event-elem-h {
@@ -4076,6 +4077,8 @@ for selection in timeline_search.js */
   box-sizing: border-box;
   background-color: var(--elem_mid);
   font-size: min(14px, 3vw);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .event-belligerents.event-elem-body {
@@ -4232,6 +4235,7 @@ for selection in timeline_search.js */
   background-color: var(--darker_red);
   padding: 10px;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  border-top-left-radius: 3px;
 }
 
 .comment-header-user {
@@ -4286,6 +4290,8 @@ for selection in timeline_search.js */
   font-weight: 300;
   padding: 10px 20px 10px 20px;
   background-color: var(--elem_mid);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .new-comment-area {
@@ -4302,6 +4308,7 @@ for selection in timeline_search.js */
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   padding: 6px;
   box-sizing: border-box;
+  border-top-left-radius: 3px;
 }
 
 .new-comment-heading {
@@ -4314,6 +4321,8 @@ for selection in timeline_search.js */
   background-color: var(--elem_mid);
   border: 1px solid var(--darker_red);
   border-radius: 0px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .comment-submit {
