@@ -863,6 +863,7 @@ p {
   width: 150px;
   border-style: none;
   text-transform: uppercase;
+  border-radius: 3px;
 }
 
 .feature-button:hover, 
@@ -874,7 +875,9 @@ p {
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 var(--bright_red); }
+  0% { 
+    box-shadow: 0 0 0 0 var(--bright_red); 
+  }
 }
 
 @media screen and (max-width: 750px) { 
@@ -1048,6 +1051,7 @@ p {
   animation-duration: 0.3s;
   clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 100% 100% ,0 100%);
   box-sizing: border-box;
+  border-radius: 5px;
 }
 
 .modal-content-inner {
@@ -1065,7 +1069,7 @@ p {
 
 .modal-content-small {
   width: min(60%, 400px);
-  height: 220px;
+  height: 230px;
 }
 
 .modal-preview-content {
@@ -1106,7 +1110,7 @@ p {
   height: fit-content;
   align-items: center;
   padding: calc(5% + 1px);
-  overflow-y: hidden;
+  overflow-y: scroll;
 }
 
 .modal-body p{
@@ -1268,6 +1272,7 @@ p {
 .form-input {
   width: 100%;
   box-sizing: border-box;
+  cursor: text;
 }
 
 .form-heading {
@@ -1352,6 +1357,7 @@ p {
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   border-style: none;
+  border-radius: 3px;
 }
 
 .user-delete-button {
@@ -1540,7 +1546,7 @@ p {
   position: relative;
   color: var(--text_dark);
   box-sizing: border-box;
-  cursor: pointer;
+  border-radius: 3px;
 }
 
 .campaign-input:hover {
@@ -2065,6 +2071,7 @@ p {
   padding: 1px;
   background-color: var(--dark_red);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  border-radius: 3px;
 }
 
 .entry-button {
@@ -2075,6 +2082,7 @@ p {
   border: none;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   text-transform: uppercase;
+  border-radius: 3px;
 }
 
 .entry-button:hover {
@@ -2432,6 +2440,7 @@ p {
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
   color: var(--text_dark);
   transition: 0.3s;
+  border-radius: 3px;
 }
 
 .delete-button {
@@ -3769,6 +3778,7 @@ for selection in timeline_search.js */
   margin-bottom: 0;
   clip-path: none;
   transition: 0.2s;
+  border-radius: 0px;
 }
 
 .year-button:hover {
