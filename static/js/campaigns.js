@@ -6,6 +6,7 @@ class Dropdown {
   }) {
     this.dropdown = dropdown;
     this.button = button;
+    this.buttonOutline = button.parentNode;
     this.state = false
 
     this.button.onclick = event => {
@@ -21,6 +22,10 @@ class Dropdown {
   
   openDropdown() {
     this.button.style.transitionDelay = "0s";
+    this.button.style.borderBottomLeftRadius = "0px";
+    this.buttonOutline.style.borderBottomLeftRadius = "0px";
+    this.button.style.borderBottomRightRadius = "0px";
+    this.buttonOutline.style.borderBottomRightRadius = "0px";
     this.dropdown.style.height = "150px";
     this.dropdown.style.border = "1px solid var(--dark_red)";
     this.dropdown.style.borderTop = "0px";
@@ -34,6 +39,10 @@ class Dropdown {
 
     // Disable transition delay after 0.1s
   setTimeout(() => {
+    this.button.style.borderBottomLeftRadius = "";
+    this.buttonOutline.style.borderBottomLeftRadius = "";
+    this.button.style.borderBottomRightRadius = "";
+    this.buttonOutline.style.borderBottomRightRadius = "";
     this.button.style.transitionDelay = "0s";
     this.dropdown.style.border = "0px";
   }, 100);
