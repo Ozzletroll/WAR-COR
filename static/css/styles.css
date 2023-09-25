@@ -3921,6 +3921,90 @@ for selection in timeline_search.js */
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+
+}
+
+.event-main-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.adjacent-event-area {
+  display: none;
+  flex: 1 0 0;
+}
+
+.area-left {
+  justify-content: left;
+  padding-right: 20px;
+}
+
+.area-right {
+  justify-content: right;
+  padding-left: 20px;
+  text-align: right;
+}
+
+.adjacent-elem-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  height: 66px;
+}
+
+@media screen and (min-width: 1500px) {
+  
+  .adjacent-event-area {
+    display: flex;
+    opacity: 100%;
+  }
+
+}
+
+.adjacent-event-a {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.adjacent-button {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+.adjacent-icon-left {
+  padding-right: 10px;
+}
+
+.adjacent-icon-right{
+  padding-left: 10px;
+}
+
+.adjacent-event-a:hover .adjacent-event-header {
+  color: var(--text_header_hover);
+}
+
+.adjacent-event-a:hover .icon-colour-var {
+  fill: var(--text_header_hover);
+}
+
+.adjacent-event-header {
+  margin: 0;
+  color: var(--text_header);
+  transition: 0.15s;
+}
+
+.event-centre-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  filter: drop-shadow(1px 3px 3px var(--elem_shadow));
+
 }
 
 .event-page-upper {
@@ -3928,16 +4012,15 @@ for selection in timeline_search.js */
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
+  border-bottom: 1px solid var(--elem_border);
 }
 
 .event-page-body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
   box-sizing: border-box;
   padding-top: 20px;
-  border-top: 1px solid var(--elem_border);
 }
 
 .event-body-top {

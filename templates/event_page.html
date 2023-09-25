@@ -1,6 +1,7 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/adjacent_event_button.html" as adjacent_event_button %}
 
 {% extends "base/base.html" %}
 
@@ -39,87 +40,100 @@
 
         <div class="event-page-container fade-in-block-2">
 
-            <div class="event-page-upper">
+          <div class="event-main-container">
+
+            {{ adjacent_event_button.adjacent_event_button(left=true) }}
+
+            <div class="event-centre-container">
+              <div class="event-page-upper">
                 <div class="event-page-elem event-date-area">
                     <h4 class="event-page-date">{{event.date}}</h4>
                 </div>
-  
+
                 <div class="event-page-elem type-area">
                     <h4 class="event-page-type">{{event.type}}</h4>
                 </div>
-            </div>
+              </div>
 
-            <div class="event-page-body">
+              <div class="event-page-body">
 
-                <div class="event-body-top">
-                    {# Only render if it is needed #}
-                    {% if event.location | length > 0 %}
-                    <div class="event-page-elem event-location">
-        
-                        <div class="event-elem-header">
-                            <h4 class="event-elem-h">Location</h4>
-                        </div>
-                        <div class="event-elem-body">
-                            {{event.location}}
-                        </div>  
-                    </div>
-                    {% endif %}
-        
-                    {# Only render if it is needed #}
-                    {% if event.belligerents | length > 0 %}
-                    <div class="event-page-elem event-belligerents">
-        
-                        <div class="event-elem-header">
-                            <h4 class="event-elem-h">Belligerents</h4>
-                        </div>
-                        <div class="event-elem-body">
-                            {% for group in belligerents %}
-                                <div class="ally-group">
-                                {% for ally in group %}
-                                    <div class="ally-elem">
-                                        {{ally}}
-                                    </div>
-                                {% endfor %}
-                                </div> 
-                                {% if not loop.last %}
-                                <div class="vs-area">vs</div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
+                  <div class="event-body-top">
+                      {# Only render if it is needed #}
+                      {% if event.location | length > 0 %}
+                      <div class="event-page-elem event-location">
+          
+                          <div class="event-elem-header">
+                              <h4 class="event-elem-h">Location</h4>
+                          </div>
+                          <div class="event-elem-body">
+                              {{event.location}}
+                          </div>  
+                      </div>
+                      {% endif %}
+          
+                      {# Only render if it is needed #}
+                      {% if event.belligerents | length > 0 %}
+                      <div class="event-page-elem event-belligerents">
+          
+                          <div class="event-elem-header">
+                              <h4 class="event-elem-h">Belligerents</h4>
+                          </div>
+                          <div class="event-elem-body">
+                              {% for group in belligerents %}
+                                  <div class="ally-group">
+                                  {% for ally in group %}
+                                      <div class="ally-elem">
+                                          {{ally}}
+                                      </div>
+                                  {% endfor %}
+                                  </div> 
+                                  {% if not loop.last %}
+                                  <div class="vs-area">vs</div>
+                                  {% endif %}
+                              {% endfor %}
+                          </div>
+                        
+                      </div>
+                      {% endif %}
+
+                  </div>
+      
+                  <div class="event-page-elem event-elem-large elem-body event-page-description">
+      
+                      <div class="entry-left-padding"></div>
+
+                      <div class="description-body">
+                          <h4 class="event-desc-header">Compendium Entry:</h4>
+                          <div class="event-desc">
+                            {{event.body | safe }}
+                          </div>
+                      </div>
                       
-                    </div>
-                    {% endif %}
+                  </div>
+      
+                  {# Only render if it is needed #}
+                  {% if event.result | length > 0 %}  
+                  <div class="event-elem-centre">
+                      <div class="event-page-elem elem-body event-page-result">
+                          <div class="event-elem-header">
+                              <h4 class="event-elem-h">RESULT</h4>
+                          </div>
+                          <div class="event-elem-body">
+                              {{event.result}}
+                          </div>
+                      </div>
+                  </div>
+                  {% endif %}
 
-                </div>
-    
-                <div class="event-page-elem event-elem-large elem-body event-page-description">
-    
-                    <div class="entry-left-padding"></div>
-
-                    <div class="description-body">
-                        <h4 class="event-desc-header">Compendium Entry:</h4>
-                        <div class="event-desc">
-                          {{event.body | safe }}
-                        </div>
-                    </div>
-                    
-                </div>
-    
-                {# Only render if it is needed #}
-                {% if event.result | length > 0 %}  
-                <div class="event-elem-centre">
-                    <div class="event-page-elem elem-body event-page-result">
-                        <div class="event-elem-header">
-                            <h4 class="event-elem-h">RESULT</h4>
-                        </div>
-                        <div class="event-elem-body">
-                            {{event.result}}
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
+              </div>
 
             </div>
+
+            {{ adjacent_event_button.adjacent_event_button(right=true) }}
+
+          </div>
+
+            
 
             <!-- User comments area -->
             <div class="comments-area fade-in-block-3">

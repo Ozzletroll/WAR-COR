@@ -62,7 +62,7 @@ def view_event(campaign_name, event_name):
                                 event_id=event.id,
                                 scroll_target=scroll_target))
 
-    return render_template("event.html", 
+    return render_template("event_page.html", 
                            event=event, 
                            campaign=campaign, 
                            belligerents=belligerents,
@@ -158,7 +158,7 @@ def add_event(campaign_name):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_event.html", 
+    return render_template("event_page.html", 
                            form=form, 
                            campaign=campaign)
 
@@ -229,7 +229,7 @@ def edit_event(campaign_name, event_name):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_event.html",
+    return render_template("event_page.html",
                             campaign=campaign,
                             campaign_name=campaign.title,
                             event_name=event.title,
@@ -295,7 +295,10 @@ def delete_comment(campaign_name, event_name, comment_id):
     db.session.delete(comment)
     db.session.commit()
 
-    return redirect(url_for('event.view_event', campaign_name=campaign.title, event_name=event.title, event_id=event.id))
+    return redirect(url_for('event.view_event', 
+                            campaign_name=campaign.title, 
+                            event_name=event.title, 
+                            event_id=event.id))
 
 
 
