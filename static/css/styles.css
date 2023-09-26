@@ -3825,9 +3825,11 @@ for selection in timeline_search.js */
 
 /* Event Page */
 
-@keyframes scrollHeader{
+@keyframes scrollHeader {
   0% { transform: translateX(0%); }
+  10% { transform: translateX(0%); }
   50% { transform: translateX(-100%); }
+  60% { transform: translateX(-100%); } /* Pause here for a moment */
   100% { transform: translateX(0%); }
 }
 

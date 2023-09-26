@@ -81,9 +81,10 @@ function checkHeader() {
 
   // Check if animation should be applied
   if (widthDifference > 0) {
-    // Set keyframe
+    // Set keyframes
     const keyframes = animationRule.cssRules;
-    keyframes[1].style.transform = `translateX(calc(-100% + ${containerWidth - widthDifference}px))`;
+    keyframes[2].style.transform = `translateX(calc(-100% + ${containerWidth - widthDifference}px))`;
+    keyframes[3].style.transform = `translateX(calc(-100% + ${containerWidth - widthDifference}px))`;
 
     // Calculate the duration based on the difference
     const animationDuration = widthDifference / 10;
