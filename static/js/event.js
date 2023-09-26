@@ -86,7 +86,7 @@ function checkHeader() {
     keyframes[1].style.transform = `translateX(calc(-100% + ${containerWidth - widthDifference}px))`;
 
     // Calculate the duration based on the difference
-    const animationDuration = widthDifference / 5;
+    const animationDuration = widthDifference / 10;
     // Apply the dynamic animation duration
     header.style.animation = `scrollHeader ${animationDuration}s linear infinite`;
   } 
