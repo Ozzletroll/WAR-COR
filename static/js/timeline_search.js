@@ -566,3 +566,10 @@ searchBar.addEventListener("keydown", function(event) {
     searchEngine.scrollToResults();
   }
 });
+
+// Add event listener to detect when the search bar loses focus
+searchBar.addEventListener("blur", function() {
+  // Clear searchbar
+  searchBar.value = "";
+  searchEngine.timelineSearch();
+});
