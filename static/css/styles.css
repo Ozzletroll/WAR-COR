@@ -4093,7 +4093,7 @@ for selection in timeline_search.js */
   background-color: var(--darker_red);
   width: 100%;
   margin: 0;
-  font-size: min(18px, 4vw);
+  font-size: min(16px, 4vw);
   border-top-left-radius: 3px;
 }
 
@@ -4154,7 +4154,7 @@ for selection in timeline_search.js */
 }
 
 .event-page-date {
-  font-size: min(5vw, 35px);
+  font-size: min(4vw, 36px);
   font-weight: 500;
   margin: 0;
   color: var(--text_dark);
@@ -4167,7 +4167,7 @@ for selection in timeline_search.js */
 }
 
 .event-page-type {
-  font-size: min(4vw, 35px);
+  font-size: min(4vw, 26px);
   font-weight: 500;
   margin: 0;
   text-transform: uppercase;
@@ -4176,6 +4176,7 @@ for selection in timeline_search.js */
   color: var(--text_header_contrast);
   clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
   border-top-left-radius: 3px;
+  margin-left: 20px;
 }
 
 .event-page-result {
@@ -4224,7 +4225,7 @@ for selection in timeline_search.js */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 200px;
+  margin-top: 100px;
   width: 75%;
   margin-bottom: 200px;
 }
