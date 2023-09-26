@@ -30,7 +30,10 @@
               {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, scroll_target=scroll_target) %}
               {{ back_button.back_button(url=url, blank=false) }}
 
-              <h3 class="campaigns-heading">{{event.title}}</h1>
+              <div class="campaigns-heading-outer">
+                <h3 class="campaigns-heading">{{event.title}}</h1>
+              </div>
+              
             </div>
       
             <hr class="campaigns-divider">

@@ -3825,6 +3825,24 @@ for selection in timeline_search.js */
 
 /* Event Page */
 
+@keyframes scrollHeader{
+  0% { transform: translateX(0%); }
+  50% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+@media screen and (min-width: 1500px) {
+
+  .campaigns-heading-outer {
+    overflow: hidden;
+  }
+
+  .campaigns-heading {
+    white-space: nowrap;
+  }
+  
+}
+
 .event-back-button-area {
   display: flex;
   align-items: center;
@@ -3984,6 +4002,8 @@ for selection in timeline_search.js */
 
 .adjacent-button {
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 0;
   padding: 0;
   border: none;
