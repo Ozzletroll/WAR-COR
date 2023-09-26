@@ -16,7 +16,11 @@ function campaignSearch() {
     var elementText = campaignElements[index].innerText.toLowerCase();
     var campaignCard = document.getElementsByClassName("campaign-entry")[index];
 
-    if (elementText.includes(searchQuery)) {
+    if (searchQuery.length == 0) {
+      // Reset styling to undo any changes made by search function
+      campaignCard.style.display = "flex";
+    }
+    else if (elementText.includes(searchQuery)) {
       // Reset styling to undo any changes made by search function
       campaignCard.style.display = "flex";
 
@@ -35,3 +39,10 @@ function campaignSearch() {
 
 // Add event listener to the input field
 searchBar.addEventListener("input", campaignSearch);
+
+// Add event listener to detect when the search bar loses focus
+searchBar.addEventListener("blur", function() {
+  // Clear searchbar
+  searchBar.value = "";
+  campaignSearch();
+});
