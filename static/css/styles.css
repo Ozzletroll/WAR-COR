@@ -4762,18 +4762,20 @@ pre {
 
 /* Join Campaign Page */
 
-.empty-search-header.flavour-text {
+.empty-search-entry {
   display: flex;
-  width: fit-content;
+  flex-direction: column;
+}
+
+.empty-search-header {
   margin: 0;
 }
 
-.empty-search-entry {
-  display: flex;
-  align-items: flex-end;
+.empty-search-blink {
+  margin: 0;
 }
 
-.empty-search-entry::after {
+.empty-search-blink::after {
   color: var(--text_header);
   content: "_";
   font-size: min(2vw, 11px);
