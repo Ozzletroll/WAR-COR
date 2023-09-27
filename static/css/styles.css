@@ -1314,6 +1314,7 @@ p {
   margin: 20px;
   margin-bottom: 0px;
   background-color: var(--elem_dark);
+  border-radius: 3px;
 }
 
 .form-icon {
@@ -1382,6 +1383,19 @@ p {
   flex-direction: column;
 }
 
+.search-form {
+  display: flex;
+  gap: 20px;
+}
+
+.search-input {
+  width: 250px;
+}
+
+.search-submit {
+  padding: 5px 30px;
+}
+
 @media screen and (min-width: 800px){
 
   .form-column {
@@ -1405,7 +1419,6 @@ p {
   .campaign-submit-area {
     width: 100%;
   }
-
   
 }
 
@@ -1416,6 +1429,22 @@ p {
   }
 
 }  
+
+@media screen and (max-width: 500px){
+
+  .search-submit {
+    font-size: min(14px, 3vw);
+    padding: 5px
+  }
+
+  .callsign-input.search-input {
+    font-size: min(14px, 3vw);
+    text-align: left;
+  }
+
+}
+    
+
 
 /* Top of page navigation elements */
 
@@ -2391,6 +2420,7 @@ p {
   font-weight: 500;
   border: 2px solid;
   border-color: var(--bg_colour2);
+  border-radius: 3px;
   transition: 0.5s;
   background-color: var(--elem_bright);
   padding: 5px;
@@ -2503,6 +2533,7 @@ p {
   appearance: none;
   padding: 10px;
   border: 1px solid var(--dark_red);
+  border-radius: 3px;
   transition: 0.3s;
 }
 
@@ -4727,4 +4758,30 @@ pre {
     padding: 10vw;
   }
 
+}
+
+/* Join Campaign Page */
+
+.empty-search-header.flavour-text {
+  display: flex;
+  width: fit-content;
+  margin: 0;
+}
+
+.empty-search-entry {
+  display: flex;
+  align-items: flex-end;
+}
+
+.empty-search-entry::after {
+  color: var(--text_header);
+  content: "_";
+  font-size: min(2vw, 11px);
+  animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+@keyframes cursor-blink {
+  0% {
+    opacity: 0;
+  }
 }

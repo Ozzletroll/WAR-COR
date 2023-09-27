@@ -10,7 +10,7 @@
 
 <div class="scrollpage">
 
-  <div class="campaigns-content">
+  <div class="campaigns-content ">
 
     {# Animation fade in group 1 #}
     <div class="fade-in-block-1">
@@ -42,29 +42,39 @@
       {% include 'components/flash.html' %}
     </div>
 
-    <div class="campaigns-upper-bar fade-in-block-1">
+    <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
       <div class="bar-items-left">
-        SEARCH
+
+        <form class="search-form fade-in-block-2"  method="POST">
+          {{ form.csrf_token }}
+          {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME")}}
+          {{form.submit(class_="submit-button callsign-submit search-submit")}}
+        </form>
+
       </div>
 
       {% include "components/view_toggles.html" %}
     </div>
 
     {# Animation fade in group 2 #}
-    <div id="campaigns-list" class="campaigns-list fade-in-block-2">
+    <div id="campaigns-list" class="campaigns-list search-campaigns-list fade-in-block-2">
 
-      Results will go here
+       <div class="empty-search-entry">
+        <h5 class="flavour-text empty-search-header">>Please enter a search query</h5>
+       </div>
 
+    </div>
 
+    <div class="flavour-text-area fade-in-block-3 z-index-anim">
+      <p class="flavour-text flavour-text-centre">All UWC Correspondents are reminded that collaboration and cooperation are the cornerstones of our organisation. UWC personnel are expected treat all intelligent lifeforms with compassion, and to adhere to the UWC Code of Conduct in all dealings.</p>
+      <img src="/static/images/logo-red.png" class="top-logo">
     </div>
 
   </div>
 </div>
 
 <!-- Javascript -->
-<script src="/static/js/campaigns.js"></script>
 <script src="/static/js/campaigns_layout.js"></script>
-<script src="/static/js/campaign_search.js"></script> 
 
 
 
