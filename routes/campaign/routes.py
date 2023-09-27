@@ -260,6 +260,16 @@ def remove_campaign_users(campaign_name, username):
                             campaign_id=campaign.id))
 
 
+
+# Apply to join existing campaign
+@bp.route("/campaigns/campaign_search")
+@login_required
+def join_campaign():
+
+    return render_template("join_campaign.html")
+
+
+
 # Function called by user searching for new members on edit members page
 @bp.route("/campaigns/<campaign_name>/user_search", methods=["POST"])
 @login_required
