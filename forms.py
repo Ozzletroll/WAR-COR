@@ -126,3 +126,9 @@ class UploadJsonForm(FlaskForm):
 class CommentForm(FlaskForm):
     body = CKEditorField("Comment", validators=[DataRequired()])
     submit = SubmitField("Submit")
+
+
+
+class CampaignSearchForm(FlaskForm):
+    search = StringField("Search", validators=[Length(min=3)])
+    submit = SubmitField("Search")

@@ -266,7 +266,10 @@ def remove_campaign_users(campaign_name, username):
 @login_required
 def join_campaign():
 
-    return render_template("join_campaign.html")
+    form = forms.CampaignSearchForm()
+    
+    return render_template("join_campaign.html",
+                           form=form)
 
 
 
