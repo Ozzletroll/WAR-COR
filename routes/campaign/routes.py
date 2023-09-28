@@ -260,47 +260,51 @@ def remove_campaign_users(campaign_name, username):
                             campaign_id=campaign.id))
 
 
-
 # Apply to join existing campaign
-@bp.route("/campaigns/join_campaign")
+@bp.route("/campaigns/join_campaign", methods=["GET", "POST"])
 @login_required
 def join_campaign():
 
     form = forms.CampaignSearchForm()
-    
-    return render_template("join_campaign.html",
-                           form=form)
 
-
-
-# Function called when searching for campaigns to join
-@bp.route("/campaigns/campaign_search", methods=["POST"])
-@login_required
-def campaign_search():
-
-    search = request.form["search"]
-
-    # Ignore search if less than 3 characters
-    if len(search) < 3:
-        response = make_response(jsonify({"message": "Search queries should be three characters or more"}), 400)
-        return response
-    
+    # Check if page has any results to render
+    if "results" not in request.args:
+        results = None
     else:
-        search_format = "%{}%".format(search)
-        campaigns = db.session.execute(select(models.Campaign)
-                                    .filter(models.Campaign.title.like(search_format))).scalars()
+        results = request.args["results"]
 
-        results = {campaign.title: [campaign.id, url_for("campaign.request_membership", 
-                                                        campaign_name=campaign.title, 
-                                                        campaign_id=campaign.id )]
-                    for campaign in campaigns if campaign not in current_user.campaigns}
+    if form.validate_on_submit():
+        search = request.form["search"].lower()
 
-        if len(results) == 0:
-            response = make_response(jsonify({"message": "No results found"}), 204)
+        # Ignore search if less than 3 characters
+        if len(search) < 3:
+            flash("Search queries must be three or more characters")
+            return redirect(url_for("campaign.join_campaign"))
+
         else:
-            response = make_response(results, 200)
+            search_format = "%{}%".format(search)
+            campaigns = db.session.execute(select(models.Campaign)
+                                          .filter(models.Campaign.title.like(search_format))).scalars()
 
-        return response
+            results = [campaign for campaign in campaigns if campaign not in current_user.campaigns]
+                                        
+            if len(results) == 0:
+                flash("No campaigns matching query found")
+                return redirect(url_for("campaign.join_campaign"))
+
+            return render_template("join_campaign.html",
+                           form=form,
+                           results=results)
+
+    # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
+
+    return render_template("join_campaign.html",
+                           form=form,
+                           results=results)
+
 
 
 # Function called when applying to join campaign
@@ -308,7 +312,7 @@ def campaign_search():
 @login_required
 def request_membership(campaign_name, campaign_id):
 
-    print(f"REQUEST TO JOIN {campaign_name} from user: {current_user.username}")
+    flash(f"Membership request to campaign '{campaign_name}' sent")
 
     return redirect(url_for("campaign.join_campaign"))
 
