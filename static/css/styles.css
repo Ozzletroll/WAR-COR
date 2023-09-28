@@ -4773,6 +4773,7 @@ pre {
 .empty-search-entry {
   display: flex;
   flex-direction: column;
+  margin-bottom: 25px;
 }
 
 .search-header-bold {
@@ -4820,9 +4821,14 @@ pre {
   }
 }
 
-
 @keyframes cursor-blink {
   0% {
     opacity: 0;
   }
+}
+
+.campaign-results-button {
+  display: flex;
+  width: fit-content;
+  padding: 5px 20px;
 }

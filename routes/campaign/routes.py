@@ -262,7 +262,7 @@ def remove_campaign_users(campaign_name, username):
 
 
 # Apply to join existing campaign
-@bp.route("/campaigns/campaign_search")
+@bp.route("/campaigns/join_campaign")
 @login_required
 def join_campaign():
 
@@ -271,6 +271,46 @@ def join_campaign():
     return render_template("join_campaign.html",
                            form=form)
 
+
+
+# Function called when searching for campaigns to join
+@bp.route("/campaigns/campaign_search", methods=["POST"])
+@login_required
+def campaign_search():
+
+    search = request.form["search"]
+
+    # Ignore search if less than 3 characters
+    if len(search) < 3:
+        response = make_response(jsonify({"message": "Search queries should be three characters or more"}), 400)
+        return response
+    
+    else:
+        search_format = "%{}%".format(search)
+        campaigns = db.session.execute(select(models.Campaign)
+                                    .filter(models.Campaign.title.like(search_format))).scalars()
+
+        results = {campaign.title: [campaign.id, url_for("campaign.request_membership", 
+                                                        campaign_name=campaign.title, 
+                                                        campaign_id=campaign.id )]
+                    for campaign in campaigns if campaign not in current_user.campaigns}
+
+        if len(results) == 0:
+            response = make_response(jsonify({"message": "No results found"}), 204)
+        else:
+            response = make_response(results, 200)
+
+        return response
+
+
+# Function called when applying to join campaign
+@bp.route("/campaigns/join_campaign/<campaign_name>/<campaign_id>", methods=["GET"])
+@login_required
+def request_membership(campaign_name, campaign_id):
+
+    print(f"REQUEST TO JOIN {campaign_name} from user: {current_user.username}")
+
+    return redirect(url_for("campaign.join_campaign"))
 
 
 # Function called by user searching for new members on edit members page
@@ -300,7 +340,7 @@ def user_search(campaign_name):
     
     # Check if query returned no results
     if len(results) == 0:
-        response = make_response(jsonify({"message": "No users found"}), 404)
+        response = make_response(jsonify({"message": "No users found"}), 204)
     # Otherwise, send good response
     else:
         response = make_response(results, 200)
