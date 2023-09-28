@@ -38,17 +38,14 @@
 
     </div>
 
-    <div class="form-flash">
-      {% include 'components/flash.html' %}
-    </div>
 
     <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
       <div class="bar-items-left">
 
-        <form class="search-form fade-in-block-2"  method="POST">
+        <form class="search-form fade-in-block-2" onsubmit="return false" novalidate>
           {{ form.csrf_token }}
-          {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME")}}
-          {{form.submit(class_="submit-button callsign-submit search-submit")}}
+          {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME", autocomplete="off")}}
+          {{form.submit(class_="submit-button callsign-submit search-submit", onClick="user_search(target_url, csrfToken)")}}
         </form>
 
       </div>
@@ -57,17 +54,26 @@
     </div>
 
     {# Animation fade in group 2 #}
-    <div id="campaigns-list" class="campaigns-list search-campaigns-list fade-in-block-2">
+    <div id="campaigns-list" class="search-campaigns-list fade-in-block-2">
 
-       <div id="campaign-no-results" class="empty-search-entry">
-        <h5 class="flavour-text empty-search-header">>CAMPAIGN::SEARCH</h5>
-        <h5 class="flavour-text empty-search-blink">>Please enter a search query</h5>
-       </div>
+      <div class="search-campaigns-upper">
+        <div class="form-flash">
+          {% include 'components/flash.html' %}
+        </div>
+  
+        <div id="campaign-no-results" class="empty-search-entry">
+        <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
+        <h5 class="flavour-text typing-2 empty-search-header">>CAMPAIGN::SEARCH</h5>
+        <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
+        </div>
+      </div>
+
+      
 
     </div>
 
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
-      <p class="flavour-text flavour-text-centre">All UWC Correspondents are reminded that collaboration and cooperation are the cornerstones of our organisation. UWC personnel are expected treat all intelligent lifeforms with compassion, and to adhere to the UWC Code of Conduct in all dealings.</p>
+      <p class="flavour-text flavour-text-centre">All UWC Correspondents are reminded that collaboration and cooperation are the cornerstones of our organisation. UWC personnel are expected to treat each other with respect, and to adhere to the UWC Code of Conduct in all dealings.</p>
       <img src="/static/images/logo-red.png" class="top-logo">
     </div>
 
@@ -76,7 +82,10 @@
 
 <!-- Javascript -->
 <script src="/static/js/campaigns_layout.js"></script>
-
+ <script>
+  const target_url = "{{ url_for('campaign.campaign_search') }}"   
+  const csrfToken = "{{ csrf_token() }}"
+</script>
 
 
 {% endblock %}

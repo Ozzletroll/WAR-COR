@@ -4762,25 +4762,64 @@ pre {
 
 /* Join Campaign Page */
 
+.search-campaigns-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 25px;
+  margin-bottom: 200px;
+}
+
 .empty-search-entry {
   display: flex;
   flex-direction: column;
 }
 
-.empty-search-header {
-  margin: 0;
+.search-header-bold {
+  font-weight: 400;
 }
 
-.empty-search-blink {
+.empty-search-header, .empty-search-blink {
   margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 1s steps(50, end);
+  width: 300px;
+  visibility: hidden;
+  animation-fill-mode: both;
 }
 
 .empty-search-blink::after {
   color: var(--text_header);
   content: "_";
+  font-weight: 500;
   font-size: min(2vw, 11px);
   animation: cursor-blink 1.5s steps(2) infinite;
 }
+
+.typing-1 {
+  animation-delay: 300ms;
+}
+
+.typing-2 {
+  animation-delay: 600ms;
+}
+
+.typing-3 {
+  animation-delay: 900ms;
+}
+
+@keyframes typing {
+  from { 
+    visibility: visible;
+    width: 0;
+  }
+
+  to {
+    visibility: visible;
+  }
+}
+
 
 @keyframes cursor-blink {
   0% {
