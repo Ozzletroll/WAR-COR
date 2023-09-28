@@ -4827,8 +4827,25 @@ pre {
   }
 }
 
-.campaign-results-button {
+.campaign-search-results-area {
   display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.results-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: fit-content;
-  padding: 5px 20px;
+}
+
+.results-flavour {
+  width: fit-content;
+}
+
+.request-button {
+  width: 180px;
 }

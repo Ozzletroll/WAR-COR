@@ -42,11 +42,17 @@
     <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
       <div class="bar-items-left">
 
-        <form class="search-form fade-in-block-2" onsubmit="return false" novalidate>
+        <form class="search-form fade-in-block-2" method="POST">
           {{ form.csrf_token }}
-          {{form.search(id="campaign-search", class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME", autocomplete="off")}}
-          {{form.submit(class_="submit-button callsign-submit search-submit", onClick="campaignSearch(target_url, csrfToken)")}}
+          {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME", autocomplete="off")}}
+          {{form.submit(class_="submit-button callsign-submit search-submit")}}
         </form>
+
+        {% if results is not none %}
+          <div class="results-counter">
+            <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+          </div>
+        {% endif %}
 
       </div>
 
@@ -61,17 +67,23 @@
           {% include 'components/flash.html' %}
         </div>
   
-        <div id="empty-flavour" class="empty-search-entry">
-          <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
-          <h5 class="flavour-text typing-2 empty-search-header">>CAMPAIGN::SEARCH</h5>
-          <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
-        </div>
+        {% if results is none %}
+          <div id="empty-flavour" class="empty-search-entry">
+            <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
+            <h5 class="flavour-text typing-2 empty-search-header">>CAMPAIGN::SEARCH</h5>
+            <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
+          </div>
+        {% endif %}
 
         <div id="campaigns-list" class="campaign-search-results-area">
 
-            <div id="results-area" class="campaign-search-results">
-              [RESULTS GO HERE]
-            </div>
+          {% if results is not none %}
+            {% for campaign in results %}
+
+              {{ campaign_entry.campaign_entry(campaign=campaign, current_user=current_user, search_result=true) }}
+
+            {% endfor %}
+          {% endif %}
 
         </div>
 
@@ -90,12 +102,7 @@
 </div>
 
 <!-- Javascript -->
-<script src="/static/js/join_campaign_search.js"></script>
 <script src="/static/js/campaigns_layout.js"></script>
- <script>
-  const target_url = "{{ url_for('campaign.campaign_search') }}"   
-  const csrfToken = "{{ csrf_token() }}"
-</script>
 
 
 {% endblock %}

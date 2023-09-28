@@ -11,7 +11,7 @@
 
 #}
 
-{% macro campaign_entry(campaign=campaign, current_user=current_user) %}
+{% macro campaign_entry(campaign=campaign, current_user=current_user, search_result=false) %}
 
 <section class="campaign-entry">
 
@@ -43,12 +43,21 @@
 
     <div class="campaign-entry-buttons">
       
-      <div class="entry-button-outline">
-        <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-          <button class="entry-button">VIEW</button>
-        </a>
-      </div>
+      {% if not search_result %}
+        <div class="entry-button-outline">
+          <a href="{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+            <button class="entry-button">VIEW</button>
+          </a>
+        </div>
+      {% else %}
+        <div class="entry-button-outline">
+          <a href="{{ url_for('campaign.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+            <button class="entry-button request-button">REQUEST MEMBERSHIP</button>
+          </a>
+        </div>
+      {% endif %}
 
+    
       {% if campaign in current_user.permissions %}
       
         <div class="dropdown-area">
