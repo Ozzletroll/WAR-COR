@@ -107,6 +107,11 @@ def create_campaign():
                                 campaign_name=campaign.title, 
                                 campaign_id=campaign.id))
 
+     # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
+
     return render_template("new_campaign.html", 
                            form=form)
 
@@ -138,6 +143,11 @@ def edit_campaign(campaign_name, campaign_id):
     # Set back button scroll target
     scroll_target = f"campaign-{campaign.id}"
     session["scroll_target"] = scroll_target 
+
+     # Flash form errors
+    for field_name, errors in form.errors.items():
+        for error_message in errors:
+            flash(field_name + ": " + error_message)
 
     return render_template("new_campaign.html", 
                            form=form, 
@@ -260,7 +270,7 @@ def remove_campaign_users(campaign_name, username):
                             campaign_id=campaign.id))
 
 
-# Apply to join existing campaign
+# Join campaign page
 @bp.route("/campaigns/join_campaign", methods=["GET", "POST"])
 @login_required
 def join_campaign():
@@ -307,7 +317,7 @@ def join_campaign():
 
 
 
-# Function called when applying to join campaign
+# Function called when applying to join campaign 
 @bp.route("/campaigns/join_campaign/<campaign_name>/<campaign_id>", methods=["GET"])
 @login_required
 def request_membership(campaign_name, campaign_id):
