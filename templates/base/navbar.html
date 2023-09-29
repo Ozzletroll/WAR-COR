@@ -146,6 +146,28 @@
         </a>
       </div>
     </li>
+    {% elif message.request %}
+
+      <h5 class="message-date">{{message.date}}</h5>
+
+      <li class="message-item">
+        <h4 class="message-header">REQUEST</h4>   
+        <div class=message-body>{{message.body}}</div>
+        <div class="message-button-area">
+          <a href="{{url_for('campaign.confirm_request', 
+                              campaign_name=message.target_campaign.title, 
+                              campaign_id=message.target_campaign.id, 
+                              message_id=message.id)}}">
+            <button class="message-button">ACCEPT</button>
+          </a>
+          <a href="{{url_for('campaign.deny_request', 
+                              campaign_name=message.target_campaign.title,
+                              campaign_id=message.target_campaign.id, 
+                              message_id=message.id)}}">
+            <button class="message-button">DECLINE</button>
+          </a>
+        </div>
+      </li>
 
     {% endif %}
 

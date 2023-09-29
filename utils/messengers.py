@@ -42,14 +42,54 @@ def send_invite_message(sender, recipient, campaign):
     db.session.commit()
 
 
-def send_new_member_notification(sender, recipients, campaign):
+def send_membership_request(sender, recipients, campaign):
+  """Function for creating and 'sending' a campaign membership request message.
+  Messages are stored in the database, and accessed via the user.messages
+  association. Takes a user object for  sender, a list of admin users for recipients, 
+  and a campaign object."""
+
+  # Check for existing pending request
+  message = db.session.execute(
+      select(models.Message)
+      .filter(models.Message.target_campaign.has(id=campaign.id))
+      .filter(models.Message.author.has(id=sender.id))
+      .filter(models.Message.request == True)).scalar()
+
+  # If invitation message already exists, update date
+  # to push to top of notifications list
+  if message:
+    message.date = datetime.now()
+    db.session.commit()
+
+  # Otherwise, create a new message
+  else:
+    message = models.Message()
+
+    message.author = sender
+    message.request = True
+    message.body = f"{sender.username} has requested to join the campaign: {campaign.title}"
+    message.target_user = sender
+    message.target_campaign = campaign
+    message.date = datetime.now()
+
+    db.session.add(message)
+
+    # Add message to user's message list
+    for user in recipients:
+      user.messages.append(message)
+
+    sender.sent_messages.append(message)
+    db.session.commit()
+
+
+def send_new_member_notification(sender, recipients, campaign, new_user_username):
   """Function called to create a new member notification"""
 
   message = models.Message()
 
   message.author = sender
   message.notification = True
-  message.body = f"{sender.username} has joined the campaign: {campaign.title}"
+  message.body = f"{new_user_username} has joined the campaign: {campaign.title}"
   message.target_campaign = campaign
   message.date = datetime.now()
 

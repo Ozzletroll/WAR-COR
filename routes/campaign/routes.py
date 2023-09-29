@@ -312,6 +312,18 @@ def join_campaign():
 @login_required
 def request_membership(campaign_name, campaign_id):
 
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, 
+                   title=campaign_name)).scalar()
+    
+    # Retrieve the users with editing permissions for the campaign
+    campaign_admins = db.session.execute(
+        db.select(models.User)
+        .join(models.user_edit_permissions)
+        .where(models.user_edit_permissions.c.campaign_id == campaign.id)).scalars()
+
+    messengers.send_membership_request(current_user, campaign_admins, campaign)
     flash(f"Membership request to campaign '{campaign_name}' sent")
 
     return redirect(url_for("campaign.join_campaign"))
@@ -413,9 +425,10 @@ def accept_invite(campaign_name):
             recipients = [user for user in campaign.members if user.id != message.target_user.id]
 
             # Send new campaign member notification
-            messengers.send_new_member_notification(sender=current_user, 
-                                recipients=recipients,
-                                campaign=campaign)
+            messengers.send_new_member_notification(current_user, 
+                                                    recipients,
+                                                    campaign,
+                                                    current_user.username)
             
             # Set back button scroll target
             scroll_target = f"campaign-{campaign.id}"
@@ -448,6 +461,64 @@ def decline_invite(campaign_name):
 
     return redirect(url_for("campaign.campaigns"))
 
+
+
+# Function called when admin accepts new membership request
+@bp.route("/campaigns/<campaign_name>/confirm_join_request", methods=["GET"])
+@login_required
+def confirm_request(campaign_name):
+
+    message_id = request.args["message_id"]
+    target_campaign_id = request.args["campaign_id"]
+
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+    # Assert current user has campaign editing permissions
+    auth.permission_required(campaign)
+
+    # Check message is valid and user not already in campaign
+    if message.request and message.target_user not in campaign.members:
+        
+        # Add user to campaign
+        message.target_user.campaigns.append(campaign)
+        
+        # Delete message
+        db.session.delete(message)
+        db.session.commit()
+
+        # Send new member notification to campaign members
+        messengers.send_new_member_notification(current_user, 
+                                                campaign.members, 
+                                                campaign, 
+                                                message.target_user.username)
+        
+        flash(f"Added {message.target_user.username} to campaign: {campaign.title}")
+
+    return redirect(url_for("campaign.campaigns"))
+
+
+# Function called when admin declines new membership request
+@bp.route("/campaigns/<campaign_name>/denyjoin_request", methods=["GET"])
+@login_required
+def deny_request(campaign_name):
+
+    message_id = request.args["message_id"]
+    target_campaign_id = request.args["campaign_id"]
+
+    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+
+    # Assert current user has campaign editing permissions
+    auth.permission_required(campaign)
+
+    flash(f"Declined {message.target_user.username}'s request to join to campaign: {campaign.title}")
+
+    # Delete message
+    db.session.delete(message)
+    db.session.commit()
+
+    return redirect(url_for("campaign.campaigns"))
 
 
 # Function called when granting a user campaign editing permissions
