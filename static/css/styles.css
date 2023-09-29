@@ -1899,7 +1899,6 @@ p {
   padding-left: 0;
   filter: drop-shadow(0px 3px 3px var(--elem_shadow));
   gap: 50px;
-  margin-top: 25px;
   margin-bottom: 200px;
 }
 
@@ -2218,7 +2217,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 0px 0px 0px;
+  margin: 10px 0px 25px 0px;
   gap: 10px;
 }
 
@@ -4766,7 +4765,6 @@ pre {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin-top: 25px;
   margin-bottom: 200px;
 }
 
