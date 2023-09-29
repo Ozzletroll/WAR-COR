@@ -175,7 +175,7 @@ function user_search(url, csrfToken) {
     "body" : data,
   })
   .then(function(response) {
-    if (response.status == 404){
+    if (response.status == 204){
       
       // Get the results area div element
       const resultsAreaDiv = document.getElementById("results-area");
@@ -192,7 +192,7 @@ function user_search(url, csrfToken) {
       const newHeading = Object.assign(
         document.createElement("h4"), 
         {className: "results-username",
-        innerHTML: "//404: No users found"}
+        innerHTML: "//204: No matching users found"}
         );
 
         newDiv.appendChild(newHeading);
