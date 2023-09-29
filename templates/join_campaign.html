@@ -50,7 +50,11 @@
 
         {% if results is not none %}
           <div class="results-counter">
-            <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+            {% if results | length > 1 %}
+              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+            {% elif results | length == 1 %}
+              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULT</h5>
+            {% endif %}
           </div>
         {% endif %}
 

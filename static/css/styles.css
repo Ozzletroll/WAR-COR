@@ -4843,7 +4843,8 @@ pre {
 }
 
 .results-flavour {
-  width: fit-content;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .request-button {
