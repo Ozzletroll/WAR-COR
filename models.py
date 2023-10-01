@@ -143,21 +143,50 @@ class Event(db.Model):
     # Events have both following and preceding events.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
-    parent_campaign = db.relationship("Campaign", back_populates="events")
-
+    parent_campaign = db.relationship("Campaign", 
+                                      back_populates="events")
     following_event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     following_event = db.relationship('Event', 
                                       backref=db.backref('preceding_event', 
                                                          uselist=False), 
                                                          remote_side=[id])
-
     epochs = db.relationship("Epoch",
                               secondary="epoch_events",
                               back_populates="events")
-
     comments = db.relationship("Comment", 
                                back_populates="parent_event",
                                cascade="delete, delete-orphan")
+
+    # Methods
+    def update(self, form, parent_campaign, new=False):
+        """ Method to populate and update self.
+            Takes form data from form.data
+            Set "new" to true if creating new entry
+            Set "date" to true if event's date has been specified by ui.  """
+
+        for field, value in form.items():
+            if value is not None:
+                setattr(self, field, value)
+
+        self.parent_campaign = parent_campaign
+        self.parent_campaign.last_edited = datetime.now()
+        
+        if new:
+            db.session.add(self)
+
+        db.session.commit()
+
+
+    def create_blank(self, datestring):
+        """ Method to create a blank temporary pending event for prepopulating form.
+            Takes an incremented datestring from organisers.format_event_datestring(). """
+
+        self.title = ""
+        self.type = ""
+        self.body = ""
+        self.date = datestring
+
+
 
 
 class Epoch(db.Model):

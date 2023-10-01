@@ -77,26 +77,24 @@ def add_event(campaign_name):
 
     target_campaign_id = request.args["campaign_id"]
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name, id=target_campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title=campaign_name, 
+                   id=target_campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
     # Check if date argument given
     if "date" in request.args:
-        # Create placeholder event to prepopulate form
-        event = models.Event()
-        event.title = ""
-        event.type = ""
+        # Get date arguments
         datestring = request.args["date"]
-
         args = request.args
         # Increase the date by one unit and format the datestring
         datestring = organisers.format_event_datestring(datestring, args)
-
-        # Populate new form with updated date string
-        event.date = datestring
-        event.body = ""
-        
+        # Create placeholder event
+        event = models.Event()
+        event.create_blank(datestring)
+        # Prepopulate form
         form = forms.CreateEventForm(obj=event)
 
     # Otherwise, create default empty form
@@ -107,31 +105,11 @@ def add_event(campaign_name):
     if form.validate_on_submit():
         # Create new event object using form data
         event = models.Event()
-        event.title = request.form["title"]
-        event.type = request.form["type"]
-        event.date = request.form["date"]
-        event.location = request.form["location"]
-        event.belligerents = request.form["belligerents"]
-        event.body = request.form["body"]
-        event.result = request.form["result"]
 
-        if form.header.data:
-            event.header = True
-        else:
-            event.header = False    
-
-        if form.hide_time.data:
-            event.hide_time = True
-        else:
-            event.hide_time = False
-
-        event.parent_campaign = campaign
-        event.parent_campaign.last_edited = datetime.now()
-
-        # Add event to database
-        db.session.add(event)
-        db.session.commit()
-
+        event.update(form=form.data,
+                     parent_campaign=campaign,
+                     new=True)
+        
         # Update "following_event" relationships for all events
         organisers.get_following_events(campaign)
 
@@ -187,29 +165,8 @@ def edit_event(campaign_name, event_name):
 
     if form.validate_on_submit():
         # Update event object using form data
-        event.title = request.form["title"]
-        event.type = request.form["type"]
-        event.date = request.form["date"]
-        event.location = request.form["location"]
-        event.belligerents = request.form["belligerents"]
-        event.body = request.form["body"]
-        event.result = request.form["result"]
-
-        if form.header.data:
-            event.header = True
-        else:
-            event.header = False  
-
-        if form.hide_time.data:
-            event.hide_time = True
-        else:
-            event.hide_time = False    
-
-        event.parent_campaign.last_edited = datetime.now()
-
-        # Update the database
-        db.session.add(event)
-        db.session.commit()
+        event.update(form=form.data, 
+                     parent_campaign=campaign)
 
         # Update "following_event" relationships for all events
         organisers.get_following_events(campaign)
