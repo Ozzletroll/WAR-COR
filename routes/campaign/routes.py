@@ -84,23 +84,21 @@ def create_campaign():
     form = forms.CreateCampaignForm()
 
     if form.validate_on_submit():
-        user = current_user
 
+        # Create and populate campaign object
         new_campaign = models.Campaign()
-        new_campaign.title = request.form["title"]
-        new_campaign.date_suffix = request.form["date_suffix"]
-        new_campaign.description = request.form["description"]
-        new_campaign.last_edited = datetime.now()
+        new_campaign.update(form=request.form, 
+                            new=True)
+        
+        # Add current user as campaign membere
+        current_user.campaigns.append(new_campaign)
 
-        # Add new campaign to database
-        db.session.add(new_campaign)
-        # Add current user as campaign member, callsign will be set to None
-        user.campaigns.append(new_campaign)
         # Give current user campaign editing permissions
-        user.permissions.append(new_campaign)
+        current_user.permissions.append(new_campaign)
 
         db.session.commit()
 
+        # Get campaign for redirect
         campaign = db.session.execute(select(models.Campaign).filter_by(id=new_campaign.id)).scalar()
 
         return redirect(url_for("campaign.edit_timeline", 
@@ -129,15 +127,9 @@ def edit_campaign(campaign_name, campaign_id):
     form = forms.CreateCampaignForm(obj=campaign)
     form.submit.label.text = "Update Campaign Data"
 
+    # Update campaign if form submitted
     if form.validate_on_submit():
-        campaign.title = request.form["title"]
-        campaign.description = request.form["description"]
-        campaign.date_suffix = request.form["date_suffix"]
-        campaign.last_edited = datetime.now()
-
-        db.session.add(campaign)
-        db.session.commit()
-
+        campaign.update(form=request.form)
         return redirect(url_for("campaign.campaigns"))
 
     # Set back button scroll target

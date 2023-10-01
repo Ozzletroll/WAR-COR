@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from datetime import datetime
 
 from app import db
 
@@ -106,6 +107,26 @@ class Campaign(db.Model):
                                         back_populates="campaign",
                                         cascade="delete, delete-orphan",
                                         viewonly=True)
+    
+
+    # Methods
+
+    def update(self, form, new=False):
+        """ Method to populate and update self.
+            Takes form data from request.form.
+            Set "new" to true if creating new entry. """
+
+        for field, value in form.items():
+            if value is not None:
+                setattr(self, field, value)
+
+        self.last_edited = datetime.now()
+
+        if new:
+            db.session.add(self)
+
+        db.session.commit()
+
 
 
 class Event(db.Model):
