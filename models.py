@@ -84,24 +84,19 @@ class Campaign(db.Model):
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
     # permission. 
-
     events = db.relationship("Event", 
                              back_populates="parent_campaign", 
                              cascade="delete, delete-orphan")
-    
     epochs = db.relationship("Epoch", 
                              back_populates="parent_campaign", 
                              cascade="delete, delete-orphan")
-    
     pending_invites = db.relationship("Message", 
                                       back_populates="target_campaign", 
                                       cascade="delete, delete-orphan")
-
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     members = db.relationship("User",
                               secondary="user_campaign",
                               back_populates="campaigns")
-
     # Association between Child -> Association -> Parent
     user_associations = db.relationship("UserCampaign",
                                         back_populates="campaign",
@@ -110,7 +105,6 @@ class Campaign(db.Model):
     
 
     # Methods
-
     def update(self, form, new=False):
         """ Method to populate and update self.
             Takes form data from request.form.
