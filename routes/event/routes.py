@@ -113,14 +113,9 @@ def add_event(campaign_name):
         # Update "following_event" relationships for all events
         organisers.get_following_events(campaign)
 
-        # Update campaigns epochs
-        for epoch in campaign.epochs:
-            epoch.events.clear()
-            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-            if len(epoch.events) > 0:
-                epoch.has_events = True
-            db.session.commit()
-        
+        # Check all epochs for events
+        campaign.check_epochs()
+
         # Create notification message
         messengers.send_event_notification(current_user,
                                            recipients=campaign.members,
@@ -171,13 +166,8 @@ def edit_event(campaign_name, event_name):
         # Update "following_event" relationships for all events
         organisers.get_following_events(campaign)
 
-        # Update campaigns epochs
-        for epoch in campaign.epochs:
-            epoch.events.clear()
-            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-            if len(epoch.events) > 0:
-                epoch.has_events = True
-            db.session.commit()
+        # Update all epochs
+        campaign.check_epochs()
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -224,13 +214,9 @@ def delete_event(campaign_name, event_name):
     organisers.get_following_events(campaign)
 
     # Update campaigns epochs
-    for epoch in campaign.epochs:
-        epoch.events.clear()
-        epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-        if len(epoch.events) > 0:
-            epoch.has_events = True
+    campaign.check_epochs()
 
-        db.session.commit()
+    db.session.commit()
 
     return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -295,27 +281,11 @@ def new_epoch(campaign_name):
 
     if form.validate_on_submit():
 
+        # Create new epoch and populate with form data
         epoch = models.Epoch()
-
-        epoch.title = request.form["title"]
-        epoch.start_date = request.form["start_date"]
-        epoch.end_date = request.form["end_date"]
-        epoch.description = request.form["description"]
-
-        epoch.parent_campaign = campaign
-
-        # Find events that take place during the epoch
-        matching_events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-        for event in matching_events:
-            epoch.events.append(event)
-
-        if len(epoch.events) > 0:
-            epoch.has_events = True
-
-        # Update campaign and commit
-        campaign.last_edited = datetime.now()
-        db.session.add(epoch)
-        db.session.commit()
+        epoch.update(form=request.form,
+                     parent_campaign=campaign,
+                     new=True)
 
         scroll_target = f"epoch-{epoch.id}"
 
@@ -358,27 +328,10 @@ def edit_epoch(campaign_name, epoch_title):
 
     if form.validate_on_submit():
 
-        epoch.title = request.form["title"]
-        epoch.start_date = request.form["start_date"]
-        epoch.end_date = request.form["end_date"]
-        epoch.description = request.form["description"]
-
-        # Clear epochs events
-        # Update campaigns epochs
-        for epoch in campaign.epochs:
-            epoch.events.clear()
-            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-
-            if len(epoch.events) > 0:
-                epoch.has_events = True
-
-            db.session.commit()
+        epoch.update(form=request.form,
+                     parent_campaign=campaign)
 
         scroll_target = f"epoch-{epoch.id}"
-
-        # Update campaign and commit
-        campaign.last_edited = datetime.now()
-        db.session.commit()
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -422,6 +375,9 @@ def delete_epoch(campaign_name, epoch_title):
 
     db.session.delete(epoch)
     db.session.commit()
+    
+    # Update all epochs
+    campaign.check_epochs()
 
     return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 

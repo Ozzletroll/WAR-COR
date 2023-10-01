@@ -3,6 +3,10 @@ from datetime import datetime
 
 from app import db
 
+import utils.organisers as organisers
+
+
+
 # Association table that defines user to campaign editing permissions.
 user_edit_permissions = db.Table("user_edit_permissions",
                                  db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
@@ -121,6 +125,14 @@ class Campaign(db.Model):
 
         db.session.commit()
 
+    
+    def check_epochs(self):
+        """ Method to clear and recheck all epochs for containing
+            events. """
+        
+        for epoch in self.epochs:
+            epoch.populate_self()
+
 
 
 class Event(db.Model):
@@ -210,6 +222,60 @@ class Epoch(db.Model):
     events = db.relationship("Event",
                               secondary="epoch_events",
                               back_populates="epochs")
+    
+
+    # Methods
+    def update(self, form, parent_campaign, new=False):
+        """ Method to populate and update self.
+            Takes form data from request.form
+            Set "new" to true if creating new entry.  """
+
+        for field, value in form.items():
+            if value is not None:
+                setattr(self, field, value)
+
+        self.parent_campaign = parent_campaign
+        self.parent_campaign.last_edited = datetime.now()
+        
+        if new:
+            db.session.add(self)
+
+        db.session.commit()
+
+        self.populate_self()
+        self.parent_campaign.check_epochs()
+
+
+    def populate_self(self):
+        """ Method to get all events in parent campaign that fall
+        between the epochs start and end dates, and flag self
+        if containing any events. """
+        
+        def is_in_epoch(event, epoch):
+
+            epoch_start = float(epoch.start_date.replace("-", "."))
+            epoch_end = float(epoch.end_date.replace("-", "."))
+
+            event_year, event_month = event.date.split("-")[:2]
+            event_combined = event_year + "-" + event_month
+            event_date = float(event_combined.replace("-", "."))
+
+            if epoch_start <= event_date <= epoch_end:
+                return True
+            else:
+                return False
+    
+        self.events.clear()
+        self.events = [event for event in self.parent_campaign.events if is_in_epoch(event, self)]
+
+        if len(self.events) > 0:
+            self.has_events = True
+        else:
+            self.has_events = False
+
+        db.session.commit()
+
+
 
 class Comment(db.Model):
     __tablename__ = "comment"
