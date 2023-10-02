@@ -25,7 +25,7 @@ def view_event(campaign_name, event_name):
     campaign = event.parent_campaign
 
     # Format belligerents data
-    belligerents = organisers.separate_belligerents(event.belligerents) 
+    belligerents = event.separate_belligerents() 
 
     form = forms.CommentForm()
 

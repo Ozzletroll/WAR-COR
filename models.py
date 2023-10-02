@@ -211,6 +211,21 @@ class Event(db.Model):
         self.date = datestring
 
 
+    def separate_belligerents(self):
+        """ Method to seperate the belligerents into groups for rendering. """
+
+        separated_belligerents = self.belligerents.split(",")
+        groups = []
+
+        for group in separated_belligerents:
+            allied_belligerents = []
+            for element in group.split("&"):
+                allied_belligerents.append(element)
+            groups.append(allied_belligerents)
+            
+        return groups
+
+
 
 class Epoch(db.Model):
     __tablename__ = "epoch"
