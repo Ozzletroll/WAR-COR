@@ -20,8 +20,11 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
     app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["SESSION_COOKIE_SECURE"] = True
+    app.config["SESSION_COOKIE_HTTPONLY"] = True
+    app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
     app.config['CKEDITOR_SERVE_LOCAL'] = True
-
+                  
     # Initialise database and import models
     db.init_app(app)
     import models
