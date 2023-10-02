@@ -1,8 +1,7 @@
 from flask import jsonify, make_response
-from random import randint
 
 from routes.generator import bp
-from utils.generators import Generator, create_data
+from utils.generators import Generator
 
 #   =======================================
 #                Generators
