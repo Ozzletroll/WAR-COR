@@ -493,9 +493,8 @@ p {
   background-color: var(--elem_mid);
   border-top: 0px solid;
   border-left: 1px solid;
-  border-right: 1px solid;
   border-bottom: 0px solid;
-  border-color: var(--elem_border);
+  border-color: var(--dark_red);
   border-bottom-left-radius: 5px;
   box-sizing: border-box;
   transition: 0.3s;
@@ -614,6 +613,8 @@ p {
 
   .notifications-dropdown {
     width: 100vw;
+    border-left: 0px;
+    border-bottom-left-radius: 0px;
   }
 
   .message-item {
@@ -1651,6 +1652,7 @@ p {
   left: 100vw;
   width: 350px;
   height: 80px;
+  box-sizing: border-box;
   padding: 0px 1px 1px 1px;
   background-color: var(--elem_mid);
   z-index: 1;

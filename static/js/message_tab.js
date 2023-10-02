@@ -22,14 +22,14 @@ class messageTab {
   openTab() {
     this.tab.style.marginBottom = "-400px"
     this.tab.style.height = "400px"
-    this.tab.style.borderBottom = "1px solid var(--elem_border)"
+    this.tab.style.borderBottom = "1px solid var(--dark_red)"
     this.state = true
   }
 
   closeTab() {
     this.tab.style.marginBottom = "0"
     this.tab.style.height = "0"
-    this.tab.style.borderBottom = "0px solid var(--elem_border)"
+    this.tab.style.borderBottom = "0px solid var(--dark_red)"
 
     this.state = false
   }
