@@ -23,8 +23,7 @@ class Comment(db.Model):
     # Methods
     def update(self, form, parent_event, author):
         """ Method to populate and update self.
-            Takes form data from request.form.
-            Set "new" to true for notification purposes. """
+            Takes form data from request.form. """
 
         for field, value in form.items():
             if value is not None:
