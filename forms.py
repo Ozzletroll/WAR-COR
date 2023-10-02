@@ -63,7 +63,7 @@ class LoginForm(FlaskForm):
 
 
 class ChangeUsernameForm(FlaskForm):
-    new_username = StringField("New Username", validators=[DataRequired(), Length(max=30)])
+    username = StringField("New Username", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("Update")
 
 

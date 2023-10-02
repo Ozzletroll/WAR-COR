@@ -162,7 +162,6 @@ def send_comment_notification(sender, recipients, campaign, event):
     format_message(message)
     db.session.add(message)
 
-    
   # Finally, commit all changes to db
   db.session.commit()
 

@@ -25,7 +25,7 @@ def view_event(campaign_name, event_name):
     campaign = event.parent_campaign
 
     # Format belligerents data
-    belligerents = organisers.separate_belligerents(event.belligerents) 
+    belligerents = event.separate_belligerents() 
 
     form = forms.CommentForm()
 
@@ -40,15 +40,9 @@ def view_event(campaign_name, event_name):
 
         # Create new comment
         comment = models.Comment()
-        comment.body = request.form["body"]
-        comment.author = current_user
-        comment.date = datetime.now()
-        comment.parent_event = event
-        comment.new = True
-
-        # Add to db
-        db.session.add(comment)
-        db.session.commit()
+        comment.update(form=request.form,
+                       parent_event=event,
+                       author=current_user)
 
         # Create new comment notification
         messengers.send_comment_notification(sender=current_user,
@@ -77,26 +71,24 @@ def add_event(campaign_name):
 
     target_campaign_id = request.args["campaign_id"]
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name, id=target_campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title=campaign_name, 
+                   id=target_campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
     # Check if date argument given
     if "date" in request.args:
-        # Create placeholder event to prepopulate form
-        event = models.Event()
-        event.title = ""
-        event.type = ""
+        # Get date arguments
         datestring = request.args["date"]
-
         args = request.args
         # Increase the date by one unit and format the datestring
         datestring = organisers.format_event_datestring(datestring, args)
-
-        # Populate new form with updated date string
-        event.date = datestring
-        event.body = ""
-        
+        # Create placeholder event
+        event = models.Event()
+        event.create_blank(datestring)
+        # Prepopulate form
         form = forms.CreateEventForm(obj=event)
 
     # Otherwise, create default empty form
@@ -107,42 +99,13 @@ def add_event(campaign_name):
     if form.validate_on_submit():
         # Create new event object using form data
         event = models.Event()
-        event.title = request.form["title"]
-        event.type = request.form["type"]
-        event.date = request.form["date"]
-        event.location = request.form["location"]
-        event.belligerents = request.form["belligerents"]
-        event.body = request.form["body"]
-        event.result = request.form["result"]
-
-        if form.header.data:
-            event.header = True
-        else:
-            event.header = False    
-
-        if form.hide_time.data:
-            event.hide_time = True
-        else:
-            event.hide_time = False
-
-        event.parent_campaign = campaign
-        event.parent_campaign.last_edited = datetime.now()
-
-        # Add event to database
-        db.session.add(event)
-        db.session.commit()
-
+        event.update(form=form.data,
+                     parent_campaign=campaign,
+                     new=True)
         # Update "following_event" relationships for all events
-        organisers.get_following_events(campaign)
-
-        # Update campaigns epochs
-        for epoch in campaign.epochs:
-            epoch.events.clear()
-            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-            if len(epoch.events) > 0:
-                epoch.has_events = True
-            db.session.commit()
-        
+        campaign.get_following_events()
+        # Check all epochs for events
+        campaign.check_epochs()
         # Create notification message
         messengers.send_event_notification(current_user,
                                            recipients=campaign.members,
@@ -187,40 +150,14 @@ def edit_event(campaign_name, event_name):
 
     if form.validate_on_submit():
         # Update event object using form data
-        event.title = request.form["title"]
-        event.type = request.form["type"]
-        event.date = request.form["date"]
-        event.location = request.form["location"]
-        event.belligerents = request.form["belligerents"]
-        event.body = request.form["body"]
-        event.result = request.form["result"]
-
-        if form.header.data:
-            event.header = True
-        else:
-            event.header = False  
-
-        if form.hide_time.data:
-            event.hide_time = True
-        else:
-            event.hide_time = False    
-
-        event.parent_campaign.last_edited = datetime.now()
-
-        # Update the database
-        db.session.add(event)
-        db.session.commit()
+        event.update(form=form.data, 
+                     parent_campaign=campaign)
 
         # Update "following_event" relationships for all events
-        organisers.get_following_events(campaign)
+        campaign.get_following_events()
 
-        # Update campaigns epochs
-        for epoch in campaign.epochs:
-            epoch.events.clear()
-            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-            if len(epoch.events) > 0:
-                epoch.has_events = True
-            db.session.commit()
+        # Update all epochs
+        campaign.check_epochs()
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -264,16 +201,10 @@ def delete_event(campaign_name, event_name):
     db.session.commit()
 
     # Update "following_event" relationships for all events
-    organisers.get_following_events(campaign)
+    campaign.get_following_events()
 
     # Update campaigns epochs
-    for epoch in campaign.epochs:
-        epoch.events.clear()
-        epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-        if len(epoch.events) > 0:
-            epoch.has_events = True
-
-        db.session.commit()
+    campaign.check_epochs()
 
     return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -338,27 +269,11 @@ def new_epoch(campaign_name):
 
     if form.validate_on_submit():
 
+        # Create new epoch and populate with form data
         epoch = models.Epoch()
-
-        epoch.title = request.form["title"]
-        epoch.start_date = request.form["start_date"]
-        epoch.end_date = request.form["end_date"]
-        epoch.description = request.form["description"]
-
-        epoch.parent_campaign = campaign
-
-        # Find events that take place during the epoch
-        matching_events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-        for event in matching_events:
-            epoch.events.append(event)
-
-        if len(epoch.events) > 0:
-            epoch.has_events = True
-
-        # Update campaign and commit
-        campaign.last_edited = datetime.now()
-        db.session.add(epoch)
-        db.session.commit()
+        epoch.update(form=request.form,
+                     parent_campaign=campaign,
+                     new=True)
 
         scroll_target = f"epoch-{epoch.id}"
 
@@ -401,27 +316,10 @@ def edit_epoch(campaign_name, epoch_title):
 
     if form.validate_on_submit():
 
-        epoch.title = request.form["title"]
-        epoch.start_date = request.form["start_date"]
-        epoch.end_date = request.form["end_date"]
-        epoch.description = request.form["description"]
-
-        # Clear epochs events
-        # Update campaigns epochs
-        for epoch in campaign.epochs:
-            epoch.events.clear()
-            epoch.events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-
-            if len(epoch.events) > 0:
-                epoch.has_events = True
-
-            db.session.commit()
+        epoch.update(form=request.form,
+                     parent_campaign=campaign)
 
         scroll_target = f"epoch-{epoch.id}"
-
-        # Update campaign and commit
-        campaign.last_edited = datetime.now()
-        db.session.commit()
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -465,6 +363,9 @@ def delete_epoch(campaign_name, epoch_title):
 
     db.session.delete(epoch)
     db.session.commit()
+    
+    # Update all epochs
+    campaign.check_epochs()
 
     return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 

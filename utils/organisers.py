@@ -57,16 +57,11 @@ def campaign_sort(campaign):
     a list of year objects."""
     
     def custom_sort(event):
-        """Function that splits a datestring into individual integers"""
+        """Function that splits a datestring for use as a key for the sorted() function. """
 
-        year = event.date.split("-")[0]
-        month = event.date.split("-")[1]
-        day = event.date.split("-")[2].split()[0]
-        hours = event.date.split("-")[2].split()[1].split(":")[0]
-        minutes = event.date.split("-")[2].split()[1].split(":")[1]
-        seconds = event.date.split("-")[2].split()[1].split(":")[2]
-        
-        return int(year), int(month), int(day), int(hours), int(minutes), int(seconds)
+        sort_key = split_date(event.date)
+
+        return sort_key
 
 
     def custom_sort_epoch(epoch):
@@ -305,78 +300,19 @@ def format_event_datestring(datestring, args):
 
     if "new_hour" in args:
         incremented_values = increment(values, 2)
-
         # Format date as string for form field
         datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " " + str(incremented_values[3]).zfill(2) + ":00:00"
 
     # Move to the next day and format the string
     if "new_day" in args:
         incremented_values = increment(values, 3)
-
         # Format date as string for form field
         datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " 00:00:00"
 
     # Move to the next month and format the string
     if "new_month" in args:
         incremented_values = increment(values, 4)
-
         # Format date as string for form field
         datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + "01 00:00:00"
 
     return datestring
-
-
-def populate_epoch(epoch, campaign):
-    """Compares an epoch's start and end date values against a campaigns
-    events. Returns a list of all event's that fall within the epoch's 
-    date range. Events that occur during the epochs end date month
-    are considered part of the epoch."""
-
-    def is_in_epoch(event, epoch):
-
-        epoch_start = float(epoch.start_date.replace("-", "."))
-        epoch_end = float(epoch.end_date.replace("-", "."))
-
-        event_year, event_month = event.date.split("-")[:2]
-        event_combined = event_year + "-" + event_month
-        event_date = float(event_combined.replace("-", "."))
-
-        if epoch_start <= event_date <= epoch_end:
-            return True
-        else:
-            return False
-    
-    events = [event for event in campaign.events if is_in_epoch(event, epoch)]
-
-    return events
-
-
-def separate_belligerents(belligerents):
-    """Takes a given event.belligerents string and separates it.
-    Returns an ampersand separated list of comma separated lists."""
-
-    separated_belligerents = belligerents.split(",")
-    groups = []
-
-    for group in separated_belligerents:
-        allied_belligerents = []
-        for element in group.split("&"):
-            allied_belligerents.append(element)
-        groups.append(allied_belligerents)
-        
-    return groups
-
-
-def get_following_events(campaign):
-    """Takes all events in a given campaign, and updates each event
-    to reference the following event."""
-
-    sorted_campaign_events = sorted(campaign.events, key=lambda event: event.date)
-
-    for index, event in enumerate(sorted_campaign_events):
-
-        # Ignore last event in timeline as it has no following event
-        if index != len(sorted_campaign_events) - 1:
-            event.following_event = sorted_campaign_events[index + 1]
-
-    db.session.commit()
