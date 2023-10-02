@@ -43,12 +43,16 @@ const modal_2 = new Modal({
   span: "close-2",
 })
 
+// Only create delete modal if elements present (IE, we are actually on the edit epoch template)
+const modalDeleteTest = document.getElementById("modal-delete")
+if (modalDeleteTest != null) {
+  modal_delete = new Modal({
+    modal: "modal-delete",
+    button: "button-delete",
+    span: "close-delete",
+  })
+}
 
-const modal_delete = new Modal({
-  modal: "modal-delete",
-  button: "button-delete",
-  span: "close-delete",
-})
 
 // Close modals if the user clicks anywhere else
 window.onclick = function(event) {
@@ -58,8 +62,9 @@ window.onclick = function(event) {
   if (event.target == modal_2.modal) {
     modal_2.closeModal();
   }
-  if (event.target == modal_delete.modal) {
-    modal_delete.closeModal();
+  if (modalDeleteTest != null) {
+    if (event.target == modal_delete.modal) {
+      modal_delete.closeModal();
+    }
   }
-
 }
