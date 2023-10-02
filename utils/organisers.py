@@ -57,16 +57,11 @@ def campaign_sort(campaign):
     a list of year objects."""
     
     def custom_sort(event):
-        """Function that splits a datestring into individual integers"""
+        """Function that splits a datestring for use as a key for the sorted() function. """
 
-        year = event.date.split("-")[0]
-        month = event.date.split("-")[1]
-        day = event.date.split("-")[2].split()[0]
-        hours = event.date.split("-")[2].split()[1].split(":")[0]
-        minutes = event.date.split("-")[2].split()[1].split(":")[1]
-        seconds = event.date.split("-")[2].split()[1].split(":")[2]
-        
-        return int(year), int(month), int(day), int(hours), int(minutes), int(seconds)
+        sort_key = split_date(event.date)
+
+        return sort_key
 
 
     def custom_sort_epoch(epoch):
