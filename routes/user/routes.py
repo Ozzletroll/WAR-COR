@@ -29,34 +29,19 @@ def register():
     form = forms.RegisterUserForm()
 
     if form.validate_on_submit():
-        # Create new user
-        user = models.User()
-        user.username = request.form["username"]
-        password = request.form["password"]
-
-        # Salt and hash password
-        sh_password = werkzeug.security.generate_password_hash(
-            password,
-            method="pbkdf2:sha256",
-            salt_length=8
-        )
-
-        user.password = sh_password
-
+        proposed_username = request.form["username"]
         # Check if username already exists in database
-        username_search = db.session.execute(select(models.User).filter_by(username=user.username)).first()
+        username_search = db.session.execute(select(models.User).filter_by(username=proposed_username)).first()
         if username_search:
             # Debug message
-            print("Username already in use. Please choose a new username.")
             flash("Username already in use. Please choose a new username.")
             return redirect(url_for("user.register"))
         else:
-            # Add user to database
-            db.session.add(user)
-            db.session.commit()
+            # Create new user
+            user = models.User()
+            user.update(form=request.form,
+                        new=True)
             # Login user
-            # Debug message
-            print(f"Registration successful {user.username}")
             login_user(user)
             return redirect(url_for("campaign.campaigns"))
 
@@ -69,8 +54,6 @@ def login():
 
     # Check if user is already logged in and redirect if they are
     if current_user.is_authenticated:
-        # Debug message
-        print("User already logged in.")
         return redirect(url_for("home.home"))
 
     form = forms.LoginForm()
@@ -83,19 +66,12 @@ def login():
 
         if user:
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
-                # Login user
-                # Debug message
-                print(f"Login successful {user.username}")
                 login_user(user)
                 return redirect(url_for("campaign.campaigns"))
             else:
-                # Debug message
-                print("Incorrect password or username.")
                 flash("Incorrect password or username.")
                 return redirect(url_for("user.login"))
         else:
-            # Debug message
-            print("Username not found. Please check login details.")
             flash("Username not found. Please check login details.")
             return redirect(url_for("user.login"))
 
@@ -106,10 +82,8 @@ def login():
 @bp.route("/logout")
 @login_required
 def logout():
-    # Flask-login logout
-    logout_user()
 
-    # Clear session
+    logout_user()
     session.clear()
 
     return redirect(url_for("home.home"))
@@ -183,15 +157,12 @@ def change_username(username):
 
     if username_form.validate_on_submit():
         
-        new_username = request.form["new_username"]
-
         # Check if new username is not already in use
+        new_username = request.form["username"]
         username_check = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
         if not username_check:
-
             # Set username to new value
-            user.username = new_username
-            db.session.commit()
+            user.update(form=request.form)
             flash("Username updated")
         
         # Otherwise, redirect back to user page
@@ -222,27 +193,9 @@ def change_password(username):
         # Password change form is submitted
         if password_form.validate_on_submit():
             
-            old_password = request.form["old_password"]
-            new_password = request.form["new_password"]
-
-            # Check if the given old password matches the db password
-            if werkzeug.security.check_password_hash(pwhash=user.password, password=old_password):
-                
-                # Salt and hash new password
-                sh_password = werkzeug.security.generate_password_hash(
-                    new_password,
-                    method="pbkdf2:sha256",
-                    salt_length=8
-                )
-
-                user.password = sh_password
-
-                # Update database
-                db.session.commit()
-
+            if user.change_password(form=request.form):
                 flash("Password updated")
                 return redirect(url_for("user.user_page", username=user.username))
-            
             else:
                 flash("Incorrect password")
                 return redirect(url_for("user.user_page", username=user.username))
@@ -274,7 +227,7 @@ def delete_user(username):
 
         search_user = db.session.execute(select(models.User).filter_by(username=search_username)).scalar()
 
-        if search_user:
+        if search_user and auth.user_verification(search_user):
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                 
                 # Check if user deletion will leave any campaigns without any members

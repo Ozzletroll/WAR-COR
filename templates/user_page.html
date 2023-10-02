@@ -191,7 +191,7 @@
           <form id="form-1" class="change-password-form" method="POST" action="{{ url_for('user.change_username', username=user.username) }}">
             {{ username_form.csrf_token }}
             <div class="user-form-container">
-              {{ username_form.new_username(class_="callsign-input", placeholder="NEW USERNAME", autocomplete='off') }}
+              {{ username_form.username(class_="callsign-input", placeholder="NEW USERNAME", autocomplete='off') }}
               {{ username_form.submit(class_="submit-button callsign-submit") }}
             </div>
           </form>

@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from datetime import datetime
+import werkzeug
 
 from app import db
 
@@ -70,6 +71,50 @@ class User(UserMixin, db.Model):
     sent_messages = db.relationship("Message", back_populates="author", foreign_keys="[Message.author_id]")
     open_invites = db.relationship("Message", back_populates="target_user", foreign_keys="[Message.target_user_id]")
 
+    # Methods
+    def update(self, form, new=False):
+        """ Method to populate and update self.
+            Takes form data from request.form.
+            Set "new" to true if creating new entry. """
+
+        self.username = form["username"]
+
+        if new:
+            # Salt and hash password
+            sh_password = werkzeug.security.generate_password_hash(
+                form["password"],
+                method="pbkdf2:sha256",
+                salt_length=8
+            )
+            self.password = sh_password
+            db.session.add(self)
+        
+        db.session.commit()
+
+
+    def change_password(self, form):
+        """ Method to change user's password. Returns false
+            if given old password is incorrect. """
+
+        old_password = form["old_password"]
+        new_password = form["new_password"]
+
+        # Check if the given old password matches the db password
+        if werkzeug.security.check_password_hash(pwhash=self.password, password=old_password):
+            
+            # Salt and hash new password
+            sh_password = werkzeug.security.generate_password_hash(
+                new_password,
+                method="pbkdf2:sha256",
+                salt_length=8
+            )
+            self.password = sh_password
+            db.session.commit()
+            return True
+
+        else:
+            return False
+        
 
 
 class Campaign(db.Model):
