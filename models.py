@@ -104,7 +104,6 @@ class Campaign(db.Model):
                                         cascade="delete, delete-orphan",
                                         viewonly=True)
     
-
     # Methods
     def update(self, form, new=False):
         """ Method to populate and update self.
@@ -145,6 +144,7 @@ class Campaign(db.Model):
                 event.following_event = sorted_campaign_events[index + 1]
 
         db.session.commit()
+
 
 
 class Event(db.Model):
@@ -212,7 +212,6 @@ class Event(db.Model):
 
 
 
-
 class Epoch(db.Model):
     __tablename__ = "epoch"
 
@@ -235,7 +234,6 @@ class Epoch(db.Model):
                               secondary="epoch_events",
                               back_populates="epochs")
     
-
     # Methods
     def update(self, form, parent_campaign, new=False):
         """ Method to populate and update self.
