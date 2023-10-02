@@ -40,15 +40,9 @@ def view_event(campaign_name, event_name):
 
         # Create new comment
         comment = models.Comment()
-        comment.body = request.form["body"]
-        comment.author = current_user
-        comment.date = datetime.now()
-        comment.parent_event = event
-        comment.new = True
-
-        # Add to db
-        db.session.add(comment)
-        db.session.commit()
+        comment.update(form=request.form,
+                       parent_event=event,
+                       author=current_user)
 
         # Create new comment notification
         messengers.send_comment_notification(sender=current_user,
