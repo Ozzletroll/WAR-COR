@@ -99,17 +99,13 @@ def add_event(campaign_name):
     if form.validate_on_submit():
         # Create new event object using form data
         event = models.Event()
-
         event.update(form=form.data,
                      parent_campaign=campaign,
                      new=True)
-        
         # Update "following_event" relationships for all events
-        organisers.get_following_events(campaign)
-
+        campaign.get_following_events()
         # Check all epochs for events
         campaign.check_epochs()
-
         # Create notification message
         messengers.send_event_notification(current_user,
                                            recipients=campaign.members,
@@ -158,7 +154,7 @@ def edit_event(campaign_name, event_name):
                      parent_campaign=campaign)
 
         # Update "following_event" relationships for all events
-        organisers.get_following_events(campaign)
+        campaign.get_following_events()
 
         # Update all epochs
         campaign.check_epochs()
@@ -205,12 +201,10 @@ def delete_event(campaign_name, event_name):
     db.session.commit()
 
     # Update "following_event" relationships for all events
-    organisers.get_following_events(campaign)
+    campaign.get_following_events()
 
     # Update campaigns epochs
     campaign.check_epochs()
-
-    db.session.commit()
 
     return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 

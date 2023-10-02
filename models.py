@@ -131,6 +131,21 @@ class Campaign(db.Model):
             epoch.populate_self()
 
 
+    def get_following_events(self):
+        """ Method to iterate through all events, defining relationship to
+            the event that immediately follows it. The backref can be used
+            to access the preceding event. """
+
+        sorted_campaign_events = sorted(self.events, key=lambda event: event.date)
+
+        for index, event in enumerate(sorted_campaign_events):
+
+            # Ignore last event in timeline as it has no following event
+            if index != len(sorted_campaign_events) - 1:
+                event.following_event = sorted_campaign_events[index + 1]
+
+        db.session.commit()
+
 
 class Event(db.Model):
     __tablename__ = "event"
