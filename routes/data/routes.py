@@ -31,6 +31,9 @@ def backup_page(campaign_name):
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
+    # Set back button scroll target
+    session["campaign_scroll_target"] = f"campaign-{campaign.id}"
+
     form = forms.UploadJsonForm()
 
     if form.validate_on_submit():

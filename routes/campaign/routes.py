@@ -1,7 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
-from datetime import datetime
 import werkzeug
 
 import auth
@@ -19,7 +18,7 @@ from routes.campaign import bp
 #   =======================================
 
 
-# View all users campaigns
+# View all campaigns
 @bp.route("/campaigns")
 @login_required
 def campaigns():
@@ -27,16 +26,8 @@ def campaigns():
     campaigns = current_user.campaigns
     campaigns.sort(key=lambda campaign: campaign.last_edited, reverse=True)
 
-    # Check for scroll_target variable
-    if "scroll_target" in session:
-        scroll_target = session["scroll_target"]
-        del session["scroll_target"]
-    else:
-        scroll_target = None
-
     return render_template("campaigns.html", 
-                           campaigns=campaigns, 
-                           scroll_target=scroll_target)
+                           campaigns=campaigns)
 
 
 # View campaign overview
@@ -47,8 +38,7 @@ def show_timeline(campaign_name, campaign_id):
     grouped_events = organisers.campaign_sort(campaign)
 
     # Set back button scroll target
-    scroll_target = f"campaign-{campaign.id}"
-    session["scroll_target"] = scroll_target 
+    session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("timeline.html", 
                            campaign=campaign, 
@@ -68,8 +58,7 @@ def edit_timeline(campaign_name, campaign_id):
     grouped_events = organisers.campaign_sort(campaign)
 
     # Set back button scroll target
-    scroll_target = f"campaign-{campaign.id}"
-    session["scroll_target"] = scroll_target 
+    session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("timeline.html", 
                            campaign=campaign, 
@@ -133,8 +122,7 @@ def edit_campaign(campaign_name, campaign_id):
         return redirect(url_for("campaign.campaigns"))
 
     # Set back button scroll target
-    scroll_target = f"campaign-{campaign.id}"
-    session["scroll_target"] = scroll_target 
+    session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
      # Flash form errors
     for field_name, errors in form.errors.items():
@@ -215,8 +203,7 @@ def edit_campaign_users(campaign_name):
     form = forms.AddUserForm()
 
     # Set back button scroll target
-    scroll_target = f"campaign-{campaign.id}"
-    session["scroll_target"] = scroll_target
+    session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("campaign_members.html", 
                            campaign=campaign, 
@@ -432,9 +419,8 @@ def accept_invite(campaign_name):
                                                     campaign,
                                                     current_user.username)
             
-            # Set back button scroll target
-            scroll_target = f"campaign-{campaign.id}"
-            session["scroll_target"] = scroll_target 
+            # Set scroll target
+            session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
         else:
             flash(f"Already a member of campaign: {campaign.title}")

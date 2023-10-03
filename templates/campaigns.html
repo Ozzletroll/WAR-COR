@@ -83,15 +83,9 @@
 <script src="/static/js/campaigns.js"></script>
 <script src="/static/js/campaigns_layout.js"></script>
 <script src="/static/js/campaign_search.js"></script> 
-
-<!-- Scroll to target element if scroll_target is set -->
-{% if scroll_target %}
+<script src="/static/js/scroll_target.js"></script> 
 <script>
-  window.addEventListener('load', function() {
-    document.getElementById('{{ scroll_target }}').scrollIntoView();
-  });
+  window.addEventListener('load', scrollToTarget('{{ url_for("home.campaign_target") }}', '{{ csrf_token() }}'));
 </script>
-
-{% endif %}
 
 {% endblock %}

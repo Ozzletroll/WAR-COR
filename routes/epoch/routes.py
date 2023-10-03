@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash
+from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required
 
@@ -48,12 +48,12 @@ def new_epoch(campaign_name):
                      parent_campaign=campaign,
                      new=True)
 
-        scroll_target = f"epoch-{epoch.id}"
+        # Set back button scroll target
+        session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
-                                campaign_id=campaign.id, 
-                                scroll_target=scroll_target))
+                                campaign_id=campaign.id))
     
     # Flash form errors
     for field_name, errors in form.errors.items():
@@ -85,6 +85,9 @@ def edit_epoch(campaign_name, epoch_title):
                                .filter_by(title=epoch_title, 
                                           id=epoch_id)).scalar()
 
+    # Set back button scroll target
+    session["timeline_scroll_target"] = f"epoch-{epoch.id}"
+
     form = forms.CreateEpochForm(obj=epoch)
 
     if form.validate_on_submit():
@@ -92,12 +95,9 @@ def edit_epoch(campaign_name, epoch_title):
         epoch.update(form=request.form,
                      parent_campaign=campaign)
 
-        scroll_target = f"epoch-{epoch.id}"
-
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
-                                campaign_id=campaign.id, 
-                                scroll_target=scroll_target))
+                                campaign_id=campaign.id))
     
     # Flash form errors
     for field_name, errors in form.errors.items():

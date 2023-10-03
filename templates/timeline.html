@@ -189,12 +189,9 @@
   <div id="editPageVariable" class="hidden" editPage="false"></div>
 {% endif %}
 <script src="/static/js/timeline_search.js"></script>
-{% if "scroll_target" in request.args %}
+<script src="/static/js/scroll_target.js"></script> 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('{{ request.args["scroll_target"] }}').scrollIntoView();
-  });
+  window.addEventListener('load', scrollToTarget('{{ url_for("home.timeline_target") }}', '{{ csrf_token() }}'));
 </script>
-{% endif %}
 
 {% endblock %}

@@ -30,7 +30,7 @@ def view_event(campaign_name, event_name):
     form = forms.CommentForm()
 
     # Set scroll_to target for back button
-    scroll_target = f"event-{event.id}"
+    session["timeline_scroll_target"] = f"event-{event.id}"
 
     # Check if new comment submitted
     if form.validate_on_submit():
@@ -53,15 +53,13 @@ def view_event(campaign_name, event_name):
         return redirect(url_for('event.view_event', 
                                 campaign_name=campaign.title, 
                                 event_name=event.title, 
-                                event_id=event.id,
-                                scroll_target=scroll_target))
+                                event_id=event.id))
 
     return render_template("event_page.html", 
                            event=event, 
                            campaign=campaign, 
                            belligerents=belligerents,
-                           form=form,
-                           scroll_target=scroll_target)
+                           form=form)
 
 
 # Add new event
@@ -112,12 +110,12 @@ def add_event(campaign_name):
                                            campaign=campaign,
                                            event=event)
 
-        scroll_target = f"event-{event.id}"
+        # Set scroll_to target for back button
+        session["timeline_scroll_target"] = f"event-{event.id}"
 
         return redirect(url_for("campaign.edit_timeline",
                                 campaign_name=campaign.title,
-                                campaign_id=campaign.id,
-                                scroll_target=scroll_target))
+                                campaign_id=campaign.id))
 
     # Flash form errors
     for field_name, errors in form.errors.items():
@@ -140,8 +138,8 @@ def edit_event(campaign_name, event_name):
     campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
     event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
 
-    # Create scroll target for back button
-    scroll_target = f"event-{event.id}"
+    # Set scroll_to target for back button
+    session["timeline_scroll_target"] = f"event-{event.id}"
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -161,8 +159,7 @@ def edit_event(campaign_name, event_name):
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
-                                campaign_id=campaign.id, 
-                                scroll_target=scroll_target))
+                                campaign_id=campaign.id))
 
     # Change form label to 'update'
     form.submit.label.text = 'Update Event'
@@ -177,7 +174,6 @@ def edit_event(campaign_name, event_name):
                             campaign_name=campaign.title,
                             event_name=event.title,
                             form=form,
-                            scroll_target=scroll_target,
                             event=event,
                             edit=True)
 

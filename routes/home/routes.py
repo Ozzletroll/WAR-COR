@@ -1,9 +1,9 @@
-from flask import render_template
+from flask import render_template, session, jsonify, make_response
 import datetime
 from routes.home import bp
 
 #   =======================================
-#                  HOMEPAGE
+#              HOME AND SESSION
 #   =======================================
 
 
@@ -16,3 +16,39 @@ def home():
     year = date.year
 
     return render_template("index.html", year=year)
+
+
+# Clear campaign page scroll target session variable
+@bp.route("/session/campaign_scroll_target", methods=["GET"])
+def campaign_target():
+
+    if "campaign_scroll_target" in session:
+
+        response_data = {"Message": "Session variable cleared", 
+                         "target": session["campaign_scroll_target"]}
+        # Clear session variable
+        session.pop("campaign_scroll_target", None)
+        response = make_response(jsonify(response_data), 200)
+
+    else:
+        response = make_response({"Message": "Session variable not set"}, 204)
+
+    return response
+    
+
+# Clear timeline page scroll target session variable
+@bp.route("/session/timeline_scroll_target", methods=["GET"])
+def timeline_target():
+
+    if "timeline_scroll_target" in session:
+
+        response_data = {"Message": "Session variable cleared", 
+                         "target": session["timeline_scroll_target"]}
+        # Clear session variable
+        session.pop("timeline_scroll_target", None)
+        response = make_response(jsonify(response_data), 200)
+
+    else:
+        response = make_response({"Message": "Session variable not set"}, 204)
+
+    return response
