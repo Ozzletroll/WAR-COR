@@ -1603,6 +1603,7 @@ p {
   padding: 20px;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
+  cursor: pointer;
 }
 
 .campaign-submit:hover {
