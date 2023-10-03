@@ -7,7 +7,7 @@ from utils.generators import Generator
 #                Generators
 #   =======================================
 
-@bp.route("/generators/random_event")
+@bp.route("/generate/random-event-title")
 def random_event_title():
     """View which generates a random event title"""
 

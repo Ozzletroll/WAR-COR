@@ -117,7 +117,7 @@ def user_page(username) :
                             password_form=password_form)
 
 
-@bp.route("/user/<username>/update_callsign", methods=["GET", "POST"])
+@bp.route("/user/<username>/update-callsign", methods=["GET", "POST"])
 @login_required
 def update_callsign(username):
 
@@ -147,7 +147,7 @@ def update_callsign(username):
     return redirect(url_for("user.user_page", username=username))   
 
 
-@bp.route("/user/<username>/change_username", methods=["GET", "POST"])
+@bp.route("/user/<username>/change-username", methods=["GET", "POST"])
 @login_required
 def change_username(username):
 
@@ -179,7 +179,7 @@ def change_username(username):
     return redirect(url_for("user.user_page", username=user.username))
         
 
-@bp.route("/user/<username>/change_password", methods=["GET", "POST"])
+@bp.route("/user/<username>/change-password", methods=["GET", "POST"])
 @login_required
 def change_password(username):
 
@@ -280,7 +280,7 @@ def back():
 
 
 # Function called when dimissing a notification
-@bp.route("/user/<username>/dimiss_message", methods=["GET"])
+@bp.route("/user/<username>/message/dimiss", methods=["GET"])
 @login_required
 def dismiss_message(username):
 
@@ -305,7 +305,7 @@ def dismiss_message(username):
 
 
 # Function called when dismissing all messages
-@bp.route("/user/<username>/dismiss_all", methods=["GET"])
+@bp.route("/user/<username>/message/dismiss-all", methods=["GET"])
 @login_required
 def dismiss_all(username):
 

@@ -19,7 +19,7 @@ def home():
 
 
 # Clear campaign page scroll target session variable
-@bp.route("/session/campaign_scroll_target", methods=["GET"])
+@bp.route("/session/campaign-scroll-target", methods=["GET"])
 def campaign_target():
 
     if "campaign_scroll_target" in session:
@@ -37,7 +37,7 @@ def campaign_target():
     
 
 # Clear timeline page scroll target session variable
-@bp.route("/session/timeline_scroll_target", methods=["GET"])
+@bp.route("/session/timeline-scroll-target", methods=["GET"])
 def timeline_target():
 
     if "timeline_scroll_target" in session:

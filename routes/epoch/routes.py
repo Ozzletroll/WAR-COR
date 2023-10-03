@@ -16,14 +16,13 @@ from routes.epoch import bp
 #   =======================================
 
 # Add new epoch
-@bp.route("/campaigns/<campaign_name>/epochs/new_epoch", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/new_epoch", methods=["GET", "POST"])
 @login_required
-def new_epoch(campaign_name):
+def new_epoch(campaign_name, campaign_id):
 
-    target_campaign_id = request.args["campaign_id"]
     campaign = db.session.execute(select(models.Campaign)
                                   .filter_by(title=campaign_name, 
-                                             id=target_campaign_id)).scalar()
+                                             id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
@@ -68,16 +67,13 @@ def new_epoch(campaign_name):
 
 
 # Edit epoch
-@bp.route("/campaigns/<campaign_name>/epochs/<epoch_title>/edit", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/edit", methods=["GET", "POST"])
 @login_required
-def edit_epoch(campaign_name, epoch_title):
-
-    target_campaign_id = request.args["campaign_id"]
-    epoch_id = request.args["epoch_id"]
+def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(select(models.Campaign)
                                   .filter_by(title=campaign_name, 
-                                             id=target_campaign_id)).scalar()
+                                             id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
@@ -117,16 +113,13 @@ def edit_epoch(campaign_name, epoch_title):
 
 
 # Delete epoch
-@bp.route("/campaigns/<campaign_name>/epochs/<epoch_title>/delete", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/delete", methods=["GET", "POST"])
 @login_required
-def delete_epoch(campaign_name, epoch_title):
-
-    target_campaign_id = request.args["campaign_id"]
-    epoch_id = request.args["epoch_id"]
+def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(select(models.Campaign)
                                   .filter_by(title=campaign_name, 
-                                             id=target_campaign_id)).scalar()
+                                             id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 

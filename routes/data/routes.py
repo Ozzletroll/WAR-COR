@@ -21,12 +21,11 @@ from app import db
 
 
 # Data backup main page
-@bp.route("/campaigns/<campaign_name>/data", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/data", methods=["GET", "POST"])
 @login_required
-def backup_page(campaign_name):
+def backup_page(campaign_name, campaign_id):
 
-    target_campaign_id = request.args["campaign_id"]
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -109,12 +108,11 @@ def backup_page(campaign_name):
 
 
 # Backup campaign data
-@bp.route("/campaigns/<campaign_name>/data/export")
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/data/export")
 @login_required
-def campaign_backup(campaign_name):
+def campaign_backup(campaign_name, campaign_id):
 
-    target_campaign_id = request.args["campaign_id"]
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)

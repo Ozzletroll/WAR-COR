@@ -31,10 +31,14 @@ def campaigns():
 
 
 # View campaign overview
-@bp.route("/campaigns/<campaign_name>/<campaign_id>")
+@bp.route("/campaigns/<campaign_name>-<campaign_id>")
 def show_timeline(campaign_name, campaign_id):
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+
+    # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)
 
     # Set back button scroll target
@@ -46,10 +50,13 @@ def show_timeline(campaign_name, campaign_id):
 
 
 # View campaign editing page
-@bp.route("/campaigns/<campaign_name>/<campaign_id>/edit")
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/edit")
 @login_required
 def edit_timeline(campaign_name, campaign_id):
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
     
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -104,11 +111,13 @@ def create_campaign():
 
 
 # Edit campaign data
-@bp.route("/campaigns/<campaign_name>/<campaign_id>/data/edit", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/data/edit", methods=["GET", "POST"])
 @login_required
 def edit_campaign(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -136,11 +145,14 @@ def edit_campaign(campaign_name, campaign_id):
 
 
 # Delete campaign
-@bp.route("/campaigns/<campaign_name>/<campaign_id>/delete", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/delete", methods=["GET", "POST"])
 @login_required
 def delete_campaign(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(title=campaign_name, id=campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+    
     auth.permission_required(campaign)
 
     # Create login form to check credentials
@@ -189,13 +201,13 @@ def delete_campaign(campaign_name, campaign_id):
 
 
 # View and add campaign users
-@bp.route("/campaigns/<campaign_name>/edit_members", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/edit-members", methods=["GET", "POST"])
 @login_required
-def edit_campaign_users(campaign_name):
-    target_campaign_id = request.args["campaign_id"]
+def edit_campaign_users(campaign_name, campaign_id):
 
     campaign = db.session.execute(
-        select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -211,12 +223,13 @@ def edit_campaign_users(campaign_name):
 
 
 # Remove campaign users
-@bp.route("/campaigns/<campaign_name>/remove_users/<username>", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user/<username>", methods=["GET"])
 @login_required
-def remove_campaign_users(campaign_name, username):
-    target_campaign_id = request.args["campaign_id"]
+def remove_campaign_users(campaign_name, campaign_id, username):
+
     campaign = db.session.execute(
-        select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -250,7 +263,7 @@ def remove_campaign_users(campaign_name, username):
 
 
 # Join campaign page
-@bp.route("/campaigns/join_campaign", methods=["GET", "POST"])
+@bp.route("/campaigns/join-campaign", methods=["GET", "POST"])
 @login_required
 def join_campaign():
 
@@ -272,8 +285,9 @@ def join_campaign():
 
         else:
             search_format = "%{}%".format(search)
-            campaigns = db.session.execute(select(models.Campaign)
-                                          .filter(models.Campaign.title.like(search_format))).scalars()
+            campaigns = db.session.execute(
+                select(models.Campaign)
+                .filter(models.Campaign.title.like(search_format))).scalars()
 
             results = [campaign for campaign in campaigns if campaign not in current_user.campaigns]
                                         
@@ -295,16 +309,14 @@ def join_campaign():
                            results=results)
 
 
-
 # Function called when applying to join campaign 
-@bp.route("/campaigns/join_campaign/<campaign_name>/<campaign_id>", methods=["GET"])
+@bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["GET"])
 @login_required
 def request_membership(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, 
-                   title=campaign_name)).scalar()
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
     
     # Retrieve the users with editing permissions for the campaign
     campaign_admins = db.session.execute(
@@ -319,12 +331,13 @@ def request_membership(campaign_name, campaign_id):
 
 
 # Function called by user searching for new members on edit members page
-@bp.route("/campaigns/<campaign_name>/user_search", methods=["POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
 @login_required
-def user_search(campaign_name):
-    target_campaign_id = request.args["campaign_id"]
+def user_search(campaign_name, campaign_id):
+
     campaign = db.session.execute(
-        select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Query database for users with similar usernames
     search = request.form["username"]
@@ -354,13 +367,15 @@ def user_search(campaign_name):
 
 
 # Function called when adding a new user
-@bp.route("/campaigns/<campaign_name>/add_user", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["GET"])
 @login_required
-def add_user(campaign_name):
-    user_to_add = request.args["username"]
-    target_campaign_id = request.args["campaign_id"]
+def add_user(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    user_to_add = request.args["username"]
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -387,15 +402,19 @@ def add_user(campaign_name):
 
 
 # Function called when user accepts a campaign invitation
-@bp.route("/campaigns/<campaign_name>/accept_invite", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/accept-invite", methods=["GET"])
 @login_required
-def accept_invite(campaign_name):
+def accept_invite(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
-    target_campaign_id = request.args["campaign_id"]
 
-    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    message = db.session.execute(
+        select(models.Message)
+        .filter_by(id=message_id)).scalar()
+    
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id)).scalar()
 
     # Check if the campaign invitation is valid and for the current user
     if message in campaign.pending_invites and message.target_user == current_user:
@@ -428,11 +447,10 @@ def accept_invite(campaign_name):
     return redirect(url_for("campaign.campaigns"))
 
 
-
 # Function called when user declines a campaign invitation
-@bp.route("/campaigns/<campaign_name>/decline_invite", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/decline-invite", methods=["GET"])
 @login_required
-def decline_invite(campaign_name):
+def decline_invite(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
     message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
@@ -452,15 +470,14 @@ def decline_invite(campaign_name):
 
 
 # Function called when admin accepts new membership request
-@bp.route("/campaigns/<campaign_name>/confirm_join_request", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/confirm-join-request", methods=["GET"])
 @login_required
-def confirm_request(campaign_name):
+def confirm_request(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
-    target_campaign_id = request.args["campaign_id"]
 
     message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
 
     # Assert current user has campaign editing permissions
     auth.permission_required(campaign)
@@ -487,15 +504,14 @@ def confirm_request(campaign_name):
 
 
 # Function called when admin declines new membership request
-@bp.route("/campaigns/<campaign_name>/denyjoin_request", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/deny-join-request", methods=["GET"])
 @login_required
-def deny_request(campaign_name):
+def deny_request(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
-    target_campaign_id = request.args["campaign_id"]
 
     message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
 
     # Assert current user has campaign editing permissions
     auth.permission_required(campaign)
@@ -510,16 +526,15 @@ def deny_request(campaign_name):
 
 
 # Function called when granting a user campaign editing permissions
-@bp.route("/campaigns/<campaign_name>/grant_permission", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["GET"])
 @login_required
-def add_permission(campaign_name):
+def add_permission(campaign_name, campaign_id):
 
     user_to_add = request.args["username"]
     user_id = request.args["user_id"]
-    target_campaign_id = request.args["campaign_id"]
 
     user = db.session.execute(select(models.User).filter_by(username=user_to_add, id=user_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)

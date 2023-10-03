@@ -18,10 +18,10 @@ from routes.event import bp
 
 
 # View event
-@bp.route("/campaigns/<campaign_name>/events/<event_name>", methods=["GET", "POST"])
-def view_event(campaign_name, event_name):
-    target_event_id = request.args["event_id"]
-    event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
+def view_event(campaign_name, campaign_id, event_name, event_id):
+
+    event = db.session.execute(select(models.Event).filter_by(id=event_id)).scalar()
     campaign = event.parent_campaign
 
     # Format belligerents data
@@ -51,7 +51,8 @@ def view_event(campaign_name, event_name):
                                              event=event)
 
         return redirect(url_for('event.view_event', 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.title,
+                                campaign_id=campaign.id, 
                                 event_name=event.title, 
                                 event_id=event.id))
 
@@ -63,16 +64,14 @@ def view_event(campaign_name, event_name):
 
 
 # Add new event
-@bp.route("/campaigns/<campaign_name>/events/new_event", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/new-event", methods=["GET", "POST"])
 @login_required
-def add_event(campaign_name):
-
-    target_campaign_id = request.args["campaign_id"]
+def add_event(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(title=campaign_name, 
-                   id=target_campaign_id)).scalar()
+                   id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
@@ -129,14 +128,12 @@ def add_event(campaign_name):
 
 
 # Edit existing event
-@bp.route("/campaigns/<campaign_name>/events/<event_name>/edit", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/edit", methods=["GET", "POST"])
 @login_required
-def edit_event(campaign_name, event_name):
-    target_campaign_id = request.args["campaign_id"]
-    target_event_id = request.args["event_id"]
+def edit_event(campaign_name, campaign_id, event_name, event_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
-    event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
+    event = db.session.execute(select(models.Event).filter_by(id=event_id)).scalar()
 
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"event-{event.id}"
@@ -179,14 +176,12 @@ def edit_event(campaign_name, event_name):
 
 
 # Delete existing event
-@bp.route("/campaigns/<campaign_name>/events/<event_name>/delete", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/delete", methods=["GET"])
 @login_required
-def delete_event(campaign_name, event_name):
-    target_campaign_id = request.args["campaign_id"]
-    target_event_id = request.args["event_id"]
+def delete_event(campaign_name, campaign_id, event_name, event_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=target_campaign_id)).scalar()
-    event = db.session.execute(select(models.Event).filter_by(id=target_event_id)).scalar()
+    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
+    event = db.session.execute(select(models.Event).filter_by(id=event_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -208,7 +203,7 @@ def delete_event(campaign_name, event_name):
 
 
 # Delete comment
-@bp.route("/campaigns/<campaign_name>/events/<event_name>/comments/<comment_id>/delete")
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment/<comment_id>/delete")
 @login_required
 def delete_comment(campaign_name, event_name, comment_id):
     

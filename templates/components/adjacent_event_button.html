@@ -22,7 +22,8 @@
   <div class="adjacent-event-area area-left">
     <div class="adjacent-elem-container">
       <a href="{{ url_for('event.view_event', 
-                          campaign_name=campaign.title, 
+                          campaign_name=campaign.title,
+                          campaign_id=campaign.id,  
                           event_name=event.preceding_event.title, 
                           event_id=event.preceding_event.id) }}" class="adjacent-event-a">
         <button class="adjacent-button">
@@ -48,6 +49,7 @@
   
     <a href="{{ url_for('event.view_event', 
                          campaign_name=campaign.title, 
+                         campaign_id=campaign.id, 
                          event_name=event.following_event.title, 
                          event_id=event.following_event.id) }}" class="adjacent-event-a">
       <div class="adjacent-headers-right">
