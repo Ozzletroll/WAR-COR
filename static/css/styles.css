@@ -253,6 +253,23 @@ body {
   filter: invert(50);
 }
 
+.icon-hamburger {
+  width: 40px;
+}
+
+.icon-hamburger .icon-colour-var {
+  fill: var(--bg_colour1);
+}
+
+.icon-hamburger:hover .icon-colour-var {
+  fill: var(--bright_red);
+}
+
+.icon-hamburger:active .icon-colour-var {
+  fill: var(--bright_red);
+}
+
+
 button {
   font-family: "Roboto Mono", monospace;
   cursor: pointer;
@@ -3267,7 +3284,7 @@ p {
 
 .new-timeline-item {
   display: flex;
-  font-size: min(14px, 2vw);
+  font-size: min(14px, 3vw);
   font-weight: 300;
   justify-content: center;
   align-items: center;
