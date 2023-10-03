@@ -25,7 +25,9 @@ from app import db
 @login_required
 def backup_page(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
@@ -41,7 +43,7 @@ def backup_page(campaign_name, campaign_id):
             # Get file and read json data
             file = form.file.data
             data = json.load(file)
-
+            
         except json.JSONDecodeError:
             flash("Invalid JSON format")
             return redirect(url_for("data.backup_page", campaign_name=campaign.title, campaign_id=campaign.id))
@@ -55,7 +57,6 @@ def backup_page(campaign_name, campaign_id):
             except KeyError:
                 flash("KeyError: Please check JSON file formatting")
                 return redirect(url_for("data.backup_page", campaign_name=campaign.title, campaign_id=campaign.id))
-
 
             else:
                 # Delete all existing current campaign data
@@ -100,10 +101,6 @@ def backup_page(campaign_name, campaign_id):
         for error_message in errors:
             flash(error_message)
 
-    # Set back button scroll target
-    scroll_target = f"campaign-{campaign.id}"
-    session["scroll_target"] = scroll_target
-
     return render_template("backup.html", campaign=campaign, form=form)
 
 
@@ -112,7 +109,9 @@ def backup_page(campaign_name, campaign_id):
 @login_required
 def campaign_backup(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)

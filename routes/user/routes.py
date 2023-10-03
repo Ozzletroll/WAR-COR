@@ -29,9 +29,13 @@ def register():
     form = forms.RegisterUserForm()
 
     if form.validate_on_submit():
+
         proposed_username = request.form["username"]
         # Check if username already exists in database
-        username_search = db.session.execute(select(models.User).filter_by(username=proposed_username)).first()
+        username_search = db.session.execute(
+            select(models.User)
+            .filter_by(username=proposed_username)).first()
+        
         if username_search:
             # Debug message
             flash("Username already in use. Please choose a new username.")
@@ -62,7 +66,10 @@ def login():
 
         username = request.form["username"]
         password = request.form["password"]
-        user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+
+        user = db.session.execute(
+            select(models.User)
+            .filter_by(username=username)).scalar()
 
         if user:
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
@@ -94,7 +101,9 @@ def logout():
 @login_required
 def user_page(username) :
 
-    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=username)).scalar()
 
     # Check if the user is actually the owner of the account they are trying to modify
     auth.user_verification(user)
@@ -130,11 +139,12 @@ def update_callsign(username):
         callsign = request.form["callsign"]
         
         # Update the users callsign
-        user_campaign = db.session.execute(select(models.UserCampaign).filter_by(user_id=user_id, campaign_id=campaign_id)).scalar()
+        user_campaign = db.session.execute(
+            select(models.UserCampaign)
+            .filter_by(user_id=user_id, campaign_id=campaign_id)).scalar()
+        
         user_campaign.callsign = callsign
-
         db.session.commit()
-
         flash("Callsign updated")
 
     else:
@@ -151,7 +161,10 @@ def update_callsign(username):
 @login_required
 def change_username(username):
 
-    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=username)).scalar()
+    
     auth.user_verification(user)
     username_form = forms.ChangeUsernameForm()
 
@@ -159,7 +172,10 @@ def change_username(username):
         
         # Check if new username is not already in use
         new_username = request.form["username"]
-        username_check = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
+
+        username_check = db.session.execute(
+            select(models.User)
+            .filter_by(username=new_username)).scalar()
         
         if not username_check:
             # Set username to new value
@@ -183,7 +199,10 @@ def change_username(username):
 @login_required
 def change_password(username):
 
-    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=username)).scalar()
+    
     auth.user_verification(user)
 
     # Check if the user matching given parameters exists in database
@@ -215,7 +234,10 @@ def change_password(username):
 @login_required
 def delete_user(username):
 
-    user = db.session.execute(select(models.User).filter_by(username=username)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=username)).scalar()
+    
     auth.user_verification(user)
 
     # Create login form to check credentials
@@ -226,7 +248,9 @@ def delete_user(username):
         search_username = request.form["username"]
         password = request.form["password"]
 
-        search_user = db.session.execute(select(models.User).filter_by(username=search_username)).scalar()
+        search_user = db.session.execute(
+            select(models.User)
+            .filter_by(username=search_username)).scalar()
 
         if search_user and auth.user_verification(search_user):
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
@@ -285,7 +309,10 @@ def back():
 def dismiss_message(username):
 
     message_id = request.args["message_id"]
-    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+
+    message = db.session.execute(
+        select(models.Message)
+        .filter_by(id=message_id)).scalar()
 
     # Remove notification from user's messages
     if message in current_user.messages:
@@ -293,7 +320,10 @@ def dismiss_message(username):
         db.session.commit()
 
     # Check if message is still in any users messages list by querying association table
-    message_query = db.session.execute(select(models.user_messages.c.user_id).where(models.user_messages.c.message_id == message_id)).scalar()
+    message_query = db.session.execute(
+        select(models.user_messages.c.user_id)
+        .where(models.user_messages.c.message_id == message_id)).scalar()
+    
     # If message is no longer needed, delete it
     if not message_query:
         db.session.delete(message)
@@ -317,7 +347,10 @@ def dismiss_all(username):
         db.session.commit()
 
         # Check if message is still in any users messages list by querying association table
-        message_query = db.session.execute(select(models.user_messages.c.user_id).where(models.user_messages.c.message_id == message.id)).scalar()
+        message_query = db.session.execute(
+            select(models.user_messages.c.user_id)
+            .where(models.user_messages.c.message_id == message.id)).scalar()
+        
         # If message is no longer needed, delete it
         if not message_query:
             db.session.delete(message)

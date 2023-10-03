@@ -20,9 +20,9 @@ from routes.epoch import bp
 @login_required
 def new_epoch(campaign_name, campaign_id):
 
-    campaign = db.session.execute(select(models.Campaign)
-                                  .filter_by(title=campaign_name, 
-                                             id=campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
@@ -71,15 +71,15 @@ def new_epoch(campaign_name, campaign_id):
 @login_required
 def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
-    campaign = db.session.execute(select(models.Campaign)
-                                  .filter_by(title=campaign_name, 
-                                             id=campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
-    epoch = db.session.execute(select(models.Epoch)
-                               .filter_by(title=epoch_title, 
-                                          id=epoch_id)).scalar()
+    epoch = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title=epoch_title, id=epoch_id)).scalar()
 
     # Set back button scroll target
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
@@ -117,15 +117,15 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 @login_required
 def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
-    campaign = db.session.execute(select(models.Campaign)
-                                  .filter_by(title=campaign_name, 
-                                             id=campaign_id)).scalar()
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
     auth.permission_required(campaign)
 
-    epoch = db.session.execute(select(models.Epoch)
-                               .filter_by(title=epoch_title, 
-                                          id=epoch_id)).scalar()
+    epoch = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title=epoch_title, id=epoch_id)).scalar()
 
     db.session.delete(epoch)
     db.session.commit()

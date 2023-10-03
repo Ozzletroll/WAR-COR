@@ -95,7 +95,9 @@ def create_campaign():
         db.session.commit()
 
         # Get campaign for redirect
-        campaign = db.session.execute(select(models.Campaign).filter_by(id=new_campaign.id)).scalar()
+        campaign = db.session.execute(
+            select(models.Campaign)
+            .filter_by(id=new_campaign.id)).scalar()
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.title, 
@@ -164,7 +166,9 @@ def delete_campaign(campaign_name, campaign_id):
         password = request.form["password"]
 
         user = current_user
-        search_user = db.session.execute(select(models.User).filter_by(username=search_username)).scalar()
+        search_user = db.session.execute(
+            select(models.User)
+            .filter_by(username=search_username)).scalar()
 
         if search_user:
             if search_user.id == current_user.id:
@@ -237,7 +241,9 @@ def remove_campaign_users(campaign_name, campaign_id, username):
     user_to_remove = username
 
     # Check if username exists
-    user = db.session.execute(select(models.User).filter_by(username=user_to_remove)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=user_to_remove)).scalar()
 
     if user:
         # Check is user is actually a member of the campaign
@@ -453,7 +459,10 @@ def accept_invite(campaign_name, campaign_id):
 def decline_invite(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
-    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
+
+    message = db.session.execute(
+        select(models.Message)
+        .filter_by(id=message_id)).scalar()
 
     # Check if target message is actually for the current user
     if message.target_user == current_user:
@@ -476,8 +485,13 @@ def confirm_request(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
 
-    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
+    message = db.session.execute(
+        select(models.Message)
+        .filter_by(id=message_id)).scalar()
+    
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id)).scalar()
 
     # Assert current user has campaign editing permissions
     auth.permission_required(campaign)
@@ -510,8 +524,13 @@ def deny_request(campaign_name, campaign_id):
 
     message_id = request.args["message_id"]
 
-    message = db.session.execute(select(models.Message).filter_by(id=message_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id)).scalar()
+    message = db.session.execute(
+        select(models.Message)
+        .filter_by(id=message_id)).scalar()
+    
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id)).scalar()
 
     # Assert current user has campaign editing permissions
     auth.permission_required(campaign)
@@ -533,8 +552,13 @@ def add_permission(campaign_name, campaign_id):
     user_to_add = request.args["username"]
     user_id = request.args["user_id"]
 
-    user = db.session.execute(select(models.User).filter_by(username=user_to_add, id=user_id)).scalar()
-    campaign = db.session.execute(select(models.Campaign).filter_by(id=campaign_id, title=campaign_name)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=user_to_add, id=user_id)).scalar()
+    
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
