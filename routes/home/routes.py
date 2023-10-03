@@ -18,7 +18,7 @@ def home():
     return render_template("index.html", year=year)
 
 
-# Clear campaign page scroll target session variable
+# Get and clear campaign page scroll target session variable
 @bp.route("/session/campaign-scroll-target", methods=["GET"])
 def campaign_target():
 
@@ -36,7 +36,7 @@ def campaign_target():
     return response
     
 
-# Clear timeline page scroll target session variable
+# Get and clear timeline page scroll target session variable
 @bp.route("/session/timeline-scroll-target", methods=["GET"])
 def timeline_target():
 

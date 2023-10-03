@@ -13,7 +13,10 @@ function scrollToTarget(target_url, csrfToken) {
   })
   .then(function(data) {
     if (data) {
-      document.getElementById(data["target"]).scrollIntoView();
+      var targetElement = document.getElementById(data["target"]);
+      if (targetElement != null) {
+        targetElement.scrollIntoView();
+      }
     }
   });
 }
