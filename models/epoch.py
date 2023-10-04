@@ -55,12 +55,12 @@ class Epoch(db.Model):
         
         def is_in_epoch(event, epoch):
 
-            epoch_start = float(epoch.start_date.replace("-", "."))
-            epoch_end = float(epoch.end_date.replace("-", "."))
+            epoch_start = float(epoch.start_date.replace("/", "."))
+            epoch_end = float(epoch.end_date.replace("/", "."))
 
-            event_year, event_month = event.date.split("-")[:2]
-            event_combined = event_year + "-" + event_month
-            event_date = float(event_combined.replace("-", "."))
+            event_year, event_month = event.date.split("/")[:2]
+            event_combined = event_year + "/" + event_month
+            event_date = float(event_combined.replace("/", "."))
 
             if epoch_start <= event_date <= epoch_end:
                 return True

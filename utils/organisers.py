@@ -41,13 +41,13 @@ def split_date(datestring):
     """Function that splits a datestring into individual values,
     returns a list of integers"""
 
-    year = datestring.split("-")[0]
-    month = datestring.split("-")[1]
-    day = datestring.split("-")[2].split()[0]
-    hours = datestring.split("-")[2].split()[1].split(":")[0]
-    minutes = datestring.split("-")[2].split()[1].split(":")[1]
-    seconds = datestring.split("-")[2].split()[1].split(":")[2]
-    
+    year = datestring.split("/")[0]
+    month = datestring.split("/")[1]
+    day = datestring.split("/")[2].split()[0]
+    hours = datestring.split("/")[2].split()[1].split(":")[0]
+    minutes = datestring.split("/")[2].split()[1].split(":")[1]
+    seconds = datestring.split("/")[2].split()[1].split(":")[2]
+
     return [int(year), int(month), int(day), int(hours), int(minutes), int(seconds)]
 
 
@@ -67,8 +67,8 @@ def campaign_sort(campaign):
     def custom_sort_epoch(epoch):
         """Function to split a datestring in Epoch objects into individual integers"""
 
-        year = epoch.start_date.split("-")[0]
-        month = epoch.start_date.split("-")[1]
+        year = epoch.start_date.split("/")[0]
+        month = epoch.start_date.split("/")[1]
 
         return int(year), int(month)
 
@@ -140,12 +140,12 @@ def campaign_sort(campaign):
     # Sort and group epochs by start date and end date
     epochs_by_start_date = group_epochs(campaign.epochs, 
                                         sort_key=lambda epoch: epoch.start_date,
-                                        year_key=lambda epoch: epoch.start_date.split("-")[0],
-                                        month_key=lambda epoch: epoch.start_date.split("-")[1])
+                                        year_key=lambda epoch: epoch.start_date.split("/")[0],
+                                        month_key=lambda epoch: epoch.start_date.split("/")[1])
     epochs_by_end_date = group_epochs(campaign.epochs,
                                       sort_key=lambda epoch: epoch.end_date,
-                                      year_key=lambda epoch: epoch.end_date.split("-")[0],
-                                      month_key=lambda epoch: epoch.end_date.split("-")[1])
+                                      year_key=lambda epoch: epoch.end_date.split("/")[0],
+                                      month_key=lambda epoch: epoch.end_date.split("/")[1])
     
     # Merge two dictionaries for year/month population
     combined_epochs = {}
@@ -167,19 +167,19 @@ def campaign_sort(campaign):
     # Sort events into date order
     sorted_events = sorted(campaign.events, key=custom_sort)
     # Structure events into dictionary, grouped by year
-    groups = groupby(sorted_events, key=lambda event: (event.date.split("-")[0]))
+    groups = groupby(sorted_events, key=lambda event: (event.date.split("/")[0]))
     grouped_events = {year: list(group) for year, group in groups}
 
     # Group each years events into months
     for year in grouped_events:
-        groups = groupby(grouped_events[year], key=lambda event: (event.date.split("-")[1]))
+        groups = groupby(grouped_events[year], key=lambda event: (event.date.split("/")[1]))
         grouped_months = {month: list(group) for month, group in groups}
         grouped_events[year] = grouped_months
 
     # Group each months events into days
     for year in grouped_events:
         for month in grouped_events[year]:
-            groups = groupby(grouped_events[year][month], key=lambda event: (event.date.split("-")[2].split()[0]))
+            groups = groupby(grouped_events[year][month], key=lambda event: (event.date.split("/")[2].split()[0]))
             grouped_days = {day: list(group) for day, group in groups}
             grouped_events[year][month] = grouped_days
 
@@ -291,28 +291,27 @@ def format_event_datestring(datestring, args):
 
         incremented_values.reverse()
 
-        print(incremented_values)
         return incremented_values
 
 
     values = split_date(datestring)
-    year_format = len(datestring.split("-")[0])
+    year_format = len(datestring.split("/")[0])
 
     if "new_hour" in args:
         incremented_values = increment(values, 2)
         # Format date as string for form field
-        datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " " + str(incremented_values[3]).zfill(2) + ":00:00"
+        datestring = str(incremented_values[0]).zfill(year_format) + "/" + str(incremented_values[1]).zfill(2) + "/" + str(incremented_values[2]).zfill(2) + " " + str(incremented_values[3]).zfill(2) + ":00:00"
 
     # Move to the next day and format the string
     if "new_day" in args:
         incremented_values = increment(values, 3)
         # Format date as string for form field
-        datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + str(incremented_values[2]).zfill(2) + " 00:00:00"
+        datestring = str(incremented_values[0]).zfill(year_format) + "/" + str(incremented_values[1]).zfill(2) + "/" + str(incremented_values[2]).zfill(2) + " 00:00:00"
 
     # Move to the next month and format the string
     if "new_month" in args:
         incremented_values = increment(values, 4)
         # Format date as string for form field
-        datestring = str(incremented_values[0]).zfill(year_format) + "-" + str(incremented_values[1]).zfill(2) + "-" + "01 00:00:00"
+        datestring = str(incremented_values[0]).zfill(year_format) + "/" + str(incremented_values[1]).zfill(2) + "/" + "01 00:00:00"
 
     return datestring

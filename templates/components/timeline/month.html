@@ -42,10 +42,10 @@ elements.
       <a class="epoch-centre-area" href="{{ url_for('epoch.new_epoch', 
                             campaign_name=campaign.title,
                             campaign_id=campaign.id,
-                            date=year.name + '-' + month.name) }}">
+                            date=year.name + '/' + month.name) }}">
         <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
           <div class="epoch-button-text">NEW EPOCH
-            <div>{{ year.name }} - {{month.name}}</div>
+            <div>{{ year.name }} / {{month.name}}</div>
           </div>
         </button>
       </a>
@@ -118,7 +118,7 @@ elements.
       <a href="{{ url_for('event.add_event', 
                             campaign_name=campaign.title,
                             campaign_id=campaign.id,
-                            date=year.name + '-' + month.name + '-' + '01' + ' 00:00:00') }}">
+                            date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
         <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
           <img class="icon icon-invert" src="/static/images/icons/plus.svg">
         </button>
@@ -137,7 +137,7 @@ elements.
                             campaign_name=campaign.title,
                             new_month=True, 
                             campaign_id=campaign.id,
-                            date=year.name + '-' + month.name + '-' + '01' + ' 00:00:00') }}">
+                            date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
         <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
           <img class="icon icon-invert" src="/static/images/icons/plus.svg">
         </button>

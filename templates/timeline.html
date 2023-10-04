@@ -123,7 +123,11 @@
               <div class="timeline-year-container">
 
                 <h3 class="timeline-year-header" id="year-{{year.name}}">
-                  {{ year.name + campaign.date_suffix}}
+                  {% if year.name.startswith("-") %}
+                    {{ year.name + campaign.negative_date_suffix}}
+                  {% else %}
+                    {{ year.name + campaign.date_suffix}}
+                  {% endif %}
                 </h3> 
 
                 <div class="timeline-columns">

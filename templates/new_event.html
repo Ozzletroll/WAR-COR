@@ -64,7 +64,7 @@
             <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
           </label>
         
-          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY-MM-DD HH:MM:SS", autocomplete="off") }}
+          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD HH:MM:SS", autocomplete="off") }}
 
         </div>
 
@@ -80,12 +80,14 @@
                 </span>
               </div>
               <div class="modal-body">
-                <p>WAR/COR organises all events in chronological order. Dates should be entered in a "YEAR-MONTH-DAY HOUR:MINUTE:SECONDS" format.</p>
+                <p>WAR/COR organises all events in chronological order. Dates should be entered in a "YEAR/MONTH/DAY HOUR:MINUTE:SECONDS" format.</p>
                 <p>In order to handle a variety of non-standard galactic calendars, WAR/COR does not
                   enforce standard year/month/day lengths.</p>
+                <p>A negative value may be given for the year, allowing the placement of events in a similar manner to the BC/BCE system.</p>
                 <p>The year value can be any value of 1-9 digits. For formatting consistency, we advise 'zero padding' year values. EG. "0015" if you are using four digit years.</p>
                 <p>The month, day, hour and seconds entries can be any value from 00-99.</p>
-                <p class="modal-highlight-text">Example: "5016-15-40 25:00:00" is a valid date.</p>
+                <p class="modal-highlight-text">Example: "5016/15/40 25:00:00" is a valid date.</p>
+                <p class="modal-highlight-text">Example: "-500/03/25 12:00:00" is a valid date.</p>
               </div>
             </div>
           </div>
