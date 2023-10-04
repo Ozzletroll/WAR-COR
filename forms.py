@@ -11,10 +11,10 @@ def date_format(format):
 
     if format == "event":
         message = "Not a valid date format, please use the format 'YYYY-MM-DD HH:MM:SS'"
-        format = r"^\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
+        format = r"^-?\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}d{2}$"
     elif format == "epoch":
         message = "Not a valid date format, please use the format 'YYYY-MM'"
-        format = r"^\d{1,9}-\d{2}$"
+        format = r"^-?\d{1,9}-\d{2}$"
 
     def _date_format(form, field):
 
@@ -77,7 +77,8 @@ class ChangePasswordForm(FlaskForm):
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
     description = CKEditorField("Description", validators=[DataRequired()])
-    date_suffix = StringField("Campaign Title", validators=[Optional()])
+    date_suffix = StringField("Date Suffix", validators=[Optional()])
+    negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
     submit = SubmitField("Create Campaign")
 
 
