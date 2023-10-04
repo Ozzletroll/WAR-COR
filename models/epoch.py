@@ -10,8 +10,15 @@ class Epoch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(250), nullable=False)
+
     start_date = db.Column(db.String, nullable=False)
+    start_year = db.Column(db.Integer)
+    start_month = db.Column(db.Integer)
+
     end_date = db.Column(db.String, nullable=False)
+    end_year = db.Column(db.Integer)
+    end_month = db.Column(db.Integer)
+
     description = db.Column(db.String(250), nullable=True)
     has_events = db.Column(db.Boolean(), nullable=False, default=False)
 
@@ -33,7 +40,17 @@ class Epoch(db.Model):
             Set "new" to true if creating new entry.  """
 
         for field, value in form.items():
-            if value is not None:
+            if field == "start_date" and value is not None:
+                self.start_date = value
+                self.start_year = self.split_date(value)[0]
+                self.start_month = self.split_date(value)[1]
+
+            elif field == "end_date" and value is not None:
+                self.end_date = value
+                self.end_year = self.split_date(value)[0]
+                self.end_month = self.split_date(value)[1]
+
+            elif value is not None:
                 setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
@@ -46,6 +63,15 @@ class Epoch(db.Model):
 
         self.populate_self()
         self.parent_campaign.check_epochs()
+
+
+    def split_date(self, datestring):
+        """ Method that splits a form datestring into individual integer values. """
+
+        year = int(datestring.split("/")[0])
+        month = int(datestring.split("/")[1])
+
+        return [year, month]
 
 
     def populate_self(self):

@@ -11,7 +11,15 @@ class Event(db.Model):
 
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
+
     date = db.Column(db.String, nullable=False)
+    year = db.Column(db.Integer)
+    month = db.Column(db.Integer)
+    day = db.Column(db.Integer)
+    hour = db.Column(db.Integer)
+    minute = db.Column(db.Integer)
+    second = db.Column(db.Integer)
+
     location = db.Column(db.String(250), nullable=True)
     belligerents = db.Column(db.String(250), nullable=True)
     body = db.Column(db.String(250), nullable=False)
@@ -26,6 +34,7 @@ class Event(db.Model):
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     parent_campaign = db.relationship("Campaign", 
                                       back_populates="events")
+    
     following_event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
     following_event = db.relationship('Event', 
                                       backref=db.backref('preceding_event', 
@@ -42,11 +51,14 @@ class Event(db.Model):
     def update(self, form, parent_campaign, new=False):
         """ Method to populate and update self.
             Takes form data from form.data
-            Set "new" to true if creating new entry
-            Set "date" to true if event's date has been specified by ui.  """
+            Set "new" to true if creating new entry  """
 
         for field, value in form.items():
-            if value is not None:
+            if field == "date" and value is not None:
+                self.date = value
+                self.split_date(value)
+
+            elif value is not None:
                 setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
@@ -66,6 +78,17 @@ class Event(db.Model):
         self.type = ""
         self.body = ""
         self.date = datestring
+
+
+    def split_date(self, datestring):
+        """ Method that splits a form datestring into individual integer values. """
+
+        self.year = int(datestring.split("/")[0])
+        self.month = int(datestring.split("/")[1])
+        self.day = int(datestring.split("/")[2].split()[0])
+        self.hour = int(datestring.split("/")[2].split()[1].split(":")[0])
+        self.minute = int(datestring.split("/")[2].split()[1].split(":")[1])
+        self.second = int(datestring.split("/")[2].split()[1].split(":")[2])
 
 
     def separate_belligerents(self):
