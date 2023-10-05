@@ -41,8 +41,13 @@ def date_is_after(form, field):
     start_date = form.start_date.data
     end_date = field.data
 
-    start_year, start_month = map(int, start_date.split("/"))
-    end_year, end_month = map(int, end_date.split("/"))
+    # Convert to integers, catching exception if incorrect format submitted
+    try:
+        start_year, start_month = map(int, start_date.split("/"))
+        end_year, end_month = map(int, end_date.split("/"))
+    except ValueError:
+        # The date_format validator will raise a Validation error already.
+        return
 
     if start_year > end_year or (start_year == end_year and start_month > end_month):
         raise ValidationError("End Date must be equal or after Start Date")
@@ -100,7 +105,7 @@ class CreateEpochForm(FlaskForm):
     class Meta:
         validators = {
             'start_date': [date_format(format="epoch")],
-            'end_date': [date_format(format="epoch")]
+            'end_date': [date_format(format="epoch"), date_is_after]
         }
 
     title = StringField("Event Title", validators=[DataRequired()])
