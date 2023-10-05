@@ -56,6 +56,7 @@ def campaign_import(json, campaign):
     campaign.title = json["title"]
     campaign.description = json["description"]
     campaign.date_suffix = json["date_suffix"]
+    campaign.negative_date_suffix = json["negative_date_suffix"]
     campaign.last_edited = datetime.now()
 
     return campaign
