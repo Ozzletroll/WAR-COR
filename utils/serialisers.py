@@ -1,5 +1,6 @@
-from flask import jsonify, make_response
+from flask import jsonify, make_response, flash
 from datetime import datetime
+import json
 
 import models
 
@@ -49,17 +50,80 @@ def data_export(campaign):
     return response
 
 
+def test_json(file):
+
+    errors_dict = {}
+
+    # Test if file is actually a json file
+    try:
+        data = json.load(file)    
+    except json.JSONDecodeError:
+        errors["Filetype:"] = "Invalid file format. Data backups must be a JSON file."
+        flash("Invalid file format. Data backups must be a JSON file.")
+        return False
+
+    test_campaign = models.Campaign()
+
+    # Test campaign overview data
+    test_campaign, errors = campaign_import(data, test_campaign)
+    if len(errors) > 0:
+        errors_dict["Campaign Data"] = errors
+
+    # Test event data
+    for index, item in enumerate(data["events"]):
+        event, errors = events_import(item)
+        if len(errors) > 0:
+            if event.title is not None:
+                errors_dict[f"Event - {event.title}"] = errors
+            else:
+                errors_dict[f"Event - {index}"] = errors
+
+    # Test backup epoch data
+    for index, item in enumerate(data["epochs"]):
+        epoch, errors = epochs_import(item)
+        if len(errors) > 0:
+            if epoch.title is not None:
+                errors_dict[f"Epoch - {event.title}"] = errors
+            else:
+                errors_dict[f"Epoch - {index}"] = errors
+
+    if len(errors_dict) == 0:
+        file_valid = True
+    else:
+        file_valid = False
+        for error, text in errors_dict.items():
+            flash(f"{error}: {', '.join(text)}")
+
+    return file_valid
+
 
 def campaign_import(json, campaign):
     """Updates campaign object with json campaign data."""
 
-    campaign.title = json["title"]
-    campaign.description = json["description"]
-    campaign.date_suffix = json["date_suffix"]
-    campaign.negative_date_suffix = json["negative_date_suffix"]
-    campaign.last_edited = datetime.now()
+    errors = []
 
-    return campaign
+    try:
+        campaign.title = json["title"]
+    except KeyError:
+        errors.append("Unable to locate campaign title.")
+    try:
+        campaign.description = json["description"]
+    except KeyError:
+        errors.append("Unable to locate campaign description.")
+    try:
+        campaign.date_suffix = json["date_suffix"]
+    except KeyError:
+        errors.append("Unable to locate date suffix.")
+    try:
+        campaign.negative_date_suffix = json["negative_date_suffix"]
+    except KeyError:
+        errors.append("Unable to locate negative date suffix.")
+    try:
+        campaign.last_edited = datetime.now()
+    except KeyError:
+        errors.append("Unable to locate campaign last edited date.")
+
+    return campaign, errors
 
 
 
@@ -68,26 +132,85 @@ def events_import(event):
 
     new_event = models.Event()
 
-    new_event.title = event["title"]
-    new_event.date = event["date"]
-    new_event.type = event["type"]
-    new_event.belligerents = event["belligerents"]
-    new_event.body = event["body"]
-    new_event.header = event["header"]
-    new_event.location = event["location"]
-    new_event.result = event["result"]
+    errors = []
 
-    return new_event
+    try:
+        new_event.title = event["title"]
+    except KeyError:
+        errors.append("Unable to locate event title.")
+    try:
+        new_event.date = event["date"]
+    except KeyError:
+        errors.append("Unable to locate event date.")
+    try:
+        new_event.split_date(new_event.date)
+    except ValueError:
+        errors.append("Incorrect date format.")
+    try:
+        new_event.type = event["type"]
+    except KeyError:
+        errors.append("Unable to locate event type.")
+    try:
+        new_event.belligerents = event["belligerents"]
+    except KeyError:
+        errors.append("Unable to locate event belligerents.")
+    try:
+        new_event.body = event["body"]
+    except KeyError:
+        errors.append("Unable to locate event body.")
+    try:
+        new_event.header = event["header"]
+    except KeyError:
+        errors.append("Unable to locate event header.")
+    try:
+        new_event.location = event["location"]
+    except KeyError:
+        errors.append("Unable to locate event location.")
+    try:
+        new_event.result = event["result"]
+    except KeyError:
+        errors.append("Unable to locate event result.")
+
+    return new_event, errors
 
 
 def epochs_import(epoch):
-    """Creates new epoch from jsons epochs list item."""
+    """Creates new epoch from jsons epochs list item."""    
 
     new_epoch = models.Epoch()
-
-    new_epoch.title = epoch["title"]
-    new_epoch.start_date = epoch["start_date"]
-    new_epoch.end_date = epoch["end_date"]
-    new_epoch.description = epoch["description"]
-
-    return new_epoch
+    errors = []
+        
+    try:
+        new_epoch.title = epoch["title"]
+    except KeyError:
+        errors.append("Unable to locate epoch title.")
+    try:
+        new_epoch.start_date = epoch["start_date"]
+    except KeyError:
+        errors.append("Unable to locate epoch start date.")
+    try:
+        new_epoch.start_year = new_epoch.split_date(new_epoch.start_date)[0]
+    except ValueError:
+        errors.append("Incorrect date format")
+    try:
+        new_epoch.start_month = new_epoch.split_date(new_epoch.start_date)[1]
+    except ValueError:
+        errors.append("Incorrect date format")
+    try:
+        new_epoch.end_date = epoch["end_date"]
+    except KeyError:
+        errors.append("Unable to locate epoch end date.")
+    try:
+        new_epoch.end_year = new_epoch.split_date(new_epoch.end_date)[0]
+    except ValueError:
+        errors.append("Incorrect date format")
+    try:
+        new_epoch.end_month = new_epoch.split_date(new_epoch.end_date)[1]
+    except ValueError:
+        errors.append("Incorrect date format")
+    try:
+        new_epoch.description = epoch["description"]
+    except KeyError:
+        errors.append("Unable to locate epoch description.")
+    
+    return new_epoch, errors
