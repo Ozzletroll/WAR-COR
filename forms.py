@@ -41,11 +41,11 @@ def date_is_after(form, field):
     start_date = form.start_date.data
     end_date = field.data
 
-    start_year, start_month = map(int, start_date.split("-"))
-    end_year, end_month = map(int, end_date.split("-"))
+    start_year, start_month = map(int, start_date.split("/"))
+    end_year, end_month = map(int, end_date.split("/"))
 
     if start_year > end_year or (start_year == end_year and start_month > end_month):
-        raise ValidationError("End Date must be equal or greater than Start Date")
+        raise ValidationError("End Date must be equal or after Start Date")
 
 
 class RegisterUserForm(FlaskForm):
@@ -105,7 +105,7 @@ class CreateEpochForm(FlaskForm):
 
     title = StringField("Event Title", validators=[DataRequired()])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[date_format(format="epoch")])
+    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after])
     description = CKEditorField("Description")
     submit = SubmitField("Create Epoch")
 
