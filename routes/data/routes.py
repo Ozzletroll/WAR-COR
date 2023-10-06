@@ -41,9 +41,10 @@ def backup_page(campaign_name, campaign_id):
 
         # Test json file
         file = form.file.data
+
+        # If json is ok, populate campaign with json data
         if serialisers.test_json(file):
 
-            # If json is ok, populate campaign with json data
             # Reset the file pointer to the beginning
             file.seek(0) 
             data = json.load(file)   
@@ -65,12 +66,17 @@ def backup_page(campaign_name, campaign_id):
                 event.parent_campaign = campaign
                 db.session.add(event)
 
+            db.session.commit()
+
+            # Convert json epopchs into epoch objects
             for item in data["epochs"]:
                 epoch, errors = serialisers.epochs_import(item)
                 db.session.add(epoch)
 
                 epoch.parent_campaign = campaign
                 epoch.populate_self()
+
+            db.session.commit()
 
             campaign.get_following_events()
 

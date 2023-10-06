@@ -17,8 +17,7 @@ def data_export(campaign):
                       "belligerents": event.belligerents,
                       "body": event.body,
                       "result": event.result,
-                      "header": event.header,
-                      }
+                      "header": event.header}
         
         events_data.append(event_dict)
 
@@ -37,10 +36,13 @@ def data_export(campaign):
                      "description": campaign.description,
                      "last_edited": campaign.last_edited,
                      "date_suffix": campaign.date_suffix,
-                     "events": events_data,
-                     "epochs": epoch_data}
+                     "negative_date_suffix": campaign.negative_date_suffix}
+    
+    final_output = {"campaign_data": campaign_data,
+                    "events": events_data,
+                    "epochs": epoch_data}
 
-    response = make_response(jsonify(campaign_data))
+    response = make_response(jsonify(final_output))
 
         # Set headers for downloading
     filename = "WAR_COR_Backup " + campaign.title
@@ -51,6 +53,7 @@ def data_export(campaign):
 
 
 def test_json(file):
+    """ Function to test a json backup file prior to importing """
 
     errors_dict = {}
 
@@ -101,6 +104,8 @@ def campaign_import(json, campaign):
     """Updates campaign object with json campaign data."""
 
     errors = []
+
+    json = json["campaign_data"]
 
     try:
         campaign.title = json["title"]
