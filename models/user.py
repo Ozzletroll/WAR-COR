@@ -28,7 +28,10 @@ class User(UserMixin, db.Model):
                                             cascade="delete, delete-orphan",
                                             viewonly=True)
 
-    permissions = db.relationship("Campaign", secondary=user_edit_permissions)
+    permissions = db.relationship("Campaign", 
+                                  secondary=user_edit_permissions, 
+                                  back_populates="admins")
+    
     comments = db.relationship("Comment", back_populates="author")
     messages = db.relationship("Message", 
                                secondary=user_messages, 

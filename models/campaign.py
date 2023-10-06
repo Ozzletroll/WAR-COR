@@ -27,10 +27,13 @@ class Campaign(db.Model):
     pending_invites = db.relationship("Message", 
                                       back_populates="target_campaign", 
                                       cascade="delete, delete-orphan")
+    admins = db.relationship("User",
+                             secondary="user_edit_permissions",
+                             back_populates="permissions")
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     members = db.relationship("User",
                               secondary="user_campaign",
-                              back_populates="campaigns")
+                              back_populates="campaigns",)
     # Association between Child -> Association -> Parent
     user_associations = db.relationship("UserCampaign",
                                         back_populates="campaign",
