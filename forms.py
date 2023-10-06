@@ -10,11 +10,11 @@ import re
 def date_format(format):
 
     if format == "event":
-        message = "Not a valid date format, please use the format 'YYYY-MM-DD HH:MM:SS'"
-        format = r"^\d{1,9}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$"
+        message = "Not a valid date format, please use the format 'YYYY/MM/DD HH:MM:SS'"
+        format = r"^-?\d{1,9}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}$"
     elif format == "epoch":
-        message = "Not a valid date format, please use the format 'YYYY-MM'"
-        format = r"^\d{1,9}-\d{2}$"
+        message = "Not a valid date format, please use the format 'YYYY/MM'"
+        format = r"^-?\d{1,9}/\d{2}$"
 
     def _date_format(form, field):
 
@@ -41,11 +41,16 @@ def date_is_after(form, field):
     start_date = form.start_date.data
     end_date = field.data
 
-    start_year, start_month = map(int, start_date.split("-"))
-    end_year, end_month = map(int, end_date.split("-"))
+    # Convert to integers, catching exception if incorrect format submitted
+    try:
+        start_year, start_month = map(int, start_date.split("/"))
+        end_year, end_month = map(int, end_date.split("/"))
+    except ValueError:
+        # The date_format validator will raise a Validation error already.
+        return
 
     if start_year > end_year or (start_year == end_year and start_month > end_month):
-        raise ValidationError("End Date must be equal or greater than Start Date")
+        raise ValidationError("End Date must be equal or after Start Date")
 
 
 class RegisterUserForm(FlaskForm):
@@ -77,7 +82,8 @@ class ChangePasswordForm(FlaskForm):
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
     description = CKEditorField("Description", validators=[DataRequired()])
-    date_suffix = StringField("Campaign Title", validators=[Optional()])
+    date_suffix = StringField("Date Suffix", validators=[Optional()])
+    negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
     submit = SubmitField("Create Campaign")
 
 
@@ -99,12 +105,12 @@ class CreateEpochForm(FlaskForm):
     class Meta:
         validators = {
             'start_date': [date_format(format="epoch")],
-            'end_date': [date_format(format="epoch")]
+            'end_date': [date_format(format="epoch"), date_is_after]
         }
 
     title = StringField("Event Title", validators=[DataRequired()])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[date_format(format="epoch")])
+    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after])
     description = CKEditorField("Description")
     submit = SubmitField("Create Epoch")
 

@@ -39,62 +39,58 @@ def backup_page(campaign_name, campaign_id):
 
     if form.validate_on_submit():
 
-        try:
-            # Get file and read json data
-            file = form.file.data
-            data = json.load(file)
-            
-        except json.JSONDecodeError:
-            flash("Invalid JSON format")
-            return redirect(url_for("data.backup_page", campaign_name=campaign.title, campaign_id=campaign.id))
+        # Test json file
+        file = form.file.data
+
+        # If json is ok, populate campaign with json data
+        if serialisers.test_json(file):
+
+            # Reset the file pointer to the beginning
+            file.seek(0) 
+            data = json.load(file)   
+
+            # Delete all existing current campaign data
+            for epoch in campaign.epochs:
+                db.session.delete(epoch)
+            for event in campaign.events:
+                db.session.delete(event)
+            db.session.commit()
+
+            # Overwrite campaign data
+            campaign, errors = serialisers.campaign_import(data, campaign)
+
+            # Convert json events into event objects
+            for item in data["events"]:
+                event, errors = serialisers.events_import(item)
+
+                event.parent_campaign = campaign
+                db.session.add(event)
+
+            db.session.commit()
+
+            # Convert json epopchs into epoch objects
+            for item in data["epochs"]:
+                epoch, errors = serialisers.epochs_import(item)
+                db.session.add(epoch)
+
+                epoch.parent_campaign = campaign
+                epoch.populate_self()
+
+            db.session.commit()
+
+            campaign.get_following_events()
+
+            # Commit to db
+            db.session.commit()
+            flash(f"Campaign: {campaign.title} succesfully restored from backup")
+
+            return redirect(url_for("campaign.campaigns"))
 
         else:
 
-            try:
-                # Convert json data to campaign object
-                campaign = serialisers.campaign_import(data, campaign)
-
-            except KeyError:
-                flash("KeyError: Please check JSON file formatting")
-                return redirect(url_for("data.backup_page", campaign_name=campaign.title, campaign_id=campaign.id))
-
-            else:
-                # Delete all existing current campaign data
-                for epoch in campaign.epochs:
-                    db.session.delete(epoch)
-                for event in campaign.events:
-                    db.session.delete(event)
-
-                db.session.commit()
-            
-            try:
-                # Convert json events into event objects
-                for item in data["events"]:
-                    event = serialisers.events_import(item)
-
-                    event.parent_campaign = campaign
-                    db.session.add(event)
-
-                for item in data["epochs"]:
-                    epoch = serialisers.epochs_import(item)
-                    db.session.add(epoch)
-
-                    epoch.parent_campaign = campaign
-
-                    # Find events that take place during the epoch
-                    matching_events = organisers.populate_epoch(epoch=epoch, campaign=campaign)
-                    for event in matching_events:
-                        epoch.events.append(event)
-
-            except KeyError:
-                flash("KeyError: Please check JSON file formatting")
-                return redirect(url_for("data.backup_page", campaign_name=campaign.title, campaign_id=campaign.id))
-
-            else:
-                db.session.commit()
-                flash(f"Campaign {campaign.title} succesfully restored from backup")
-
-        return redirect(url_for("campaign.campaigns"))
+            return redirect(url_for("data.backup_page", 
+                                    campaign_name=campaign.title, 
+                                    campaign_id=campaign.id))
 
     # Flash form errors
     for field_name, errors in form.errors.items():
@@ -102,6 +98,42 @@ def backup_page(campaign_name, campaign_id):
             flash(error_message)
 
     return render_template("backup.html", campaign=campaign, form=form)
+
+
+
+
+
+        #     try:
+        #         # Convert json data to campaign object
+        #         restored_campaign = serialisers.campaign_import(data, campaign)
+
+        #     except KeyError:
+        #         flash("KeyError: Please check JSON file formatting")
+        #         return redirect(url_for("data.backup_page", 
+        #                                 campaign_name=campaign.title, 
+        #                                 campaign_id=campaign.id))
+
+        #     else:
+        #         
+
+        #         db.session.commit()
+            
+        #     try:
+        #         
+
+        #     except KeyError:
+        #         flash("KeyError: Please check JSON file formatting")
+        #         return redirect(url_for("data.backup_page", 
+        #                                 campaign_name=campaign.title, 
+        #                                 campaign_id=campaign.id))
+
+        #     else:
+        #         db.session.commit()
+        #         flash(f"Campaign {campaign.title} succesfully restored from backup")
+
+       
+
+    
 
 
 # Backup campaign data

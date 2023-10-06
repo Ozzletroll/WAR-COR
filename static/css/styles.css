@@ -4762,6 +4762,16 @@ pre {
   display: none;
 }
 
+.backup-flash {
+  text-align: left;
+}
+
+.backup-flash .flashes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 @media screen and (max-width: 800px) {
   
   .backup-area {
