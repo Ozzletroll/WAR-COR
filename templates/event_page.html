@@ -49,9 +49,15 @@
 
             <div class="event-centre-container">
               <div class="event-page-upper">
-                <div class="event-page-elem event-date-area">
+                {% if event.hide_time or event.header %}
+                  <div class="event-page-elem event-date-area">
+                      <h4 class="event-page-date">{{event.date.split(" ")[0]}}</h4>
+                  </div>
+                {% else %}
+                  <div class="event-page-elem event-date-area">
                     <h4 class="event-page-date">{{event.date}}</h4>
-                </div>
+                  </div>
+                {% endif %}
 
                 <div class="event-page-elem type-area">
                     <h4 class="event-page-type">{{event.type}}</h4>
