@@ -1248,6 +1248,12 @@ p {
   justify-content: center;
   text-decoration: none;
   width: 50px;
+  transition: 0.15s;
+  color: var(--text_normal);
+}
+
+.footer-links a:hover {
+  color: var(--bright_red);
 }
 
 .footer-links :visited{
@@ -4878,3 +4884,4 @@ pre {
 .request-button {
   width: 180px;
 }
+
