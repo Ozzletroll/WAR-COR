@@ -138,15 +138,16 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
     
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
     event = db.session.execute(
         select(models.Event)
         .filter_by(id=event_id)).scalar()
 
-    # Set scroll_to target for back button
-    session["timeline_scroll_target"] = f"event-{event.id}"
-
-    # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    if event:
+        # Set scroll_to target for back button
+        session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
 
