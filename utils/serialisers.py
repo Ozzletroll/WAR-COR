@@ -61,7 +61,7 @@ def test_json(file):
     try:
         data = json.load(file)    
     except json.JSONDecodeError:
-        errors["Filetype:"] = "Invalid file format. Data backups must be a JSON file."
+        errors_dict["Filetype:"] = "Invalid file format. Data backups must be a JSON file."
         flash("Invalid file format. Data backups must be a JSON file.")
         return False
 
@@ -142,39 +142,41 @@ def events_import(event):
     try:
         new_event.title = event["title"]
     except KeyError:
-        errors.append("Unable to locate event title.")
+        errors.append("Unable to locate event title")
     try:
         new_event.date = event["date"]
     except KeyError:
-        errors.append("Unable to locate event date.")
+        errors.append("Unable to locate event date")
     try:
         new_event.split_date(new_event.date)
     except ValueError:
-        errors.append("Incorrect date format.")
+        errors.append("Incorrect date format")
+    except AttributeError:
+        errors.append("Incorrect date format")
     try:
         new_event.type = event["type"]
     except KeyError:
-        errors.append("Unable to locate event type.")
+        errors.append("Unable to locate event type")
     try:
         new_event.belligerents = event["belligerents"]
     except KeyError:
-        errors.append("Unable to locate event belligerents.")
+        errors.append("Unable to locate event belligerents")
     try:
         new_event.body = event["body"]
     except KeyError:
-        errors.append("Unable to locate event body.")
+        errors.append("Unable to locate event body")
     try:
         new_event.header = event["header"]
     except KeyError:
-        errors.append("Unable to locate event header.")
+        errors.append("Unable to locate event header")
     try:
         new_event.location = event["location"]
     except KeyError:
-        errors.append("Unable to locate event location.")
+        errors.append("Unable to locate event location")
     try:
         new_event.result = event["result"]
     except KeyError:
-        errors.append("Unable to locate event result.")
+        errors.append("Unable to locate event result")
 
     return new_event, errors
 
@@ -188,26 +190,32 @@ def epochs_import(epoch):
     try:
         new_epoch.title = epoch["title"]
     except KeyError:
-        errors.append("Unable to locate epoch title.")
+        errors.append("Unable to locate epoch title")
     try:
         new_epoch.start_date = epoch["start_date"]
     except KeyError:
-        errors.append("Unable to locate epoch start date.")
+        errors.append("Unable to locate epoch start date")
     try:
         new_epoch.start_year = new_epoch.split_date(new_epoch.start_date)[0]
     except ValueError:
+        errors.append("Incorrect date format")
+    except AttributeError:
         errors.append("Incorrect date format")
     try:
         new_epoch.start_month = new_epoch.split_date(new_epoch.start_date)[1]
     except ValueError:
         errors.append("Incorrect date format")
+    except AttributeError:
+        errors.append("Incorrect date format")
     try:
         new_epoch.end_date = epoch["end_date"]
     except KeyError:
-        errors.append("Unable to locate epoch end date.")
+        errors.append("Unable to locate epoch end date")
     try:
         new_epoch.end_year = new_epoch.split_date(new_epoch.end_date)[0]
     except ValueError:
+        errors.append("Incorrect date format")
+    except AttributeError:
         errors.append("Incorrect date format")
     try:
         new_epoch.end_month = new_epoch.split_date(new_epoch.end_date)[1]
@@ -216,6 +224,6 @@ def epochs_import(epoch):
     try:
         new_epoch.description = epoch["description"]
     except KeyError:
-        errors.append("Unable to locate epoch description.")
+        errors.append("Unable to locate epoch description")
     
     return new_epoch, errors
