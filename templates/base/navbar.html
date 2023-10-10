@@ -118,10 +118,16 @@
         <h4 class="message-header">INVITE</h4>   
         <div class=message-body>{{message.body}}</div>
         <div class="message-button-area">
-          <a href="{{url_for('campaign.accept_invite', campaign_name=message.target_campaign.title, campaign_id=message.target_campaign.id, message_id=message.id)}}">
+          <a href="{{url_for('campaign.accept_invite', 
+                              campaign_name=message.target_campaign.title, 
+                              campaign_id=message.target_campaign.id, 
+                              message_id=message.id)}}">
             <button class="message-button">ACCEPT</button>
           </a>
-          <a href="{{url_for('campaign.decline_invite', campaign_name=message.target_campaign.title, message_id=message.id)}}">
+          <a href="{{url_for('campaign.decline_invite', 
+                              campaign_name=message.target_campaign.title,
+                              campaign_id=message.target_campaign.id, 
+                              message_id=message.id)}}">
             <button class="message-button">DECLINE</button>
           </a>
         </div>
