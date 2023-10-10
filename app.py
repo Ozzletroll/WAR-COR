@@ -64,6 +64,9 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     from routes.campaign import bp as campaign_bp
     app.register_blueprint(campaign_bp)
 
+    from routes.membership import bp as membership_bp
+    app.register_blueprint(membership_bp)
+
     from routes.epoch import bp as epoch_bp
     app.register_blueprint(epoch_bp)
 

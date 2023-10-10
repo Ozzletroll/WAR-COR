@@ -74,7 +74,7 @@
                 </div>
                 <div class="members-right">
                   {% if not campaign in user.permissions%}
-                  <a href="{{ url_for('campaign.add_permission', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username, user_id=user.id) }}">
+                  <a href="{{ url_for('membership.add_permission', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username, user_id=user.id) }}">
                     <button class="entry-button">Make Admin</button>
                   </a>
                   {% else %}
@@ -165,7 +165,7 @@
             <p class="flavour-text modal-flavour">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::REVOKE</p>
             <p class="modal-text modal-text-upper">Confirm removal of {{ user.username }} from campaign "{{ campaign.title }}". Any admin privileges will be revoked.</p>
 
-            <a class="delete-comment-link" href="{{ url_for('campaign.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username) }}">
+            <a class="delete-comment-link" href="{{ url_for('membership.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username) }}">
               <button class="button modal-confirm-button">
                 {% if user.id == current_user.id %}
                 Leave
@@ -190,7 +190,7 @@
  <!-- Javascript -->
  <script src="/static/js/campaign_members.js"></script> 
  <script>
-  const target_url = "{{ url_for('campaign.user_search', campaign_name=campaign.title, campaign_id=campaign.id) }}"   
+  const target_url = "{{ url_for('membership.user_search', campaign_name=campaign.title, campaign_id=campaign.id) }}"   
   const csrfToken = "{{ csrf_token() }}"
 </script>
 
