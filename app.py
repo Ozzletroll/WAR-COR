@@ -79,6 +79,9 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     from routes.generator import bp as gen_bp
     app.register_blueprint(gen_bp)
 
+    from routes.search import bp as search_bp
+    app.register_blueprint(search_bp)
+
     from routes.error import bp as error_bp
     app.register_blueprint(error_bp)
 

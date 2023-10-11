@@ -1,0 +1,45 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/back_button.html" as back_button %}
+{% import "components/campaign_entry.html" as campaign_entry %}
+
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
+
+      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=true,
+                                        current_user=current_user,
+                                        campaign=campaign) }}
+
+        <div class="campaigns-title">
+          
+          {# Back button #}
+          {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {{ back_button.back_button(url=url, blank=false) }}
+
+          <div class="campaigns-heading-outer">
+            <h3 class="campaigns-heading">Advanced Search</h1>
+          </div>
+          
+        </div>
+  
+        <hr class="campaigns-divider">
+        <p class="flavour-text timeline-margin">UWC-71-04 // Advanced::Search</p>
+
+    </div>
+    
+  </div>
+
+</div>
+
+{% endblock %}

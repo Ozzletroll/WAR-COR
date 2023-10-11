@@ -6,8 +6,11 @@
   
 #}
 
+{% macro searchbar(campaign) %}
+
 <div id="searchbar" class="searchbar-border">
   <div class="searchbar-outer">
+
     <button id="searchbar-button" class="button searchbar-button">
       <label class="search-label">
 
@@ -22,9 +25,11 @@
 
       </label>
     </button>
+
     <div class="searchbar-area">
       <input id="search-bar" class="search-bar" placeholder="SEARCH">
-      <a href="">
+      {% if campaign is not none %}
+      <a href="{{ url_for('search.search_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
         <button class="button searchbar-advanced-button">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <title>Advanced Search</title>
@@ -36,7 +41,9 @@
           </svg>
         </button>
       </a>
+      {% endif %}
     </div>
+
     <div class="hits-area">
       <div id="hits-counter" class="hits-counter">
         {% if request.path == "/campaigns" %}
@@ -46,9 +53,10 @@
         {% endif %}
       </div>
     </div>
+
   </div>
 </div>
 
 <script src="/static/js/searchbar.js"></script>
 
-
+{%- endmacro %}

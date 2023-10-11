@@ -1796,6 +1796,7 @@ p {
 }
 
 .hits-counter {
+  text-transform: uppercase;
   padding: 5px;
 }
 
