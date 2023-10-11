@@ -30,7 +30,7 @@
           {# Back button #}
           
           {% if edit %}
-            {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, edit=true) %}
+            {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
           {% else %}
             {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
           {% endif %}

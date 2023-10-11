@@ -12,7 +12,11 @@
 
 {% block content %}
 
-{{ searchbar.searchbar(campaign, edit=true) }}
+{% if edit %}
+  {{ searchbar.searchbar(campaign, edit=true) }}
+{% else %}
+  {{ searchbar.searchbar(campaign) }}
+{% endif %}
 
 <div class="sidebar-page">
   {% include "components/sidebar.html" %}

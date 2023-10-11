@@ -32,13 +32,13 @@
       <input id="search-bar" class="search-bar" placeholder="SEARCH">
       {% if campaign is not none %}
         {% if edit %}
-          <a class="advanced-search-area" href="{{ url_for('search.search_campaign', campaign_name=campaign.title, campaign_id=campaign.id, edit=true) }}">
+          <a class="advanced-search-area" href="{{ url_for('search.advanced_search', campaign_name=campaign.title, campaign_id=campaign.id, edit=true) }}">
             <button class="button searchbar-advanced-button">
               ADVANCED
             </button>
           </a>
         {% else %}
-          <a class="advanced-search-area" href="{{ url_for('search.search_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+          <a class="advanced-search-area" href="{{ url_for('search.advanced_search', campaign_name=campaign.title, campaign_id=campaign.id) }}">
             <button class="button searchbar-advanced-button">
               ADVANCED
             </button>

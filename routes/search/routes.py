@@ -15,7 +15,7 @@ from routes.search import bp
 
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])
-def search_campaign(campaign_name, campaign_id):
+def advanced_search(campaign_name, campaign_id):
 
   campaign = db.session.execute(
         select(models.Campaign)
@@ -23,9 +23,20 @@ def search_campaign(campaign_name, campaign_id):
     
   form = forms.AdvancedSearchForm()
 
-  edit = bool(request.args["edit"])
+  if "edit" in request.args:
+    edit = bool(request.args["edit"])
+  else:
+    edit = False
 
   return render_template("advanced_search.html", 
                          form=form, 
                          campaign=campaign, 
                          edit=edit)
+
+
+
+# Function called via fetch request to search database
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/search/<search_query>", methods=["GET", "POST"])
+def search_campaign(campaign_name, campaign_id, search_query):
+
+  return
