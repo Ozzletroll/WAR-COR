@@ -47,8 +47,64 @@
 
     </div>
     
+    <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
+      <div class="bar-items-left">
+
+        <form class="search-form fade-in-block-2" method="POST">
+          {{ form.csrf_token }}
+          {{form.search(class_="form-input callsign-input search-input", placeholder="SEARCH QUERY", autocomplete="off")}}
+          {{form.submit(class_="button submit-button callsign-submit search-submit")}}
+        </form>
+
+        {% if results is not none %}
+          <div class="results-counter">
+            {% if results | length > 1 %}
+              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+            {% elif results | length == 1 %}
+              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULT</h5>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      </div>
+
+      {% include "components/view_toggles.html" %}
+    </div>
+
+    {# Animation fade in group 2 #}
+    <div class="search-campaigns-list fade-in-block-2">
+
+      <div class="search-campaigns-upper">
+        <div class="form-flash">
+          {% include 'components/flash.html' %}
+        </div>
+  
+        {% if results is none %}
+          <div id="empty-flavour" class="empty-search-entry">
+            <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
+            <h5 class="flavour-text typing-2 empty-search-header">>DATABASE::SEARCH</h5>
+            <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
+          </div>
+        {% endif %}
+
+        <div id="campaigns-list" class="campaign-search-results-area">
+
+          {# Results go here #}
+
+        </div>
+
+      </div>
+
+      
+
+    </div>
+
   </div>
 
 </div>
+
+<!-- Javascript -->
+<script src="/static/js/campaigns_layout.js"></script>
+
 
 {% endblock %}

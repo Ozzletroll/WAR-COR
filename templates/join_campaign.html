@@ -45,7 +45,7 @@
         <form class="search-form fade-in-block-2" method="POST">
           {{ form.csrf_token }}
           {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME", autocomplete="off")}}
-          {{form.submit(class_="submit-button callsign-submit search-submit")}}
+          {{form.submit(class_="button submit-button callsign-submit search-submit")}}
         </form>
 
         {% if results is not none %}
