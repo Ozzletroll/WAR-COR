@@ -2,11 +2,13 @@
   
   SEARCHBAR COMPONENT
   
-  Found on the campaigns page, timeline page and timeline edit page
+  Found on the campaigns page, timeline page and timeline edit page.
+  Edit boolean can be passed to direct advanced search page back 
+  button to edit timeline page.
   
 #}
 
-{% macro searchbar(campaign) %}
+{% macro searchbar(campaign, edit=false) %}
 
 <div id="searchbar" class="searchbar-border">
   <div class="searchbar-outer">
@@ -29,11 +31,20 @@
     <div class="searchbar-area">
       <input id="search-bar" class="search-bar" placeholder="SEARCH">
       {% if campaign is not none %}
-      <a class="advanced-search-area" href="{{ url_for('search.search_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-        <button class="button searchbar-advanced-button">
-          ADVANCED
-        </button>
-      </a>
+        {% if edit %}
+          <a class="advanced-search-area" href="{{ url_for('search.search_campaign', campaign_name=campaign.title, campaign_id=campaign.id, edit=true) }}">
+            <button class="button searchbar-advanced-button">
+              ADVANCED
+            </button>
+          </a>
+        {% else %}
+          <a class="advanced-search-area" href="{{ url_for('search.search_campaign', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+            <button class="button searchbar-advanced-button">
+              ADVANCED
+            </button>
+          </a>
+        {% endif %}
+      
       {% endif %}
     </div>
 

@@ -14,7 +14,11 @@
     {# Animation fade in group 1 #}
     <div class="fade-in-block-1">
 
-      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% if edit %}
+        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% else %}
+        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% endif %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                         is_link=true,
@@ -24,7 +28,12 @@
         <div class="campaigns-title">
           
           {# Back button #}
-          {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          
+          {% if edit %}
+            {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id, edit=true) %}
+          {% else %}
+            {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {% endif %}
           {{ back_button.back_button(url=url, blank=false) }}
 
           <div class="campaigns-heading-outer">

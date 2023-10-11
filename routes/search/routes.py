@@ -23,4 +23,9 @@ def search_campaign(campaign_name, campaign_id):
     
   form = forms.AdvancedSearchForm()
 
-  return render_template("advanced_search.html", form=form, campaign=campaign)
+  edit = bool(request.args["edit"])
+
+  return render_template("advanced_search.html", 
+                         form=form, 
+                         campaign=campaign, 
+                         edit=edit)
