@@ -1,6 +1,7 @@
-from flask import make_response, jsonify
+from sqlalchemy import select, or_
 
 from app import db
+import models
 
 
 
@@ -49,7 +50,18 @@ class SearchEngine:
         return self.results
 
     
-
     def search_campaign(self, campaign, query):
-        pass
-     
+
+        # Get the columns of the Event model, excluding irrelevant ones
+        excluded_columns = ["Year", "Month", "Day", "Hour", "Minute", "Second", "Header", "Hide Time"]
+        columns = [column for column in models.Event.__table__.columns if column.name not in excluded_columns]
+
+        # Construct .like statements for each column using given search query
+        query_filter = or_(*[column.like(f"%{query}%") for column in columns])
+
+        # Filter the Event model objects based on the query filter
+        event_results = (db.session.query(models.Event)
+                         .join(models.Campaign.events)
+                         .filter(models.Campaign.id == campaign.id, query_filter).all()) 
+
+        print(event_results)
