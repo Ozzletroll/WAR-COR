@@ -40,6 +40,48 @@ def edit_campaign_users(campaign_name, campaign_id):
                            form=form)
 
 
+# Remove campaign users
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user/<username>", methods=["GET"])
+@login_required
+def remove_campaign_users(campaign_name, campaign_id, username):
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
+    user_to_remove = username
+
+    # Check if username exists
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=user_to_remove)).scalar()
+
+    if user:
+        # Check is user is actually a member of the campaign
+        if user in campaign.members:
+            user.campaigns.remove(campaign)
+            flash(f"Removed {user.username} from campaign.")
+        # Remove editing permissions if they exist
+        if campaign in user.permissions:
+            user.permissions.remove(campaign)
+            flash(f"Removed {user.username}'s campaign permissions.")
+        # Check if campaign is left with no users, and delete if so
+        if len(campaign.members) == 0:
+            db.session.delete(campaign)
+            db.session.commit()
+            return redirect(url_for("campaign.campaigns"))
+
+        db.session.commit()
+    else:
+        flash("User not in database, please check username.")
+    return redirect(url_for("membership.edit_campaign_users", 
+                            campaign_name=campaign_name, 
+                            campaign_id=campaign.id))
+
+
 # Join campaign page
 @bp.route("/campaigns/join-campaign", methods=["GET", "POST"])
 @login_required
@@ -85,48 +127,6 @@ def join_campaign():
     return render_template("join_campaign.html",
                            form=form,
                            results=results)
-
-
-# Remove campaign users
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user/<username>", methods=["GET"])
-@login_required
-def remove_campaign_users(campaign_name, campaign_id, username):
-
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
-
-    # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
-
-    user_to_remove = username
-
-    # Check if username exists
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=user_to_remove)).scalar()
-
-    if user:
-        # Check is user is actually a member of the campaign
-        if user in campaign.members:
-            user.campaigns.remove(campaign)
-            flash(f"Removed {user.username} from campaign.")
-        # Remove editing permissions if they exist
-        if campaign in user.permissions:
-            user.permissions.remove(campaign)
-            flash(f"Removed {user.username}'s campaign permissions.")
-        # Check if campaign is left with no users, and delete if so
-        if len(campaign.members) == 0:
-            db.session.delete(campaign)
-            db.session.commit()
-            return redirect(url_for("campaign.campaigns"))
-
-        db.session.commit()
-    else:
-        flash("User not in database, please check username.")
-    return redirect(url_for("membership.edit_campaign_users", 
-                            campaign_name=campaign_name, 
-                            campaign_id=campaign.id))
 
 
 # Function called when applying to join campaign 
