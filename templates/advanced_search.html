@@ -75,9 +75,6 @@
     <div class="search-campaigns-list fade-in-block-2">
 
       <div class="search-campaigns-upper">
-        <div class="form-flash">
-          {% include 'components/flash.html' %}
-        </div>
   
         {% if results is none %}
           <div id="empty-flavour" class="empty-search-entry">
@@ -86,6 +83,10 @@
             <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
           </div>
         {% endif %}
+
+        <div class="form-flash">
+          {% include 'components/flash.html' %}
+        </div>
 
         <div id="campaigns-list" class="campaign-search-results-area">
 
@@ -105,6 +106,5 @@
 
 <!-- Javascript -->
 <script src="/static/js/campaigns_layout.js"></script>
-
 
 {% endblock %}
