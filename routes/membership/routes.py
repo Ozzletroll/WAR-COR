@@ -59,7 +59,7 @@ def join_campaign():
         # Ignore search if less than 3 characters
         if len(search) < 3:
             flash("Search queries must be three or more characters")
-            return redirect(url_for("campaign.join_campaign"))
+            return redirect(url_for("membership.join_campaign"))
 
         else:
             search_format = "%{}%".format(search)
@@ -71,7 +71,7 @@ def join_campaign():
                                         
             if len(results) == 0:
                 flash("No campaigns matching query found")
-                return redirect(url_for("campaign.join_campaign"))
+                return redirect(url_for("membership.join_campaign"))
 
             return render_template("join_campaign.html",
                            form=form,
