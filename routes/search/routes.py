@@ -45,6 +45,9 @@ def advanced_search(campaign_name, campaign_id):
         
         results = search_engine.return_results()
 
+        if len(results) == 0:
+            flash("No results found")
+
         # Only include edit argument if necessary
         if edit:
             return redirect(url_for("search.advanced_search",
