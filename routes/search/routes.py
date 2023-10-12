@@ -8,35 +8,59 @@ from app import db
 from routes.search import bp
 
 
-#   =======================================
-#                  Search
-#   =======================================
+# =======================================
+#                Search
+# =======================================
 
 
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])
 def advanced_search(campaign_name, campaign_id):
 
-  campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
-    
-  form = forms.AdvancedSearchForm()
+    campaign = db.session.execute(
+                select(models.Campaign)
+                .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        
+    form = forms.AdvancedSearchForm()
 
-  if "edit" in request.args:
-    edit = bool(request.args["edit"])
-  else:
-    edit = False
+    # Check if page has any results to render
+    if "results" not in request.args:
+        results = None
+    else:
+        results = request.args["results"]
 
-  return render_template("advanced_search.html", 
-                         form=form, 
-                         campaign=campaign, 
-                         edit=edit)
+    # Check if user came from the edit timeline page
+    if "edit" in request.args:
+        edit = bool(request.args["edit"])
+    else:
+        edit = False
+
+    # If form submitted, search database
+    if form.validate_on_submit():
+        search_query = request.form["search"]
+
+        search_engine = search.SearchEngine()
+        search_engine.search_campaign(campaign=campaign,
+                                    query=search_query)
+        
+        results = search_engine.return_results()
+
+        # Only include edit argument if necessary
+        if edit:
+            return redirect(url_for("search.advanced_search",
+                                    campaign_name=campaign.title,
+                                    campaign_id=campaign.id,
+                                    edit=edit,
+                                    results=results))
+        else:
+            return redirect(url_for("search.advanced_search",
+                                    campaign_name=campaign.title,
+                                    campaign_id=campaign.id,
+                                    results=results))
 
 
-
-# Function called via fetch request to search database
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/search/<search_query>", methods=["GET", "POST"])
-def search_campaign(campaign_name, campaign_id, search_query):
-
-  return
+    return render_template("advanced_search.html",
+                           form=form,
+                           campaign=campaign,
+                           edit=edit,
+                           results=results)
