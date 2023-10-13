@@ -41,8 +41,7 @@ def advanced_search(campaign_name, campaign_id):
 
         search_engine = search.SearchEngine()
         search_engine.search_campaign(campaign=campaign,
-                                    query=search_query)
-        
+                                      query=search_query)
         results = search_engine.return_results()
 
         if len(results) == 0:
