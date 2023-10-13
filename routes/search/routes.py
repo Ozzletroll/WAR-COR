@@ -47,20 +47,27 @@ def advanced_search(campaign_name, campaign_id):
 
         if len(results) == 0:
             flash("No results found")
-
-        # Only include edit argument if necessary
-        if edit:
-            return redirect(url_for("search.advanced_search",
-                                    campaign_name=campaign.title,
-                                    campaign_id=campaign.id,
-                                    edit=edit,
-                                    results=results))
+            if edit:
+                return redirect(url_for("search.advanced_search",
+                                        campaign_name=campaign.title,
+                                        campaign_id=campaign.id,
+                                        edit=edit))
+            else:
+                return redirect(url_for("search.advanced_search",
+                                        campaign_name=campaign.title,
+                                        campaign_id=campaign.id))
         else:
-            return redirect(url_for("search.advanced_search",
-                                    campaign_name=campaign.title,
-                                    campaign_id=campaign.id,
-                                    results=results))
-
+            if edit:
+                return render_template("advanced_search.html",
+                                        form=form,
+                                        campaign=campaign,
+                                        edit=edit,
+                                        results=results)
+            else:
+                return render_template("advanced_search.html",
+                                        form=form,
+                                        campaign=campaign,
+                                        results=results)
 
     return render_template("advanced_search.html",
                            form=form,

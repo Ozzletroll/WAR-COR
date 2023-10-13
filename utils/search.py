@@ -1,4 +1,4 @@
-from sqlalchemy import select, or_
+from sqlalchemy import select, or_, label
 
 from app import db
 import models
@@ -11,7 +11,7 @@ class Result:
     def __init__(self):
         self.relevenance = 0
         self.object = None
-        self.excerpt = ""
+        self.matching_attributes = []
 
 
 
@@ -43,17 +43,27 @@ class SearchEngine:
   
     def return_results(self):
 
-        for result in self.results:
-            pass
-
-
         return self.results
 
     
     def search_campaign(self, campaign, query):
 
+        self.results = []
+        query = query.lower()
+
         # Get the columns of the Event model, excluding irrelevant ones
-        excluded_columns = ["Year", "Month", "Day", "Hour", "Minute", "Second", "Header", "Hide Time"]
+        excluded_columns = ["id", 
+                            "year", 
+                            "month", 
+                            "day", 
+                            "hour", 
+                            "minute", 
+                            "second", 
+                            "header", 
+                            "hide_time",
+                            "campaign_id",
+                            "following_event_id"]
+        
         columns = [column for column in models.Event.__table__.columns if column.name not in excluded_columns]
 
         # Construct .like statements for each column using given search query
@@ -62,6 +72,20 @@ class SearchEngine:
         # Filter the Event model objects based on the query filter
         event_results = (db.session.query(models.Event)
                          .join(models.Campaign.events)
-                         .filter(models.Campaign.id == campaign.id, query_filter).all()) 
+                         .filter(models.Campaign.id == campaign.id, query_filter)
+                         .all()) 
 
-        print(event_results)
+        # Find the matching event attributes
+        for event in event_results:
+
+            result = Result()
+            result.object = event
+            
+            for column in columns:
+                attr_value = getattr(event, column.name)
+                if query in str(attr_value).lower():
+                    result.matching_attributes.append(column.name)
+
+            self.results.append(result)
+
+
