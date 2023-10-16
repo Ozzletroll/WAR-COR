@@ -1,5 +1,8 @@
+from flask import url_for
 from sqlalchemy import select, or_, label
 import editdistance
+from bs4 import BeautifulSoup
+import re
 
 from app import db
 import models
@@ -12,7 +15,11 @@ class Result:
     def __init__(self):
         self.relevance = 0
         self.object = None
+        self.type = ""
+        self.excerpt = ""
         self.matching_attributes = []
+        self.url = ""
+        self.edit_url = ""
 
 
 
@@ -81,6 +88,18 @@ class SearchEngine:
 
             result = Result()
             result.object = event
+            result.type = "Event"
+            result.url = url_for("event.view_event",
+                                 campaign_name=campaign.title,
+                                 campaign_id=campaign.id,
+                                 event_name=event.title,
+                                 event_id=event.id)
+            
+            result.edit_url = url_for("event.edit_event",
+                                      campaign_name=campaign.title,
+                                      campaign_id=campaign.id,
+                                      event_name=event.title,
+                                      event_id=event.id)
 
             scores = []
             
@@ -89,12 +108,15 @@ class SearchEngine:
                 attr_value = getattr(event, column.name)
                 if query in str(attr_value).lower():
 
-                    result.matching_attributes.append(column.name)
                     matching_words = []
 
                     for word in attr_value.split(" "):
                         if query in word.lower():
                             matching_words.append(word)
+
+                        result.matching_attributes.append(column.name)
+
+                        result.excerpt = self.create_excerpt(event)
 
                         relevance = editdistance.eval(query, word)
                         scores.append(relevance)
@@ -105,3 +127,20 @@ class SearchEngine:
             self.results.append(result)
 
 
+    @staticmethod
+    def create_excerpt(event):
+
+        excerpt_html = event.body
+
+        # Convert html to plaintext with BeautifulSoup
+        soup = BeautifulSoup(excerpt_html, "html.parser")
+        plain_text = soup.get_text()
+
+        # Ignore words within header tags
+        for header in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+            header_text = header.get_text()
+            plain_text = plain_text.replace(header_text, "")
+        
+        excerpt = " ".join(plain_text.split()[:30])
+        return f"{excerpt}..."
+    
