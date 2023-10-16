@@ -1,7 +1,8 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
-{% import "components/campaign_entry.html" as campaign_entry %}
+{% import "components/search_result.html" as search_result %}
+
 
 {% extends "base/base.html" %}
 
@@ -91,6 +92,15 @@
         <div id="campaigns-list" class="campaign-search-results-area">
 
           {# Results go here #}
+          {% if results is not none %}
+
+            {% for result in results %}
+
+              {{ search_result.result(result) }}
+
+            {% endfor %}
+
+          {% endif %}
 
         </div>
 

@@ -1,0 +1,27 @@
+{# 
+  
+  SEARCH RESULT COMPONENT
+  
+  Used by the advanced search page.
+  
+#}
+
+{% macro result(result) %}
+
+  <div class="search-result">
+    <a class="result-url" href="{{ result.url }}">
+      {{ result.type }}:
+      {{ result.object.title }}
+    </a>
+
+    <div class="result-excerpt">
+
+      {{ result.excerpt | safe }}
+
+    </div>
+
+    
+  </div>
+    
+
+{%- endmacro %}
