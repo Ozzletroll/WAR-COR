@@ -18,6 +18,7 @@ class Result:
         self.type = ""
         self.excerpt = ""
         self.matching_attributes = []
+        self.matching_attributes_text = ""
         self.url = ""
         self.edit_url = ""
 
@@ -109,21 +110,22 @@ class SearchEngine:
                 if query in str(attr_value).lower():
 
                     matching_words = []
+                    result.matching_attributes.append(column.name)
+                    result.excerpt = self.create_excerpt(event)
 
                     for word in attr_value.split(" "):
                         if query in word.lower():
                             matching_words.append(word)
-
-                        result.matching_attributes.append(column.name)
-
-                        result.excerpt = self.create_excerpt(event)
 
                         relevance = editdistance.eval(query, word)
                         scores.append(relevance)
 
             # Calculate final relevance score
             result.relevance = (sum(scores) / len(scores)) / len(scores)
-         
+
+            # Create matching attributes text for template
+            result.matching_attributes_text = ", ".join(result.matching_attributes).title()
+
             self.results.append(result)
 
 

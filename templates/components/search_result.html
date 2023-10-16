@@ -6,13 +6,20 @@
   
 #}
 
-{% macro result(result) %}
+{% macro result(result, edit=false) %}
 
-  <div class="search-result">
-    <a class="result-url" href="{{ result.url }}">
-      {{ result.type }}:
-      {{ result.object.title }}
-    </a>
+  <li class="search-result">
+    {% if edit %}
+      <a class="result-url" href="{{ result.edit_url }}">
+        {{ result.type }}:
+        {{ result.object.title }}
+      </a>
+    {% else %}
+      <a class="result-url" href="{{ result.url }}">
+        {{ result.type }}:
+        {{ result.object.title }}
+      </a>
+    {% endif %}
 
     <div class="result-excerpt">
 
@@ -20,8 +27,12 @@
 
     </div>
 
+    <div class="result-matching-fields">
+      <h5 class="result-header">Matching fields: {{ result.matching_attributes_text }}</h5>
+    </div>
+
     
-  </div>
+  </li>
     
 
 {%- endmacro %}

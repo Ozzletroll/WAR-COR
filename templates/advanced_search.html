@@ -69,7 +69,6 @@
 
       </div>
 
-      {% include "components/view_toggles.html" %}
     </div>
 
     {# Animation fade in group 2 #}
@@ -89,24 +88,26 @@
           {% include 'components/flash.html' %}
         </div>
 
-        <div id="campaigns-list" class="campaign-search-results-area">
+        <ol id="campaigns-list" class="campaign-search-results-area">
 
           {# Results go here #}
           {% if results is not none %}
 
-            {% for result in results %}
-
-              {{ search_result.result(result) }}
-
-            {% endfor %}
+            {% if edit %}
+              {% for result in results %}
+                {{ search_result.result(result, edit=true) }}
+              {% endfor %}
+            {% else %}
+              {% for result in results %}
+                {{ search_result.result(result) }}
+              {% endfor %}
+            {% endif %}
 
           {% endif %}
 
-        </div>
+        </ol>
 
       </div>
-
-      
 
     </div>
 
