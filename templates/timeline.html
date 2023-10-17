@@ -19,9 +19,9 @@
 {% block content %}
 
 {% if edit %}
-  {{ searchbar.searchbar(campaign, edit=true) }}
+  {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
 {% else %}
-  {{ searchbar.searchbar(campaign) }}
+  {{ searchbar.searchbar(campaign, timeline=true) }}
 {% endif %}
 
 <div class="sidebar-page">
