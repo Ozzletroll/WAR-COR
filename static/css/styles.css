@@ -4908,9 +4908,15 @@ pre {
 
 .results-counter {
   display: flex;
+  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
-  width: fit-content;
+}
+
+.results-counter .flavour-text {
+  width: 100%;
+  margin: 0;
+  font-size: 14px;
 }
 
 .results-flavour {
@@ -4922,3 +4928,43 @@ pre {
   width: 180px;
 }
 
+/* Advanced Search Page */
+
+.advanced-search-results-area {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 25px 0px;
+  gap: 30px;
+}
+
+.search-result {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.result-header-main {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.result-url {
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: var(--text_header);
+  transition: 0.15s;
+}
+
+.result-url:hover {
+  color: var(--text_header_hover);
+}
+
+.result-excerpt {
+  color: var(--text_dark);
+  font-weight: 300;
+}
+
+.result-header {
+  color: var(--text_dark);
+}

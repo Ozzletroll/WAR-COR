@@ -11,13 +11,17 @@
   <li class="search-result">
     {% if edit %}
       <a class="result-url" href="{{ result.edit_url }}">
-        {{ result.type }}:
-        {{ result.object.title }}
+        <h4 class="result-header-main">
+          {{ result.type }}:
+          {{ result.object.title }}
+        </h4>
       </a>
     {% else %}
       <a class="result-url" href="{{ result.url }}">
-        {{ result.type }}:
-        {{ result.object.title }}
+        <h4 class="result-header-main">
+          {{ result.type }}:
+          {{ result.object.title }}
+        </h4>
       </a>
     {% endif %}
 

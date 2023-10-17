@@ -57,22 +57,22 @@
           {{form.submit(class_="button submit-button callsign-submit search-submit")}}
         </form>
 
-        {% if results is not none %}
-          <div class="results-counter">
-            {% if results | length > 1 %}
-              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
-            {% elif results | length == 1 %}
-              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULT</h5>
-            {% endif %}
-          </div>
-        {% endif %}
-
       </div>
 
     </div>
 
     {# Animation fade in group 2 #}
     <div class="search-campaigns-list fade-in-block-2">
+
+      {% if results is not none %}
+          <div class="results-counter">
+            {% if results | length > 1 %}
+              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+            {% elif results | length == 1 %}
+              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULT</h5>
+            {% endif %}
+          </div>
+        {% endif %}
 
       <div class="search-campaigns-upper">
   
@@ -88,7 +88,7 @@
           {% include 'components/flash.html' %}
         </div>
 
-        <ol id="campaigns-list" class="campaign-search-results-area">
+        <ol id="campaigns-list" class="advanced-search-results-area">
 
           {# Results go here #}
           {% if results is not none %}
