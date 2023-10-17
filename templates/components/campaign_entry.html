@@ -51,7 +51,7 @@
         </div>
       {% else %}
         <div class="entry-button-outline">
-          <a href="{{ url_for('campaign.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+          <a href="{{ url_for('membership.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
             <button class="entry-button request-button">REQUEST MEMBERSHIP</button>
           </a>
         </div>
@@ -78,7 +78,7 @@
                 Timeline Data
               </button>
             </a>
-            <a href="{{ url_for('campaign.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+            <a href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id)}}">
               <button class="deploy-button">
                 <img class="icon icon-invert" src="/static/images/icons/user_management_dark.svg"> 
                 Members

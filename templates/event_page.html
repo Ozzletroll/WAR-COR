@@ -26,7 +26,11 @@
             <div class="campaigns-title">
               
               {# Back button #}
-              {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+              {% if "/search" in request.referrer %}
+                {% set url = url_for('search.advanced_search', campaign_name=campaign.title, campaign_id=campaign.id) %}
+              {% else %}
+                {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+              {% endif %}
               {{ back_button.back_button(url=url, blank=false) }}
 
               <div class="campaigns-heading-outer">

@@ -100,42 +100,6 @@ def backup_page(campaign_name, campaign_id):
     return render_template("backup.html", campaign=campaign, form=form)
 
 
-
-
-
-        #     try:
-        #         # Convert json data to campaign object
-        #         restored_campaign = serialisers.campaign_import(data, campaign)
-
-        #     except KeyError:
-        #         flash("KeyError: Please check JSON file formatting")
-        #         return redirect(url_for("data.backup_page", 
-        #                                 campaign_name=campaign.title, 
-        #                                 campaign_id=campaign.id))
-
-        #     else:
-        #         
-
-        #         db.session.commit()
-            
-        #     try:
-        #         
-
-        #     except KeyError:
-        #         flash("KeyError: Please check JSON file formatting")
-        #         return redirect(url_for("data.backup_page", 
-        #                                 campaign_name=campaign.title, 
-        #                                 campaign_id=campaign.id))
-
-        #     else:
-        #         db.session.commit()
-        #         flash(f"Campaign {campaign.title} succesfully restored from backup")
-
-       
-
-    
-
-
 # Backup campaign data
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/data/export")
 @login_required

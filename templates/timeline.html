@@ -1,4 +1,5 @@
 {# Component Macro imports #}
+{% import "components/searchbar.html" as searchbar %}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
@@ -11,7 +12,11 @@
 
 {% block content %}
 
-{% include "components/searchbar.html" %}
+{% if edit %}
+  {{ searchbar.searchbar(campaign, edit=true) }}
+{% else %}
+  {{ searchbar.searchbar(campaign) }}
+{% endif %}
 
 <div class="sidebar-page">
   {% include "components/sidebar.html" %}

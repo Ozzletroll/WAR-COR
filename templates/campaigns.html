@@ -1,4 +1,5 @@
 {# Component Macro imports #}
+{% import "components/searchbar.html" as searchbar %}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/campaign_entry.html" as campaign_entry %}
@@ -7,7 +8,7 @@
 
 {% block content %}
 
-{% include "components/searchbar.html" %}
+{{ searchbar.searchbar(campaign=none) }}
 
 <div class="scrollpage">
 
@@ -48,7 +49,7 @@
           </button>
         </a>
 
-        <a href="{{ url_for('campaign.join_campaign')}}">
+        <a href="{{ url_for('membership.join_campaign')}}">
           <button class="create-campaign-button">
             + JOIN CAMPAIGN
           </button>

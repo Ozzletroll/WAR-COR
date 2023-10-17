@@ -1,0 +1,42 @@
+{# 
+  
+  SEARCH RESULT COMPONENT
+  
+  Used by the advanced search page.
+  
+#}
+
+{% macro result(result, edit=false) %}
+
+  <li class="search-result">
+    {% if edit %}
+      <a class="result-url" href="{{ result.edit_url }}">
+        <h4 class="result-header-main">
+          {{ result.type }}:
+          {{ result.object.title }}
+        </h4>
+      </a>
+    {% else %}
+      <a class="result-url" href="{{ result.url }}">
+        <h4 class="result-header-main">
+          {{ result.type }}:
+          {{ result.object.title }}
+        </h4>
+      </a>
+    {% endif %}
+
+    <div class="result-excerpt">
+
+      {{ result.excerpt | safe }}
+
+    </div>
+
+    <div class="result-matching-fields">
+      <h5 class="result-header">Matching fields: {{ result.matching_attributes_text }}</h5>
+    </div>
+
+    
+  </li>
+    
+
+{%- endmacro %}

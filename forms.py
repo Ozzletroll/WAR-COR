@@ -137,3 +137,8 @@ class CommentForm(FlaskForm):
 class CampaignSearchForm(FlaskForm):
     search = StringField("Search", validators=[Length(min=3)])
     submit = SubmitField("Search")
+
+
+class AdvancedSearchForm(FlaskForm):
+    search = StringField("Search", validators=[Length(min=3)])
+    submit = SubmitField("Search")

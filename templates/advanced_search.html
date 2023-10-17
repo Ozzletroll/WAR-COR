@@ -1,0 +1,118 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/back_button.html" as back_button %}
+{% import "components/search_result.html" as search_result %}
+
+
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
+
+      {% if edit %}
+        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% else %}
+        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% endif %}
+
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                        is_link=true,
+                                        current_user=current_user,
+                                        campaign=campaign) }}
+
+        <div class="campaigns-title">
+          
+          {# Back button #}
+          
+          {% if edit %}
+            {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {% else %}
+            {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {% endif %}
+          {{ back_button.back_button(url=url, blank=false) }}
+
+          <div class="campaigns-heading-outer">
+            <h3 class="campaigns-heading">Advanced Search</h1>
+          </div>
+          
+        </div>
+  
+        <hr class="campaigns-divider">
+        <p class="flavour-text timeline-margin">UWC-71-04 // Advanced::Search</p>
+
+    </div>
+    
+    <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
+      <div class="bar-items-left">
+
+        <form class="search-form fade-in-block-2" method="POST">
+          {{ form.csrf_token }}
+          {{form.search(class_="form-input callsign-input search-input", placeholder="SEARCH QUERY", autocomplete="off")}}
+          {{form.submit(class_="button submit-button callsign-submit search-submit")}}
+        </form>
+
+      </div>
+
+    </div>
+
+    {# Animation fade in group 2 #}
+    <div class="search-campaigns-list fade-in-block-2">
+
+      {% if results is not none %}
+          <div class="results-counter">
+            {% if results | length > 1 %}
+              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+            {% elif results | length == 1 %}
+              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULT</h5>
+            {% endif %}
+          </div>
+        {% endif %}
+
+      <div class="search-campaigns-upper">
+  
+        {% if results is none %}
+          <div id="empty-flavour" class="empty-search-entry">
+            <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
+            <h5 class="flavour-text typing-2 empty-search-header">>DATABASE::SEARCH</h5>
+            <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
+          </div>
+        {% endif %}
+
+        <div class="form-flash">
+          {% include 'components/flash.html' %}
+        </div>
+
+        <ol id="campaigns-list" class="advanced-search-results-area">
+
+          {# Results go here #}
+          {% if results is not none %}
+
+            {% if edit %}
+              {% for result in results %}
+                {{ search_result.result(result, edit=true) }}
+              {% endfor %}
+            {% else %}
+              {% for result in results %}
+                {{ search_result.result(result) }}
+              {% endfor %}
+            {% endif %}
+
+          {% endif %}
+
+        </ol>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}
