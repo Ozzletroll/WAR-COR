@@ -1738,6 +1738,7 @@ p {
   background-color: var(--elem_mid);
   text-transform: uppercase;
   border: 1px solid var(--bg_colour2);
+  border-right: none;
   border-radius: 0;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
@@ -1764,7 +1765,7 @@ p {
   text-decoration: none;
 }
 
-.searchbar-advanced-button {
+.searchbar-go, .searchbar-advanced-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1776,18 +1777,27 @@ p {
   border-radius: 0;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
-  height: 32px;
   box-sizing: border-box;
   outline: none;
   transition: 0.15s;
 }
 
-.searchbar-advanced-button:hover {
+.searchbar-advanced-button {
+  border-radius: 3px;
+}
+
+.searchbar-go:hover, .searchbar-advanced-button:hover {
   background-color: var(--elem_hover);
 }
 
-.searchbar-advanced-button:active{
+.searchbar-go:hover, .searchbar-advanced-button:active{
   background-color: var(--elem_dark);
+}
+
+.searchbar-go {
+  padding: 0 10px;
+  border-left: none;
+  margin-right: 5px;
 }
 
 .hits-area {
@@ -1796,7 +1806,6 @@ p {
   justify-content: center;
   color: var(--text_dark);
   font-size: 10px;
-  margin: 10px;
   opacity: 50%;
 }
 

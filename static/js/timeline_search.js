@@ -559,17 +559,14 @@ const hitsCounter = document.getElementById("hits-counter");
 const initialValue = hitsCounter.innerText;
 const searchEngine = new SearchEngine(searchBar, hitsCounter)
 
+function triggerSearch() {
+  searchEngine.scrollToResults();
+}
+
 // Add event listener to the input field
 searchBar.addEventListener("input", () => searchEngine.timelineSearch());
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter" && searchBar.value.length > 0) {
     searchEngine.scrollToResults();
   }
-});
-
-// Add event listener to detect when the search bar loses focus
-searchBar.addEventListener("blur", function() {
-  // Clear searchbar
-  searchBar.value = "";
-  searchEngine.timelineSearch();
 });
