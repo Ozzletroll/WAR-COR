@@ -32,7 +32,7 @@ class SearchbarTab {
 
   closeTab() {
     this.tab.style.width = "";
-    this.tab.style.transform = "translateX(361px)";
+    this.tab.style.transform = "translateX(min(361px, 100vw))";
     this.state = false;
   }
 
@@ -40,8 +40,8 @@ class SearchbarTab {
     if (window.innerWidth <= 600 && this.state == true) {
       this.outer.style.justifyContent = "space-between";
       this.tab.style.width = "100vw";
-      this.area.style.flex = "3 1 0";
-      this.area.style.marginLeft = "30px";
+      this.area.style.flex = "4 1 0";
+      this.area.style.marginLeft = "10px";
       this.areaInner.style.width = "100%";
     }
     else {

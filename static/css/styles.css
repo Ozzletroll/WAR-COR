@@ -157,6 +157,14 @@
 
 /* Page Layout */
 
+body {
+  font-family: "Roboto Mono", monospace;
+  margin: 0;
+  background-color: var(--bg_colour1);
+  overflow-y: scroll;
+  transition: 1s;
+}
+
 .layout {
   display: flex;
   flex-direction: row;
@@ -167,6 +175,7 @@
   flex-direction: column;
   width: calc(100vw - (100vw - 100%));
   max-width: 1800px;
+  overflow-x: clip;
 }
 
 .onepage {
@@ -215,15 +224,6 @@
 }
 
 /* Basic elements */
-
-body {
-  font-family: "Roboto Mono", monospace;
-  margin: 0;
-  background-color: var(--bg_colour1);
-  overflow-y: scroll;
-  overflow-x: hidden;
-  transition: 1s;
-}
 
 .flashes {
   list-style-type: none;
@@ -1681,9 +1681,10 @@ p {
   background-color: var(--elem_mid);
   z-index: 2;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+  margin-left: -40px;
   margin-bottom: -82px;
-  transform: translateX(361px);
-  transition: 0.3s;
+  transform: translateX(min(361px, 100vw));
+  transition: 0.15s;
 }
 
 .searchbar-outer {
@@ -1818,9 +1819,11 @@ p {
 
 @media screen and (max-width: 380px) {
 
-  .searchbar-border{
-    display: none;
+  .searchbar-area {
+    width: 100%;
   }
+
+
   
 }
 
@@ -1840,7 +1843,6 @@ p {
   z-index: 1;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-bottom: -82px;
-  transition: 0.3s;
 }
 
 .edit-toggle-outer {
