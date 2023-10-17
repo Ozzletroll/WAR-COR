@@ -1432,6 +1432,10 @@ p {
     width: 45%;
   }
   
+  .form-container-margin-auto {
+    margin-left: auto;
+  }
+
   .form-container-large {
     width: 100%;
   }
@@ -1823,8 +1827,6 @@ p {
     width: 100%;
   }
 
-
-  
 }
 
 /* Edit Page Toggle */

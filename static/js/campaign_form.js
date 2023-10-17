@@ -71,8 +71,6 @@ class PreviewModal {
     var modalBody = document.getElementById("preview-modal-body");
     modalBody.innerHTML = content;
    
-    this.formatImages();
-  
   }
 
 }
