@@ -1,5 +1,6 @@
 {# Component Macro imports #}
 {% import "components/searchbar.html" as searchbar %}
+{% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
@@ -22,6 +23,14 @@
   {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
 {% else %}
   {{ searchbar.searchbar(campaign, timeline=true) }}
+{% endif %}
+
+{% if current_user.is_authenticated and campaign in current_user.permissions %}
+  {% if edit %}
+    {{ edit_toggle.edit_toggle(campaign, edit=true) }}
+  {% else %}
+    {{ edit_toggle.edit_toggle(campaign) }}
+  {% endif %}
 {% endif %}
 
 <div class="sidebar-page">

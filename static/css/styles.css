@@ -1679,7 +1679,7 @@ p {
   box-sizing: border-box;
   padding: 0px 1px 1px 1px;
   background-color: var(--elem_mid);
-  z-index: 1;
+  z-index: 2;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-bottom: -82px;
   transform: translateX(361px);
@@ -1822,6 +1822,60 @@ p {
     display: none;
   }
   
+}
+
+/* Edit Page Toggle */
+
+.edit-toggle-border {
+  display: flex;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 120px;
+  left: 100vw;
+  width: 40px;
+  height: 80px;
+  box-sizing: border-box;
+  padding: 0px 1px 1px 1px;
+  background-color: var(--elem_mid);
+  z-index: 1;
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+  margin-bottom: -82px;
+  transition: 0.3s;
+}
+
+.edit-toggle-outer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: var(--bg_colour1);
+  clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
+}
+
+.edit-toggle-url {
+  display: flex;
+  height: 100%;
+}
+
+.edit-toggle-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 5px 10px;
+  background-color: transparent;
+  border: medium;
+  transition: all 0.3s ease 0s;
+  clip-path: polygon(0px 0px, 100% 0%, 100% 100%, 15px 100%, 0px calc(100% - 15px));
+  box-sizing: border-box;
+}
+
+.edit-toggle-button:hover .icon-colour-var {
+  fill: var(--bright_red);
+}
+
+.edit-toggle-label {
+  cursor: pointer;
 }
 
 /* Animation Block */
