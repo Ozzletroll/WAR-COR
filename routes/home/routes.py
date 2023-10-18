@@ -1,4 +1,4 @@
-from flask import render_template, session, jsonify, make_response
+from flask import render_template, session, jsonify, make_response, request
 import datetime
 from routes.home import bp
 
@@ -49,9 +49,18 @@ def campaign_target():
 @bp.route("/session/timeline-scroll-target", methods=["GET"])
 def timeline_target():
 
-    if "timeline_scroll_target" in session:
-
+    if "timeline_relative_scroll" in session:
         response_data = {"Message": "Session variable cleared", 
+                         "type": "relative",
+                         "target": session["timeline_relative_scroll"]}
+        # Clear session variable
+        session.pop("timeline_relative_scroll", None)
+        response = make_response(jsonify(response_data), 200)
+
+    elif "timeline_scroll_target" in session:
+
+        response_data = {"Message": "Session variable cleared",
+                         "type": "element", 
                          "target": session["timeline_scroll_target"]}
         # Clear session variable
         session.pop("timeline_scroll_target", None)
@@ -59,5 +68,22 @@ def timeline_target():
 
     else:
         response = make_response({"Message": "Session variable not set"}, 204)
+
+    return response
+
+
+# Set scroll target when changing between editing and viewing timeline layer
+@bp.route("/session/timeline-edit-toggle", methods=["POST"])
+def timeline_edit_toggle():
+    """ This route is called via fetch request when the user clicks
+        to toggle between viewing and editing the timeline.
+        The target variable is an integer value referring to the
+        window.scrollY value of the page. """
+
+    json_data = request.get_json()
+    target = json_data["target"]
+
+    session["timeline_relative_scroll"] = f"{target}"
+    response = make_response({"Message": "Session variable set"}, 200)
 
     return response

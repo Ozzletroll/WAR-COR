@@ -1874,6 +1874,10 @@ p {
   box-sizing: border-box;
 }
 
+.edit-toggle-button .icon-colour-var {
+  fill: var(--text_header_dark);
+}
+
 .edit-toggle-button:hover .icon-colour-var {
   fill: var(--bright_red);
 }

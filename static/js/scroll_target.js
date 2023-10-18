@@ -13,9 +13,26 @@ function scrollToTarget(target_url, csrfToken) {
   })
   .then(function(data) {
     if (data) {
-      var targetElement = document.getElementById(data["target"]);
-      if (targetElement != null) {
-        targetElement.scrollIntoView();
+      if (data["type"] == "relative") {
+
+        const percentage = data["target"];
+
+        // Get the total height of the page
+        const pageHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+
+        // Calculate the scroll position based on the percentage
+        const scrollPosition = (pageHeight * percentage) / 100;
+
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: "instant"
+        });
+      }
+      else if (data["type"] == "element") {
+        var targetElement = document.getElementById(data["target"]);
+        if (targetElement != null) {
+          targetElement.scrollIntoView();
+        }
       }
     }
   });
