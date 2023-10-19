@@ -83,7 +83,7 @@ function checkEventHeight() {
 }
 
 // Add click event listener to close the modal when clicking outside
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   checkEventHeight();
 });
 window.addEventListener('resize', function() {
