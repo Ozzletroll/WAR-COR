@@ -1358,6 +1358,8 @@ p {
   display: flex;
   color: var(--text_header_dark);
   border-style: none;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
   background-color: var(--elem_dark);
   font-family: "Roboto Mono", monospace;
   font-size: 18px;
