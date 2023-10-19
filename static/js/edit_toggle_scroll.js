@@ -9,8 +9,6 @@ function getCentralElement() {
     y: Math.floor(screenHeight / 3)
   };
 
-  console.log(screenTarget)
-
   // Get all potential scroll target elements on page, removing ones with no id
   let elementList = Array.from(document.querySelectorAll(".timeline-event .timeline-event, .epoch-container, .timeline-year-header, .campaigns-heading, .campaign-overview, .last-edited-area"))
   .filter(element => element.id !== "");  
