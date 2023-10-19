@@ -32,7 +32,6 @@ class Tab {
 
   openTab() {
     this.tab.style.transform = "translateX(0)"
-    this.button_elem.style.transform = "translateX(0)"
     this.tab.style.marginRight = "0"
     this.state = true
     this.icon.src = "/static/images/icons/chevron_left.svg"
@@ -42,7 +41,6 @@ class Tab {
 
   closeTab() {
     this.tab.style.transform = "translateX(-300px)"
-    this.button_elem.style.transform = "translateX(0)"
     this.tab.style.marginRight = "-300px"
     this.state = false
     this.icon.src = "/static/images/icons/chevron_right.svg"

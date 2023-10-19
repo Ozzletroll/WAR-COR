@@ -3907,14 +3907,12 @@ for selection in timeline_search.js */
   align-items: center;
   background-color: var(--dark_red);
   color: var(--text_normal);
-  transform: translateX(0);
   height: 200px;
   width: 50px;
   max-width: 50px;
   top: 54px;
   position: -webkit-sticky;
   position: sticky;
-  transition: 0.5s;
   margin-right: -50px;
   clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
   z-index: 1;
