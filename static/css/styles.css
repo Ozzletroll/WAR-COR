@@ -2261,6 +2261,7 @@ p {
   justify-content: flex-end;
   height: 100%;
   padding-bottom: 10px;
+  scroll-margin-top: 40vh;
 }
 
 .last-updated-text {

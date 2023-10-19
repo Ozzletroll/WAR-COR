@@ -58,7 +58,7 @@
           {% set url = "" %}
           {{ back_button.back_button(url=url, blank=true) }}
 
-          <h3 class="campaigns-heading">{{campaign.title}}</h1>
+          <h3 id="campaigns-heading" class="campaigns-heading">{{campaign.title}}</h1>
         </div>
 
         <hr class="campaigns-divider">
@@ -70,7 +70,7 @@
 
         <!-- Overview and members list -->
         <div class="campaign-entry-container timeline-overview">
-          <div class="campaign-overview">
+          <div id="campaign-overview" class="campaign-overview">
             <h4 class="campaign-entry-title">Overview:</h4>
               {{ campaign.description | safe }}
           </div>
@@ -80,7 +80,7 @@
 
         </div>
 
-        <div class="campaign-overview last-edited-area">
+        <div id="last-edited-area" class="campaign-overview last-edited-area">
           <h4 class="campaign-entry-title">Last Updated:</h4>
           <p class="last-updated-text">{{ campaign.last_edited }}</p>
         </div>
@@ -215,7 +215,7 @@
 <script src="/static/js/timeline_search.js"></script>
 <script src="/static/js/scroll_target.js"></script> 
 <script>
-  window.addEventListener('load', scrollToTarget('{{ url_for("home.timeline_target") }}', '{{ csrf_token() }}'));
+  window.addEventListener('DOMContentLoaded', scrollToTarget('{{ url_for("home.timeline_target") }}', '{{ csrf_token() }}'));
 </script>
 
 {% endblock %}
