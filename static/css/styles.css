@@ -502,10 +502,10 @@ p {
   left: 100vw;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 2;
+  z-index: 10;
   overflow-y: scroll;
   margin-bottom: 0;
-  width: 350px;
+  width: 400px;
   height: 0;
   background-color: var(--elem_mid);
   border-top: 0px solid;
