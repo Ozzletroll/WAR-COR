@@ -58,6 +58,37 @@ buttons.forEach((button, index) => {
   
 });
 
+// Show/hide lower adjacent element links based on event-main-container height
+function checkEventHeight() {
+  var lowerAdjacentElement = document.querySelector(".adjacent-events-lower");
+
+  var event = document.querySelector(".event-centre-container");
+  var eventHeight = event.clientHeight + 200;
+  var windowHeight = window.innerHeight;
+  var windowWidth = window.innerWidth;
+
+  if (windowWidth > 1500) {
+    if (eventHeight > windowHeight) {
+      console.log("TRUE")
+      lowerAdjacentElement.style.display = "flex";
+    }
+    else {
+      lowerAdjacentElement.style.display = "none";
+    }
+  }
+  else {
+    lowerAdjacentElement.style.display = "flex";
+  }
+
+}
+
+// Add click event listener to close the modal when clicking outside
+window.addEventListener('DOMContentLoaded', function() {
+  checkEventHeight();
+});
+window.addEventListener('resize', function() {
+  checkEventHeight();
+});
 
 // Scroll header if header  on large screens and if header is broken across multiple lines.
 function checkHeader() {

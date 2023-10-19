@@ -146,13 +146,18 @@
 
               </div>
 
+              <div class="adjacent-events-lower">
+                {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=true) }}
+                {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=true) }}
+              </div>
+
             </div>
 
             {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true) }}
 
           </div>
 
-            
+
 
             <!-- User comments area -->
             <div class="comments-area fade-in-block-3">
