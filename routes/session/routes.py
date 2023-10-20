@@ -59,8 +59,9 @@ def timeline_target():
 def timeline_edit_toggle():
     """ This route is called via fetch request when the user clicks
         to toggle between viewing and editing the timeline.
-        The target variable is an integer value referring to the
-        window.scrollY value of the page. """
+        The target variable is a the id of the element closest
+        to where the user left off, which is used by the template
+        to scroll to. """
 
     json_data = request.get_json()
     target = json_data["target"]
