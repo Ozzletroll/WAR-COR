@@ -3,6 +3,7 @@ from flask import jsonify, make_response
 from routes.generator import bp
 from utils.generators import Generator
 
+
 #   =======================================
 #                Generators
 #   =======================================
