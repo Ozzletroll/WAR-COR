@@ -1,18 +1,3 @@
-import json
-import models
-from app import db
-
-TEST_USERNAME = "test_user"
-TEST_PASSWORD = "123"
-
-
-# Function to log in test user
-def example_login(client):
-    client.post("/login", follow_redirects=True, data={
-        "username": TEST_USERNAME,
-        "password": TEST_PASSWORD,
-    })
-
 
 # Test if the home page is reachable
 def test_home(client):
