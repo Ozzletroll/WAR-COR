@@ -1,6 +1,6 @@
 
 # Test random event name generator
-def test_campaign_scroll_target(client):
+def test_random_event_name_gen(client):
     response = client.get("generate/random-event-title")
 
     assert response.status_code == 200
