@@ -40,7 +40,7 @@ def campaign_target():
         response = make_response(jsonify(response_data), 200)
 
     else:
-        response = make_response({"Message": "Session variable not set"}, 204)
+        response = make_response(jsonify({"Message": "Session variable not set"}), 204)
 
     return response
     
