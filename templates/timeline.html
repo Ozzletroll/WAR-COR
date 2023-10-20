@@ -215,7 +215,7 @@
 <script src="/static/js/timeline_search.js"></script>
 <script src="/static/js/scroll_target.js"></script> 
 <script>
-  window.addEventListener('DOMContentLoaded', scrollToTarget('{{ url_for("home.timeline_target") }}', '{{ csrf_token() }}'));
+  window.addEventListener('DOMContentLoaded', scrollToTarget('{{ url_for("session.timeline_target") }}', '{{ csrf_token() }}'));
 </script>
 
 {% endblock %}
