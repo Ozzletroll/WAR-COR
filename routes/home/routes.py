@@ -33,7 +33,8 @@ def campaign_target():
 
     if "campaign_scroll_target" in session:
 
-        response_data = {"Message": "Session variable cleared", 
+        response_data = {"Message": "Session variable cleared",
+                         "type": "element", 
                          "target": session["campaign_scroll_target"]}
         # Clear session variable
         session.pop("campaign_scroll_target", None)
