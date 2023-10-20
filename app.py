@@ -99,21 +99,28 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
             response.headers["Pragma"] = "no-cache"
             return response
 
+    # os.path.join is used to allow the test config to also access the data
+    data_folder = os.path.join(os.path.dirname(__file__), 'utils', 'data')
+
+    # Create data folder if necessary
+    if not os.path.exists(data_folder):
+        os.makedirs(data_folder)
+
     # Create data for random name generator
     try:
-        with open(f"{app.root_path}/utils/data/nouns.json", "r") as file:
+        with open(os.path.join(data_folder, 'nouns.json'), 'r') as file:
             pass
     except FileNotFoundError:
         create_data()
 
     try:
-        with open(f"{app.root_path}/utils/data/adjectives.json", "r") as file:
+        with open(os.path.join(data_folder, 'adjectives.json'), 'r') as file:
             pass
     except FileNotFoundError:
         create_data()    
 
     try:
-        with open(f"{app.root_path}/utils/data/verbs.json", "r") as file:
+        with open(os.path.join(data_folder, 'verbs.json'), 'r') as file:
             pass
     except FileNotFoundError:
         create_data()
