@@ -30,7 +30,11 @@
     </button>
 
     <div class="searchbar-area">
-      <input id="search-bar" class="search-bar" placeholder="SEARCH">
+      {% if timeline %}
+        <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH">
+      {% else %}
+        <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH">
+      {% endif %}
       {% if timeline %}
         <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
