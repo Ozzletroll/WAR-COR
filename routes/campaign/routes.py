@@ -85,7 +85,7 @@ def create_campaign():
         new_campaign.update(form=request.form, 
                             new=True)
         
-        # Add current user as campaign membere
+        # Add current user as campaign members
         current_user.campaigns.append(new_campaign)
 
         # Give current user campaign editing permissions
