@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session
+from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
 import werkzeug
@@ -7,7 +7,6 @@ import auth
 import forms
 import models
 import utils.organisers as organisers
-import utils.messengers as messengers
 
 from app import db
 from routes.campaign import bp
