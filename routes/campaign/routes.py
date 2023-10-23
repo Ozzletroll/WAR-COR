@@ -103,7 +103,7 @@ def create_campaign():
                                 campaign_name=campaign.title, 
                                 campaign_id=campaign.id))
 
-     # Flash form errors
+    # Flash form errors
     for field_name, errors in form.errors.items():
         for error_message in errors:
             flash(field_name + ": " + error_message)
@@ -135,7 +135,7 @@ def edit_campaign(campaign_name, campaign_id):
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
-     # Flash form errors
+    # Flash form errors
     for field_name, errors in form.errors.items():
         for error_message in errors:
             flash(field_name + ": " + error_message)
