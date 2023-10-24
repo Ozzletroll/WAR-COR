@@ -61,3 +61,38 @@ def test_duplicate_user_registration(client, app, auth):
     # Test if only 1 user matching that user exists in database
     query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).all()
     assert len(query) == 1
+
+
+def test_delete_user(client, app, auth):
+    new_username = "Delete Me"
+    new_password = "123"
+
+    response_1 = auth.register(username=new_username,
+                               password=new_password)
+    assert response_1.status_code == 200
+
+    query = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
+    assert query is not None
+
+    # Test if incorrect username fails
+    auth.login(username=new_username, password=new_password)
+    response_2 = auth.delete(username=new_username,
+                             given_username="Incorrect Username",
+                             given_password=new_password)
+    assert response_2.status_code == 200
+    assert b"<li>Authentication failed. Incorrect username.</li>" in response_2.data
+
+    # Test if incorrect password fails
+    response_3 = auth.delete(username=new_username,
+                             given_username=new_username,
+                             given_password="Incorrect Password")
+    assert response_3.status_code == 200
+    assert b"<li>Authentication failed. Incorrect password.</li>" in response_3.data
+
+    # Test if correct credentials lead to user deletion
+    response_4 = auth.delete(username=new_username,
+                             given_username=new_username,
+                             given_password=new_password)
+    assert response_4.status_code == 200
+    query_2 = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
+    assert query_2 is None

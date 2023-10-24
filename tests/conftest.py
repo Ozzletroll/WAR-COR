@@ -50,3 +50,12 @@ class AuthActions(object):
 
     def logout(self):
         return self._client.get("/logout", follow_redirects=True)
+
+    def delete(self, username, given_username, given_password):
+        url = url_for("user.delete_user", username=username)
+        return self._client.post(url, follow_redirects=True, data={
+            "username": given_username,
+            "password": given_password,
+        })
+
+
