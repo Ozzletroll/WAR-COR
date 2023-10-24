@@ -29,6 +29,11 @@ def auth(client):
     return AuthActions(client)
 
 
+@pytest.fixture()
+def campaign(client):
+    return CampaignActions(client)
+
+
 class AuthActions(object):
     """ Class to facilitate common user auth functions during testing """
 
@@ -59,3 +64,32 @@ class AuthActions(object):
         })
 
 
+class CampaignActions(object):
+    """ Class to facilitate common campaign actions """
+
+    def __init__(self, client):
+        self._client = client
+
+    def create(self, title="Test Campaign", description="Test Description"):
+        return self._client.post("/campaigns/create_campaign", follow_redirects=True, data={
+            "title": title,
+            "description": description,
+        })
+
+    def edit(self, campaign_name, campaign_id, title="Edited Title", description="Edited Description"):
+        url = url_for("campaign.delete_campaign",
+                      campaign_name=campaign_name,
+                      campaign_id=campaign_id)
+        return self._client.post(url, follow_redirects=True, data={
+            "title": title,
+            "description": description,
+        })
+
+    def delete(self, campaign_name, campaign_id, username="test", password="test"):
+        url = url_for("campaign.delete_campaign",
+                      campaign_name=campaign_name,
+                      campaign_id=campaign_id)
+        return self._client.post(url, follow_redirects=True, data={
+            "username": username,
+            "password": password
+        })
