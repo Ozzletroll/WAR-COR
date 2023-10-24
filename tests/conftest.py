@@ -1,11 +1,18 @@
 import pytest
+from flask import url_for
 from app import create_app
+from app import db
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def app():
     app = create_app(database_uri="sqlite:///test.db")
     yield app
+
+    # Teardown
+    with app.app_context():
+        db.session.close()
+        db.drop_all()
 
 
 @pytest.fixture()
