@@ -22,8 +22,6 @@ def register():
 
     # Check if user is already logged in and redirect if they are
     if current_user.is_authenticated:
-        # Debug message
-        print("User already logged in.")
         return redirect(url_for("home.home"))
 
     form = forms.RegisterUserForm()
