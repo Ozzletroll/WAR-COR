@@ -89,10 +89,26 @@ def test_delete_user(client, app, auth):
     assert response_3.status_code == 200
     assert b"<li>Authentication failed. Incorrect password.</li>" in response_3.data
 
-    # Test if correct credentials lead to user deletion
+    # Test if user can be deleted if logged in as another user
+    auth.logout()
+    auth.login(username=TEST_USERNAME,
+               password=TEST_PASSWORD)
     response_4 = auth.delete(username=new_username,
                              given_username=new_username,
                              given_password=new_password)
-    assert response_4.status_code == 200
+    assert response_4.status_code == 403
     query_2 = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
-    assert query_2 is None
+    assert query_2 is not None
+
+    # Test if correct credentials lead to user deletion
+    auth.logout()
+    auth.login(username=new_username,
+               password=new_password)
+    response_5 = auth.delete(username=new_username,
+                             given_username=new_username,
+                             given_password=new_password)
+    assert response_5.status_code == 200
+    query_3 = db.session.execute(select(models.User).filter_by(username=new_username)).scalar()
+    assert query_3 is None
+
+
