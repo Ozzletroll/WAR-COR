@@ -42,10 +42,22 @@ def test_logout(client, auth):
 
 def test_user_page(client, app, auth):
     # Login user
-    # Login user
     auth.login(username=TEST_USERNAME,
                password=TEST_PASSWORD)
 
     # Test if the user page accessible
     response = client.get(f"/user/{TEST_USERNAME}", follow_redirects=True)
     assert b'<h3 class="user-heading heading-line-2">test_user</h3>' in response.data
+
+
+def test_duplicate_user_registration(client, app, auth):
+    # Test if another user with same credentials can be added
+    response = auth.register(username=TEST_USERNAME,
+                             password=TEST_PASSWORD)
+    assert response.status_code == 200
+    # Test if user has been redirected due to username already being in use
+    assert b"<li>Username already in use. Please choose a new username.</li>" in response.data
+
+    # Test if only 1 user matching that user exists in database
+    query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).all()
+    assert len(query) == 1
