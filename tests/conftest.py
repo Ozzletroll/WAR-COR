@@ -76,13 +76,13 @@ class CampaignActions(object):
             "description": description,
         })
 
-    def edit(self, campaign_name, campaign_id, title="Edited Title", description="Edited Description"):
-        url = url_for("campaign.delete_campaign",
+    def edit(self, campaign_name, campaign_id, new_title="Edited Title", new_description="Edited Description"):
+        url = url_for("campaign.edit_campaign",
                       campaign_name=campaign_name,
                       campaign_id=campaign_id)
         return self._client.post(url, follow_redirects=True, data={
-            "title": title,
-            "description": description,
+            "title": new_title,
+            "description": new_description,
         })
 
     def view(self, campaign_name, campaign_id):
