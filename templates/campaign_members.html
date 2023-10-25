@@ -119,7 +119,7 @@
           {{ form.csrf_token }}
           <div class="user-form-container">
             {{ form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH", autocomplete='off') }}
-            {{ form.submit(class_="submit-button callsign-submit", onClick="user_search(target_url, csrfToken)") }}
+            {{ form.submit(class_="button submit-button callsign-submit", onClick="user_search(target_url, csrfToken)") }}
           </div>
         </form>
 
