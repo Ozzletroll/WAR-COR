@@ -8,8 +8,6 @@ import models
 import utils.messengers as messengers
 
 from app import db
-from routes.campaign import bp
-
 from routes.membership import bp
 
 
