@@ -147,8 +147,12 @@
               </div>
 
               <div class="adjacent-events-lower">
-                {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=true) }}
-                {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=true) }}
+                <div class="adjacent-lower-left">
+                  {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=true) }}
+                </div>
+                <div class="adjacent-lower-right">
+                  {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=true) }}
+                </div>
               </div>
 
             </div>
