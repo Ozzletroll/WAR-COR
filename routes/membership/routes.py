@@ -38,6 +38,41 @@ def edit_campaign_users(campaign_name, campaign_id):
                            form=form)
 
 
+# Function called when adding a new user
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["GET"])
+@login_required
+def add_user(campaign_name, campaign_id):
+
+    user_to_add = request.args["username"]
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id)).scalar()
+
+    # Check if the user has permissions to edit the target campaign.
+    auth.permission_required(campaign)
+
+    # Check if username exists
+    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+    if user:
+        # Check if user isn't already a member
+        if campaign not in user.campaigns:
+
+            messengers.send_invite_message(sender=current_user,
+                                           recipient=user,
+                                           campaign=campaign)
+
+            flash(f"{user.username} invited to campaign.")
+        else:
+            flash(f"{user.username} is already a member of this campaign.")
+    else:
+        flash("User not in database, please check username.")
+
+    return redirect(url_for("membership.edit_campaign_users",
+                            campaign_name=campaign_name,
+                            campaign_id=campaign.id))
+
+
 # Remove campaign users
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user/<username>", methods=["GET"])
 @login_required
@@ -114,8 +149,8 @@ def join_campaign():
                 return redirect(url_for("membership.join_campaign"))
 
             return render_template("join_campaign.html",
-                           form=form,
-                           results=results)
+                                   form=form,
+                                   results=results)
 
     # Flash form errors
     for field_name, errors in form.errors.items():
@@ -182,41 +217,6 @@ def user_search(campaign_name, campaign_id):
         response = make_response(results, 200)
         
     return response
-
-
-# Function called when adding a new user
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["GET"])
-@login_required
-def add_user(campaign_name, campaign_id):
-
-    user_to_add = request.args["username"]
-
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
-
-    # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
-
-    # Check if username exists
-    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
-    if user:
-        # Check if user isn't already a member
-        if campaign not in user.campaigns:
-
-            messengers.send_invite_message(sender=current_user, 
-                                           recipient=user,
-                                           campaign=campaign)
-
-            flash(f"{user.username} invited to campaign.")
-        else:
-            flash(f"{user.username} is already a member of this campaign.")
-    else:
-        flash("User not in database, please check username.")
-
-    return redirect(url_for("membership.edit_campaign_users", 
-                            campaign_name=campaign_name, 
-                            campaign_id=campaign.id))
 
 
 # Function called when user accepts a campaign invitation
