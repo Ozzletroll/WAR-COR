@@ -1058,7 +1058,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--bright_red);
+  background-color: var(--darker_red);
   margin: auto;
   padding: 0px;
   width: min(80%, 500px);
@@ -1067,7 +1067,7 @@ p {
   -webkit-animation-name: modalanim;
   -webkit-animation-duration: 0.4s;
   animation-name: modalanim;
-  animation-duration: 0.3s;
+  animation-duration: 0.5s;
   clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 100% 100% ,0 100%);
   box-sizing: border-box;
   border-radius: 5px;
@@ -1106,6 +1106,7 @@ p {
   text-transform: uppercase;
   height: fit-content;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  border-top-left-radius: 3px;
 }
 
 .modal-header-small {
@@ -1122,6 +1123,8 @@ p {
   font-weight: 300;
   background-color: var(--elem_mid);
   box-sizing: border-box;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .modal-body-small {
