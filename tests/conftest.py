@@ -97,3 +97,10 @@ class CampaignActions(object):
             "username": username,
             "password": password
         })
+
+    def add_user(self, campaign_name, campaign_id, username):
+        url = url_for("membership.add_user",
+                      campaign_name=campaign_name,
+                      campaign_id=campaign_id,
+                      username=username)
+        return self._client.get(url, follow_redirects=True)
