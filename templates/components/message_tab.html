@@ -1,0 +1,119 @@
+<div id="messages-tab" class="notifications-dropdown">
+  
+    <ul class="notifications-list">
+    {% if current_user.messages | length == 0 %}
+      
+      <li class="message-item">
+        <h5 class="no-message-header">NO MESSAGES</h5>
+        <div class="no-message-text-area">
+          <p class="flavour-text no-message-flavour">//Communications:Online</p>
+          <p class="flavour-text no-message-flavour">//Satellite:Lock</p>
+          <p class="flavour-text no-message-flavour no-message-spacer">>Awaiting Uplink_</p>
+        </div>
+      </li>
+  
+    {% endif %}
+  
+    {% if current_user.messages | length >= 2 %}
+  
+    <h4 class="message-count">{{current_user.messages | length}} New Messages</h4>
+    
+    <a href="{{ url_for('user.dismiss_all', username=current_user.username, current_url=request.url) }}">
+      <button class="message-button">DISMISS ALL</button>
+    </a>
+  
+    {% endif %}
+  
+    {% for message in current_user.messages | sort(attribute="date") | reverse %}
+  
+      {% if message.invite %}
+  
+        <h5 class="message-date">{{message.date}}</h5>
+  
+        <li class="message-item">
+          <h4 class="message-header">INVITE</h4>   
+          <div class=message-body>{{message.body}}</div>
+          <div class="message-button-area">
+
+            <button id="message-accept-{{ message.id }}" class="button message-button accept-button" 
+            onclick="acceptInvite(event)"
+            data-csrf="{{ csrf_token() }}"
+            data-url="{{ url_for('membership.accept_invite') }}"
+            data-campaign-id="{{ message.target_campaign.id }}"
+            data-message-id="{{ message.id }}">
+            ACCEPT
+            </button>
+
+            <button id="message-decline-{{ message.id }}" class="button message-button decline-button" 
+            onclick="declineInvite(event)"
+            data-csrf="{{ csrf_token() }}"
+            data-url="{{ url_for('membership.decline_invite') }}"
+            data-campaign-id="{{ message.target_campaign.id }}"
+            data-message-id="{{ message.id }}">
+            DECLINE
+            </button>
+
+          </div>
+        </li>
+        
+      {% elif message.notification %}
+  
+      <h5 class="message-date">{{message.date}}</h5>
+  
+      <li class="message-item">
+        <h4 class="message-header">ALERT</h4>
+        <div class=message-body>{{message.body}}</div>
+        <div class="message-button-area">
+          {% if message.target_event is not none %}
+          <a href="{{ url_for('user.dismiss_message',
+                               message_id=message.id,
+                               username=current_user.username,
+                               current_url=url_for('event.view_event',
+                                                    campaign_name=message.target_campaign.title,
+                                                    campaign_id=message.target_campaign.id,
+                                                    event_name=message.target_event.title,
+                                                    event_id=message.target_event.id,
+                                                    scroll_target=scroll_target)) }}">
+            <button class="message-button">VIEW</button>
+          </a>
+          {% endif %}
+          {% set scroll_target = "event" ~ "-" ~ message.target_event.id | string %}
+          <a href="{{ url_for('user.dismiss_message', 
+                               message_id=message.id, 
+                               username=current_user.username, 
+                               current_url=request.url) }}">
+            <button class="message-button">DISMISS</button>
+          </a>
+        </div>
+      </li>
+      {% elif message.request %}
+  
+        <h5 class="message-date">{{message.date}}</h5>
+  
+        <li class="message-item">
+          <h4 class="message-header">REQUEST</h4>   
+          <div class=message-body>{{message.body}}</div>
+          <div class="message-button-area">
+            <a href="{{url_for('membership.confirm_request', 
+                                campaign_name=message.target_campaign.title, 
+                                campaign_id=message.target_campaign.id, 
+                                message_id=message.id)}}">
+              <button class="message-button">ACCEPT</button>
+            </a>
+            <a href="{{url_for('membership.deny_request', 
+                                campaign_name=message.target_campaign.title,
+                                campaign_id=message.target_campaign.id, 
+                                message_id=message.id)}}">
+              <button class="message-button">DECLINE</button>
+            </a>
+          </div>
+        </li>
+  
+      {% endif %}
+  
+    {% endfor %}
+    </ul>
+  
+</div>
+
+<script src="/static/js/message_tab.js"></script> 
