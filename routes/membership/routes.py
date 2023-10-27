@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session
+from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
 from sqlalchemy import select
 from flask_login import login_required, current_user
 
@@ -220,11 +220,13 @@ def user_search(campaign_name, campaign_id):
 
 
 # Function called when user accepts a campaign invitation
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/accept-invite", methods=["GET"])
+@bp.route("/campaigns/accept-invite", methods=["POST"])
 @login_required
-def accept_invite(campaign_name, campaign_id):
+def accept_invite():
+    """ Function called via fetch request from navbar template when user accepts a campaign invitation. """
 
-    message_id = request.args["message_id"]
+    message_id = request.form["message_id"]
+    campaign_id = request.form["campaign_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -262,13 +264,18 @@ def accept_invite(campaign_name, campaign_id):
         else:
             flash(f"Already a member of campaign: {campaign.title}")
 
+    # If message is not valid for current user trying to access it
+    # redirect to error page
+    else:
+        abort(403)
+
     return redirect(url_for("campaign.campaigns"))
 
 
 # Function called when user declines a campaign invitation
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/decline-invite", methods=["GET"])
+@bp.route("/campaigns/decline-invite", methods=["GET"])
 @login_required
-def decline_invite(campaign_name, campaign_id):
+def decline_invite():
 
     message_id = request.args["message_id"]
 

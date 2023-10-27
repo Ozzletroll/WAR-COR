@@ -66,4 +66,10 @@ function acceptInvite(event) {
       },
       body: formData
     })
+    .then((response)=>{         
+      if(response.redirected){
+          window.location.href = response.url;
+      }
+  })
+
 }
