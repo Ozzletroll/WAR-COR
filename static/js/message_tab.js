@@ -43,7 +43,8 @@ const messages_tab = new messageTab({
 })
 
 
-function acceptInvite(event) {
+// Function to accept/decline campaign invite messages
+function handleMessage(event) {
 
   const button = event.target;
 
@@ -59,17 +60,16 @@ function acceptInvite(event) {
 
   // Send to server via fetch request
   fetch(URL, {
-      method: "POST",
-      redirect: "follow",
-      headers: {
-        "X-CSRF-TOKEN": csrf,
-      },
-      body: formData
-    })
-    .then((response)=>{         
-      if(response.redirected){
-          window.location.href = response.url;
-      }
+    method: "POST",
+    redirect: "follow",
+    headers: {
+      "X-CSRF-TOKEN": csrf,
+    },
+    body: formData
   })
-
-}
+  .then((response)=>{         
+    if(response.redirected){
+      window.location.href = response.url;
+    } 
+  })
+};

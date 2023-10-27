@@ -247,7 +247,6 @@ def accept_invite():
             # Delete message
             db.session.delete(message)
             db.session.commit()
-            flash(f"Accepted invitation to campaign: {campaign.title}")
 
             # Create recipients list, omitting the accepting user themselves
             recipients = [user for user in campaign.members if user.id != message.target_user.id]
@@ -261,9 +260,6 @@ def accept_invite():
             # Set scroll target
             session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
-        else:
-            flash(f"Already a member of campaign: {campaign.title}")
-
     # If message is not valid for current user trying to access it
     # redirect to error page
     else:
@@ -273,11 +269,11 @@ def accept_invite():
 
 
 # Function called when user declines a campaign invitation
-@bp.route("/campaigns/decline-invite", methods=["GET"])
+@bp.route("/campaigns/decline-invite", methods=["POST"])
 @login_required
 def decline_invite():
 
-    message_id = request.args["message_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -286,14 +282,13 @@ def decline_invite():
     # Check if target message is actually for the current user
     if message.target_user == current_user:
 
-        campaign_name_flash = message.target_campaign.title
-
         db.session.delete(message)
         db.session.commit()
 
-        flash(f"Declined invitation to campaign: {campaign_name_flash}")
+    else:
+        abort(403)
 
-    return redirect(url_for("campaign.campaigns"))
+    return redirect(request.referrer)
 
 
 # Function called when admin accepts new membership request
