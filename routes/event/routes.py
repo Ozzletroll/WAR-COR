@@ -18,7 +18,7 @@ from routes.event import bp
 
 
 # View event
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>")
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
 def view_event(campaign_name, campaign_id, event_name, event_id):
 
     event = db.session.execute(
@@ -31,6 +31,7 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     belligerents = event.separate_belligerents() 
 
     form = forms.CommentForm()
+    delete_form = forms.DeleteConfirmForm()
 
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"event-{event.id}"
@@ -63,7 +64,8 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                            event=event, 
                            campaign=campaign, 
                            belligerents=belligerents,
-                           form=form)
+                           form=form,
+                           delete_form=delete_form)
 
 
 # Add new event
@@ -150,7 +152,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
-    delete_form = forms.DeleteEventForm()
+    delete_form = forms.DeleteConfirmForm()
 
     if form.validate_on_submit():
         # Update event object using form data
@@ -218,7 +220,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
 
 
 # Delete comment
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment/<comment_id>/delete")
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment/<comment_id>/delete", methods=["POST"])
 @login_required
 def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id):
     
