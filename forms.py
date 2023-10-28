@@ -100,7 +100,7 @@ class CreateEventForm(FlaskForm):
     submit = SubmitField("Create Event")
 
 
-class DeleteEventForm(FlaskForm):
+class DeleteConfirmForm(FlaskForm):
     submit = SubmitField("Delete")
 
 
