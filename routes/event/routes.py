@@ -18,7 +18,7 @@ from routes.event import bp
 
 
 # View event
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>")
 def view_event(campaign_name, campaign_id, event_name, event_id):
 
     event = db.session.execute(
@@ -150,6 +150,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
+    delete_form = forms.DeleteEventForm()
 
     if form.validate_on_submit():
         # Update event object using form data
@@ -179,12 +180,13 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
                             campaign_name=campaign.title,
                             event_name=event.title,
                             form=form,
+                            delete_form=delete_form,
                             event=event,
                             edit=True)
 
 
 # Delete existing event
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/delete", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/delete", methods=["POST"])
 @login_required
 def delete_event(campaign_name, campaign_id, event_name, event_id):
 

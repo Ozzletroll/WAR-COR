@@ -1168,9 +1168,11 @@ p {
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   border: 1px solid var(--bright_red);
+  font-family: "Roboto Mono", monospace;
   font-weight: 500;
   margin: 0;
   transition: 0.3s;
+  text-transform: uppercase;
 }
 
 .modal-confirm-button:hover {

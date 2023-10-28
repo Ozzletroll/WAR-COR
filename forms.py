@@ -100,6 +100,10 @@ class CreateEventForm(FlaskForm):
     submit = SubmitField("Create Event")
 
 
+class DeleteEventForm(FlaskForm):
+    submit = SubmitField("Delete")
+
+
 class CreateEpochForm(FlaskForm):
     # Register custom validators for error collection
     class Meta:
