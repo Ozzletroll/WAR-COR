@@ -28,16 +28,18 @@ def edit_campaign_users(campaign_name, campaign_id):
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
-    form = forms.SearchUserForm()
+    search_form = forms.SearchUserForm()
     add_form = forms.AddUserForm()
+    remove_form = forms.AddUserForm()
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("campaign_members.html", 
                            campaign=campaign, 
-                           form=form,
-                           add_form=add_form)
+                           search_form=search_form,
+                           add_form=add_form,
+                           remove_form=remove_form)
 
 
 # Function called by user searching for new members on edit members page
@@ -122,23 +124,25 @@ def add_user(campaign_name, campaign_id):
 
 
 # Remove campaign users
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user/<username>", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user", methods=["POST"])
 @login_required
-def remove_campaign_users(campaign_name, campaign_id, username):
+def remove_campaign_users(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
-
+    
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
-    user_to_remove = username
+    username = request.form["username"]
+    user_id = request.form["user_id"]
 
     # Check if username exists
     user = db.session.execute(
         select(models.User)
-        .filter_by(username=user_to_remove)).scalar()
+        .filter_by(username=username, 
+                   id=user_id)).scalar()
 
     if user:
         # Check is user is actually a member of the campaign
@@ -156,6 +160,14 @@ def remove_campaign_users(campaign_name, campaign_id, username):
             return redirect(url_for("campaign.campaigns"))
 
         db.session.commit()
+
+        # Check if campaign left with no admins
+        if len(campaign.admins) == 0:
+            for user in campaign.members:
+                user.permissions.append(campaign)
+            db.session.commit()
+            return redirect(url_for("campaign.campaigns"))
+
     else:
         flash("User not in database, please check username.")
     return redirect(url_for("membership.edit_campaign_users", 
