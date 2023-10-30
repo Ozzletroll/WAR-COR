@@ -127,9 +127,18 @@
           
           <!-- This marker is just a reference node for the insertBefore() method -->
           <div id="results-marker"></div>
+
         </div>
 
-
+        {# Hidden form, populated via javascript onclick event listener #}
+        <form id="add-user-form" class="add-member-form form-hidden" method="POST">
+          {{ add_form.csrf_token }}
+          <div class="user-form-container">
+            {{ add_form.username }}
+            {{ add_form.user_id }}
+            {{ add_form.submit_button(id="add-user-submit") }}
+          </div>
+        </form>
 
 
       </div>

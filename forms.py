@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField, IntegerField
 from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError, Length
 from flask_ckeditor import CKEditorField
 import re
@@ -118,9 +118,17 @@ class CreateEpochForm(FlaskForm):
     description = CKEditorField("Description")
     submit = SubmitField("Create Epoch")
 
-class AddUserForm(FlaskForm):
+class SearchUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     submit = SubmitField("Search")
+
+
+class AddUserForm(FlaskForm):
+    """ The name "submit_button" is used rather than "submit" as to avoid conflict 
+        with javascript form.submit() funtion. """
+    username = StringField("Username", validators=[DataRequired()])
+    user_id = IntegerField("User ID", validators=[DataRequired()])
+    submit_button = SubmitField("Invite")
 
 
 class ChangeCallsignForm(FlaskForm):

@@ -28,22 +28,66 @@ def edit_campaign_users(campaign_name, campaign_id):
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
-    form = forms.AddUserForm()
+    form = forms.SearchUserForm()
+    add_form = forms.AddUserForm()
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("campaign_members.html", 
                            campaign=campaign, 
-                           form=form)
+                           form=form,
+                           add_form=add_form)
 
 
-# Function called when adding a new user
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["GET"])
+# Function called by user searching for new members on edit members page
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
+@login_required
+def user_search(campaign_name, campaign_id):
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+
+    # Query database for users with similar usernames
+    search = request.form["username"]
+    if len(search) == 0:
+        response = make_response(jsonify({"message": "Please enter a search query"}), 400)
+        return response
+    
+    search_format = "%{}%".format(search)
+    users = db.session.execute(select(models.User)
+                               .filter(models.User.username.like(search_format))).scalars()
+
+    # Format results as dict
+    results = {"results": {user.username: {"id": user.id,
+                                           "username": user.username} 
+                                           for user in users 
+                                           if user not in campaign.members},
+               "target_url": url_for('membership.add_user',
+                                     campaign_name=campaign.title,
+                                     campaign_id=campaign.id)}
+    
+    # Check if query returned no results
+    if len(results["results"]) == 0:
+        response = make_response(jsonify({"message": "No users found"}), 204)
+    # Otherwise, send good response
+    else:
+        response = make_response(results, 200)
+        
+    return response
+
+
+# Function called when inviting a new user via new user page
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["POST"])
 @login_required
 def add_user(campaign_name, campaign_id):
+    """ Function called via hidden form submission from add members page.
+    The form is populated dynamically by javascript when the user clicks
+    the 'invite' button beside a username search result entry. """
 
-    user_to_add = request.args["username"]
+    username = request.form["username"]
+    user_id = request.form["user_id"]
 
     campaign = db.session.execute(
         select(models.Campaign)
@@ -53,7 +97,11 @@ def add_user(campaign_name, campaign_id):
     auth.permission_required(campaign)
 
     # Check if username exists
-    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=username, 
+                   id=user_id)).scalar()
+    
     if user:
         # Check if user isn't already a member
         if campaign not in user.campaigns:
@@ -181,42 +229,6 @@ def request_membership(campaign_name, campaign_id):
     flash(f"Membership request to campaign '{campaign_name}' sent")
 
     return redirect(url_for("membership.join_campaign"))
-
-
-# Function called by user searching for new members on edit members page
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
-@login_required
-def user_search(campaign_name, campaign_id):
-
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
-
-    # Query database for users with similar usernames
-    search = request.form["username"]
-    if len(search) == 0:
-        response = make_response(jsonify({"message": "Please enter a search query"}), 400)
-        return response
-    
-    search_format = "%{}%".format(search)
-    users = db.session.execute(select(models.User)
-                               .filter(models.User.username.like(search_format))).scalars()
-
-    # Format results as dict
-    results = {user.username: [user.id, url_for('membership.add_user',
-                                                 campaign_name=campaign.title,
-                                                 campaign_id=campaign.id,
-                                                 username=user.username)]
-            for user in users if user not in campaign.members}
-    
-    # Check if query returned no results
-    if len(results) == 0:
-        response = make_response(jsonify({"message": "No users found"}), 204)
-    # Otherwise, send good response
-    else:
-        response = make_response(results, 200)
-        
-    return response
 
 
 # Function called when user accepts a campaign invitation
