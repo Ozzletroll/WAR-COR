@@ -42,7 +42,7 @@
     <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
       <div class="bar-items-left">
 
-        <form class="search-form fade-in-block-2" method="POST">
+        <form class="join-campaign-form search-form fade-in-block-2" method="POST">
           {{ form.csrf_token }}
           {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME", autocomplete="off")}}
           {{form.submit(class_="button submit-button callsign-submit search-submit")}}
@@ -51,9 +51,9 @@
         {% if results is not none %}
           <div class="results-counter">
             {% if results | length > 1 %}
-              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
+              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
             {% elif results | length == 1 %}
-              <h5 class="flavour-text typing-1 empty-search-header search-header-bold results-flavour">{{ results | length }} RESULT</h5>
+              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULT</h5>
             {% endif %}
           </div>
         {% endif %}

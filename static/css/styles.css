@@ -2562,6 +2562,8 @@ p {
 
 .callsign-input {
   display: flex;
+  flex: 1 0 0;
+  max-width: 250px;
   font-size: 16px;
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
@@ -4996,6 +4998,10 @@ pre {
   }
 }
 
+.join-campaign-upper .bar-items-left {
+  width: 100%;
+}
+
 .campaign-search-results-area {
   display: flex;
   flex-direction: column;
@@ -5006,24 +5012,31 @@ pre {
 
 .results-counter {
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 2 auto;
   justify-content: center;
   align-items: center;
 }
 
+@media screen and (max-width: 600px) {
+  .results-counter {
+    display: none;
+  }
+}
+
 .results-counter .flavour-text {
-  width: 100%;
+  display: flex;
   margin: 0;
   font-size: 14px;
 }
 
 .results-flavour {
-  overflow: hidden;
-  white-space: nowrap;
+  width: 100%;
 }
 
 .request-button {
+  text-transform: uppercase;
   width: 180px;
+  font-family: "Roboto Mono", monospace;
 }
 
 /* Advanced Search Page */

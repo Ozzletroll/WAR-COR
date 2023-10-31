@@ -8,6 +8,8 @@
 
   Takes the current campaign object as first argument, and 
   the flask_login current_user.
+  The search_results and form are passed from the join campaign route, for
+  rendering search results.
 
 #}
 
@@ -54,7 +56,7 @@
         <form method="POST" action="{{ url_for('membership.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
           {{ form.csrf_token }}
           <div class="entry-button-outline">
-            {{ form.submit(class_="entry-button request-button") }}
+            {{ form.submit(class_="button entry-button request-button") }}
           </div>
         </form>
 
