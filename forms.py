@@ -131,6 +131,10 @@ class AddUserForm(FlaskForm):
     submit_button = SubmitField("Invite")
 
 
+class SubmitForm(FlaskForm):
+    submit = SubmitField("Request Membership")
+
+
 class ChangeCallsignForm(FlaskForm):
     callsign = StringField("New Callsign", validators=[DataRequired(), Length(max=30)])
     submit = SubmitField("Update")

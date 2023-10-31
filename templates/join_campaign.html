@@ -85,7 +85,7 @@
           {% if results is not none %}
             {% for campaign in results %}
 
-              {{ campaign_entry.campaign_entry(campaign=campaign, current_user=current_user, search_result=true) }}
+              {{ campaign_entry.campaign_entry(campaign=campaign, current_user=current_user, search_result=true, form=request_form) }}
 
             {% endfor %}
           {% endif %}

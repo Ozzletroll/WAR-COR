@@ -11,7 +11,7 @@
 
 #}
 
-{% macro campaign_entry(campaign=campaign, current_user=current_user, search_result=false) %}
+{% macro campaign_entry(campaign=campaign, current_user=current_user, search_result=false, form=none) %}
 
 <section class="campaign-entry">
 
@@ -50,11 +50,14 @@
           </a>
         </div>
       {% else %}
-        <div class="entry-button-outline">
-          <a href="{{ url_for('membership.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
-            <button class="entry-button request-button">REQUEST MEMBERSHIP</button>
-          </a>
-        </div>
+
+        <form method="POST" action="{{ url_for('membership.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
+          {{ form.csrf_token }}
+          <div class="entry-button-outline">
+            {{ form.submit(class_="entry-button request-button") }}
+          </div>
+        </form>
+
       {% endif %}
 
     

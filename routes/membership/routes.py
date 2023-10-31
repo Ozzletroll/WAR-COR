@@ -181,6 +181,7 @@ def remove_campaign_users(campaign_name, campaign_id):
 def join_campaign():
 
     form = forms.CampaignSearchForm()
+    request_form = forms.SubmitForm()
 
     # Check if page has any results to render
     if "results" not in request.args:
@@ -210,6 +211,7 @@ def join_campaign():
 
             return render_template("join_campaign.html",
                                    form=form,
+                                   request_form=request_form,
                                    results=results)
 
     # Flash form errors
@@ -219,11 +221,12 @@ def join_campaign():
 
     return render_template("join_campaign.html",
                            form=form,
+                           request_form=request_form,
                            results=results)
 
 
 # Function called when applying to join campaign 
-@bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["GET"])
+@bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["POST"])
 @login_required
 def request_membership(campaign_name, campaign_id):
 
