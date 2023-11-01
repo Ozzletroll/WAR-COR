@@ -95,7 +95,7 @@ def logout():
 
 
 # Access user page
-@bp.route("/user/<username>", methods=["GET", "POST"])
+@bp.route("/user/<username>", methods=["GET"])
 @login_required
 def user_page(username) :
 
@@ -124,7 +124,7 @@ def user_page(username) :
                             password_form=password_form)
 
 
-@bp.route("/user/<username>/update-callsign", methods=["GET", "POST"])
+@bp.route("/user/<username>/update-callsign", methods=["POST"])
 @login_required
 def update_callsign(username):
 
@@ -155,7 +155,7 @@ def update_callsign(username):
     return redirect(url_for("user.user_page", username=username))   
 
 
-@bp.route("/user/<username>/change-username", methods=["GET", "POST"])
+@bp.route("/user/<username>/change-username", methods=["POST"])
 @login_required
 def change_username(username):
 
@@ -193,7 +193,7 @@ def change_username(username):
     return redirect(url_for("user.user_page", username=user.username))
         
 
-@bp.route("/user/<username>/change-password", methods=["GET", "POST"])
+@bp.route("/user/<username>/change-password", methods=["POST"])
 @login_required
 def change_password(username):
 
@@ -228,7 +228,7 @@ def change_password(username):
     return redirect(url_for("user.user_page", username=user.username))
 
 
-@bp.route("/user/<username>/delete", methods=["GET", "POST"])
+@bp.route("/user/<username>/delete", methods=["POST"])
 @login_required
 def delete_user(username):
 
