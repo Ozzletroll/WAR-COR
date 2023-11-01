@@ -16,12 +16,15 @@
   
     {% if current_user.messages | length >= 2 %}
   
-    <h4 class="message-count">{{current_user.messages | length}} New Messages</h4>
-    
-    <a href="{{ url_for('user.dismiss_all', username=current_user.username, current_url=request.url) }}">
-      <button class="message-button">DISMISS ALL</button>
-    </a>
-  
+      <h4 class="message-count">{{current_user.messages | length}} New Messages</h4>
+      
+        <button id="dismiss-all" class="button message-button" 
+        onclick="handleMessage(event)"
+        data-csrf="{{ csrf_token() }}"
+        data-url="{{ url_for('user.dismiss_all') }}">
+        DISMISS ALL
+        </button>
+
     {% endif %}
   
     {% for message in current_user.messages | sort(attribute="date") | reverse %}
@@ -65,25 +68,27 @@
         <div class=message-body>{{message.body}}</div>
         <div class="message-button-area">
           {% if message.target_event is not none %}
-          <a href="{{ url_for('user.dismiss_message',
-                               message_id=message.id,
-                               username=current_user.username,
-                               current_url=url_for('event.view_event',
-                                                    campaign_name=message.target_campaign.title,
-                                                    campaign_id=message.target_campaign.id,
-                                                    event_name=message.target_event.title,
-                                                    event_id=message.target_event.id,
-                                                    scroll_target=scroll_target)) }}">
-            <button class="message-button">VIEW</button>
+            <button id="view-message-{{ message.id }}" class="button message-button accept-button" 
+            onclick="handleMessage(event)"
+            data-csrf="{{ csrf_token() }}"
+            data-url="{{ url_for('user.dismiss_message', view=True) }}"
+            data-campaign-id="{{ message.target_campaign.id }}"
+            data-message-id="{{ message.id }}">
+            VIEW
+            </button>
+
           </a>
           {% endif %}
-          {% set scroll_target = "event" ~ "-" ~ message.target_event.id | string %}
-          <a href="{{ url_for('user.dismiss_message', 
-                               message_id=message.id, 
-                               username=current_user.username, 
-                               current_url=request.url) }}">
-            <button class="message-button">DISMISS</button>
-          </a>
+
+          <button id="dismiss-message-{{ message.id }}" class="button message-button decline-button" 
+          onclick="handleMessage(event)"
+          data-csrf="{{ csrf_token() }}"
+          data-url="{{ url_for('user.dismiss_message') }}"
+          data-campaign-id="{{ message.target_campaign.id }}"
+          data-message-id="{{ message.id }}">
+          DISMISS
+          </button>
+
         </div>
       </li>
       {% elif message.request %}
