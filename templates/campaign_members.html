@@ -74,13 +74,18 @@
                 </div>
                 <div class="members-right">
                   {% if not campaign in user.permissions%}
-                  <a href="{{ url_for('membership.add_permission', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username, user_id=user.id) }}">
-                    <button class="entry-button">Make Admin</button>
-                  </a>
+                    <form id="make-admin-form" class="add-member-form" method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+                      {{ add_form.csrf_token }}
+                      <div class="user-form-container">
+                        {{ add_form.username(value=user.username, class_="form-hidden") }}
+                        {{ add_form.user_id(value=user.id, class_="form-hidden") }}
+                        {{ add_form.submit_button(value="MAKE ADMIN", class_="button entry-button") }}
+                      </div>
+                    </form>
                   {% else %}
-                  <div class="button members-button-spacer">
-                    <div class="spacer-inner">ADMIN</div>
-                  </div>
+                    <div class="button members-button-spacer">
+                      <div class="spacer-inner">ADMIN</div>
+                    </div>
                   {% endif %}
                   
                   <button id ="button-{{ loop.index }}" class="entry-button">
@@ -116,10 +121,10 @@
         <p class="flavour-text">CNF-{{campaign.id}}-02 // {{campaign.title}}::Recruitment </p>
 
         <form id="form-1" class="add-member-form" onsubmit="return false" novalidate>
-          {{ form.csrf_token }}
+          {{ search_form.csrf_token }}
           <div class="user-form-container">
-            {{ form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH", autocomplete='off') }}
-            {{ form.submit(class_="button submit-button callsign-submit", onClick="user_search(target_url, csrfToken)") }}
+            {{ search_form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH", autocomplete='off') }}
+            {{ search_form.submit(class_="button submit-button callsign-submit", onClick="user_search(target_url, csrfToken)") }}
           </div>
         </form>
 
@@ -127,9 +132,18 @@
           
           <!-- This marker is just a reference node for the insertBefore() method -->
           <div id="results-marker"></div>
+
         </div>
 
-
+        {# Hidden form, populated via javascript onclick event listener #}
+        <form id="add-user-form" class="add-member-form form-hidden" method="POST">
+          {{ add_form.csrf_token }}
+          <div class="user-form-container">
+            {{ add_form.username }}
+            {{ add_form.user_id }}
+            {{ add_form.submit_button(id="add-user-submit") }}
+          </div>
+        </form>
 
 
       </div>
@@ -165,15 +179,20 @@
             <p class="flavour-text modal-flavour">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::REVOKE</p>
             <p class="modal-text modal-text-upper">Confirm removal of {{ user.username }} from campaign "{{ campaign.title }}". Any admin privileges will be revoked.</p>
 
-            <a class="delete-comment-link" href="{{ url_for('membership.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id, username=user.username) }}">
-              <button class="button modal-confirm-button">
-                {% if user.id == current_user.id %}
-                Leave
-                {% else %}
-                Remove
-                {% endif %}
-              </button>
-            </a>
+            <form id="remove-user-form" class="add-member-form" method="POST" action="{{ url_for('membership.remove_campaign_users', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+              {{ remove_form.csrf_token }}
+              <div class="user-form-container">
+                {{ remove_form.username(value=user.username, class_="form-hidden") }}
+                {{ remove_form.user_id(value=user.id, class_="form-hidden") }}
+                  {% if user.id == current_user.id %}
+                    {% set text = "Leave" %}
+                    {{ remove_form.submit_button(value=text, class_="button modal-confirm-button") }}
+                  {% else %}
+                    {% set text = "Remove" %}
+                    {{ remove_form.submit_button(value=text, class_="button modal-confirm-button") }}
+                  {% endif %}
+              </div>
+            </form>
 
           </div>
         </div>

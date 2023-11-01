@@ -333,11 +333,10 @@
                 <p class="flavour-text modal-flavour">MSG-{{campaign.id}}-{{event.id}} // DELETION::CONFIRM</p>
                 <p class="modal-text modal-text-upper">Confirm termination of event: "{{event.title}}"</p>
 
-                <a class="delete-comment-link" href="{{ url_for('event.delete_event', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id) }}">
-                  <button class="button modal-confirm-button">
-                    DELETE
-                  </button>
-                </a>
+                <form method="POST" action="{{ url_for('event.delete_event', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id) }}">
+                  {{ delete_form.csrf_token }}
+                  {{ delete_form.submit(class_="button modal-confirm-button", ) }}
+                </form>
 
               </div>
             </div>

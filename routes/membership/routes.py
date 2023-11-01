@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session
+from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
 from sqlalchemy import select
 from flask_login import login_required, current_user
 
@@ -28,22 +28,68 @@ def edit_campaign_users(campaign_name, campaign_id):
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
-    form = forms.AddUserForm()
+    search_form = forms.SearchUserForm()
+    add_form = forms.AddUserForm()
+    remove_form = forms.AddUserForm()
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("campaign_members.html", 
                            campaign=campaign, 
-                           form=form)
+                           search_form=search_form,
+                           add_form=add_form,
+                           remove_form=remove_form)
 
 
-# Function called when adding a new user
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["GET"])
+# Function called by user searching for new members on edit members page
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
+@login_required
+def user_search(campaign_name, campaign_id):
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+
+    # Query database for users with similar usernames
+    search = request.form["username"]
+    if len(search) == 0:
+        response = make_response(jsonify({"message": "Please enter a search query"}), 400)
+        return response
+    
+    search_format = "%{}%".format(search)
+    users = db.session.execute(select(models.User)
+                               .filter(models.User.username.like(search_format))).scalars()
+
+    # Format results as dict
+    results = {"results": {user.username: {"id": user.id,
+                                           "username": user.username} 
+                                           for user in users 
+                                           if user not in campaign.members},
+               "target_url": url_for('membership.add_user',
+                                     campaign_name=campaign.title,
+                                     campaign_id=campaign.id)}
+    
+    # Check if query returned no results
+    if len(results["results"]) == 0:
+        response = make_response(jsonify({"message": "No users found"}), 204)
+    # Otherwise, send good response
+    else:
+        response = make_response(results, 200)
+        
+    return response
+
+
+# Function called when inviting a new user via new user page
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["POST"])
 @login_required
 def add_user(campaign_name, campaign_id):
+    """ Function called via hidden form submission from add members page.
+    The form is populated dynamically by javascript when the user clicks
+    the 'invite' button beside a username search result entry. """
 
-    user_to_add = request.args["username"]
+    username = request.form["username"]
+    user_id = request.form["user_id"]
 
     campaign = db.session.execute(
         select(models.Campaign)
@@ -53,7 +99,11 @@ def add_user(campaign_name, campaign_id):
     auth.permission_required(campaign)
 
     # Check if username exists
-    user = db.session.execute(select(models.User).filter_by(username=user_to_add)).scalar()
+    user = db.session.execute(
+        select(models.User)
+        .filter_by(username=username, 
+                   id=user_id)).scalar()
+    
     if user:
         # Check if user isn't already a member
         if campaign not in user.campaigns:
@@ -74,23 +124,25 @@ def add_user(campaign_name, campaign_id):
 
 
 # Remove campaign users
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user/<username>", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user", methods=["POST"])
 @login_required
-def remove_campaign_users(campaign_name, campaign_id, username):
+def remove_campaign_users(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
-
+    
     # Check if the user has permissions to edit the target campaign.
     auth.permission_required(campaign)
 
-    user_to_remove = username
+    username = request.form["username"]
+    user_id = request.form["user_id"]
 
     # Check if username exists
     user = db.session.execute(
         select(models.User)
-        .filter_by(username=user_to_remove)).scalar()
+        .filter_by(username=username, 
+                   id=user_id)).scalar()
 
     if user:
         # Check is user is actually a member of the campaign
@@ -108,6 +160,14 @@ def remove_campaign_users(campaign_name, campaign_id, username):
             return redirect(url_for("campaign.campaigns"))
 
         db.session.commit()
+
+        # Check if campaign left with no admins
+        if len(campaign.admins) == 0:
+            for user in campaign.members:
+                user.permissions.append(campaign)
+            db.session.commit()
+            return redirect(url_for("campaign.campaigns"))
+
     else:
         flash("User not in database, please check username.")
     return redirect(url_for("membership.edit_campaign_users", 
@@ -121,6 +181,7 @@ def remove_campaign_users(campaign_name, campaign_id, username):
 def join_campaign():
 
     form = forms.CampaignSearchForm()
+    request_form = forms.SubmitForm()
 
     # Check if page has any results to render
     if "results" not in request.args:
@@ -150,6 +211,7 @@ def join_campaign():
 
             return render_template("join_campaign.html",
                                    form=form,
+                                   request_form=request_form,
                                    results=results)
 
     # Flash form errors
@@ -159,11 +221,12 @@ def join_campaign():
 
     return render_template("join_campaign.html",
                            form=form,
+                           request_form=request_form,
                            results=results)
 
 
 # Function called when applying to join campaign 
-@bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["GET"])
+@bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["POST"])
 @login_required
 def request_membership(campaign_name, campaign_id):
 
@@ -172,10 +235,7 @@ def request_membership(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
     
     # Retrieve the users with editing permissions for the campaign
-    campaign_admins = db.session.execute(
-        db.select(models.User)
-        .join(models.user_edit_permissions)
-        .where(models.user_edit_permissions.c.campaign_id == campaign.id)).scalars()
+    campaign_admins = campaign.admins
 
     messengers.send_membership_request(current_user, campaign_admins, campaign)
     flash(f"Membership request to campaign '{campaign_name}' sent")
@@ -183,48 +243,14 @@ def request_membership(campaign_name, campaign_id):
     return redirect(url_for("membership.join_campaign"))
 
 
-# Function called by user searching for new members on edit members page
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
-@login_required
-def user_search(campaign_name, campaign_id):
-
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
-
-    # Query database for users with similar usernames
-    search = request.form["username"]
-    if len(search) == 0:
-        response = make_response(jsonify({"message": "Please enter a search query"}), 400)
-        return response
-    
-    search_format = "%{}%".format(search)
-    users = db.session.execute(select(models.User)
-                               .filter(models.User.username.like(search_format))).scalars()
-
-    # Format results as dict
-    results = {user.username: [user.id, url_for('membership.add_user',
-                                                 campaign_name=campaign.title,
-                                                 campaign_id=campaign.id,
-                                                 username=user.username)]
-            for user in users if user not in campaign.members}
-    
-    # Check if query returned no results
-    if len(results) == 0:
-        response = make_response(jsonify({"message": "No users found"}), 204)
-    # Otherwise, send good response
-    else:
-        response = make_response(results, 200)
-        
-    return response
-
-
 # Function called when user accepts a campaign invitation
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/accept-invite", methods=["GET"])
+@bp.route("/campaigns/accept-invite", methods=["POST"])
 @login_required
-def accept_invite(campaign_name, campaign_id):
+def accept_invite():
+    """ Function called via fetch request from navbar template when user accepts a campaign invitation. """
 
-    message_id = request.args["message_id"]
+    message_id = request.form["message_id"]
+    campaign_id = request.form["campaign_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -245,7 +271,6 @@ def accept_invite(campaign_name, campaign_id):
             # Delete message
             db.session.delete(message)
             db.session.commit()
-            flash(f"Accepted invitation to campaign: {campaign.title}")
 
             # Create recipients list, omitting the accepting user themselves
             recipients = [user for user in campaign.members if user.id != message.target_user.id]
@@ -259,18 +284,20 @@ def accept_invite(campaign_name, campaign_id):
             # Set scroll target
             session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
-        else:
-            flash(f"Already a member of campaign: {campaign.title}")
+    # If message is not valid for current user trying to access it
+    # redirect to error page
+    else:
+        abort(403)
 
     return redirect(url_for("campaign.campaigns"))
 
 
 # Function called when user declines a campaign invitation
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/decline-invite", methods=["GET"])
+@bp.route("/campaigns/decline-invite", methods=["POST"])
 @login_required
-def decline_invite(campaign_name, campaign_id):
+def decline_invite():
 
-    message_id = request.args["message_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -279,22 +306,22 @@ def decline_invite(campaign_name, campaign_id):
     # Check if target message is actually for the current user
     if message.target_user == current_user:
 
-        campaign_name_flash = message.target_campaign.title
-
         db.session.delete(message)
         db.session.commit()
 
-        flash(f"Declined invitation to campaign: {campaign_name_flash}")
+    else:
+        abort(403)
 
-    return redirect(url_for("campaign.campaigns"))
+    return redirect(request.referrer)
 
 
 # Function called when admin accepts new membership request
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/confirm-join-request", methods=["GET"])
+@bp.route("/campaigns/confirm-join-request", methods=["POST"])
 @login_required
-def confirm_request(campaign_name, campaign_id):
+def confirm_request():
 
-    message_id = request.args["message_id"]
+    campaign_id = request.form["campaign_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -323,17 +350,16 @@ def confirm_request(campaign_name, campaign_id):
                                                 campaign, 
                                                 message.target_user.username)
         
-        flash(f"Added {message.target_user.username} to campaign: {campaign.title}")
-
-    return redirect(url_for("campaign.campaigns"))
+    return redirect(request.referrer)
 
 
 # Function called when admin declines new membership request
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/deny-join-request", methods=["GET"])
+@bp.route("/campaigns/deny-join-request", methods=["POST"])
 @login_required
-def deny_request(campaign_name, campaign_id):
+def deny_request():
 
-    message_id = request.args["message_id"]
+    campaign_id = request.form["campaign_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -346,22 +372,20 @@ def deny_request(campaign_name, campaign_id):
     # Assert current user has campaign editing permissions
     auth.permission_required(campaign)
 
-    flash(f"Declined {message.target_user.username}'s request to join to campaign: {campaign.title}")
-
     # Delete message
     db.session.delete(message)
     db.session.commit()
 
-    return redirect(url_for("campaign.campaigns"))
+    return redirect(request.referrer)
 
 
 # Function called when granting a user campaign editing permissions
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["POST"])
 @login_required
 def add_permission(campaign_name, campaign_id):
 
-    user_to_add = request.args["username"]
-    user_id = request.args["user_id"]
+    user_to_add = request.form["username"]
+    user_id = request.form["user_id"]
 
     user = db.session.execute(
         select(models.User)

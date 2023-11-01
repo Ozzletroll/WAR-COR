@@ -178,21 +178,11 @@ def delete_campaign(campaign_name, campaign_id):
                     # Commit changes
                     db.session.commit()
                     return redirect(url_for("campaign.campaigns"))
-                else:
-                    flash("Authentication failed. Incorrect password.")
-                    return redirect(url_for("campaign.delete_campaign", 
-                                            campaign_name=campaign_name, 
-                                            campaign_id=campaign_id))
-            else:
-                flash("Authentication failed. Incorrect username.")
-                return redirect(url_for("campaign.delete_campaign", 
-                                        campaign_name=campaign_name, 
-                                        campaign_id=campaign_id))
-        else:
-            flash("Authentication failed. Incorrect username.")
-            return redirect(url_for("campaign.delete_campaign", 
-                                    campaign_name=campaign_name, 
-                                    campaign_id=campaign_id))
+
+        flash("Authentication failed. Please check username/password.")
+        return redirect(url_for("campaign.delete_campaign", 
+                                campaign_name=campaign_name, 
+                                campaign_id=campaign_id))
 
     else:
         # Change LoginForm submit button text

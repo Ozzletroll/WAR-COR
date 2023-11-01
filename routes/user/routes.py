@@ -95,7 +95,7 @@ def logout():
 
 
 # Access user page
-@bp.route("/user/<username>", methods=["GET", "POST"])
+@bp.route("/user/<username>", methods=["GET"])
 @login_required
 def user_page(username) :
 
@@ -124,7 +124,7 @@ def user_page(username) :
                             password_form=password_form)
 
 
-@bp.route("/user/<username>/update-callsign", methods=["GET", "POST"])
+@bp.route("/user/<username>/update-callsign", methods=["POST"])
 @login_required
 def update_callsign(username):
 
@@ -155,7 +155,7 @@ def update_callsign(username):
     return redirect(url_for("user.user_page", username=username))   
 
 
-@bp.route("/user/<username>/change-username", methods=["GET", "POST"])
+@bp.route("/user/<username>/change-username", methods=["POST"])
 @login_required
 def change_username(username):
 
@@ -193,7 +193,7 @@ def change_username(username):
     return redirect(url_for("user.user_page", username=user.username))
         
 
-@bp.route("/user/<username>/change-password", methods=["GET", "POST"])
+@bp.route("/user/<username>/change-password", methods=["POST"])
 @login_required
 def change_password(username):
 
@@ -228,7 +228,7 @@ def change_password(username):
     return redirect(url_for("user.user_page", username=user.username))
 
 
-@bp.route("/user/<username>/delete", methods=["GET", "POST"])
+@bp.route("/user/<username>/delete", methods=["POST"])
 @login_required
 def delete_user(username):
 
@@ -279,7 +279,7 @@ def delete_user(username):
 
 
 # Back button on the user page
-@bp.route("/back", methods=['GET'])
+@bp.route("/back", methods=["GET"])
 def back():
     """Function to handle redirects for the back button on the user page.
     Uses request.referrer normally, or defers to stored session variable
@@ -301,12 +301,12 @@ def back():
     return redirect(referrer)
 
 
-# Function called when dimissing a notification
-@bp.route("/user/<username>/message/dimiss", methods=["GET"])
+# Function called when viewing/dimissing a notification
+@bp.route("/user/messages/dimiss", methods=["POST"])
 @login_required
-def dismiss_message(username):
+def dismiss_message():
 
-    message_id = request.args["message_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -317,25 +317,34 @@ def dismiss_message(username):
         current_user.messages.remove(message)
         db.session.commit()
 
-    # Check if message is still in any users messages list by querying association table
-    message_query = db.session.execute(
-        select(models.user_messages.c.user_id)
-        .where(models.user_messages.c.message_id == message_id)).scalar()
+        event_url = url_for("event.view_event", 
+                            campaign_name=message.target_campaign.title,
+                            campaign_id=message.target_campaign.id,
+                            event_name=message.target_event.title,
+                            event_id=message.target_event.id)
+
+        # Check if message is still in any users messages list by querying association table
+        message_query = db.session.execute(
+            select(models.user_messages.c.user_id)
+            .where(models.user_messages.c.message_id == message_id)).scalar()
     
-    # If message is no longer needed, delete it
-    if not message_query:
-        db.session.delete(message)
-        db.session.commit()
+        # If message is no longer needed, delete it
+        if not message_query:
+            db.session.delete(message)
+            db.session.commit()
 
-    redirect_url = request.args["current_url"]
-
-    return redirect(redirect_url)
+        # If the user is viewing the target event, redirect to it
+        view = request.args.get("view", None)
+        if view:
+            return redirect(event_url)
+        
+    return redirect(request.referrer)
 
 
 # Function called when dismissing all messages
-@bp.route("/user/<username>/message/dismiss-all", methods=["GET"])
+@bp.route("/user/messages/dismiss-all", methods=["POST"])
 @login_required
-def dismiss_all(username):
+def dismiss_all():
 
     messages = list(current_user.messages)
 
@@ -354,6 +363,4 @@ def dismiss_all(username):
             db.session.delete(message)
             db.session.commit()
      
-    redirect_url = request.args["current_url"]
-
-    return redirect(redirect_url)
+    return redirect(request.referrer)

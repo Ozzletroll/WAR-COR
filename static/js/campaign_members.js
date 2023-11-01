@@ -240,7 +240,7 @@ function user_search(url, csrfToken) {
       resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
 
       let index = 0
-      for (let user in data) {
+      for (let user in data["results"]) {
 
         // Create the new elements
         const newDiv = Object.assign(
@@ -256,13 +256,23 @@ function user_search(url, csrfToken) {
           );
 
         const newButton = Object.assign(
-          document.createElement("a"), 
+          document.createElement("button"), 
           {className: "submit-button callsign-submit",
-          innerHTML: "Invite",
-          href: data[user][1]}
+          innerHTML: "Invite"}
           );
 
-        // Add the elements as child
+        // Set result data as attributes of button
+        newButton.setAttribute("data-userID", data["results"][user]["id"]);
+        newButton.setAttribute("data-username", data["results"][user]["username"]);
+        newButton.setAttribute("data-targetURL", data["target_url"]);
+
+        // Bind onclick function
+        newButton.addEventListener("click", function(event) {
+          element = event.target;
+          populateForm(element);
+        });
+
+        // Add the elements as child of parent div
         newDiv.appendChild(newHeading);
         newDiv.appendChild(newButton);
 
@@ -284,4 +294,25 @@ function user_search(url, csrfToken) {
 
   })
 
+}
+
+// Function called when clicking an invite button. Grabs user data and fills hidden form, then submits.
+function populateForm(element) {
+
+  var userID = element.dataset.userid;
+  var username = element.dataset.username;
+  var targetURL = element.dataset.targeturl;
+
+  // Get form and set target url
+  var form = document.getElementById("add-user-form");
+  form.setAttribute("action", targetURL);
+
+  // Populate form with search result data
+  var usernameField = form.elements.username;
+  var userIDField = form.elements.user_id;
+  usernameField.value = username;
+  userIDField.value = userID;
+
+  // Submit form
+  form.submit()
 }

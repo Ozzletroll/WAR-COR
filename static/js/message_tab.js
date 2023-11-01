@@ -41,3 +41,35 @@ const messages_tab = new messageTab({
   tab: "messages-tab",
   button: "messages-button",
 })
+
+
+// Function to accept/decline campaign invite messages
+function handleMessage(event) {
+
+  const button = event.target;
+
+  const csrf = button.dataset.csrf;
+  const URL = button.dataset.url;
+  const campaignID = button.dataset.campaignId;
+  const messageID = button.dataset.messageId;
+
+  // Create form and add data
+  const formData = new FormData();
+  formData.append("campaign_id", campaignID);
+  formData.append("message_id", messageID);
+
+  // Send to server via fetch request
+  fetch(URL, {
+    method: "POST",
+    redirect: "follow",
+    headers: {
+      "X-CSRF-TOKEN": csrf,
+    },
+    body: formData
+  })
+  .then((response)=>{         
+    if(response.redirected){
+      window.location.href = response.url;
+    } 
+  })
+};

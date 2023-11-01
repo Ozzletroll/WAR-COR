@@ -34,11 +34,10 @@
   --fixed-bg-1: #ffffff;
   --fixed-bg-2: #E5E5E5;
   --fixed-text: #000000;
-  --dark_grey: #2B2B2B;
+  --dark_grey: #1f1f1f;
 
   scrollbar-color: var(--bright_red) rgb(20, 25, 27);
   scroll-behavior: smooth;
-  
 }
  
 /* Dark Mode Colours */
@@ -144,6 +143,7 @@
 /* Chrome Scrollbar */
 ::-webkit-scrollbar {
   background: var(--dark_grey);
+  border-left: 1px solid var(--dark_grey);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -276,6 +276,7 @@ button {
 }
 
 .button {
+  font-family: "Roboto Mono", monospace;
   cursor: pointer;
 }
 
@@ -1152,10 +1153,11 @@ p {
   text-transform: uppercase;
 }
 
-.modal-body .modal-flavour {
+.modal-body .flavour-text.modal-flavour {
   display: flex;
   margin: 0;
   width: 100%;
+  margin-bottom: 0px;
 }
 
 .modal-image {
@@ -1168,9 +1170,11 @@ p {
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   border: 1px solid var(--bright_red);
+  font-family: "Roboto Mono", monospace;
   font-weight: 500;
   margin: 0;
   transition: 0.3s;
+  text-transform: uppercase;
 }
 
 .modal-confirm-button:hover {
@@ -2559,6 +2563,8 @@ p {
 
 .callsign-input {
   display: flex;
+  flex: 1 0 0;
+  max-width: 250px;
   font-size: 16px;
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
@@ -2924,6 +2930,7 @@ p {
 
 .current-members-list .entry-button {
   width: 140px;
+  height: 41px;
 }
 
 .members-left {
@@ -4984,12 +4991,16 @@ pre {
   to {
     visibility: visible;
   }
-}
+} 
 
 @keyframes cursor-blink {
   0% {
     opacity: 0;
   }
+}
+
+.join-campaign-upper .bar-items-left {
+  width: 100%;
 }
 
 .campaign-search-results-area {
@@ -5002,24 +5013,31 @@ pre {
 
 .results-counter {
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 2 auto;
   justify-content: center;
   align-items: center;
 }
 
+@media screen and (max-width: 600px) {
+  .results-counter {
+    display: none;
+  }
+}
+
 .results-counter .flavour-text {
-  width: 100%;
+  display: flex;
   margin: 0;
   font-size: 14px;
 }
 
 .results-flavour {
-  overflow: hidden;
-  white-space: nowrap;
+  width: 100%;
 }
 
 .request-button {
+  text-transform: uppercase;
   width: 180px;
+  font-family: "Roboto Mono", monospace;
 }
 
 /* Advanced Search Page */
