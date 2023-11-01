@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
+from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort, get_flashed_messages
 from sqlalchemy import select
 from flask_login import login_required, current_user
 
@@ -319,11 +319,12 @@ def decline_invite():
 
 
 # Function called when admin accepts new membership request
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/confirm-join-request", methods=["GET"])
+@bp.route("/campaigns/confirm-join-request", methods=["POST"])
 @login_required
-def confirm_request(campaign_name, campaign_id):
+def confirm_request():
 
-    message_id = request.args["message_id"]
+    campaign_id = request.form["campaign_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -352,17 +353,16 @@ def confirm_request(campaign_name, campaign_id):
                                                 campaign, 
                                                 message.target_user.username)
         
-        flash(f"Added {message.target_user.username} to campaign: {campaign.title}")
-
-    return redirect(url_for("campaign.campaigns"))
+    return redirect(request.referrer)
 
 
 # Function called when admin declines new membership request
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/deny-join-request", methods=["GET"])
+@bp.route("/campaigns/deny-join-request", methods=["POST"])
 @login_required
-def deny_request(campaign_name, campaign_id):
+def deny_request():
 
-    message_id = request.args["message_id"]
+    campaign_id = request.form["campaign_id"]
+    message_id = request.form["message_id"]
 
     message = db.session.execute(
         select(models.Message)
@@ -375,13 +375,11 @@ def deny_request(campaign_name, campaign_id):
     # Assert current user has campaign editing permissions
     auth.permission_required(campaign)
 
-    flash(f"Declined {message.target_user.username}'s request to join to campaign: {campaign.title}")
-
     # Delete message
     db.session.delete(message)
     db.session.commit()
 
-    return redirect(url_for("campaign.campaigns"))
+    return redirect(request.referrer)
 
 
 # Function called when granting a user campaign editing permissions

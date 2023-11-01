@@ -94,18 +94,25 @@
           <h4 class="message-header">REQUEST</h4>   
           <div class=message-body>{{message.body}}</div>
           <div class="message-button-area">
-            <a href="{{url_for('membership.confirm_request', 
-                                campaign_name=message.target_campaign.title, 
-                                campaign_id=message.target_campaign.id, 
-                                message_id=message.id)}}">
-              <button class="message-button">ACCEPT</button>
-            </a>
-            <a href="{{url_for('membership.deny_request', 
-                                campaign_name=message.target_campaign.title,
-                                campaign_id=message.target_campaign.id, 
-                                message_id=message.id)}}">
-              <button class="message-button">DECLINE</button>
-            </a>
+
+            <button id="invite-accept-{{ message.id }}" class="button message-button accept-button" 
+            onclick="handleMessage(event)"
+            data-csrf="{{ csrf_token() }}"
+            data-url="{{ url_for('membership.confirm_request') }}"
+            data-campaign-id="{{ message.target_campaign.id }}"
+            data-message-id="{{ message.id }}">
+            ACCEPT
+            </button>
+
+            <button id="invite-decline-{{ message.id }}" class="button message-button decline-button" 
+            onclick="handleMessage(event)"
+            data-csrf="{{ csrf_token() }}"
+            data-url="{{ url_for('membership.deny_request') }}"
+            data-campaign-id="{{ message.target_campaign.id }}"
+            data-message-id="{{ message.id }}">
+            DECLINE
+            </button>
+
           </div>
         </li>
   
