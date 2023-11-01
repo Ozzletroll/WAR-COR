@@ -276,6 +276,7 @@ button {
 }
 
 .button {
+  font-family: "Roboto Mono", monospace;
   cursor: pointer;
 }
 

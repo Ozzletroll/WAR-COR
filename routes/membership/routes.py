@@ -383,12 +383,12 @@ def deny_request():
 
 
 # Function called when granting a user campaign editing permissions
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["GET"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["POST"])
 @login_required
 def add_permission(campaign_name, campaign_id):
 
-    user_to_add = request.args["username"]
-    user_id = request.args["user_id"]
+    user_to_add = request.form["username"]
+    user_id = request.form["user_id"]
 
     user = db.session.execute(
         select(models.User)
