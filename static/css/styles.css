@@ -34,11 +34,10 @@
   --fixed-bg-1: #ffffff;
   --fixed-bg-2: #E5E5E5;
   --fixed-text: #000000;
-  --dark_grey: #2B2B2B;
+  --dark_grey: #1f1f1f;
 
   scrollbar-color: var(--bright_red) rgb(20, 25, 27);
   scroll-behavior: smooth;
-  
 }
  
 /* Dark Mode Colours */
@@ -144,6 +143,7 @@
 /* Chrome Scrollbar */
 ::-webkit-scrollbar {
   background: var(--dark_grey);
+  border-left: 1px solid var(--dark_grey);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -4990,7 +4990,7 @@ pre {
   to {
     visibility: visible;
   }
-}
+} 
 
 @keyframes cursor-blink {
   0% {
