@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort, get_flashed_messages
+from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
 from sqlalchemy import select
 from flask_login import login_required, current_user
 
