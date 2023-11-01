@@ -235,10 +235,7 @@ def request_membership(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
     
     # Retrieve the users with editing permissions for the campaign
-    campaign_admins = db.session.execute(
-        db.select(models.User)
-        .join(models.user_edit_permissions)
-        .where(models.user_edit_permissions.c.campaign_id == campaign.id)).scalars()
+    campaign_admins = campaign.admins
 
     messengers.send_membership_request(current_user, campaign_admins, campaign)
     flash(f"Membership request to campaign '{campaign_name}' sent")
