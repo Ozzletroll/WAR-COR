@@ -228,7 +228,7 @@ def change_password(username):
     return redirect(url_for("user.user_page", username=user.username))
 
 
-@bp.route("/user/<username>/delete", methods=["POST"])
+@bp.route("/user/<username>/delete", methods=["GET", "POST"])
 @login_required
 def delete_user(username):
 
