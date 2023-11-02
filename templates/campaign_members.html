@@ -76,7 +76,7 @@
                   {% if not campaign in user.permissions%}
                     <form id="make-admin-form" class="add-member-form" method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.title, campaign_id=campaign.id) }}">
                       {{ add_form.csrf_token }}
-                      <div class="user-form-container">
+                      <div>
                         {{ add_form.username(value=user.username, class_="form-hidden") }}
                         {{ add_form.user_id(value=user.id, class_="form-hidden") }}
                         {{ add_form.submit_button(value="MAKE ADMIN", class_="button entry-button") }}
