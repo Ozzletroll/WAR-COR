@@ -4783,16 +4783,9 @@ pre {
 }
 
 .modal-body-preview p img {
-  max-width: 100% !important;
-  height: auto !important;
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
   font-size: min(3vw, 14px);
-}
-
-.modal-body-preview img {
-  width: 100% !important;
-  height: auto !important;
 }
 
 /* Data backup page */
