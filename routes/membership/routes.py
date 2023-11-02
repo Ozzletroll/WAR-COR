@@ -180,7 +180,7 @@ def remove_campaign_users(campaign_name, campaign_id):
 @login_required
 def join_campaign():
 
-    form = forms.CampaignSearchForm()
+    form = forms.SearchForm()
     request_form = forms.SubmitForm()
 
     # Check if page has any results to render

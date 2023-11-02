@@ -21,7 +21,7 @@ def advanced_search(campaign_name, campaign_id):
                 select(models.Campaign)
                 .filter_by(id=campaign_id, title=campaign_name)).scalar()
         
-    form = forms.AdvancedSearchForm()
+    form = forms.SearchForm()
 
     # Check if page has any results to render
     if "results" not in request.args:
