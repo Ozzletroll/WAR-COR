@@ -249,30 +249,23 @@
               <!-- New Comment Area -->
               {% if current_user.is_authenticated and current_user in campaign.members %}
 
-              <div class="new-comment-area">
-                <div class="new-comment-area-header">
-                  <h4 class="new-comment-heading">//COMMENT</h4>
+                <div class="new-comment-area">
+                  <div class="new-comment-area-header">
+                    <h4 class="new-comment-heading">//COMMENT</h4>
+                  </div>
+
+                  <form class="form comment-form" method="post">
+                    {{ form.csrf_token }}
+                    {{ form.body(class_="") }}
+                    {{ form.submit(class_="button comment-submit") }}
+                  </form>
                 </div>
-
-                <form class="form comment-form" method="post">
-                  {{ form.csrf_token }}
-                  {{ form.body(class_="ckeditor") }}
-                  {{ form.submit(class_="button comment-submit") }}
-                </form>
-                {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-                {{ ckeditor.config(name="body") }}
-              </div>
                 
-
               {% endif %}
 
             </div>
 
-
         </div>
-
-
-
 
       </div>
 
