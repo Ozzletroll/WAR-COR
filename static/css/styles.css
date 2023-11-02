@@ -1193,17 +1193,19 @@ p {
   to {opacity:1}
 }
 
-.close {
+.modal-close {
   display: flex;
   align-items: center;
   padding: 10px;
+  opacity: 0.7;
+  transition: 0.15s;
 }
 
-.close:hover,
-.close:focus {
-  color: var(--red);
+.modal-close:hover,
+.modal-close:focus {
   text-decoration: none;
   cursor: pointer;
+  opacity: 1;
 }
 
 @media screen and (max-width: 400px) { 
@@ -1218,7 +1220,6 @@ p {
  }
 
 }
-
 
 /* Footer */
 
@@ -4604,22 +4605,6 @@ for selection in timeline_search.js */
 
 }
 
-/* CKEditor */
-
-.cke_editable {
-  padding: 20px;
-  font-family: "Roboto Mono", monospace;
-}
-
-.form-container .cke {
-  border: none;
-}
-
-.comment-form .cke_chrome {
-  border: none;
-  box-sizing: border-box;
-}
-
 /* Editor styles */
 
 .cke_editable h1 {
@@ -4641,6 +4626,10 @@ for selection in timeline_search.js */
 }
 
 /* Campaign Overview HTML Elements */
+
+.campaign-overview {
+  color: var(--text_dark);
+}
 
 .campaign-overview h1 {
   font-size: min(24px, 5vw);
@@ -4794,16 +4783,9 @@ pre {
 }
 
 .modal-body-preview p img {
-  max-width: 100% !important;
-  height: auto !important;
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
   font-size: min(3vw, 14px);
-}
-
-.modal-body-preview img {
-  width: 100% !important;
-  height: auto !important;
 }
 
 /* Data backup page */

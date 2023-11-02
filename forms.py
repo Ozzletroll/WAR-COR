@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField, IntegerField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField, IntegerField, TextAreaField
 from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError, Length
-from flask_ckeditor import CKEditorField
 import re
 
 
@@ -81,7 +80,7 @@ class ChangePasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired()])
-    description = CKEditorField("Description", validators=[DataRequired()])
+    description = TextAreaField("Description", validators=[DataRequired()])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
     submit = SubmitField("Create Campaign")
@@ -93,7 +92,7 @@ class CreateEventForm(FlaskForm):
     date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
     location = StringField("Location", validators=[Optional()])
     belligerents = StringField("Belligerents", validators=[Optional()])
-    body = CKEditorField("Body", validators=[DataRequired()])
+    body = TextAreaField("Body", validators=[DataRequired()])
     result = StringField("Result", validators=[Optional()])
     header = BooleanField("Header", default=False, validators=[Optional()])
     hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
@@ -115,7 +114,7 @@ class CreateEpochForm(FlaskForm):
     title = StringField("Event Title", validators=[DataRequired()])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
     end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after])
-    description = CKEditorField("Description")
+    description = TextAreaField("Description")
     submit = SubmitField("Create Epoch")
 
 class SearchUserForm(FlaskForm):
@@ -146,7 +145,7 @@ class UploadJsonForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    body = CKEditorField("Comment", validators=[DataRequired()])
+    body = TextAreaField("Comment", validators=[DataRequired()])
     submit = SubmitField("Submit")
 
 

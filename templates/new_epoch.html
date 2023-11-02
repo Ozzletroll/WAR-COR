@@ -1,8 +1,22 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/summernote_editor.html" as summernote %}
+
 
 {% extends "base/base.html" %}
+
+{# Add Summernote #}
+{% block head %}
+  {% include "base/header.html" %}
+  {% block title %}
+    <title>WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+  {% endblock %}
+{% endblock %}
+
 
 {% block content %}
 
@@ -63,7 +77,7 @@
             <p class="flavour-text">UWC-17-01 //  Epoch::Start Marker</p>
           </label>
         
-          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY/MM", autocomplete="off") }}
+          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY/MM REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -74,7 +88,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Epoch</h2>
-                <span id="close-1" class="close">
+                <span id="close-1" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>
@@ -107,7 +121,7 @@
             <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
           </label>
         
-          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY/MM", autocomplete="off") }}
+          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY/MM REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -118,7 +132,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Epoch</h2>
-                <span id="close-2" class="close">
+                <span id="close-2" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>
@@ -139,7 +153,7 @@
             <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
           </label>
 
-          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title") }}
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title", placeholder="REQUIRED") }}
 
         </div>
 
@@ -154,10 +168,10 @@
           <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
         </label>
 
-        {{ form.description(id="form-contents", class_="campaign-input large-input event-input", autocomplete="off") }}
-        
-        {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+        {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
+        {{ summernote.summernote_editor(required=false) }}
+        
         </div>
 
 
@@ -181,7 +195,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Delete Epoch</h2>
-                <span id="close-delete" class="close">
+                <span id="close-delete" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>

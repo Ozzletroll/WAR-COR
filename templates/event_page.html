@@ -2,15 +2,23 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
+{% import "components/summernote_editor.html" as summernote %}
+
 
 {% extends "base/base.html" %}
 
+{# Add Summernote #}
 {% block head %}
-  {% include 'base/header.html' %}
+  {% include "base/header.html" %}
   {% block title %}
-    <title>{{event.title.upper()}} | WAR/COR</title>
+  <title>{{event.title.upper()}} | WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+    <link rel="stylesheet" href="/static/css/summernote_comment_theme.css">
   {% endblock %}
 {% endblock %}
+
 
 {% block content %}
 
@@ -225,7 +233,7 @@
                       <div class="modal-content-inner">
                         <div class="modal-header">
                           <h2 class="modal-header-small">Delete Comment</h2>
-                          <span id="close-{{loop.index}}" class="close">
+                          <span id="close-{{loop.index}}" class="modal-close">
                             <img class="icon" src="/static/images/icons/cancel.svg">
                           </span>
                         </div>
@@ -249,30 +257,24 @@
               <!-- New Comment Area -->
               {% if current_user.is_authenticated and current_user in campaign.members %}
 
-              <div class="new-comment-area">
-                <div class="new-comment-area-header">
-                  <h4 class="new-comment-heading">//COMMENT</h4>
+                <div class="new-comment-area">
+                  <div class="new-comment-area-header">
+                    <h4 class="new-comment-heading">//COMMENT</h4>
+                  </div>
+
+                  <form class="form comment-form" method="post">
+                    {{ form.csrf_token }}
+                    {{ form.body(id="summernote") }}
+                    {{ summernote.summernote_editor(comment=true) }}
+                    {{ form.submit(class_="button comment-submit") }}
+                  </form>
                 </div>
-
-                <form class="form comment-form" method="post">
-                  {{ form.csrf_token }}
-                  {{ form.body(class_="ckeditor") }}
-                  {{ form.submit(class_="button comment-submit") }}
-                </form>
-                {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-                {{ ckeditor.config(name="body") }}
-              </div>
                 
-
               {% endif %}
 
             </div>
 
-
         </div>
-
-
-
 
       </div>
 

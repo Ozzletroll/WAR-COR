@@ -1,8 +1,22 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/summernote_editor.html" as summernote %}
+
 
 {% extends "base/base.html" %}
+
+{# Add Summernote #}
+{% block head %}
+  {% include "base/header.html" %}
+  {% block title %}
+    <title>WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+  {% endblock %}
+{% endblock %}
+
 
 {% block content %}
 
@@ -68,7 +82,7 @@
             <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
           </label>
         
-          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD HH:MM:SS", autocomplete="off") }}
+          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD HH:MM:SS REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -79,7 +93,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Event Date</h2>
-                <span id="close-1" class="close">
+                <span id="close-1" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>
@@ -114,7 +128,7 @@
             <p class="flavour-text">UWC-6-02 //  Event::Operation Designation</p>
           </label>
 
-          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title") }}
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title", placeholder="REQUIRED") }}
 
         </div>
 
@@ -127,7 +141,7 @@
             <p class="flavour-text">UWC-6-03 //  Event::Category</p>
           </label>
 
-          {{ form.type(class_="campaign-input event-input", autocomplete="off") }}
+          {{ form.type(class_="campaign-input event-input", autocomplete="off", placeholder="REQUIRED") }}
         
         </div>
 
@@ -140,7 +154,7 @@
             <p class="flavour-text">UWC-6-04 //  Event::Location</p>
           </label>
 
-          {{ form.location(class_="campaign-input event-input", autocomplete="off") }}
+          {{ form.location(class_="campaign-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
         </div>
 
@@ -161,7 +175,7 @@
             <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
           </label>
 
-          {{ form.belligerents(class_="campaign-input event-input", autocomplete="off") }}
+          {{ form.belligerents(class_="campaign-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
         </div>
 
@@ -172,7 +186,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Belligerents</h2>
-                <span id="close-2" class="close">
+                <span id="close-2" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>
@@ -219,7 +233,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Event Group Headers</h2>
-                <span id="close-3" class="close">
+                <span id="close-3" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>
@@ -253,10 +267,10 @@
           <p class="flavour-text">UWC-6-07 //  Event::Overview</p>
         </label>
 
-        {{ form.body(id="form-contents", class_="campaign-input large-input event-input", autocomplete="off") }}
-        
-        {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+        {{ form.body(id="summernote", class_="campaign-input large-input event-input", autocomplete="off") }}
 
+        {{ summernote.summernote_editor() }}
+        
         </div>
 
         {# HTML Preview Modal #}
@@ -266,7 +280,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">HTML Preview</h2>
-                <span id="close-preview" class="close">
+                <span id="close-preview" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>
@@ -301,7 +315,7 @@
           <p class="flavour-text">UWC-6-08 //  Event::Outcome</p>
         </label>
 
-        {{ form.result(class_="campaign-input event-input", autocomplete="off") }}
+        {{ form.result(class_="campaign-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
         </div>
 
@@ -325,7 +339,7 @@
             <div class="modal-content-inner">
               <div class="modal-header">
                 <h2 class="modal-header-small">Delete Event</h2>
-                <span id="close-delete" class="close">
+                <span id="close-delete" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
               </div>

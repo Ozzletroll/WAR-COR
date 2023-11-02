@@ -2,7 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
-from flask_ckeditor import CKEditor
 from flask_wtf.csrf import CSRFProtect
 import os
 import logging
@@ -12,7 +11,6 @@ from utils.generators import create_data
 
 db = SQLAlchemy()
 csrf = CSRFProtect()
-ckeditor = CKEditor()
 
 # Application factory
 def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
@@ -24,7 +22,6 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_COOKIE_HTTPONLY'] = True
     app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
-    app.config['CKEDITOR_SERVE_LOCAL'] = True
     app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
     app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT') or 25)
     app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS') is not None
@@ -130,9 +127,6 @@ def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
             pass
     except FileNotFoundError:
         create_data()
-
-    # Initialise CKEditor
-    ckeditor.init_app(app)
 
     # Configure error logging email
     if not app.debug:
