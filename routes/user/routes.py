@@ -312,12 +312,16 @@ def dismiss_message():
         current_user.messages.remove(message)
         db.session.commit()
 
-        event_url = url_for("event.view_event", 
-                            campaign_name=message.target_campaign.title,
-                            campaign_id=message.target_campaign.id,
-                            event_name=message.target_event.title,
-                            event_id=message.target_event.id)
-
+        # If redirecting to event, build url prior to potential message deletion
+        view = request.args.get("view", None)
+        
+        if view and hasattr(message, 'target_event'):
+            event_url = url_for("event.view_event", 
+                                campaign_name=message.target_campaign.title,
+                                campaign_id=message.target_campaign.id,
+                                event_name=message.target_event.title,
+                                event_id=message.target_event.id)
+    
         # Check if message is still in any users messages list by querying association table
         message_query = db.session.execute(
             select(models.user_messages.c.user_id)
@@ -328,8 +332,7 @@ def dismiss_message():
             db.session.delete(message)
             db.session.commit()
 
-        # If the user is viewing the target event, redirect to it
-        view = request.args.get("view", None)
+
         if view:
             return redirect(event_url)
         
