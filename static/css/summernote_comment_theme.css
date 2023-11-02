@@ -1,0 +1,12 @@
+.note-editor {
+    clip-path: none;
+}
+
+.note-editor.note-frame {
+    border: none;
+}
+
+.note-toolbar {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}

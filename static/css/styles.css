@@ -4604,22 +4604,6 @@ for selection in timeline_search.js */
 
 }
 
-/* CKEditor */
-
-.cke_editable {
-  padding: 20px;
-  font-family: "Roboto Mono", monospace;
-}
-
-.form-container .cke {
-  border: none;
-}
-
-.comment-form .cke_chrome {
-  border: none;
-  box-sizing: border-box;
-}
-
 /* Editor styles */
 
 .cke_editable h1 {
@@ -4641,6 +4625,10 @@ for selection in timeline_search.js */
 }
 
 /* Campaign Overview HTML Elements */
+
+.campaign-overview {
+  color: var(--text_dark);
+}
 
 .campaign-overview h1 {
   font-size: min(24px, 5vw);

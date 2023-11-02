@@ -2,15 +2,23 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
+{% import "components/summernote_editor.html" as summernote %}
+
 
 {% extends "base/base.html" %}
 
+{# Add Summernote #}
 {% block head %}
-  {% include 'base/header.html' %}
+  {% include "base/header.html" %}
   {% block title %}
-    <title>{{event.title.upper()}} | WAR/COR</title>
+  <title>{{event.title.upper()}} | WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+    <link rel="stylesheet" href="/static/css/summernote_comment_theme.css">
   {% endblock %}
 {% endblock %}
+
 
 {% block content %}
 
@@ -256,7 +264,8 @@
 
                   <form class="form comment-form" method="post">
                     {{ form.csrf_token }}
-                    {{ form.body(class_="") }}
+                    {{ form.body(id="summernote") }}
+                    {{ summernote.summernote_editor(comment=true) }}
                     {{ form.submit(class_="button comment-submit") }}
                   </form>
                 </div>

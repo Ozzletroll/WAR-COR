@@ -1,8 +1,22 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/summernote_editor.html" as summernote %}
+
 
 {% extends "base/base.html" %}
+
+{# Add Summernote #}
+{% block head %}
+  {% include "base/header.html" %}
+  {% block title %}
+    <title>WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+  {% endblock %}
+{% endblock %}
+
 
 {% block content %}
 
@@ -60,7 +74,7 @@
           <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
         </label>
 
-        {{ form.title(class_="campaign-input form-input", autocomplete="off") }}
+        {{ form.title(class_="campaign-input form-input", autocomplete="off", placeholder="REQUIRED") }}
 
       </div>
 
@@ -79,7 +93,7 @@
           <p class="flavour-text">UWC-5-02 //  Campaign::Calendar Suffix</p>
         </label>
 
-        {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8) }}
+        {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
 
       </div>
 
@@ -98,7 +112,7 @@
           <p class="flavour-text">UWC-5-02 //  Campaign::Calendar Negative Suffix</p>
         </label>
 
-        {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8) }}
+        {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
 
       </div>
       
@@ -116,8 +130,10 @@
           <p class="flavour-text">UWC-5-03 //  Campaign::Conflict Overview</p>
         </label>
 
-        {{ form.description(id="form-contents", class_="campaign-input large-input", autocomplete="off") }}
-        
+        {{ form.description(id="summernote", class_="campaign-input large-input", autocomplete="off") }}
+
+        {{ summernote.summernote_editor() }}
+
       </div>
 
       {# HTML Preview Modal #}

@@ -1,0 +1,33 @@
+{#
+    Summernote editor configuration component.
+    
+    The "required" boolean parameter is to determine placeholder text.
+
+#}
+
+{% macro summernote_editor(comment=false, required=true) %}
+
+    {% if required and not comment %}
+        {% set text = "REQUIRED" %}
+    {% else %}
+      {% set text = "" %}
+    {% endif %}
+
+    <script>
+        $('#summernote').summernote({
+        placeholder: '<p>{{ text }}</p>',
+        dialogsInBody: true,
+        dialogsFade: true, 
+        tabsize: 2,
+        height: 300,
+        styleTags: ['p', 'h1', 'h2', 'h3'],
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],,
+            ['insert', ['link', 'picture']]
+        ]
+        });
+        dialogsClass: 'summernote-dialog'
+    </script>
+{%- endmacro %}

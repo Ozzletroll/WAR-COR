@@ -10,4 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="shortcut icon" href="{{ url_for('static', filename='/images/favicon.ico') }}">
   <script src="/static/js/theme.js"></script>
+  {% block extra_header %}
+  {% endblock %}
 </head>
