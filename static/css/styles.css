@@ -1591,12 +1591,13 @@ p {
 .form-toggle-inputs {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .form-toggle-label {
   cursor: pointer;
   color: var(--text_dark);
+  font-size: min(14px, 3vw);
 }
 
 .campaign-input {
@@ -2794,20 +2795,13 @@ p {
   text-decoration: none;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 600px) {
 
-  .event-submit-area {
-    flex-direction: column;
-    gap: 25px;
-  }
-
-  .event-delete, .event-delete .campaign-input {
-    justify-content: center;
-    width: 100%;
+  .event-submit-area .campaign-submit {
+    font-size: min(4vw, 16px);
   }
 
 }
-
 
 .form-extra-button-area {
   display: flex;
@@ -2850,8 +2844,7 @@ p {
 .input-checkbox {
   width: 25px;
   height: 25px;
-  padding: 5px;
-  margin: 5px;
+  margin: 3px;
   cursor: pointer;
   background-color: var(--elem_dark);
 }
