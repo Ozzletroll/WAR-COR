@@ -82,7 +82,7 @@
             <p class="flavour-text">UWC-6-01 //  Event::Chronometric Data</p>
           </label>
         
-          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD HH:MM:SS", autocomplete="off") }}
+          {{ form.date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD HH:MM:SS REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -128,7 +128,7 @@
             <p class="flavour-text">UWC-6-02 //  Event::Operation Designation</p>
           </label>
 
-          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title") }}
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title", placeholder="REQUIRED") }}
 
         </div>
 
@@ -141,7 +141,7 @@
             <p class="flavour-text">UWC-6-03 //  Event::Category</p>
           </label>
 
-          {{ form.type(class_="campaign-input event-input", autocomplete="off") }}
+          {{ form.type(class_="campaign-input event-input", autocomplete="off", placeholder="REQUIRED") }}
         
         </div>
 
@@ -154,7 +154,7 @@
             <p class="flavour-text">UWC-6-04 //  Event::Location</p>
           </label>
 
-          {{ form.location(class_="campaign-input event-input", autocomplete="off") }}
+          {{ form.location(class_="campaign-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
         </div>
 
@@ -175,7 +175,7 @@
             <p class="flavour-text">UWC-6-05 //  Event::Participants</p>
           </label>
 
-          {{ form.belligerents(class_="campaign-input event-input", autocomplete="off") }}
+          {{ form.belligerents(class_="campaign-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
         </div>
 
@@ -315,7 +315,7 @@
           <p class="flavour-text">UWC-6-08 //  Event::Outcome</p>
         </label>
 
-        {{ form.result(class_="campaign-input event-input", autocomplete="off") }}
+        {{ form.result(class_="campaign-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
         </div>
 

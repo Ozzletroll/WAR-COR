@@ -77,7 +77,7 @@
             <p class="flavour-text">UWC-17-01 //  Epoch::Start Marker</p>
           </label>
         
-          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY/MM", autocomplete="off") }}
+          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY/MM REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -121,7 +121,7 @@
             <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
           </label>
         
-          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY/MM", autocomplete="off") }}
+          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY/MM REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -153,7 +153,7 @@
             <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
           </label>
 
-          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title") }}
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title", placeholder="REQUIRED") }}
 
         </div>
 
@@ -168,9 +168,9 @@
           <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
         </label>
 
-        {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off") }}
+        {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
 
-        {{ summernote.summernote_editor() }}
+        {{ summernote.summernote_editor(required=false) }}
         
         </div>
 

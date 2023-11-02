@@ -9,8 +9,16 @@
 
     {% if required and not comment %}
         {% set text = "REQUIRED" %}
+    {% elif not comment %}
+      {% set text = "OPTIONAL" %}
     {% else %}
       {% set text = "" %}
+    {% endif %}
+
+    {% if comment %}
+      {% set height = "150" %}
+    {% else %}
+      {% set height = "300" %}
     {% endif %}
 
     <script>
@@ -19,7 +27,7 @@
         dialogsInBody: true,
         dialogsFade: true, 
         tabsize: 2,
-        height: 300,
+        height: "{{ height }}",
         styleTags: ['p', 'h1', 'h2', 'h3'],
         toolbar: [
             ['style', ['style']],
