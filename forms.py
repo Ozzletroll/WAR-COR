@@ -53,7 +53,7 @@ def date_is_after(form, field):
 
 
 class RegisterUserForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(max=30)])
+    username = StringField("Username", validators=[DataRequired(), Length(min=3, max=30)])
     password = PasswordField("Password", validators=[DataRequired(), EqualTo("confirm_password",
                                                                              message="Password must match")])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired()])
@@ -67,7 +67,7 @@ class LoginForm(FlaskForm):
 
 
 class ChangeUsernameForm(FlaskForm):
-    username = StringField("New Username", validators=[DataRequired(), Length(max=30)])
+    username = StringField("New Username", validators=[DataRequired(), Length(min=3, max=30)])
     submit = SubmitField("Update")
 
 
