@@ -68,7 +68,8 @@ def test_add_campaign_members(client, auth, campaign):
     # Test unauthenticated user cannot add to campaign
     response_1 = campaign.add_user(campaign_name=campaign_object.title,
                                    campaign_id=campaign_object.id,
-                                   username="User 1")
+                                   username=user_1.username,
+                                   user_id=user_1.id)
     assert response_1.status_code == 200
     assert b'<li>Please log in to access this page</li>' in response_1.data
 
@@ -76,7 +77,8 @@ def test_add_campaign_members(client, auth, campaign):
     auth.login(username="Admin", password="123")
     response_2 = campaign.add_user(campaign_name=campaign_object.title,
                                    campaign_id=campaign_object.id,
-                                   username="User 1")
+                                   username=user_1.username,
+                                   user_id=user_1.id)
     assert response_2.status_code == 200
 
     # Test if pending invitation message created

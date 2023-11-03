@@ -63,6 +63,13 @@ class AuthActions(object):
             "password": given_password,
         })
 
+    def accept_invite(self, campaign_name, campaign_id, message_id):
+        url = url_for("membership.accept_invite",
+                      campaign_name=campaign_name,
+                      campaign_id=campaign_id,
+                      message_id=message_id)
+        return self._client.get(url, follow_redirects=True)
+
 
 class CampaignActions(object):
     """ Class to facilitate common campaign actions """
@@ -98,9 +105,12 @@ class CampaignActions(object):
             "password": password
         })
 
-    def add_user(self, campaign_name, campaign_id, username):
+    def add_user(self, campaign_name, campaign_id, username, user_id):
         url = url_for("membership.add_user",
                       campaign_name=campaign_name,
-                      campaign_id=campaign_id,
-                      username=username)
-        return self._client.get(url, follow_redirects=True)
+                      campaign_id=campaign_id)
+        data = {
+            "username": username,
+            "user_id": user_id,
+        }
+        return self._client.post(url, data=data, follow_redirects=True)
