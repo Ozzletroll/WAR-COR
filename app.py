@@ -12,6 +12,7 @@ from utils.generators import create_data
 db = SQLAlchemy()
 csrf = CSRFProtect()
 
+
 # Application factory
 def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
     # Create and configure instance of the Flask app
