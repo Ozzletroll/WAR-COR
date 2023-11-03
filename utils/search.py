@@ -1,8 +1,7 @@
 from flask import url_for
-from sqlalchemy import select, or_, label
+from sqlalchemy import or_
 import editdistance
 from bs4 import BeautifulSoup
-import re
 
 from app import db
 import models
