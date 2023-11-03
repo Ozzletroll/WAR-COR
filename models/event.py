@@ -1,4 +1,5 @@
 from datetime import datetime
+import bleach
 
 from app import db
 
@@ -57,8 +58,20 @@ class Event(db.Model):
             if field == "date" and value is not None:
                 self.date = value
                 self.split_date(value)
+                continue
 
-            elif value is not None:
+            if field == "body":
+                allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "ul", "ol"]
+                allowed_attrs = {
+                    "*": ["class"],
+                    "a": ["href", "rel"],
+                    "img": ["alt", "src"],
+                    }
+                value = bleach.clean(value, 
+                                     tags=allowed_tags,
+                                     attributes=allowed_attrs)
+
+            if value is not None:
                 setattr(self, field, value)
 
         self.parent_campaign = parent_campaign

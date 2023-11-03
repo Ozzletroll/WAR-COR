@@ -1,4 +1,5 @@
 from datetime import datetime
+import bleach
 
 from app import db
 
@@ -26,6 +27,16 @@ class Comment(db.Model):
             Takes form data from request.form. """
 
         for field, value in form.items():
+            if field == "body":
+                allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "ul", "ol"]
+                allowed_attrs = {
+                    "*": ["class"],
+                    "a": ["href", "rel"],
+                    "img": ["alt", "src"],
+                    }
+                value = bleach.clean(value, 
+                                     tags=allowed_tags,
+                                     attributes=allowed_attrs)
             if value is not None:
                 setattr(self, field, value)
 

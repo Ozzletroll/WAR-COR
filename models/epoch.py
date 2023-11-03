@@ -1,4 +1,5 @@
 from datetime import datetime
+import bleach
 
 from app import db
 
@@ -44,13 +45,26 @@ class Epoch(db.Model):
                 self.start_date = value
                 self.start_year = self.split_date(value)[0]
                 self.start_month = self.split_date(value)[1]
+                continue
 
             elif field == "end_date" and value is not None:
                 self.end_date = value
                 self.end_year = self.split_date(value)[0]
                 self.end_month = self.split_date(value)[1]
+                continue
 
-            elif value is not None:
+            if field == "description":
+                allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "ul", "ol"]
+                allowed_attrs = {
+                    "*": ["class"],
+                    "a": ["href", "rel"],
+                    "img": ["alt", "src"],
+                    }
+                value = bleach.clean(value, 
+                                     tags=allowed_tags,
+                                     attributes=allowed_attrs)
+
+            if value is not None:
                 setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
