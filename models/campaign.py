@@ -1,5 +1,6 @@
 from datetime import datetime
 import bleach
+from bleach.css_sanitizer import CSSSanitizer
 
 from app import db
 
@@ -53,11 +54,14 @@ class Campaign(db.Model):
                 allowed_attrs = {
                     "*": ["class"],
                     "a": ["href", "rel"],
-                    "img": ["alt", "src"],
+                    "img": ["alt", "src", "style"],
                     }
+                allowed_styles = ["height", "width"]
+                css_santizer = CSSSanitizer(allowed_css_properties=allowed_styles)
                 value = bleach.clean(value, 
                                      tags=allowed_tags,
-                                     attributes=allowed_attrs)
+                                     attributes=allowed_attrs,
+                                     css_sanitizer=css_santizer)
             if value is not None:
                 setattr(self, field, value)
 

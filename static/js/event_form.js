@@ -67,8 +67,6 @@ class PreviewModal {
     var editor = document.querySelector('.note-editable');
     var content = editor.innerHTML;
 
-    console.log(content)
-  
     // Get the preview modal text area and add html
     var modalBody = document.getElementById("preview-modal-body");
     modalBody.innerHTML = content;

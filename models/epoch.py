@@ -58,7 +58,7 @@ class Epoch(db.Model):
                 allowed_attrs = {
                     "*": ["class"],
                     "a": ["href", "rel"],
-                    "img": ["alt", "src"],
+                    "img": ["alt", "src", "style"],
                     }
                 value = bleach.clean(value, 
                                      tags=allowed_tags,
