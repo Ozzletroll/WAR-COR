@@ -41,8 +41,12 @@
             <div class="campaigns-title">
               
               {# Back button #}
-              {% if "/search" in request.referrer %}
-                {% set url = url_for('search.advanced_search', campaign_name=campaign.title, campaign_id=campaign.id) %}
+              {% if request.referrer %}
+                {% if "/search" in request.referrer %}
+                  {% set url = url_for('search.advanced_search', campaign_name=campaign.title, campaign_id=campaign.id) %}
+                {% else %}
+                  {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+                {% endif %}
               {% else %}
                 {% set url = url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
               {% endif %}
