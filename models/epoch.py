@@ -1,7 +1,7 @@
 from datetime import datetime
-import bleach
 
 from app import db
+from utils.sanitisers import sanitise_input
 
 
 
@@ -53,18 +53,11 @@ class Epoch(db.Model):
                 self.end_month = self.split_date(value)[1]
                 continue
 
-            if field == "description":
-                allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "ul", "ol"]
-                allowed_attrs = {
-                    "*": ["class"],
-                    "a": ["href", "rel"],
-                    "img": ["alt", "src", "style"],
-                    }
-                value = bleach.clean(value, 
-                                     tags=allowed_tags,
-                                     attributes=allowed_attrs)
-
             if value is not None:
+
+                if field == "description":
+                    value = sanitise_input(value)
+
                 setattr(self, field, value)
 
         self.parent_campaign = parent_campaign

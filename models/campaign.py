@@ -1,8 +1,7 @@
 from datetime import datetime
-import bleach
-from bleach.css_sanitizer import CSSSanitizer
 
 from app import db
+from utils.sanitisers import sanitise_input
 
 
 
@@ -47,22 +46,13 @@ class Campaign(db.Model):
         """ Method to populate and update self.
             Takes form data from request.form.
             Set "new" to true if creating new entry. """
-
+        
         for field, value in form.items():
-            if field == "description":
-                allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "ul", "ol"]
-                allowed_attrs = {
-                    "*": ["class"],
-                    "a": ["href", "rel"],
-                    "img": ["alt", "src", "style"],
-                    }
-                allowed_styles = ["height", "width"]
-                css_santizer = CSSSanitizer(allowed_css_properties=allowed_styles)
-                value = bleach.clean(value, 
-                                     tags=allowed_tags,
-                                     attributes=allowed_attrs,
-                                     css_sanitizer=css_santizer)
             if value is not None:
+
+                if field == "description":
+                    value = sanitise_input(value)
+
                 setattr(self, field, value)
 
         self.last_edited = datetime.now()

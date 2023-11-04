@@ -1,8 +1,7 @@
 from datetime import datetime
-import bleach
-from bleach.css_sanitizer import CSSSanitizer
 
 from app import db
+from utils.sanitisers import sanitise_input
 
 
 
@@ -28,21 +27,11 @@ class Comment(db.Model):
             Takes form data from request.form. """
 
         for field, value in form.items():
+
             if field == "body":
-                allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "ul", "ol"]
-                allowed_attrs = {
-                    "*": ["class"],
-                    "a": ["href", "rel"],
-                    "img": ["alt", "src", "style"],
-                    }
-                allowed_styles = ["height", "width"]
-                css_santizer = CSSSanitizer(allowed_css_properties=allowed_styles)
-                value = bleach.clean(value, 
-                                     tags=allowed_tags,
-                                     attributes=allowed_attrs,
-                                     css_sanitizer=css_santizer)
-            if value is not None:
-                setattr(self, field, value)
+                value = sanitise_input(value)
+
+            setattr(self, field, value)
 
         self.parent_event = parent_event
         self.author = author
