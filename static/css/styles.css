@@ -3237,7 +3237,7 @@ p {
 .epoch-description img {
   max-width: 100%;
   height: auto;
-  border: 1px solid var(--darker_red);
+  border: 1px solid var(--bright_red);
 }
 
 .epoch-between {
