@@ -60,3 +60,14 @@
   color: var(--text_dark);
   opacity: 0.5;
 }
+
+.note-handle .note-control-selection .note-control-sizing.note-control-se {
+  background-color: var(--bright_red);
+}
+
+.note-handle .note-control-selection .note-control-handle, 
+.note-handle .note-control-selection .note-control-holder, 
+.note-handle .note-control-selection .note-control-sizing {
+  border-color: var(--bright_red);
+  border-width: 2px;
+}
