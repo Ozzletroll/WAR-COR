@@ -11,12 +11,16 @@ class Dropdown {
 
     this.button.onclick = event => {
       
+      event.stopPropagation();
+
       if (this.state == false) {
+        this.closeAllDropdowns();
         this.openDropdown(event)
       }
       else if (this.state == true) {
         this.closeDropdown(event)
       }
+
     } 
   }
   
@@ -48,6 +52,15 @@ class Dropdown {
   }, 100);
   }
 
+  closeAllDropdowns() {
+    for (let i = 0; i < menuItems.length; i++) {
+      const dropdown = menuItems[i];
+      if (dropdown.state == true) {
+        dropdown.closeDropdown();
+      }
+    }
+  }
+
 }
 
 // Create array to hold dropdown objects
@@ -69,5 +82,12 @@ buttons.forEach((button, index) => {
   menuItems.push(dropdown)
 });
 
-
-
+// Close drowdowns if another element clicked
+window.onclick = event => {
+  for (let i = 0; i < menuItems.length; i++) {
+    const dropdown = menuItems[i];
+    if (dropdown.state == true && !dropdown.dropdown.contains(event.target)) {
+      dropdown.closeDropdown();
+    }
+  }
+}
