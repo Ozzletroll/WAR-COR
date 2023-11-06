@@ -3,6 +3,8 @@ from datetime import datetime
 import json
 
 import models
+from utils.sanitisers import sanitise_input
+
 
 
 def data_export(campaign):
@@ -112,7 +114,7 @@ def campaign_import(json, campaign):
     except KeyError:
         errors.append("Unable to locate campaign title.")
     try:
-        campaign.description = json["description"]
+        campaign.description = sanitise_input(json["description"])
     except KeyError:
         errors.append("Unable to locate campaign description.")
     try:
@@ -162,7 +164,7 @@ def events_import(event):
     except KeyError:
         errors.append("Unable to locate event belligerents")
     try:
-        new_event.body = event["body"]
+        new_event.body = sanitise_input(event["body"])
     except KeyError:
         errors.append("Unable to locate event body")
     try:
@@ -222,7 +224,7 @@ def epochs_import(epoch):
     except ValueError:
         errors.append("Incorrect date format")
     try:
-        new_epoch.description = epoch["description"]
+        new_epoch.description = sanitise_input(epoch["description"])
     except KeyError:
         errors.append("Unable to locate epoch description")
     
