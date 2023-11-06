@@ -103,28 +103,34 @@
                       {% endif %}
           
                       {# Only render if it is needed #}
-                      {% if event.belligerents | length > 0 %}
-                      <div class="event-page-elem event-belligerents">
-          
-                          <div class="event-elem-header">
-                              <h4 class="event-elem-h">Belligerents</h4>
-                          </div>
-                          <div class="event-elem-body">
-                              {% for group in belligerents %}
-                                  <div class="ally-group">
-                                  {% for ally in group %}
-                                      <div class="ally-elem">
-                                          {{ally}}
-                                      </div>
-                                  {% endfor %}
-                                  </div> 
-                                  {% if not loop.last %}
-                                  <div class="vs-area">vs</div>
+                      {% if belligerents %}
+                        <div class="event-page-elem event-belligerents">
+            
+                            <div class="event-elem-header">
+                                <h4 class="event-elem-h">Belligerents</h4>
+                            </div>
+                            <div class="event-elem-body">
+                                {% for group in belligerents %}
+
+                                  {% if group | length == 1 and belligerents | length == 1  %}
+                                    <div class="ally-group ally-group-solo">
+                                  {% else %}
+                                    <div class="ally-group">
                                   {% endif %}
-                              {% endfor %}
-                          </div>
-                        
-                      </div>
+
+                                    {% for ally in group %}
+                                        <div class="ally-elem">
+                                            {{ally}}
+                                        </div>
+                                    {% endfor %}
+                                    </div> 
+                                    {% if not loop.last %}
+                                    <div class="vs-area">vs</div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                          
+                        </div>
                       {% endif %}
 
                   </div>

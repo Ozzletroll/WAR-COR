@@ -99,6 +99,9 @@ class Event(db.Model):
     def separate_belligerents(self):
         """ Method to seperate the belligerents into groups for rendering. """
 
+        if self.belligerents == "":
+            return []
+
         separated_belligerents = self.belligerents.split(",")
         groups = []
 

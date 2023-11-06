@@ -4390,6 +4390,10 @@ for selection in timeline_search.js */
   height: 100%;
 }
 
+.ally-group-solo {
+  align-items: flex-start;
+}
+
 .ally-elem {
   display: flex;
   flex: 1 0 0;
