@@ -168,3 +168,33 @@ def test_join_campaign(client, auth, campaign):
 
 
 def test_request_membership(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    url = url_for("membership.request_membership",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id)
+
+    # Test if request fails if not authenticated
+    response_1 = client.post(url, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'<li>Please log in to access this page</li>' in response_1.data
+
+    # Test if user can request membership to campaign
+    auth.login(username=user_1.username, password="123")
+    response_2 = client.post(url, follow_redirects=True)
+    assert response_2.status_code == 200
+
+    # Test if membership request message created
+    pending_request = db.session.query(models.Message) \
+        .filter(models.Message.request == 1,
+                models.Message.target_campaign_id == campaign_object.id,
+                models.Message.target_user_id == user_1.id).scalar()
+    assert pending_request is not None
+    assert user_1.id == pending_request.target_user_id
