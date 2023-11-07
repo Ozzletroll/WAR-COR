@@ -198,3 +198,46 @@ def test_request_membership(client, auth, campaign):
                 models.Message.target_user_id == user_1.id).scalar()
     assert pending_request is not None
     assert user_1.id == pending_request.target_user_id
+
+
+def test_accept_invite(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    pending_invitation = db.session.query(models.Message) \
+        .filter(models.Message.invite == 1,
+                models.Message.target_campaign_id == campaign_object.id,
+                models.Message.target_user_id == user_1.id).scalar()
+
+    url = url_for("membership.accept_invite")
+    data = {
+        "message_id": pending_invitation.id,
+        "campaign_id": campaign_object.id,
+    }
+
+    # Test if accepting invite fails if not authenticated
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'<li>Please log in to access this page</li>' in response_1.data
+
+    # Test if accepting invite fails if logged in as non-target user
+    auth.login(username=user_2.username, password="123")
+    response_2 = client.post(url, data=data, follow_redirects=True)
+    assert response_2.status_code == 403
+    auth.logout()
+
+    # Test if accepting invite succeeds when logged in as correct target user
+    auth.login(username=user_1.username, password="123")
+    response_3 = client.post(url, data=data, follow_redirects=True)
+    assert response_3.status_code == 200
+    assert user_1 in campaign_object.members
