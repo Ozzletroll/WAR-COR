@@ -1,7 +1,6 @@
 from app import db
 
 
-
 class Message(db.Model):
     __tablename__ = "message"
 
@@ -11,12 +10,11 @@ class Message(db.Model):
     request = db.Column(db.Boolean(), default=False)
     body = db.Column(db.String(250))
     date = db.Column(db.DateTime, nullable=False)
-    
 
     # Database relationships
     recipients = db.relationship("User",
-                                secondary="user_messages",
-                                back_populates="messages")
+                                 secondary="user_messages",
+                                 back_populates="messages")
 
     author_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     author = db.relationship("User", back_populates="sent_messages", foreign_keys=[author_id])
