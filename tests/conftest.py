@@ -114,3 +114,14 @@ class CampaignActions(object):
             "user_id": user_id,
         }
         return self._client.post(url, data=data, follow_redirects=True)
+
+    def remove_user(self, campaign_name, campaign_id, username, user_id):
+        url = url_for("membership.remove_user",
+                      campaign_name=campaign_name,
+                      campaign_id=campaign_id)
+        data = {
+            "username": username,
+            "user_id": user_id,
+        }
+        return self._client.post(url, data=data, follow_redirects=True)
+

@@ -52,11 +52,12 @@ def test_edit_campaign_members(client, auth, campaign):
     assert b'<h3 class="campaigns-heading">Edit Members</h3>' in response_3.data
 
 
-def test_add_campaign_members(client, auth, campaign):
+def test_add_user(client, auth, campaign):
 
     admin = db.session.execute(
         select(models.User)
         .filter_by(username="Admin")).scalar()
+
     user_1 = db.session.execute(
         select(models.User)
         .filter_by(username="User 1")).scalar()
@@ -88,3 +89,35 @@ def test_add_campaign_members(client, auth, campaign):
                 models.Message.target_user_id == user_1.id).scalar()
     assert pending_invitation is not None
     assert user_1.id == pending_invitation.target_user_id
+
+
+def test_remove_user(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    # Manually add user_1 to campaign members
+    campaign_object.members.append(user_1)
+    db.session.commit()
+
+    # Test unauthenticated user cannot remove campaign member
+    response_1 = campaign.remove_user(campaign_name=campaign_object.title,
+                                      campaign_id=campaign_object.id,
+                                      username=user_1.username,
+                                      user_id=user_1.id)
+    assert response_1.status_code == 200
+    assert b'<li>Please log in to access this page</li>' in response_1.data
+
+    # Test admin can remove user 1 to campaign
+    auth.login(username="Admin", password="123")
+    response_2 = campaign.remove_user(campaign_name=campaign_object.title,
+                                      campaign_id=campaign_object.id,
+                                      username=user_1.username,
+                                      user_id=user_1.id)
+    assert response_2.status_code == 200
+    assert user_1 not in campaign_object.members
