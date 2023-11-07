@@ -126,7 +126,7 @@ def add_user(campaign_name, campaign_id):
 # Remove campaign users
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user", methods=["POST"])
 @login_required
-def remove_campaign_users(campaign_name, campaign_id):
+def remove_user(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
