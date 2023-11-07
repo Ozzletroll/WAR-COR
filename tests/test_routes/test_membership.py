@@ -125,17 +125,9 @@ def test_remove_user(client, auth, campaign):
 
 def test_join_campaign(client, auth, campaign):
 
-    admin = db.session.execute(
-        select(models.User)
-        .filter_by(username="Admin")).scalar()
-
     user_1 = db.session.execute(
         select(models.User)
         .filter_by(username="User 1")).scalar()
-
-    campaign_object = db.session.execute(
-        select(models.Campaign)
-        .filter_by(title="Test Campaign")).scalar()
 
     url = url_for("membership.join_campaign")
 
@@ -173,3 +165,6 @@ def test_join_campaign(client, auth, campaign):
     response_5 = client.post(url, data=data, follow_redirects=True)
     assert response_5.status_code == 200
     assert b'<li>No campaigns matching query found</li>' in response_5.data
+
+
+def test_request_membership(client, auth, campaign):
