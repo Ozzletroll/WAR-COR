@@ -121,3 +121,55 @@ def test_remove_user(client, auth, campaign):
                                       user_id=user_1.id)
     assert response_2.status_code == 200
     assert user_1 not in campaign_object.members
+
+
+def test_join_campaign(client, auth, campaign):
+
+    admin = db.session.execute(
+        select(models.User)
+        .filter_by(username="Admin")).scalar()
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    url = url_for("membership.join_campaign")
+
+    # Test page is inaccessible as anonymous user
+    response_1 = client.get(url, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'<li>Please log in to access this page</li>' in response_1.data
+
+    # Test page accessible when logged in
+    auth.login(username=user_1.username, password="123")
+    response_2 = client.get(url, follow_redirects=True)
+    assert response_2.status_code == 200
+    assert b'<h3 class="campaigns-heading">Join Campaign</h3>' in response_2.data
+
+    # Test if search fails when query less than 3 characters
+    data = {
+        "search": "aa",
+    }
+    response_3 = client.post(url, data=data, follow_redirects=True)
+    assert response_3.status_code == 200
+    assert b'<li>search: Field must be at least 3 characters long.</li>' in response_3.data
+
+    # Test if search returns result when query is 3 or more characters
+    data = {
+        "search": "Test Campaign",
+    }
+    response_4 = client.post(url, data=data, follow_redirects=True)
+    assert response_4.status_code == 200
+    assert b'<h2 id="campaign-1" class="campaign-header">Test Campaign</h2>' in response_4.data
+
+    # Test if search returns no results if query matches no campaign in database
+    data = {
+        "search": "Really Long Query That Will Return No Results",
+    }
+    response_5 = client.post(url, data=data, follow_redirects=True)
+    assert response_5.status_code == 200
+    assert b'<li>No campaigns matching query found</li>' in response_5.data
