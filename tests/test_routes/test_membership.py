@@ -1,5 +1,5 @@
 from sqlalchemy import select
-from flask import url_for
+from flask import url_for, request
 from app import db
 import models
 
@@ -241,3 +241,61 @@ def test_accept_invite(client, auth, campaign):
     response_3 = client.post(url, data=data, follow_redirects=True)
     assert response_3.status_code == 200
     assert user_1 in campaign_object.members
+
+
+def test_decline_invite(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    # Create pending campaign invitation for user_2
+    auth.login(username="Admin", password="123")
+    campaign.add_user(campaign_name=campaign_object.title,
+                      campaign_id=campaign_object.id,
+                      username=user_2.username,
+                      user_id=user_2.id)
+
+    pending_invitation = db.session.query(models.Message) \
+        .filter(models.Message.invite == 1,
+                models.Message.target_campaign_id == campaign_object.id,
+                models.Message.target_user_id == user_2.id).scalar()
+
+    auth.logout()
+
+    url = url_for("membership.decline_invite")
+    data = {
+        "message_id": pending_invitation.id,
+        "campaign_id": campaign_object.id,
+    }
+
+    # Test that declining invite fails if user is not authenticated
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'<li>Please log in to access this page</li>'
+
+    # Test that declining invite fails if user is not the messages target user
+    auth.login(username=user_1.username, password="123")
+    response_2 = client.post(url, data=data, follow_redirects=True)
+    assert response_2.status_code == 403
+    auth.logout()
+
+    # Test that declining the invite succeeds if logged in as target user
+    auth.login(username=user_2.username, password="123")
+    response_3 = client.post(url, data=data)
+    assert response_3.status_code == 302
+
+    pending_invitation = db.session.query(models.Message) \
+        .filter(models.Message.invite == 1,
+                models.Message.target_campaign_id == campaign_object.id,
+                models.Message.target_user_id == user_2.id).scalar()
+
+    assert pending_invitation is None
