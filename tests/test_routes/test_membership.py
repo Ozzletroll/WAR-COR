@@ -349,3 +349,62 @@ def test_confirm_request(client, auth, campaign):
     response_2 = client.post(url, data=data)
     assert response_2.status_code == 302
     assert user_2 in campaign_object.members
+
+
+def test_deny_request(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    # Remove user_2 from campaign
+    campaign_object.members.remove(user_2)
+
+    create_request_url = url_for("membership.request_membership",
+                                 campaign_name=campaign_object.title,
+                                 campaign_id=campaign_object.id)
+
+    # Create new membership request for user_2
+    auth.login(username=user_2.username, password="123")
+    client.post(create_request_url)
+
+    pending_request = db.session.query(models.Message) \
+        .filter(models.Message.request == 1,
+                models.Message.target_campaign_id == campaign_object.id,
+                models.Message.target_user_id == user_2.id).scalar()
+
+    auth.logout()
+
+    url = url_for("membership.deny_request")
+    data = {
+        "campaign_id": campaign_object.id,
+        "message_id": pending_request.id,
+    }
+
+    # Test that non-admin user cannot deny request
+    auth.login(username=user_1.username, password="123")
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 403
+    assert pending_request is not None
+    auth.logout()
+
+    # Test that admin can deny request
+    auth.login(username="Admin", password="123")
+    response_2 = client.post(url, data=data)
+    assert response_2.status_code == 302
+    assert user_2 not in campaign_object.members
+
+    pending_request = db.session.query(models.Message) \
+        .filter(models.Message.request == 1,
+                models.Message.target_campaign_id == campaign_object.id,
+                models.Message.target_user_id == user_2.id).scalar()
+
+    assert pending_request is None
