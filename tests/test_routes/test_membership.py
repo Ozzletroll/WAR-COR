@@ -1,5 +1,5 @@
 from sqlalchemy import select
-from flask import url_for, request
+from flask import url_for
 from app import db
 import models
 
@@ -408,3 +408,39 @@ def test_deny_request(client, auth, campaign):
                 models.Message.target_user_id == user_2.id).scalar()
 
     assert pending_request is None
+
+
+def test_add_permission(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    url = url_for("membership.add_permission",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id)
+    data = {
+        "username": user_2.username,
+        "user_id": user_2.id,
+    }
+
+    # Test if non-admin user can add permission
+    auth.login(username=user_1.username, password="123")
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 403
+    assert user_2 not in campaign_object.admins
+    auth.logout()
+
+    # Test if admin can grant editing permission
+    auth.login(username="Admin", password="123")
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert user_2 in campaign_object.admins
