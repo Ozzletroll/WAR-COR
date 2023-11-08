@@ -298,4 +298,5 @@ def test_decline_invite(client, auth, campaign):
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_2.id).scalar()
 
+    assert user_2 not in campaign_object.members
     assert pending_invitation is None
