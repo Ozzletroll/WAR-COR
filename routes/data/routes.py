@@ -14,7 +14,6 @@ from routes.data import bp
 from app import db
 
 
-
 #   =======================================
 #            User Data Management
 #   =======================================
