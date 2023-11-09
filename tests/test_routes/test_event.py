@@ -83,6 +83,25 @@ def test_add_event(client, auth, campaign, event):
     assert event_object.belligerents == "Belligerent 1, Belligerent 2"
 
 
+def test_add_event_prepopulate(client, auth, campaign, event):
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    # Test if date string is incremented by 1 hour and form is prepopulated with new value
+    url = url_for("event.add_event",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id,
+                  date="5016/01/01 00:00:00",
+                  new_hour=True)
+
+    auth.login(username="Admin", password="123")
+    response = client.get(url)
+    assert response.status_code == 200
+    assert b'value="5016/01/01 01:00:00"' in response.data
+
+
 def test_view_event(client, auth, campaign):
 
     campaign_object = db.session.execute(
