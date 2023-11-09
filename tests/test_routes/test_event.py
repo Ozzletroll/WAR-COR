@@ -81,3 +81,25 @@ def test_add_event(client, auth, campaign, event):
 
     assert event_object in campaign_object.events
     assert event_object.belligerents == "Belligerent 1, Belligerent 2"
+
+
+def test_view_event(client, auth, campaign):
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+
+    url = url_for("event.view_event",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id,
+                  event_name=event_object.title,
+                  event_id=event_object.id)
+
+    # Test if event route is reachable
+    response = client.get(url)
+    assert response.status_code == 200
+    
