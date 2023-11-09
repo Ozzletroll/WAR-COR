@@ -34,6 +34,11 @@ def campaign(client):
     return CampaignActions(client)
 
 
+@pytest.fixture()
+def event(client):
+    return EventActions(client)
+
+
 class AuthActions(object):
     """ Class to facilitate common user auth functions during testing """
 
@@ -81,6 +86,8 @@ class CampaignActions(object):
         return self._client.post("/campaigns/create_campaign", follow_redirects=True, data={
             "title": title,
             "description": description,
+            "date_suffix": "",
+            "negative_date_suffix": "",
         })
 
     def edit(self, campaign_name, campaign_id, new_title="Edited Title", new_description="Edited Description"):
@@ -125,3 +132,16 @@ class CampaignActions(object):
         }
         return self._client.post(url, data=data, follow_redirects=True)
 
+
+class EventActions(object):
+
+    def __init__(self, client):
+        self._client = client
+
+    def create(self, campaign_object, data):
+
+        url = url_for("event.add_event",
+                      campaign_name=campaign_object.title,
+                      campaign_id=campaign_object.id)
+
+        return self._client.post(url, data=data, follow_redirects=True)
