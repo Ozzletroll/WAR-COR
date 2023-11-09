@@ -102,4 +102,42 @@ def test_view_event(client, auth, campaign):
     # Test if event route is reachable
     response = client.get(url)
     assert response.status_code == 200
-    
+
+
+def test_leave_comment(client, auth, campaign, event):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+
+    data = {
+        "body": "Comment text"
+    }
+
+    # Test non-member cannot leave comment
+    auth.login(username=user_2.username, password="123")
+    response_1 = event.create_comment(campaign_object=campaign_object,
+                                      event_object=event_object,
+                                      data=data)
+    assert response_1.status_code == 403
+    auth.logout()
+
+    # Test member can leave comment
+    auth.login(username=user_1.username, password="123")
+    response_2 = event.create_comment(campaign_object=campaign_object,
+                                      event_object=event_object,
+                                      data=data)
+    assert response_2.status_code == 200
+    assert event_object.comments[0].body == "Comment text"
