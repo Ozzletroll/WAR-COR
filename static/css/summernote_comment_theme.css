@@ -1,5 +1,6 @@
 .note-editor {
     clip-path: none;
+    max-width: 100%;
 }
 
 .note-editor.note-frame {

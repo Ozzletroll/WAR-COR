@@ -11,16 +11,14 @@
         {% set text = "REQUIRED" %}
     {% elif not comment %}
       {% set text = "OPTIONAL" %}
+    {% elif comment %}
+      {% set text = "LEAVE A COMMENT" %}
     {% else %}
       {% set text = "" %}
     {% endif %}
 
-    {% if comment %}
-      {% set height = "150" %}
-    {% else %}
-      {% set height = "fit-content" %}
-    {% endif %}
-
+    {% set height = "fit-content" %}
+  
     <script>
         $('#summernote').summernote({
         placeholder: '<p>{{ text }}</p>',

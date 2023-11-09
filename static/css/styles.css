@@ -4558,6 +4558,7 @@ for selection in timeline_search.js */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  max-width: 100%;
 }
 
 .new-comment-area-header {
@@ -4583,6 +4584,7 @@ for selection in timeline_search.js */
   border-radius: 0px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  max-width: 100%;
 }
 
 .comment-submit {
