@@ -31,7 +31,7 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     belligerents = event.separate_belligerents() 
 
     form = forms.CommentForm()
-    delete_form = forms.DeleteConfirmForm()
+    delete_form = forms.SubmitForm()
 
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"event-{event.id}"
@@ -151,7 +151,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
-    delete_form = forms.DeleteConfirmForm()
+    delete_form = forms.SubmitForm()
 
     if form.validate_on_submit():
         # Update event object using form data

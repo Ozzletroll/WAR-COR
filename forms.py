@@ -99,10 +99,6 @@ class CreateEventForm(FlaskForm):
     submit = SubmitField("Create Event")
 
 
-class DeleteConfirmForm(FlaskForm):
-    submit = SubmitField("Delete")
-
-
 class CreateEpochForm(FlaskForm):
     # Register custom validators for error collection
     class Meta:
@@ -131,7 +127,7 @@ class AddUserForm(FlaskForm):
 
 
 class SubmitForm(FlaskForm):
-    submit = SubmitField("Request Membership")
+    submit = SubmitField("Submit")
 
 
 class ChangeCallsignForm(FlaskForm):
@@ -140,7 +136,10 @@ class ChangeCallsignForm(FlaskForm):
     
 
 class UploadJsonForm(FlaskForm):
-    file = FileField("Backup JSON", validators=[DataRequired(), FileAllowed(["json"], "Please select a valid WAR/COR JSON file"), file_format()])
+    file = FileField("Backup JSON", validators=[DataRequired(), 
+                                                FileAllowed(["json"], 
+                                                            "Please select a valid WAR/COR JSON file"), 
+                                                            file_format()])
     submit = SubmitField("Restore")
 
 
