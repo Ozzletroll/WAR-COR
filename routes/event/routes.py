@@ -130,7 +130,6 @@ def add_event(campaign_name, campaign_id):
                            campaign=campaign)
 
 
-
 # Edit existing event
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/edit", methods=["GET", "POST"])
 @login_required
@@ -178,13 +177,13 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
             flash(field_name + ": " + error_message)
 
     return render_template("new_event.html",
-                            campaign=campaign,
-                            campaign_name=campaign.title,
-                            event_name=event.title,
-                            form=form,
-                            delete_form=delete_form,
-                            event=event,
-                            edit=True)
+                           campaign=campaign,
+                           campaign_name=campaign.title,
+                           event_name=event.title,
+                           form=form,
+                           delete_form=delete_form,
+                           event=event,
+                           edit=True)
 
 
 # Delete existing event
@@ -214,9 +213,9 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
     # Update campaigns epochs
     campaign.check_epochs()
 
-    return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
-                                campaign_id=campaign.id))
+    return redirect(url_for("campaign.edit_timeline",
+                            campaign_name=campaign.title,
+                            campaign_id=campaign.id))
 
 
 # Delete comment
