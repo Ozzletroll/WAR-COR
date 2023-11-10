@@ -160,3 +160,55 @@ def test_leave_comment(client, auth, campaign, event):
                                       data=data)
     assert response_2.status_code == 200
     assert event_object.comments[0].body == "Comment text"
+
+
+def test_delete_comment(client, auth, campaign, event):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+
+    comment_object = db.session.query(models.Comment) \
+        .filter(models.Comment.author_id == 2,
+                models.Comment.body == "Comment text",
+                models.Comment.event_id == event_object.id).scalar()
+
+    url = url_for("event.delete_comment",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id,
+                  event_name=event_object.title,
+                  event_id=event_object.id,
+                  comment_id=comment_object.id)
+
+    # Test that non-admin, non-author user cannot delete comment
+    auth.login(username=user_2.username, password="123")
+    response_1 = client.post(url, follow_redirects=True)
+    assert response_1.status_code == 403
+    auth.logout()
+
+    # Test that comment author can delete the comment
+    auth.login(username=user_1.username, password="123")
+    response_1 = client.post(url, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert len(event_object.comments) == 0
+
+    # Test that campaign admin can delete the comment
+    event.create_comment(campaign_object, event_object, data={"body": "Comment text"})
+    assert len(event_object.comments) == 1
+    auth.logout()
+    auth.login(username="Admin", password="123")
+    response_2 = client.post(url, follow_redirects=True)
+    assert response_2.status_code == 200
+    assert len(event_object.comments) == 0
