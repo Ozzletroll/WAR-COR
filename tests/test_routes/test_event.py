@@ -282,3 +282,61 @@ def test_delete_comment(client, auth, campaign, event):
     response_2 = client.post(url, follow_redirects=True)
     assert response_2.status_code == 200
     assert len(event_object.comments) == 0
+
+
+def test_delete_event(client, auth, campaign, event):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+
+    url = url_for("event.delete_event",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id,
+                  event_name=event_object.title,
+                  event_id=event_object.id)
+
+    # Test route is not reachable when not logged in
+    response_1 = client.post(url, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'<li>Please log in to access this page</li>' in response_1.data
+
+    # Test event cannot be deleted by non-member user
+    auth.login(username=user_2.username, password="123")
+    response_2 = client.post(url, follow_redirects=True)
+    assert response_2.status_code == 403
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+    assert event_object is not None
+
+    # Test event cannot be deleted by non-admin member
+    auth.login(username=user_1.username, password="123")
+    response_3 = client.post(url, follow_redirects=True)
+    assert response_3.status_code == 403
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+    assert event_object is not None
+    auth.logout()
+
+    # Test event can be deleted by admin
+    auth.login(username="Admin", password="123")
+    response_4 = client.post(url, follow_redirects=True)
+    assert response_4.status_code == 200
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+    assert event_object is None
