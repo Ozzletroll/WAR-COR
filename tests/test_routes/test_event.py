@@ -102,6 +102,76 @@ def test_add_event_prepopulate(client, auth, campaign, event):
     assert b'value="5016/01/01 01:00:00"' in response.data
 
 
+def test_edit_event(client, auth, campaign, event):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 2")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    event_object = db.session.execute(
+        select(models.Event)
+        .filter_by(title="Test Event")).scalar()
+
+    event_data = {
+        "type": "Test",
+        "title": "Test Event",
+        "date": "5016/01/01 09:00:00",
+        "location": "Edited Test Location",
+        "belligerents": "Belligerent 1, Belligerent 2",
+        "body": "Edited Test Body Text",
+        "result": "Edited Test Result",
+        "header": False,
+        "hide_time": False,
+    }
+
+    get_url = url_for("event.edit_event",
+                      campaign_name=campaign_object.title,
+                      campaign_id=campaign_object.id,
+                      event_name=event_object.title,
+                      event_id=event_object.id)
+
+    # Test page is not reachable when logged in as non-member user
+    auth.login(username=user_2.username, password="123")
+    response_1 = client.get(get_url)
+    assert response_1.status_code == 403
+    response_2 = event.edit(campaign_object, event_object, data=event_data)
+    assert response_2.status_code == 403
+    auth.logout()
+
+    # Test page cannot be accessed by member without admin permissions
+    auth.login(username=user_1.username, password="123")
+    response_3 = client.get(get_url)
+    assert response_3.status_code == 403
+    response_4 = event.edit(campaign_object, event_object, data=event_data)
+    assert response_4.status_code == 403
+    auth.logout()
+
+    # Test page cannot be accessed by member without admin permissions
+    auth.login(username=user_1.username, password="123")
+    response_5 = client.get(get_url)
+    assert response_5.status_code == 403
+    response_6 = event.edit(campaign_object, event_object, data=event_data)
+    assert response_6.status_code == 403
+    auth.logout()
+
+    # Test admin can view editing page and update event data
+    auth.login(username="Admin", password="123")
+    response_7 = client.get(get_url)
+    assert response_7.status_code == 200
+    response_8 = event.edit(campaign_object, event_object, data=event_data)
+    assert response_8.status_code == 200
+    assert event_object.body == "Edited Test Body Text"
+    auth.logout()
+
+
 def test_view_event(client, auth, campaign):
 
     campaign_object = db.session.execute(
