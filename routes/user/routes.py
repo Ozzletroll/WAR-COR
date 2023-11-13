@@ -97,7 +97,7 @@ def logout():
 # Access user page
 @bp.route("/user/<username>", methods=["GET"])
 @login_required
-def user_page(username) :
+def user_page(username):
 
     user = db.session.execute(
         select(models.User)
@@ -117,11 +117,11 @@ def user_page(username) :
     if request.referrer and "/user" not in request.referrer:
         session["previous_url"] = request.referrer
 
-    return render_template("user_page.html", 
-                            user=user, 
-                            callsign_form=callsign_form,
-                            username_form=username_form,
-                            password_form=password_form)
+    return render_template("user_page.html",
+                           user=user,
+                           callsign_form=callsign_form,
+                           username_form=username_form,
+                           password_form=password_form)
 
 
 @bp.route("/user/<username>/update-callsign", methods=["POST"])
@@ -287,7 +287,7 @@ def back():
         # Use a fallback URL if the previous URL is not available
         referrer = request.referrer
     elif current_user.is_authenticated:
-        # If no session var or referrer, and is is logged in, redirect to homepage
+        # If no session var or referrer, and user is logged in, redirect to homepage
         referrer = url_for('campaign.campaigns')
     else:
         # Otherwise, redirect to homepage
