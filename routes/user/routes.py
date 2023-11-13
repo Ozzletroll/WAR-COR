@@ -296,8 +296,8 @@ def back():
     return redirect(referrer)
 
 
-# Function called when viewing/dimissing a notification
-@bp.route("/user/messages/dimiss", methods=["POST"])
+# Function called when viewing/dismissing a notification
+@bp.route("/user/messages/dismiss", methods=["POST"])
 @login_required
 def dismiss_message():
 
@@ -331,7 +331,6 @@ def dismiss_message():
         if not message_query:
             db.session.delete(message)
             db.session.commit()
-
 
         if view:
             return redirect(event_url)
