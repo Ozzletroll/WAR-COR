@@ -24,7 +24,7 @@ def test_view_campaigns_page(client, auth):
     auth.logout()
 
 
-def test_create_campaign(client, app, auth, campaign):
+def test_create_campaign(client, auth, campaign):
 
     # Test campaign creation fails when not logged in
     response_1 = campaign.create(title=TEST_CAMPAIGN_TITLE,
@@ -52,7 +52,7 @@ def test_create_campaign(client, app, auth, campaign):
     assert string in response_2.data
 
 
-def test_show_timeline(client, app, auth, campaign):
+def test_show_timeline(client, auth, campaign):
 
     campaign_query = db.session.execute(
         select(models.Campaign)
@@ -103,7 +103,7 @@ def test_show_timeline_editing_page(client, auth):
     assert b'editPage="true"' in response_3.data
 
 
-def test_campaign_editing(client, app, auth, campaign):
+def test_campaign_editing(client, auth, campaign):
 
     # Test campaign cannot be edited when logged out
     auth.logout()

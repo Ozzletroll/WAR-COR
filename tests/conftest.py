@@ -4,7 +4,7 @@ from app import create_app
 from app import db
 
 
-@pytest.fixture(scope="package")
+@pytest.fixture(scope="module")
 def app():
     app = create_app(database_uri="sqlite:///test.db")
     yield app
