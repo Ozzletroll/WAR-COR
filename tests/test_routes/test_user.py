@@ -1,3 +1,4 @@
+from flask import url_for
 from sqlalchemy import select
 from flask_login import current_user
 import werkzeug
@@ -112,3 +113,30 @@ def test_delete_user(client, app, auth):
     assert query_3 is None
 
 
+def test_update_callsign(client, auth, campaign):
+
+    auth.register(username="New User", password="123")
+
+    # Create test campaign to change callsign for
+    campaign.create("Callsign Change Test",
+                    description="A campaign to test user callsigns")
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Callsign Change Test")).scalar()
+
+    url = url_for("user.update_callsign",
+                  username=current_user.username,
+                  user_id=current_user.id,
+                  campaign_id=campaign_object.id)
+    data = {
+        "callsign": "NEW CALLSIGN",
+    }
+
+    # Test callsign can be updated
+    response = client.post(url, data=data)
+    assert response.status_code == 302
+
+    user_campaign_association = [entry for entry in current_user.campaign_associations
+                                 if entry.campaign_id == campaign_object.id]
+    assert user_campaign_association[0].callsign == "NEW CALLSIGN"
