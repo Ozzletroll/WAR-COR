@@ -140,3 +140,37 @@ def test_update_callsign(client, auth, campaign):
     user_campaign_association = [entry for entry in current_user.campaign_associations
                                  if entry.campaign_id == campaign_object.id]
     assert user_campaign_association[0].callsign == "NEW CALLSIGN"
+
+
+def test_change_username(client, auth):
+
+    auth.register(username="Username_1", password="123")
+    auth.logout()
+    auth.register(username="Username_2", password="123")
+
+    url = url_for("user.change_username", username=current_user.username)
+
+    # Test that username change fails if existing username is given
+    data = {
+        "username": "Username_1"
+    }
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'Username already in use, please choose another' in response_1.data
+    assert current_user.username == "Username_2"
+
+    # Test that username change succeeds if unique username given
+    data = {
+        "username": "a"
+    }
+    response_2 = client.post(url, data=data, follow_redirects=True)
+    assert response_2.status_code == 200
+    assert b'New username must be 3 or more characters' in response_2.data
+
+    # Test that username change succeeds if unique username given
+    data = {
+        "username": "New_Username"
+    }
+    response_3 = client.post(url, data=data, follow_redirects=True)
+    assert response_3.status_code == 200
+    assert current_user.username == "New_Username"
