@@ -200,12 +200,10 @@ def change_password(username):
 
     # Check if the user matching given parameters exists in database
     if user:
-
         password_form = forms.ChangePasswordForm()
 
         # Password change form is submitted
         if password_form.validate_on_submit():
-            
             if user.change_password(form=request.form):
                 flash("Password updated")
                 return redirect(url_for("user.user_page", username=user.username))
