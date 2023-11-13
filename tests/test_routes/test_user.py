@@ -174,3 +174,36 @@ def test_change_username(client, auth):
     response_3 = client.post(url, data=data, follow_redirects=True)
     assert response_3.status_code == 200
     assert current_user.username == "New_Username"
+
+
+def test_change_password(client, auth):
+
+    auth.login(username="Username_1", password="123")
+
+    url = url_for("user.change_password", username=current_user.username)
+
+    # Test password change fails if incorrect old password given
+    data = {
+        "old_password": "An Incorrect Password",
+        "new_password": "New Password",
+        "confirm_password": "New Password"
+    }
+    response_1 = client.post(url, data=data, follow_redirects=True)
+    assert response_1.status_code == 200
+    assert b'Incorrect password' in response_1.data
+
+    # Test password change succeeds when correct authentication given
+    data = {
+        "old_password": "123",
+        "new_password": "New Password",
+        "confirm_password": "New Password"
+    }
+    response_2 = client.post(url, data=data, follow_redirects=True)
+    assert response_2.status_code == 200
+    assert b'Password updated' in response_2.data
+
+    # Check user can log in with new details
+    auth.logout()
+    auth.login(username="Username_1", password="New Password")
+    assert current_user.is_authenticated
+    assert current_user.username == "Username_1"
