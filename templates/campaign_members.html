@@ -74,21 +74,18 @@
                 </div>
                 <div class="members-right">
                   {% if not campaign in user.permissions%}
-                    <form id="make-admin-form" class="add-member-form" method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.title, campaign_id=campaign.id) }}">
-                      {{ add_form.csrf_token }}
-                      <div>
-                        {{ add_form.username(value=user.username, class_="form-hidden") }}
-                        {{ add_form.user_id(value=user.id, class_="form-hidden") }}
-                        {{ add_form.submit_button(value="MAKE ADMIN", class_="button entry-button") }}
-                      </div>
-                    </form>
+
+                    <button id="admin-button-{{ loop.index }}" class="button entry-button" data-modal="True">
+                      <div>MAKE ADMIN</div>
+                    </button>
+
                   {% else %}
-                    <div class="button members-button-spacer">
+                    <div id="admin-button-{{ loop.index }}" class="button members-button-spacer">
                       <div class="spacer-inner">ADMIN</div>
                     </div>
                   {% endif %}
                   
-                  <button id ="button-{{ loop.index }}" class="entry-button">
+                  <button id="button-{{ loop.index }}" class="entry-button">
                     {% if user.id == current_user.id %}
                       Leave
                     {% else %}
@@ -157,6 +154,39 @@
       <img src="/static/images/logo-red.png" class="top-logo">
     </div>
       
+    {# Confirm Make Admin Modal #}
+
+    {% for user in campaign.members %}
+    <div id="admin-modal-{{loop.index}}" class="modal">
+      <div class="modal-content modal-content-mid">
+        <div class="modal-content-inner">
+          <div class="modal-header">
+            <h2 class="modal-header-small">
+              GRANT WARCOR AUTHORISATION
+            </h2>
+            <span id="admin-close-{{loop.index}}" class="close">
+              <img class="icon" src="/static/images/icons/cancel.svg">
+            </span>
+          </div>
+          <div class="modal-body modal-body-small">
+            <p class="flavour-text modal-flavour">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::GRANT</p>
+            <p class="modal-text modal-text-upper">Confirm WARCOR admin authorisation for user {{ user.username }} in campaign "{{ campaign.title }}".</p>
+
+            <form id="make-admin-form" class="add-member-form" method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+              {{ add_form.csrf_token }}
+              <div>
+                {{ add_form.username(value=user.username, class_="form-hidden") }}
+                {{ add_form.user_id(value=user.id, class_="form-hidden") }}
+                {{ add_form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
     {# Confirm Leave/Remove Modal #}
 
     {% for user in campaign.members %}

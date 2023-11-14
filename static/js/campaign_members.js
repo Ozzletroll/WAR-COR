@@ -135,7 +135,11 @@ var modals = document.querySelectorAll('[id^="modal-"]');
 var buttons = document.querySelectorAll('[id^="button-"]');
 var spans = document.querySelectorAll('[id^="close-"]');
 
-// Iterate through both arrays, creating dropdown objects
+var adminModals = document.querySelectorAll('[id^="admin-modal-"]');
+var adminButtons = document.querySelectorAll('[id^="admin-button-"]');
+var adminSpans = document.querySelectorAll('[id^="admin-close-"]');
+
+
 buttons.forEach((button, index) => {
 
   var modal = new Modal({
@@ -143,17 +147,30 @@ buttons.forEach((button, index) => {
     button: button,
     span: spans[index],
   })
-
-  // Append object to array
   modalItems.push(modal)
-
-  // Add click event listener to close the modal when clicking outside
   window.addEventListener('click', function(event) {
     if (event.target == modal.modal) {
       modal.closeModal();
     }
   });
   
+});
+
+adminButtons.forEach((button, index) => {
+
+  if (button.dataset.modal == "True") {
+    var modal = new Modal({
+      modal: adminModals[index],
+      button: button,
+      span: adminSpans[index],
+    })
+    modalItems.push(modal)
+    window.addEventListener('click', function(event) {
+      if (event.target == modal.modal) {
+        modal.closeModal();
+      }
+    });
+  }
 });
 
 
