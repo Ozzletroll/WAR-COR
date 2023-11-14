@@ -127,7 +127,8 @@ elements.
     </div>
     {% endif %}
 
-    {% if index == length - 1 %}
+
+    {% if not month.has_following_month %}
     <!-- End of month new event button -->
     <div class="month-between event-between-years">
       <div class="between-months-elements">

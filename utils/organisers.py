@@ -25,6 +25,7 @@ class Month:
         self.epochs = []
         self.end_epochs = []
         self.epoch_has_events = False
+        self.has_following_month = False
 
 
 
@@ -243,10 +244,17 @@ def campaign_sort(campaign):
         except KeyError:
             year_object.marker = False
 
-        for month in final_group[year]:
+        for index, month in enumerate(final_group[year]):
 
             month_object = Month()
             month_object.name = str(month).zfill(2)
+
+            # Determine if the following month is the next consecutive month
+            if index != len(final_group[year]) - 1:
+                next_month = list(final_group[year].keys())[index + 1]
+
+                if int(next_month) == int(month) + 1:
+                    month_object.has_following_month = True
 
             for day in final_group[year][month]:
 
