@@ -104,7 +104,6 @@ def campaign_sort(campaign):
     def check_year_marker(year):
         """Check if a given year is long enough to warrant a year marker """
 
-        year_markers = []
         marker = False
 
         if len(year) >= 3:
