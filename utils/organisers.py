@@ -63,13 +63,13 @@ def campaign_sort(campaign):
         The first dictionary structure is created by combining two dictionaries of the 
         campaigns epochs organised by start date and end date.
 
-            Example: {year: {month: [<Epoch 1>, <Epoch 2>]}
+            Example: {year: {month: [<Epoch 1>, <Epoch 2>]}}
 
         Next, a similar dictionary is created from the campaigns events, with an 
         additional layer of nested dictionaries representing days. The event objects
         themselves are nested inside the day entries.
 
-            Example: {year: {month: {day: [<Event 3>, <Event 4>]}}
+            Example: {year: {month: {day: [<Event 3>, <Event 4>]}}}
         
         These two nested dictionaries are then combined into one. The "events" dictionary
         is used as the primary structure, and new entries are created for any year/month
@@ -81,10 +81,10 @@ def campaign_sort(campaign):
             in 5014/05/01 and ended in 5016/01/01, the dict would be:
 
             final_group = {5014: {05: [<Epoch 1>]}},
-                        5015: {01: {01: [<Event 1>, <Event 2>]},
-                        5016: {01: [<Epoch 2>]}}
+                           5015: {01: {01: [<Event 1>, <Event 2>]},
+                           5016: {01: [<Epoch 2>]}}
 
-        Finally, this dict is used to create a convenient structure of nested
+        Finally, this dict is used to create a structure of nested
         objects, allowing easier rendering in the Jinja template:                     
 
             Month objects are assigned as a property of Year objects under Year.months. 
