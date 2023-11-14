@@ -41,19 +41,18 @@ class Epoch(db.Model):
             Set "new" to true if creating new entry.  """
 
         for field, value in form.items():
-            if field == "start_date" and value is not None:
-                self.start_date = value
-                self.start_year = self.split_date(value)[0]
-                self.start_month = self.split_date(value)[1]
-                continue
-
-            elif field == "end_date" and value is not None:
-                self.end_date = value
-                self.end_year = self.split_date(value)[0]
-                self.end_month = self.split_date(value)[1]
-                continue
-
+            
             if value is not None:
+
+                if field == "start_date":
+                    self.start_date = value
+                    self.start_year = self.split_date(value)[0]
+                    self.start_month = self.split_date(value)[1]
+
+                if field == "end_date":
+                    self.end_date = value
+                    self.end_year = self.split_date(value)[0]
+                    self.end_month = self.split_date(value)[1]
 
                 if field == "description":
                     value = sanitise_input(value)
@@ -88,15 +87,17 @@ class Epoch(db.Model):
         
         def is_in_epoch(event, epoch):
 
-            epoch_start = float(epoch.start_date.replace("/", "."))
-            epoch_end = float(epoch.end_date.replace("/", "."))
+            epoch_start_year = int(epoch.start_date.split("/")[:2][0])
+            epoch_start_month = int(epoch.start_date.split("/")[:2][1])
+            epoch_end_year = int(epoch.end_date.split("/")[:2][0])
+            epoch_end_month = int(epoch.end_date.split("/")[:2][1])
 
-            event_year, event_month = event.date.split("/")[:2]
-            event_combined = event_year + "/" + event_month
-            event_date = float(event_combined.replace("/", "."))
+            event_year = int(event.date.split("/")[:2][0])
+            event_month = int(event.date.split("/")[:2][1])
 
-            if epoch_start <= event_date <= epoch_end:
-                return True
+            if epoch_start_year <= event_year <= epoch_end_year:
+                if epoch_start_month <= event_month <= epoch_end_month:
+                    return True
             else:
                 return False
     
