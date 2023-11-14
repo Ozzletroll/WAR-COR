@@ -43,6 +43,8 @@
 
         {% endfor %}
 
+        {# Show Epoch End
+
         {% if month.has_epoch_end %}
           {% for epoch in month.end_epochs %}
             {% if epoch.has_events %}
@@ -51,7 +53,9 @@
             </a>
             {% endif %}
           {% endfor %}
-       {% endif %}
+        {% endif %}
+        
+        #}
 
       {% endfor %}
 
