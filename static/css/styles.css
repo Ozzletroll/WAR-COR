@@ -5098,8 +5098,8 @@ pre {
   position: fixed;
   bottom: 0px;
   background-color: var(--dark_red);
-  width: min(400px, 90%);
-  height: min(500px, 90%);
+  width: min(800px, 90%);
+  height: min(300px, 90%);
   margin-bottom: 10px;
   padding: 1px;
   z-index: 3;
@@ -5141,6 +5141,7 @@ pre {
 
 .consent-text {
   font-size: 14px;
+  margin: 5px;
 }
 
 .consent-footer {
@@ -5154,7 +5155,7 @@ pre {
   display: flex;
   width: fit-content;
   height: fit-content;
-  margin: 25px;
+  margin: 10px;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   border: none;
