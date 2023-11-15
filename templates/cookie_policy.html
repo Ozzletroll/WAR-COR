@@ -1,0 +1,52 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/back_button.html" as back_button %}
+{% import "components/campaign_entry.html" as campaign_entry %}
+
+{% extends "base/base.html" %}
+
+{% block content %}
+
+<div class="scrollpage">
+
+  <div class="campaigns-content">
+
+    {# Animation fade in group 1 #}
+    <div class="fade-in-block-1">
+    
+      {# Create navigation url bar #}
+
+      {% set urls = [url_for('home.home')] %}
+
+      {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                              is_link=true,
+                              current_user=current_user,
+                              homepage=true) }}
+
+      <div class="campaigns-title">
+
+        {# Only render usable back button if referrer has a url #}
+        {% if request.referrer %}
+          {# User page back button #}
+          {% set url = request.referrer %}
+          {{ back_button.back_button(url=url, blank=false) }}
+        {% else %}
+          {# Blank back button area area. No url needed. #}
+          {% set url = "" %}
+          {{ back_button.back_button(url=url, blank=true) }}
+        {% endif %}
+
+        <h3 class="campaigns-heading">COOKIE POLICY</h3>
+
+      </div>
+
+      <hr class="campaigns-divider">
+      <p class="flavour-text">NOM-01-00 // Cookie::Policy </p>
+
+    </div>
+    
+  </div>
+
+</div>
+
+{% endblock %}

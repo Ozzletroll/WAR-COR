@@ -1,6 +1,7 @@
-from flask import session, jsonify, make_response, request
+from flask import session, jsonify, make_response, request, redirect
 from routes.session import bp
 
+import forms
 
 #   =======================================
 #                 SESSION
@@ -12,11 +13,20 @@ def check_consent():
     """ Checks for GDPR consent form acceptance in session, and
         injects variable to templates. """
 
-    if "consent_form" not in session:
-        return dict(consent=False)
+    if "consent" not in session:
+        consent_form = forms.SubmitForm()
+        return dict(consent=False, consent_form=consent_form)
     else:
         return dict(consent=True)
     
+
+@bp.route("/session/accept_cookies", methods=["POST"])
+def accept_cookies():
+    """ Sets the cookie consent form session variable.  """
+
+    session["consent"] = True
+    return redirect(request.referrer)
+
 
 # Get and clear campaign page scroll target session variable
 @bp.route("/session/campaign-scroll-target", methods=["GET"])

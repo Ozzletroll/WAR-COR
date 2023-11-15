@@ -1,4 +1,4 @@
-from flask import render_template, session, jsonify, make_response, request
+from flask import render_template
 import datetime
 from routes.home import bp
 
@@ -25,3 +25,9 @@ def about():
 @bp.route("/contact")
 def contact():
     return render_template("contact.html")
+
+
+@bp.route("/cookie-policy")
+def cookie_policy():
+
+    return render_template("cookie_policy.html")
