@@ -7,6 +7,16 @@ from routes.session import bp
 #   =======================================
 
 
+@bp.app_context_processor
+def check_consent():
+    """ Checks for GDPR consent form acceptance in session, and
+        injects variable to templates. """
+
+    if "consent_form" not in session:
+        return dict(consent=False)
+    else:
+        return dict(consent=True)
+    
 
 # Get and clear campaign page scroll target session variable
 @bp.route("/session/campaign-scroll-target", methods=["GET"])
