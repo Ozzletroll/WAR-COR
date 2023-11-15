@@ -5099,7 +5099,7 @@ pre {
   bottom: 0px;
   background-color: var(--dark_red);
   width: min(800px, 90%);
-  height: min(300px, 90%);
+  max-height: calc(100vh - 74px);
   margin-bottom: 10px;
   padding: 1px;
   z-index: 3;
