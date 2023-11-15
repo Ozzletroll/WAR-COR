@@ -1,0 +1,32 @@
+<div class="consent-form-border">
+    <div class="consent-form-inner">
+        <div class="consent-header">
+            <h3 class="consent-heading">UNION TERMS AND CONDITIONS</h3>
+        </div>
+        
+        <div class="consent-body">
+
+            <p class="consent-text">
+                WAR/COR acknowledges the necessity of user privacy, and uses only essential cookies to allow basic site functionality.
+                WAR/COR does not gather or track any user data.
+            </p>
+            <p class="consent-text">
+                For users signing in, email addresses are used only for authentication and password recovery.
+            </p>
+            <p class="consent-text">
+                By clicking 'Accept', you agree to our website's cookie use as described in our
+                <a href="{{ url_for('home.cookie_policy') }}" class="consent-link">Cookie Policy</a>.
+            </p>
+
+        </div>
+
+        <div class="consent-footer">
+            <form method="POST" action="{{ url_for('session.accept_cookies') }}">
+                {{ consent_form.csrf_token }}
+                {{ consent_form.submit(value="ACCEPT", class="button consent-button") }}
+            </form>
+        </div>
+
+    </div>
+    
+</div>

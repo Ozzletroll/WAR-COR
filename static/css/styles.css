@@ -5090,3 +5090,83 @@ pre {
 .result-header {
   color: var(--text_dark);
 }
+
+/* GDPR CONSENT FORM */
+
+.consent-form-border {
+  display: flex;
+  position: fixed;
+  bottom: 0px;
+  background-color: var(--dark_red);
+  width: min(400px, 90%);
+  height: min(500px, 90%);
+  margin-bottom: 10px;
+  padding: 1px;
+  z-index: 3;
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  box-sizing: border-box;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 3px;
+}
+
+.consent-form-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 auto;
+  background-color: var(--elem_mid);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  border-radius: 1px;
+}
+
+.consent-header {
+  width: 100%;
+  background-color: var(--darker_red);
+}
+
+.consent-heading {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text_header_contrast);
+}
+
+.consent-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.consent-text {
+  font-size: 14px;
+}
+
+.consent-footer {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.consent-button {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  margin: 25px;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  transition: 0.15s;
+}
+
+.consent-button:hover {
+  background-color: var(--dark_red);
+}
+
+.consent-button:active {
+  background-color: var(--bright_red);
+}

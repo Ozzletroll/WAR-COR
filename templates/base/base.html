@@ -17,6 +17,10 @@
 
         {% include 'base/navbar.html' %}
 
+        {% if not consent %}
+          {% include 'components/gdpr_consent_form.html' %}
+        {% endif %}
+
         {% block content %}
         {% endblock %}
 
