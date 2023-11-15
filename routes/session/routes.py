@@ -13,9 +13,16 @@ def check_consent():
     """ Checks for GDPR consent form acceptance in session, and
         injects variable to templates. """
 
-    if "consent" not in session:
-        consent_form = forms.SubmitForm()
-        return dict(consent=False, consent_form=consent_form)
+    excluded_routes = ["/", "/about", "/contact", "/cookie-policy"]
+
+    if request.path not in excluded_routes:
+        
+        if "consent" not in session:
+            consent_form = forms.SubmitForm()
+            return dict(consent=False, consent_form=consent_form)
+        else:
+            return dict(consent=True)
+        
     else:
         return dict(consent=True)
     
