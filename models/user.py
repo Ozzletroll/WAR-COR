@@ -47,7 +47,7 @@ class User(UserMixin, db.Model):
             Takes form data from request.form.
             Set "new" to true if creating new entry. """
 
-        self.email = form["email"]
+        self.email = form["email"].lower()
         self.username = form["username"]
 
         if new:

@@ -2,11 +2,11 @@ from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
-from werkzeug.security import generate_password_hash
 
 import auth
 import forms
 import models
+from utils import messengers
 
 from app import db
 from routes.user import bp
@@ -365,10 +365,26 @@ def dismiss_all():
 @bp.route("/user/recover-password", methods=["GET", "POST"])
 def recover_password():
 
-    form = forms.PasswordRecoveryForm()
+    # Check if user is not logged in
+    if not current_user.is_authenticated:
 
-    if form.validate_on_submit():
-        pass
+        form = forms.PasswordRecoveryForm()
+        if form.validate_on_submit():
+            
+            email = request.form["email"].lower()
+            user = db.session.execute(
+                select(models.User)
+                .filter_by(email=email)).scalar()
+            
+            if user:
+                messengers.send_recovery_email()
+                flash(f"Account recovery email sent to {email}")
+            else:
+                flash("No account matching given email found. Please check your email address and try again.")
 
-    return render_template("password_recovery.html", 
-                           form=form)
+        return render_template("password_recovery.html", 
+                            form=form)
+    
+    else:
+        return redirect(url_for("user.login"))
+    
