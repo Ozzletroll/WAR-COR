@@ -18,3 +18,9 @@ def test_contact(client):
     response = client.get("/contact")
     assert response.status_code == 200
     assert b'<h3 class="campaigns-heading">Contact</h3>' in response.data
+
+
+def test_cookie_policy(client):
+    response = client.get("/cookie-policy")
+    assert response.status_code == 200
+    assert b'<h3 class="campaigns-heading">Cookie Policy</h3>' in response.data
