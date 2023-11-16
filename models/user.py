@@ -45,10 +45,16 @@ class User(UserMixin, db.Model):
     def update(self, form, new=False):
         """ Method to populate and update self.
             Takes form data from request.form.
+            Email and username booleans
             Set "new" to true if creating new entry. """
 
-        self.email = form["email"].lower()
-        self.username = form["username"]
+        for field, value in form.items():
+            if value is not None:
+
+                if field == "email":
+                    value.lower()
+
+                setattr(self, field, value)
 
         if new:
             # Salt and hash password

@@ -29,14 +29,21 @@ def register():
     if form.validate_on_submit():
 
         proposed_username = request.form["username"]
+        proposed_email = request.form["email"]
         # Check if username already exists in database
         username_search = db.session.execute(
             select(models.User)
             .filter_by(username=proposed_username)).first()
-        
+        email_search = db.session.execute(
+            select(models.User)
+            .filter_by(email=proposed_email)).first()
+
         if username_search:
             # Debug message
             flash("Username already in use. Please choose a new username.")
+            return redirect(url_for("user.register"))
+        elif email_search:
+            flash("Account already registered with that email, please login instead.")
             return redirect(url_for("user.register"))
         else:
             # Create new user
