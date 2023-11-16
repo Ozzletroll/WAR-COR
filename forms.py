@@ -68,6 +68,11 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+class PasswordRecoveryForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Recover")
+
+
 class ChangeUsernameForm(FlaskForm):
     username = StringField("New Username", validators=[DataRequired(), Length(min=3, max=30)])
     submit = SubmitField("Update")

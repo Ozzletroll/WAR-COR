@@ -1335,6 +1335,7 @@ p {
   opacity: 55%;
   font-size: min(14vw, 140px);
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .auth-form-header {
@@ -1370,6 +1371,10 @@ p {
 
 .auth-form-upper.upper-register {
   margin-bottom: 50px;
+}
+
+.auth-form-upper.upper-recovery {
+  margin-bottom: 160px;
 }
 
 .form-elem {
@@ -1476,12 +1481,19 @@ p {
 .auth-links a {
   text-align: center;
   text-decoration: underline;
-  color: var(--darker_red);
+  color: var(--text_header_dark);
   transition: 0.15s;
 }
 
 .auth-links a:hover {
-  color: var(--bright_red);
+  color: var(--text_header_hover);
+}
+
+.password-recovery-text p {
+  color: var(--text_header_dark);
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 @media screen and (min-width: 800px){

@@ -359,3 +359,16 @@ def dismiss_all():
             db.session.commit()
      
     return redirect(request.referrer)
+
+
+# Function called when recovering password
+@bp.route("/user/recover-password", methods=["GET", "POST"])
+def recover_password():
+
+    form = forms.PasswordRecoveryForm()
+
+    if form.validate_on_submit():
+        pass
+
+    return render_template("password_recovery.html", 
+                           form=form)
