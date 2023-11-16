@@ -45,14 +45,15 @@ class AuthActions(object):
     def __init__(self, client):
         self._client = client
 
-    def login(self, username="test", password="test"):
+    def login(self, username="test_username", password="test_password"):
         return self._client.post("/login", follow_redirects=True, data={
             "username": username,
             "password": password,
         })
 
-    def register(self, username='test', password='test'):
+    def register(self, email='test@testemail.com', username='test_username', password='test_password'):
         return self._client.post("/register", follow_redirects=True, data={
+            "email": email,
             "username": username,
             "password": password,
             "confirm_password": password,
