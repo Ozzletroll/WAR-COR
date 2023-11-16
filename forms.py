@@ -63,7 +63,6 @@ class RegisterUserForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = EmailField("Email", validators=[DataRequired(), Email()])
     username = StringField("Username", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Login")
