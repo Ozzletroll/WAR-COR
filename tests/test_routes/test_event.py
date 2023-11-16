@@ -4,20 +4,26 @@ from app import db
 import models
 
 
+TEST_PASSWORD = "123456768"
+
+
 def test_setup(client, auth, campaign):
     # Create test users
-    auth.register(username="Admin",
-                  password="123")
+    auth.register(email="testemail1@email.com",
+                  username="Admin",
+                  password=TEST_PASSWORD)
     auth.logout()
-    auth.register(username="User 1",
-                  password="123")
+    auth.register(email="testemail2@email.com",
+                  username="User 1",
+                  password=TEST_PASSWORD)
     auth.logout()
-    auth.register(username="User 2",
-                  password="123")
+    auth.register(email="testemail3@email.com",
+                  username="User 2",
+                  password=TEST_PASSWORD)
     auth.logout()
 
     # Create test campaign and add user_1 as member
-    auth.login(username="Admin", password="123")
+    auth.login(username="Admin", password=TEST_PASSWORD)
     campaign.create(title="Test Campaign",
                     description="A campaign for testing purposes")
 
@@ -65,13 +71,13 @@ def test_add_event(client, auth, campaign, event):
     assert b'<li>Please log in to access this page</li>' in response_1.data
 
     # Test that post request fails if logged in as non admin user
-    auth.login(username=user_1.username, password="123")
+    auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_2 = event.create(campaign_object=campaign_object, data=event_data)
     assert response_2.status_code == 403
     auth.logout()
 
     # Test that event can be created when logged in as campaign admin
-    auth.login(username="Admin", password="123")
+    auth.login(username="Admin", password=TEST_PASSWORD)
     response_3 = event.create(campaign_object=campaign_object, data=event_data)
     assert response_3.status_code == 200
 
@@ -96,7 +102,7 @@ def test_add_event_prepopulate(client, auth, campaign, event):
                   date="5016/01/01 00:00:00",
                   new_hour=True)
 
-    auth.login(username="Admin", password="123")
+    auth.login(username="Admin", password=TEST_PASSWORD)
     response = client.get(url)
     assert response.status_code == 200
     assert b'value="5016/01/01 01:00:00"' in response.data
@@ -139,7 +145,7 @@ def test_edit_event(client, auth, campaign, event):
                       event_id=event_object.id)
 
     # Test page is not reachable when logged in as non-member user
-    auth.login(username=user_2.username, password="123")
+    auth.login(username=user_2.username, password=TEST_PASSWORD)
     response_1 = client.get(get_url)
     assert response_1.status_code == 403
     response_2 = event.edit(campaign_object, event_object, data=event_data)
@@ -147,7 +153,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.logout()
 
     # Test page cannot be accessed by member without admin permissions
-    auth.login(username=user_1.username, password="123")
+    auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_3 = client.get(get_url)
     assert response_3.status_code == 403
     response_4 = event.edit(campaign_object, event_object, data=event_data)
@@ -155,7 +161,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.logout()
 
     # Test page cannot be accessed by member without admin permissions
-    auth.login(username=user_1.username, password="123")
+    auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_5 = client.get(get_url)
     assert response_5.status_code == 403
     response_6 = event.edit(campaign_object, event_object, data=event_data)
@@ -163,7 +169,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.logout()
 
     # Test admin can view editing page and update event data
-    auth.login(username="Admin", password="123")
+    auth.login(username="Admin", password=TEST_PASSWORD)
     response_7 = client.get(get_url)
     assert response_7.status_code == 200
     response_8 = event.edit(campaign_object, event_object, data=event_data)
@@ -216,7 +222,7 @@ def test_leave_comment(client, auth, campaign, event):
     }
 
     # Test non-member cannot leave comment
-    auth.login(username=user_2.username, password="123")
+    auth.login(username=user_2.username, password=TEST_PASSWORD)
     response_1 = event.create_comment(campaign_object=campaign_object,
                                       event_object=event_object,
                                       data=data)
@@ -224,7 +230,7 @@ def test_leave_comment(client, auth, campaign, event):
     auth.logout()
 
     # Test member can leave comment
-    auth.login(username=user_1.username, password="123")
+    auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_2 = event.create_comment(campaign_object=campaign_object,
                                       event_object=event_object,
                                       data=data)
@@ -263,13 +269,13 @@ def test_delete_comment(client, auth, campaign, event):
                   comment_id=comment_object.id)
 
     # Test that non-admin, non-author user cannot delete comment
-    auth.login(username=user_2.username, password="123")
+    auth.login(username=user_2.username, password=TEST_PASSWORD)
     response_1 = client.post(url, follow_redirects=True)
     assert response_1.status_code == 403
     auth.logout()
 
     # Test that comment author can delete the comment
-    auth.login(username=user_1.username, password="123")
+    auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_1 = client.post(url, follow_redirects=True)
     assert response_1.status_code == 200
     assert len(event_object.comments) == 0
@@ -278,7 +284,7 @@ def test_delete_comment(client, auth, campaign, event):
     event.create_comment(campaign_object, event_object, data={"body": "Comment text"})
     assert len(event_object.comments) == 1
     auth.logout()
-    auth.login(username="Admin", password="123")
+    auth.login(username="Admin", password=TEST_PASSWORD)
     response_2 = client.post(url, follow_redirects=True)
     assert response_2.status_code == 200
     assert len(event_object.comments) == 0
@@ -314,7 +320,7 @@ def test_delete_event(client, auth, campaign, event):
     assert b'<li>Please log in to access this page</li>' in response_1.data
 
     # Test event cannot be deleted by non-member user
-    auth.login(username=user_2.username, password="123")
+    auth.login(username=user_2.username, password=TEST_PASSWORD)
     response_2 = client.post(url, follow_redirects=True)
     assert response_2.status_code == 403
     event_object = db.session.execute(
@@ -323,7 +329,7 @@ def test_delete_event(client, auth, campaign, event):
     assert event_object is not None
 
     # Test event cannot be deleted by non-admin member
-    auth.login(username=user_1.username, password="123")
+    auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_3 = client.post(url, follow_redirects=True)
     assert response_3.status_code == 403
     event_object = db.session.execute(
@@ -333,7 +339,7 @@ def test_delete_event(client, auth, campaign, event):
     auth.logout()
 
     # Test event can be deleted by admin
-    auth.login(username="Admin", password="123")
+    auth.login(username="Admin", password=TEST_PASSWORD)
     response_4 = client.post(url, follow_redirects=True)
     assert response_4.status_code == 200
     event_object = db.session.execute(

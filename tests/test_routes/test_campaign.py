@@ -5,6 +5,7 @@ import models
 
 TEST_CAMPAIGN_TITLE = "Test Campaign Title"
 TEST_CAMPAIGN_DESCRIPTION = "Test Campaign Description"
+TEST_PASSWORD = "12345678"
 
 
 def test_view_campaigns_page(client, auth):
@@ -91,7 +92,9 @@ def test_show_timeline_editing_page(client, auth):
     assert b"<li>Please log in to access this page</li>" in response_1.data
 
     # Test if access is denied to user without editing permissions
-    auth.register(username="User 2", password="123")
+    auth.register(email="testemail2@email.com",
+                  username="User_2",
+                  password=TEST_PASSWORD)
     response_2 = client.get(url, follow_redirects=True)
     assert response_2.status_code == 403
     auth.logout()
@@ -126,7 +129,9 @@ def test_campaign_editing(client, auth, campaign):
     assert new_campaign_query is None
 
     # Test campaign cannot be edited if logged in a non-admin user
-    auth.register(username="user_2", password="123")
+    auth.register(email="testemail3@email.com",
+                  username="User_3",
+                  password=TEST_PASSWORD)
     response_2 = campaign.edit(campaign_name=TEST_CAMPAIGN_TITLE,
                                campaign_id=campaign_query.id,
                                new_title="Edited Title",
@@ -169,7 +174,7 @@ def test_delete_campaign(client, auth, campaign):
     assert b"<li>Please log in to access this page</li>" in response_1.data
 
     # Test that authenticated user without editing permissions cannot delete campaign
-    auth.login(username="user_2", password="123")
+    auth.login(username="User_2", password=TEST_PASSWORD)
     response_2 = client.get(url, follow_redirects=True)
     assert response_2.status_code == 403
     auth.logout()

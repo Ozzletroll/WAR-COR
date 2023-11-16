@@ -8,12 +8,13 @@ import models
 from app import db
 
 TEST_USERNAME = "test_user"
-TEST_PASSWORD = "123"
+TEST_PASSWORD = "12345678"
 
 
 def test_register(client, app, auth):
     # Test if a new user can be added
-    response = auth.register(username=TEST_USERNAME,
+    response = auth.register(email="testemail1@email.com",
+                             username=TEST_USERNAME,
                              password=TEST_PASSWORD)
     assert response.status_code == 200
 
@@ -53,7 +54,8 @@ def test_user_page(client, app, auth):
 
 def test_duplicate_user_registration(client, app, auth):
     # Test if another user with same credentials can be added
-    response = auth.register(username=TEST_USERNAME,
+    response = auth.register(email="testemail2@email.com",
+                             username=TEST_USERNAME,
                              password=TEST_PASSWORD)
     assert response.status_code == 200
     # Test if user has been redirected due to username already being in use
@@ -66,9 +68,10 @@ def test_duplicate_user_registration(client, app, auth):
 
 def test_delete_user(client, app, auth):
     new_username = "Delete Me"
-    new_password = "123"
+    new_password = TEST_PASSWORD
 
-    response_1 = auth.register(username=new_username,
+    response_1 = auth.register(email="testemail3@email.com",
+                               username=new_username,
                                password=new_password)
     assert response_1.status_code == 200
 
@@ -115,7 +118,9 @@ def test_delete_user(client, app, auth):
 
 def test_update_callsign(client, auth, campaign):
 
-    auth.register(username="New User", password="123")
+    auth.register(email="testemail4@email.com",
+                  username="New User",
+                  password=TEST_PASSWORD)
 
     # Create test campaign to change callsign for
     campaign.create("Callsign Change Test",
@@ -144,9 +149,13 @@ def test_update_callsign(client, auth, campaign):
 
 def test_change_username(client, auth):
 
-    auth.register(username="Username_1", password="123")
+    auth.register(email="testemail5@email.com",
+                  username="Username_1",
+                  password=TEST_PASSWORD)
     auth.logout()
-    auth.register(username="Username_2", password="123")
+    auth.register(email="testemail6@email.com",
+                  username="Username_2",
+                  password=TEST_PASSWORD)
 
     url = url_for("user.change_username", username=current_user.username)
 
@@ -159,7 +168,7 @@ def test_change_username(client, auth):
     assert b'Username already in use, please choose another' in response_1.data
     assert current_user.username == "Username_2"
 
-    # Test that username change succeeds if unique username given
+    # Test that username change fails if proposed username is less than 3 characters
     data = {
         "username": "a"
     }
@@ -178,7 +187,7 @@ def test_change_username(client, auth):
 
 def test_change_password(client, auth):
 
-    auth.login(username="Username_1", password="123")
+    auth.login(username="Username_1", password=TEST_PASSWORD)
 
     url = url_for("user.change_password", username=current_user.username)
 
@@ -194,7 +203,7 @@ def test_change_password(client, auth):
 
     # Test password change succeeds when correct authentication given
     data = {
-        "old_password": "123",
+        "old_password": TEST_PASSWORD,
         "new_password": "New Password",
         "confirm_password": "New Password"
     }

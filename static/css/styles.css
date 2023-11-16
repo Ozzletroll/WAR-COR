@@ -1305,7 +1305,7 @@ p {
   display: flex;
   flex-direction: column;
   filter: drop-shadow(1px 3px 3px var(--elem_shadow));
-  width: min(280px, 80vw);
+  width: min(320px, 80vw);
   margin-bottom: 20px;
 }
 
@@ -1335,6 +1335,7 @@ p {
   opacity: 55%;
   font-size: min(14vw, 140px);
   margin-bottom: 15px;
+  text-align: center;
 }
 
 .auth-form-header {
@@ -1359,29 +1360,44 @@ p {
 .form-layout {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}
+
+.auth-form-upper {
+  margin-bottom: 120px;
+}
+
+.auth-form-upper.upper-register {
+  margin-bottom: 50px;
+}
+
+.auth-form-upper.upper-recovery {
+  margin-bottom: 160px;
 }
 
 .form-elem {
   display: flex;
   flex: 1 1 auto;
   align-items: center;
-  margin: 20px;
-  margin-bottom: 0px;
+  margin: 20px 0px;
+  width: 100%;
   background-color: var(--elem_dark);
   border-radius: 3px;
+  box-sizing: border-box;
 }
 
 .form-icon {
   display: flex;
   align-items: center;
+  padding: 0px 5px;
 }
 
 .form-elem.elem-centre {
   background-color: transparent;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  margin-top: 120px;
 }
 
 .form-field {
@@ -1452,6 +1468,34 @@ p {
   padding: 5px 30px;
 }
 
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  color: var(--text_flavour);
+  padding: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+  gap: 10px;
+}
+
+.auth-links a {
+  text-align: center;
+  text-decoration: underline;
+  color: var(--text_header_dark);
+  transition: 0.15s;
+}
+
+.auth-links a:hover {
+  color: var(--text_header_hover);
+}
+
+.password-recovery-text p {
+  color: var(--text_header_dark);
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 @media screen and (min-width: 800px){
 
   .form-column {
@@ -1486,6 +1530,10 @@ p {
 
   .edit-form .campaign-input {
     font-size: min(4vw, 16px);
+  }
+
+  h1.form-heading {
+    display: none;
   }
 
 }  

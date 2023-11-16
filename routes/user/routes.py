@@ -2,11 +2,11 @@ from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
-from werkzeug.security import generate_password_hash
 
 import auth
 import forms
 import models
+from utils import messengers
 
 from app import db
 from routes.user import bp
@@ -29,14 +29,21 @@ def register():
     if form.validate_on_submit():
 
         proposed_username = request.form["username"]
+        proposed_email = request.form["email"]
         # Check if username already exists in database
         username_search = db.session.execute(
             select(models.User)
             .filter_by(username=proposed_username)).first()
-        
+        email_search = db.session.execute(
+            select(models.User)
+            .filter_by(email=proposed_email)).first()
+
         if username_search:
             # Debug message
             flash("Username already in use. Please choose a new username.")
+            return redirect(url_for("user.register"))
+        elif email_search:
+            flash("Account already registered with that email, please login instead.")
             return redirect(url_for("user.register"))
         else:
             # Create new user
@@ -359,3 +366,32 @@ def dismiss_all():
             db.session.commit()
      
     return redirect(request.referrer)
+
+
+# Function called when recovering password
+@bp.route("/user/recover-password", methods=["GET", "POST"])
+def recover_password():
+
+    # Check if user is not logged in
+    if not current_user.is_authenticated:
+
+        form = forms.PasswordRecoveryForm()
+        if form.validate_on_submit():
+            
+            email = request.form["email"].lower()
+            user = db.session.execute(
+                select(models.User)
+                .filter_by(email=email)).scalar()
+            
+            if user:
+                messengers.send_recovery_email()
+                flash(f"Account recovery email sent to {email}")
+            else:
+                flash("No account matching given email found. Please check your email address and try again.")
+
+        return render_template("password_recovery.html", 
+                            form=form)
+    
+    else:
+        return redirect(url_for("user.login"))
+    

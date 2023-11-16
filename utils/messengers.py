@@ -165,3 +165,9 @@ def send_comment_notification(sender, recipients, campaign, event):
     # Finally, commit all changes to db
     db.session.commit()
 
+
+def send_recovery_email():
+
+    # Email sending code goes here
+
+    pass

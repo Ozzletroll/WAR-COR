@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, FileField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError, Length
+from wtforms import StringField, EmailField, SubmitField, PasswordField, BooleanField, FileField, IntegerField, TextAreaField
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, ValidationError, Length, Email
 import re
 
 
@@ -53,9 +53,11 @@ def date_is_after(form, field):
 
 
 class RegisterUserForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Email()])
     username = StringField("Username", validators=[DataRequired(), Length(min=3, max=30)])
-    password = PasswordField("Password", validators=[DataRequired(), EqualTo("confirm_password",
-                                                                             message="Password must match")])
+    password = PasswordField("Password", validators=[DataRequired(), 
+                                                     Length(min=8), 
+                                                     EqualTo("confirm_password", message="Password must match")])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired()])
     submit = SubmitField("Sign Up")
 
@@ -64,6 +66,11 @@ class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(max=30)])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Login")
+
+
+class PasswordRecoveryForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Recover")
 
 
 class ChangeUsernameForm(FlaskForm):

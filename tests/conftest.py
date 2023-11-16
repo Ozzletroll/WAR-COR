@@ -45,14 +45,15 @@ class AuthActions(object):
     def __init__(self, client):
         self._client = client
 
-    def login(self, username="test", password="test"):
+    def login(self, username="test_username", password="12345678"):
         return self._client.post("/login", follow_redirects=True, data={
             "username": username,
             "password": password,
         })
 
-    def register(self, username='test', password='test'):
+    def register(self, email='test@testemail.com', username='test_username', password='12345678'):
         return self._client.post("/register", follow_redirects=True, data={
+            "email": email,
             "username": username,
             "password": password,
             "confirm_password": password,
@@ -103,7 +104,7 @@ class CampaignActions(object):
         url = url_for("campaign.show_timeline", campaign_name=campaign_name, campaign_id=campaign_id)
         return self._client.get(url, follow_redirects=True)
 
-    def delete(self, campaign_name, campaign_id, username="test", password="test"):
+    def delete(self, campaign_name, campaign_id, username="test_username", password="12345678"):
         url = url_for("campaign.delete_campaign",
                       campaign_name=campaign_name,
                       campaign_id=campaign_id)
