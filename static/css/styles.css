@@ -1305,7 +1305,7 @@ p {
   display: flex;
   flex-direction: column;
   filter: drop-shadow(1px 3px 3px var(--elem_shadow));
-  width: min(280px, 80vw);
+  width: min(320px, 80vw);
   margin-bottom: 20px;
 }
 
@@ -1359,29 +1359,33 @@ p {
 .form-layout {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 0px 20px;
+  box-sizing: border-box;
 }
 
 .form-elem {
   display: flex;
   flex: 1 1 auto;
   align-items: center;
-  margin: 20px;
-  margin-bottom: 0px;
+  margin: 20px 0px 0px;
+  width: 100%;
   background-color: var(--elem_dark);
   border-radius: 3px;
+  box-sizing: border-box;
 }
 
 .form-icon {
   display: flex;
   align-items: center;
+  padding: 0px 5px;
 }
 
 .form-elem.elem-centre {
   background-color: transparent;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  margin-top: 120px;
+  margin: 150px 0px 20px 0px;
 }
 
 .form-field {
@@ -1486,6 +1490,10 @@ p {
 
   .edit-form .campaign-input {
     font-size: min(4vw, 16px);
+  }
+
+  h1.form-heading {
+    display: none;
   }
 
 }  
