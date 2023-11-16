@@ -37,29 +37,40 @@
         </div>
           
         <div class="form-layout">
-          <div class="form-elem">
-            <label class="form-icon">
-              <img class="icon icon-invert" src="/static/images/icons/email.svg">
-            </label>
-            {{ form.email(placeholder_='EMAIL', class_='form-field', autocomplete='off') }}
+
+          <div class="auth-form-upper upper-register">
+            <div class="form-elem">
+              <label class="form-icon">
+                <img class="icon icon-invert" src="/static/images/icons/email.svg">
+              </label>
+              {{ form.email(placeholder_='EMAIL', class_='form-field', autocomplete='off') }}
+            </div>
+            <div class="form-elem">
+              <label class="form-icon">
+                <img class="icon icon-invert" src="/static/images/icons/user.svg">
+              </label>
+              {{ form.username(placeholder_='USERNAME', class_='form-field', autocomplete='off') }}
+            </div>
+            <div class="form-elem">
+              <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock.svg"></label>
+              {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
+            </div>
+            <div class="form-elem">
+              <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock_key.svg"></label>
+              {{ form.confirm_password(placeholder_='CONFIRM_PASSWORD', class_='form-field') }}
+            </div>
           </div>
-          <div class="form-elem">
-            <label class="form-icon">
-              <img class="icon icon-invert" src="/static/images/icons/user.svg">
-            </label>
-            {{ form.username(placeholder_='USERNAME', class_='form-field', autocomplete='off') }}
-          </div>
-          <div class="form-elem">
-            <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock.svg"></label>
-            {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
-          </div>
-          <div class="form-elem">
-            <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock_key.svg"></label>
-            {{ form.confirm_password(placeholder_='CONFIRM_PASSWORD', class_='form-field') }}
-          </div>
-          <div class="form-submit">
-            <div class="form-elem elem-centre">
-              {{ form.submit(class_="button submit-button") }}
+          
+          <div class="auth-form-lower">
+            <div class="auth-links">
+              <a href="{{ url_for('user.login') }}">
+                Existing user sign in
+              </a>
+            </div>
+            <div class="form-submit">
+              <div class="form-elem elem-centre">
+                {{ form.submit(class_="button submit-button") }}
+              </div>
             </div>
           </div>
         </div>
