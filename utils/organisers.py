@@ -78,7 +78,7 @@ def campaign_sort(campaign):
 
             Example: 
         
-            If there were two events that occured in 5015/01/01, and one epoch that began
+            If there were two events that occurred in 5015/01/01, and one epoch that began
             in 5014/05/01 and ended in 5016/01/01, the dict would be:
 
             final_group = {5014: {05: [<Epoch 1>]}},
@@ -101,7 +101,6 @@ def campaign_sort(campaign):
         """Sort key function for sorting event objects """
         return (event.year, event.month, event.day, event.hour, event.minute, event.second)
 
-
     def check_year_marker(year):
         """Check if a given year is long enough to warrant a year marker """
 
@@ -121,7 +120,6 @@ def campaign_sort(campaign):
             return True
         else:
             return False
-
 
     def check_headers(year_list):
         """Takes the list of year objects and checks each month and day within them,
@@ -149,7 +147,6 @@ def campaign_sort(campaign):
                 except IndexError:
                     month.header = False
 
-
     def group_epochs(epochs, sort_key, year_key, month_key):
         """Function to sort epochs into matching data structure to the timeline events.
         Takes a list of a campaigns epochs, as well as a sort key."""
@@ -163,7 +160,6 @@ def campaign_sort(campaign):
             grouped_epochs[year] = grouped_months
 
         return grouped_epochs
-
 
     # Sort and group epochs by start date and end date
     epochs_by_start_date = group_epochs(campaign.epochs, 
@@ -231,7 +227,7 @@ def campaign_sort(campaign):
         for month in final_group[year]:
             final_group[year] = {key: value for key, value in sorted(final_group[year].items())}
 
-    # Turn each level of the heirarchy into an object, with the level below as a list held in a property
+    # Turn each level of the hierarchy into an object, with the level below as a list held in a property
     year_list = []
 
     for year in final_group:
@@ -305,7 +301,7 @@ def campaign_sort(campaign):
 def format_event_datestring(datestring, args):
     """Function that takes a datestring, and the dictionary from request.args, 
     and returns the next day/week/month/year date as a string,
-    ready for form prepopulation."""
+    ready for form pre population."""
 
     def increment(values, column):
         """Function iterates through the datestring tuple, incrementing 
@@ -326,7 +322,6 @@ def format_event_datestring(datestring, args):
         incremented_values.reverse()
 
         return incremented_values
-
 
     values = split_date(datestring)
     year_format = len(datestring.split("/")[0])
