@@ -1,3 +1,27 @@
+from flask import url_for
+
+
+def test_check_consent(client, captured_templates):
+
+    # Clear cookie for testing
+    response = client.get("/")
+    response.set_cookie("warcor_consent", "", expires=0)
+
+    # Test route excluded from showing cookie consent form
+    client.get("/")
+    template_1, context_1 = captured_templates[1]
+
+    assert "consent" in context_1
+    assert context_1["consent"] is True
+
+    # Test that included route shows cookie form
+    client.get(url_for('user.register'))
+    template_2, context_2 = captured_templates[2]
+
+    assert "consent" in context_2
+    assert context_2["consent"] is False
+    assert "consent_form" in context_2
+
 
 # Test campaign scroll target route
 def test_campaign_scroll_target(client):
