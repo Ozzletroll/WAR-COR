@@ -32,7 +32,7 @@ def accept_cookies():
     """ Sets the consent form acceptance cookie  """
 
     response = make_response(redirect(request.referrer))
-    response.set_cookie("warcor_consent", "True")
+    response.set_cookie("warcor_consent", "True", secure=True)
 
     return response
 
