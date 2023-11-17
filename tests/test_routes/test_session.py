@@ -1,6 +1,7 @@
 from flask import url_for
 
 
+# Test cookie consent form context injection
 def test_check_consent(client, captured_templates):
 
     # Clear cookie for testing
@@ -21,6 +22,18 @@ def test_check_consent(client, captured_templates):
     assert "consent" in context_2
     assert context_2["consent"] is False
     assert "consent_form" in context_2
+
+
+# Test cookie acceptance route
+def test_accept_cookie(client):
+
+    # Clear cookie for testing
+    response_1 = client.get("/")
+    response_1.set_cookie("warcor_consent", "", expires=0)
+
+    response_2 = client.post(url_for("session.accept_cookies"))
+    assert response_2.status_code == 302
+    assert "warcor_consent" in response_2.headers["Set-Cookie"]
 
 
 # Test campaign scroll target route
