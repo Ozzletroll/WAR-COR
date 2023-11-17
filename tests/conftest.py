@@ -1,5 +1,5 @@
 import pytest
-from flask import url_for
+from flask import url_for, template_rendered
 from app import create_app
 from app import db
 
@@ -166,3 +166,24 @@ class EventActions(object):
                       event_id=event_object.id)
 
         return self._client.post(url, data=data, follow_redirects=True)
+
+
+@pytest.fixture
+def captured_templates(app):
+    """ Captures the template and context of the app.
+        Pass the fixture to the test function, and the
+        templates and contexts can be accessed with:
+
+        template, context = captured_templates[index]
+    """
+
+    recorded = []
+
+    def record(sender, template, context, **extra):
+        recorded.append((template, context))
+
+    template_rendered.connect(record, app)
+    try:
+        yield recorded
+    finally:
+        template_rendered.disconnect(record, app)
