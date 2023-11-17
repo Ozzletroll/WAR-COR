@@ -10,14 +10,14 @@ import forms
 
 @bp.app_context_processor
 def check_consent():
-    """ Checks for GDPR consent form acceptance in session, and
+    """ Checks for GDPR consent form acceptance cookie, and
         injects variable to templates. """
 
     excluded_routes = ["/", "/about", "/contact", "/cookie-policy"]
 
     if request.path not in excluded_routes:
         
-        if "consent" not in session:
+        if not request.cookies.get("warcor_consent"):
             consent_form = forms.SubmitForm()
             return dict(consent=False, consent_form=consent_form)
         else:
@@ -29,10 +29,12 @@ def check_consent():
 
 @bp.route("/session/accept_cookies", methods=["POST"])
 def accept_cookies():
-    """ Sets the cookie consent form session variable.  """
+    """ Sets the consent form acceptance cookie  """
 
-    session["consent"] = True
-    return redirect(request.referrer)
+    response = make_response(redirect(request.referrer))
+    response.set_cookie("warcor_consent", "True")
+
+    return response
 
 
 # Get and clear campaign page scroll target session variable
