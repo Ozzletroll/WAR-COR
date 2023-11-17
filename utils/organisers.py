@@ -35,7 +35,7 @@ class Day:
         self.name = ""
         self.events = []
         self.header = False
-
+        self.has_following_day = False
 
 
 def split_date(datestring):
@@ -240,22 +240,29 @@ def campaign_sort(campaign):
         except KeyError:
             year_object.marker = False
 
-        for index, month in enumerate(final_group[year]):
+        for month_index, month in enumerate(final_group[year]):
 
             month_object = Month()
             month_object.name = str(month).zfill(2)
 
             # Determine if the following month is the next consecutive month
-            if index != len(final_group[year]) - 1:
-                next_month = list(final_group[year].keys())[index + 1]
+            if month_index != len(final_group[year]) - 1:
+                next_month = list(final_group[year].keys())[month_index + 1]
 
                 if int(next_month) == int(month) + 1:
                     month_object.has_following_month = True
 
-            for day in final_group[year][month]:
+            for day_index, day in enumerate(final_group[year][month]):
 
                 day_object = Day()
                 day_object.name = str(day).zfill(2)
+
+                # Determine if the following day is the next consecutive day
+                if day_index != len(final_group[year][month]) - 1:
+                    next_day= list(final_group[year][month].keys())[day_index + 1]
+
+                    if int(next_day) == int(day) + 1:
+                        day_object.has_following_day = True
 
                 try:
                     for event in grouped_events[year][month][day]:

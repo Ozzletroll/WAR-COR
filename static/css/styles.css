@@ -3659,8 +3659,16 @@ for selection in timeline_search.js */
   margin-bottom: -111px;
 }
 
+.top-no-between {
+  margin-bottom: -39px;
+}
+
 .day-line-mid-edit {
   margin-bottom: -110px;
+}
+
+.mid-no-between {
+  margin-bottom: -39px;
 }
 
 .day-line-bottom-edit {
@@ -3857,8 +3865,16 @@ for selection in timeline_search.js */
     margin-bottom: -135px;
   }
 
+  .top-no-between {
+    margin-bottom: -39px;
+  }
+
   .day-line-mid-edit {
     margin-bottom: -135px;
+  }
+
+  .mid-no-between {
+    margin-bottom: -39px;
   }
 
   .event-outer-container .event-small-date {

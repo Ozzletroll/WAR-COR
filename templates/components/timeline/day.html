@@ -15,14 +15,18 @@ elements.
 {% macro day(campaign, year, month, day, length, index, edit=false) %}
 
   <!-- Day {{ day.name }} -->
-
+  
   {% if edit %}
     {% if length == 1 %}
     <div class="timeline-day-outer">
       <div class="day-line day-line-solo-edit"></div>
     {% elif index == 0  %}
     <div class="timeline-day-outer">
+      {% if day.has_following_day %}
+      <div class="day-line day-line-top-edit top-no-between"></div>
+      {% else %}
       <div class="day-line day-line-top-edit"></div>
+      {% endif %}
     {% elif index == length - 1 and length == 2 %}
     <div class="timeline-day-outer day-container-edgecase">
       <div class="day-line day-line-bottom-edit"></div>
@@ -31,7 +35,11 @@ elements.
       <div class="day-line day-line-bottom-edit"></div>
     {% else %}
     <div class="timeline-day-outer day-container-mid">
+      {% if day.has_following_day %}
+      <div class="day-line  day-line-mid-edit mid-no-between"></div>
+      {% else %}
       <div class="day-line  day-line-mid-edit"></div>
+      {% endif %}
     {% endif %}
   {% else %}
     {# If day is the only day in the month #}
@@ -108,7 +116,8 @@ elements.
 
   </div>
 
-  {% if edit %}
+
+  {% if edit and not day.has_following_day %}
     <!-- Between days event button -->
     <div class="event-between event-between-days">
       <div class="between-days-elements">
