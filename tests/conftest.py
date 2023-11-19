@@ -2,11 +2,12 @@ import pytest
 from flask import url_for, template_rendered
 from app import create_app
 from app import db
+from config import TestingConfig
 
 
 @pytest.fixture(scope="module")
 def app():
-    app = create_app(database_uri="sqlite:///test.db")
+    app = create_app(config_class=TestingConfig)
     yield app
 
     # Teardown

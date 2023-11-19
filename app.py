@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
+from config import Config
 import os
 import logging
 from logging.handlers import SMTPHandler
@@ -14,21 +15,10 @@ csrf = CSRFProtect()
 
 
 # Application factory
-def create_app(database_uri='sqlite:///war_cor.db', test_config=None):
+def create_app(config_class=Config):
     # Create and configure instance of the Flask app
     app = Flask(__name__, instance_relative_config=True)
-    app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SESSION_COOKIE_SECURE'] = True
-    app.config['SESSION_COOKIE_HTTPONLY'] = True
-    app.config['SESSION_COOKIE_SAMESITE'] = "Lax"
-    app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER')
-    app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT') or 25)
-    app.config['MAIL_USE_TLS'] = os.environ.get('MAIL_USE_TLS') is not None
-    app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
-    app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
-    app.config['ADMINS'] = ["admin-email-goes-here"]
+    app.config.from_object(config_class)
 
     # Initialise database and import models
     db.init_app(app)
