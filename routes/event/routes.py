@@ -6,7 +6,7 @@ from datetime import datetime
 import forms
 import models
 import auth
-import utils.organisers as organisers
+import utils.formatters as formatters
 import utils.messengers as messengers
 
 from app import db
@@ -85,7 +85,7 @@ def add_event(campaign_name, campaign_id):
         datestring = request.args["date"]
         args = request.args
         # Increase the date by one unit and format the datestring
-        datestring = organisers.format_event_datestring(datestring, args)
+        datestring = formatters.increment_datestring(datestring, args)
         # Create placeholder event
         event = models.Event()
         event.create_blank(datestring)
