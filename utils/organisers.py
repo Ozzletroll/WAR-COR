@@ -200,8 +200,8 @@ def campaign_sort(campaign):
         if year not in combined_epochs:
             combined_epochs[year] = epochs_by_start_date[year]
     for year in epochs_by_end_date:
-            if year not in combined_epochs:
-                combined_epochs[year] = epochs_by_end_date[year]
+        if year not in combined_epochs:
+            combined_epochs[year] = epochs_by_end_date[year]
 
     # Sort years again
     combined_epochs = {key: value for key, value in sorted(combined_epochs.items())}
