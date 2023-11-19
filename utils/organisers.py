@@ -161,6 +161,43 @@ def campaign_sort(campaign):
 
         return grouped_epochs
 
+    def has_following(index, level, current_item):
+        """ Function to determine if month/day within timeline has a consecutive following month/day.
+            Used within the template to determine placement of +New Event buttons.
+            
+            Parameters:
+            -------------------------------------------------
+                index : int
+                    Index of current loop
+
+                level: dict
+                    The current level of the nested dict
+                    being iterated through.
+
+                    When checking a month, use:
+                    level=final_group[year]
+
+                    When checking a day, use:
+                    level=final_group[year][month]
+
+                item: dict
+                    The current item of the level iterable
+
+            -------------------------------------------------
+
+            """
+
+        if index != len(level) - 1:
+            next = list(level.keys())[index + 1]
+
+            if int(next) == int(current_item) + 1:
+                return True
+
+        else:
+            return False
+
+    # --- START ---
+
     # Sort and group epochs by start date and end date
     epochs_by_start_date = group_epochs(campaign.epochs, 
                                         sort_key=lambda epoch: (epoch.start_year, epoch.start_month),
@@ -246,10 +283,7 @@ def campaign_sort(campaign):
             month_object.name = str(month).zfill(2)
 
             # Determine if the following month is the next consecutive month
-            if month_index != len(final_group[year]) - 1:
-                next_month = list(final_group[year].keys())[month_index + 1]
-
-                if int(next_month) == int(month) + 1:
+            if has_following(index=month_index, level=final_group[year], current_item=month):
                     month_object.has_following_month = True
 
             for day_index, day in enumerate(final_group[year][month]):
@@ -258,11 +292,8 @@ def campaign_sort(campaign):
                 day_object.name = str(day).zfill(2)
 
                 # Determine if the following day is the next consecutive day
-                if day_index != len(final_group[year][month]) - 1:
-                    next_day= list(final_group[year][month].keys())[day_index + 1]
-
-                    if int(next_day) == int(day) + 1:
-                        day_object.has_following_day = True
+                if has_following(index=day_index, level=final_group[year][month], current_item=day):
+                    day_object.has_following_day = True
 
                 try:
                     for event in grouped_events[year][month][day]:
