@@ -13,4 +13,4 @@ if __name__ == "__main__":
 # gunicorn --bind 127.0.0.1:5000 appserver:production_app
 
 else:
-    production_app = create_app()
+    production_app = create_app(ProductionConfig)
