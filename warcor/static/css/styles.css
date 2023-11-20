@@ -1360,21 +1360,11 @@ p {
 .form-layout {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  height: min(65vh, 380px);
   width: 100%;
   padding: 0px 20px;
   box-sizing: border-box;
-}
-
-.auth-form-upper {
-  margin-bottom: 120px;
-}
-
-.auth-form-upper.upper-register {
-  margin-bottom: 50px;
-}
-
-.auth-form-upper.upper-recovery {
-  margin-bottom: 160px;
 }
 
 .form-elem {
