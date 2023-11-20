@@ -1,0 +1,115 @@
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed
+from wtforms import StringField, EmailField, SubmitField, PasswordField, \
+                    BooleanField, FileField, IntegerField, TextAreaField
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email
+
+from warcor.forms.validators import *
+
+
+class RegisterUserForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Email()])
+    username = StringField("Username", validators=[DataRequired(), Length(min=3, max=30)])
+    password = PasswordField("Password", validators=[DataRequired(), 
+                                                     Length(min=8), 
+                                                     EqualTo("confirm_password", message="Password must match")])
+    confirm_password = PasswordField("Confirm Password", validators=[DataRequired()])
+    submit = SubmitField("Sign Up")
+
+
+class LoginForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired(), Length(max=30)])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Login")
+
+
+class PasswordRecoveryForm(FlaskForm):
+    email = EmailField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Recover")
+
+
+class ChangeUsernameForm(FlaskForm):
+    username = StringField("New Username", validators=[DataRequired(), Length(min=3, max=30)])
+    submit = SubmitField("Update")
+
+
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField("Password", validators=[DataRequired()])
+    new_password = PasswordField('New Password', [DataRequired(), EqualTo('confirm_password', message='Passwords must match')])
+    confirm_password = PasswordField("Confirm Password")
+    submit = SubmitField("Update")
+
+
+class CreateCampaignForm(FlaskForm):
+    title = StringField("Campaign Title", validators=[DataRequired()])
+    description = TextAreaField("Description", validators=[DataRequired()])
+    date_suffix = StringField("Date Suffix", validators=[Optional()])
+    negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
+    submit = SubmitField("Create Campaign")
+
+
+class CreateEventForm(FlaskForm):
+    title = StringField("Event Title", validators=[DataRequired()])
+    type = StringField("Event Type", validators=[DataRequired()])
+    date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
+    location = StringField("Location", validators=[Optional()])
+    belligerents = StringField("Belligerents", validators=[Optional()])
+    body = TextAreaField("Body", validators=[DataRequired()])
+    result = StringField("Result", validators=[Optional()])
+    header = BooleanField("Header", default=False, validators=[Optional()])
+    hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
+    submit = SubmitField("Create Event")
+
+
+class CreateEpochForm(FlaskForm):
+    # Register custom validators for error collection
+    class Meta:
+        validators = {
+            'start_date': [date_format(format="epoch")],
+            'end_date': [date_format(format="epoch"), date_is_after]
+        }
+
+    title = StringField("Event Title", validators=[DataRequired()])
+    start_date = StringField("Start Date", validators=[date_format(format="epoch")])
+    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after])
+    description = TextAreaField("Description")
+    submit = SubmitField("Create Epoch")
+
+class SearchUserForm(FlaskForm):
+    username = StringField("Username", validators=[DataRequired()])
+    submit = SubmitField("Search")
+
+
+class AddUserForm(FlaskForm):
+    """ The name "submit_button" is used rather than "submit" as to avoid conflict 
+        with javascript form.submit() funtion. """
+    username = StringField("Username", validators=[DataRequired()])
+    user_id = IntegerField("User ID", validators=[DataRequired()])
+    submit_button = SubmitField("Invite")
+
+
+class SubmitForm(FlaskForm):
+    submit = SubmitField("Submit")
+
+
+class ChangeCallsignForm(FlaskForm):
+    callsign = StringField("New Callsign", validators=[DataRequired(), Length(max=30)])
+    submit = SubmitField("Update")
+    
+
+class UploadJsonForm(FlaskForm):
+    file = FileField("Backup JSON", validators=[DataRequired(), 
+                                                FileAllowed(["json"], 
+                                                            "Please select a valid WAR/COR JSON file"), 
+                                                            file_format()])
+    submit = SubmitField("Restore")
+
+
+class CommentForm(FlaskForm):
+    body = TextAreaField("Comment", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+
+class SearchForm(FlaskForm):
+    search = StringField("Search", validators=[Length(min=3)])
+    submit = SubmitField("Search")
