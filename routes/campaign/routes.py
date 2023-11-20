@@ -3,7 +3,7 @@ from sqlalchemy import select
 from flask_login import login_required, current_user
 import werkzeug
 
-import auth
+from utils import authenticators
 import forms
 import models
 import utils.organisers as organisers
@@ -58,7 +58,7 @@ def edit_timeline(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
     
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)
@@ -121,7 +121,7 @@ def edit_campaign(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     form = forms.CreateCampaignForm(obj=campaign)
     form.submit.label.text = "Update Campaign Data"
@@ -154,7 +154,7 @@ def delete_campaign(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(title=campaign_name, id=campaign_id)).scalar()
     
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Create login form to check credentials
     form = forms.LoginForm()

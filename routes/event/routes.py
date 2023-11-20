@@ -5,7 +5,7 @@ from datetime import datetime
 
 import forms
 import models
-import auth
+from utils import authenticators
 import utils.formatters as formatters
 import utils.messengers as messengers
 
@@ -40,7 +40,7 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     if form.validate_on_submit():
         
         # Check user is a member of the campaign
-        auth.check_membership(campaign)
+        authenticators.check_membership(campaign)
 
         # Create new comment
         comment = models.Comment()
@@ -77,7 +77,7 @@ def add_event(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Check if date argument given
     if "date" in request.args:
@@ -140,7 +140,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         .filter_by(id=campaign_id)).scalar()
     
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     event = db.session.execute(
         select(models.Event)
@@ -200,7 +200,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
         .filter_by(id=event_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     campaign.last_edited = datetime.now()
 
@@ -239,10 +239,10 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
 
     # Check if it is the comment author who is deleting the comment
     if comment.author == current_user:
-        auth.check_membership(campaign)
+        authenticators.check_membership(campaign)
     else:
         # Check if the user has permissions to edit the target campaign.
-        auth.permission_required(campaign)
+        authenticators.permission_required(campaign)
 
     # Delete the comment
     db.session.delete(comment)

@@ -4,7 +4,7 @@ from flask_login import login_required
 
 import forms
 import models
-import auth
+from utils import authenticators
 
 from app import db
 from routes.epoch import bp
@@ -24,7 +24,7 @@ def new_epoch(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Check if date argument given
     if "date" in request.args:
@@ -75,7 +75,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
         select(models.Campaign)
         .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     epoch = db.session.execute(
         select(models.Epoch)
@@ -121,7 +121,7 @@ def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
         select(models.Campaign)
         .filter_by(title=campaign_name, id=campaign_id)).scalar()
 
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     epoch = db.session.execute(
         select(models.Epoch)

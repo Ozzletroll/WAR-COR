@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, url_for, flash, jsonify, m
 from sqlalchemy import select
 from flask_login import login_required, current_user
 
-import auth
+from utils import authenticators
 import forms
 import models
 import utils.messengers as messengers
@@ -26,7 +26,7 @@ def edit_campaign_users(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     search_form = forms.SearchUserForm()
     add_form = forms.AddUserForm()
@@ -96,7 +96,7 @@ def add_user(campaign_name, campaign_id):
         .filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Check if username exists
     user = db.session.execute(
@@ -133,7 +133,7 @@ def remove_user(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
     
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     username = request.form["username"]
     user_id = request.form["user_id"]
@@ -332,7 +332,7 @@ def confirm_request():
         .filter_by(id=campaign_id)).scalar()
 
     # Assert current user has campaign editing permissions
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Check message is valid and user not already in campaign
     if message.request and message.target_user not in campaign.members:
@@ -370,7 +370,7 @@ def deny_request():
         .filter_by(id=campaign_id)).scalar()
 
     # Assert current user has campaign editing permissions
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Delete message
     db.session.delete(message)
@@ -396,7 +396,7 @@ def add_permission(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Give user editing permissions
     if campaign not in user.permissions:

@@ -1,14 +1,13 @@
-from flask import render_template, redirect, request, url_for, flash, session
+from flask import render_template, redirect, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required
 
 import json
 
 import forms
-import auth
+from utils import authenticators
 import models
 import utils.serialisers as serialisers
-import utils.organisers as organisers
 
 from routes.data import bp
 from app import db
@@ -29,7 +28,7 @@ def backup_page(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
@@ -109,7 +108,7 @@ def campaign_backup(campaign_name, campaign_id):
         .filter_by(id=campaign_id, title=campaign_name)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
-    auth.permission_required(campaign)
+    authenticators.permission_required(campaign)
 
     # Export campaign data as json file.
     json = serialisers.data_export(campaign)

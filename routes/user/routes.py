@@ -3,10 +3,9 @@ from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
 
-import auth
 import forms
 import models
-from utils import messengers
+from utils import messengers, authenticators
 
 from app import db
 from routes.user import bp
@@ -111,7 +110,7 @@ def user_page(username):
         .filter_by(username=username)).scalar()
 
     # Check if the user is actually the owner of the account they are trying to modify
-    auth.user_verification(user)
+    authenticators.user_verification(user)
 
     callsign_form = forms.ChangeCallsignForm()
     username_form = forms.ChangeUsernameForm()
@@ -170,7 +169,7 @@ def change_username(username):
         select(models.User)
         .filter_by(username=username)).scalar()
     
-    auth.user_verification(user)
+    authenticators.user_verification(user)
 
     # Check if new username is not already in use
     new_username = request.form["username"]
@@ -203,7 +202,7 @@ def change_password(username):
         select(models.User)
         .filter_by(username=username)).scalar()
     
-    auth.user_verification(user)
+    authenticators.user_verification(user)
 
     # Check if the user matching given parameters exists in database
     if user:
@@ -236,7 +235,7 @@ def delete_user(username):
         select(models.User)
         .filter_by(username=username)).scalar()
     
-    auth.user_verification(user)
+    authenticators.user_verification(user)
 
     # Create login form to check credentials
     form = forms.LoginForm()
@@ -250,7 +249,7 @@ def delete_user(username):
             select(models.User)
             .filter_by(username=search_username)).scalar()
 
-        if search_user and auth.user_verification(search_user):
+        if search_user and authenticators.user_verification(search_user):
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                 
                 # Check if user deletion will leave any campaigns without any members
