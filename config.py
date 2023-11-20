@@ -28,4 +28,4 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "postgres:///war-cor.db"
+    SQLALCHEMY_DATABASE_URI = "postgresql:///war-cor.db"
