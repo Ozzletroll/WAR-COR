@@ -16,6 +16,7 @@ csrf = CSRFProtect()
 
 # Application factory
 def create_app(config_class=Config):
+    
     # Create and configure instance of the Flask app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config_class)
