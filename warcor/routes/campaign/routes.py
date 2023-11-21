@@ -8,7 +8,7 @@ from warcor import models
 from warcor.utils import authenticators
 import warcor.utils.organisers as organisers
 
-from warcor.app import db
+from warcor import db
 from warcor.routes.campaign import bp
 
 

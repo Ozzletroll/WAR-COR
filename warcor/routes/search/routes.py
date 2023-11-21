@@ -4,14 +4,13 @@ from warcor.forms import forms
 from warcor import models
 import warcor.utils.search as search
 
-from warcor.app import db
+from warcor import db
 from warcor.routes.search import bp
 
 
 # =======================================
 #                Search
 # =======================================
-
 
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])

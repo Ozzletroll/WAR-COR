@@ -7,13 +7,13 @@ from warcor.forms import forms
 from warcor import models
 from warcor.utils import authenticators, messengers
 
-from warcor.app import db
+from warcor import db
 from warcor.routes.user import bp
+
 
 #   =======================================
 #                  User
 #   =======================================
-
 
 # New user registration
 @bp.route("/register", methods=["GET", "POST"])

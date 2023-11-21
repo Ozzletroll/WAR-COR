@@ -10,7 +10,7 @@ from warcor import models
 import warcor.utils.serialisers as serialisers
 
 from warcor.routes.data import bp
-from warcor.app import db
+from warcor import db
 
 
 #   =======================================

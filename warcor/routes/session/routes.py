@@ -8,7 +8,6 @@ from warcor.forms import forms
 #                 SESSION
 #   =======================================
 
-
 @bp.app_context_processor
 def check_consent():
     """ Checks for GDPR consent form acceptance cookie, and

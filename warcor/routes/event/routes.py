@@ -9,7 +9,7 @@ from warcor.utils import authenticators
 import warcor.utils.formatters as formatters
 import warcor.utils.messengers as messengers
 
-from warcor.app import db
+from warcor import db
 from warcor.routes.event import bp
 
 #   =======================================

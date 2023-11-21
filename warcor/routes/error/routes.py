@@ -1,5 +1,5 @@
 from flask import render_template
-from warcor.app import db
+from warcor import db
 
 from warcor.routes.error import bp
 

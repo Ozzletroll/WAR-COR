@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from warcor.app import db
+from warcor import db
 from warcor.utils.sanitisers import sanitise_input
-
 
 
 class Event(db.Model):

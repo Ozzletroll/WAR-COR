@@ -6,7 +6,6 @@ from warcor import models
 from warcor.utils.sanitisers import sanitise_input
 
 
-
 def data_export(campaign):
     """Serialise campaign object as json file for export"""
     

@@ -3,7 +3,7 @@ from sqlalchemy import or_
 import editdistance
 from bs4 import BeautifulSoup
 
-from warcor.app import db
+from warcor import db
 from warcor import models
 
 

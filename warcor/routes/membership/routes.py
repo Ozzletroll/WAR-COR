@@ -7,14 +7,13 @@ from warcor.forms import forms
 from warcor import models
 import warcor.utils.messengers as messengers
 
-from warcor.app import db
+from warcor import db
 from warcor.routes.membership import bp
 
 
 #   =======================================
 #                 MEMBERSHIP
 #   =======================================
-
 
 # View and add campaign users
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/edit-members", methods=["GET", "POST"])

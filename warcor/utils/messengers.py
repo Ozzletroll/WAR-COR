@@ -2,7 +2,7 @@ from datetime import datetime
 from sqlalchemy import select
 
 from warcor import models
-from warcor.app import db
+from warcor import db
 
 
 def send_invite_message(sender, recipient, campaign):

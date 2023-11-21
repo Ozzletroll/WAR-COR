@@ -5,7 +5,7 @@ import werkzeug
 from werkzeug.security import generate_password_hash
 
 from warcor import models
-from warcor.app import db
+from warcor import db
 
 TEST_USERNAME = "test_user"
 TEST_PASSWORD = "12345678"

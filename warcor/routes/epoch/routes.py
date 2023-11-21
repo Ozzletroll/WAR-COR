@@ -6,9 +6,8 @@ from warcor.forms import forms
 from warcor import models
 from warcor.utils import authenticators
 
-from warcor.app import db
+from warcor import db
 from warcor.routes.epoch import bp
-
 
 
 #   =======================================

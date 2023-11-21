@@ -1,12 +1,11 @@
-from warcor.app import create_app
+from warcor import create_app
 from config import ProductionConfig
-
 
 
 app = create_app()
 
 # Development
-if __name__ == "__main__" or __name__ == "main":
+if __name__ == "__main__":
     app.run(debug=True)
 
 # Production

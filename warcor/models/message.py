@@ -1,4 +1,4 @@
-from warcor.app import db
+from warcor import db
 
 
 class Message(db.Model):

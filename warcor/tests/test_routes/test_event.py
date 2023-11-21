@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from flask import url_for
-from warcor.app import db
+from warcor import db
 from warcor import models
 
 TEST_PASSWORD = "123456768"

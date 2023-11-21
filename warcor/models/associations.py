@@ -1,4 +1,4 @@
-from warcor.app import db
+from warcor import db
 
 
 # Association table that defines user to campaign editing permissions.

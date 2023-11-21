@@ -1,7 +1,7 @@
 import pytest
 from flask import url_for, template_rendered
-from warcor.app import create_app
-from warcor.app import db
+from warcor import create_app
+from warcor import db
 from config import TestingConfig
 
 
