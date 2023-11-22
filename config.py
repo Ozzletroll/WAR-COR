@@ -28,4 +28,4 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI") or "postgresql:///war_cor.db"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
