@@ -41,16 +41,16 @@ class ChangePasswordForm(FlaskForm):
 
 
 class CreateCampaignForm(FlaskForm):
-    title = StringField("Campaign Title", validators=[DataRequired()])
-    description = TextAreaField("Description", validators=[DataRequired()])
+    title = StringField("Campaign Title", validators=[DataRequired(), Length(max=250)])
+    description = TextAreaField("Description", validators=[DataRequired(), Length(max=300)])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
     submit = SubmitField("Create Campaign")
 
 
 class CreateEventForm(FlaskForm):
-    title = StringField("Event Title", validators=[DataRequired()])
-    type = StringField("Event Type", validators=[DataRequired()])
+    title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
+    type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
     date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
     location = StringField("Location", validators=[Optional()])
     belligerents = StringField("Belligerents", validators=[Optional()])
@@ -69,7 +69,7 @@ class CreateEpochForm(FlaskForm):
             'end_date': [date_format(format="epoch"), date_is_after]
         }
 
-    title = StringField("Event Title", validators=[DataRequired()])
+    title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
     end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after])
     description = TextAreaField("Description")
@@ -106,7 +106,7 @@ class UploadJsonForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    body = TextAreaField("Comment", validators=[DataRequired()])
+    body = TextAreaField("Comment", validators=[DataRequired(), Length(max=300)])
     submit = SubmitField("Submit")
 
 
