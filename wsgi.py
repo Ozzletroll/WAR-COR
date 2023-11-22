@@ -5,4 +5,4 @@ from config import ProductionConfig
 # If using gunicorn, bind using:
 # gunicorn --bind 127.0.0.1:5000 wsgi:production_app
 
-# production_app = create_app(ProductionConfig)
+production_app = create_app(ProductionConfig)
