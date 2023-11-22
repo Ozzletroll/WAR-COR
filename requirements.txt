@@ -1,6 +1,6 @@
 alembic==1.11.1
 beautifulsoup4==4.11.2
-Bleach==6.1.0
+bleach==6.1.0
 bleach[css]==6.1.0
 python-dotenv==0.18.0
 editdistance==0.6.2
@@ -10,6 +10,7 @@ Flask_Login==0.6.3
 Flask_Migrate==4.0.4
 flask_sqlalchemy==3.1.1
 Flask_WTF==1.2.1
+gunicorn==21.2.0
 lemminflect==0.2.3
 nltk==3.8.1
 psycopg2==2.9.9
