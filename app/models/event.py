@@ -21,8 +21,8 @@ class Event(db.Model):
     second = db.Column(db.Integer)
 
     location = db.Column(db.String(250), nullable=True)
-    belligerents = db.Column(db.String(250), nullable=True)
-    body = db.Column(db.String(250), nullable=False)
+    belligerents = db.Column(db.String(), nullable=True)
+    body = db.Column(db.String(), nullable=False)
     result = db.Column(db.String(250), nullable=True)
     header = db.Column(db.Boolean(), nullable=False, default=False)
     hide_time = db.Column(db.Boolean(), nullable=False, default=False)

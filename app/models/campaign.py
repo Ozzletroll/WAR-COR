@@ -11,7 +11,7 @@ class Campaign(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(250))
-    description = db.Column(db.String(250), nullable=False)
+    description = db.Column(db.String(500), nullable=False)
     last_edited = db.Column(db.DateTime, nullable=False)
     date_suffix = db.Column(db.String(8), nullable=True)
     negative_date_suffix = db.Column(db.String(8), nullable=True)
