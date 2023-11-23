@@ -56,7 +56,7 @@
         <form method="POST" action="{{ url_for('membership.request_membership', campaign_name=campaign.title, campaign_id=campaign.id)}}">
           {{ form.csrf_token }}
           <div class="entry-button-outline">
-            {{ form.submit(class_="button entry-button request-button") }}
+            {{ form.submit(class_="button entry-button request-button", value="Request Membership") }}
           </div>
         </form>
 
