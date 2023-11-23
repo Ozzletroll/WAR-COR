@@ -3178,13 +3178,22 @@ p {
   opacity: 0;
 }
 
-.timeline-year-container {
+.timeline-year-outer-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 0 0 10%;
   width: 10%;
-  margin-right: calc((0.50 * 10%) * -1);
+  margin-left: -5%;
+}
+
+.timeline-year-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  margin-right: -100%;
 }
 
 .timeline-horizontal {
@@ -3886,10 +3895,6 @@ for selection in timeline_search.js */
 
   .timeline-left-marker {
     font-size: 18px;
-  }
-
-  .timeline-year-container {
-    margin-left: -15px;
   }
 
   .connector-date {

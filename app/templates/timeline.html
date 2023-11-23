@@ -140,44 +140,46 @@
             <div class="timeline-year">
 
               <!-- Year main axis -->
-              <div class="timeline-year-container">
+              <div class="timeline-year-outer-container">
+                <div class="timeline-year-container">
 
-                <h3 class="timeline-year-header" id="year-{{year.name}}">
-                  {% if year.name.startswith("-") %}
-                    {{ year.name + campaign.negative_date_suffix}}
-                  {% else %}
-                    {{ year.name + campaign.date_suffix}}
-                  {% endif %}
-                </h3> 
+                  <h3 class="timeline-year-header" id="year-{{year.name}}">
+                    {% if year.name.startswith("-") %}
+                      {{ year.name + campaign.negative_date_suffix}}
+                    {% else %}
+                      {{ year.name + campaign.date_suffix}}
+                    {% endif %}
+                  </h3> 
 
-                <div class="timeline-columns">
+                  <div class="timeline-columns">
 
-                  {% if year.marker %}
-                  <div id="timeline-left-marker" class="timeline-left-marker">
-                    <div class="year-marker-hr"></div>
-                    <div class="year-marker-line"></div>
-                    <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
-                    <div class="year-marker-line"></div>
-                    <div class="year-marker-hr"></div>
-                  </div>
-                  {% else %}
-                  <div id="timeline-left-marker" class="timeline-left-marker marker-invis">
-                    <div class="year-marker-hr marker-invis"></div>
-                    <div class="year-marker-line marker-invis"></div>
-                    <h5 class="year-marker marker-invis">{{ year.name + campaign.date_suffix}}</h5>
-                    <div class="year-marker-line marker-invis"></div>
-                    <div class="year-marker-hr marker-invis"></div>
-                  </div>
-                  {% endif %}
+                    {% if year.marker %}
+                    <div id="timeline-left-marker" class="timeline-left-marker">
+                      <div class="year-marker-hr"></div>
+                      <div class="year-marker-line"></div>
+                      <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
+                      <div class="year-marker-line"></div>
+                      <div class="year-marker-hr"></div>
+                    </div>
+                    {% else %}
+                    <div id="timeline-left-marker" class="timeline-left-marker marker-invis">
+                      <div class="year-marker-hr marker-invis"></div>
+                      <div class="year-marker-line marker-invis"></div>
+                      <h5 class="year-marker marker-invis">{{ year.name + campaign.date_suffix}}</h5>
+                      <div class="year-marker-line marker-invis"></div>
+                      <div class="year-marker-hr marker-invis"></div>
+                    </div>
+                    {% endif %}
 
-                  <div class="timeline-right-marker">
-                    <hr class="timeline-horizontal">
-                    <hr class="timeline-line">
-                    <hr class="timeline-horizontal">
+                    <div class="timeline-right-marker">
+                      <hr class="timeline-horizontal">
+                      <hr class="timeline-line">
+                      <hr class="timeline-horizontal">
+                    </div>
+
                   </div>
 
                 </div>
-
               </div>
           
               <!-- Timeline months -->
