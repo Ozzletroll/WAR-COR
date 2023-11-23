@@ -2,12 +2,19 @@ import pytest
 from flask import url_for, template_rendered
 from app import create_app
 from app import db
-from config import TestingConfig
+from config import TestingConfig, TestingPostgresConfig
 
 
 @pytest.fixture(scope="module")
 def app():
-    app = create_app(config_class=TestingConfig)
+    """ 
+        Main app fixture for pytest.
+        Either pass TestingConfig to test on SQlite db,
+        or TestingPostgres Config to test on local Postgres db.
+        
+    """
+
+    app = create_app(config_class=TestingPostgresConfig)
     yield app
 
     # Teardown
@@ -18,9 +25,6 @@ def app():
 
 @pytest.fixture()
 def client(app):
-    app.config["TESTING"] = True
-    app.config['SECRET_KEY'] = "TESTING_KEY"
-    app.config['WTF_CSRF_ENABLED'] = False
     with app.test_client() as client:
         yield client
 
