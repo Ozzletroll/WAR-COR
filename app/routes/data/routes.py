@@ -66,7 +66,7 @@ def backup_page(campaign_name, campaign_id):
 
             db.session.commit()
 
-            # Convert json epopchs into epoch objects
+            # Convert json epochs into epoch objects
             for item in data["epochs"]:
                 epoch, errors = serialisers.epochs_import(item)
                 db.session.add(epoch)
@@ -80,7 +80,7 @@ def backup_page(campaign_name, campaign_id):
 
             # Commit to db
             db.session.commit()
-            flash(f"Campaign: {campaign.title} succesfully restored from backup")
+            flash(f"Campaign: {campaign.title} successfully restored from backup")
 
             return redirect(url_for("campaign.campaigns"))
 
