@@ -15,11 +15,10 @@ from app.routes.search import bp
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])
 def advanced_search(campaign_name, campaign_id):
-
     campaign = db.session.execute(
-                select(models.Campaign)
-                .filter_by(id=campaign_id, title=campaign_name)).scalar()
-        
+        select(models.Campaign)
+        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+
     form = forms.SearchForm()
 
     # Check if page has any results to render
@@ -57,15 +56,15 @@ def advanced_search(campaign_name, campaign_id):
         else:
             if edit:
                 return render_template("advanced_search.html",
-                                        form=form,
-                                        campaign=campaign,
-                                        edit=edit,
-                                        results=results)
+                                       form=form,
+                                       campaign=campaign,
+                                       edit=edit,
+                                       results=results)
             else:
                 return render_template("advanced_search.html",
-                                        form=form,
-                                        campaign=campaign,
-                                        results=results)
+                                       form=form,
+                                       campaign=campaign,
+                                       results=results)
 
     return render_template("advanced_search.html",
                            form=form,
