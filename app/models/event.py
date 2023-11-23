@@ -35,17 +35,19 @@ class Event(db.Model):
     parent_campaign = db.relationship("Campaign", 
                                       back_populates="events")
     
-    following_event_id = db.Column(db.Integer, db.ForeignKey('event.id'))
-    following_event = db.relationship('Event', 
-                                      backref=db.backref('preceding_event', 
-                                                         uselist=False), 
-                                                         remote_side=[id])
+    following_event_id = db.Column(db.Integer, db.ForeignKey("event.id"))
+    following_event = db.relationship("Event",
+                                      backref=db.backref("preceding_event", uselist=False),
+                                      remote_side=[id])
     epochs = db.relationship("Epoch",
-                              secondary="epoch_events",
-                              back_populates="events")
+                             secondary="epoch_events",
+                             back_populates="events")
     comments = db.relationship("Comment", 
                                back_populates="parent_event",
                                cascade="delete, delete-orphan")
+    targeting_messages = db.relationship("Message",
+                                         back_populates="target_event",
+                                         cascade="delete, delete-orphan")
 
     # Methods
     def update(self, form, parent_campaign, new=False):
@@ -73,7 +75,6 @@ class Event(db.Model):
 
         db.session.commit()
 
-
     def create_blank(self, datestring):
         """ Method to create a blank temporary pending event for prepopulating form.
             Takes an incremented datestring from organisers.format_event_datestring(). """
@@ -82,7 +83,6 @@ class Event(db.Model):
         self.type = ""
         self.body = ""
         self.date = datestring
-
 
     def split_date(self, datestring):
         """ Method that splits a form datestring into individual integer values. """
@@ -93,7 +93,6 @@ class Event(db.Model):
         self.hour = int(datestring.split("/")[2].split()[1].split(":")[0])
         self.minute = int(datestring.split("/")[2].split()[1].split(":")[1])
         self.second = int(datestring.split("/")[2].split()[1].split(":")[2])
-
 
     def separate_belligerents(self):
         """ Method to seperate the belligerents into groups for rendering. """

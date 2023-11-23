@@ -244,9 +244,11 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
         # Check if the user has permissions to edit the target campaign.
         authenticators.permission_required(campaign)
 
-    # Delete the comment
-    db.session.delete(comment)
-    db.session.commit()
+    # Check if comment -> event -> campaign relationship is valid
+    if comment in event.comments and event in campaign.events:
+        # Delete the comment
+        db.session.delete(comment)
+        db.session.commit()
 
     return redirect(url_for('event.view_event', 
                             campaign_name=campaign.title,

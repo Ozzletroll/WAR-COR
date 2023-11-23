@@ -284,6 +284,18 @@ def test_delete_comment(client, auth, campaign, event):
     assert len(event_object.comments) == 1
     auth.logout()
     auth.login(username="Admin", password=TEST_PASSWORD)
+
+    second_comment_object = db.session.query(models.Comment) \
+        .filter(models.Comment.body == "Comment text",
+                models.Comment.event_id == event_object.id).scalar()
+
+    url = url_for("event.delete_comment",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id,
+                  event_name=event_object.title,
+                  event_id=event_object.id,
+                  comment_id=second_comment_object.id)
+
     response_2 = client.post(url, follow_redirects=True)
     assert response_2.status_code == 200
     assert len(event_object.comments) == 0
