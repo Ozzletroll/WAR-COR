@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
-from sqlalchemy import select
+from sqlalchemy import select, func
 from flask_login import login_required, current_user
 
 from app.utils import authenticators
@@ -200,7 +200,8 @@ def join_campaign():
             search_format = "%{}%".format(search)
             campaigns = db.session.execute(
                 select(models.Campaign)
-                .filter(models.Campaign.title.like(search_format))).scalars()
+                .filter(func.lower(models.Campaign.title).like(search_format))
+            ).scalars()
 
             results = [campaign for campaign in campaigns if campaign not in current_user.campaigns]
                                         
