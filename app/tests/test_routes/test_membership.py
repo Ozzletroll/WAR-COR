@@ -89,7 +89,7 @@ def test_add_user(client, auth, campaign):
 
     # Test if pending invitation message created
     pending_invitation = db.session.query(models.Message)\
-        .filter(models.Message.invite == 1,
+        .filter(models.Message.invite == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_1.id).scalar()
     assert pending_invitation is not None
@@ -198,7 +198,7 @@ def test_request_membership(client, auth, campaign):
 
     # Test if membership request message created
     pending_request = db.session.query(models.Message) \
-        .filter(models.Message.request == 1,
+        .filter(models.Message.request == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_1.id).scalar()
     assert pending_request is not None
@@ -220,7 +220,7 @@ def test_accept_invite(client, auth, campaign):
         .filter_by(title="Test Campaign")).scalar()
 
     pending_invitation = db.session.query(models.Message) \
-        .filter(models.Message.invite == 1,
+        .filter(models.Message.invite == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_1.id).scalar()
 
@@ -270,7 +270,7 @@ def test_decline_invite(client, auth, campaign):
                       user_id=user_2.id)
 
     pending_invitation = db.session.query(models.Message) \
-        .filter(models.Message.invite == 1,
+        .filter(models.Message.invite == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_2.id).scalar()
 
@@ -299,7 +299,7 @@ def test_decline_invite(client, auth, campaign):
     assert response_3.status_code == 302
 
     pending_invitation = db.session.query(models.Message) \
-        .filter(models.Message.invite == 1,
+        .filter(models.Message.invite == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_2.id).scalar()
 
@@ -330,7 +330,7 @@ def test_confirm_request(client, auth, campaign):
     client.post(create_request_url)
 
     pending_request = db.session.query(models.Message) \
-        .filter(models.Message.request == 1,
+        .filter(models.Message.request == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_2.id).scalar()
 
@@ -382,7 +382,7 @@ def test_deny_request(client, auth, campaign):
     client.post(create_request_url)
 
     pending_request = db.session.query(models.Message) \
-        .filter(models.Message.request == 1,
+        .filter(models.Message.request == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_2.id).scalar()
 
@@ -408,7 +408,7 @@ def test_deny_request(client, auth, campaign):
     assert user_2 not in campaign_object.members
 
     pending_request = db.session.query(models.Message) \
-        .filter(models.Message.request == 1,
+        .filter(models.Message.request == True,
                 models.Message.target_campaign_id == campaign_object.id,
                 models.Message.target_user_id == user_2.id).scalar()
 
