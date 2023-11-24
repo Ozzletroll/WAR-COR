@@ -1524,6 +1524,20 @@ p {
   
 }
 
+@media screen and (max-height: 1000px){
+
+  h1.form-heading {
+    display: none;
+  }
+
+  .login-flavour-text {
+    margin-top: 5vh;
+  }
+
+}
+
+
+
 @media screen and (max-width: 600px){
 
   .edit-form .campaign-input {
@@ -1532,6 +1546,10 @@ p {
 
   h1.form-heading {
     display: none;
+  }
+
+  .login-flavour-text {
+    margin-top: 5vh;
   }
 
 }  
