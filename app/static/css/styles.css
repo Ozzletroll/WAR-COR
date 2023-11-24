@@ -1537,7 +1537,6 @@ p {
 }
 
 
-
 @media screen and (max-width: 600px){
 
   .edit-form .campaign-input {
@@ -2054,14 +2053,13 @@ p {
 
 .campaigns-heading {
   font-size: min(7vw, 48px);
-  font-weight: 400;
+  font-weight: 500;
   color: var(--text_header);
   width: 100%;
   padding-bottom: 0%;
   padding-left: 5%;
   margin: 0;
   text-transform: uppercase;
-  font-weight: 700;
   padding: 0;
 }
 
@@ -3322,6 +3320,7 @@ p {
   justify-content: center;
   text-align: center;
   font-size: min(3vw, 12px);
+  font-weight: 400;
   margin: 0;
 }
 
@@ -3825,7 +3824,7 @@ for selection in timeline_search.js */
 .event-header {
   display: flex;
   font-size: clamp(12px, 2vw, 16px);
-  font-weight: 600;
+  font-weight: 500;
   padding: 10px 15px 10px 15px;
   text-transform: uppercase;
   color: var(--text_header_contrast);
