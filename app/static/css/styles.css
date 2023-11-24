@@ -140,6 +140,11 @@
   --gradient2: #2f3d30;;
 }
 
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(/static/fonts/RobotoMono-VariableFont_wght.ttf);
+}
+
 /* Chrome Scrollbar */
 ::-webkit-scrollbar {
   background: var(--dark_grey);
@@ -148,11 +153,6 @@
 
 ::-webkit-scrollbar-thumb {
   background: var(--bright_red);
-}
-
-@font-face {
-  font-family: "Roboto Mono";
-  src: url(/static/fonts/RobotoMono-VariableFont_wght.ttf);
 }
 
 /* Page Layout */
@@ -224,6 +224,10 @@ body {
 
 /* Basic elements */
 
+h1, h2, h3, h4, h5 {
+  font-weight: 500;
+}
+
 .flashes {
   list-style-type: none;
   color: var(--text_header);
@@ -268,7 +272,6 @@ body {
   fill: var(--bright_red);
 }
 
-
 button {
   font-family: "Roboto Mono", monospace;
   cursor: pointer;
@@ -276,6 +279,7 @@ button {
 
 .button {
   font-family: "Roboto Mono", monospace;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -324,7 +328,7 @@ p {
 .logo-title{
   color: var(--text_normal);
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: none;
   transition: 0.5s;
 }
@@ -735,6 +739,7 @@ p {
 
 .main-title {
   font-size: min(22vw, 180px);
+  font-weight: 500;
   margin-bottom: 15px;
 	color: #F5F5F5;
 	text-transform: uppercase;
@@ -876,6 +881,7 @@ p {
 
 .feature-title {
   font-size: 24px;
+  font-weight: 500;
   margin: 0;
 }
 
@@ -1134,6 +1140,7 @@ p {
 
 .modal-header-small {
   font-size: min(18px, 4vw);
+  font-weight: 500;
   margin: 0;
 }
 
@@ -1340,6 +1347,7 @@ p {
 
 .auth-form-header {
   font-size: min(5vw, 20px);
+  font-weight: 500;
   margin: 0;
   margin-left: 10px;
   padding: 15px;
