@@ -117,7 +117,7 @@ const toggle_2 = new ToggleButton({
 function themeToggle() {
 
   // Get the stylesheet
-  var stylesheet = document.styleSheets[0];
+  var stylesheet = document.styleSheets[1];
   var iconRule
   
   // Iterate through all the rules and get the icon rule

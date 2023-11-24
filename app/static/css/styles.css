@@ -155,6 +155,10 @@
   background: var(--bright_red);
 }
 
+html {
+  line-height: 1.4;
+}
+
 /* Page Layout */
 
 body {
@@ -279,7 +283,8 @@ button {
 
 .button {
   font-family: "Roboto Mono", monospace;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   cursor: pointer;
 }
 
@@ -301,6 +306,7 @@ p {
   background-color: var(--darker_red);
   padding-left: min(10px, 2%);
   padding-right: min(10px, 2%);
+  height: 54px;
   min-height: 54px;
   top: 0;
   position: -webkit-sticky;
@@ -318,6 +324,7 @@ p {
 }
 
 .top-logo {
+  height: 25px;
   width: 30px;
 }
 
@@ -902,6 +909,8 @@ p {
 }
 
 .feature-button {
+  font-size: 14px;
+  font-weight: 400;
   background-color: var(--darker_red);
   color: #E5E5E5;
   padding: 3%;
@@ -1422,7 +1431,6 @@ p {
   display: flex;
   justify-content: center;
   font-size: 15px;
-  padding: 5px;
   text-transform: uppercase;
   width: 120px;
   font-family: "Roboto Mono", monospace;
@@ -1430,6 +1438,8 @@ p {
   color: var(--text_header_contrast);
   border-style: none;
   border-radius: 3px;
+  margin: 0;
+  padding: 8px;
 }
 
 .user-delete-button {
@@ -1751,7 +1761,7 @@ p {
 }
 
 .flavour-text {
-  font-size: min(2vw, 11px);
+  font-size: min(2vw, 12px);
   font-weight: 200;
   width: min(400px, 60vw);
   color: var(--text_flavour);
@@ -1834,6 +1844,7 @@ p {
 }
 
 .search-bar {
+  font-size: 14px;
   color: var(--text_flavour);
   width: 100%;
   background-color: var(--elem_mid);
@@ -1877,6 +1888,7 @@ p {
   align-items: center;
   background-color: var(--elem_mid);
   color: var(--text_header);
+  font-size: 14px;
   font-weight: 400;
   height: 32px;
   border: 1px solid var(--bg_colour2);
@@ -2149,6 +2161,7 @@ p {
 }
 
 .campaign-header {
+  font-size: 22px;
   display: flex;
   width: 100%;
   background-color: var(--darker_red);
@@ -2182,6 +2195,8 @@ p {
 }
 
 .campaign-entry-title {
+  font-size: 16px;
+  font-weight: 500;
   text-transform: uppercase;
   color: var(--text_dark);
 }
@@ -2338,6 +2353,7 @@ p {
 }
 
 .entry-button {
+  font-size: 14px;
   width: 160px;
   padding: 10px;
   background-color: var(--darker_red);
@@ -2421,10 +2437,12 @@ p {
 
 .deploy-button {
   display: flex;
+  align-items: center;
   border: none;
   text-transform: uppercase;
   gap: 5px;
   background-color: var(--elem_dark);
+  font-size: 13px;
   color: var(--text_flavour);
   width: 100%;
   height: 30px;
@@ -2463,6 +2481,8 @@ p {
 }
 
 .create-campaign-button {
+  font-size: 14px;
+  font-weight: 400;
   background-color: transparent;
   color: var(--text_dark);
   border: 1px solid var(--dark_red);
@@ -2496,6 +2516,12 @@ p {
   filter: drop-shadow(5px 1px 5px var(--elem_shadow));
 }
 
+.user-page-title {
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
 .callsign-deploy-button {
   display: flex;
   align-items: center;
@@ -2508,7 +2534,6 @@ p {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   transition: 0.5s;
   gap: 15px;
-
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -2657,6 +2682,7 @@ p {
   border: 2px solid;
   border-color: var(--bg_colour2);
   border-radius: 3px;
+  box-sizing: border-box;
   transition: 0.5s;
   background-color: var(--elem_bright);
   padding: 5px;
@@ -2683,6 +2709,8 @@ p {
 
 .callsign-submit {
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
+  font-size: 16px;
+  height: 100%;
 }
 
 .user-content .form-flash .flashes {
@@ -2751,6 +2779,7 @@ p {
 .preferences-form {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 
 .pref-item {
@@ -2945,7 +2974,6 @@ p {
 	margin-bottom: 25px;
 }
 .edit-members-container {
-  margin-top: 20px;
   width: 100%;
 }
 
@@ -3206,9 +3234,8 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 0 10%;
   width: 10%;
-  margin-left: -5%;
+  /* margin-left: -5%; */
 }
 
 .timeline-year-container {
@@ -3217,23 +3244,26 @@ p {
   align-items: center;
   height: 100%;
   width: 100%;
-  margin-right: -100%;
+  /* position: relative;
+  left: 50%; */
+  transform: translate(50%);
+  -webkit-transform: (50%);
+  margin-right: 0px;
 }
 
 .timeline-horizontal {
   width: 100%;
-  color: var(--bright_red);
-  border-color: var(--bright_red);
+  height: 1px;
+  background-color: var(--bright_red);
   margin-bottom: 0;
   margin-top: 0;
 }
 
 .timeline-line {
+  width: 1px;
   height: 100%;
-  color: var(--bright_red);
-  border-color: var(--bright_red);
+  background-color: var(--bright_red);
   margin: 0;
-  width: 0px;
 }
 
 .timeline-columns {
@@ -3711,7 +3741,7 @@ for selection in timeline_search.js */
   display: flex;
   flex: 0 0 1px;
   border: 1px solid var(--bright_red);
-  margin-top: 13px;
+  margin-top: 14px;
   box-sizing: border-box;
   margin-left: -1px;
   transition: 0.5s;
@@ -3750,12 +3780,14 @@ for selection in timeline_search.js */
 }
 
 .event-line-solo {
+  display: none;
   border-right: 0;
   border-bottom: 0;
   border-left: 0;
 }
 
 .event-line-solo-edit {
+  display: flex;
   border-left: 1px dashed var(--bright_red);
   margin-bottom: -35px;
 }
@@ -4078,6 +4110,8 @@ for selection in timeline_search.js */
 }
 
 .event-button {
+  font-size: 12px;
+  font-weight: 400;
   min-width: 0;
   overflow-x: hidden;
   text-align: left;
@@ -4562,6 +4596,7 @@ for selection in timeline_search.js */
 .comments-count {
   color: var(--text_dark);
   font-size: min(14px, 3vw);
+  font-weight: 400;
 }
 
 .comment-date {
