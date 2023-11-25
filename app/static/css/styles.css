@@ -250,6 +250,7 @@ h1, h2, h3, h4, h5 {
 
 .icon-large {
   width: 40px;
+  height: 40px;
 }
 
 .icon-xlarge {
@@ -307,8 +308,8 @@ p {
   padding-left: min(10px, 2%);
   padding-right: min(10px, 2%);
   height: 54px;
-  min-height: 54px;
-  top: 0;
+  top: 0px;
+  bottom: 54px;
   position: -webkit-sticky;
   position: sticky;
   z-index: 3;
@@ -3278,15 +3279,14 @@ p {
   color: var(--text_header);
   width: 100%;
   padding-bottom: 0%;
-  margin: 0;
   font-size: min(4vw, 46px);
   width: 10vw;
   display: flex;
   justify-content: center;
+  text-align: center;
   scroll-margin-top: 53px;
   padding-left: 0;
-  margin-left: -50px;
-  margin-right: -50px;
+  margin: 0px;
 }
 
 /* Epoch */
@@ -4031,42 +4031,46 @@ for selection in timeline_search.js */
 
 /* Sidebar */
 
-.sidebar {
+.sidebar-outer {
   display: flex;
-  flex: 1 0 auto;
+  margin-right: -300px;
+  position: relative;
+  left: -300px;
+  top: 0px;
+  z-index: 1;
+  transition: 0.3s;
+  will-change: transform;
+}
+
+.sidebar-scroll {
+  display: flex;
   flex-direction: column;
-  background-color: var(--bg_colour2);
+  flex: 1 0 auto;
   height: calc(100vh - 54px);
   width: 300px;
-  max-width: 300px;
-  transform: translateX(-300px);
-  margin-right: -300px;
-  overflow-x: hidden;
-  transition: 0.5s;
+  overflow-y: scroll;
   top: 54px;
   position: -webkit-sticky;
   position: sticky;
-  box-sizing: border-box;
   border-right: 1px solid var(--elem_border);
-  z-index: 1;
+  background-color: var(--elem_mid);
 }
 
 .sidebar-deploy {
   display: flex;
-  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark_red);
-  color: var(--text_normal);
-  height: 200px;
-  width: 50px;
-  max-width: 50px;
-  top: 54px;
   position: -webkit-sticky;
   position: sticky;
+  top: 54px;
+  height: 200px;
+  width: 50px;
   margin-right: -50px;
+  background-color: var(--dark_red);
+  color: var(--text_normal);
   clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
-  z-index: 1;
+  cursor: pointer;
+  will-change: transform;
 }
 
 @media screen and (max-width: 800px) {
@@ -4113,7 +4117,7 @@ for selection in timeline_search.js */
   overflow-x: hidden;
   text-align: left;
   border-style: none;
-  height: 100%;
+  min-height: 40px;
   padding: 0;
   padding: 10px;
   background-color: var(--bg_colour2);

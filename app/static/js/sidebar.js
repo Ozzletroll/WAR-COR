@@ -15,9 +15,9 @@ class Tab {
     this.timeline = document.getElementById(timeline);
     this.monthConnectors = document.getElementsByClassName("month-connector");
 
-    this.updateTimelineMargin();
+    // this.updateTimelineMargin();
 
-    window.addEventListener('resize', this.updateTimelineMargin.bind(this));
+    // window.addEventListener('resize', this.updateTimelineMargin.bind(this));
 
     document.getElementById(this.button).onclick = event => {
 
@@ -31,49 +31,47 @@ class Tab {
   }
 
   openTab() {
-    this.tab.style.transform = "translateX(0)"
-    this.tab.style.marginRight = "0"
+    this.tab.style.left = "0px"
     this.state = true
     this.icon.src = "/static/images/icons/chevron_left.svg"
-    this.adjustMonthConnectors()
-    this.updateTimelineMargin();
+    // this.adjustMonthConnectors()
+    // this.updateTimelineMargin();
   }
 
   closeTab() {
-    this.tab.style.transform = "translateX(-300px)"
-    this.tab.style.marginRight = "-300px"
+    this.tab.style.left = "-300px"
     this.state = false
     this.icon.src = "/static/images/icons/chevron_right.svg"
-    this.adjustMonthConnectors()
-    this.timeline.style.marginLeft = "0"
+    // this.adjustMonthConnectors()
+    // this.timeline.style.marginLeft = "0"
   }
 
   // Adjust margin if sidebar deployed and screen between 800 and 1000px
-  updateTimelineMargin() {
-    if (window.innerWidth >= 800 && window.innerWidth <= 1000 && this.state == true) {
-      this.timeline.style.marginLeft = "-15%";
-      this.adjustMonthConnectors()
-    } else {
-      this.timeline.style.marginLeft = "";
-      this.adjustMonthConnectors()
-    }
-  }
+  // updateTimelineMargin() {
+  //   if (window.innerWidth >= 800 && window.innerWidth <= 1000 && this.state == true) {
+  //     this.timeline.style.marginLeft = "-15%";
+  //     this.adjustMonthConnectors()
+  //   } else {
+  //     this.timeline.style.marginLeft = "";
+  //     this.adjustMonthConnectors()
+  //   }
+  // }
 
-  adjustMonthConnectors() {
-    if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
-      // Iterate through all month connectors, and alter width
-      for (let i = 0; i < this.monthConnectors.length; i++) {
-        this.monthConnectors[i].style.minWidth = "15%";
-      }
-    }
-    else {
-      // Iterate through all month connectors, and alter width
-      for (let i = 0; i < this.monthConnectors.length; i++) {
-        this.monthConnectors[i].style.minWidth = "30%";
-      }
-    }
+  // adjustMonthConnectors() {
+  //   if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
+  //     // Iterate through all month connectors, and alter width
+  //     for (let i = 0; i < this.monthConnectors.length; i++) {
+  //       this.monthConnectors[i].style.minWidth = "15%";
+  //     }
+  //   }
+  //   else {
+  //     // Iterate through all month connectors, and alter width
+  //     for (let i = 0; i < this.monthConnectors.length; i++) {
+  //       this.monthConnectors[i].style.minWidth = "30%";
+  //     }
+  //   }
 
-  }
+  // }
 
 }
 
@@ -111,7 +109,7 @@ function scrollToAnim(targetEvent) {
 
 // Create sidebar
 const sidebar = new Tab({
-  tab: "sidebar",
+  tab: "sidebar-outer",
   button: "sidebar-deploy",
   icon: "sidebar-icon",
   timeline: "timeline-container",
