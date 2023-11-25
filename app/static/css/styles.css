@@ -3235,8 +3235,8 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 10%;
-  /* margin-left: -5%; */
+  width: min(10vw, 90px);
+  margin-left: -5%;
 }
 
 .timeline-year-container {
@@ -4033,10 +4033,10 @@ for selection in timeline_search.js */
 
 .sidebar-outer {
   display: flex;
-  margin-right: -300px;
-  position: relative;
+  position: sticky;
   left: -300px;
   top: 0px;
+  margin-left: -300px;
   z-index: 1;
   transition: 0.3s;
   will-change: transform;
@@ -4075,7 +4075,7 @@ for selection in timeline_search.js */
 
 @media screen and (max-width: 800px) {
 
-  .sidebar-deploy {
+  .sidebar-outer {
     display: none;
   }
 

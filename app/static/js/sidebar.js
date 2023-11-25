@@ -9,15 +9,16 @@ class Tab {
   }) {
     this.tab = document.getElementById(tab);
     this.button = button;
-    this.button_elem = document.getElementById(button);
+    this.buttonElem = document.getElementById(button);
     this.state = false
     this.icon = document.getElementById(icon);
     this.timeline = document.getElementById(timeline);
     this.monthConnectors = document.getElementsByClassName("month-connector");
 
-    // this.updateTimelineMargin();
-
-    // window.addEventListener('resize', this.updateTimelineMargin.bind(this));
+    // Call check screensize on initialisation, 
+    // and again anytime the viewport is resized
+    this.checkScreenSize();
+    window.addEventListener('resize', this.checkScreenSize.bind(this));
 
     document.getElementById(this.button).onclick = event => {
 
@@ -30,48 +31,60 @@ class Tab {
     }
   }
 
+  checkScreenSize() {
+    if (window.innerWidth >= 1200 && this.state == true) {
+      this.tab.style.marginRight = "300px";
+    }
+    else {
+      this.tab.style.marginRight = "0px"
+    }
+  }
+
   openTab() {
-    this.tab.style.left = "0px"
-    this.state = true
-    this.icon.src = "/static/images/icons/chevron_left.svg"
-    // this.adjustMonthConnectors()
-    // this.updateTimelineMargin();
+    this.tab.style.transform = "translateX(300px)";
+
+    if (window.innerWidth >= 1200 ) {
+      this.tab.style.marginRight = "300px"
+    }
+
+    this.state = true;
+    this.icon.src = "/static/images/icons/chevron_left.svg";
   }
 
   closeTab() {
-    this.tab.style.left = "-300px"
-    this.state = false
-    this.icon.src = "/static/images/icons/chevron_right.svg"
-    // this.adjustMonthConnectors()
-    // this.timeline.style.marginLeft = "0"
+    this.tab.style.transform = "translateX(0)";
+    this.state = false;
+    this.checkScreenSize();
+    this.icon.src = "/static/images/icons/chevron_right.svg";
+
   }
 
   // Adjust margin if sidebar deployed and screen between 800 and 1000px
-  // updateTimelineMargin() {
-  //   if (window.innerWidth >= 800 && window.innerWidth <= 1000 && this.state == true) {
-  //     this.timeline.style.marginLeft = "-15%";
-  //     this.adjustMonthConnectors()
-  //   } else {
-  //     this.timeline.style.marginLeft = "";
-  //     this.adjustMonthConnectors()
-  //   }
-  // }
+  updateTimelineMargin() {
+    if (window.innerWidth >= 800 && window.innerWidth <= 1000 && this.state == true) {
+      this.timeline.style.marginLeft = "-15%";
+      this.adjustMonthConnectors()
+    } else {
+      this.timeline.style.marginLeft = "";
+      this.adjustMonthConnectors()
+    }
+  }
 
-  // adjustMonthConnectors() {
-  //   if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
-  //     // Iterate through all month connectors, and alter width
-  //     for (let i = 0; i < this.monthConnectors.length; i++) {
-  //       this.monthConnectors[i].style.minWidth = "15%";
-  //     }
-  //   }
-  //   else {
-  //     // Iterate through all month connectors, and alter width
-  //     for (let i = 0; i < this.monthConnectors.length; i++) {
-  //       this.monthConnectors[i].style.minWidth = "30%";
-  //     }
-  //   }
+  adjustMonthConnectors() {
+    if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
+      // Iterate through all month connectors, and alter width
+      for (let i = 0; i < this.monthConnectors.length; i++) {
+        this.monthConnectors[i].style.minWidth = "15%";
+      }
+    }
+    else {
+      // Iterate through all month connectors, and alter width
+      for (let i = 0; i < this.monthConnectors.length; i++) {
+        this.monthConnectors[i].style.minWidth = "30%";
+      }
+    }
 
-  // }
+  }
 
 }
 
