@@ -1,5 +1,5 @@
 from flask import url_for
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 import editdistance
 from bs4 import BeautifulSoup
 
@@ -71,7 +71,8 @@ class SearchEngine:
                             "campaign_id",
                             "following_event_id"]
         
-        columns = [column for column in models.Event.__table__.columns if column.name not in excluded_columns]
+        columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns 
+                   if column.name not in excluded_columns]
 
         # Construct .like statements for each column using given search query
         query_filter = or_(*[column.like(f"%{query}%") for column in columns])
