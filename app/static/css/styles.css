@@ -190,7 +190,7 @@ body {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  transition: 1s;
+  /* transition: 1s; */
 }
 
 .onepage-content {
@@ -4040,12 +4040,9 @@ for selection in timeline_search.js */
   width: 300px;
   max-width: 300px;
   transform: translateX(-300px);
-  min-width: 0;
   margin-right: -300px;
   overflow-x: hidden;
   transition: 0.5s;
-  display: flex;
-  align-self: flex-start;
   top: 54px;
   position: -webkit-sticky;
   position: sticky;
