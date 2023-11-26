@@ -48,15 +48,14 @@ class Tab {
     }
 
     this.state = true;
-    this.icon.src = "/static/images/icons/chevron_left.svg";
+    this.icon.style.transform = "scaleX(-1)";
   }
 
   closeTab() {
     this.tab.style.transform = "translateX(0)";
     this.state = false;
     this.checkScreenSize();
-    this.icon.src = "/static/images/icons/chevron_right.svg";
-
+    this.icon.style.transform = "scaleX(1)";
   }
 
   // Adjust margin if sidebar deployed and screen between 800 and 1000px
