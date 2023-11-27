@@ -317,6 +317,7 @@ p {
   padding-left: min(10px, 2%);
   padding-right: min(10px, 2%);
   height: 54px;
+  min-height: 54px;
   top: 0px;
   bottom: 54px;
   position: -webkit-sticky;
@@ -330,16 +331,20 @@ p {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  gap: 5%;
 }
 
 .top-logo {
-  height: 25px;
-  width: 30px;
+  height: 22px;
+  width: 26px;
 }
 
 .logo {
   display: flex;
+}
+
+.title-area {
+  display: flex;
+  flex-direction: row;
 }
 
 .logo-title{
@@ -348,6 +353,7 @@ p {
   font-weight: 500;
   text-decoration: none;
   transition: 0.5s;
+  margin: 0px 10px;
 }
 
 .logo-title:hover {
@@ -356,12 +362,11 @@ p {
 
 .version-number {
   display: flex;
+  flex: 1 0 auto;
   align-items: flex-end;
-  flex: 1 0 0;
+  padding-bottom: 5px;
   color: var(--text_normal);
-  font-size: 14px;
-  width: 140px;
-  padding: 5px;
+  font-size: 12px;
 }
 
 .navbar-right {
@@ -688,10 +693,6 @@ p {
 
   .version-number {
     display: none;
-  }
-
-  .logo-area {
-    gap: 15px;
   }
 
 }
