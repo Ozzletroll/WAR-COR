@@ -12,13 +12,11 @@ class Year:
         self.marker = False
 
 
-
 class Month:
 
     def __init__(self):
         self.name = ""
         self.days = []
-        self.header = False
         self.has_epoch = False
         self.has_epoch_end = False
         self.epochs = []
@@ -27,15 +25,12 @@ class Month:
         self.has_following_month = False
 
 
-
 class Day:
 
     def __init__(self):
         self.name = ""
         self.events = []
-        self.header = False
         self.has_following_day = False
-
 
 
 def campaign_sort(campaign):
@@ -105,32 +100,6 @@ def campaign_sort(campaign):
             return True
         else:
             return False
-
-    def check_headers(year_list):
-        """Takes the list of year objects and checks each month and day within them,
-        flagging the header properties."""
-
-        for year_index, year in enumerate(year_list):
-
-            for month_index, month in enumerate(year.months):
-
-                try:
-                    for day_index, day in enumerate(month.days):
-
-                        # Give the day the header property if it is the first day of the month,
-                        # and that day has only one event, which has the header property.
-                        if day_index == 0 and len(day.events) == 1 and day.events[0].header:
-                            day.header = True
-                except KeyError:
-                    continue
-
-                # Give the month the header property, if the year has only one month,
-                # and that month's first day has the header property.
-                try:
-                    if len(year.months) == 1 and month.days[0].header:
-                        month.header = True
-                except IndexError:
-                    month.header = False
 
     def group_epochs(epochs, sort_key, year_key, month_key):
         """Function to sort epochs into matching data structure to the timeline events.
@@ -314,8 +283,5 @@ def campaign_sort(campaign):
 
         # Append the year object to the formatted list
         year_list.append(year_object)
-
-        # Finally, take the list of year objects and check them for header status
-        check_headers(year_list)
 
     return year_list

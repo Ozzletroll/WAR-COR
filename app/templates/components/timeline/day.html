@@ -65,12 +65,8 @@ elements.
     {% endif %}
   {% endif %}
 
-  {# Check if the first event in the month is a header event, and their are no sub events #}
-  {% if day.header %}
-    <div class="right-branch-label hidden-date">
-  {% else %}
-    <div class="right-branch-label">
-  {% endif %}
+
+  <div class="right-branch-label">
 
     <div class="date-label-area">
       <div class="line line-first"></div>
