@@ -3584,9 +3584,11 @@ p {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* flex: 2 0 0; */
+  height: 30px;
   min-width: 30%;
   transition: 0.5s;
+  margin-left: 1px;
+  /* Add back 1 pixel margin taken by event-line-bottom negative margin */
 }
 
 .right-branch-label {
@@ -3599,14 +3601,11 @@ p {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  height: 30px;
 }
 
 .hidden-date {
   display: none;
-}
-
-.hidden-align {
-  height: 27px;
 }
 
 .line {
@@ -3655,6 +3654,7 @@ p {
 
 .line-first {
   flex: 0.5;
+  margin-left: -1px;
 }
 
 .connector-date {
@@ -3696,7 +3696,7 @@ for selection in timeline_search.js */
 }
 
 .day-line {
-  margin-top: 13px;
+  margin-top: 15px;
   border-left: 1px solid var(--bright_red);
   border-top: 0px;
   border-right: 0px;
@@ -3704,9 +3704,22 @@ for selection in timeline_search.js */
   margin-left: -1px;
 }
 
+.day-line-solo {
+  display: none;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+
 .day-line-solo-edit {
   border-left: 1px dashed var(--bright_red);
   margin-bottom: -35px;
+}
+
+.day-line-top {
+  border-bottom: 0;
+  border-right: 0;
+  margin-bottom: -40px;
 }
 
 .day-line-top-edit {
@@ -3717,12 +3730,24 @@ for selection in timeline_search.js */
   margin-bottom: -39px;
 }
 
+.day-line-mid {
+  border-right: 0;
+  border-bottom: 0;
+  margin-bottom: -40px;
+}
+
 .day-line-mid-edit {
   margin-bottom: -110px;
 }
 
 .mid-no-between {
   margin-bottom: -39px;
+}
+
+.day-line-bottom {
+  margin-top: 15px;
+  border: none;
+  margin-left: 0px;
 }
 
 .day-line-bottom-edit {
@@ -3741,7 +3766,7 @@ for selection in timeline_search.js */
   display: flex;
   flex: 0 0 1px;
   border: 1px solid var(--bright_red);
-  margin-top: 14px;
+  margin-top: 15px;
   box-sizing: border-box;
   margin-left: -1px;
   transition: 0.5s;
@@ -3750,7 +3775,7 @@ for selection in timeline_search.js */
 .event-line-top {
   border-bottom: 0;
   border-right: 0;
-  margin-bottom: -39px;
+  margin-bottom: -40px;
 }
 
 .event-line-top-edit {
@@ -3758,10 +3783,8 @@ for selection in timeline_search.js */
 }
 
 .event-line-bottom {
-  margin-top: 13px;
-  border-right: 0;
-  border-bottom: 0;
-  border-left: 0;
+  margin-top: 15px;
+  border: none;
 }
 
 .event-line-bottom-edit {
@@ -3772,7 +3795,7 @@ for selection in timeline_search.js */
 .event-line-mid {
   border-right: 0;
   border-bottom: 0;
-  margin-bottom: -39px;
+  margin-bottom: -40px;
 }
 
 .event-line-mid-edit {
