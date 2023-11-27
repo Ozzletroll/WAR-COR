@@ -3,17 +3,13 @@ class Tab {
   constructor({
     tab,
     button,
-    icon,
-    timeline,
-    monthConnectors,
+    icon
   }) {
     this.tab = document.getElementById(tab);
     this.button = button;
     this.buttonElem = document.getElementById(button);
     this.state = false
     this.icon = document.getElementById(icon);
-    this.timeline = document.getElementById(timeline);
-    this.monthConnectors = document.getElementsByClassName("month-connector");
 
     // Call check screensize on initialisation, 
     // and again anytime the viewport is resized
@@ -58,33 +54,6 @@ class Tab {
     this.icon.style.transform = "scaleX(1)";
   }
 
-  // Adjust margin if sidebar deployed and screen between 800 and 1000px
-  updateTimelineMargin() {
-    if (window.innerWidth >= 800 && window.innerWidth <= 1000 && this.state == true) {
-      this.timeline.style.marginLeft = "-15%";
-      this.adjustMonthConnectors()
-    } else {
-      this.timeline.style.marginLeft = "";
-      this.adjustMonthConnectors()
-    }
-  }
-
-  adjustMonthConnectors() {
-    if (window.innerWidth >= 800 && window.innerWidth <= 900 && this.state == true) {
-      // Iterate through all month connectors, and alter width
-      for (let i = 0; i < this.monthConnectors.length; i++) {
-        this.monthConnectors[i].style.minWidth = "15%";
-      }
-    }
-    else {
-      // Iterate through all month connectors, and alter width
-      for (let i = 0; i < this.monthConnectors.length; i++) {
-        this.monthConnectors[i].style.minWidth = "30%";
-      }
-    }
-
-  }
-
 }
 
 
@@ -123,9 +92,7 @@ function scrollToAnim(targetEvent) {
 const sidebar = new Tab({
   tab: "sidebar-outer",
   button: "sidebar-deploy",
-  icon: "sidebar-icon",
-  timeline: "timeline-container",
-  monthConnectors: "month-connector",
+  icon: "sidebar-icon"
 })
 
 
