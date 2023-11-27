@@ -318,7 +318,7 @@ p {
   padding-right: min(10px, 2%);
   height: 54px;
   min-height: 54px;
-  top: 0px;
+  top: 0;
   bottom: 54px;
   position: -webkit-sticky;
   position: sticky;
@@ -1804,7 +1804,7 @@ p {
   z-index: 2;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-left: -40px;
-  margin-bottom: -82px;
+  margin-bottom: -80px;
   transform: translateX(min(361px, 100vw));
   transition: 0.15s;
 }
@@ -4067,9 +4067,12 @@ for selection in timeline_search.js */
 
 .sidebar-outer {
   display: flex;
+  position: -webkit-sticky;
   position: sticky;
+  width: 300px;
   left: -300px;
   top: 54px;
+  height: calc(100vh - 54px);
   margin-left: -300px;
   z-index: 1;
   transition: 0.3s;
@@ -4079,11 +4082,9 @@ for selection in timeline_search.js */
 .sidebar-scroll {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
-  height: calc(100vh - 54px);
   width: 300px;
   overflow-y: scroll;
-  top: 54px;
+  top: 0;
   position: -webkit-sticky;
   position: sticky;
   border-right: 1px solid var(--elem_border);
