@@ -4085,8 +4085,6 @@ for selection in timeline_search.js */
   width: 300px;
   overflow-y: scroll;
   top: 0;
-  position: -webkit-sticky;
-  position: sticky;
   border-right: 1px solid var(--elem_border);
   background-color: var(--elem_mid);
 }
@@ -4095,9 +4093,6 @@ for selection in timeline_search.js */
   display: flex;
   justify-content: center;
   align-items: center;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 54px;
   height: 200px;
   width: 50px;
   margin-right: -50px;
