@@ -89,7 +89,8 @@ class CampaignActions(object):
         self._client = client
 
     def create(self, title="Test Campaign", description="Test Description"):
-        return self._client.post("/campaigns/create_campaign", follow_redirects=True, data={
+        url = url_for("campaign.create_campaign")
+        return self._client.post(url, follow_redirects=True, data={
             "title": title,
             "description": description,
             "date_suffix": "",

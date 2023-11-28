@@ -40,7 +40,7 @@ elements.
       </div>
 
       <a class="epoch-centre-area" href="{{ url_for('epoch.new_epoch', 
-                            campaign_name=campaign.title,
+                            campaign_name=campaign.url_title,
                             campaign_id=campaign.id,
                             date=year.name + '/' + month.name) }}">
         <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
@@ -116,7 +116,7 @@ elements.
         <div class="line line-dashed line-dashed-heavy"></div>
       </div>
       <a href="{{ url_for('event.add_event', 
-                            campaign_name=campaign.title,
+                            campaign_name=campaign.url_title,
                             campaign_id=campaign.id,
                             date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
         <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
@@ -135,7 +135,7 @@ elements.
         <div class="line line-dashed line-dashed-heavy"></div>
       </div>
       <a href="{{ url_for('event.add_event', 
-                            campaign_name=campaign.title,
+                            campaign_name=campaign.url_title,
                             new_month=True, 
                             campaign_id=campaign.id,
                             date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">

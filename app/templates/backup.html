@@ -16,7 +16,7 @@
       {# Create navigation url bar #}
 
       {% set urls = [url_for('campaign.campaigns'), 
-                    url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+                    url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                         is_link=true,
@@ -40,7 +40,7 @@
 
       <div class="backup-ctrl export-area">
 
-        <a class="backup-link" href="{{ url_for('data.campaign_backup', campaign_name=campaign.title, campaign_id=campaign.id) }}">
+        <a class="backup-link" href="{{ url_for('data.campaign_backup', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
           <button class="backup-button">
             <h3 class="backup-title">BACKUP</h3>
             <img class="icon icon-invert icon-xlarge icon-comp-r" src="/static/images/icons/egress.svg">

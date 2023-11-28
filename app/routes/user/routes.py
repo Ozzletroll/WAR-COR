@@ -321,9 +321,9 @@ def dismiss_message():
         
         if view and hasattr(message, 'target_event'):
             event_url = url_for("event.view_event", 
-                                campaign_name=message.target_campaign.title,
+                                campaign_name=message.target_campaign.url_title,
                                 campaign_id=message.target_campaign.id,
-                                event_name=message.target_event.title,
+                                event_name=message.target_event.url_title,
                                 event_id=message.target_event.id)
     
         # Check if message is still in any users messages list by querying association table
@@ -388,8 +388,8 @@ def recover_password():
             else:
                 flash("No account matching given email found. Please check your email address and try again.")
 
-        return render_template("password_recovery.html", 
-                            form=form)
+        return render_template("password_recovery.html",
+                               form=form)
     
     else:
         return redirect(url_for("user.login"))

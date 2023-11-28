@@ -4,13 +4,13 @@ from app import db
 from app.utils.sanitisers import sanitise_input
 
 
-
 class Campaign(db.Model):
     __tablename__ = "campaign"
 
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(250))
+    url_title = db.Column(db.String(250))
     description = db.Column(db.String(500), nullable=False)
     last_edited = db.Column(db.DateTime, nullable=False)
     date_suffix = db.Column(db.String(8), nullable=True)
@@ -56,20 +56,19 @@ class Campaign(db.Model):
                 setattr(self, field, value)
 
         self.last_edited = datetime.now()
+        self.set_url_title()
 
         if new:
             db.session.add(self)
 
         db.session.commit()
 
-    
     def check_epochs(self):
         """ Method to clear and recheck all epochs for containing
             events. """
         
         for epoch in self.epochs:
             epoch.populate_self()
-
 
     def get_following_events(self):
         """ Method to iterate through all events, defining relationship to
@@ -85,3 +84,10 @@ class Campaign(db.Model):
                 event.following_event = sorted_campaign_events[index + 1]
 
         db.session.commit()
+
+    def set_url_title(self):
+        """ Method to set url safe version of title, replacing spaces
+            with dashes '-'. """
+        
+        self.url_title = self.title.replace(" ", "-")
+        

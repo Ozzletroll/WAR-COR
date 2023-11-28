@@ -22,7 +22,7 @@ def edit_campaign_users(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
@@ -48,7 +48,7 @@ def user_search(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     # Query database for users with similar usernames
     search = request.form["username"]
@@ -66,7 +66,7 @@ def user_search(campaign_name, campaign_id):
                                            for user in users 
                                            if user not in campaign.members},
                "target_url": url_for('membership.add_user',
-                                     campaign_name=campaign.title,
+                                     campaign_name=campaign.url_title,
                                      campaign_id=campaign.id)}
     
     # Check if query returned no results
@@ -129,7 +129,7 @@ def remove_user(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
     
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
@@ -232,7 +232,7 @@ def request_membership(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
     
     # Retrieve the users with editing permissions for the campaign
     campaign_admins = campaign.admins
@@ -393,7 +393,7 @@ def add_permission(campaign_name, campaign_id):
     
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
@@ -405,5 +405,5 @@ def add_permission(campaign_name, campaign_id):
 
     flash(f"Granted {user.username} campaign editing permissions.")
     return redirect(url_for("membership.edit_campaign_users", 
-                            campaign_name=campaign_name, 
+                            campaign_name=campaign.url_title,
                             campaign_id=campaign.id))

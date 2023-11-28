@@ -17,7 +17,7 @@ from app.routes.search import bp
 def advanced_search(campaign_name, campaign_id):
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     form = forms.SearchForm()
 

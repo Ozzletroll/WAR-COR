@@ -84,15 +84,15 @@ elements.
          
           {% if edit %}
             <a href="{{ url_for('event.edit_event', 
-                        campaign_name=campaign.title,
+                        campaign_name=campaign.url_title,
                         campaign_id=campaign.id, 
-                        event_name=event.title, 
+                        event_name=event.url_title,
                         event_id=event.id) }}"> 
           {% else %}
             <a href="{{ url_for('event.view_event', 
-            campaign_name=campaign.title,
+            campaign_name=campaign.url_title,
             campaign_id=campaign.id, 
-            event_name=event.title, 
+            event_name=event.url_title,
             event_id=event.id) }}">      
           {% endif %}
 
@@ -119,7 +119,7 @@ elements.
           <div class="line line-dashed line-edit"></div>
       </div>
         <a href="{{ url_for('event.add_event', 
-                    campaign_name=campaign.title, 
+                    campaign_name=campaign.url_title,
                     campaign_id=campaign.id,
                     new_hour=True, 
                     date=event.date) }}">

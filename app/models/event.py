@@ -11,6 +11,7 @@ class Event(db.Model):
 
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
+    url_title = db.Column(db.String(250))
 
     date = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer)
@@ -68,6 +69,7 @@ class Event(db.Model):
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
+        self.set_url_title()
         
         if new:
             db.session.add(self)
@@ -75,8 +77,8 @@ class Event(db.Model):
         db.session.commit()
 
     def create_blank(self, datestring):
-        """ Method to create a blank temporary pending event for prepopulating form.
-            Takes an incremented datestring from organisers.format_event_datestring(). """
+        """ Method to create a blank temporary pending event for pre-populating form.
+            Takes an incremented date-string from organisers.format_event_datestring(). """
 
         self.title = ""
         self.type = ""
@@ -84,7 +86,7 @@ class Event(db.Model):
         self.date = datestring
 
     def split_date(self, datestring):
-        """ Method that splits a form datestring into individual integer values. """
+        """ Method that splits a form date string into individual integer values. """
 
         self.year = int(datestring.split("/")[0])
         self.month = int(datestring.split("/")[1])
@@ -94,7 +96,7 @@ class Event(db.Model):
         self.second = int(datestring.split("/")[2].split()[1].split(":")[2])
 
     def separate_belligerents(self):
-        """ Method to seperate the belligerents into groups for rendering. """
+        """ Method to separate the belligerents into groups for rendering. """
 
         if self.belligerents == "":
             return []
@@ -109,3 +111,9 @@ class Event(db.Model):
             groups.append(allied_belligerents)
             
         return groups
+
+    def set_url_title(self):
+        """ Method to set url safe version of title, replacing spaces
+            with dashes '-'. """
+
+        self.url_title = self.title.replace(" ", "-")

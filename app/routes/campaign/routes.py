@@ -35,7 +35,7 @@ def show_timeline(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)
@@ -55,7 +55,7 @@ def edit_timeline(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
     
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
@@ -73,7 +73,7 @@ def edit_timeline(campaign_name, campaign_id):
 
 
 # Create new campaign
-@bp.route("/campaigns/create_campaign", methods=["GET", "POST"])
+@bp.route("/campaigns/create-campaign", methods=["GET", "POST"])
 @login_required
 def create_campaign():
     form = forms.CreateCampaignForm()
@@ -99,7 +99,7 @@ def create_campaign():
             .filter_by(id=new_campaign.id)).scalar()
 
         return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
 
     # Flash form errors
@@ -118,7 +118,7 @@ def edit_campaign(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
@@ -152,7 +152,7 @@ def delete_campaign(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
     
     authenticators.permission_required(campaign)
 
@@ -181,8 +181,8 @@ def delete_campaign(campaign_name, campaign_id):
 
         flash("Authentication failed. Please check username/password.")
         return redirect(url_for("campaign.delete_campaign", 
-                                campaign_name=campaign_name, 
-                                campaign_id=campaign_id))
+                                campaign_name=campaign.url_title,
+                                campaign_id=campaign.id))
 
     else:
         # Change LoginForm submit button text

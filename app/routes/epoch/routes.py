@@ -21,7 +21,7 @@ def new_epoch(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
@@ -50,7 +50,7 @@ def new_epoch(campaign_name, campaign_id):
         session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
         return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
     
     # Flash form errors
@@ -60,9 +60,8 @@ def new_epoch(campaign_name, campaign_id):
 
     return render_template("new_epoch.html",
                            campaign=campaign,
-                           campaign_name=campaign.title,
+                           campaign_name=campaign.url_title,
                            form=form)
-
 
 
 # Edit epoch
@@ -72,13 +71,13 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
     epoch = db.session.execute(
         select(models.Epoch)
-        .filter_by(title=epoch_title, id=epoch_id)).scalar()
+        .filter_by(id=epoch_id)).scalar()
 
     # Set back button scroll target
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
@@ -91,7 +90,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                      parent_campaign=campaign)
 
         return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
     
     # Flash form errors
@@ -104,11 +103,10 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     return render_template("new_epoch.html",
                            campaign=campaign,
-                           campaign_name=campaign.title,
+                           campaign_name=campaign.url_title,
                            form=form,
                            epoch=epoch,
                            edit_page=True)
-
 
 
 # Delete epoch
@@ -118,13 +116,13 @@ def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
     epoch = db.session.execute(
         select(models.Epoch)
-        .filter_by(title=epoch_title, id=epoch_id)).scalar()
+        .filter_by(id=epoch_id)).scalar()
 
     db.session.delete(epoch)
     db.session.commit()
@@ -132,6 +130,6 @@ def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     # Update all epochs
     campaign.check_epochs()
 
-    return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
-                                campaign_id=campaign.id))
+    return redirect(url_for("campaign.edit_timeline",
+                            campaign_name=campaign.url_title,
+                            campaign_id=campaign.id))

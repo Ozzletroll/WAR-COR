@@ -55,9 +55,9 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                                              event=event)
 
         return redirect(url_for('event.view_event', 
-                                campaign_name=campaign.title,
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id, 
-                                event_name=event.title, 
+                                event_name=event.url_title,
                                 event_id=event.id))
 
     return render_template("event_page.html", 
@@ -75,7 +75,7 @@ def add_event(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
@@ -117,7 +117,7 @@ def add_event(campaign_name, campaign_id):
         session["timeline_scroll_target"] = f"event-{event.id}"
 
         return redirect(url_for("campaign.edit_timeline",
-                                campaign_name=campaign.title,
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
 
     # Flash form errors
@@ -165,7 +165,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         campaign.check_epochs()
 
         return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
 
     # Change form label to 'update'
@@ -178,8 +178,8 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
 
     return render_template("new_event.html",
                            campaign=campaign,
-                           campaign_name=campaign.title,
-                           event_name=event.title,
+                           campaign_name=campaign.url_title,
+                           event_name=event.url_title,
                            form=form,
                            delete_form=delete_form,
                            event=event,
@@ -214,7 +214,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
     campaign.check_epochs()
 
     return redirect(url_for("campaign.edit_timeline",
-                            campaign_name=campaign.title,
+                            campaign_name=campaign.url_title,
                             campaign_id=campaign.id))
 
 
@@ -251,7 +251,7 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
         db.session.commit()
 
     return redirect(url_for('event.view_event', 
-                            campaign_name=campaign.title,
+                            campaign_name=campaign.url_title,
                             campaign_id=campaign.id, 
-                            event_name=event.title, 
+                            event_name=event.url_title,
                             event_id=event.id))
