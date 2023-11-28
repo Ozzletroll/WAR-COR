@@ -27,7 +27,7 @@
     {# Animation fade in group 1 #}
     <div class="fade-in-block-1">
 
-      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                         is_link=true,
@@ -37,7 +37,7 @@
         <div class="campaigns-title">
 
           {# Back button #}
-          {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+          {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
           {{ back_button.back_button(url=url, blank=false) }}
 
           {% if edit_page %}
@@ -204,7 +204,7 @@
                 <p class="modal-text modal-text-upper">Confirm termination of epoch: "{{epoch.title}}".</p>
 
                 <a class="delete-comment-link" href="{{ url_for('epoch.delete_epoch', 
-                                                        campaign_name=campaign.title, 
+                                                        campaign_name=campaign.url_title,
                                                         campaign_id=campaign.id,
                                                         epoch_title=epoch.title,
                                                         epoch_id=epoch.id) }}">

@@ -27,7 +27,7 @@
     {# Animation fade in group 1 #}
     <div class="fade-in-block-1">
 
-      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+      {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                         is_link=true,
@@ -39,12 +39,12 @@
           {# Back button #}
           {% if request.referrer %}
             {% if "/search" in request.referrer %}
-              {% set url = url_for('search.advanced_search', campaign_name=campaign.title, campaign_id=campaign.id, edit=true) %}
+              {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id, edit=true) %}
             {% else %}
-              {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+              {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
             {% endif %}
           {% else %}
-            {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id) %}
+            {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
           {% endif %}
 
           {{ back_button.back_button(url=url, blank=false) }}
@@ -346,7 +346,11 @@
                 <p class="flavour-text modal-flavour">MSG-{{campaign.id}}-{{event.id}} // DELETION::CONFIRM</p>
                 <p class="modal-text modal-text-upper">Confirm termination of event: "{{event.title}}"</p>
 
-                <form method="POST" action="{{ url_for('event.delete_event', campaign_name=campaign.title, campaign_id=campaign.id, event_name=event.title, event_id=event.id) }}">
+                <form method="POST" action="{{ url_for('event.delete_event',
+                                               campaign_name=campaign.url_title,
+                                               campaign_id=campaign.id,
+                                               event_name=event.url_title,
+                                               event_id=event.id) }}">
                   {{ delete_form.csrf_token }}
                   {{ delete_form.submit(class_="button modal-confirm-button", value="DELETE") }}
                 </form>

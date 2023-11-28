@@ -120,7 +120,7 @@ elements.
         <div class="line line-dashed line-edit"></div>
     </div>
       <a href="{{ url_for('event.add_event', 
-                  campaign_name=campaign.title, 
+                  campaign_name=campaign.url_title,
                   campaign_id=campaign.id,
                   new_day=True, 
                   date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">

@@ -66,7 +66,7 @@ def user_search(campaign_name, campaign_id):
                                            for user in users 
                                            if user not in campaign.members},
                "target_url": url_for('membership.add_user',
-                                     campaign_name=campaign.title,
+                                     campaign_name=campaign.url_title,
                                      campaign_id=campaign.id)}
     
     # Check if query returned no results

@@ -29,7 +29,7 @@
 
       {# Create navigation url bar #}
       {% if edit %}
-        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)] %}
+        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
       {% else %}
         {% set urls = [url_for('campaign.campaigns')] %}
       {% endif %}

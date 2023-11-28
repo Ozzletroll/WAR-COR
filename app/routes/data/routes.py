@@ -87,7 +87,7 @@ def backup_page(campaign_name, campaign_id):
         else:
 
             return redirect(url_for("data.backup_page", 
-                                    campaign_name=campaign.title, 
+                                    campaign_name=campaign.url_title,
                                     campaign_id=campaign.id))
 
     # Flash form errors

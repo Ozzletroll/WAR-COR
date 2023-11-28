@@ -46,8 +46,8 @@
 <script>
   const toggleTargetURL = "{{ url_for('session.timeline_edit_toggle') }}"   
   const csrfTokenForToggle = "{{ csrf_token() }}"
-  const timelineURL = "{{ url_for('campaign.show_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}"
-  const editTimelineURL = "{{ url_for('campaign.edit_timeline', campaign_name=campaign.title, campaign_id=campaign.id)}}"
+  const timelineURL = "{{ url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)}}"
+  const editTimelineURL = "{{ url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)}}"
 </script>
 
 {%- endmacro %}

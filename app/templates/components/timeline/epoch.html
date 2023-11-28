@@ -19,9 +19,9 @@ property to represent if the epoch has child events.
     {% for epoch in epochs %}
       {% if edit %}
       <a class="edit-epoch" href="{{ url_for('epoch.edit_epoch', 
-                                     campaign_name=campaign.title, 
+                                     campaign_name=campaign.url_title,
                                      campaign_id=campaign.id,
-                                     epoch_title=epoch.title, 
+                                     epoch_title=epoch.url_title,
                                      epoch_id=epoch.id) }}">
       {% endif %}
 

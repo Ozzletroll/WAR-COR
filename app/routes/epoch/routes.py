@@ -50,7 +50,7 @@ def new_epoch(campaign_name, campaign_id):
         session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
         return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
     
     # Flash form errors
@@ -60,7 +60,7 @@ def new_epoch(campaign_name, campaign_id):
 
     return render_template("new_epoch.html",
                            campaign=campaign,
-                           campaign_name=campaign.title,
+                           campaign_name=campaign.url_title,
                            form=form)
 
 
@@ -91,7 +91,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                      parent_campaign=campaign)
 
         return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
+                                campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
     
     # Flash form errors
@@ -104,7 +104,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     return render_template("new_epoch.html",
                            campaign=campaign,
-                           campaign_name=campaign.title,
+                           campaign_name=campaign.url_title,
                            form=form,
                            epoch=epoch,
                            edit_page=True)
@@ -132,6 +132,6 @@ def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     # Update all epochs
     campaign.check_epochs()
 
-    return redirect(url_for("campaign.edit_timeline", 
-                                campaign_name=campaign.title, 
-                                campaign_id=campaign.id))
+    return redirect(url_for("campaign.edit_timeline",
+                            campaign_name=campaign.url_title,
+                            campaign_id=campaign.id))
