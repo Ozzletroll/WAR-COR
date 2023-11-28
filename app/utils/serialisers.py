@@ -18,7 +18,7 @@ def data_export(campaign):
                       "belligerents": event.belligerents,
                       "body": event.body,
                       "result": event.result,
-                      "header": event.header}
+                      "hide_time": event.hide_time}
         
         events_data.append(event_dict)
 
@@ -166,7 +166,7 @@ def events_import(event):
     except KeyError:
         errors.append("Unable to locate event body")
     try:
-        new_event.header = event["header"]
+        new_event.hide_time = event["hide_time"]
     except KeyError:
         errors.append("Unable to locate event header")
     try:
