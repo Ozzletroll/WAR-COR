@@ -22,7 +22,6 @@ def data_export(campaign):
         
         events_data.append(event_dict)
 
-
     epoch_data = []
     for epoch in campaign.epochs:
         epoch_dict = {"title": epoch.title,
@@ -31,7 +30,6 @@ def data_export(campaign):
                       "description": epoch.description}
         
         epoch_data.append(epoch_dict)
-
 
     campaign_data = {"title": campaign.title,
                      "description": campaign.description,
@@ -45,7 +43,7 @@ def data_export(campaign):
 
     response = make_response(jsonify(final_output))
 
-        # Set headers for downloading
+    # Set headers for downloading
     filename = "WAR_COR_Backup " + campaign.title
     response.headers["Content-Disposition"] = f"attachment; filename={filename}"
     response.headers["Content-Type"] = "application/json"
@@ -110,6 +108,7 @@ def campaign_import(json, campaign):
 
     try:
         campaign.title = json["title"]
+        campaign.set_url_title()
     except KeyError:
         errors.append("Unable to locate campaign title.")
     try:
@@ -132,7 +131,6 @@ def campaign_import(json, campaign):
     return campaign, errors
 
 
-
 def events_import(event):
     """Creates a new event object from json events list item."""
 
@@ -142,6 +140,7 @@ def events_import(event):
 
     try:
         new_event.title = event["title"]
+        new_event.set_url_title()
     except KeyError:
         errors.append("Unable to locate event title")
     try:

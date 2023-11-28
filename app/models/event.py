@@ -12,6 +12,7 @@ class Event(db.Model):
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
     url_title = db.Column(db.String(250))
+
     date = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer)
     month = db.Column(db.Integer)
@@ -110,3 +111,9 @@ class Event(db.Model):
             groups.append(allied_belligerents)
             
         return groups
+
+    def set_url_title(self):
+        """ Method to set url safe version of title, replacing spaces
+            with dashes '-'. """
+
+        self.url_title = self.title.replace(" ", "-")
