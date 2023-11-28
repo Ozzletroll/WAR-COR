@@ -45,32 +45,28 @@ elements.
     {# If day is the only day in the month #}
     {% if length == 1 %}
       <div class="timeline-day-outer">
-        <div class="event-line event-line-solo"></div>
+        <div class="day-line day-line-solo"></div>
     {# If day is the first in the month #}
     {% elif index == 0  %}
     <div class="timeline-day-outer">
-      <div class="event-line event-line-top"></div>
+      <div class="day-line day-line-top"></div>
     {# If day is the last in the month and there are only two days #}
     {% elif index == length - 1 and length == 2 %}
     <div class="timeline-day-outer day-container-edgecase">
-      <div class="event-line event-line-bottom"></div>
+      <div class="day-line day-line-bottom"></div>
     {# If the day is the last in the month #}
     {% elif index == length - 1 %}
       <div class="timeline-day-outer day-container-bottom">
-        <div class="event-line event-line-bottom"></div>
+        <div class="day-line day-line-bottom"></div>
     {# All other days #}
     {% else %}
       <div class="timeline-day-outer day-container-mid">
-        <div class="event-line event-line-mid"></div>
+        <div class="day-line day-line-mid"></div>
     {% endif %}
   {% endif %}
 
-  {# Check if the first event in the month is a header event, and their are no sub events #}
-  {% if day.header %}
-    <div class="right-branch-label hidden-date">
-  {% else %}
-    <div class="right-branch-label">
-  {% endif %}
+
+  <div class="right-branch-label">
 
     <div class="date-label-area">
       <div class="line line-first"></div>

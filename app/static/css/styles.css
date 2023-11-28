@@ -226,6 +226,15 @@ body {
   }
 }
 
+@media screen and (max-width: 1800px) {
+
+  .border {
+    display: none;
+    width: 0px;
+  }
+  
+}
+
 /* Basic elements */
 
 h1, h2, h3, h4, h5 {
@@ -250,6 +259,7 @@ h1, h2, h3, h4, h5 {
 
 .icon-large {
   width: 40px;
+  height: 40px;
 }
 
 .icon-xlarge {
@@ -309,6 +319,7 @@ p {
   height: 54px;
   min-height: 54px;
   top: 0;
+  bottom: 54px;
   position: -webkit-sticky;
   position: sticky;
   z-index: 3;
@@ -320,16 +331,20 @@ p {
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  gap: 5%;
 }
 
 .top-logo {
-  height: 25px;
-  width: 30px;
+  height: 22px;
+  width: 26px;
 }
 
 .logo {
   display: flex;
+}
+
+.title-area {
+  display: flex;
+  flex-direction: row;
 }
 
 .logo-title{
@@ -338,6 +353,7 @@ p {
   font-weight: 500;
   text-decoration: none;
   transition: 0.5s;
+  margin: 0px 10px;
 }
 
 .logo-title:hover {
@@ -346,12 +362,11 @@ p {
 
 .version-number {
   display: flex;
+  flex: 1 0 auto;
   align-items: flex-end;
-  flex: 1 0 0;
+  padding-bottom: 5px;
   color: var(--text_normal);
-  font-size: 14px;
-  width: 140px;
-  padding: 5px;
+  font-size: 12px;
 }
 
 .navbar-right {
@@ -382,6 +397,7 @@ p {
   list-style-type: none;
   font-size: 16px;
   padding-left: 0;
+  margin: 0;
 }
 
 .navbar-links .navbar-link-item {
@@ -677,10 +693,6 @@ p {
 
   .version-number {
     display: none;
-  }
-
-  .logo-area {
-    gap: 15px;
   }
 
 }
@@ -1792,7 +1804,7 @@ p {
   z-index: 2;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-left: -40px;
-  margin-bottom: -82px;
+  margin-bottom: -80px;
   transform: translateX(min(361px, 100vw));
   transition: 0.15s;
 }
@@ -3234,8 +3246,8 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 10%;
-  /* margin-left: -5%; */
+  width: min(10vw, 90px);
+  margin-left: -5%;
 }
 
 .timeline-year-container {
@@ -3278,15 +3290,14 @@ p {
   color: var(--text_header);
   width: 100%;
   padding-bottom: 0%;
-  margin: 0;
   font-size: min(4vw, 46px);
   width: 10vw;
   display: flex;
   justify-content: center;
+  text-align: center;
   scroll-margin-top: 53px;
   padding-left: 0;
-  margin-left: -50px;
-  margin-right: -50px;
+  margin: 0px;
 }
 
 /* Epoch */
@@ -3584,9 +3595,11 @@ p {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* flex: 2 0 0; */
+  height: 30px;
   min-width: 30%;
   transition: 0.5s;
+  margin-left: 1px;
+  /* Add back 1 pixel margin taken by event-line-bottom negative margin */
 }
 
 .right-branch-label {
@@ -3599,14 +3612,11 @@ p {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  height: 30px;
 }
 
 .hidden-date {
   display: none;
-}
-
-.hidden-align {
-  height: 27px;
 }
 
 .line {
@@ -3655,6 +3665,7 @@ p {
 
 .line-first {
   flex: 0.5;
+  margin-left: -1px;
 }
 
 .connector-date {
@@ -3696,7 +3707,7 @@ for selection in timeline_search.js */
 }
 
 .day-line {
-  margin-top: 13px;
+  margin-top: 15px;
   border-left: 1px solid var(--bright_red);
   border-top: 0px;
   border-right: 0px;
@@ -3704,9 +3715,22 @@ for selection in timeline_search.js */
   margin-left: -1px;
 }
 
+.day-line-solo {
+  display: none;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+}
+
 .day-line-solo-edit {
   border-left: 1px dashed var(--bright_red);
   margin-bottom: -35px;
+}
+
+.day-line-top {
+  border-bottom: 0;
+  border-right: 0;
+  margin-bottom: -40px;
 }
 
 .day-line-top-edit {
@@ -3717,12 +3741,24 @@ for selection in timeline_search.js */
   margin-bottom: -39px;
 }
 
+.day-line-mid {
+  border-right: 0;
+  border-bottom: 0;
+  margin-bottom: -40px;
+}
+
 .day-line-mid-edit {
   margin-bottom: -110px;
 }
 
 .mid-no-between {
   margin-bottom: -39px;
+}
+
+.day-line-bottom {
+  margin-top: 15px;
+  border: none;
+  margin-left: 0px;
 }
 
 .day-line-bottom-edit {
@@ -3741,7 +3777,7 @@ for selection in timeline_search.js */
   display: flex;
   flex: 0 0 1px;
   border: 1px solid var(--bright_red);
-  margin-top: 14px;
+  margin-top: 15px;
   box-sizing: border-box;
   margin-left: -1px;
   transition: 0.5s;
@@ -3750,7 +3786,7 @@ for selection in timeline_search.js */
 .event-line-top {
   border-bottom: 0;
   border-right: 0;
-  margin-bottom: -39px;
+  margin-bottom: -40px;
 }
 
 .event-line-top-edit {
@@ -3758,10 +3794,8 @@ for selection in timeline_search.js */
 }
 
 .event-line-bottom {
-  margin-top: 13px;
-  border-right: 0;
-  border-bottom: 0;
-  border-left: 0;
+  margin-top: 15px;
+  border: none;
 }
 
 .event-line-bottom-edit {
@@ -3772,7 +3806,7 @@ for selection in timeline_search.js */
 .event-line-mid {
   border-right: 0;
   border-bottom: 0;
-  margin-bottom: -39px;
+  margin-bottom: -40px;
 }
 
 .event-line-mid-edit {
@@ -4031,47 +4065,47 @@ for selection in timeline_search.js */
 
 /* Sidebar */
 
-.sidebar {
+.sidebar-outer {
   display: flex;
-  flex: 1 0 auto;
-  flex-direction: column;
-  background-color: var(--bg_colour2);
-  height: calc(100vh - 54px);
-  width: 300px;
-  max-width: 300px;
-  transform: translateX(-300px);
-  margin-right: -300px;
-  overflow-x: hidden;
-  transition: 0.5s;
-  top: 54px;
   position: -webkit-sticky;
   position: sticky;
-  box-sizing: border-box;
-  border-right: 1px solid var(--elem_border);
+  width: 300px;
+  left: -300px;
+  top: 54px;
+  height: calc(100vh - 54px);
+  margin-left: -300px;
   z-index: 1;
+  transition: 0.3s;
+  will-change: transform;
+}
+
+.sidebar-scroll {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  overflow-y: scroll;
+  top: 0;
+  border-right: 1px solid var(--elem_border);
+  background-color: var(--elem_mid);
 }
 
 .sidebar-deploy {
   display: flex;
-  flex: 1 0 auto;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark_red);
-  color: var(--text_normal);
   height: 200px;
   width: 50px;
-  max-width: 50px;
-  top: 54px;
-  position: -webkit-sticky;
-  position: sticky;
   margin-right: -50px;
+  background-color: var(--dark_red);
+  color: var(--text_normal);
   clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
-  z-index: 1;
+  cursor: pointer;
+  will-change: transform;
 }
 
 @media screen and (max-width: 800px) {
 
-  .sidebar-deploy {
+  .sidebar-outer {
     display: none;
   }
 
@@ -4113,7 +4147,7 @@ for selection in timeline_search.js */
   overflow-x: hidden;
   text-align: left;
   border-style: none;
-  height: 100%;
+  min-height: 40px;
   padding: 0;
   padding: 10px;
   background-color: var(--bg_colour2);

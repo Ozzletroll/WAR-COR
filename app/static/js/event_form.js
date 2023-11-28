@@ -180,38 +180,3 @@ window.onclick = function(event) {
     }
   }
 }
-
-
-// Check and disable "hide_time" option if "block_header" is selected
-
-// Get references to the header and hide_time form fields
-const headerField = document.getElementById("header-input");
-const hideTimeField = document.getElementById("hide-time-input");
-
-// Initialise checkbox values
-if (headerField.checked) {
-  hideTimeField.checked = true;
-  hideTimeField.disabled = true;
-  hideTimeField.style.opacity = "30%";
-}
-else {
-  hideTimeField.disabled = false;
-  hideTimeField.style.opacity = "";
-}
-
-// Listen for the change event on the header field
-headerField.addEventListener('change', function() {
-// Check if the header field is checked
-if (headerField.checked) {
-// Check and disable the hide_time field
-hideTimeField.checked = true;
-hideTimeField.disabled = true;
-hideTimeField.style.opacity = "30%";
-} 
-else {
-// If the header field is unchecked, enable the hide_time field
-hideTimeField.checked = false;
-hideTimeField.disabled = false;
-hideTimeField.style.opacity = "";
-}
-});

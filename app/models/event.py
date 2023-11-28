@@ -24,7 +24,6 @@ class Event(db.Model):
     belligerents = db.Column(db.String(), nullable=True)
     body = db.Column(db.String(), nullable=False)
     result = db.Column(db.String(), nullable=True)
-    header = db.Column(db.Boolean(), nullable=False, default=False)
     hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
     # Database relationships
