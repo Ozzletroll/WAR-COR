@@ -3,11 +3,9 @@ const charCount = document.getElementById("remaining-chars");
 const charLimit = parseInt(charCount.innerText);
 
 function updateCharCount(charField) {
-
     var currentChars = charField.textContent.length;
     var remainingChars = charLimit - currentChars;
     charCount.innerText = remainingChars;
-    
 }
 
 updateCharCount(charField);

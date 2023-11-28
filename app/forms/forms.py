@@ -42,7 +42,7 @@ class ChangePasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired(), Length(max=250)])
-    description = TextAreaField("Description", validators=[DataRequired(), Length(max=600)])
+    description = TextAreaField("Description", validators=[DataRequired(), Length(max=700)])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
     submit = SubmitField("Create Campaign")
