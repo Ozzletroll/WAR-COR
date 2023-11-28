@@ -126,7 +126,19 @@
                   <p class="flavour-text">Events make up the main structure of the timeline. They represent events or occurences
                     that take place at specific dates. Events are rendered in grouped year/month/day blocks.
                   </p>
+
+                  <a class="first-event-link" 
+                    href="{{ url_for('data.backup_page',
+                             campaign_id=campaign.id,
+                             campaign_name=campaign.url_title) }}">
+                    <button class="button new-timeline-item first-event-button">RESTORE FROM BACKUP</button>
+                  </a>
+                  <p class="flavour-text">Restore a campaign from a WAR/COR .json backup file.</p>
+
+
                 </div>
+
+
                 
               {% else %}
                 <p class="flavour-text">Awaiting conflict data input</p>
