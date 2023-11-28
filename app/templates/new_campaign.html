@@ -90,7 +90,7 @@
               <h4 id="example-date" class="campaign-form label-title label-example"></h4>
             </div>
           </div>
-          <p class="flavour-text">UWC-5-02 //  Campaign::Calendar Suffix</p>
+          <p class="flavour-text">UWC-5-02 //  Calendar::Suffix</p>
         </label>
 
         {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
@@ -105,11 +105,13 @@
               <h4 class="campaign-form label-title">Negative Date Suffix</h4>
             </div>
             <div class="label-right">
-              <h4 class="campaign-form label-title label-example">Example: -300</h4>
-              <h4 id="negative-example-date" class="campaign-form label-title label-example"></h4>
+              <div class="example-area">
+                <h4 class="campaign-form label-title label-example">Example: -300</h4>
+                <h4 id="negative-example-date" class="campaign-form label-title label-example"></h4>
+              </div>
             </div>
           </div>
-          <p class="flavour-text">UWC-5-02 //  Campaign::Calendar Negative Suffix</p>
+          <p class="flavour-text">UWC-5-02 //  Calendar::Negative Suffix</p>
         </label>
 
         {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
@@ -124,7 +126,7 @@
               <h4 class="campaign-form label-title">Description</h4>
             </div>
             <div class="label-right">
-              <h4 class="campaign-form label-title label-example">Remaining characters:&nbsp</h4>
+              <h4 class="campaign-form label-title label-example">Remaining chars:&nbsp</h4>
               <h4 id="remaining-chars" class="campaign-form label-title label-example">600</h4>
             </div>
           </div>
