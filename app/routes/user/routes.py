@@ -388,8 +388,8 @@ def recover_password():
             else:
                 flash("No account matching given email found. Please check your email address and try again.")
 
-        return render_template("password_recovery.html", 
-                            form=form)
+        return render_template("password_recovery.html",
+                               form=form)
     
     else:
         return redirect(url_for("user.login"))

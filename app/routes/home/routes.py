@@ -29,5 +29,4 @@ def contact():
 
 @bp.route("/cookie-policy")
 def cookie_policy():
-
     return render_template("cookie_policy.html")

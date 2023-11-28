@@ -73,7 +73,7 @@ def edit_timeline(campaign_name, campaign_id):
 
 
 # Create new campaign
-@bp.route("/campaigns/create_campaign", methods=["GET", "POST"])
+@bp.route("/campaigns/create-campaign", methods=["GET", "POST"])
 @login_required
 def create_campaign():
     form = forms.CreateCampaignForm()

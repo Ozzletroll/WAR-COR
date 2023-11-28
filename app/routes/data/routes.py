@@ -25,7 +25,7 @@ def backup_page(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(id=campaign_id, title=campaign_name)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)

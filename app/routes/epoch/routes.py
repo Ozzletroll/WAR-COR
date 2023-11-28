@@ -21,7 +21,7 @@ def new_epoch(campaign_name, campaign_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
@@ -64,7 +64,6 @@ def new_epoch(campaign_name, campaign_id):
                            form=form)
 
 
-
 # Edit epoch
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/edit", methods=["GET", "POST"])
 @login_required
@@ -72,13 +71,13 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
     epoch = db.session.execute(
         select(models.Epoch)
-        .filter_by(title=epoch_title, id=epoch_id)).scalar()
+        .filter_by(id=epoch_id)).scalar()
 
     # Set back button scroll target
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
@@ -110,7 +109,6 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                            edit_page=True)
 
 
-
 # Delete epoch
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/delete", methods=["GET", "POST"])
 @login_required
@@ -118,13 +116,13 @@ def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(
         select(models.Campaign)
-        .filter_by(title=campaign_name, id=campaign_id)).scalar()
+        .filter_by(id=campaign_id)).scalar()
 
     authenticators.permission_required(campaign)
 
     epoch = db.session.execute(
         select(models.Epoch)
-        .filter_by(title=epoch_title, id=epoch_id)).scalar()
+        .filter_by(id=epoch_id)).scalar()
 
     db.session.delete(epoch)
     db.session.commit()
