@@ -6,20 +6,21 @@
 
     <section class="hero">
 
-      <div class="hero-centered">
-        <h1 class="main-title">WAR/COR</h1>
-        <div class="secondary-title">
-          <h2>Frontline reporting in the year 5016u</h2>
+      <div class="hero-centered hero-fade">
+        <div class="hero-title-area">
+          <h1 class="main-title">WAR/COR</h1>
+          <hr id="title-hr" class="title-hr">
         </div>
-        {% if current_user.is_authenticated %}
-        <a href="{{url_for('campaign.campaigns')}}"><button type="button" class="feature-button">View Campaigns</button></a>
-        {% else %}
-        <a href="{{ url_for('user.register') }}"><button type="button" class="feature-button">Enlist today</button></a>
-        {% endif %}
-      </div>
-      <a href=#main-features class="down-area">
+        
+        <div class="secondary-title hero-fade">
+          <h2>FRONTLINE REPORTING IN THE YEAR 5016u</h2>
+        </div>
 
-        <svg class="down-arrow icon-colour-var" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
+      </div>
+      <a href=#main-features class="down-area hero-fade">
+
+        <div class="down-arrow-hidden-spacer"></div>
+        <svg class="down-arrow icon-colour-var" version="1.1" id="down-arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
           <g id="SVGRepo_bgCarrier" stroke-width="0"/>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
           <g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/> </g>
@@ -163,7 +164,9 @@
   {% include "base/footer.html" %}
 
  <!-- Javascript -->
+ <script src="/static/js/get_screen_height.js"></script> 
  <script src="/static/js/index.js"></script> 
+
 
 {% endblock %}
 
