@@ -1,4 +1,5 @@
 from flask import session, jsonify, make_response, request, redirect
+from datetime import timedelta
 from app.routes.session import bp
 
 from app.forms import forms
@@ -31,8 +32,9 @@ def check_consent():
 def accept_cookies():
     """ Sets the consent form acceptance cookie  """
 
+    expiry = timedelta(days=30)
     response = make_response(redirect(request.referrer))
-    response.set_cookie("warcor_consent", "True", secure=True)
+    response.set_cookie("warcor_consent", "True", secure=True, max_age=expiry.total_seconds())
 
     return response
 
