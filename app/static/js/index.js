@@ -72,6 +72,15 @@ window.onclick = function(event) {
 
   }
 
+// Animate horizontal line on load
+function animateHR(horizontalLine) {
+  var horizontalLine = document.getElementById("title-hr");
+  horizontalLine.style.width = "50%";
+}
+window.addEventListener("load", animateHR);
+
+
+// Store timeout function so it can be cleared when screen returns to pos 0
 var timeout;
 
 // Get navbar and hide box-shadow if at position 0

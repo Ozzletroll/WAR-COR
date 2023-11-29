@@ -795,9 +795,10 @@ p {
 
 .title-hr {
   background-color: var(--fixed-bg-1);
-  width: 50%;
+  width: 0px;
   height: 1px;
   border: none;
+  transition: width 0.5s ease-in-out;
 }
 
 .hero-centered {
