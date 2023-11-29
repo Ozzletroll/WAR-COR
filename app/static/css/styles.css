@@ -3751,7 +3751,7 @@ for selection in timeline_search.js */
 }
 
 .top-no-between {
-  margin-bottom: -39px;
+  margin-bottom: -40px;
 }
 
 .day-line-mid {
@@ -3969,7 +3969,7 @@ for selection in timeline_search.js */
   }
 
   .top-no-between {
-    margin-bottom: -39px;
+    margin-bottom: -40px;
   }
 
   .day-line-mid-edit {
@@ -4010,12 +4010,7 @@ for selection in timeline_search.js */
   }
 
   .month-connector {
-    margin-top: 13px;
     flex: 1 0 5vw;
-  }
-
-  .right-branch-label {
-    margin-top: 13px;
   }
 
   .hidden-align {
@@ -4028,6 +4023,15 @@ for selection in timeline_search.js */
 
   .epoch-end-marker {
     height: 0px;
+  }
+
+  .event-header {
+    padding: 9px 15px 10px 15px;
+    font-size: 14px;
+  }
+
+  .timeline-event {
+    margin-top: -8px;
   }
 
 }
