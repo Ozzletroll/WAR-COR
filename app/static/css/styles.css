@@ -856,7 +856,6 @@ p {
   display: flex;
   width: 80px;
   z-index: 1;
-  transition: 0.15s;
 }
 
 .down-arrow-hidden-spacer {

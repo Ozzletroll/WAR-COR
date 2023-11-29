@@ -99,6 +99,7 @@ function checkScrollPos () {
   }
   else {
     navbar.style.boxShadow = "";
+    navbar.style.transition = "box-shadow 0.5s ease";
     downArrow.style.opacity = "0";
 
     // Clear the timeout to prevent multiple timeouts from being set
@@ -110,5 +111,5 @@ function checkScrollPos () {
   
 }
 
-window.addEventListener("load", checkScrollPos);
+window.addEventListener("DOMContentLoaded", checkScrollPos);
 window.addEventListener("scroll", checkScrollPos);
