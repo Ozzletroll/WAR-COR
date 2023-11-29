@@ -1,6 +1,6 @@
 :root {
   /* App height var */
-  --app-height: 100%;
+  --app-height: calc(100vh - 54px);
 
   /* Light Mode Colours */
   --bg_colour1: #ffffff;
@@ -776,6 +776,7 @@ p {
   align-items: center;
   text-align: center;
   height: var(--app-height);
+  transition: height 0.5s ease;
 }
 
 .hero-fade {
