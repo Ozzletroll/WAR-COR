@@ -72,3 +72,25 @@ window.onclick = function(event) {
 
   }
 
+// Get navbar and hide box-shadow if at position 0
+// Hide down arrow if not a at position 0
+function checkScrollPos () {
+  var navbar = document.getElementById("navbar");
+  var downArrow = document.getElementById("down-arrow");
+  
+  if (window.scrollY == 0) {
+    navbar.style.boxShadow = "none";
+    downArrow.style.opacity = "";
+    downArrow.style.display = "";
+  }
+  else {
+    navbar.style.boxShadow = "";
+    downArrow.style.opacity = "0";
+    // downArrow.style.display = "none";
+    
+  }
+  
+}
+
+window.addEventListener("load", checkScrollPos);
+window.addEventListener("scroll", checkScrollPos);
