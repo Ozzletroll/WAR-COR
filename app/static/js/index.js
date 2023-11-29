@@ -72,6 +72,8 @@ window.onclick = function(event) {
 
   }
 
+var timeout;
+
 // Get navbar and hide box-shadow if at position 0
 // Hide down arrow if not a at position 0
 function checkScrollPos () {
@@ -81,13 +83,20 @@ function checkScrollPos () {
   if (window.scrollY == 0) {
     navbar.style.boxShadow = "none";
     downArrow.style.opacity = "";
-    downArrow.style.display = "";
+    downArrow.style.display = "flex";
+
+    // Clear timeout
+    clearTimeout(timeout);
   }
   else {
     navbar.style.boxShadow = "";
     downArrow.style.opacity = "0";
-    // downArrow.style.display = "none";
-    
+
+    // Clear the timeout to prevent multiple timeouts from being set
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+      downArrow.style.display = "none";
+    }, 300);
   }
   
 }
