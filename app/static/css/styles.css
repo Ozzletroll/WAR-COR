@@ -913,11 +913,16 @@ p {
   animation-fill-mode: both;
 }
 
-.features-upper-container {
+.features-timeline-showcase {
   display: flex;
   flex: 1 0 0;
   flex-direction: row;
   justify-content: space-between;
+  margin: 50px 0px;
+}
+
+.timeline-year-outer-container.timeline-demo-container {
+  margin-left: 0px;
 }
 
 .feature-image {
