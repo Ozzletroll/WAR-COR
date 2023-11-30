@@ -1,84 +1,9 @@
-// Modal class
-class Modal {
-  constructor({
-    modal,
-    button,
-    span,
-  }) {
-    this.modal = document.getElementById(modal);
-    this.button = button;
-    this.span = span;
-
-    document.getElementById(this.button).onclick = event => {
-      this.openModal(event)
-    } 
-
-    document.getElementById(this.span).onclick = event => {
-      this.closeModal(event)
-    } 
-
-  }
-  
-  openModal() {
-    this.modal.style.display = "flex";
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-  }
-
-}
-
-// Create modals
-const modal_1 = new Modal({
-  modal: "modal-1",
-  button: "m1-button",
-  span: "close-1",
-})
-
-const modal_2 = new Modal({
-  modal: "modal-2",
-  button: "m2-button",
-  span: "close-2",
-})
-
-const modal_3 = new Modal({
-  modal: "modal-3",
-  button: "m3-button",
-  span: "close-3",
-})
-
-const modal_4 = new Modal({
-  modal: "modal-4",
-  button: "m4-button",
-  span: "close-4",
-})
-
-
-// Close modals if the user clicks anywhere else
-window.onclick = function(event) {
-    if (event.target == modal_1.modal) {
-      modal_1.closeModal();
-    }
-    if (event.target == modal_2.modal) {
-      modal_2.closeModal();
-    }
-    if (event.target == modal_3.modal) {
-      modal_3.closeModal();
-    }
-    if (event.target == modal_4.modal) {
-      modal_4.closeModal();
-    }
-
-  }
-
 // Animate horizontal line on load
 function animateHR(horizontalLine) {
   var horizontalLine = document.getElementById("title-hr");
   horizontalLine.style.width = "50%";
 }
 window.addEventListener("load", animateHR);
-
 
 // Store timeout function so it can be cleared when screen returns to pos 0
 var timeout;
@@ -108,8 +33,24 @@ function checkScrollPos () {
       downArrow.style.display = "none";
     }, 300);
   }
-  
 }
 
 window.addEventListener("DOMContentLoaded", checkScrollPos);
 window.addEventListener("scroll", checkScrollPos);
+
+// Fade in feature header when visible
+const header = document.getElementById("features-header")
+const flavourText = document.getElementById("flavour-typewriter")
+
+function checkHeaderVisible() {
+  const elementPosition = header.getBoundingClientRect().top;
+  const windowHeight = window.innerHeight;
+
+  if (elementPosition < windowHeight) {
+    header.classList.add("hero-fade");
+    flavourText.classList.add("flavour-typewriter");
+  }
+}
+
+checkHeaderVisible();
+window.addEventListener('scroll', checkHeaderVisible);
