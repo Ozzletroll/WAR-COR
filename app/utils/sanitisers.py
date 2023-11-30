@@ -6,7 +6,7 @@ def sanitise_input(value):
     """ Method to sanitise user submitted html input. Uses Bleach
         and CSSSanitizer. """
     
-    allowed_tags = ["p", "b", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol"]
+    allowed_tags = ["p", "b", "i", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol"]
     allowed_attrs = {
         "*": ["class"],
         "a": ["href", "rel"],
