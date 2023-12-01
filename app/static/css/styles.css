@@ -888,7 +888,7 @@ p {
   flex-direction: column;
   width: 80%;
   min-height: var(--app-height);
-  margin: 80px 0px;
+  margin: 60px 0px;
 }
 
 .features-header {
@@ -896,9 +896,10 @@ p {
 }
 
 .sub-title {
-  font-size: min(4vw, 48px);
+  font-size: min(6vw, 48px);
   font-weight: 500;
   text-transform: uppercase;
+  text-align: center;
   color: var(--text_header);
   width: 100%;
   margin: 0;
@@ -917,7 +918,12 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 50px 0px;
+  margin: 40px 0px;
+  transition: 0.25s;
+}
+
+.timeline-showcase-scaledown {
+  transform: scale(0.8);
 }
 
 .fade-group {
@@ -929,10 +935,6 @@ p {
   opacity: 1 !important;
 }
 
-.timeline-year-outer-container.timeline-demo-container {
-  margin-left: 0px;
-}
-
 .feature-image {
   max-width: 1000px;
 }
@@ -942,6 +944,13 @@ p {
   font-weight: 500;
   margin: 0;
   color: var(--text_header);
+}
+
+.feature-title-centre {
+  text-align: center;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: var(--text_normal);
 }
 
 .features-paragraph {

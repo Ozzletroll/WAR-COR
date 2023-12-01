@@ -76,8 +76,8 @@ function fadeInElement(element, timing) {
 
 
 // Fade in features elements when visible
-const header = document.getElementById("features-header")
-const flavourText = document.getElementById("flavour-typewriter")
+const header = document.getElementById("features-header");
+const paragraph = document.getElementById("features-paragraph");
 
 function checkHeaderVisible() {
   const elementPosition = header.getBoundingClientRect().top;
@@ -85,10 +85,29 @@ function checkHeaderVisible() {
 
   if (elementPosition < windowHeight) {
     header.classList.add("hero-fade");
-    flavourText.classList.add("flavour-typewriter");
     animateTimelineDemo();
   }
 }
 
 checkHeaderVisible();
 window.addEventListener('scroll', checkHeaderVisible);
+
+
+// Scale down timeline demo if features page larger that viewport
+function checkTimelineDemoHeight() {
+
+  var featuresArea = document.getElementById("features-upper");
+  var timelineDemo = document.getElementById("timeline-showcase");
+  var screenHeight = window.innerHeight - 54;
+  
+  if (screenHeight < featuresArea.offsetHeight) {
+    timelineDemo.classList.add("timeline-showcase-scaledown");
+  }
+  else {
+    timelineDemo.classList.remove("timeline-showcase-scaledown");
+  }
+
+}
+
+checkTimelineDemoHeight();
+window.addEventListener('resize', checkTimelineDemoHeight);
