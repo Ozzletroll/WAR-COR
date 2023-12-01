@@ -887,7 +887,7 @@ p {
   display: flex;
   flex-direction: column;
   width: 80%;
-  height: var(--app-height);
+  min-height: var(--app-height);
   margin: 80px 0px;
 }
 
@@ -896,7 +896,7 @@ p {
 }
 
 .sub-title {
-  font-size: min(7vw, 48px);
+  font-size: min(4vw, 48px);
   font-weight: 500;
   text-transform: uppercase;
   color: var(--text_header);
@@ -907,7 +907,7 @@ p {
 .flavour-text.flavour-typewriter {
   overflow: hidden;
   white-space: nowrap;
-  animation: typing 2s steps(50, end);
+  animation: typing 1s steps(50, end);
   width: 300px;
   visibility: hidden;
   animation-fill-mode: both;
@@ -915,10 +915,18 @@ p {
 
 .features-timeline-showcase {
   display: flex;
-  flex: 1 0 0;
   flex-direction: row;
   justify-content: space-between;
   margin: 50px 0px;
+}
+
+.fade-group {
+  opacity: 0;
+}
+
+.fade-in-recursive, .fade-in-recursive > * {
+  transition: 1s !important;
+  opacity: 1 !important;
 }
 
 .timeline-year-outer-container.timeline-demo-container {
@@ -933,12 +941,11 @@ p {
   font-size: 24px;
   font-weight: 500;
   margin: 0;
+  color: var(--text_header);
 }
 
-.feature {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
+.features-paragraph {
+  font-weight: 300;
 }
 
 .feature p {
@@ -4031,10 +4038,6 @@ for selection in timeline_search.js */
 
   .epoch-start-marker, .epoch-end-marker {
     opacity: 0;
-  }
-
-  .epoch-end-marker {
-    height: 0px;
   }
 
   .event-header {

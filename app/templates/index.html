@@ -36,7 +36,7 @@
           <h3 class="sub-title">Create Dynamic RPG Timelines</h3>
           <hr class="campaigns-divider">
         </div>
-        <p id="flavour-typewriter" class="flavour-text">UWC-00-00 // Organisation::Overview </p>
+        <p id="flavour-typewriter" class="flavour-text">UWC-00-00 // Equipment::Overview </p>
 
         <div class="features-timeline-showcase">
 
@@ -44,6 +44,16 @@
 
         </div>
 
+        <div class="features-paragraph">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
 
       </div>
 
@@ -51,14 +61,17 @@
         <img src="/static/images/pic02.jpg">
         <div class="features-text-area">
           <h5 class="feature-title">Freeform Timeline Editing</h5>
-          <p>> Unbound by the constraints of pre-collapse archiving conventions, WAR/COR allows seamless conflict organisation in accordance with a variety of non-standard local system calendars.</p>
+          <p>Unbound by the constraints of pre-collapse archiving conventions, 
+            WAR/COR allows seamless conflict organisation in accordance with a variety 
+            of non-standard local system calendars.</p>
         </div>
       </div>
 
       <div class="features-lower lower-2">
         <div class="features-text-area">
           <h5 class="feature-title">Responsive Battlefield Performance</h5>
-          <p>> UWC military standardisation ensures reliable performance across all theatres of warfare.</p>
+          <p>UWC military standardisation ensures reliable performance on a variety 
+            of hardware platforms, across any theatre of warfare.</p>
         </div>
         <img src="/static/images/responsive-mockup.png">
       </div>
@@ -67,7 +80,8 @@
 
     <section class="cta">
       <div class="bottom-cta">
-        <h4 class="cta-text">> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</h4>
+        <h4 class="cta-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+          sed do eiusmod tempor incididunt ut labore</h4>
         <div class="button-area">
           {% if current_user.is_authenticated %}
           <a href="{{ url_for('campaign.campaigns') }}"><button type="button" class="feature-button">GET STARTED</button></a>
@@ -81,81 +95,16 @@
 
   </div>
 
-  <div id="modal-1" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 1</h2>
-          <span id="close-1" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  <div id="modal-2" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 2</h2>
-          <span id="close-2" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  <div id="modal-3" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 3</h2>
-          <span id="close-3" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  <div id="modal-4" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 4</h2>
-          <span id="close-4" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  
-
   {% include "base/footer.html" %}
 
- <!-- Javascript -->
- <script src="/static/js/get_screen_height.js"></script> 
- <script src="/static/js/index.js"></script> 
+<!-- Javascript -->
+<script src="/static/js/get_screen_height.js"></script> 
+<script src="/static/js/index.js"></script> 
+<script src="/static/js/margin_fix.js"></script> 
+<script>
+  window.addEventListener("resize", marginFix);
+  window.addEventListener('DOMContentLoaded', marginFix());
+</script>
 
 
 {% endblock %}

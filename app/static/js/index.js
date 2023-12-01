@@ -38,7 +38,44 @@ function checkScrollPos () {
 window.addEventListener("DOMContentLoaded", checkScrollPos);
 window.addEventListener("scroll", checkScrollPos);
 
-// Fade in feature header when visible
+// Features area animations
+
+// Main animation controller
+function animateTimelineDemo() {
+
+  speedMultiplier = 0.4;
+
+  var timings = {
+    "fade-group-1": 1000 * speedMultiplier,
+    "fade-group-2": 2000 * speedMultiplier,
+    "fade-group-3": 3000 * speedMultiplier,
+    "fade-group-4": 4000 * speedMultiplier,
+    "fade-group-5": 5000 * speedMultiplier,
+    "fade-group-6": 5500 * speedMultiplier,
+    "fade-group-7": 6000 * speedMultiplier,
+    "fade-group-8": 7000 * speedMultiplier,
+  };
+
+  // For each keyframe timing, trigger animation on element
+  for (const [element, timing] of Object.entries(timings)) {
+    fadeInElement(element, timing)
+  }
+
+}
+// Fade in animations for features area
+function fadeInElement(element, timing) {
+
+  setTimeout(function() {
+    var elements = document.getElementsByClassName(element);
+    Array.from(elements).forEach((element) => {
+      element.classList.add("fade-in-recursive");
+    });
+  }, timing);
+
+}
+
+
+// Fade in features elements when visible
 const header = document.getElementById("features-header")
 const flavourText = document.getElementById("flavour-typewriter")
 
@@ -49,6 +86,7 @@ function checkHeaderVisible() {
   if (elementPosition < windowHeight) {
     header.classList.add("hero-fade");
     flavourText.classList.add("flavour-typewriter");
+    animateTimelineDemo();
   }
 }
 
