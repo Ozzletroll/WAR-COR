@@ -101,7 +101,13 @@ function checkTimelineDemoHeight() {
   var screenHeight = window.innerHeight - 54;
   
   if (screenHeight < featuresArea.offsetHeight) {
-    timelineDemo.classList.add("timeline-showcase-scaledown");
+
+    // Apply transform scale
+    // Excludes firefox as it is bugged when rendering 1px lines
+    if (!navigator.userAgent.includes("Firefox")) {
+      timelineDemo.classList.add("timeline-showcase-scaledown");
+    }
+    
   }
   else {
     timelineDemo.classList.remove("timeline-showcase-scaledown");
