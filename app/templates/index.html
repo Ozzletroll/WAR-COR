@@ -54,6 +54,35 @@
 
       </div>
 
+      <div class="features-carousel">
+
+
+        
+
+        <ul id="carousel">
+          <li class="carousel-item">
+            <img class="carousel-img" src="/static/images/pic02.jpg">
+          </li>
+          <li class="carousel-item">
+            <img class="carousel-img" src="/static/images/pic02.jpg">
+          </li>
+          <li class="carousel-item">
+            <img class="carousel-img" src="/static/images/pic02.jpg">
+          </li>
+        </ul>
+        <div class="features-text-area">
+          <p id="carousel-text-1" class="carousel-text">
+            Create campaigns, add members and set callsigns
+          </p>
+          <p id="carousel-text-2" class="carousel-text">
+            Input conflict data, creating events and epochs
+          </p>
+          <p id="carousel-text-3" class="carousel-text">
+            Visualise campaign chronology
+          </p>
+        </div>
+      </div>
+
       <div class="features-lower">
         <img src="/static/images/pic02.jpg">
         <div class="features-text-area">
@@ -77,8 +106,7 @@
 
     <section class="cta">
       <div class="bottom-cta">
-        <h4 class="cta-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-          sed do eiusmod tempor incididunt ut labore</h4>
+        <h4 class="cta-text">WAR/COR is free for all citizens of Union</h4>
         <div class="button-area">
           {% if current_user.is_authenticated %}
           <a href="{{ url_for('campaign.campaigns') }}"><button type="button" class="feature-button">GET STARTED</button></a>

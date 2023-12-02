@@ -35,7 +35,7 @@
   --gradient2: #d1d1d1;
 
   --fixed-bg-1: #ffffff;
-  --fixed-bg-2: #E5E5E5;
+  --fixed-bg-2: #F5F5F5;
   --fixed-text: #000000;
   --dark_grey: #1f1f1f;
 
@@ -887,8 +887,7 @@ p {
   display: flex;
   flex-direction: column;
   width: 80%;
-  min-height: var(--app-height);
-  margin: 60px 0px;
+  margin-top: 60px;
 }
 
 .features-header {
@@ -968,7 +967,11 @@ p {
   font-weight: 300;
   font-size: 18px;
   height: 70%;
-  color: var(--fixed-text);
+  color: var(--text_dark);
+}
+
+.features-text-area {
+  color: var(--text_dark);
 }
 
 .feature-button {
@@ -1028,8 +1031,41 @@ p {
 
  }
 
+.features-carousel {
+  background-image: linear-gradient(var(--bg_colour1), var(--bg_colour2));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  padding: 5%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#carousel {
+  display: flex;
+}
+
+.carousel-item {
+  list-style: none;
+}
+
+.carousel-img {
+  width: 500px;
+  height: auto;
+  max-width: 80vw;
+  margin: 10px;
+}
+
+.carousel-text {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
  .features-lower {
-  background-color: var(--fixed-bg-2);
+  background-color: var(--bg_colour1);
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -1042,7 +1078,7 @@ p {
  }
 
 .features-lower p {
-  color: var(--fixed-text);
+  color: var(--text_dark);
   font-weight: 300;
 }
 
@@ -1055,7 +1091,7 @@ p {
 }
 
 .lower-2 {
-  background-color: var(--bg_colour3);
+  background-color: var(--bg_colour2);
 }
 
  .features-text-area {
@@ -1085,7 +1121,7 @@ p {
   flex-direction: row;
   justify-content: center;
   text-align: center;
-  background-color: var(--bg_colour3);
+  background-color: var(--bg_colour1);
   color: var(--darker_red);
   margin: 0%;
   padding: 0%;
@@ -1103,6 +1139,8 @@ p {
   font-size: 20px;
   font-weight: 300;
   max-width: 50%;
+  margin: 20px;
+  color: var(--text_header);
 }
 
 .button-area {
@@ -2204,7 +2242,7 @@ p {
   background-color: var(--dark_red);
 }
 
-.campaigns-list {color: var(--bg_colour3);
+.campaigns-list {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -2768,10 +2806,6 @@ p {
 
 .callsign-form-container {
   display: flex;
-}
-
-.callsign-form-icon {
-  background-color: var(--bg_colour3);
 }
 
 .callsign-submit {
@@ -4211,7 +4245,7 @@ for selection in timeline_search.js */
 }
 
 .event-button:hover {
-  background-color: var(--bg_colour3);
+  background-color: var(--fixed-bg-2);
   color: var(--dark_red);
 }
 
