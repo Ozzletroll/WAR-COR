@@ -43,7 +43,7 @@ window.addEventListener("scroll", checkScrollPos);
 // Main animation controller
 function animateTimelineDemo() {
 
-  speedMultiplier = 0.4;
+  var speedMultiplier = 0.3;
 
   var timings = {
     "fade-group-1": 1000 * speedMultiplier,
@@ -51,9 +51,9 @@ function animateTimelineDemo() {
     "fade-group-3": 3000 * speedMultiplier,
     "fade-group-4": 4000 * speedMultiplier,
     "fade-group-5": 5000 * speedMultiplier,
-    "fade-group-6": 5500 * speedMultiplier,
-    "fade-group-7": 6000 * speedMultiplier,
-    "fade-group-8": 7000 * speedMultiplier,
+    "fade-group-6": 6000 * speedMultiplier,
+    "fade-group-7": 7000 * speedMultiplier,
+    "fade-group-8": 8000 * speedMultiplier,
   };
 
   // For each keyframe timing, trigger animation on element

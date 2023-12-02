@@ -922,6 +922,13 @@ p {
   transition: 0.25s;
 }
 
+.showcase-area {
+  opacity: 0;
+  margin-top: 20px;
+  width: 100%;
+  transition: 1s ease-in-out;
+}
+
 .timeline-showcase-scaledown {
   transform: scale(0.8);
 }
@@ -991,9 +998,16 @@ p {
 
 @media screen and (max-width: 600px) { 
 
-  .features-grid {
-    justify-content: center;
-    text-align: center;
+  .sub-title {
+    font-size: min(5vw, 38px);
+  }
+
+  .timeline-showcase-scaledown {
+    margin-top: 0px;
+  }
+
+  .feature-title-centre {
+    font-size: 14px;
   }
 
   .feature {
