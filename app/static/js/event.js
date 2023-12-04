@@ -98,7 +98,8 @@ function checkHeader() {
   const containerWidth = headerContainer.offsetWidth;
 
   // Find the animation rule
-  const styleSheet = document.styleSheets[0];
+  // stylesheet[1] = styles.css
+  const styleSheet = document.styleSheets[1];
   let animationRule;
   for (const rule of styleSheet.cssRules) {
     if (rule.name === 'scrollHeader') {
