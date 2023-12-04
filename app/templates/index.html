@@ -62,24 +62,31 @@
       <div class="features-carousel">
 
         <ul id="carousel">
-          <li class="carousel-item">
+          <li id="carousel-img-1" class="carousel-item">
             <img class="carousel-img" src="/static/images/pic02.jpg">
           </li>
-          <li class="carousel-item">
+          <li id="carousel-img-2" class="carousel-item">
             <img class="carousel-img" src="/static/images/pic02.jpg">
           </li>
-          <li class="carousel-item">
+          <li id="carousel-img-3" class="carousel-item">
             <img class="carousel-img" src="/static/images/pic02.jpg">
           </li>
         </ul>
+
         <div class="carousel-text-area">
+          <div class="carousel-buttons">
+            <input id="carousel-button-1" class="carousel-button" type="radio" value="0" name="carousel-radio" checked>
+            <input id="carousel-button-2" class="carousel-button" type="radio" value="1" name="carousel-radio">
+            <input id="carousel-button-3" class="carousel-button" type="radio" value="2" name="carousel-radio">
+          </div>
+
           <p id="carousel-text-1" class="carousel-text">
             Create campaigns, add members and set callsigns
           </p>
-          <p id="carousel-text-2" class="carousel-text">
+          <p id="carousel-text-2" class="carousel-text carousel-text-hidden">
             Input conflict data, creating events and epochs
           </p>
-          <p id="carousel-text-3" class="carousel-text">
+          <p id="carousel-text-3" class="carousel-text carousel-text-hidden">
             Visualise campaign chronology
           </p>
         </div>
@@ -126,7 +133,8 @@
 
 <!-- Javascript -->
 <script src="/static/js/get_screen_height.js"></script> 
-<script src="/static/js/index.js"></script> 
+<script src="/static/js/index.js"></script>
+<script src="/static/js/carousel.js"></script>
 <script src="/static/js/margin_fix.js"></script> 
 <script>
   window.addEventListener("resize", marginFix);
