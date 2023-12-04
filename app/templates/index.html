@@ -34,11 +34,16 @@
       <div id="features-upper" class="features-upper">
         <div id="features-header" class="features-header">
           <h3 class="sub-title">Create Dynamic RPG Timelines</h3>
-          <h5 class="feature-title feature-title-centre">Lorem ipsum dolor sit amet</h5>
+          <hr class="campaigns-divider">
+          <p class="flavour-text flavour-text-centred">UWC-0-0 // System::Overview </p>
+
+          <!-- <h5 class="feature-title feature-title-centre">Conflict logging / worldbuilding / Battlefield Reporting</h5> -->
         </div>
 
-        <div id="timeline-showcase" class="features-timeline-showcase">
-          {% include "components/timeline_demo.html" %}
+        <div class="showcase-area">
+          <div id="timeline-showcase" class="features-timeline-showcase">
+            {% include "components/timeline_demo.html" %}
+          </div>
         </div>
 
         <div id="features-paragraph" class="features-paragraph hero-fade">
@@ -56,9 +61,6 @@
 
       <div class="features-carousel">
 
-
-        
-
         <ul id="carousel">
           <li class="carousel-item">
             <img class="carousel-img" src="/static/images/pic02.jpg">
@@ -70,7 +72,7 @@
             <img class="carousel-img" src="/static/images/pic02.jpg">
           </li>
         </ul>
-        <div class="features-text-area">
+        <div class="carousel-text-area">
           <p id="carousel-text-1" class="carousel-text">
             Create campaigns, add members and set callsigns
           </p>
@@ -88,8 +90,8 @@
         <div class="features-text-area">
           <h5 class="feature-title">Freeform Timeline Editing</h5>
           <p>Unbound by the constraints of pre-collapse archiving conventions, 
-            WAR/COR allows seamless conflict organisation in accordance with a variety 
-            of non-standard local system calendars.</p>
+            WAR/COR allows seamless conflict organisation in accordance with any 
+            non-standard local system calendars.</p>
         </div>
       </div>
 
@@ -106,7 +108,7 @@
 
     <section class="cta">
       <div class="bottom-cta">
-        <h4 class="cta-text">WAR/COR is free for all citizens of Union</h4>
+        <h4 class="cta-text">Free for all citizens of Union</h4>
         <div class="button-area">
           {% if current_user.is_authenticated %}
           <a href="{{ url_for('campaign.campaigns') }}"><button type="button" class="feature-button">GET STARTED</button></a>
