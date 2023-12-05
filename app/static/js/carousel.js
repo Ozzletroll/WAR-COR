@@ -7,13 +7,19 @@ class Carousel {
     // Auto slide timer interval
     interval,
     // Carousel element itself
-    carousel
+    carousel,
+    text
   }) {
     this.carousel = document.getElementById(carousel);
     this.images = [];
     for (let index = 0; index < images.length; index++) {
         this.images.push(document.getElementById(images[index]))
     }
+
+    this.text = [];
+    for (let index = 0; index < text.length; index++) {
+      this.text.push(document.getElementById(text[index]))
+  }
 
     this.radioButtons = [];
     for (let index = 0; index < radioButtons.length; index++) {
@@ -66,6 +72,15 @@ class Carousel {
     this.images.forEach((image, index) => {
       image.style.transform = `translateX(${(index - targetIndex) * 100}%)`;
     })
+    // Change slide text
+    this.text.forEach((text, index) => {
+      if (index != targetIndex) {
+        text.classList.add("carousel-text-hidden");
+      }
+      else {
+        text.classList.remove("carousel-text-hidden");
+      }
+    })
     // Update curret position
     this.currentSlide = targetIndex;
   }
@@ -110,5 +125,10 @@ const carousel = new Carousel({
     "carousel-button-3",
   ],
   interval: 5000,
-  carousel: "carousel"
+  carousel: "carousel",
+  text: [
+    "carousel-text-1",
+    "carousel-text-2",
+    "carousel-text-3",
+  ]
 })
