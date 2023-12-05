@@ -1103,6 +1103,7 @@ p {
   font-size: 14px;
   font-weight: 300;
   text-transform: uppercase;
+  height: 40px;
 }
 
 .carousel-text-hidden {
