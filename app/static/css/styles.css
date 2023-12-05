@@ -1052,13 +1052,14 @@ p {
   max-width: 800px;
   height: 400px;
   overflow: hidden;
+  border: 1px solid var(--elem_border);
+  box-shadow: 3px 3px 3px var(--elem_shadow);
   border-radius: 5px;
 }
 
 .carousel-item {
   list-style: none;
   width: 100%;
-  max-width: 800px;
   height: auto;
   position: absolute;
   transition: all 0.5s;
