@@ -47,23 +47,25 @@ class Carousel {
 
     // Create event listener to start automatic slides once user scrolls into view
     this.scrollListener = (event) => {
-      if (this.isInView()) {
-        this.autoSlide();
-        window.removeEventListener("scroll", this.scrollListener);
-      }
+      this.isInView();
     }
     addEventListener("scroll", this.scrollListener);
+    // Call once to check if page has started with carousel in view
+    this.isInView();
 
   }
 
   isInView() {
     var rect = this.carousel.getBoundingClientRect();
-    return (
+    if (
       rect.top >= 0 &&
       rect.left >= 0 &&
       rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
+    ) {
+      this.autoSlide();
+      window.removeEventListener("scroll", this.scrollListener);
+    };
   }
 
   changeSlide(targetIndex) {
