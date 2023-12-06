@@ -4,7 +4,7 @@
 
   <div class="main-area">
 
-    <section class="hero">
+    <section id="hero" class="hero">
 
       <div class="hero-centered hero-fade">
         <div class="hero-title-area">
@@ -31,59 +31,91 @@
 
     <section class="features" id="main-features">
 
-      <div class="features-header">
-        <h3 class="sub-title">Create and share rpg campaign timelines</h3>
+      <div id="features-upper" class="features-upper">
+        <div id="features-header" class="features-header">
+          <h3 class="sub-title">Create Dynamic RPG Timelines</h3>
+          <hr class="campaigns-divider">
+          <p class="flavour-text flavour-text-centred">UWC-0-0 // System::Overview </p>
+        </div>
+
+        <div class="showcase-area">
+          <div id="timeline-showcase" class="features-timeline-showcase">
+            {% include "components/timeline_demo.html" %}
+          </div>
+        </div>
+
+        <div id="features-paragraph" class="features-paragraph hero-fade">
+          <p>WAR/COR is a free, lightweight roleplaying game timeline creator, with a focus on
+            structured, military campaign logging. Create and share session notes with your players,
+            document combat reports and track your campaign's history.
+          </p>
+        </div>
+
       </div>
-      <div class="features-grid">
-        <div class="feature">
-          <h5 class="feature-title">Feature Title</h5>
-          <p>> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <button id="m1-button" type="button" class="feature-button">Learn more</button>
-        </div>
 
-        <div class="feature">
-          <h5 class="feature-title">Feature Title</h5>
-          <p>> Amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.</p>
-          <button id="m2-button" type="button" class="feature-button">Learn more</button>
-        </div>
+      <div class="features-carousel">
 
-        <div class="feature">
-          <h5 class="feature-title">Feature Title</h5>
-          <p>> Consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam.</p>
-          <button id="m3-button" type="button" class="feature-button">Learn more</button>
-        </div>
+        <ul id="carousel">
+          <li id="carousel-img-1" class="carousel-item">
+            <img class="carousel-img" src="/static/images/slide-1.png">
+          </li>
+          <li id="carousel-img-2" class="carousel-item">
+            <img class="carousel-img" src="/static/images/slide-2.png">
+          </li>
+          <li id="carousel-img-3" class="carousel-item">
+            <img class="carousel-img" src="/static/images/slide-3.png">
+          </li>
+        </ul>
 
-        <div class="feature">
-          <h5 class="feature-title">Feature Title</h5>
-          <p>> Eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-          <button id="m4-button" type="button" class="feature-button">Learn more</button>
-        </div>
+        <div class="carousel-text-area">
+          <div class="carousel-buttons">
+            <input id="carousel-button-1" class="carousel-button" type="radio" value="0" name="carousel-radio" checked>
+            <input id="carousel-button-2" class="carousel-button" type="radio" value="1" name="carousel-radio">
+            <input id="carousel-button-3" class="carousel-button" type="radio" value="2" name="carousel-radio">
+          </div>
 
+          <p id="carousel-text-1" class="carousel-text">
+            Create campaigns, add members and set callsigns
+          </p>
+          <p id="carousel-text-2" class="carousel-text carousel-text-hidden">
+            Input conflict data, creating events and epochs
+          </p>
+          <p id="carousel-text-3" class="carousel-text carousel-text-hidden">
+            Visualise campaign chronology
+          </p>
+        </div>
       </div>
 
       <div class="features-lower">
-        <img src="/static/images/pic02.jpg">
+        <img src="/static/images/custom-date-example.png">
         <div class="features-text-area">
-          <h5 class="feature-title">Feature Title</h5>
-          <p>> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+          <h5 class="feature-title">Freeform Timeline Editing</h5>
+          <p>Unbound by the constraints of pre-collapse archiving conventions, 
+            WAR/COR allows seamless conflict organisation in accordance with any 
+            non-standard local system calendars.</p>
         </div>
       </div>
 
       <div class="features-lower lower-2">
         <div class="features-text-area">
-          <h5 class="feature-title">Feature Title</h5>
-          <p>> Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
+          <h5 class="feature-title">Responsive Battlefield Performance</h5>
+          <p>UWC military standardisation ensures reliable performance on a variety 
+            of hardware platforms, across any theatre of warfare.</p>
         </div>
-        <img src="/static/images/pic03.jpg">
+        <img src="/static/images/responsive-mockup.png">
       </div>
 
     </section>
 
     <section class="cta">
       <div class="bottom-cta">
-        <h4 class="cta-text">> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore</h4>
+        <h4 class="cta-text">Free for all citizens of Union</h4>
         <div class="button-area">
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('campaign.campaigns') }}"><button type="button" class="feature-button">GET STARTED</button></a>
+          {% else %}
           <a href="{{ url_for('user.register') }}"><button type="button" class="feature-button">Enlist today</button></a>
+          {% endif %}
         </div>
       </div>
 
@@ -91,81 +123,17 @@
 
   </div>
 
-  <div id="modal-1" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 1</h2>
-          <span id="close-1" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  <div id="modal-2" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 2</h2>
-          <span id="close-2" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  <div id="modal-3" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 3</h2>
-          <span id="close-3" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  <div id="modal-4" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Header Text 4</h2>
-          <span id="close-4" class="modal-close">
-            <img class="icon" src="/static/images/icons/cancel.svg">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est.</p>
-          <img class="modal-img" src="/static/images/pic05.jpg">
-        </div>
-     </div>
-    </div>
-  </div>
-
-  
-
   {% include "base/footer.html" %}
 
- <!-- Javascript -->
- <script src="/static/js/get_screen_height.js"></script> 
- <script src="/static/js/index.js"></script> 
+<!-- Javascript -->
+<script src="/static/js/get_screen_height.js"></script> 
+<script src="/static/js/index.js"></script>
+<script src="/static/js/carousel.js"></script>
+<script src="/static/js/margin_fix.js"></script> 
+<script>
+  window.addEventListener("resize", marginFix);
+  window.addEventListener('DOMContentLoaded', marginFix());
+</script>
 
 
 {% endblock %}

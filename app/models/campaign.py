@@ -75,6 +75,12 @@ class Campaign(db.Model):
             the event that immediately follows it. The backref can be used
             to access the preceding event. """
 
+        # Clear old relationships
+        for event in self.events:
+            event.following_event = None
+            
+        db.session.commit()
+
         sorted_campaign_events = sorted(self.events, key=lambda event: event.date)
 
         for index, event in enumerate(sorted_campaign_events):
