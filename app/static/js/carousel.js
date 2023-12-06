@@ -53,6 +53,12 @@ class Carousel {
     // Call once to check if page has started with carousel in view
     this.isInView();
 
+
+    this.heightListener = (event) => {
+      this.adjustHeight();
+    }
+    addEventListener("resize", this.heightListener);
+    addEventListener("load", this.heightListener);
   }
 
   isInView() {
@@ -110,6 +116,11 @@ class Carousel {
         clearInterval(autoSlideInterval);
       });
     });
+  }
+
+  adjustHeight() {
+    var newHeight = this.images[0].children[0].offsetHeight;
+    this.carousel.style.height = newHeight + "px";
   }
 
 }
