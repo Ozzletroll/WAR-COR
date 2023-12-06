@@ -368,8 +368,8 @@ def dismiss_all():
 
 
 # Function called when recovering password
-@bp.route("/user/recover-password", methods=["GET", "POST"])
-def recover_password():
+@bp.route("/user/request-password-reset", methods=["GET", "POST"])
+def request_password_reset():
 
     # Check if user is not logged in
     if not current_user.is_authenticated:
@@ -383,7 +383,8 @@ def recover_password():
                 .filter_by(email=email)).scalar()
             
             if user:
-                messengers.send_recovery_email()
+                messengers.send_recovery_email(recipient_email=email,
+                                               user=user)
                 flash(f"Account recovery email sent to {email}")
             else:
                 flash("No account matching given email found. Please check your email address and try again.")
@@ -394,3 +395,22 @@ def recover_password():
     else:
         return redirect(url_for("user.login"))
     
+
+# Function called via recovery email url
+@bp.route("/user/reset-password/<token>", methods=["GET"])
+def reset_password(token): 
+
+    if current_user.is_authenticated:
+        return redirect(url_for("campaign.campaigns"))
+    
+    # Verify that password reset token is valid
+    user = models.User.verify_password_reset_token(token)
+    if not user:
+        return redirect(url_for("home.home"))
+    
+    form = forms.ChangePasswordForm()
+
+    if form.validate_on_submit():
+        pass
+
+    return render_template("reset_password.html", form=form)

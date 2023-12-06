@@ -1,5 +1,7 @@
+from flask import url_for
 from datetime import datetime
 from sqlalchemy import select
+from mailersend import emails
 
 from app import models
 from app import db
@@ -166,8 +168,40 @@ def send_comment_notification(sender, recipients, campaign, event):
     db.session.commit()
 
 
-def send_recovery_email():
+def send_recovery_email(recipient_email, user):
+    """ Function to send emails via MailerSend """
 
-    # Email sending code goes here
+    token = user.get_reset_password_token()
+    reset_url = url_for("user.reset_password", token=token, _external=True)
 
-    pass
+    mailer = emails.NewEmail()
+
+    mail_body = {}
+    mail_from = {
+        "name": "WAR/COR Password Reset",
+        "email": "passwordreset@war-cor.com",
+    }
+    recipients = [
+        {
+            "name": user.username,
+            "email": recipient_email,
+        }
+    ]
+    personalization = [
+        {
+            "email": recipient_email,
+            "data": {
+                "username": user.username,
+                "reset_url": reset_url,
+            }
+        }
+    ]
+
+    mailer.set_mail_from(mail_from, mail_body)
+    mailer.set_mail_to(recipients, mail_body)
+    mailer.set_subject("WAR/COR Password Reset", mail_body)
+    mailer.set_template("z86org880dkgew13", mail_body)
+    mailer.set_advanced_personalization(personalization, mail_body)
+
+    mailer.send(mail_body)
+    

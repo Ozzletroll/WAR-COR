@@ -1,5 +1,8 @@
+from flask import current_app
 from flask_login import UserMixin
 import werkzeug
+import jwt
+from datetime import datetime
 
 from app.models.associations import *
 
@@ -91,3 +94,23 @@ class User(UserMixin, db.Model):
         else:
             return False
         
+    
+    def get_reset_password_token(self, expiration=600):
+
+        return jwt.encode(
+            {"reset_password": self.id, "exp": datetime.now().timestamp() + expiration},
+            current_app.config["SECRET_KEY"], 
+            algorithm="HS256")
+
+
+    @staticmethod
+    def verify_password_reset_token(token):
+
+        try:
+            id = jwt.decode(token, current_app.config["SECRET_KEY"],
+                            algorithms=["HS256"])["reset_password"]
+        except:
+            return
+        
+        return db.session.get(User, id)
+    
