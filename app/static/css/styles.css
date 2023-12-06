@@ -916,7 +916,6 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 40px 0px;
   transition: 0.25s;
 }
 
@@ -957,7 +956,13 @@ p {
 }
 
 .features-paragraph {
+  max-width: 800px;
   font-weight: 300;
+  margin: 5% 0 0 0;
+}
+
+.features-paragraph p {
+  margin: 0;
 }
 
 .feature p {
