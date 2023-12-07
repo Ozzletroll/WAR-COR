@@ -397,7 +397,7 @@ def request_password_reset():
     
 
 # Function called via recovery email url
-@bp.route("/user/reset-password/<token>", methods=["GET"])
+@bp.route("/user/reset-password/<token>", methods=["GET", "POST"])
 def reset_password(token): 
 
     if current_user.is_authenticated:
@@ -408,9 +408,14 @@ def reset_password(token):
     if not user:
         return redirect(url_for("home.home"))
     
-    form = forms.ChangePasswordForm()
+    form = forms.ResetPasswordForm()
 
     if form.validate_on_submit():
-        pass
 
-    return render_template("reset_password.html", form=form)
+        # Update users password
+        if user.change_password(form=request.form, reset=True):
+            flash("Password updated, please login using new password")
+        
+        return redirect(url_for("user.login"))
+
+    return render_template("password_reset.html", form=form)
