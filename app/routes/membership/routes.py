@@ -238,7 +238,7 @@ def request_membership(campaign_name, campaign_id):
     campaign_admins = campaign.admins
 
     messengers.send_membership_request(current_user, campaign_admins, campaign)
-    flash(f"Membership request to campaign '{campaign_name}' sent")
+    flash(f"Membership request to campaign '{campaign.title}' sent")
 
     return redirect(url_for("membership.join_campaign"))
 
