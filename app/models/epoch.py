@@ -15,10 +15,12 @@ class Epoch(db.Model):
     start_date = db.Column(db.String, nullable=False)
     start_year = db.Column(db.Integer)
     start_month = db.Column(db.Integer)
+    start_day = db.Column(db.Integer)
 
     end_date = db.Column(db.String, nullable=False)
     end_year = db.Column(db.Integer)
     end_month = db.Column(db.Integer)
+    end_day = db.Column(db.Integer)
 
     description = db.Column(db.String(), nullable=True)
     has_events = db.Column(db.Boolean(), nullable=False, default=False)
@@ -71,13 +73,15 @@ class Epoch(db.Model):
         self.parent_campaign.check_epochs()
 
 
-    def split_date(self, datestring):
+    @staticmethod
+    def split_date(datestring):
         """ Method that splits a form datestring into individual integer values. """
 
         year = int(datestring.split("/")[0])
         month = int(datestring.split("/")[1])
+        day = int(datestring.split("/")[2])
 
-        return [year, month]
+        return [year, month, day]
 
 
     def populate_self(self):
@@ -87,17 +91,17 @@ class Epoch(db.Model):
         
         def is_in_epoch(event, epoch):
 
-            epoch_start_year = int(epoch.start_date.split("/")[:2][0])
-            epoch_start_month = int(epoch.start_date.split("/")[:2][1])
-            epoch_end_year = int(epoch.end_date.split("/")[:2][0])
-            epoch_end_month = int(epoch.end_date.split("/")[:2][1])
+            epoch_start_year, epoch_start_month, epoch_start_day = self.split_date(epoch.start_date)
+            epoch_end_year, epoch_end_month, epoch_end_day = self.split_date(epoch.end_date)
 
-            event_year = int(event.date.split("/")[:2][0])
-            event_month = int(event.date.split("/")[:2][1])
+            event_year = int(event.date.split("/")[0])
+            event_month = int(event.date.split("/")[1])
+            event_day = int(event.date.split("/")[2][:2])
 
             if epoch_start_year <= event_year <= epoch_end_year:
                 if epoch_start_month <= event_month <= epoch_end_month:
-                    return True
+                    if epoch_start_day <= event_day <= epoch_end_day:
+                        return True
             else:
                 return False
     

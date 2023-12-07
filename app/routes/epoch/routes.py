@@ -30,8 +30,8 @@ def new_epoch(campaign_name, campaign_id):
         # Create placeholder event to prepopulate form
         epoch = models.Epoch()
 
-        epoch.start_date = request.args["date"]
-        epoch.end_date = request.args["date"]
+        epoch.start_date = request.args["date"] + "/01"
+        epoch.end_date = request.args["date"] + "/02"
         form = forms.CreateEpochForm(obj=epoch)
 
     # Otherwise, create default empty form
