@@ -7,7 +7,6 @@ from datetime import datetime
 from app.models.associations import *
 
 
-
 class User(UserMixin, db.Model):
     __tablename__ = "user"
 
@@ -70,18 +69,13 @@ class User(UserMixin, db.Model):
         
         db.session.commit()
 
-
-    def change_password(self, form):
+    def change_password(self, form, reset=False):
         """ Method to change user's password. Returns false
-            if given old password is incorrect. """
+            if given old password is incorrect. Set Reset param when
+            resetting password via recovery email. """
 
-        old_password = form["old_password"]
-        new_password = form["new_password"]
-
-        # Check if the given old password matches the db password
-        if werkzeug.security.check_password_hash(pwhash=self.password, password=old_password):
-            
-            # Salt and hash new password
+        if reset:
+            new_password = form["new_password"]
             sh_password = werkzeug.security.generate_password_hash(
                 new_password,
                 method="pbkdf2:sha256",
@@ -92,16 +86,31 @@ class User(UserMixin, db.Model):
             return True
 
         else:
-            return False
-        
-    
+            old_password = form["old_password"]
+            new_password = form["new_password"]
+
+            # Check if the given old password matches the db password
+            if werkzeug.security.check_password_hash(pwhash=self.password, password=old_password):
+                
+                # Salt and hash new password
+                sh_password = werkzeug.security.generate_password_hash(
+                    new_password,
+                    method="pbkdf2:sha256",
+                    salt_length=8
+                )
+                self.password = sh_password
+                db.session.commit()
+                return True
+
+            else:
+                return False
+
     def get_reset_password_token(self, expiration=600):
 
         return jwt.encode(
             {"reset_password": self.id, "exp": datetime.now().timestamp() + expiration},
             current_app.config["SECRET_KEY"], 
             algorithm="HS256")
-
 
     @staticmethod
     def verify_password_reset_token(token):
