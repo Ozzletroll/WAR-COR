@@ -32,9 +32,9 @@ def check_consent():
 def accept_cookies():
     """ Sets the consent form acceptance cookie  """
 
-    expiry = timedelta(days=30)
+    expiry = int(timedelta(days=30).total_seconds())
     response = make_response(redirect(request.referrer))
-    response.set_cookie("warcor_consent", "True", secure=True, max_age=expiry.total_seconds())
+    response.set_cookie("warcor_consent", "True", secure=True, max_age=expiry)
 
     return response
 
