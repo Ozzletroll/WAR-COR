@@ -1,4 +1,4 @@
-<div class="consent-form-border">
+<div id="consent-form" class="consent-form-border">
     <div class="consent-form-inner">
         <div class="consent-header">
             <h3 class="consent-heading">UWC TERMS AND CONDITIONS</h3>
@@ -21,12 +21,16 @@
         </div>
 
         <div class="consent-footer">
-            <form method="POST" action="{{ url_for('session.accept_cookies') }}">
-                {{ consent_form.csrf_token }}
-                {{ consent_form.submit(value="ACCEPT", class="button consent-button") }}
-            </form>
+            <button id="gdpr-consent-accept" class="button consent-button" 
+            onclick="acceptCookies(event)"
+            data-csrf="{{ csrf_token() }}"
+            data-url="{{ url_for('session.accept_cookies') }}">
+            ACCEPT
+            </button>
         </div>
 
     </div>
     
 </div>
+
+<script src="/static/js/consent.js"></script>

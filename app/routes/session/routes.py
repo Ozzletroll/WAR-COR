@@ -19,8 +19,7 @@ def check_consent():
     if request.path not in excluded_routes:
         
         if not request.cookies.get("warcor_consent"):
-            consent_form = forms.SubmitForm()
-            return dict(consent=False, consent_form=consent_form)
+            return dict(consent=False)
         else:
             return dict(consent=True)
         
@@ -30,11 +29,16 @@ def check_consent():
 
 @bp.route("/session/accept_cookies", methods=["POST"])
 def accept_cookies():
-    """ Sets the consent form acceptance cookie  """
+    """ Sets the consent form acceptance cookie. Called via fetch request from consent form
+        component.  """
 
     expiry = int(timedelta(days=30).total_seconds())
     response = make_response(redirect(request.referrer))
-    response.set_cookie("warcor_consent", "True", secure=True, max_age=expiry)
+    response.set_cookie("warcor_consent", 
+                        "True", 
+                        secure=True, 
+                        max_age=expiry,
+                        samesite="Strict")
 
     return response
 
