@@ -179,7 +179,7 @@ def send_recovery_email(recipient_email, user):
     mail_body = {}
     mail_from = {
         "name": "WAR/COR Password Reset",
-        "email": "passwordreset@war-cor.com",
+        "email": "no-reply@war-cor.com",
     }
     recipients = [
         {
