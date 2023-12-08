@@ -101,11 +101,18 @@ class Epoch(db.Model):
             event_day = int(event.date.split("/")[2][:2])
 
             if epoch_start_year <= event_year <= epoch_end_year:
-                if epoch_start_month <= event_month <= epoch_end_month:
-                    if epoch_start_day <= event_day <= epoch_end_day:
-                        return True
-            else:
-                return False
+                if epoch_start_year == event_year and event_month < epoch_start_month:
+                    return False
+                if epoch_end_year == event_year and event_month > epoch_end_month:
+                    return False
+                if epoch_start_year == event_year and event_month == epoch_start_month and event_day < epoch_start_day:
+                    return False
+                if epoch_end_year == event_year and event_month == epoch_end_month and event_day > epoch_end_day:
+                    return False
+                return True
+
+            return False
+        
     
         self.events.clear()
         self.events = [event for event in self.parent_campaign.events if is_in_epoch(event, self)]
