@@ -33,49 +33,12 @@ class Day:
         self.epochs = []
         self.end_epochs = []
         self.epoch_has_events = False
+        self.followed_by_epoch = False
 
 
 def campaign_sort(campaign):
     """ Function that structures campaign event data for timeline rendering. Returns
         a list of year objects.
-    
-        Sorting is achieved by first creating nested dictionaries to represent the
-        timeline structure, which will be used for iteration purposes in order to create
-        Year, Month, and Day objects. 
-        
-        The first dictionary structure is created by combining two dictionaries of the 
-        campaigns epochs organised by start date and end date.
-
-            Example: {year: {month: [<Epoch 1>, <Epoch 2>]}}
-
-        Next, a similar dictionary is created from the campaigns events, with an 
-        additional layer of nested dictionaries representing days. The event objects
-        themselves are nested inside the day entries.
-
-            Example: {year: {month: {day: [<Event 3>, <Event 4>]}}}
-        
-        These two nested dictionaries are then combined into one. The "events" dictionary
-        is used as the primary structure, and new entries are created for any year/month
-        that only contains epochs.
-
-            Example: 
-        
-            If there were two events that occurred in 5015/01/01, and one epoch that began
-            in 5014/05/01 and ended in 5016/01/01, the dict would be:
-
-            final_group = {5014: {05: [<Epoch 1>]}},
-                           5015: {01: {01: [<Event 1>, <Event 2>]},
-                           5016: {01: [<Epoch 2>]}}
-
-        Finally, this dict is used to create a structure of nested
-        objects, allowing easier rendering in the Jinja template:                     
-
-            Month objects are assigned as a property of Year objects under Year.months. 
-            Day objects are assigned as properties of Month objects under Month.days.
-            Epochs are assigned under Month.epochs.
-            Event objects are assigned under Day.events.
-
-        Other properties are also assigned here to assist in template rendering.
         
     """
 
@@ -159,7 +122,7 @@ def campaign_sort(campaign):
             return False
 
 
-    def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, epochs_attr):
+    def check_for_epoch(dictionary, year, month, day, month_object, day_object, has_epoch_attr, epochs_attr):
         try:
             epochs = dictionary[year][month][day]
         except KeyError:
@@ -168,9 +131,11 @@ def campaign_sort(campaign):
             setattr(day_object, has_epoch_attr, True)
             for epoch in epochs:
                 epochs_attr.append(epoch)
+                if epoch.has_events:
+                    day_object.epoch_has_events = True
 
 
-    # --- START ---
+    # --- START --- #
 
     events = (db.session.query(models.Event)
             .filter_by(campaign_id=campaign.id)
@@ -245,6 +210,7 @@ def campaign_sort(campaign):
                 # Check if day has any epoch starts
                 check_for_epoch(epoch_start_dict, 
                                 year, month, day,
+                                month_object,
                                 day_object, 
                                 "has_epoch", 
                                 day_object.epochs)
@@ -252,12 +218,21 @@ def campaign_sort(campaign):
                 # Check if day has any epoch ends
                 check_for_epoch(epoch_end_dict, 
                                 year, month, day,
+                                month_object,
                                 day_object, 
                                 "has_epoch_end", 
                                 day_object.end_epochs)
-
+                
                 # Append the day object to the month object
                 month_object.days.append(day_object)
+
+            # Flag day objects if they have epoch elements after them
+            # for template rendering purposes
+            for index, day_object in enumerate(month_object.days):
+                if day_object.has_epoch and index != 0:
+                    month_object.days[index - 1].followed_by_epoch = True
+                elif day_object.has_epoch_end:
+                    month_object.days[index].followed_by_epoch = True
 
             # Append the month object to the year object
             year_object.months.append(month_object)   
