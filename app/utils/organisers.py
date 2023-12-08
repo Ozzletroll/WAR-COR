@@ -1,6 +1,4 @@
-from itertools import groupby
 import copy
-from collections import defaultdict
 
 from app import db, models
 
