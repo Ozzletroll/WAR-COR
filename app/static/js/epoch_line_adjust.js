@@ -38,5 +38,21 @@ function epochLineAdjust() {
 
 }
 
+// Trigger margin adjust on sidebar page element resize (usually from sidebar deployment)
+const element = document.getElementById("scrollpage");
+
+const resizeObserver = new ResizeObserver(entries => {
+  entries.forEach(entry => {
+    epochLineAdjust();
+  });
+});
+
+// Start observing the target element
+resizeObserver.observe(element);
+
+// Start observing the element
+resizeObserver.observe(element);
+
+// Add conventional event listeners for page load and resize
 window.addEventListener("resize", epochLineAdjust);
 window.addEventListener("load", epochLineAdjust);
