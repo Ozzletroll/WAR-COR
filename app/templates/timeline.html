@@ -167,7 +167,6 @@
 
                   <div class="timeline-columns">
 
-                    {% if year.marker %}
                     <div id="timeline-left-marker" class="timeline-left-marker">
                       <div class="year-marker-hr"></div>
                       <div class="year-marker-line"></div>
@@ -175,15 +174,6 @@
                       <div class="year-marker-line"></div>
                       <div class="year-marker-hr"></div>
                     </div>
-                    {% else %}
-                    <div id="timeline-left-marker" class="timeline-left-marker marker-invis">
-                      <div class="year-marker-hr marker-invis"></div>
-                      <div class="year-marker-line marker-invis"></div>
-                      <h5 class="year-marker marker-invis">{{ year.name + campaign.date_suffix}}</h5>
-                      <div class="year-marker-line marker-invis"></div>
-                      <div class="year-marker-hr marker-invis"></div>
-                    </div>
-                    {% endif %}
 
                     <div class="timeline-right-marker">
                       <div class="timeline-horizontal"></div>
@@ -230,7 +220,8 @@
 {% endif %}
 <script src="/static/js/timeline_search.js"></script>
 <script src="/static/js/scroll_target.js"></script> 
-<script src="/static/js/margin_fix.js"></script> 
+<script src="/static/js/margin_fix.js"></script>
+<script src="/static/js/epoch_line_adjust.js"></script>
 <script>
   window.addEventListener("resize", marginFix);
   window.addEventListener('DOMContentLoaded', marginFix());

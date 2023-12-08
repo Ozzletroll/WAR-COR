@@ -15,23 +15,6 @@ elements.
 
 {% macro month(campaign, year, month, day, length, index, edit=false) %}
 
-  {# Start of epoch markers #}
-  {% if month.has_epoch %}
-    {% if month.epoch_has_events %}
-      {% if edit %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=true, edit=true) }}
-      {% else %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=true, edit=false) }}
-      {% endif %}
-    {% else %}
-      {% if edit %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=false, edit=true) }}
-      {% else %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=false, edit=false) }}
-      {% endif %}
-    {% endif %}
-  {% endif %}
-
   {% if edit %}
     {# New Epoch Element #}
     <div class="epoch-between">
@@ -148,16 +131,5 @@ elements.
     {% endif %}
 
   {% endif %}
-
-    
-  {# End of epoch markers #}
-  {% if month.has_epoch_end %}
-    {% if month.epoch_has_events %}
-      {{ epoch.epoch_end(month.end_epochs) }}
-    {% else %}
-      {{ epoch.epoch_end(month.end_epochs, contents=false) }}
-    {% endif %}
-  {% endif %}
-
 
 {%- endmacro %}
