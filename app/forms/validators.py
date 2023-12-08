@@ -45,5 +45,5 @@ def date_is_after(form, field):
         # The date_format validator will raise a Validation error already.
         return
 
-    if (start_year, start_month, start_day) >= (end_year, end_month, end_day):
+    if (start_year, start_month, start_day) > (end_year, end_month, end_day):
         raise ValidationError("End Date must be after Start Date")
