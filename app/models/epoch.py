@@ -50,11 +50,13 @@ class Epoch(db.Model):
                     self.start_date = value
                     self.start_year = self.split_date(value)[0]
                     self.start_month = self.split_date(value)[1]
+                    self.start_day = self.split_date(value)[2]
 
                 if field == "end_date":
                     self.end_date = value
                     self.end_year = self.split_date(value)[0]
                     self.end_month = self.split_date(value)[1]
+                    self.end_day = self.split_date(value)[2]
 
                 if field == "description":
                     value = sanitise_input(value)
