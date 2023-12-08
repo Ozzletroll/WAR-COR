@@ -4143,10 +4143,6 @@ for selection in timeline_search.js */
     height: 0;
   }
 
-  .epoch-start-marker, .epoch-end-marker {
-    opacity: 0;
-  }
-
   .event-header {
     padding: 9px 15px 10px 15px;
     font-size: 14px;
