@@ -3488,6 +3488,7 @@ p {
 .epoch-date {
   font-size: min(3.5vw, 18px);
   margin: 0;
+  text-align: center;
 }
 
 .epoch-end-date {
@@ -3736,7 +3737,6 @@ p {
   align-items: center;
   height: 30px;
   min-width: 30%;
-  transition: 0.5s;
   margin-left: 1px;
   /* Add back 1 pixel margin taken by event-line-bottom negative margin */
 }

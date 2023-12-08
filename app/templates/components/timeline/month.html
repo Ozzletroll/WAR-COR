@@ -50,7 +50,11 @@ elements.
 
   {% if month.days | length != 0 %}
 
+    {% if month.epoch_offset %}
+    <div class="month-connector month-connector-offset">
+    {% else %}
     <div class="month-connector">
+    {% endif %}
 
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">

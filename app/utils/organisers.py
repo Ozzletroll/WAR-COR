@@ -18,6 +18,7 @@ class Month:
         self.name = ""
         self.days = []
         self.has_following_month = False
+        self.epoch_offset = False
 
 
 class Day:
@@ -221,16 +222,22 @@ def campaign_sort(campaign):
                                 "has_epoch_end", 
                                 day_object.end_epochs)
                 
+                # Flag day object as having epoch end element after it for
+                # template rendering
+                if day_object.has_epoch_end:
+                    day_object.followed_by_epoch = True
+
                 # Append the day object to the month object
                 month_object.days.append(day_object)
 
-            # Flag day objects if they have epoch elements after them
+            # Flag day objects if the next day has epoch elements before them
             # for template rendering purposes
             for index, day_object in enumerate(month_object.days):
                 if day_object.has_epoch and index != 0:
                     month_object.days[index - 1].followed_by_epoch = True
-                elif day_object.has_epoch_end:
-                    month_object.days[index].followed_by_epoch = True
+
+                if index == 0 and day_object.has_epoch:
+                    month_object.epoch_offset = True
 
             # Append the month object to the year object
             year_object.months.append(month_object)   

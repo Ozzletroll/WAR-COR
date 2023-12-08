@@ -30,7 +30,7 @@ property to represent if the epoch has child events.
           <h3 class="epoch-header">{{ epoch.title }}</h3>
           <div class="epoch-body">
             {% if epoch.start_date != epoch.end_date %}
-              <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
+              <h4 class="epoch-date">{{ epoch.start_date }} - {{ epoch.end_date }}</h4>
             {% else %}
               <h4 class="epoch-date">{{ epoch.start_date }}</h4>
             {% endif %}

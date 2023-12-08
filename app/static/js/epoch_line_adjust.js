@@ -10,6 +10,7 @@ Array.from(dayLineFollowed).forEach(element => {
 
 function epochLineAdjust() {
 
+    // Adjust day vertical line lengths to compensate for epoch elements
     Array.from(dayLineFollowed).forEach((element, index) => {
         
         var dayElement = element.parentNode;
@@ -36,6 +37,18 @@ function epochLineAdjust() {
         
     });
 
+    // Adjust month connector margin-top to compensate for epoch elements
+    var monthConnectors = document.getElementsByClassName("month-connector-offset");
+    Array.from(monthConnectors).forEach(element => {
+        
+        var nextElement = element.nextElementSibling;
+        var epochElement = nextElement.querySelector(".epoch-start-group");
+        var epochHeight = epochElement.getBoundingClientRect().height;
+
+        element.style.marginTop = epochHeight + "px";
+
+    });
+
 }
 
 // Trigger margin adjust on sidebar page element resize (usually from sidebar deployment)
@@ -48,9 +61,6 @@ const resizeObserver = new ResizeObserver(entries => {
 });
 
 // Start observing the target element
-resizeObserver.observe(element);
-
-// Start observing the element
 resizeObserver.observe(element);
 
 // Add conventional event listeners for page load and resize
