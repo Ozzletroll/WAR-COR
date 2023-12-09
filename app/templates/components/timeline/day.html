@@ -53,7 +53,7 @@ elements.
       {% endif %}
     {% elif index == length - 1 %}
     <div class="timeline-day-outer day-container-bottom">
-      <div class="day-line day-line-bottom-edit {{ followed_by_epoch_class }}"></div>
+      <div class="day-line day-line-bottom-edit"></div>
     {% else %}
     <div class="timeline-day-outer day-container-mid">
       {% if day.has_following_day %}
@@ -74,7 +74,7 @@ elements.
     {# If the day is the last in the month #}
     {% elif index == length - 1 %}
       <div class="timeline-day-outer day-container-bottom">
-        <div class="day-line day-line-bottom {{ followed_by_epoch_class }}"></div>
+        <div class="day-line day-line-bottom"></div>
     {# All other days #}
     {% else %}
       <div class="timeline-day-outer day-container-mid">
