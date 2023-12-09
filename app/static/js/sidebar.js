@@ -39,7 +39,7 @@ class Tab {
   openTab() {
     this.tab.style.transform = "translateX(300px)";
 
-    if (window.innerWidth >= 1200 ) {
+    if (window.innerWidth >= 1400 ) {
       this.tab.style.marginRight = "300px"
     }
 
