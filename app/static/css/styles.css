@@ -3445,8 +3445,15 @@ p {
 
 /* Epoch */
 
+.epoch-start-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+}
+
 .epoch-outer {
   display: flex;
+  flex: 1 0 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;

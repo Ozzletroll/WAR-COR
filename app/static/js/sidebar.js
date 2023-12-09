@@ -28,7 +28,7 @@ class Tab {
   }
 
   checkScreenSize() {
-    if (window.innerWidth >= 1200 && this.state == true) {
+    if (window.innerWidth >= 1400 && this.state == true) {
       this.tab.style.marginRight = "300px";
     }
     else {
