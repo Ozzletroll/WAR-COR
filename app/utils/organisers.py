@@ -82,6 +82,8 @@ def campaign_sort(campaign):
             else:
                 combined_dict[year] = dict2[year]
 
+        combined_dict = {key: value for key, value in sorted(combined_dict.items())}
+
         return combined_dict
 
 
@@ -121,7 +123,7 @@ def campaign_sort(campaign):
             return False
 
 
-    def check_for_epoch(dictionary, year, month, day, month_object, day_object, has_epoch_attr, epochs_attr):
+    def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, epochs_attr):
         try:
             epochs = dictionary[year][month][day]
         except KeyError:
@@ -204,12 +206,12 @@ def campaign_sort(campaign):
 
                 # Append all the days event to the day object
                 for event in final_group[year][month][day]:
-                    day_object.events.append(event)
+                    if isinstance(event, models.Event):
+                        day_object.events.append(event)
 
                 # Check if day has any epoch starts
                 check_for_epoch(epoch_start_dict, 
                                 year, month, day,
-                                month_object,
                                 day_object, 
                                 "has_epoch", 
                                 day_object.epochs)
@@ -217,7 +219,6 @@ def campaign_sort(campaign):
                 # Check if day has any epoch ends
                 check_for_epoch(epoch_end_dict, 
                                 year, month, day,
-                                month_object,
                                 day_object, 
                                 "has_epoch_end", 
                                 day_object.end_epochs)
