@@ -50,10 +50,14 @@ elements.
 
   {% if month.days | length != 0 %}
 
+    {% if month.hide_marker %}
+      {% set hidden_class = "hidden" %}
+    {% endif %}
+
     {% if month.epoch_offset %}
-    <div class="month-connector month-connector-offset">
+    <div class="month-connector month-connector-offset {{ hidden_class }}">
     {% else %}
-    <div class="month-connector">
+    <div class="month-connector {{ hidden_class }}">
     {% endif %}
 
       <div class="line line-first"></div>

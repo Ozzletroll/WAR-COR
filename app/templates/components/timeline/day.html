@@ -82,6 +82,9 @@ elements.
     {% endif %}
   {% endif %}
 
+  {% if day.hide_marker %}
+    {% set hidden_class = "hidden" %}
+  {% endif %}
 
   <div class="right-branch-label">
 
@@ -92,7 +95,7 @@ elements.
           {{day.name}}
         </div>
       </div>
-      <div class="line line-spacer"></div>
+      <div class="line line-spacer {{ hidden_class }}"></div>
     </div>
 
   </div>

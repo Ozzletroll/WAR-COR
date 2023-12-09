@@ -3439,6 +3439,10 @@ p {
   margin: 0px;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 /* Epoch */
 
 .epoch-outer {
