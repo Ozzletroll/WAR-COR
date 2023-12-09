@@ -19,6 +19,7 @@ class Month:
         self.days = []
         self.has_following_month = False
         self.epoch_offset = False
+        self.hide_marker = False
 
 
 class Day:
@@ -33,6 +34,7 @@ class Day:
         self.end_epochs = []
         self.epoch_has_events = False
         self.followed_by_epoch = False
+        self.hide_marker = False
 
 
 def campaign_sort(campaign):
@@ -77,11 +79,19 @@ def campaign_sort(campaign):
                                 pass
                             else:
                                 combined_dict[year][month][day] = dict2[year][month][day]
+                    
                     else:
                         combined_dict[year][month] = dict2[year][month]
+
+                    # Sort days
+                    combined_dict[year][month] = {key: value for key, value in sorted(combined_dict[year][month].items())}
             else:
                 combined_dict[year] = dict2[year]
 
+            # Sort months
+            combined_dict[year] = {key: value for key, value in sorted(combined_dict[year].items())}
+
+        # Sort years
         combined_dict = {key: value for key, value in sorted(combined_dict.items())}
 
         return combined_dict
@@ -140,10 +150,13 @@ def campaign_sort(campaign):
 
     events = (db.session.query(models.Event)
             .filter_by(campaign_id=campaign.id)
-            .order_by(models.Event.year, 
-                    models.Event.month, 
-                    models.Event.day)
-                    .all())
+            .order_by(models.Event.year,
+                      models.Event.month,
+                      models.Event.day,
+                      models.Event.hour,
+                      models.Event.minute,
+                      models.Event.second,)
+                      .all())
     
     epochs_by_start_date = (db.session.query(models.Epoch)
                             .filter_by(campaign_id=campaign.id)
@@ -227,6 +240,11 @@ def campaign_sort(campaign):
                 # template rendering
                 if day_object.has_epoch_end:
                     day_object.followed_by_epoch = True
+
+                # Check if day markers can be hidden due to only having an epoch and no events
+                if day_object.has_epoch or day_object.has_epoch_end:
+                    if len(day_object.events) == 0:
+                        day_object.hide_marker = True
 
                 # Append the day object to the month object
                 month_object.days.append(day_object)
