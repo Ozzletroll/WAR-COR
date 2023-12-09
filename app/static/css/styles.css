@@ -3657,7 +3657,7 @@ p {
   align-items: center;
   width: 25%;
   height: 20px;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 .event-between-events {
@@ -4119,7 +4119,7 @@ for selection in timeline_search.js */
   }
 
   .event-between {
-    margin-bottom: 75px;
+    padding-bottom: 75px;
   }
 
   .timeline-year-header {

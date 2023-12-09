@@ -19,7 +19,8 @@ function epochLineAdjust() {
 
         while (currentElement) {
             if (currentElement.classList.contains("epoch-start-group") 
-            || currentElement.classList.contains("epoch-end-group")) {
+            || currentElement.classList.contains("epoch-end-group")
+            || currentElement.classList.contains("event-between")) {
               epochElements.push(currentElement);
             } else {
               break;
@@ -29,7 +30,7 @@ function epochLineAdjust() {
 
           var totalHeight = 0;
           for (var i = 0; i < epochElements.length; i++) {
-            totalHeight += epochElements[i].offsetHeight;
+            totalHeight += epochElements[i].getBoundingClientRect().height;;
           }
 
         var newMargin = startingMargins[0] - totalHeight;
