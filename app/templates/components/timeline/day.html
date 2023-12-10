@@ -49,7 +49,7 @@ elements.
 
   {% if edit %}
     {% if length == 1 %}
-    <div class="timeline-day-outer {{ month_hidden_class }}">
+    <div class="timeline-day-outer">
       <div class="day-line day-line-solo-edit {{ followed_by_epoch_class }}"></div>
     {% elif index == 0  %}
     <div class="timeline-day-outer">
@@ -89,8 +89,8 @@ elements.
     {% endif %}
   {% endif %}
 
-  <div class="right-branch-label {{ month_hidden_class }}">
 
+  <div class="right-branch-label">
     <div class="date-label-area {{ hidden_mobile_class}}">
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">
@@ -101,7 +101,7 @@ elements.
       {% if edit and not day.has_events %}
       <div class="line line-spacer line-dashed"></div>
       {% else %}
-      <div class="line line-spacer {{ hidden_class}}"></div>
+      <div class="line line-spacer {{ hidden_class }}"></div>
       {% endif %}
     </div>
 
@@ -129,7 +129,7 @@ elements.
   {% endif %}
 
     {# All events within day #}
-    <div class="event-group-container {{ hidden_class }} {{ month_hidden_class }}">
+    <div class="event-group-container {{ hidden_class }}">
       {% for event in day.events %}
 
         {% if edit %}
@@ -163,7 +163,7 @@ elements.
 
   {% if edit and not day.has_following_day %}
     <!-- Between days event button -->
-    <div class="event-between event-between-days {{ month_hidden_class }}">
+    <div class="event-between event-between-days">
       <div class="between-days-elements">
         <div class="line line-dashed line-edit"></div>
     </div>

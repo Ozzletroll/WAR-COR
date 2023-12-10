@@ -40,6 +40,11 @@ elements.
 
   <!-- Month {{ month.name }} -->
 
+  {% if not month.has_events %}
+    {% set hidden_class = "hidden" %}
+    {% set hidden_mobile_class = "hidden-mobile" %}
+  {% endif %}
+
   {% if index == 0 %}
     <div class="month-outer month-outer-top">
   {% elif index == length - 1 %}
@@ -50,14 +55,10 @@ elements.
 
   {% if month.days | length != 0 %}
 
-    {% if not month.has_events %}
-      {% set hidden_class = "hidden" %}
-    {% endif %}
-
     {% if month.epoch_offset %}
-    <div class="month-connector month-connector-offset {{ hidden_class }}">
+    <div class="month-connector month-connector-offset {{ hidden_mobile_class }}">
     {% else %}
-    <div class="month-connector {{ hidden_class }}">
+    <div class="month-connector {{ hidden_mobile_class }}">
     {% endif %}
 
       <div class="line line-first"></div>

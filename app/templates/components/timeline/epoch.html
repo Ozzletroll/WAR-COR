@@ -47,12 +47,10 @@ property to represent if the epoch has child events.
 
     </div>
 
-    {% if contents %}
       <div class="epoch-start-marker">
         <div class="epoch-vert-line"></div>
         <div class="epoch-hor-line"></div>
       </div>
-    {% endif %}
 
   </div>
 
@@ -72,12 +70,12 @@ Takes an a months epochs list as an argument
 {% macro epoch_end(epochs, contents=true) %}
 
 <div class="epoch-end-group">
-  {% if contents %}
+  
     <div class="epoch-end-marker">
       <div class="epoch-hor-line-end"></div>
       <div class="epoch-vert-line"></div>
     </div>
-  {% endif %}
+
 
   <div class="epoch-outer epoch-end-outer">
 
