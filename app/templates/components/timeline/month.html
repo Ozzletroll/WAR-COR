@@ -50,7 +50,7 @@ elements.
 
   {% if month.days | length != 0 %}
 
-    {% if month.hide_marker %}
+    {% if not month.has_events %}
       {% set hidden_class = "hidden" %}
     {% endif %}
 

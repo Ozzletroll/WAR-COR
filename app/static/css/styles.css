@@ -1946,7 +1946,7 @@ p {
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-left: -40px;
   margin-bottom: -80px;
-  transform: translateX(min(361px, 100vw));
+  transform: translateX(min(360px, 100vw));
   transition: 0.15s;
 }
 
@@ -3667,6 +3667,17 @@ p {
   padding-bottom: 50px;
 }
 
+.missing-event-area {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.event-between-missing {
+  width: 100%;
+  padding-bottom: 0px;
+}
+
 .event-between-events {
   width: 100%;
 }
@@ -3692,7 +3703,6 @@ p {
 }
 
 .new-event-flavour {
-  flex: 2 0 0;
   width: auto;
   font-size: min(3vw, 11px);
 }
@@ -4129,6 +4139,11 @@ for selection in timeline_search.js */
     padding-bottom: 75px;
   }
 
+  .event-between-missing {
+    padding-bottom: 50px;
+    margin-top: 5.5px;
+  }
+  
   .timeline-year-header {
     justify-content: flex-start;
     font-size: min(10vw, 48px);
@@ -4138,16 +4153,21 @@ for selection in timeline_search.js */
     font-size: 18px;
   }
 
+  .month-connector {
+    flex: 0.5;
+    min-width: 0px;
+  }
+
+  .hidden-mobile {
+    display: none;
+  }
+
   .connector-date {
     display: none;
   }
 
   .connector-date-outline {
     display: none;
-  }
-
-  .month-connector {
-    flex: 1 0 5vw;
   }
 
   .hidden-align {
@@ -4161,6 +4181,10 @@ for selection in timeline_search.js */
 
   .timeline-event {
     margin-top: -8px;
+  }
+
+  .epoch-elems {
+    width: 80%;
   }
 
 }

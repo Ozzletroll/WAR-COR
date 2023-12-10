@@ -17,6 +17,7 @@ class Month:
     def __init__(self):
         self.name = ""
         self.days = []
+        self.has_events = False
         self.has_following_month = False
         self.epoch_offset = False
         self.hide_marker = False
@@ -30,6 +31,7 @@ class Day:
         self.has_following_day = False
         self.has_epoch = False
         self.has_epoch_end = False
+        self.has_events = False
         self.epochs = []
         self.end_epochs = []
         self.epoch_has_events = False
@@ -246,6 +248,9 @@ def campaign_sort(campaign):
                     if len(day_object.events) == 0:
                         day_object.hide_marker = True
 
+                if len(day_object.events) > 0:
+                    day_object.has_events = True
+
                 # Append the day object to the month object
                 month_object.days.append(day_object)
 
@@ -257,6 +262,9 @@ def campaign_sort(campaign):
 
                 if index == 0 and day_object.has_epoch:
                     month_object.epoch_offset = True
+
+                if day_object.has_events:
+                    month_object.has_events = True
 
             # Append the month object to the year object
             year_object.months.append(month_object)   

@@ -33,6 +33,13 @@ elements.
   {% endif %}
 
   <!-- Day {{ day.name }} -->
+  {% if not day.has_events %}
+    {% set hidden_class = "hidden" %}
+    {% set hidden_mobile_class = "hidden-mobile" %}
+  {% endif %}
+  {% if not month.has_events %}
+    {% set month_hidden_class = "hidden" %}
+  {% endif %}
   
   {# Give element "day-line-followed" class, which is targetted via js to
      extend line to meet element below #}
@@ -42,7 +49,7 @@ elements.
 
   {% if edit %}
     {% if length == 1 %}
-    <div class="timeline-day-outer">
+    <div class="timeline-day-outer {{ month_hidden_class }}">
       <div class="day-line day-line-solo-edit {{ followed_by_epoch_class }}"></div>
     {% elif index == 0  %}
     <div class="timeline-day-outer">
@@ -82,26 +89,47 @@ elements.
     {% endif %}
   {% endif %}
 
-  {% if day.hide_marker %}
-    {% set hidden_class = "hidden" %}
-  {% endif %}
+  <div class="right-branch-label {{ month_hidden_class }}">
 
-  <div class="right-branch-label">
-
-    <div class="date-label-area">
+    <div class="date-label-area {{ hidden_mobile_class}}">
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">
         <div class="connector-date">
           {{day.name}}
         </div>
       </div>
-      <div class="line line-spacer {{ hidden_class }}"></div>
+      {% if edit and not day.has_events %}
+      <div class="line line-spacer line-dashed"></div>
+      {% else %}
+      <div class="line line-spacer {{ hidden_class}}"></div>
+      {% endif %}
     </div>
 
   </div>
 
+  {% if edit and not day.has_events %}
+    <div class="missing-event-area">
+      <div class="event-between event-between-missing">
+        
+        <div class="between-events-elements">
+          <div class="line line-dashed line-edit"></div>
+        </div>
+        <a href="{{ url_for('event.add_event', 
+                    campaign_name=campaign.url_title,
+                    campaign_id=campaign.id, 
+                    date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
+          <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+            <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+          </button>
+        </a>
+        <p class="flavour-text new-event-flavour">//NEW EVENT: Missing Event</p>
+
+      </div>
+    </div>
+  {% endif %}
+
     {# All events within day #}
-    <div class="event-group-container">
+    <div class="event-group-container {{ hidden_class }} {{ month_hidden_class }}">
       {% for event in day.events %}
 
         {% if edit %}
@@ -135,7 +163,7 @@ elements.
 
   {% if edit and not day.has_following_day %}
     <!-- Between days event button -->
-    <div class="event-between event-between-days">
+    <div class="event-between event-between-days {{ month_hidden_class }}">
       <div class="between-days-elements">
         <div class="line line-dashed line-edit"></div>
     </div>
@@ -152,6 +180,8 @@ elements.
 
     </div>
   {% endif %}
+
+  
 
 {# End of epoch markers #}
 {% if day.has_epoch_end %}
