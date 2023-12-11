@@ -93,13 +93,13 @@
                 </span>
               </div>
               <div class="modal-body">
-                <p>An epoch represents an era or a time period during a campaign.
+                <p>An epoch represents an era or a time period during a campaign, grouping together
+                  any events that occur within the epoch start and end dates.
                   Epochs are placed at the day level within the timeline, and encapsulate 
                   all the events that take place within.
                 </p>
-                <p>An epoch can both contain other epochs and run parallel to them.</p>
-                <p>The epoch marker is placed at the beginning of the START DATE day,
-                  and is inclusive of the END DATE day.</p>
+                <p>The epoch markers are placed at the beginning of the START DATE day,
+                  and the end of the END DATE day.</p>
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@
               </div>
               <div class="modal-body">
                 <p>The END DATE of the epoch specifies the position of the end of epoch marker.</p>
-                <p>Events that occur within the END DATE month are considered part of the epoch.</p>
+                <p>Events that occur within the END DATE day are considered part of the epoch.</p>
               </div>
             </div>
           </div>
@@ -180,14 +180,17 @@
           {{ form.submit(class_="campaign-input campaign-submit", ) }}
         </div>  
           
+        {% if edit_page %}
+        <div class="fade-in-block-2 campaign-submit-area event-submit-area">
+          <button id="button-delete" class="campaign-input campaign-submit" type="button">
+            Delete Epoch
+          </button>
+        </div>
+        {% endif %} 
+
       </form>
 
       {% if edit_page %}
-        <div class="fade-in-block-2 campaign-submit-area event-submit-area">
-          <button id="button-delete" class="campaign-input campaign-submit">
-            Delete Epoch
-          </button>
-        </div> 
 
         {# Delete event confirm modal #}
 
