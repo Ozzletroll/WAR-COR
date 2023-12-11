@@ -4171,11 +4171,7 @@ for selection in timeline_search.js */
   .connector-date-outline {
     display: none;
   }
-
-  .hidden-align {
-    height: 0;
-  }
-
+  
   .event-header {
     padding: 9px 15px 10px 15px;
     font-size: 14px;
