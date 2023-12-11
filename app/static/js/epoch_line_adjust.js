@@ -53,7 +53,7 @@ function epochLineAdjust() {
 }
 
 // Trigger margin adjust on sidebar page element resize (usually from sidebar deployment)
-const element = document.getElementById("scrollpage");
+const element = document.getElementById("scrollpage") || document.getElementById("main-features");
 
 const resizeObserver = new ResizeObserver(entries => {
   entries.forEach(entry => {

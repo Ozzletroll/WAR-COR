@@ -923,9 +923,9 @@ p {
   width: 100%;
 }
 
-.timeline-showcase-scaledown {
+/* .timeline-showcase-scaledown {
   transform: scale(0.8);
-}
+} */
 
 .fade-group {
   opacity: 0;
@@ -3272,7 +3272,7 @@ p {
   flex: 1 0 0;
   margin-top: 50px;
   margin-bottom: 150px;
-  transition: 0.3s;
+  transition: all 0.25s ease 0s;
 }
 
 /* No Events found elements */
