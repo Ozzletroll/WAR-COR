@@ -194,7 +194,10 @@ class Day {
   resetStyles() {
     this.elements["rightBranchLabel"].style.opacity = "";
     this.elements["eventGroupContainer"].style.opacity = "";
-    this.dayLine.style.opacity = "";
+
+    if (this.dayLine != null) {
+      this.dayLine.style.opacity = "";
+    }
 
     this.events.forEach(result => {
       result.styleReset();
