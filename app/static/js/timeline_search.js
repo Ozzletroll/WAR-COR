@@ -380,7 +380,7 @@ class SearchEngine {
             rightBranchLabel: dayContainer.querySelector(".right-branch-label"),
             eventGroupContainer: dayContainer.querySelector(".event-group-container"),
           },
-          dayLine: dayContainer.querySelector(".event-line"),
+          dayLine: dayContainer.querySelector(".day-line"),
           events: [],
           daysBelow: false,
           containsPositiveEvent: false,
