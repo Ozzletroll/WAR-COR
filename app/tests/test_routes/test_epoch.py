@@ -85,3 +85,27 @@ def test_edit_epoch(client, auth, epoch):
 
     assert epoch_object_edited is not None
     assert epoch_object_edited.title == "Test Epoch Edited"
+
+
+def test_delete_epoch(client, auth, epoch):
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    epoch_object_edited = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title="Test Epoch Edited")).scalar()
+
+    # Test epoch can be deleted
+    auth.login(username="Admin", password=TEST_PASSWORD)
+    response_1 = epoch.delete(campaign_object,
+                              epoch_object_edited)
+    assert response_1.status_code == 200
+
+    epoch_object_edited = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title="Test Epoch Edited")).scalar()
+
+    assert epoch_object_edited is None
+    assert len(campaign_object.epochs) == 0

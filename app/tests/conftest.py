@@ -202,6 +202,16 @@ class EpochActions(object):
 
         return self._client.post(url, data=data, follow_redirects=True)
 
+    def delete(self, campaign_object, epoch_object):
+
+        url = url_for("epoch.delete_epoch",
+                      campaign_name=campaign_object.title,
+                      campaign_id=campaign_object.id,
+                      epoch_id=epoch_object.id,
+                      epoch_title=epoch_object.title)
+
+        return self._client.post(url, follow_redirects=True)
+
 
 @pytest.fixture
 def captured_templates(app):
