@@ -207,15 +207,14 @@
                 <p class="flavour-text modal-flavour">EPC-{{campaign.id}}-{{epoch.id}} // DELETION::CONFIRM</p>
                 <p class="modal-text modal-text-upper">Confirm termination of epoch: "{{epoch.title}}".</p>
 
-                <a class="delete-comment-link" href="{{ url_for('epoch.delete_epoch', 
+                <form method="POST" action="{{ url_for('epoch.delete_epoch',
                                                         campaign_name=campaign.url_title,
                                                         campaign_id=campaign.id,
                                                         epoch_title=epoch.title,
                                                         epoch_id=epoch.id) }}">
-                  <button class="button modal-confirm-button">
-                    DELETE
-                  </button>
-                </a>
+                  {{ delete_form.csrf_token }}
+                  {{ delete_form.submit(class_="button modal-confirm-button", value="DELETE") }}
+                </form>
 
               </div>
             </div>
