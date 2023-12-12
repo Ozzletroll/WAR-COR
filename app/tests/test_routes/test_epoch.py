@@ -53,3 +53,35 @@ def test_new_epoch(client, auth, epoch):
         .filter_by(title="Test Epoch")).scalar()
     assert epoch_object is not None
     assert epoch_object in campaign_object.epochs
+
+
+def test_edit_epoch(client, auth, epoch):
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    epoch_object = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title="Test Epoch")).scalar()
+
+    data = {
+        "start_date": "5017/01/01",
+        "end_date": "5017/01/03",
+        "title": "Test Epoch Edited",
+        "description": "Epoch description edited",
+    }
+
+    # Test that epoch can be edited
+    auth.login(username="Admin", password=TEST_PASSWORD)
+    response_1 = epoch.edit(campaign_object,
+                            epoch_object,
+                            data=data)
+    assert response_1.status_code == 200
+
+    epoch_object_edited = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title="Test Epoch Edited")).scalar()
+
+    assert epoch_object_edited is not None
+    assert epoch_object_edited.title == "Test Epoch Edited"
