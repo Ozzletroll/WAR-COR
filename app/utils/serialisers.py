@@ -208,6 +208,10 @@ def epochs_import(epoch):
     except AttributeError:
         errors.append("Incorrect date format")
     try:
+        new_epoch.start_day = new_epoch.split_date(new_epoch.start_date)[2]
+    except ValueError:
+        errors.append("Incorrect date format")
+    try:
         new_epoch.end_date = epoch["end_date"]
     except KeyError:
         errors.append("Unable to locate epoch end date")
@@ -219,6 +223,10 @@ def epochs_import(epoch):
         errors.append("Incorrect date format")
     try:
         new_epoch.end_month = new_epoch.split_date(new_epoch.end_date)[1]
+    except ValueError:
+        errors.append("Incorrect date format")
+    try:
+        new_epoch.end_day = new_epoch.split_date(new_epoch.end_date)[2]
     except ValueError:
         errors.append("Incorrect date format")
     try:
