@@ -194,7 +194,10 @@ class Day {
   resetStyles() {
     this.elements["rightBranchLabel"].style.opacity = "";
     this.elements["eventGroupContainer"].style.opacity = "";
-    this.dayLine.style.opacity = "";
+
+    if (this.dayLine != null) {
+      this.dayLine.style.opacity = "";
+    }
 
     this.events.forEach(result => {
       result.styleReset();
@@ -377,7 +380,7 @@ class SearchEngine {
             rightBranchLabel: dayContainer.querySelector(".right-branch-label"),
             eventGroupContainer: dayContainer.querySelector(".event-group-container"),
           },
-          dayLine: dayContainer.querySelector(".event-line"),
+          dayLine: dayContainer.querySelector(".day-line"),
           events: [],
           daysBelow: false,
           containsPositiveEvent: false,

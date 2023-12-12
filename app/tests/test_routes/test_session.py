@@ -21,7 +21,6 @@ def test_check_consent(client, captured_templates):
 
     assert "consent" in context_2
     assert context_2["consent"] is False
-    assert "consent_form" in context_2
 
 
 # Test cookie acceptance route

@@ -13,45 +13,46 @@ property to represent if the epoch has child events.
 
 {% macro epoch(epochs, campaign, edit=false, contents=true) %}
 
-  <div class="epoch-outer">
+  <div class="epoch-start-group">
+    <div class="epoch-outer">
 
-    <div class="epoch-elems">
-    {% for epoch in epochs %}
-      {% if edit %}
-      <a class="edit-epoch" href="{{ url_for('epoch.edit_epoch', 
-                                     campaign_name=campaign.url_title,
-                                     campaign_id=campaign.id,
-                                     epoch_title=epoch.title,
-                                     epoch_id=epoch.id) }}">
-      {% endif %}
+      <div class="epoch-elems">
+      {% for epoch in epochs %}
+        {% if edit %}
+        <a class="edit-epoch" href="{{ url_for('epoch.edit_epoch', 
+                                      campaign_name=campaign.url_title,
+                                      campaign_id=campaign.id,
+                                      epoch_title=epoch.title,
+                                      epoch_id=epoch.id) }}">
+        {% endif %}
 
-      <div id="epoch-{{epoch.id}}" class="epoch-container">
-        <h3 class="epoch-header">{{ epoch.title }}</h3>
-        <div class="epoch-body">
-          {% if epoch.start_date != epoch.end_date %}
-            <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
-          {% else %}
-            <h4 class="epoch-date">{{ epoch.start_date }}</h4>
-          {% endif %}
-          <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
+        <div id="epoch-{{epoch.id}}" class="epoch-container">
+          <h3 class="epoch-header">{{ epoch.title }}</h3>
+          <div class="epoch-body">
+            {% if epoch.start_date != epoch.end_date %}
+              <h4 class="epoch-date">{{ epoch.start_date }} > {{ epoch.end_date }}</h4>
+            {% else %}
+              <h4 class="epoch-date">{{ epoch.start_date }}</h4>
+            {% endif %}
+            <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
+          </div>
         </div>
+
+        {% if edit %}
+        </a>
+        {% endif %}
+      {% endfor %}
+
       </div>
 
-      {% if edit %}
-      </a>
-      {% endif %}
-    {% endfor %}
-
     </div>
+
+      <div class="epoch-start-marker">
+        <div class="epoch-vert-line"></div>
+        <div class="epoch-hor-line"></div>
+      </div>
 
   </div>
-
-  {% if contents %}
-    <div class="epoch-start-marker">
-      <div class="epoch-vert-line"></div>
-      <div class="epoch-hor-line"></div>
-    </div>
-  {% endif %}
 
 {%- endmacro %}
 
@@ -68,12 +69,13 @@ Takes an a months epochs list as an argument
 
 {% macro epoch_end(epochs, contents=true) %}
 
-  {% if contents %}
+<div class="epoch-end-group">
+  
     <div class="epoch-end-marker">
       <div class="epoch-hor-line-end"></div>
       <div class="epoch-vert-line"></div>
     </div>
-  {% endif %}
+
 
   <div class="epoch-outer epoch-end-outer">
 
@@ -87,6 +89,6 @@ Takes an a months epochs list as an argument
 
   </div>
 
-  
+</div>
 
 {%- endmacro %}

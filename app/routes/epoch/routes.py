@@ -30,8 +30,8 @@ def new_epoch(campaign_name, campaign_id):
         # Create placeholder event to prepopulate form
         epoch = models.Epoch()
 
-        epoch.start_date = request.args["date"]
-        epoch.end_date = request.args["date"]
+        epoch.start_date = request.args["date"] + "/01"
+        epoch.end_date = request.args["date"] + "/02"
         form = forms.CreateEpochForm(obj=epoch)
 
     # Otherwise, create default empty form
@@ -83,6 +83,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
     form = forms.CreateEpochForm(obj=epoch)
+    delete_form = forms.SubmitForm()
 
     if form.validate_on_submit():
 
@@ -105,12 +106,13 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                            campaign=campaign,
                            campaign_name=campaign.url_title,
                            form=form,
+                           delete_form=delete_form,
                            epoch=epoch,
                            edit_page=True)
 
 
 # Delete epoch
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/delete", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/delete", methods=["POST"])
 @login_required
 def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 

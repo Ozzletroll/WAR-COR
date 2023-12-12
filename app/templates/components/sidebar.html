@@ -20,15 +20,15 @@
         
       {% for month in year.months %}
 
-        {% if month.has_epoch %}
-          {% for epoch in month.epochs %}
-          <a class="sidebar-button" href="#epoch-{{epoch.id}}">
-            <button class="event-button epoch-button">-{{epoch.title}}-</button>
-          </a>
-          {% endfor %}
-        {% endif %}
-
         {% for day in month.days %}
+
+          {% if day.has_epoch %}
+            {% for epoch in day.epochs %}
+            <a class="sidebar-button" href="#epoch-{{epoch.id}}">
+              <button class="event-button epoch-button">-{{epoch.title}}-</button>
+            </a>
+            {% endfor %}
+          {% endif %}
 
           {% for event in day.events  %}
             <a class="sidebar-button" href="#event-{{event.id}}">
@@ -42,21 +42,22 @@
             </a>
           {% endfor %}
 
-        {% endfor %}
+          {# Epoch End
 
-        {# Show Epoch End
+          {% if day.has_epoch_end %}
+            {% for epoch in day.end_epochs %}
+              {% if epoch.has_events %}
+              <a class="sidebar-button" href="#epoch-end-{{epoch.id}}">
+                <button class="event-button epoch-button">-End of {{epoch.title}}-</button>
+              </a>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          
+          #}
 
-        {% if month.has_epoch_end %}
-          {% for epoch in month.end_epochs %}
-            {% if epoch.has_events %}
-            <a class="sidebar-button" href="#epoch-end-{{epoch.id}}">
-              <button class="event-button epoch-button">-End of {{epoch.title}}-</button>
-            </a>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
         
-        #}
+        {% endfor %}
 
       {% endfor %}
 

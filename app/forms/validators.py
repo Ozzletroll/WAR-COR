@@ -9,8 +9,8 @@ def date_format(format):
         message = "Not a valid date format, please use the format 'YYYY/MM/DD HH:MM:SS'"
         format = r"^-?\d{1,9}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}$"
     elif format == "epoch":
-        message = "Not a valid date format, please use the format 'YYYY/MM'"
-        format = r"^-?\d{1,9}/\d{2}$"
+        message = "Not a valid date format, please use the format 'YYYY/MM/DD'"
+        format = r"^-?\d{1,9}/\d{2}/\d{2}$"
 
     def _date_format(form, field):
 
@@ -39,11 +39,11 @@ def date_is_after(form, field):
 
     # Convert to integers, catching exception if incorrect format submitted
     try:
-        start_year, start_month = map(int, start_date.split("/"))
-        end_year, end_month = map(int, end_date.split("/"))
+        start_year, start_month, start_day = map(int, start_date.split("/"))
+        end_year, end_month, end_day = map(int, end_date.split("/"))
     except ValueError:
         # The date_format validator will raise a Validation error already.
         return
 
-    if start_year > end_year or (start_year == end_year and start_month > end_month):
-        raise ValidationError("End Date must be equal or after Start Date")
+    if (start_year, start_month, start_day) > (end_year, end_month, end_day):
+        raise ValidationError("End Date must be after Start Date")

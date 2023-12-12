@@ -1,3 +1,4 @@
+{% import "components/timeline/epoch.html" as epoch %}
 {% import "components/timeline/event.html" as timeline_event %}
 
 {# 
@@ -14,46 +15,69 @@ elements.
 
 {% macro day(campaign, year, month, day, length, index, edit=false) %}
 
+  {# Start of epoch markers #}
+  {% if day.has_epoch %}
+    {% if day.epoch_has_events %}
+      {% if edit %}
+        {{ epoch.epoch(day.epochs, campaign=campaign, contents=true, edit=true) }}
+      {% else %}
+        {{ epoch.epoch(day.epochs, campaign=campaign, contents=true, edit=false) }}
+      {% endif %}
+    {% else %}
+      {% if edit %}
+        {{ epoch.epoch(day.epochs, campaign=campaign, contents=false, edit=true) }}
+      {% else %}
+        {{ epoch.epoch(day.epochs, campaign=campaign, contents=false, edit=false) }}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
   <!-- Day {{ day.name }} -->
+  {% if not day.has_events %}
+    {% set hidden_class = "hidden" %}
+    {% set hidden_mobile_class = "hidden-mobile" %}
+  {% endif %}
+  {% if not month.has_events %}
+    {% set month_hidden_class = "hidden" %}
+  {% endif %}
   
+  {# Give element "day-line-followed" class, which is targetted via js to
+     extend line to meet element below #}
+  {% if day.followed_by_epoch and day.events | length != 0 %}
+    {% set followed_by_epoch_class = "day-line-followed" %}
+  {% endif %}
+
   {% if edit %}
     {% if length == 1 %}
     <div class="timeline-day-outer">
-      <div class="day-line day-line-solo-edit"></div>
+      <div class="day-line day-line-solo-edit {{ followed_by_epoch_class }}"></div>
     {% elif index == 0  %}
     <div class="timeline-day-outer">
       {% if day.has_following_day %}
-      <div class="day-line day-line-top-edit top-no-between"></div>
+      <div class="day-line day-line-top-edit top-no-between {{ followed_by_epoch_class }}"></div>
       {% else %}
-      <div class="day-line day-line-top-edit"></div>
+      <div class="day-line day-line-top-edit {{ followed_by_epoch_class }}"></div>
       {% endif %}
-    {% elif index == length - 1 and length == 2 %}
-    <div class="timeline-day-outer day-container-edgecase">
-      <div class="day-line day-line-bottom-edit"></div>
     {% elif index == length - 1 %}
     <div class="timeline-day-outer day-container-bottom">
       <div class="day-line day-line-bottom-edit"></div>
     {% else %}
     <div class="timeline-day-outer day-container-mid">
       {% if day.has_following_day %}
-      <div class="day-line  day-line-mid-edit mid-no-between"></div>
+      <div class="day-line day-line-mid-edit mid-no-between {{ followed_by_epoch_class }}"></div>
       {% else %}
-      <div class="day-line  day-line-mid-edit"></div>
+      <div class="day-line day-line-mid-edit {{ followed_by_epoch_class }}"></div>
       {% endif %}
     {% endif %}
   {% else %}
     {# If day is the only day in the month #}
     {% if length == 1 %}
       <div class="timeline-day-outer">
-        <div class="day-line day-line-solo"></div>
+        <div class="day-line day-line-solo {{ followed_by_epoch_class }}"></div>
     {# If day is the first in the month #}
     {% elif index == 0  %}
     <div class="timeline-day-outer">
-      <div class="day-line day-line-top"></div>
-    {# If day is the last in the month and there are only two days #}
-    {% elif index == length - 1 and length == 2 %}
-    <div class="timeline-day-outer day-container-edgecase">
-      <div class="day-line day-line-bottom"></div>
+      <div class="day-line day-line-top {{ followed_by_epoch_class }}"></div>
     {# If the day is the last in the month #}
     {% elif index == length - 1 %}
       <div class="timeline-day-outer day-container-bottom">
@@ -61,27 +85,51 @@ elements.
     {# All other days #}
     {% else %}
       <div class="timeline-day-outer day-container-mid">
-        <div class="day-line day-line-mid"></div>
+        <div class="day-line day-line-mid {{ followed_by_epoch_class }}"></div>
     {% endif %}
   {% endif %}
 
 
   <div class="right-branch-label">
-
-    <div class="date-label-area">
+    <div class="date-label-area {{ hidden_mobile_class}}">
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">
         <div class="connector-date">
           {{day.name}}
         </div>
       </div>
-      <div class="line line-spacer"></div>
+      {% if edit and not day.has_events %}
+      <div class="line line-spacer line-dashed"></div>
+      {% else %}
+      <div class="line line-spacer {{ hidden_class }}"></div>
+      {% endif %}
     </div>
 
   </div>
 
+  {% if edit and not day.has_events %}
+    <div class="missing-event-area">
+      <div class="event-between event-between-missing">
+        
+        <div class="between-events-elements">
+          <div class="line line-dashed line-edit"></div>
+        </div>
+        <a href="{{ url_for('event.add_event', 
+                    campaign_name=campaign.url_title,
+                    campaign_id=campaign.id, 
+                    date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
+          <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+            <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+          </button>
+        </a>
+        <p class="flavour-text new-event-flavour">//NEW EVENT: Missing Event</p>
+
+      </div>
+    </div>
+  {% endif %}
+
     {# All events within day #}
-    <div class="event-group-container">
+    <div class="event-group-container {{ hidden_class }}">
       {% for event in day.events %}
 
         {% if edit %}
@@ -132,5 +180,16 @@ elements.
 
     </div>
   {% endif %}
+
+  
+
+{# End of epoch markers #}
+{% if day.has_epoch_end %}
+  {% if day.epoch_has_events %}
+    {{ epoch.epoch_end(day.end_epochs) }}
+  {% else %}
+    {{ epoch.epoch_end(day.end_epochs, contents=false) }}
+  {% endif %}
+{% endif %}
 
 {%- endmacro %}

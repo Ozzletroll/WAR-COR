@@ -15,23 +15,6 @@ elements.
 
 {% macro month(campaign, year, month, day, length, index, edit=false) %}
 
-  {# Start of epoch markers #}
-  {% if month.has_epoch %}
-    {% if month.epoch_has_events %}
-      {% if edit %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=true, edit=true) }}
-      {% else %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=true, edit=false) }}
-      {% endif %}
-    {% else %}
-      {% if edit %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=false, edit=true) }}
-      {% else %}
-        {{ epoch.epoch(month.epochs, campaign=campaign, contents=false, edit=false) }}
-      {% endif %}
-    {% endif %}
-  {% endif %}
-
   {% if edit %}
     {# New Epoch Element #}
     <div class="epoch-between">
@@ -43,7 +26,7 @@ elements.
                             campaign_name=campaign.url_title,
                             campaign_id=campaign.id,
                             date=year.name + '/' + month.name) }}">
-        <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
+        <button id="new_epoch-{{year.name}}-{{month.name}}" class="new-timeline-item">
           <div class="epoch-button-text">NEW EPOCH
             <div>{{ year.name }} / {{month.name}}</div>
           </div>
@@ -57,6 +40,11 @@ elements.
 
   <!-- Month {{ month.name }} -->
 
+  {% if not month.has_events %}
+    {% set hidden_class = "hidden" %}
+    {% set hidden_mobile_class = "hidden-mobile" %}
+  {% endif %}
+
   {% if index == 0 %}
     <div class="month-outer month-outer-top">
   {% elif index == length - 1 %}
@@ -67,7 +55,11 @@ elements.
 
   {% if month.days | length != 0 %}
 
-    <div class="month-connector">
+    {% if month.epoch_offset %}
+    <div class="month-connector month-connector-offset {{ hidden_mobile_class }}">
+    {% else %}
+    <div class="month-connector {{ hidden_mobile_class }}">
+    {% endif %}
 
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">
@@ -148,16 +140,5 @@ elements.
     {% endif %}
 
   {% endif %}
-
-    
-  {# End of epoch markers #}
-  {% if month.has_epoch_end %}
-    {% if month.epoch_has_events %}
-      {{ epoch.epoch_end(month.end_epochs) }}
-    {% else %}
-      {{ epoch.epoch_end(month.end_epochs, contents=false) }}
-    {% endif %}
-  {% endif %}
-
 
 {%- endmacro %}

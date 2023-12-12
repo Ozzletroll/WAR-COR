@@ -1,5 +1,6 @@
-from itertools import groupby
 import copy
+
+from app import db, models
 
 
 
@@ -9,7 +10,6 @@ class Year:
     def __init__(self):
         self.name = ""
         self.months = []
-        self.marker = False
 
 
 class Month:
@@ -17,12 +17,10 @@ class Month:
     def __init__(self):
         self.name = ""
         self.days = []
-        self.has_epoch = False
-        self.has_epoch_end = False
-        self.epochs = []
-        self.end_epochs = []
-        self.epoch_has_events = False
+        self.has_events = False
         self.has_following_month = False
+        self.epoch_offset = False
+        self.hide_marker = False
 
 
 class Day:
@@ -31,89 +29,75 @@ class Day:
         self.name = ""
         self.events = []
         self.has_following_day = False
+        self.has_epoch = False
+        self.has_epoch_end = False
+        self.has_events = False
+        self.epochs = []
+        self.end_epochs = []
+        self.epoch_has_events = False
+        self.followed_by_epoch = False
+        self.hide_marker = False
 
 
 def campaign_sort(campaign):
     """ Function that structures campaign event data for timeline rendering. Returns
         a list of year objects.
-    
-        Sorting is achieved by first creating nested dictionaries to represent the
-        timeline structure, which will be used for iteration purposes in order to create
-        Year, Month, and Day objects. 
-        
-        The first dictionary structure is created by combining two dictionaries of the 
-        campaigns epochs organised by start date and end date.
-
-            Example: {year: {month: [<Epoch 1>, <Epoch 2>]}}
-
-        Next, a similar dictionary is created from the campaigns events, with an 
-        additional layer of nested dictionaries representing days. The event objects
-        themselves are nested inside the day entries.
-
-            Example: {year: {month: {day: [<Event 3>, <Event 4>]}}}
-        
-        These two nested dictionaries are then combined into one. The "events" dictionary
-        is used as the primary structure, and new entries are created for any year/month
-        that only contains epochs.
-
-            Example: 
-        
-            If there were two events that occurred in 5015/01/01, and one epoch that began
-            in 5014/05/01 and ended in 5016/01/01, the dict would be:
-
-            final_group = {5014: {05: [<Epoch 1>]}},
-                           5015: {01: {01: [<Event 1>, <Event 2>]},
-                           5016: {01: [<Epoch 2>]}}
-
-        Finally, this dict is used to create a structure of nested
-        objects, allowing easier rendering in the Jinja template:                     
-
-            Month objects are assigned as a property of Year objects under Year.months. 
-            Day objects are assigned as properties of Month objects under Month.days.
-            Epochs are assigned under Month.epochs.
-            Event objects are assigned under Day.events.
-
-        Other properties are also assigned here to assist in template rendering.
         
     """
-    
-    def custom_sort(event):
-        """Sort key function for sorting event objects """
-        return (event.year, event.month, event.day, event.hour, event.minute, event.second)
 
-    def check_year_marker(year):
-        """Check if a given year is long enough to warrant a year marker """
+    def create_dict(object_list, year_attr, month_attr, day_attr):
 
-        marker = False
-
-        if len(year) >= 3:
-            marker = True
+        dict = {}
+        for item_object in object_list:
             
-        for month in year:
-            if len(year[month]) >= 5:
-                marker = True
-            for day in year[month]:
-                if len(year[month][day]) >= 5:
-                    marker = True
-        
-        if marker:
-            return True
-        else:
-            return False
+            year = getattr(item_object, year_attr)
+            month = getattr(item_object, month_attr)
+            day = getattr(item_object, day_attr)
 
-    def group_epochs(epochs, sort_key, year_key, month_key):
-        """Function to sort epochs into matching data structure to the timeline events.
-        Takes a list of a campaigns epochs, as well as a sort key."""
-        sorted_epochs = sorted(epochs, key=sort_key)
-        epoch_groups = groupby(sorted_epochs, key=year_key)
-        grouped_epochs = {year: list(group) for year, group in epoch_groups}
+            if year not in dict:
+                dict[year] = {}
 
-        for year in grouped_epochs:
-            groups = groupby(grouped_epochs[year], key=month_key)
-            grouped_months = {month: list(group) for month, group in groups}
-            grouped_epochs[year] = grouped_months
+            if month not in dict[year]:
+                dict[year][month] = {}
 
-        return grouped_epochs
+            if day not in dict[year][month]:
+                dict[year][month][day] = []
+
+            dict[year][month][day].append(item_object)
+
+        return dict
+    
+
+    def merge_dicts(dict1, dict2):
+
+        combined_dict = copy.deepcopy(dict1)
+
+        for year in dict2:
+            if year in combined_dict:
+                for month in dict2[year]:
+                    if month in combined_dict[year]:
+                        for day in dict2[year][month]:
+                            if day in combined_dict[year][month]:
+                                pass
+                            else:
+                                combined_dict[year][month][day] = dict2[year][month][day]
+                    
+                    else:
+                        combined_dict[year][month] = dict2[year][month]
+
+                    # Sort days
+                    combined_dict[year][month] = {key: value for key, value in sorted(combined_dict[year][month].items())}
+            else:
+                combined_dict[year] = dict2[year]
+
+            # Sort months
+            combined_dict[year] = {key: value for key, value in sorted(combined_dict[year].items())}
+
+        # Sort years
+        combined_dict = {key: value for key, value in sorted(combined_dict.items())}
+
+        return combined_dict
+
 
     def has_following(index, level, current_item):
         """ Function to determine if month/day within timeline has a consecutive following month/day.
@@ -150,73 +134,64 @@ def campaign_sort(campaign):
         else:
             return False
 
-    # --- START ---
 
-    # Sort and group epochs by start date and end date
-    epochs_by_start_date = group_epochs(campaign.epochs, 
-                                        sort_key=lambda epoch: (epoch.start_year, epoch.start_month),
-                                        year_key=lambda epoch: epoch.start_year,
-                                        month_key=lambda epoch: epoch.start_month)
-    epochs_by_end_date = group_epochs(campaign.epochs,
-                                      sort_key=lambda epoch: (epoch.end_year, epoch.end_month),
-                                      year_key=lambda epoch: epoch.end_year,
-                                      month_key=lambda epoch: epoch.end_month)
-    
-    # Merge two dictionaries for year/month population
-    combined_epochs = {}
-
-    for year in epochs_by_start_date:
-        if year not in combined_epochs:
-            combined_epochs[year] = epochs_by_start_date[year]
-    for year in epochs_by_end_date:
-        if year not in combined_epochs:
-            combined_epochs[year] = epochs_by_end_date[year]
-
-    # Sort years again
-    combined_epochs = {key: value for key, value in sorted(combined_epochs.items())}
-
-    # Current epoch structure:
-    # grouped_epochs = {year: {month: [<Epoch 1>, <Epoch 2>]}
-
-    # Sort events into date order
-    sorted_events = sorted(campaign.events, key=custom_sort)
-    # Structure events into dictionary, grouped by year
-    groups = groupby(sorted_events, key=lambda event: event.year)
-    grouped_events = {year: list(group) for year, group in groups}
-
-    # Group each years events into months
-    for year in grouped_events:
-        groups = groupby(grouped_events[year], key=lambda event: event.month)
-        grouped_months = {month: list(group) for month, group in groups}
-        grouped_events[year] = grouped_months
-
-    # Group each months events into days
-    for year in grouped_events:
-        for month in grouped_events[year]:
-            groups = groupby(grouped_events[year][month], key=lambda event: event.day)
-            grouped_days = {day: list(group) for day, group in groups}
-            grouped_events[year][month] = grouped_days
-
-    # Current event structure:
-    # grouped_events = {year: {month: {day: [<Event 1>, <Event 2>]}}}
-
-    # Combine both dictionaries to determine timeline structure
-    final_group = copy.deepcopy(grouped_events)
-
-    for year, month in combined_epochs.items():
-        if year in final_group:
-            for month in combined_epochs[year]:
-                if month not in final_group[year]:
-                    final_group[year][month] = combined_epochs[year][month]  
+    def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, epochs_attr):
+        try:
+            epochs = dictionary[year][month][day]
+        except KeyError:
+            pass
         else:
-            final_group[year] = combined_epochs[year]
+            setattr(day_object, has_epoch_attr, True)
+            for epoch in epochs:
+                epochs_attr.append(epoch)
+                if epoch.has_events:
+                    day_object.epoch_has_events = True
 
-    # Sort final grouping into year order
-    final_group = {key: value for key, value in sorted(final_group.items())}
-    # Sort final grouping months
-    for year in final_group:
-        for month in final_group[year]:
-            final_group[year] = {key: value for key, value in sorted(final_group[year].items())}
+
+    # --- START --- #
+
+    events = (db.session.query(models.Event)
+            .filter_by(campaign_id=campaign.id)
+            .order_by(models.Event.year,
+                      models.Event.month,
+                      models.Event.day,
+                      models.Event.hour,
+                      models.Event.minute,
+                      models.Event.second,)
+                      .all())
+    
+    epochs_by_start_date = (db.session.query(models.Epoch)
+                            .filter_by(campaign_id=campaign.id)
+                            .order_by(models.Epoch.start_year,
+                                      models.Epoch.start_month,
+                                      models.Epoch.start_day)
+                                      .all())
+    
+    epochs_by_end_date = (db.session.query(models.Epoch)
+                          .filter_by(campaign_id=campaign.id)
+                          .order_by(models.Epoch.end_year,
+                                    models.Epoch.end_month,
+                                    models.Epoch.end_day)
+                                    .all())
+
+    year_dict = create_dict(object_list=events,
+                            year_attr="year",
+                            month_attr="month",
+                            day_attr="day")
+    
+    epoch_start_dict = create_dict(object_list=epochs_by_start_date,
+                                   year_attr="start_year",
+                                   month_attr="start_month",
+                                   day_attr="start_day")
+    
+    epoch_end_dict = create_dict(object_list=epochs_by_end_date,
+                                 year_attr="end_year",
+                                 month_attr="end_month",
+                                 day_attr="end_day")
+
+    combined_epochs_dict = merge_dicts(epoch_start_dict, epoch_end_dict)
+
+    final_group = merge_dicts(year_dict, combined_epochs_dict)
 
     # Turn each level of the hierarchy into an object, with the level below as a list held in a property
     year_list = []
@@ -225,11 +200,6 @@ def campaign_sort(campaign):
 
         year_object = Year()
         year_object.name = str(year)
-        try:
-            year_object.marker = check_year_marker(grouped_events[year])
-        # Catch exception if year only has epoch and nothing else
-        except KeyError:
-            year_object.marker = False
 
         for month_index, month in enumerate(final_group[year]):
 
@@ -238,7 +208,7 @@ def campaign_sort(campaign):
 
             # Determine if the following month is the next consecutive month
             if has_following(index=month_index, level=final_group[year], current_item=month):
-                    month_object.has_following_month = True
+                month_object.has_following_month = True
 
             for day_index, day in enumerate(final_group[year][month]):
 
@@ -249,34 +219,52 @@ def campaign_sort(campaign):
                 if has_following(index=day_index, level=final_group[year][month], current_item=day):
                     day_object.has_following_day = True
 
-                try:
-                    for event in grouped_events[year][month][day]:
-                        # Append the event to the day object
+                # Append all the days event to the day object
+                for event in final_group[year][month][day]:
+                    if isinstance(event, models.Event):
                         day_object.events.append(event)
-                # Catch exception if month has no days (IE, only has epochs)
-                except KeyError:
-                    continue
+
+                # Check if day has any epoch starts
+                check_for_epoch(epoch_start_dict, 
+                                year, month, day,
+                                day_object, 
+                                "has_epoch", 
+                                day_object.epochs)
+                
+                # Check if day has any epoch ends
+                check_for_epoch(epoch_end_dict, 
+                                year, month, day,
+                                day_object, 
+                                "has_epoch_end", 
+                                day_object.end_epochs)
+                
+                # Flag day object as having epoch end element after it for
+                # template rendering
+                if day_object.has_epoch_end:
+                    day_object.followed_by_epoch = True
+
+                # Check if day markers can be hidden due to only having an epoch and no events
+                if day_object.has_epoch or day_object.has_epoch_end:
+                    if len(day_object.events) == 0:
+                        day_object.hide_marker = True
+
+                if len(day_object.events) > 0:
+                    day_object.has_events = True
 
                 # Append the day object to the month object
                 month_object.days.append(day_object)
 
-            # Check if any epoch starts occur in month
-            if year in epochs_by_start_date:
-                if month in epochs_by_start_date[year]:
-                    month_object.has_epoch = True
-                    month_object.epochs = epochs_by_start_date[year][month]
-                    for epoch in month_object.epochs:
-                        if len(epoch.events) > 0:
-                            month_object.epoch_has_events = True
+            # Flag day objects if the next day has epoch elements before them
+            # for template rendering purposes
+            for index, day_object in enumerate(month_object.days):
+                if day_object.has_epoch and index != 0:
+                    month_object.days[index - 1].followed_by_epoch = True
 
-            # Check if any epoch ends occur in month
-            if year in epochs_by_end_date:
-                if month in epochs_by_end_date[year]:
-                    month_object.has_epoch_end = True
-                    month_object.end_epochs = epochs_by_end_date[year][month]
-                    for epoch in month_object.end_epochs:
-                        if len(epoch.events) > 0:
-                            month_object.epoch_has_events = True
+                if index == 0 and day_object.has_epoch:
+                    month_object.epoch_offset = True
+
+                if day_object.has_events:
+                    month_object.has_events = True
 
             # Append the month object to the year object
             year_object.months.append(month_object)   

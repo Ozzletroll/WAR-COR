@@ -107,7 +107,7 @@
                 <p>In order to handle a variety of non-standard galactic calendars, WAR/COR does not
                   enforce standard year/month/day lengths.</p>
                 <p>The year value can be any value of 1-9 digits. A negative value may be given for the year, allowing the placement of events in a similar manner to the BC/BCE system.</p>
-                <p>The month, day, hour and seconds entries can be any value from 00-99, to accomodate any local galactic calendar standards.</p>
+                <p>The month, day, hour and seconds entries can be any value from 00-99, to accomodate any local system calendar standards.</p>
                 <p class="modal-highlight-text">Example: "5016/15/40 25:00:00" is a valid date.</p>
                 <p class="modal-highlight-text">Example: "-500/03/25 12:00:00" is a valid date.</p>
               </div>
@@ -322,15 +322,17 @@
           {{ form.submit(class_="button campaign-input campaign-submit") }}
         </div>  
   
-      </form>
-
-      {% if edit %}
+        {% if edit %}
         <div class="fade-in-block-2 campaign-submit-area event-submit-area">
-          <button id="button-delete" class="button campaign-input campaign-submit">
+          <button id="button-delete" class="button campaign-input campaign-submit" type="button">
             Delete Event
           </button>
         </div> 
+        {% endif %}
 
+      </form>
+
+      {% if edit %}
         {# Delete event confirm modal #}
 
         <div id="modal-delete" class="modal">

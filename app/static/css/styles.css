@@ -923,9 +923,9 @@ p {
   width: 100%;
 }
 
-.timeline-showcase-scaledown {
+/* .timeline-showcase-scaledown {
   transform: scale(0.8);
-}
+} */
 
 .fade-group {
   opacity: 0;
@@ -1586,6 +1586,7 @@ p {
   border-radius: 3px;
   margin: 0;
   padding: 8px;
+  cursor: pointer;
 }
 
 .user-delete-button {
@@ -1946,7 +1947,7 @@ p {
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-left: -40px;
   margin-bottom: -80px;
-  transform: translateX(min(361px, 100vw));
+  transform: translateX(min(360px, 100vw));
   transition: 0.15s;
 }
 
@@ -3271,7 +3272,7 @@ p {
   flex: 1 0 0;
   margin-top: 50px;
   margin-bottom: 150px;
-  transition: 0.3s;
+  transition: all 0.25s ease 0s;
 }
 
 /* No Events found elements */
@@ -3439,10 +3440,21 @@ p {
   margin: 0px;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 /* Epoch */
+
+.epoch-start-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0;
+}
 
 .epoch-outer {
   display: flex;
+  flex: 1 0 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -3488,6 +3500,8 @@ p {
 .epoch-date {
   font-size: min(3.5vw, 18px);
   margin: 0;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .epoch-end-date {
@@ -3572,7 +3586,7 @@ p {
 }
 
 .epoch-end-outer {
-  margin-bottom: 120px;
+  margin-bottom: 40px;
 }
 
 .epoch-end-text {
@@ -3652,7 +3666,18 @@ p {
   align-items: center;
   width: 25%;
   height: 20px;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
+}
+
+.missing-event-area {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.event-between-missing {
+  width: 100%;
+  padding-bottom: 0px;
 }
 
 .event-between-events {
@@ -3680,9 +3705,8 @@ p {
 }
 
 .new-event-flavour {
-  flex: 2 0 0;
   width: auto;
-  font-size: min(3vw, 11px);
+  font-size: min(3vw, 12px);
 }
 
 .between-last {
@@ -3736,7 +3760,6 @@ p {
   align-items: center;
   height: 30px;
   min-width: 30%;
-  transition: 0.5s;
   margin-left: 1px;
   /* Add back 1 pixel margin taken by event-line-bottom negative margin */
 }
@@ -4115,9 +4138,14 @@ for selection in timeline_search.js */
   }
 
   .event-between {
-    margin-bottom: 75px;
+    padding-bottom: 75px;
   }
 
+  .event-between-missing {
+    padding-bottom: 50px;
+    margin-top: 5.5px;
+  }
+  
   .timeline-year-header {
     justify-content: flex-start;
     font-size: min(10vw, 48px);
@@ -4127,6 +4155,15 @@ for selection in timeline_search.js */
     font-size: 18px;
   }
 
+  .month-connector {
+    flex: 0.5;
+    min-width: 0px;
+  }
+
+  .hidden-mobile {
+    display: none;
+  }
+
   .connector-date {
     display: none;
   }
@@ -4134,19 +4171,7 @@ for selection in timeline_search.js */
   .connector-date-outline {
     display: none;
   }
-
-  .month-connector {
-    flex: 1 0 5vw;
-  }
-
-  .hidden-align {
-    height: 0;
-  }
-
-  .epoch-start-marker, .epoch-end-marker {
-    opacity: 0;
-  }
-
+  
   .event-header {
     padding: 9px 15px 10px 15px;
     font-size: 14px;
@@ -4154,6 +4179,10 @@ for selection in timeline_search.js */
 
   .timeline-event {
     margin-top: -8px;
+  }
+
+  .epoch-elems {
+    width: 80%;
   }
 
 }
