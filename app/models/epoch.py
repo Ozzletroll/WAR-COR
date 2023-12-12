@@ -4,7 +4,6 @@ from app import db
 from app.utils.sanitisers import sanitise_input
 
 
-
 class Epoch(db.Model):
     __tablename__ = "epoch"
 
@@ -29,12 +28,13 @@ class Epoch(db.Model):
     # An epoch is part of a campaign, and may encapsulate multiple events.
 
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
-    parent_campaign = db.relationship("Campaign", back_populates="epochs")
+    parent_campaign = db.relationship("Campaign",
+                                      back_populates="epochs")
 
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     events = db.relationship("Event",
-                              secondary="epoch_events",
-                              back_populates="epochs")
+                             secondary="epoch_events",
+                             back_populates="epochs")
     
     # Methods
     def update(self, form, parent_campaign, new=False):
@@ -74,7 +74,6 @@ class Epoch(db.Model):
         self.populate_self()
         self.parent_campaign.check_epochs()
 
-
     @staticmethod
     def split_date(datestring):
         """ Method that splits a form datestring into individual integer values. """
@@ -84,7 +83,6 @@ class Epoch(db.Model):
         day = int(datestring.split("/")[2])
 
         return [year, month, day]
-
 
     def populate_self(self):
         """ Method to get all events in parent campaign that fall
@@ -112,8 +110,7 @@ class Epoch(db.Model):
                 return True
 
             return False
-        
-    
+
         self.events.clear()
         self.events = [event for event in self.parent_campaign.events if is_in_epoch(event, self)]
 
