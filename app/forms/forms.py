@@ -88,6 +88,7 @@ class CreateEpochForm(FlaskForm):
     description = TextAreaField("Description")
     submit = SubmitField("Create Epoch")
 
+
 class SearchUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     submit = SubmitField("Search")
