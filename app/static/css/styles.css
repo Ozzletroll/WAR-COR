@@ -4913,7 +4913,7 @@ for selection in timeline_search.js */
   font-family: "Roboto Mono", monospace;
   font-size: min(14px, 3vw);
   font-weight: 500;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0,calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
   border-style: none;
   text-transform: uppercase;
   transition: 0.3s;
