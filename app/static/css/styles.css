@@ -4887,6 +4887,7 @@ for selection in timeline_search.js */
   padding: 6px;
   box-sizing: border-box;
   border-top-left-radius: 3px;
+  margin-bottom: -1px;
 }
 
 .new-comment-heading {
