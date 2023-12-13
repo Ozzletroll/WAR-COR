@@ -151,7 +151,7 @@
 
             <!-- Year {{  year.name }} -->
 
-            <div class="timeline-year">
+            <div id="timeline-year-{{year.name}}" class="timeline-year">
 
               <!-- Year main axis -->
               <div class="timeline-year-outer-container">
@@ -167,7 +167,7 @@
 
                   <div class="timeline-columns">
 
-                    <div id="timeline-left-marker" class="timeline-left-marker">
+                    <div class="timeline-left-marker">
                       <div class="year-marker-hr"></div>
                       <div class="year-marker-line"></div>
                       <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
@@ -222,6 +222,7 @@
 <script src="/static/js/scroll_target.js"></script> 
 <script src="/static/js/margin_fix.js"></script>
 <script src="/static/js/epoch_line_adjust.js"></script>
+<script src="/static/js/timeline_left_markers.js"></script>
 <script>
   window.addEventListener("resize", marginFix);
   window.addEventListener('DOMContentLoaded', marginFix());
