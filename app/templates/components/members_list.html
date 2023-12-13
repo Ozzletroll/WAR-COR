@@ -40,6 +40,10 @@
                     <h6 class="callsign-text callsign-break">
                       [{{entry.callsign.upper()}}]
                     </h6>
+                  {% else %}
+                    <h6 class="callsign-text callsign-break">
+                      [NO CALLSIGN]
+                    </h6>
                   {% endif %}
                 {%endif%}
               {% endfor %}
