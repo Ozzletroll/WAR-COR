@@ -103,3 +103,22 @@ def timeline_edit_toggle():
     response = make_response({"Message": "Session variable set"}, 200)
 
     return response
+
+
+# Get and clear event page comment scroll target session variable
+@bp.route("/session/comment-scroll-target", methods=["GET"])
+def comment_target():
+
+    if "comment_scroll_target" in session:
+
+        response_data = {"Message": "Session variable cleared",
+                         "type": "element", 
+                         "target": session["comment_scroll_target"]}
+        # Clear session variable
+        session.pop("comment_scroll_target", None)
+        response = make_response(jsonify(response_data), 200)
+
+    else:
+        response = make_response({"Message": "Session variable not set"}, 204)
+
+    return response

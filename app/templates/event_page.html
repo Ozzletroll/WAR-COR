@@ -199,9 +199,9 @@
                       <p class="comment-date">{{ comment.date }}</p>
 
                       {% if comment.author == current_user %}
-                      <div class="comment-header comment-header-user">
+                      <div id="comment-{{comment.id}}" class="comment-header comment-header-user">
                       {% else %}
-                      <div class="comment-header">
+                      <div id="comment-{{comment.id}}" class="comment-header">
                       {% endif %}
                         <div class="comment-header-left">
                           <img class="icon" src="/static/images/icons/user_white.svg">
@@ -297,7 +297,13 @@
 
 </div>
 
- <!-- Javascript -->
- <script src="/static/js/event.js"></script> 
+<!-- Javascript -->
+<script src="/static/js/event.js"></script>
+<script src="/static/js/scroll_target.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', 
+                          scrollToTarget('{{ url_for("session.comment_target") }}', 
+                                         '{{ csrf_token() }}'));
+</script>  
 
 {% endblock %}

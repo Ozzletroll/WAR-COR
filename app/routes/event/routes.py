@@ -53,6 +53,9 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                                              recipients=campaign.members,
                                              campaign=campaign,
                                              event=event)
+        
+        # Set scroll to target to newly created event
+        session["comment_scroll_target"] = f"comment-{comment.id}"
 
         return redirect(url_for('event.view_event', 
                                 campaign_name=campaign.url_title,
