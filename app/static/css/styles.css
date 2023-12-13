@@ -3615,7 +3615,6 @@ p {
 .edit-epoch {
   display: flex;
   justify-content: center;
-  width: 100%;
   text-decoration: none;
   border: 2px dashed var(--bright_red);
   transition: 0.5s;
@@ -3910,11 +3909,11 @@ for selection in timeline_search.js */
 }
 
 .day-line-mid-edit {
-  margin-bottom: -110px;
+  margin-bottom: -109px;
 }
 
 .mid-no-between {
-  margin-bottom: -39px;
+  margin-bottom: -40px;
 }
 
 .day-line-bottom {
