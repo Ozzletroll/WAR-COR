@@ -203,7 +203,9 @@ def join_campaign():
                 .filter(func.lower(models.Campaign.title).like(search_format))
             ).scalars()
 
-            results = [campaign for campaign in campaigns if campaign not in current_user.campaigns]
+            results = [campaign for campaign in campaigns 
+                       if campaign not in current_user.campaigns 
+                       and campaign.accepting_applications]
                                         
             if len(results) == 0:
                 flash("No campaigns matching query found")
@@ -237,8 +239,11 @@ def request_membership(campaign_name, campaign_id):
     # Retrieve the users with editing permissions for the campaign
     campaign_admins = campaign.admins
 
-    messengers.send_membership_request(current_user, campaign_admins, campaign)
-    flash(f"Membership request to campaign '{campaign.title}' sent")
+    if campaign.accepting_applications:
+        messengers.send_membership_request(current_user, campaign_admins, campaign)
+        flash(f"Membership request to campaign '{campaign.title}' sent")
+    else:
+        flash(f"Campaign '{campaign.title}' is not currently accepting membership applications")
 
     return redirect(url_for("membership.join_campaign"))
 
