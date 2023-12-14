@@ -28,3 +28,14 @@ def check_membership(campaign):
     else:
         abort(403)
         
+
+def check_campaign_visibility(campaign):
+    """Function to require login if campaign is private"""
+    if campaign.private:
+        if current_user.is_authenticated:
+            if current_user not in campaign.members:
+                abort(403)
+            else:
+                return
+        else:
+            abort(401)

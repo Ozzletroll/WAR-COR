@@ -1,7 +1,13 @@
-from flask import render_template
+from flask import render_template, redirect, url_for, flash
 from app import db
 
 from app.routes.error import bp
+
+
+@bp.app_errorhandler(401)
+def access_denied_error(error):
+    flash("Please log in to access this page")
+    return redirect(url_for("user.login"))
 
 
 @bp.app_errorhandler(403)

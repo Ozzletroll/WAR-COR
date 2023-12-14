@@ -27,6 +27,8 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     
     campaign = event.parent_campaign
 
+    authenticators.check_campaign_visibility(campaign)
+
     # Format belligerents data
     belligerents = event.separate_belligerents() 
 

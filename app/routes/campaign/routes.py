@@ -36,6 +36,9 @@ def show_timeline(campaign_name, campaign_id):
     campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
+    
+    # Check campaign's privacy settings allow access
+    authenticators.check_campaign_visibility(campaign)
 
     # Sort event data for template rendering
     grouped_events = organisers.campaign_sort(campaign)

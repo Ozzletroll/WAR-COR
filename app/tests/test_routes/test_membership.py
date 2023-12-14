@@ -35,6 +35,9 @@ def test_edit_campaign_members(client, auth, campaign):
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
 
+    campaign_object.accepting_applications = True
+    db.session.commit()
+
     url = url_for("membership.edit_campaign_users",
                   campaign_name=campaign_object.title,
                   campaign_id=campaign_object.id)
