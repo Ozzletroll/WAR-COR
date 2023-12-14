@@ -126,6 +126,11 @@ const tab_2 = new Tab({
   button: "t2-button",
 })
 
+const tab_3 = new Tab({
+  tab: "tab-3",
+  button: "t3-button",
+})
+
 
 // Create array to hold modal objects
 const modalItems = []

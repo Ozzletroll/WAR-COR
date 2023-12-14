@@ -15,6 +15,8 @@ class Campaign(db.Model):
     last_edited = db.Column(db.DateTime, nullable=False)
     date_suffix = db.Column(db.String(8), nullable=True)
     negative_date_suffix = db.Column(db.String(8), nullable=True)
+    private = db.Column(db.Boolean(), default=False)
+    accepting_applications = db.Column(db.Boolean(), default=False)
 
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing

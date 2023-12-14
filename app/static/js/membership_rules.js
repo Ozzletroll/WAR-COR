@@ -1,0 +1,48 @@
+// Function to get current campaign settings
+function checkCurrentSettings(private, acceptingApplications) {
+
+    var visibility;
+    if (private == "True") {
+        visibility = "visibility-private";
+    }
+    else {
+        visibility = "visibility-public";
+    }
+
+    document.getElementById(visibility).checked = true;
+
+    var membership;
+    if (acceptingApplications == "True") {
+        membership = "membership-open";
+    }
+    else {
+        membership = "membership-invite";
+    }
+
+    document.getElementById(membership).checked = true;
+
+}
+
+// Function to update campaign membership rules via fetch request
+function updateMembershipSettings(target_url, csrfToken) {
+
+    var target_url = target_url;
+    var visibility = document.querySelector('input[name="visibility"]:checked').value;
+    var membership = document.querySelector('input[name="membership"]:checked').value;
+
+    var data = new FormData();
+    data.append("visibility", visibility);
+    data.append("membership", membership);
+
+    // Send fetch request to target url
+    fetch(target_url, {
+        "method": "POST",
+        "headers": {
+        'X-CSRF-TOKEN': csrfToken,
+        },
+        "body" : data,
+    })
+    .then(function(response) {
+
+    })
+}

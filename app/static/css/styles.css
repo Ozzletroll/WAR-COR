@@ -2918,6 +2918,11 @@ p {
   gap: 15px;
 }
 
+.user-access-form {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .user-buttons .user-form-container .user-form-flavour {
   margin-bottom: 0;
 }

@@ -407,3 +407,33 @@ def add_permission(campaign_name, campaign_id):
     return redirect(url_for("membership.edit_campaign_users", 
                             campaign_name=campaign.url_title,
                             campaign_id=campaign.id))
+
+
+# Function called via fetch request to update campaign membership settings
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/update-membership-settings", methods=["POST"])
+@login_required
+def update_membership_settings(campaign_name, campaign_id):
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(id=campaign_id)).scalar()
+    
+    authenticators.permission_required(campaign)
+
+    visibility = request.form["visibility"]
+    membership = request.form["membership"]
+
+    if visibility == "private":
+        campaign.private = True
+    else:
+        campaign.private = False
+
+    if membership == "open":
+        campaign.accepting_applications = True
+    else:
+        campaign.accepting_applications = False
+
+    db.session.commit()
+
+    response = make_response(jsonify({"message": "Settings updated"}), 200)
+    return response

@@ -150,6 +150,65 @@
 
     </div>
 
+    <!-- Tab 3 -->
+
+    <div class="settings-area">
+      <button class="callsign-deploy-button" id="t3-button">
+        <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
+        <h2 class="user-page-title">Visibility and Access</h2>
+      </button>
+
+      <div class="callsign-content-area" id="tab-3">
+
+        <p class="flavour-text">CNF-{{campaign.id}}-03 // {{campaign.title}}::Access </p>
+
+        <div class="user-form-container user-access-form">
+          <form class="preferences-form">
+
+            <h4 class="campaign-entry-title">Campaign Visibility</h4>
+            <div class="pref-item">
+              <input id="visibility-public" value="public" type="radio" name="visibility" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+              <label class="theme-label">
+                Public
+              </label>
+            </div>
+            <div class="pref-item">
+              <input id="visibility-private" value="private" type="radio" name="visibility" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+              <label class="theme-label">
+                Members Only
+              </label>
+            </div>
+  
+          </form>
+
+        </div>
+  
+        <div class="user-form-container user-access-form">
+          <form class="preferences-form">
+  
+            <h4 class="campaign-entry-title">Membership</h4>
+            <div class="pref-item">
+              <input id="membership-invite" value="invite" type="radio" name="membership" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+              <label class="theme-label">
+                Invite Only
+              </label>
+            </div>
+            <div class="pref-item">
+              <input id="membership-open" value="open" type="radio" name="membership" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+              <label class="theme-label">
+                Open to Applications
+              </label>
+            </div>
+  
+          </form>
+        </div>
+       
+        
+
+      </div>
+
+    </div>
+
   </div>
     
     <div class="flavour-text-area fade-in-block-3">
@@ -240,10 +299,21 @@
 </div>
 
  <!-- Javascript -->
- <script src="/static/js/campaign_members.js"></script> 
+ <script src="/static/js/campaign_members.js"></script>  
  <script>
   const target_url = "{{ url_for('membership.user_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const csrfToken = "{{ csrf_token() }}"
+</script>
+
+<script src="/static/js/membership_rules.js"></script>
+<script>
+  const membershipRulesURL = "{{ url_for('membership.update_membership_settings', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
+  const membershipCSRFToken = "{{ csrf_token() }}"
+</script>
+
+{# Initialise campaign visibility settings #}
+<script>
+  checkCurrentSettings("{{ campaign.private }}", "{{ campaign.accepting_applications }}")
 </script>
 
 {% endblock %}
