@@ -85,7 +85,7 @@ def create_app(config_class=Config):
     def load_user(user_id):
         return db.session.get(app.models.User, user_id)
     
-    # Disable browser caching
+    # Disable browser caching during debug
     if flask_app.config["DEBUG"]:
         @flask_app.after_request
         def after_request(response):
@@ -94,14 +94,14 @@ def create_app(config_class=Config):
             response.headers["Pragma"] = "no-cache"
             return response
 
-    # os.path.join is used to allow the test config to also access the data
+    # os.path.join is used to allow the test config to also access the data folder
     data_folder = os.path.join(os.path.dirname(__file__), 'utils', 'data')
 
     # Create data folder if necessary
     if not os.path.exists(data_folder):
         os.makedirs(data_folder)
 
-    # Create data for random name generator
+    # If not present, create data for random name generator
     try:
         with open(os.path.join(data_folder, 'nouns.json'), 'r') as file:
             pass
@@ -120,24 +120,27 @@ def create_app(config_class=Config):
     except FileNotFoundError:
         create_data()
 
-    # Configure error logging email
+    # Configure email error logging via SMTP
     if not flask_app.debug:
-        if flask_app.config['MAIL_SERVER']:
+
+        if flask_app.config["MAIL_SERVER"]:
             auth = None
-            if flask_app.config['MAIL_USERNAME'] or flask_app.config['MAIL_PASSWORD']:
-                auth = (flask_app.config['MAIL_USERNAME'], flask_app.config['MAIL_PASSWORD'])
+
+            if flask_app.config["MAIL_USERNAME"] or flask_app.config["MAIL_PASSWORD"]:
+                auth = (flask_app.config["MAIL_USERNAME"], flask_app.config["MAIL_PASSWORD"])
+
             secure = None
+
             if flask_app.config['MAIL_USE_TLS']:
                 secure = ()
+                
             mail_handler = SMTPHandler(
-                mailhost=(flask_app.config['MAIL_SERVER'], flask_app.config['MAIL_PORT']),
-                fromaddr='no-reply@' + flask_app.config['MAIL_SERVER'],
-                toaddrs=flask_app.config['ADMINS'], subject='WAR/COR Failure',
+                mailhost=(flask_app.config["MAIL_SERVER"], flask_app.config["MAIL_PORT"]),
+                fromaddr="no-reply@war-cor.com",
+                toaddrs=flask_app.config["ADMIN"], subject="WAR/COR Application Failure",
                 credentials=auth, secure=secure)
+            
             mail_handler.setLevel(logging.ERROR)
             flask_app.logger.addHandler(mail_handler)
 
     return flask_app
-
-
-
