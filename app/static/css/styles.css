@@ -2966,8 +2966,10 @@ p {
   border-color: var(--bright_red);
 }
 
-.theme-radio:hover {
-  background-color: var(--bright_red);
+@media (hover: hover) {
+  .theme-radio:hover {
+    background-color: var(--bright_red);
+  }
 }
 
 .theme-radio:active {
