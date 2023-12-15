@@ -37,7 +37,7 @@ class Day:
         self.epoch_has_events = False
         self.followed_by_epoch = False
         self.hide_marker = False
-        self.no_following_events = False
+        self.no_following_events = True
 
 
 def campaign_sort(campaign):
@@ -269,7 +269,6 @@ def campaign_sort(campaign):
 
                 # Check all days after the current one to see if they hold any events
                 if index != len(month_object.days) - 1:
-                    day_object.no_following_events = True
                     for day in month_object.days[index + 1:]:
                         if len(day.events) != 0:
                             day_object.no_following_events = False
