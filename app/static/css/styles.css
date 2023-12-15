@@ -3175,6 +3175,7 @@ p {
   background-color: var(--elem_mid);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   padding: 10px;
+  border-radius: 3px;
 }
 
 .members-left {
