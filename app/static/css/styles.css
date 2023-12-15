@@ -1577,6 +1577,7 @@ p {
   display: flex;
   justify-content: center;
   font-size: 15px;
+  font-weight: 400;
   text-transform: uppercase;
   width: 120px;
   font-family: "Roboto Mono", monospace;
@@ -1888,6 +1889,7 @@ p {
 
 .campaign-submit {
   padding: 20px;
+  font-weight: 400;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   cursor: pointer;
@@ -2755,7 +2757,7 @@ p {
   flex-wrap: wrap;
   text-transform: uppercase;
   font-size: min(7vw, 48px);
-  font-weight: 700;
+  font-weight: 500;
   padding: 0;
   width: 100%;
   text-align: left;
