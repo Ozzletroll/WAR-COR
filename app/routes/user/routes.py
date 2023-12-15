@@ -78,7 +78,8 @@ def login():
         if user:
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
                 login_user(user)
-                return redirect(url_for("campaign.campaigns"))
+
+                return redirect(request.args.get("next") or url_for("campaign.campaigns"))
             else:
                 flash("Incorrect password or username.")
                 return redirect(url_for("user.login"))
