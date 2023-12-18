@@ -7,6 +7,12 @@
 
 {% block body %}
 
+  <noscript class="noscript">
+    <strong>This site requires JavaScript to function correctly. 
+      Please enable JavaScript in your browser settings.</p></strong>
+      <img src="/static/images/logo-red.png" class="top-logo">
+  </noscript>
+
   <div class="layout">
 
     <div class="border"></div>
@@ -14,7 +20,7 @@
       {% block page_style %}
       <div class="page">
       {% endblock %}  
-
+      
         {% include 'base/navbar.html' %}
 
         {% if not consent %}

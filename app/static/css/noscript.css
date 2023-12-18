@@ -1,0 +1,17 @@
+.noscript {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text_flavour);
+    text-transform: uppercase;
+    margin: 25% 10%;
+  }
+
+  .layout {
+    display: none;
+  }
+  
