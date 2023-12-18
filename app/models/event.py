@@ -27,7 +27,6 @@ class Event(db.Model):
     result = db.Column(db.String(), nullable=True)
     hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
-    edit_locked = db.Column(db.Boolean(), default=False)
     last_edited = db.Column(db.DateTime)
 
     # Database relationships
