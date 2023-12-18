@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, session, flash
+from flask import render_template, redirect, request, url_for, session, flash, make_response
 from sqlalchemy import select
 from flask_login import login_required, current_user
 from datetime import datetime
@@ -65,12 +65,27 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                                 event_name=event.url_title,
                                 event_id=event.id))
 
-    return render_template("event_page.html", 
-                           event=event, 
-                           campaign=campaign, 
-                           belligerents=belligerents,
-                           form=form,
-                           delete_form=delete_form)
+    # Disable page caching if page has been recently edited
+    if event.has_been_recently_edited():
+        response = make_response(render_template("event_page.html",
+                                                 event=event,
+                                                 campaign=campaign,
+                                                 belligerents=belligerents,
+                                                 form=form,
+                                                 delete_form=delete_form))
+
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
+
+    else:
+        return render_template("event_page.html",
+                               event=event,
+                               campaign=campaign,
+                               belligerents=belligerents,
+                               form=form,
+                               delete_form=delete_form)
 
 
 # Add new event

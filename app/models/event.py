@@ -27,6 +27,9 @@ class Event(db.Model):
     result = db.Column(db.String(), nullable=True)
     hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
+    edit_locked = db.Column(db.Boolean(), default=False)
+    last_edited = db.Column(db.DateTime)
+
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments. 
     # Events have both following and preceding events.
@@ -69,6 +72,7 @@ class Event(db.Model):
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
+        self.last_edited = datetime.now()
         self.set_url_title()
         
         if new:
@@ -117,3 +121,14 @@ class Event(db.Model):
             with dashes '-'. """
 
         self.url_title = self.title.replace(" ", "-")
+
+    def has_been_recently_edited(self):
+        """ Method to check if event has been edited in the last 5 minutes"""
+
+        time_difference = datetime.now() - self.last_edited
+
+        if time_difference.total_seconds() <= 300:
+            return True
+        else:
+            return False
+        
