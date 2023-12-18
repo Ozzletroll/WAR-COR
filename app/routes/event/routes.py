@@ -242,7 +242,9 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
         select(models.Comment)
         .filter_by(id=target_comment_id)).scalar()
 
+    # Check if comment exists and has not already been deleted
     if comment is not None:
+
         # Check if it is the comment author who is deleting the comment
         if comment.author == current_user:
             authenticators.check_membership(campaign)
