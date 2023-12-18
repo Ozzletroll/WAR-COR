@@ -242,18 +242,19 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
         select(models.Comment)
         .filter_by(id=target_comment_id)).scalar()
 
-    # Check if it is the comment author who is deleting the comment
-    if comment.author == current_user:
-        authenticators.check_membership(campaign)
-    else:
-        # Check if the user has permissions to edit the target campaign.
-        authenticators.permission_required(campaign)
+    if comment is not None:
+        # Check if it is the comment author who is deleting the comment
+        if comment.author == current_user:
+            authenticators.check_membership(campaign)
+        else:
+            # Check if the user has permissions to edit the target campaign.
+            authenticators.permission_required(campaign)
 
-    # Check if comment -> event -> campaign relationship is valid
-    if comment in event.comments and event in campaign.events:
-        # Delete the comment
-        db.session.delete(comment)
-        db.session.commit()
+        # Check if comment -> event -> campaign relationship is valid
+        if comment in event.comments and event in campaign.events:
+            # Delete the comment
+            db.session.delete(comment)
+            db.session.commit()
 
     return redirect(url_for('event.view_event', 
                             campaign_name=campaign.url_title,
