@@ -2976,6 +2976,16 @@ p {
   background-color: transparent;
 }
 
+.access-title {
+  margin: 0px 0px 10px;
+}
+
+.access-description {
+  margin: 0px 0px 10px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
 /* Theme selector */
 
 .preferences-form {
