@@ -9,10 +9,21 @@
 
 #}
 
-{% macro members_list(campaign) %}
+{% macro members_list(campaign, edit=false) %}
 
 <div class="campaign-members">
-  <h4 class="campaign-entry-title">Members:</h4>
+  <div class="members-list-title-area">
+    <h4 class="campaign-entry-title">Members:</h4>
+
+    {% if edit %}
+      <a class="campaign-edit-link" href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
+        <button class="button campaign-edit-button">
+          EDIT MEMBERS
+        </button>
+      </a>
+    {% endif %}
+  </div>
+  
 
     <div class="campaign-members-list">
 

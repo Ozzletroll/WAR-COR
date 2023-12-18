@@ -2390,6 +2390,35 @@ p {
   flex-wrap: wrap;
 }
 
+.members-list-title-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.campaign-edit-link {
+  text-decoration: none;
+}
+
+.campaign-edit-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  gap: 5px;
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  font-size: 14px;
+  color: var(--text_header_dark);
+  background-color: var(--bg_colour1);
+  transition: 0.15s ease;
+}
+
+.campaign-edit-button:hover {
+  border: 1px solid var(--text_header_hover);
+  color: var(--text_header_hover);
+}
+
 .campaign-members .campaign-entry-title {
   margin: 0;
 }

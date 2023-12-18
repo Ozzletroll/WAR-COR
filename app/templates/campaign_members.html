@@ -28,7 +28,11 @@
       <div class="campaigns-title">
 
         {# Back button #}
-        {% set url = url_for('campaign.campaigns') %}
+        {% if request.referrer %}
+          {% set url = request.referrer %}
+        {% else %}
+          {% set url = url_for('campaign.campaigns') %}
+        {% endif %}
         {{ back_button.back_button(url=url, blank=false) }}
 
         <h3 class="campaigns-heading">Edit Members</h3>
