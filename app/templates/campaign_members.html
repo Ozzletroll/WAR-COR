@@ -14,11 +14,18 @@
     <div class="fade-in-block-1">
 
       {# Create navigation url bar #}
+      {% if request.referrer %}
+        {% if campaign.url_title + "-" + campaign.id | string + "/edit" in request.referrer %}
+          {% set campaign_url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+        {% else %}
+          {% set campaign_url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+        {% endif %}
+      {% else %}
+        {% set campaign_url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+      {% endif %}
 
       {% set urls = [url_for('campaign.campaigns'),
-                     url_for('campaign.show_timeline',
-                     campaign_name=campaign.url_title,
-                     campaign_id=campaign.id)] %}
+                     campaign_url] %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
                                         is_link=true,

@@ -123,6 +123,10 @@ def edit_campaign(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
 
+    # Set the last visited url, excluding this route
+    if request.referrer and "/data/edit" not in request.referrer:
+        session["previous_url"] = request.referrer
+
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
@@ -132,7 +136,9 @@ def edit_campaign(campaign_name, campaign_id):
     # Update campaign if form submitted
     if form.validate_on_submit():
         campaign.update(form=request.form)
-        return redirect(url_for("campaign.campaigns"))
+
+        # Redirect to the page the user came from
+        return redirect(url_for("user.back"))
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
