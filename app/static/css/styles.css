@@ -2733,10 +2733,6 @@ p {
   border-radius: 5px;
 }
 
-.settings-area .campaign-entry-title, .callsigns-area .campaign-entry-title {
-  color: var(--text_header_contrast);
-}
-
 .callsign-content-area {
   margin-top: -20px;
   padding: 0px 5% 20px 5%;
