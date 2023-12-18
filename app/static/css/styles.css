@@ -2390,7 +2390,7 @@ p {
   flex-wrap: wrap;
 }
 
-.members-list-title-area {
+.members-list-title-area, .campaign-overview-title-area {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2402,21 +2402,30 @@ p {
 
 .campaign-edit-button {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   padding: 2px;
-  gap: 5px;
   border: 1px solid var(--elem_border);
   border-radius: 3px;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--text_header_dark);
   background-color: var(--bg_colour1);
   transition: 0.15s ease;
+  width: 180px;
 }
 
 .campaign-edit-button:hover {
   border: 1px solid var(--text_header_hover);
   color: var(--text_header_hover);
+}
+
+.campaign-edit-button:hover .icon-colour-var {
+  fill: var(--bright_red);
+}
+
+.campaign-edit-button-right {
+  width: 100%;
+  justify-content: center;
 }
 
 .campaign-members .campaign-entry-title {
@@ -2526,6 +2535,14 @@ p {
 
   .members-list-item, .members-list-admin {
     margin-bottom: 5px;
+  }
+
+  .campaign-edit-button {
+    width: fit-content;
+  }
+
+  .campaign-edit-button-right {
+    display: none;
   }
 
 }
