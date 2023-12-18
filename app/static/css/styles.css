@@ -1272,7 +1272,7 @@ p {
 
 .modal-content-small {
   width: min(60%, 400px);
-  height: 230px;
+  height: fit-content;
 }
 
 .modal-preview-content {
@@ -1317,7 +1317,7 @@ p {
   height: fit-content;
   align-items: center;
   padding: calc(5% + 1px);
-  overflow-y: scroll;
+  overflow-y: visible;
 }
 
 .modal-body p{
@@ -1354,6 +1354,7 @@ p {
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   border: 1px solid var(--bright_red);
+  border-radius: 0px;
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
   margin: 0;
