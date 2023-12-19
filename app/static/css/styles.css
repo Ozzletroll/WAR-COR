@@ -1246,8 +1246,8 @@ p {
   background-color: var(--darker_red);
   padding: 0px;
   width: min(80%, 500px);
-  height: min(70%, 700px);
-  overflow-y: initial;
+  height: fit-content;
+  overflow-y: visible;
   -webkit-animation-name: modalanim;
   -webkit-animation-duration: 0.4s;
   animation-name: modalanim;
@@ -1303,7 +1303,6 @@ p {
   display: flex;
   flex: 1 0 0;
   padding: calc(10% + 1px);
-  overflow-y: auto;
   flex-direction: column;
   font-weight: 300;
   background-color: var(--elem_mid);
@@ -1393,7 +1392,7 @@ p {
   opacity: 1;
 }
 
-@media screen and (max-width: 400px) { 
+@media screen and (max-width: 500px) { 
 
   .modal-header h2{
     font-size: min(6vw, 18px);
