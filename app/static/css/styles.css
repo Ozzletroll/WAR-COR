@@ -4089,7 +4089,7 @@ for selection in timeline_search.js */
   background-color: var(--elem_mid);
   flex-direction: column;
   scroll-margin-top: 33vh;
-  clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 100% 100%, 0 100%);
+  clip-path: polygon(calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%, 0 0);
   margin-top: -9px;
   transition: 0.5s;
 }
@@ -4112,9 +4112,10 @@ for selection in timeline_search.js */
 
 .event-header {
   display: flex;
-  font-size: clamp(12px, 2vw, 16px);
+  align-items: center;
+  font-size: 16px;
   font-weight: 500;
-  padding: 10px 15px 10px 15px;
+  padding: 11px 15px;
   text-transform: uppercase;
   color: var(--text_header_contrast);
   background-color: var(--darker_red);
