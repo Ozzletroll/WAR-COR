@@ -120,7 +120,7 @@
   --elem_bright: #3d3d3d;
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
-  --elem_border: #ff3300;
+  --elem_border: #9af5a4;;
   --elem_shadow: #181516a6;
 
   --text_bright: #000000;
@@ -2408,7 +2408,7 @@ p {
   border: 1px solid var(--elem_border);
   border-radius: 3px;
   font-size: 12px;
-  color: var(--text_header_dark);
+  color: var(--text_header);
   background-color: var(--bg_colour1);
   transition: 0.15s ease;
   width: 180px;
