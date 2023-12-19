@@ -4090,14 +4090,14 @@ for selection in timeline_search.js */
   flex-direction: column;
   scroll-margin-top: 33vh;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-  margin-top: -8px;
+  margin-top: -9px;
   transition: 0.5s;
 }
 
 .event-outline {
   display: flex;
   max-width: 100%;
-  padding: 9px 1px 1px 1px;
+  padding: 10px 1px 1px 1px;
   background-color: var(--bright_red);
   flex: 1 1 0;
 }
