@@ -10,7 +10,7 @@ function getCentralElement() {
   };
 
   // Get all potential scroll target elements on page, removing ones with no id
-  let elementList = Array.from(document.querySelectorAll(".timeline-event .timeline-event, .epoch-container, .timeline-year-header, .campaigns-heading, .campaign-overview, .last-edited-area"))
+  let elementList = Array.from(document.querySelectorAll(".timeline-event .timeline-event, .epoch-container, .timeline-year-header, .campaigns-heading, .campaign-overview, .campaign-members, .last-edited-area"))
   .filter(element => element.id !== "");  
 
   let closestElement = null;
