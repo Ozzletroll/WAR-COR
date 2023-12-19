@@ -59,7 +59,6 @@ class Tab {
 
 // Function to animate the highlight for scrollTo behavior
 function scrollToAnim(targetEvent) {
-  console.log(targetEvent)
 
   // Get the scrollTo target
   var parentElem = document.getElementById(targetEvent);
