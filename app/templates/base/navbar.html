@@ -54,32 +54,35 @@
       <a href="{{ url_for('user.logout') }}"><button type="button" class="navbutton log-out-button">LOG OUT</button></a>
     {% endif %}
     </div>
-    <button class="hamburger-button" onclick="hamburgerClick()">
+    <button id="hamburger-button" class="hamburger-button">
+
       <svg class="icon icon-hamburger" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g class="icon-colour-var" transform="translate(42.666667, 106.666667)">
                 <path d="M3.55271368e-14,4.26325641e-14 L426.666667,4.26325641e-14 L426.666667,42.6666667 L3.55271368e-14,42.6666667 L3.55271368e-14,4.26325641e-14 Z M3.55271368e-14,128 L426.666667,128 L426.666667,170.666667 L3.55271368e-14,170.666667 L3.55271368e-14,128 Z M3.55271368e-14,256 L426.666667,256 L426.666667,298.666667 L3.55271368e-14,298.666667 L3.55271368e-14,256 Z" id="Combined-Shape"></path>
             </g>
         </g>
-    </svg>
+      </svg>
 
     </button>
   </div>
 </div>
-<div class="hamburger-menu" id="hamburgerMenu">
+<div id="hamburger-menu" class="hamburger-menu">
   {% if current_user.is_authenticated %}
     {% if request.path != "/campaigns" %}
-    <a class="h-menu-item" href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
+      <a class="h-menu-item" href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
     {% endif %}
     {% if request.path != url_for('user.user_page', username=current_user.username) %}
-    <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}">{{ current_user.username}}</a>
+      <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}">USER/{{ current_user.username}}</a>
     {% endif %}
     <a class="h-menu-item" href="{{ url_for('user.logout') }}">LOGOUT</a>
-    {% else %}
+  {% else %}
     <a class="h-menu-item" href="{{ url_for('user.login') }}">LOGIN</a>
     <a class="h-menu-item" href="{{ url_for('user.register') }}">REGISTER</a>
-    <a class="h-menu-item" href="">SITREP</a>
-    <a class="h-menu-item" href="">COMMS</a>
+    {% if request.path == url_for("home.home") %}
+      <a class="h-menu-item" href="#main-features">SITREP</a>
+      <a class="h-menu-item" href="{{ url_for('home.contact') }}">COMMS</a>
+    {% endif %}
   {% endif %}
 </div>
 

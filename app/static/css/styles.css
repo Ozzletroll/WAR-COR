@@ -279,7 +279,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .icon-hamburger .icon-colour-var {
-  fill: var(--bg_colour1);
+  fill: var(--fixed-bg-1);
 }
 
 .icon-hamburger:hover .icon-colour-var {
@@ -326,7 +326,7 @@ p {
   bottom: 54px;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 3;
+  z-index: 5;
   box-shadow: 0px 1px 1px var(--elem_shadow);
 }
 
@@ -678,11 +678,15 @@ p {
 /* Hamburger Menu */
 
 .hamburger-menu {
-  display: none;
-  position: -webkit-sticky;
-  position: sticky;
-  z-index: 4;
+  display: flex;
+  position: fixed;
   top: 54px;
+  z-index: 4;
+  width: 100%;
+  transform: translateY(calc(-100% - 54px));
+  transition: 0.15s ease;
+  border-bottom: 1px solid var(--elem_border);
+  box-shadow: 3px 3px 3px var(--elem_shadow);
 }
 
 .hamburger-button {
@@ -691,6 +695,25 @@ p {
   border: none;
   background-color: transparent;
   border-style: none;
+}
+
+.h-menu-item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  transition: background-color 0.15s ease;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.h-menu-item:hover {
+  color: var(--bright_red);
+  background-color: var(--bg_colour2);
+}
+
+.hamburger-menu a:visited {
+  color: var(--bright_red);
 }
 
 @media screen and (max-width: 800px) { 
@@ -725,21 +748,6 @@ p {
     justify-content: right;
     text-align: right;
     background-color: var(--elem_mid);
-  }
-
-  .h-menu-item:link {
-    text-decoration: none;
-  }
-
-  .hamburger-menu .h-menu-item:hover {
-    font-size: 16px;
-    text-decoration: none;
-    color: var(--bright_red);
-    background-color: var(--bg_colour2);
-  }
-
-  .hamburger-menu a:visited {
-    color: var(--bright_red);
   }
 
   .navbar-right rect {
