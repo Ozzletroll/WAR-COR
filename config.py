@@ -32,7 +32,7 @@ class Config(object):
     }
     SCHEDULER_TIMEZONE = "UTC"
     # Flask-APScheduler
-    SCHEDULER_API_ENABLED = True
+    SCHEDULER_API_ENABLED = False
 
 
 class TestingConfig(Config):
@@ -40,11 +40,20 @@ class TestingConfig(Config):
     SECRET_KEY = "Testing_Secret_Key"
     SQLALCHEMY_DATABASE_URI = "sqlite:///test.db"
     WTF_CSRF_ENABLED = False
+    SCHEDULER_JOBSTORES = {
+        "default": SQLAlchemyJobStore(url="sqlite:///instance/test.db")
+    }
 
 
 class TestingPostgresConfig(TestingConfig):
     SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
+    SCHEDULER_JOBSTORES = {
+        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI"))
+    }
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
+    SCHEDULER_JOBSTORES = {
+        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI"))
+    }
