@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from datetime import datetime, timedelta
+import sys
 
 from app import models
 from app import scheduler, db
@@ -27,4 +28,4 @@ def delete_old_messages():
 @scheduler.task("interval", id="2", seconds=10, misfire_grace_time=900)
 def test_scheduler():
 
-    print("JOB EXECUTED SUCCESSFULLY")
+    print("JOB EXECUTED SUCCESSFULLY", file=sys.stdout)
