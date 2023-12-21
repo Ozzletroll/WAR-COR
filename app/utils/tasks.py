@@ -23,9 +23,3 @@ def delete_old_messages():
             db.session.delete(message)
 
         db.session.commit()
-
-
-@scheduler.task("interval", id="2", seconds=10, misfire_grace_time=900)
-def test_scheduler():
-
-    print("JOB EXECUTED SUCCESSFULLY", file=sys.stdout)
