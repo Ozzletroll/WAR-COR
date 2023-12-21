@@ -18,7 +18,6 @@ def delete_old_messages():
             ).scalars()
 
         for message in messages:
-            print(f"Message {message.id} expired")
             db.session.delete(message)
 
         db.session.commit()
