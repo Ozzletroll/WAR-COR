@@ -1,6 +1,5 @@
 from sqlalchemy import select
 from datetime import datetime, timedelta
-import sys
 
 from app import models
 from app import scheduler, db
