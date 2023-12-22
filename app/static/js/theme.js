@@ -51,14 +51,22 @@ function setHORUSStyling() {
         
         paragraphText.forEach((word, index) => {
           var randomNumber = getRandomInt(100);
+          var castigateNumber = getRandomInt(100);
           // Set percentage chance for wrapping each word
           var percentageChance = 5;
           
           if (randomNumber < percentageChance) {
             var span = document.createElement("span");
             span.classList.add("horus");
-            span.textContent = word;
-            span.dataset.content = word;
+            if (castigateNumber >= 90) {
+              console.log(randomNumber)
+              span.textContent = "CASTIGATE";
+              span.dataset.content = "CASTIGATE";
+            }
+            else {
+              span.textContent = word;
+              span.dataset.content = word;
+            }
             paragraphText[index] = span.outerHTML;
           }
         });
