@@ -15,7 +15,7 @@ if (storedTheme) {
   }
 
   // Set the icon rules to reflect the current theme
-  if (storedTheme == "dark" || storedTheme == "ironbow" || storedTheme == "green") {
+  if (storedTheme == "dark" || storedTheme == "ironbow" || storedTheme == "green" || storedTheme == "horus") {
     iconRule.style.setProperty("filter", "100");
   }
   else {

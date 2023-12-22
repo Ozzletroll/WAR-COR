@@ -151,6 +151,9 @@ function themeToggle() {
   else if (currentTheme == "green") {
     document.documentElement.setAttribute('theme', targetTheme);
   }
+  else if (currentTheme == "horus") {
+    document.documentElement.setAttribute('theme', targetTheme);
+  }
 
   localStorage.setItem('theme', targetTheme);
 
@@ -174,7 +177,9 @@ if (storedTheme) {
   else if (storedTheme == "green") {
     radio = "theme-4";
   }
-  
+  else if (storedTheme == "horus") {
+    radio = "theme-5";
+  }
   
   document.getElementById(radio).checked = true;
 

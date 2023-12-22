@@ -143,6 +143,39 @@
   --gradient2: #2f3d30;;
 }
 
+[theme="horus"] {
+  --bg_colour1: #0e0e0e;
+  --bg_colour2: #2b2b2b;
+  --bg_colour3: #5c5c5c;
+
+  --elem_dark: #212221;
+  --elem_mid: #272025;
+  --elem_bright: #3d3d3d;
+  --elem_hover: #3d3d3d;
+  --elem_trans: #aaaaaa2d;
+  --elem_border: #ff3300;
+  --elem_shadow: #181516;
+
+  --text_bright: #F5F5F5;
+  --text_normal: #E5E5E5;
+  --text_dark: #ffffff;
+  --text_flavour: #e42e00;
+  --text_flavour_bright: #ff491b;
+  --text_header: #db5000;
+  --text_header_dark: #9C1717;
+  --text_header_hover: #ff8717;
+  --text_header_contrast: #ffffff;
+
+  --black: #000000;
+  --bright_red: #ff3300;
+  --red: #6e2e56;
+  --dark_red: #63203f;
+  --darker_red: #2f233d;
+
+  --gradient1: #2e2e2e;
+  --gradient2: #2f233d;
+}
+
 @font-face {
   font-family: "Roboto Mono";
   src: url(/static/fonts/RobotoMono-VariableFont_wght.ttf);
