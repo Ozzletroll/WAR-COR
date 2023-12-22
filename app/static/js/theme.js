@@ -59,7 +59,6 @@ function setHORUSStyling() {
             var span = document.createElement("span");
             span.classList.add("horus");
             if (castigateNumber >= 90) {
-              console.log(randomNumber)
               span.textContent = "CASTIGATE";
               span.dataset.content = "CASTIGATE";
             }
