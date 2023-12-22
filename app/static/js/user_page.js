@@ -157,6 +157,9 @@ function themeToggle() {
 
   localStorage.setItem('theme', targetTheme);
 
+  // Dispatch a custom event to indicate the change to theme.js
+  var event = new CustomEvent("localstoragechange");
+  window.dispatchEvent(event);
 }
 
 // Set theme radio button to show the current theme

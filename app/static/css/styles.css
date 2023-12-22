@@ -343,6 +343,61 @@ p {
   color: var(--text_dark);
 }
 
+/* Horus theme glitch effect */
+.horus {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.horus {
+  position: relative;
+  animation: glitch 1s linear infinite;
+  z-index: 1;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: attr(data-content);
+    color: red;
+    transform: translateX(-5%);
+    z-index: -1;
+    animation: glitch .3s cubic-bezier(.25, .46, .45, .94) both infinite
+  }
+  
+  &:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: attr(data-content);
+    color: blue;
+    transform: translateX(5%);
+    z-index: -1;
+    animation: glitch .3s cubic-bezier(.25, .46, .45, .94) reverse both infinite
+  }
+}
+
+@keyframes glitch {
+    0% {
+        transform: translate(0)
+    }
+    20% {
+        transform: translate(-2px, 2px)
+    }
+    40% {
+        transform: translate(-2px, -2px)
+    }
+    60% {
+        transform: translate(2px, 2px)
+    }
+    80% {
+        transform: translate(2px, -2px)
+    }
+    to {
+        transform: translate(0)
+    }
+}
+
 /* Navbar */
 
 .navbar {

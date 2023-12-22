@@ -27,3 +27,65 @@ else {
   document.documentElement.setAttribute('theme', null)
   localStorage.setItem('theme', null);
 }
+
+
+// Random number function for HORUS Styling
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+// Function to be called after page load
+function setHORUSStyling() {
+  // Add extra HORUS theme styling
+  var storedTheme = localStorage.getItem('theme');
+
+  if (storedTheme == "horus") {
+    // Set additional HORUS theme styling
+    var elements = document.querySelectorAll("h1, h2, h3, h4, h5, p, .event-header");
+
+    Array.from(elements).forEach((element) => {
+      
+    if (element.tagName == "P" && (element.parentElement.className != "note-editable" )) {
+        // Split paragraph into words
+        var paragraphText = element.textContent.split(" ");
+        
+        paragraphText.forEach((word, index) => {
+          var randomNumber = getRandomInt(100);
+          // Set percentage chance for wrapping each word
+          var percentageChance = 5;
+          
+          if (randomNumber < percentageChance) {
+            var span = document.createElement("span");
+            span.classList.add("horus");
+            span.textContent = word;
+            span.dataset.content = word;
+            paragraphText[index] = span.outerHTML;
+          }
+        });
+
+        var modifiedText = paragraphText.join(' ');
+        element.innerHTML = modifiedText;
+      }
+
+    })
+  }
+  // Otherwise, undo any existing HORUS theme style changes
+  else {
+    var elements = document.getElementsByClassName("horus");
+    Array.from(elements).forEach((element) => {
+      element.classList.remove("horus");
+    })
+
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  
+  // Call the function after the page has loaded
+  setHORUSStyling();
+
+  // Listen for local storage changes and call the function
+  window.addEventListener("localstoragechange", function(event) {
+    setHORUSStyling();
+  });
+});
