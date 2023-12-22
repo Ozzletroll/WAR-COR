@@ -41,41 +41,41 @@ function setHORUSStyling() {
 
   if (storedTheme == "horus") {
     // Set additional HORUS theme styling
-    var elements = document.querySelectorAll("h1, h2, h3, h4, h5, p, .event-header");
+    var elements = document.querySelectorAll("p");
 
     Array.from(elements).forEach((element) => {
-      
-    if (element.tagName == "P" && (element.parentElement.className != "note-editable" )) {
-        // Split paragraph into words
-        var paragraphText = element.textContent.split(" ");
-        
-        paragraphText.forEach((word, index) => {
-          var randomNumber = getRandomInt(100);
-          var castigateNumber = getRandomInt(100);
-          // Set percentage chance for wrapping each word
-          var percentageChance = 5;
+      if (element.tagName == "P" && (element.parentElement.className != "note-editable" )) {
+          // Split paragraph into words
+          var paragraphText = element.textContent.split(" ");
           
-          if (randomNumber < percentageChance) {
-            var span = document.createElement("span");
-            span.classList.add("horus");
-            if (castigateNumber >= 90) {
-              span.textContent = "CASTIGATE";
-              span.dataset.content = "CASTIGATE";
+          paragraphText.forEach((word, index) => {
+            var randomNumber = getRandomInt(100);
+            var castigateNumber = getRandomInt(100);
+            // Set percentage chance for wrapping each word
+            var percentageChance = 3;
+            
+            if (randomNumber < percentageChance) {
+              var span = document.createElement("span");
+              span.classList.add("horus");
+              if (castigateNumber >= 90) {
+                span.textContent = "CASTIGATE";
+                span.dataset.content = "CASTIGATE";
+              }
+              else {
+                span.textContent = word;
+                span.dataset.content = word;
+              }
+              paragraphText[index] = span.outerHTML;
             }
-            else {
-              span.textContent = word;
-              span.dataset.content = word;
-            }
-            paragraphText[index] = span.outerHTML;
-          }
-        });
+          });
 
-        var modifiedText = paragraphText.join(' ');
-        element.innerHTML = modifiedText;
+          var modifiedText = paragraphText.join(' ');
+          element.innerHTML = modifiedText;
       }
 
     })
   }
+
   // Otherwise, undo any existing HORUS theme style changes
   else {
     var elements = document.getElementsByClassName("horus");

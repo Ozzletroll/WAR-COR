@@ -144,36 +144,39 @@
 }
 
 [theme="horus"] {
-  --bg_colour1: #0e0e0e;
+  --bg_colour1: #161616;
   --bg_colour2: #2b2b2b;
   --bg_colour3: #5c5c5c;
 
-  --elem_dark: #212221;
-  --elem_mid: #272025;
-  --elem_bright: #3d3d3d;
+  --elem_dark: #242424;
+  --elem_mid: #1a201f;
+  --elem_bright: #3c635a;
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
-  --elem_border: #ff3300;
+  --elem_border: #20df96;
   --elem_shadow: #181516;
 
   --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
   --text_dark: #ffffff;
-  --text_flavour: #e42e00;
-  --text_flavour_bright: #ff491b;
-  --text_header: #db5000;
-  --text_header_dark: #9C1717;
-  --text_header_hover: #ff8717;
+  --text_flavour: #2ef5b9;
+  --text_flavour_bright: #39ffad;
+  --text_header: #37ff91;
+  --text_header_dark: #1a7768;
+  --text_header_hover: #2cff9c;
   --text_header_contrast: #ffffff;
 
   --black: #000000;
-  --bright_red: #ff3300;
-  --red: #6e2e56;
-  --dark_red: #63203f;
-  --darker_red: #2f233d;
+  --bright_red: #22ff90;
+  --red: #1bcfa2;
+  --dark_red: #206163;
+  --darker_red: #22332f;
 
   --gradient1: #2e2e2e;
   --gradient2: #2f233d;
+
+  --glitch1: #00ffd5;
+  --glitch2: #d400ff;
 }
 
 @font-face {
@@ -359,10 +362,10 @@ p {
     top: 0;
     left: 0;
     content: attr(data-content);
-    color: red;
+    color: var(--glitch1);
     transform: translateX(-5%);
     z-index: -1;
-    animation: glitch .3s cubic-bezier(.25, .46, .45, .94) both infinite
+    animation: glitch .3s cubic-bezier(.25, .46, .45, .94) both infinite;
   }
   
   &:after {
@@ -370,10 +373,10 @@ p {
     top: 0;
     left: 0;
     content: attr(data-content);
-    color: blue;
+    color: var(--glitch2);
     transform: translateX(5%);
     z-index: -1;
-    animation: glitch .3s cubic-bezier(.25, .46, .45, .94) reverse both infinite
+    animation: glitch .3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
   }
 }
 
