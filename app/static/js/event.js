@@ -69,7 +69,6 @@ function checkEventHeight() {
 
   if (windowWidth > 1500) {
     if (eventHeight > windowHeight) {
-      console.log("TRUE")
       lowerAdjacentElement.style.display = "flex";
     }
     else {
