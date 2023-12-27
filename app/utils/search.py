@@ -59,7 +59,8 @@ class SearchEngine:
         query = query.lower()
 
         # Get the columns of the Event model, excluding irrelevant ones
-        excluded_columns = ["id", 
+        excluded_columns = ["id",
+                            "url_title", 
                             "year", 
                             "month", 
                             "day", 
