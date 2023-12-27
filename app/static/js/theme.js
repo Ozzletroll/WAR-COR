@@ -57,6 +57,7 @@ function setHORUSStyling() {
             if (randomNumber < percentageChance) {
               var span = document.createElement("span");
               span.classList.add("horus");
+              span.dataset.originalText = word;
               if (castigateNumber >= 90) {
                 span.textContent = "CASTIGATE";
                 span.dataset.content = "CASTIGATE";
@@ -80,7 +81,12 @@ function setHORUSStyling() {
   else {
     var elements = document.getElementsByClassName("horus");
     Array.from(elements).forEach((element) => {
-      element.classList.remove("horus");
+
+      var parentElement = element.parentElement;
+      var oldText = document.createTextNode(element.dataset.originalText);
+      parentElement.insertBefore(oldText, element)
+      element.remove();
+
     })
 
   }
