@@ -169,6 +169,10 @@ class Day {
     if (this.containsPositiveResult == false) {
       this.elements["rightBranchLabel"].style.opacity = fadeValue;
       this.elements["eventGroupContainer"].style.opacity = fadeValue;
+
+      if (this.elements["missingEventContainer"] != null) {
+        this.elements["missingEventContainer"].style.opacity = fadeValue;
+      }
     }
 
 
@@ -194,6 +198,10 @@ class Day {
   resetStyles() {
     this.elements["rightBranchLabel"].style.opacity = "";
     this.elements["eventGroupContainer"].style.opacity = "";
+
+    if (this.elements["missingEventContainer"] != null) {
+      this.elements["missingEventContainer"].style.opacity = "";
+    }
 
     if (this.dayLine != null) {
       this.dayLine.style.opacity = "";
@@ -379,11 +387,13 @@ class SearchEngine {
           elements: {
             rightBranchLabel: dayContainer.querySelector(".right-branch-label"),
             eventGroupContainer: dayContainer.querySelector(".event-group-container"),
+            missingEventContainer: dayContainer.querySelector(".missing-event-area"),
           },
           dayLine: dayContainer.querySelector(".day-line"),
           events: [],
           daysBelow: false,
           containsPositiveEvent: false,
+          dayHasMissingEvent: false,
         })
 
         // Find all the elements with the class "event-header" within the container
