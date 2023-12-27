@@ -54,13 +54,13 @@ function setHORUSStyling() {
             var randomNumber = getRandomInt(100);
             var castigateNumber = getRandomInt(100);
             // Set percentage chance for wrapping each word
-            var percentageChance = 3;
+            var percentageChance = 2;
             
             if (randomNumber < percentageChance) {
               var span = document.createElement("span");
               span.classList.add("horus");
               span.dataset.originalText = word;
-              if (castigateNumber >= 90) {
+              if (castigateNumber >= 95) {
                 span.textContent = "CASTIGATE";
                 span.dataset.content = "CASTIGATE";
               }
