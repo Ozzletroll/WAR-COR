@@ -4869,7 +4869,7 @@ for selection in timeline_search.js */
   padding: 10px 20px 10px 20px;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
-  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10px, 100% 100%, 0 100%);
   border-top-left-radius: 3px;
   margin-left: 20px;
 }
