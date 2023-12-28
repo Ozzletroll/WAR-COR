@@ -39,6 +39,11 @@
   --fixed-text: #000000;
   --dark_grey: #1f1f1f;
 
+  --background_rotate: 0deg;
+  --background_brightness: 1;
+  --background_colour: #ffffff;
+  --background_saturation: 100%;
+
   scrollbar-color: var(--bright_red) rgb(20, 25, 27);
   scroll-behavior: smooth;
 }
@@ -75,6 +80,11 @@
 
   --gradient1: #2B2B2B;
   --gradient2: #131313;
+
+  --background_rotate: 0deg;
+  --background_brightness: 1;
+  --background_colour: #131212;
+  --background_saturation: 100%;
 }
 
 [theme="ironbow"] {
@@ -96,7 +106,7 @@
   --text_flavour: #e42e00;
   --text_flavour_bright: #ff491b;
   --text_header: #db5000;
-  --text_header_dark: #9C1717;
+  --text_header_dark: #9c4117;
   --text_header_hover: #ff8717;
   --text_header_contrast: #ffffff;
 
@@ -108,6 +118,11 @@
 
   --gradient1: #2e2e2e;
   --gradient2: #2f233d;
+
+  --background_rotate: 30deg;
+  --background_brightness: 1;
+  --background_colour: #141314;
+  --background_saturation: 120%;
 }
 
 [theme="green"] {
@@ -140,7 +155,12 @@
   --darker_red:#2f3d30;
 
   --gradient1: #2b2b2b;
-  --gradient2: #2f3d30;;
+  --gradient2: #2f3d30;
+
+  --background_rotate: 150deg;
+  --background_brightness: 1;
+  --background_colour: #0e0e0e;
+  --background_saturation: 30%;
 }
 
 [theme="horus"] {
@@ -154,7 +174,7 @@
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
   --elem_border: #20df96;
-  --elem_shadow: #181516;
+  --elem_shadow: #0e0c0d;
 
   --text_bright: #F5F5F5;
   --text_normal: #E5E5E5;
@@ -174,6 +194,11 @@
 
   --gradient1: #2e2e2e;
   --gradient2: #2f233d;
+
+  --background_rotate: 150deg;
+  --background_brightness: 1;
+  --background_colour: #1a1a1a;
+  --background_saturation: 100%;
 
   --glitch1: #00ffd5;
   --glitch2: #d400ff;
@@ -219,6 +244,7 @@ body {
   flex-direction: column;
   width: calc(100vw - (100vw - 100%));
   max-width: 1800px;
+  min-height: 100vh;
   overflow-x: clip;
 }
 
@@ -249,20 +275,29 @@ body {
   display: flex;
   flex: 1 1 auto;
   min-height: 100vh;
+  background-color: var(--background_colour);
   background-attachment: fixed;
-  background-color: var(--black);
   background-image: url("../images/wireframe.svg");
-  animation: 40s linear 0s infinite backgroundscroll;
+  animation: 20s linear 0s infinite backgroundscroll;
   z-index: 2;
+  filter: hue-rotate(var(--background_rotate)) brightness(var(--background_brightness)) saturate(var(--background_saturation));
+}
+
+.border-left {
+  box-shadow: inset -3px 0px 12px var(--elem_shadow);
+}
+
+.border-right {
+  box-shadow: inset 3px 0px 12px var(--elem_shadow);
 }
 
 @keyframes backgroundscroll {
   from {
-    background-position:  600px 0;
+    background-position:  400px 0;
   }
   
   to {
-    background-position:  600px 600px;
+    background-position:  400px 400px;
   }
 }
 
