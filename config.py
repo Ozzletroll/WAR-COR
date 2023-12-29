@@ -1,6 +1,6 @@
 import os
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
-from apscheduler.executors.pool import ThreadPoolExecutor, ProcessPoolExecutor
+from apscheduler.executors.pool import BackgroundScheduler
 
 
 class Config(object):
@@ -23,7 +23,7 @@ class Config(object):
         "default": SQLAlchemyJobStore(url="sqlite:///instance/war_cor.db")
     }
     SCHEDULER_EXECUTORS = {
-        "default": ThreadPoolExecutor(max_workers=4),
+        "default": BackgroundScheduler()
     }
     SCHEDULER_JOB_DEFAULTS = {
         "coalesce": False,
