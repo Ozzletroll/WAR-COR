@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 
 from app import models
 from app import scheduler, db
+import sys
 
 
 @scheduler.task("cron", id="1", week="*", day_of_week="mon", hour=3)
@@ -21,3 +22,8 @@ def delete_old_messages():
             db.session.delete(message)
 
         db.session.commit()
+
+
+@scheduler.task('interval', id='2', seconds=10, misfire_grace_time=900)
+def job1():
+    print('Job executed', file=sys.stdout)
