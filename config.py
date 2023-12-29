@@ -19,19 +19,19 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     ADMIN = os.environ.get("ADMIN")
     # APScheduler
-    # SCHEDULER_JOBSTORES = {
-    #     "default": SQLAlchemyJobStore(url="sqlite:///instance/war_cor.db")
-    # }
-    # SCHEDULER_EXECUTORS = {
-    #     "default": ThreadPoolExecutor(max_workers=4)
-    # }
-    # SCHEDULER_JOB_DEFAULTS = {
-    #     "coalesce": False,
-    #     "max_instances": 3
-    # }
-    # SCHEDULER_TIMEZONE = "UTC"
-    # # Flask-APScheduler
-    # SCHEDULER_API_ENABLED = False
+    SCHEDULER_JOBSTORES = {
+        "default": SQLAlchemyJobStore(url="sqlite:///instance/war_cor.db")
+    }
+    SCHEDULER_EXECUTORS = {
+        "default": ThreadPoolExecutor(max_workers=4)
+    }
+    SCHEDULER_JOB_DEFAULTS = {
+        "coalesce": False,
+        "max_instances": 3
+    }
+    SCHEDULER_TIMEZONE = "UTC"
+    # Flask-APScheduler
+    SCHEDULER_API_ENABLED = False
 
 
 class TestingConfig(Config):

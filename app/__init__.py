@@ -35,11 +35,10 @@ def create_app(config_class=Config):
     migrate = Migrate(flask_app, db)
 
     # Initialise APScheduler
-    # scheduler.init_app(flask_app)
-
-    # with flask_app.app_context():
-    #     import app.utils.tasks
-    #     scheduler.start()
+    with flask_app.app_context():
+        scheduler.init_app(flask_app)
+        import app.utils.tasks
+        scheduler.start()
 
     # Initialise CSRFProtect
     csrf.init_app(flask_app)
@@ -151,5 +150,11 @@ def create_app(config_class=Config):
             
             mail_handler.setLevel(logging.ERROR)
             flask_app.logger.addHandler(mail_handler)
+
+    # Dispose of db connection
+    # This prevents SSL errors when running with multiple Gunicorn workers
+    with flask_app.app_context():
+        db.session.remove()
+        db.engine.dispose()
 
     return flask_app
