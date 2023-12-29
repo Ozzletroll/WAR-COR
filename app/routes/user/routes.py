@@ -286,17 +286,17 @@ def back():
     upon form submission."""
 
     # If the previous URL is stored in session, use it as the referrer
-    if 'previous_url' in session:
-        referrer = session['previous_url']
+    if "previous_url" in session:
+        referrer = session["previous_url"]
     elif request.referrer:
         # Use a fallback URL if the previous URL is not available
         referrer = request.referrer
     elif current_user.is_authenticated:
         # If no session var or referrer, and user is logged in, redirect to homepage
-        referrer = url_for('campaign.campaigns')
+        referrer = url_for("campaign.campaigns")
     else:
         # Otherwise, redirect to homepage
-        referrer = url_for('home.home')
+        referrer = url_for("home.home")
 
     return redirect(referrer)
 
