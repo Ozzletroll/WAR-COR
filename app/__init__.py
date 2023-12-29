@@ -40,7 +40,6 @@ def create_app(config_class=Config):
     with flask_app.app_context():
         import app.utils.tasks
         scheduler.start()
-        db.engine.dispose()
 
     # Initialise CSRFProtect
     csrf.init_app(flask_app)

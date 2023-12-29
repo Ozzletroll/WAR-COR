@@ -23,8 +23,7 @@ class Config(object):
         "default": SQLAlchemyJobStore(url="sqlite:///instance/war_cor.db")
     }
     SCHEDULER_EXECUTORS = {
-        "default": ThreadPoolExecutor(20),
-        "processpool": ProcessPoolExecutor(5)
+        "default": ThreadPoolExecutor(max_workers=4),
     }
     SCHEDULER_JOB_DEFAULTS = {
         "coalesce": False,
