@@ -23,33 +23,43 @@ def create_app(config_class=Config):
     flask_app = Flask(__name__, instance_relative_config=True)
     flask_app.config.from_object(config_class)
 
-    # Initialise database and import models
-    db.init_app(flask_app)
-    import app.models
-
-    # Create the database
     with flask_app.app_context():
+
+        # Initialise database and import models
+        db.init_app(flask_app)
+        import app.models
+
+        # Create the database
         db.create_all()
 
-    # Initialise db migrations
-    migrate = Migrate(flask_app, db)
+        # Initialise db migrations
+        migrate = Migrate(flask_app, db)
 
-    # Initialise APScheduler
-    with flask_app.app_context():
+        # Initialise APScheduler
         scheduler.init_app(flask_app)
         import app.utils.tasks
         scheduler.start()
 
-    # Initialise CSRFProtect
-    csrf.init_app(flask_app)
+        # Initialise CSRFProtect
+        csrf.init_app(flask_app)
 
-    # Initialise login manager
-    login_manager = LoginManager()
-    login_manager.init_app(flask_app)
+        # Initialise login manager
+        login_manager = LoginManager()
+        login_manager.init_app(flask_app)
 
-    # Set login_required redirect page
-    login_manager.login_view = "user.login"
-    login_manager.login_message = "Please log in to access this page"
+        # Set login_required redirect page
+        login_manager.login_view = "user.login"
+        login_manager.login_message = "Please log in to access this page"
+
+        # User loader callback
+        @login_manager.user_loader
+        def load_user(user_id):
+            return db.session.get(app.models.User, user_id)
+
+        # Dispose of db connection
+        # This prevents SSL errors when running with multiple Gunicorn workers
+        db.session.remove()
+        db.engine.dispose()
 
     # Register blueprints
     from app.routes.home import bp as home_bp
@@ -88,11 +98,6 @@ def create_app(config_class=Config):
     from app.routes.test import bp as test_bp
     flask_app.register_blueprint(test_bp)
 
-    # User loader callback
-    @login_manager.user_loader
-    def load_user(user_id):
-        return db.session.get(app.models.User, user_id)
-    
     # Disable browser caching during debug
     if flask_app.config["DEBUG"]:
         @flask_app.after_request
@@ -150,11 +155,5 @@ def create_app(config_class=Config):
             
             mail_handler.setLevel(logging.ERROR)
             flask_app.logger.addHandler(mail_handler)
-
-    # Dispose of db connection
-    # This prevents SSL errors when running with multiple Gunicorn workers
-    with flask_app.app_context():
-        db.session.remove()
-        db.engine.dispose()
 
     return flask_app
