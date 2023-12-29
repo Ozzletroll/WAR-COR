@@ -15,10 +15,10 @@
     {# Animation fade in group 1 #}
     <div class="fade-in-block-1">
 
-      {% if edit %}
-        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
+      {% if request.referrer %}
+        {% set urls = [url_for("campaign.campaigns"), url_for("user.back")] %}
       {% else %}
-        {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
+        {% set urls = [url_for("campaign.campaigns"), url_for("campaign.show_timeline", campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
       {% endif %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 
@@ -30,11 +30,17 @@
           
           {# Back button #}
           
-          {% if edit %}
-            {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+          {# Only render usable back button if referrer has a url #}
+          {% if request.referrer %}
+          {# User page back button #}
+            {% set url = url_for("user.back") %}
+            {{ back_button.back_button(url=url, blank=false) }}
           {% else %}
-            {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+            {# Blank back button area area. No url needed. #}
+            {% set url = "" %}
+            {{ back_button.back_button(url=url, blank=true) }}
           {% endif %}
+
           {{ back_button.back_button(url=url, blank=false) }}
 
           <div class="campaigns-heading-outer">
@@ -93,15 +99,13 @@
           {# Results go here #}
           {% if results is not none %}
 
-            {% if edit %}
-              {% for result in results %}
-                {{ search_result.result(result, edit=true) }}
-              {% endfor %}
-            {% else %}
-              {% for result in results %}
+            {% for result in results %}
+              {% if edit %}
+                {{ search_result.result(result, edit) }}
+              {% else %}
                 {{ search_result.result(result) }}
-              {% endfor %}
-            {% endif %}
+              {% endif %}
+            {% endfor %}
 
           {% endif %}
 

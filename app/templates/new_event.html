@@ -39,7 +39,7 @@
           {# Back button #}
           {% if request.referrer %}
             {% if "/search" in request.referrer %}
-              {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id, edit=true) %}
+              {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
             {% else %}
               {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
             {% endif %}

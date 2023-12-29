@@ -9,21 +9,20 @@
 {% macro result(result, edit=false) %}
 
   <li class="search-result">
-    {% if edit %}
-      <a class="result-url" href="{{ result.edit_url }}">
-        <h4 class="result-header-main">
+
+    <a class="result-url" href="{{ result.url }}">
+      <div class="results-title-area">
+        <h4 class="results-header-main">
           {{ result.type }}:
           {{ result.object.title }}
         </h4>
-      </a>
-    {% else %}
-      <a class="result-url" href="{{ result.url }}">
-        <h4 class="result-header-main">
-          {{ result.type }}:
-          {{ result.object.title }}
-        </h4>
-      </a>
-    {% endif %}
+        {% if edit %}
+          <a class="result-url results-edit-button" href="{{ result.edit_url }}">
+            EDIT
+          </a>
+        {% endif %}
+        </div>
+    </a>
 
     <div class="result-excerpt">
 

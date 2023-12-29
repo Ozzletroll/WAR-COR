@@ -5585,7 +5585,15 @@ pre {
   list-style: none;
 }
 
-.result-header-main {
+.results-title-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.results-header-main {
+  display: flex;
+  width: fit-content;
   margin: 0;
   text-transform: uppercase;
 }
@@ -5599,6 +5607,12 @@ pre {
 
 .result-url:hover {
   color: var(--text_header_hover);
+}
+
+.results-edit-button {
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  padding: 3px 10px;
 }
 
 .result-excerpt {
