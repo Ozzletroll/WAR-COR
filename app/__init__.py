@@ -6,7 +6,6 @@ from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from config import Config
 import os
-import socket 
 import logging
 from logging.handlers import SMTPHandler
 
@@ -36,16 +35,11 @@ def create_app(config_class=Config):
     migrate = Migrate(flask_app, db)
 
     # Initialise APScheduler
-    # Ensure only one Gunicorn worker grabs the scheduled task
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind(("127.0.0.1", 47200))
-    except socket.error:
-        pass
-    else:
-        scheduler.init_app(flask_app)
-        import app.utils.tasks
-        scheduler.start()
+    # scheduler.init_app(flask_app)
+
+    # with flask_app.app_context():
+    #     import app.utils.tasks
+    #     scheduler.start()
 
     # Initialise CSRFProtect
     csrf.init_app(flask_app)
