@@ -53,6 +53,6 @@ class TestingPostgresConfig(TestingConfig):
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
-    # SCHEDULER_JOBSTORES = {
-    #     "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI"))
-    # }
+    SCHEDULER_JOBSTORES = {
+        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI"))
+    }
