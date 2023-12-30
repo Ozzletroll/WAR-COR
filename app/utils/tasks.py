@@ -6,7 +6,7 @@ from app import scheduler, db
 import sys
 
 
-@scheduler.task("cron", id="1", week="*", day_of_week="mon", hour=3)
+@scheduler.task("cron", id="1", week="*", day_of_week="mon", hour=3, misfire_grace_time=3600)
 def delete_old_messages():
 
     one_week_ago = datetime.now() - timedelta(days=7)
@@ -24,6 +24,6 @@ def delete_old_messages():
         db.session.commit()
 
 
-@scheduler.task('interval', id='2', seconds=10, misfire_grace_time=900)
+@scheduler.task('interval', id='2', seconds=10, misfire_grace_time=10)
 def job1():
     print(f'Job executed at {datetime.now()}', file=sys.stdout)
