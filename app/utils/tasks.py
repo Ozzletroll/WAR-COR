@@ -26,4 +26,4 @@ def delete_old_messages():
 
 @scheduler.task('interval', id='2', seconds=10, misfire_grace_time=900)
 def job1():
-    print(f'Job executed at {datetime.now}', file=sys.stdout)
+    print(f'Job executed at {datetime.now()}', file=sys.stdout)
