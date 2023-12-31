@@ -174,10 +174,14 @@ def send_comment_notification(sender, recipients, campaign, event):
             format_message(message)
 
     else:
-        # Otherwise, create new comment message
-        message = models.Message()
-        format_message(message)
-        db.session.add(message)
+        # Create new comment message, unless only recipient 
+        # would be the original comment author
+        if len(recipients) == 1 and recipients[0].id == sender.id:
+            return
+        else:
+            message = models.Message()
+            format_message(message)
+            db.session.add(message)
 
     # Finally, commit all changes to db
     db.session.commit()
