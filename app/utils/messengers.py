@@ -51,6 +51,10 @@ def send_membership_request(sender, recipients, campaign):
     association. Takes a user object for  sender, a list of admin users for recipients,
     and a campaign object."""
 
+    # Get body values here rather than in f string to avoid SAWarning from autoflush process
+    sender_username = sender.username
+    campaign_title = campaign.title
+
     # Check for existing pending request
     message = db.session.execute(
         select(models.Message)
@@ -70,7 +74,7 @@ def send_membership_request(sender, recipients, campaign):
 
         message.author = sender
         message.request = True
-        message.body = f"{sender.username} has requested to join the campaign: {campaign.title}"
+        message.body = f"{sender_username} has requested to join the campaign: {campaign_title}"
         message.target_user = sender
         message.target_campaign = campaign
         message.date = datetime.now()
@@ -88,11 +92,14 @@ def send_membership_request(sender, recipients, campaign):
 def send_new_member_notification(sender, recipients, campaign, new_user_username):
     """Function called to create a new member notification"""
 
+    # Get body values here rather than in f string to avoid SAWarning from autoflush process
+    campaign_title = campaign.title
+
     message = models.Message()
 
     message.author = sender
     message.notification = True
-    message.body = f"{new_user_username} has joined the campaign: {campaign.title}"
+    message.body = f"{new_user_username} has joined the campaign: {campaign_title}"
     message.target_campaign = campaign
     message.date = datetime.now()
 
@@ -108,11 +115,15 @@ def send_event_notification(sender, recipients, campaign, event):
     """Function for creating new event notifications. Takes a user model object as sender, and
     a list of user model objects as recipients, along with a campaign object, and an event object."""
 
+    # Get body values here rather than in f string to avoid SAWarning from autoflush process
+    campaign_title = campaign.title
+    event_title = event.title
+
     message = models.Message()
 
     message.author = sender
     message.notification = True
-    message.body = f"The campaign: {campaign.title} has been updated with the new event: {event.title}"
+    message.body = f"The campaign: {campaign_title} has been updated with the new event: {event_title}"
     message.target_campaign = campaign
     message.target_event = event
     message.date = datetime.now()
@@ -133,7 +144,7 @@ def send_comment_notification(sender, recipients, campaign, event):
     def format_message(message):
         message.author = sender
         message.notification = True
-        message.body = f"New comments for event: '{event.title}' in campaign: '{campaign.title}'."
+        message.body = f"New comments for event: '{event_title}' in campaign: '{campaign_title}'."
         message.target_campaign = campaign
         message.target_event = event
         message.date = datetime.now()
@@ -142,6 +153,10 @@ def send_comment_notification(sender, recipients, campaign, event):
         for user in recipients:
             if message not in user.messages and user.id != sender.id:
                 user.messages.append(message)
+
+    # Get body values here rather than in f string to avoid SAWarning from autoflush process
+    event_title = event.title
+    campaign_title = campaign.title
 
     # Check for existing comment messages
     messages = db.session.execute(
