@@ -27,11 +27,7 @@
 {{ searchbar.searchbar(campaign, event=true) }}
 
 {% if current_user.is_authenticated and campaign in current_user.permissions %}
-  {% if edit %}
-    {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
-  {% else %}
-    {{ edit_toggle.event_edit_toggle(campaign, event) }}
-  {% endif %}
+  {{ edit_toggle.event_edit_toggle(campaign, event) }}
 {% endif %}
 
 <div class="sidebar-page">

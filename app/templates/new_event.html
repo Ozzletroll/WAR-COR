@@ -1,5 +1,7 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/edit_toggle.html" as edit_toggle %}
+{% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/summernote_editor.html" as summernote %}
 
@@ -19,6 +21,13 @@
 
 
 {% block content %}
+  {% if not new %}
+  {{ searchbar.searchbar(campaign, event=true) }}
+
+  {% if current_user.is_authenticated and campaign in current_user.permissions %}
+    {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
+  {% endif %}
+{% endif %}
 
 <div class="scrollpage">
 

@@ -90,7 +90,7 @@
   function eventToggle(destinationURL) {
     window.location.href = destinationURL
   }
-  const eventURL = "{{ url_for('event.view_event', campaign_name=campaign.url_title, campaign_id=campaign.id, event_name=event.url_title, event_id=event.id) }}}"   
+  const eventURL = "{{ url_for('event.view_event', campaign_name=campaign.url_title, campaign_id=campaign.id, event_name=event.url_title, event_id=event.id) }}"   
   const eventEditURL = "{{ url_for('event.edit_event', campaign_name=campaign.url_title, campaign_id=campaign.id, event_name=event.url_title, event_id=event.id) }}"
   const csrfTokenForEventToggle = "{{ csrf_token() }}"
 </script>
