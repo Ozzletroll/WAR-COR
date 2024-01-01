@@ -16,7 +16,11 @@
     <div class="fade-in-block-1">
 
       {% if request.referrer %}
-        {% set urls = [url_for("campaign.campaigns"), url_for("user.back")] %}
+        {% if "/edit" in request.referrer %}
+          {% set urls = [url_for("campaign.campaigns"), url_for("campaign.edit_timeline", campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
+        {% else %}
+          {% set urls = [url_for("campaign.campaigns"),url_for("campaign.show_timeline", campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
+        {% endif %}
       {% else %}
         {% set urls = [url_for("campaign.campaigns"), url_for("campaign.show_timeline", campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
       {% endif %}
