@@ -130,9 +130,11 @@ def add_event(campaign_name, campaign_id):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
+    # Flag "new" to hide searchbar and edit page toggle
     return render_template("new_event.html", 
                            form=form, 
-                           campaign=campaign)
+                           campaign=campaign,
+                           new=True)
 
 
 # Edit existing event
