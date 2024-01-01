@@ -1,5 +1,7 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/edit_toggle.html" as edit_toggle %}
+{% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
 {% import "components/summernote_editor.html" as summernote %}
@@ -21,6 +23,16 @@
 
 
 {% block content %}
+
+{{ searchbar.searchbar(campaign, event=true) }}
+
+{% if current_user.is_authenticated and campaign in current_user.permissions %}
+  {% if edit %}
+    {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
+  {% else %}
+    {{ edit_toggle.event_edit_toggle(campaign, event) }}
+  {% endif %}
+{% endif %}
 
 <div class="sidebar-page">
   

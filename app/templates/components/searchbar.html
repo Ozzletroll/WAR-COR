@@ -9,7 +9,7 @@
   
 #}
 
-{% macro searchbar(campaign, edit=false, timeline=false) %}
+{% macro searchbar(campaign, edit=false, timeline=false, event=false) %}
 
 <div id="searchbar" class="searchbar-border">
   <div class="searchbar-outer">
@@ -32,9 +32,12 @@
     <div class="searchbar-area">
       {% if timeline %}
         <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH">
+      {% elif event %}
+        <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH">
       {% else %}
         <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH">
       {% endif %}
+      
       {% if timeline %}
         <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -56,6 +59,7 @@
       {% endif %}
     </div>
 
+    {% if not event %}
     <div class="hits-area">
       <div id="hits-counter" class="hits-counter">
         {% if request.path == "/campaigns" %}
@@ -65,6 +69,7 @@
         {% endif %}
       </div>
     </div>
+    {% endif %}
 
   </div>
 </div>
