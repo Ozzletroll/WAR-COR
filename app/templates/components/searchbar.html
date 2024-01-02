@@ -85,5 +85,10 @@
 </div>
 
 <script src="/static/js/searchbar.js"></script>
+{% if timeline %}
+<script src="/static/js/timeline_search.js" defer="true"></script>
+{% elif event %}
+<script src="/static/js/event_search.js" defer="true"></script>
+{% endif %}
 
 {%- endmacro %}
