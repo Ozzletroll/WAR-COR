@@ -1,4 +1,4 @@
-// Sidebar class
+// Searchbar class
 class SearchbarTab {
   constructor({
     tab,
@@ -54,7 +54,7 @@ class SearchbarTab {
   }
 }
 
-// Create sidebar
+// Create searchbar
 const searchbar = new SearchbarTab({
   tab: "searchbar",
   button: "searchbar-button",
