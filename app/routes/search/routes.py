@@ -22,10 +22,10 @@ def advanced_search(campaign_name, campaign_id):
 
     form = forms.SearchForm()
 
-    # Set back button route
-    excluded_urls = ["/search", "/event"]
-    if request.referrer and not any(excluded_url in request.referrer for excluded_url in excluded_urls):
-        session["previous_url"] = request.referrer
+    # Set back button route, excluding this route
+    if request.referrer:
+        if "/search" not in request.referrer:
+            session["previous_url"] = request.referrer
         
     # Check if page has any results to render
     if "results" not in request.args:
