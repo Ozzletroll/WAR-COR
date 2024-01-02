@@ -69,16 +69,22 @@
       {% endif %}
     </div>
 
-    {% if not event %}
-    <div class="hits-area">
-      <div id="hits-counter" class="hits-counter">
-        {% if request.path == "/campaigns" %}
-          {{ campaigns | length }} CAMPAIGNS
-        {% else %} 
-          {{ campaign.events | length }} EVENTS
-        {% endif %}
+    {% if event %}
+      <div class="hits-area">
+        <div id="hits-counter" class="hits-counter">
+          
+        </div>
       </div>
-    </div>
+    {% else%}
+      <div class="hits-area">
+        <div id="hits-counter" class="hits-counter">
+          {% if request.path == "/campaigns" %}
+            {{ campaigns | length }} CAMPAIGNS
+          {% else %} 
+            {{ campaign.events | length }} EVENTS
+          {% endif %}
+        </div>
+      </div>
     {% endif %}
 
   </div>
@@ -88,7 +94,7 @@
 {% if timeline %}
 <script src="/static/js/timeline_search.js" defer="true"></script>
 {% elif event %}
-<script src="/static/js/event_search.js" defer="true"></script>
+  <script src="/static/js/event_search.js" defer="true"></script>
 {% endif %}
 
 {%- endmacro %}

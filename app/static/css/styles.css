@@ -4809,14 +4809,11 @@ for selection in timeline_search.js */
   box-sizing: border-box;
 }
 
-.event-location {
+.event-location, .event-belligerents {
   flex: 1 1 auto;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-}
-
-.event-belligerents {
-  flex: 1 1 auto;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  transition: 0.15s ease;
+  scroll-margin: 25vh;
 }
 
 .event-date-area {
@@ -4865,6 +4862,8 @@ for selection in timeline_search.js */
   margin: 20px 0 20px 0;
   border: 1px solid var(--elem_border);
   border-radius: 5px;
+  transition: 0.15s ease;
+  scroll-margin: 25vh;
 }
 
 .entry-left-padding {
@@ -4917,6 +4916,8 @@ for selection in timeline_search.js */
 .event-page-result {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   width: 100%;
+  transition: 0.15s ease;
+  scroll-margin: 25vh;
 }
 
 .ally-group {
