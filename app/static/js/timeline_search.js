@@ -26,15 +26,9 @@ class Result {
   stylePositive() {
   // Reset styling for self
     this.styleReset();
-
-    // Edit Page Styling
-    if (editPage == true) {
-
-      // On edit page, no additional styling required
-
-    }
+    // On edit page, no additional styling required
     // Normal Page Styling
-    else {
+    if (editPage == false) {
 
       // If result has no results below it, set vertical line to fade opacity value
       if (this.resultsBelow == false) {
@@ -42,8 +36,6 @@ class Result {
       }
 
     }
-
-
   }
 
   /**
