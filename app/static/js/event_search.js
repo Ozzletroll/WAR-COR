@@ -8,11 +8,38 @@ class Result {
     this.positive = false;
     this.baseElement = document.querySelector(baseElement);
     this.textElement = this.baseElement.querySelector(textElement);
-    this.scrollTarget = this.baseElement;
+    this.initialHTML = this.textElement.innerHTML;
+    this.queryMatches = [];
   }
 
-  stylePositive() {
+  stylePositive(searchQuery) {
+
+    if (this.textElement.classList.contains("event-elem-body")) {
+      this.queryMatches.push(this.baseElement);
+    }
+    else {
+      var elements = this.textElement.querySelectorAll(".event-desc > p");
+
+      elements.forEach((element, index) => {
   
+        // Create a regular expression with the "gi" flags (global, case-insensitive)
+        const regex = new RegExp(searchQuery, "gi");
+  
+        // Replace all matching instances with the wrapped version
+        element.innerHTML = element.innerText.replace(regex, (match) => {
+          return `<strong class="search-highlight">${match}</strong>`;
+        });
+
+        // Get all newly created search highlighted elements 
+        // and push them to the queryMatches array
+        var searchHighlights = element.querySelectorAll(".search-highlight");
+        searchHighlights.forEach((element) => {
+          this.queryMatches.push(element);
+        })
+      });
+    }
+    
+
   }
 
   styleNegative() {
@@ -21,6 +48,8 @@ class Result {
   
   styleReset() {
     this.baseElement.style.opacity = "";
+    this.textElement.innerHTML = this.initialHTML;
+    this.queryMatches = [];
   }
 }
 
@@ -34,12 +63,13 @@ class SearchEngine {
     this.searchBar = searchBar;
     this.hitsCounter = hitsCounter;
     this.results = [];
+    this.matchingElements = [];
     this.searchQuery = this.searchBar.value.toLowerCase();
     this.scrollIndex = 0;
   }
 
   /**
-  * Timeline search method
+  * Event page search method
   * Takes the searchBar input and iterates through all fields on event page
   * Returns Result objects and appends them to results array.
   */
@@ -90,59 +120,64 @@ class SearchEngine {
 
   // Apply styles to all elements
   this.applyStyles();
+
+  this.populateMatchingElements();
+
+  this.updateUI();
   
   }
 
 
   applyStyles() {
-
-  this.results.forEach((result, index) => {
-
-    result.styleReset();
-
-    if (result.positive) {
-      result.stylePositive();
-    }
-    else {
-      result.styleNegative();
-    }
-  
-  });
-
+    this.results.forEach((result, index) => {
+      result.styleReset();
+      if (result.positive) {
+        result.stylePositive(this.searchQuery);
+      }
+      else {
+        result.styleNegative();
+      }
+    });
   }
 
-
-  /**
-  * Method to iterate through all current results objects in this.results
-  * and remove ones that do not match the search query.
-  */
   resultsCheck() {
-
-  this.results.forEach((result, index) => {
-
-    if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
-      result.positive = true;
-    }
-    else {
-      result.positive = false;
-    }
-  
-  });
-
+    this.results.forEach((result, index) => {
+      result.styleReset();
+      if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
+        result.positive = true;
+      }
+      else {
+        result.positive = false;
+      }
+      });
   }
 
+  populateMatchingElements() {
+    this.matchingElements = [];
+
+    this.results.forEach((result, index) => {
+      result.queryMatches.forEach((element) => {
+        this.matchingElements.push(element);
+      });
+    });
+  }
 
   /**
   * Method to update ui hits counter
   */
   updateUI() {
     var positiveResults = this.results.filter(result => result.positive);
+    // Sum total of all query matches
+    var totalMatches = 0;
+    positiveResults.forEach((result, index) => {
+      totalMatches += result.queryMatches.length;
+    });
 
     if (this.searchQuery.length == 0) {
       this.hitsCounter.innerText = initialValue;
     }
     else {
-      this.hitsCounter.innerText = `${positiveResults.length} RESULTS`;
+      this.hitsCounter.innerText = `${totalMatches} RESULTS`;
     }
   }
 
@@ -152,23 +187,24 @@ class SearchEngine {
   */
   scrollToResults() {
 
-    var positiveResults = this.results.filter(result => result.positive);
+    console.log(this.matchingElements)
 
-    if (this.results.length === 0) {
+    var positiveResults = this.matchingElements;
+
+    if (positiveResults.length === 0) {
       // No results
       return; 
     }
-
     if (this.scrollIndex >= positiveResults.length) {
       // Reset index if reached the end
       this.scrollIndex = 0; 
     }
 
     const element = positiveResults[this.scrollIndex];
-    // Scroll to element
-    element.scrollTarget.scrollIntoView(); 
-    this.hitsCounter.innerText = `${this.scrollIndex + 1} OF ${positiveResults.length} RESULTS`;
 
+    // Scroll to element and highlight matching result
+    element.scrollIntoView();
+    this.hitsCounter.innerText = `${this.scrollIndex + 1} OF ${positiveResults.length} RESULTS`;
     // Increment the index for the next call
     this.scrollIndex++; 
   }

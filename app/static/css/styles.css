@@ -2229,6 +2229,12 @@ p {
 
 }
 
+.search-highlight {
+  font-weight: 500;
+  color: var(--text_header_hover);
+  scroll-margin: 25vh;
+}
+
 @media screen and (max-width: 380px) {
 
   .searchbar-area {
