@@ -2231,8 +2231,9 @@ p {
 
 .search-highlight {
   font-weight: 500;
-  color: var(--text_header_hover);
+  color: var(--text_header_contrast);
   scroll-margin: 25vh;
+  background-color: var(--bright_red);
 }
 
 @media screen and (max-width: 380px) {
