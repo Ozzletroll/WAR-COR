@@ -187,8 +187,6 @@ class SearchEngine {
   */
   scrollToResults() {
 
-    console.log(this.matchingElements)
-
     var positiveResults = this.matchingElements;
 
     if (positiveResults.length === 0) {
