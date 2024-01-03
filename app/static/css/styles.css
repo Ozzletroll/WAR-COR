@@ -5307,7 +5307,7 @@ pre {
   height: 20px;
   padding: 5px;
   text-transform: uppercase;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0, calc(101% - 8px) 0, 101% 8px, 101% 101%, 0 101%);
   color: var(--text_header_contrast);
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
