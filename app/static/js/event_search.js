@@ -95,25 +95,44 @@ class SearchEngine {
       return;
     }
 
-  // Get page fields and create result object for each
-  var eventLocation = new Result({
-    baseElement: ".event-location",
-    textElement: ".event-elem-body",
-  });
-  var eventBelligerents = new Result({
-    baseElement: ".event-belligerents",
-    textElement: ".event-elem-body"
-  });
-  var eventDesc = new Result({
-    baseElement: ".event-page-description",
-    textElement: ".event-desc"
-  });
-  var eventResults = new Result({
-    baseElement: ".event-page-result",
-    textElement: ".event-elem-body"
-  });
+  // Get page fields and create result object for each if they exist on page
+  this.results = []
 
-  this.results = [eventLocation, eventBelligerents, eventDesc, eventResults];
+  var element = document.querySelector(".event-location");
+  if (element) {
+    var eventLocation = new Result({
+      baseElement: ".event-location",
+      textElement: ".event-elem-body",
+    });
+    this.results.push(eventLocation);
+  }
+
+  var element = document.querySelector(".event-belligerents");
+  if (element) {
+    var eventBelligerents = new Result({
+      baseElement: ".event-belligerents",
+      textElement: ".event-elem-body"
+    });
+    this.results.push(eventBelligerents);
+  }
+
+  var element = document.querySelector(".event-page-description");
+  if (element) {
+    var eventDesc = new Result({
+      baseElement: ".event-page-description",
+      textElement: ".event-desc"
+    });
+    this.results.push(eventDesc);
+  }
+
+  var element = document.querySelector(".event-page-result");
+  if (element) {
+    var eventResults = new Result({
+      baseElement: ".event-page-result",
+      textElement: ".event-elem-body"
+    });
+    this.results.push(eventResults);
+  }
 
   // Flag positive matching result elements
   this.resultsCheck();
