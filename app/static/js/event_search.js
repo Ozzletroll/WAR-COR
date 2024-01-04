@@ -79,18 +79,19 @@ class SearchEngine {
 
     // Check if old results are still valid
     this.resultsCheck(this.searchQuery);
+    this.scrollIndex = 0;
 
     this.updateUI();
 
     // Clear results and end operation if searchbar cleared
     if (this.searchQuery.length == 0){
-
       // Reset styling for each result
       this.results.forEach(result => {
         result.styleReset();
       });
       // Clear all existing search attributes
       this.results = [];
+      this.scrollIndex = 0;
       this.updateUI();
       return;
     }
