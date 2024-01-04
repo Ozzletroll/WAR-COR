@@ -334,6 +334,9 @@ class SearchEngine {
     // Check if old results are still valid
     this.resultsCheck(this.searchQuery);
 
+    // Reset scroll to index, ready for new search results
+    this.scrollIndex = 0;
+
     // Clear results and end operation if searchbar cleared
     if (this.searchQuery.length == 0){
 
