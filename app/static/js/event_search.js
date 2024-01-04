@@ -18,7 +18,7 @@ class Result {
       this.queryMatches.push(this.baseElement);
     }
     else {
-      var elements = this.textElement.querySelectorAll(".event-desc > p");
+      var elements = this.textElement.querySelectorAll(".event-desc > p, .event-desc > ul > li, .event-desc > ol > li");
 
       elements.forEach((element, index) => {
   
