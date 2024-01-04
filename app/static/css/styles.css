@@ -3322,6 +3322,10 @@ p {
   background-color: var(--elem_dark);
 }
 
+.form-container {
+  scroll-margin: 25vh;
+}
+
 /* Edit members page */
 
 .members-content h3 {

@@ -14,7 +14,8 @@ class Result {
 
   stylePositive(searchQuery) {
 
-    if (this.textElement.classList.contains("event-elem-body")) {
+    if (this.textElement.classList.contains("event-elem-body")
+    || this.textElement.classList.contains("event-input")) {
       this.queryMatches.push(this.baseElement);
     }
     else {
@@ -96,53 +97,68 @@ class SearchEngine {
       return;
     }
 
-  // Get page fields and create result object for each if they exist on page
   this.results = []
 
-  var element = document.querySelector(".event-location");
-  if (element) {
-    var eventLocation = new Result({
-      baseElement: ".event-location",
-      textElement: ".event-elem-body",
-    });
-    this.results.push(eventLocation);
+  if (editPage == false) {
+    // Get event page fields and create result object for each if they exist on page
+    var element = document.querySelector(".event-location");
+    if (element) {
+      var eventLocation = new Result({
+        baseElement: ".event-location",
+        textElement: ".event-elem-body",
+      });
+      this.results.push(eventLocation);
+    }
+
+    var element = document.querySelector(".event-belligerents");
+    if (element) {
+      var eventBelligerents = new Result({
+        baseElement: ".event-belligerents",
+        textElement: ".event-elem-body"
+      });
+      this.results.push(eventBelligerents);
+    }
+
+    var element = document.querySelector(".event-page-description");
+    if (element) {
+      var eventDesc = new Result({
+        baseElement: ".event-page-description",
+        textElement: ".event-desc"
+      });
+      this.results.push(eventDesc);
+    }
+
+    var element = document.querySelector(".event-page-result");
+    if (element) {
+      var eventResults = new Result({
+        baseElement: ".event-page-result",
+        textElement: ".event-elem-body"
+      });
+      this.results.push(eventResults);
+    }
+  }
+  else {
+    // Get edit event page fields and create result object for each if they exist on page
+    var editFields = ["#date-field", "#title-field", "#type-field", "#location-field", "#belligerents-field", "#result-field"]
+
+    editFields.forEach((field) => {
+
+      var element = document.querySelector(field);
+      if (element) {
+        var newResultObject = new Result({
+          baseElement: field,
+          textElement: ".event-input",
+        });
+        this.results.push(newResultObject);
+      }
+
+    })
+
   }
 
-  var element = document.querySelector(".event-belligerents");
-  if (element) {
-    var eventBelligerents = new Result({
-      baseElement: ".event-belligerents",
-      textElement: ".event-elem-body"
-    });
-    this.results.push(eventBelligerents);
-  }
-
-  var element = document.querySelector(".event-page-description");
-  if (element) {
-    var eventDesc = new Result({
-      baseElement: ".event-page-description",
-      textElement: ".event-desc"
-    });
-    this.results.push(eventDesc);
-  }
-
-  var element = document.querySelector(".event-page-result");
-  if (element) {
-    var eventResults = new Result({
-      baseElement: ".event-page-result",
-      textElement: ".event-elem-body"
-    });
-    this.results.push(eventResults);
-  }
-
-  // Flag positive matching result elements
   this.resultsCheck();
-
-  // Apply styles to all elements
   this.applyStyles();
-
   this.populateMatchingElements();
-
   this.updateUI();
   
   }
@@ -163,7 +179,9 @@ class SearchEngine {
   resultsCheck() {
     this.results.forEach((result, index) => {
       result.styleReset();
-      if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
+
+      if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)
+      || (result.textElement.value.toLowerCase().includes(this.searchQuery))) {
         result.positive = true;
       }
       else {
@@ -225,13 +243,14 @@ class SearchEngine {
     this.hitsCounter.innerText = `${this.scrollIndex + 1} OF ${positiveResults.length} RESULTS`;
     // Increment the index for the next call
     this.scrollIndex++; 
+
   }
 
 }
 
 // Determine if we are on the edit page
 var editPageElem = document.getElementById("editPageVariable").getAttribute("editPage");
-editPage = false;
+var editPage = false;
 if (editPageElem == "true") {
   editPage = true;
 }

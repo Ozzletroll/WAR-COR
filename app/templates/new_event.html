@@ -22,12 +22,12 @@
 
 {% block content %}
   {% if not new %}
-  {{ searchbar.searchbar(campaign, event=true) }}
+    {{ searchbar.searchbar(campaign, event=true) }}
 
-  {% if current_user.is_authenticated and campaign in current_user.permissions %}
-    {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
+    {% if current_user.is_authenticated and campaign in current_user.permissions %}
+      {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
+    {% endif %}
   {% endif %}
-{% endif %}
 
 <div class="scrollpage">
 
@@ -78,7 +78,7 @@
       <form class="edit-form form-column fade-in-block-2" method="POST">
         {{ form.csrf_token }}
 
-        <div class="form-container form-container-small">
+        <div id="date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -122,7 +122,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="title-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -148,7 +148,7 @@
 
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="type-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -161,7 +161,7 @@
         
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="location-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -174,7 +174,7 @@
 
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="belligerents-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -215,7 +215,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="display-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -259,7 +259,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-large">
+        <div id="description-field" class="form-container form-container-large">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -316,7 +316,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-footer">
+        <div id="result-field" class="form-container form-container-footer">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -385,7 +385,7 @@
 </div>
 
 {# Variable to determine page type in searchbar script #}
-<div id="editPageVariable" class="hidden" editPage="false"></div>
+<div id="editPageVariable" class="hidden" editPage="true"></div>
 
 <script src="/static/js/event_form.js"></script>
 <script src="/static/js/event_gen.js"></script> 
