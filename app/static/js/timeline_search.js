@@ -26,15 +26,9 @@ class Result {
   stylePositive() {
   // Reset styling for self
     this.styleReset();
-
-    // Edit Page Styling
-    if (editPage == true) {
-
-      // On edit page, no additional styling required
-
-    }
+    // On edit page, no additional styling required
     // Normal Page Styling
-    else {
+    if (editPage == false) {
 
       // If result has no results below it, set vertical line to fade opacity value
       if (this.resultsBelow == false) {
@@ -42,8 +36,6 @@ class Result {
       }
 
     }
-
-
   }
 
   /**
@@ -342,6 +334,9 @@ class SearchEngine {
     // Check if old results are still valid
     this.resultsCheck(this.searchQuery);
 
+    // Reset scroll to index, ready for new search results
+    this.scrollIndex = 0;
+
     // Clear results and end operation if searchbar cleared
     if (this.searchQuery.length == 0){
 
@@ -572,11 +567,12 @@ const hitsCounter = document.getElementById("hits-counter");
 const initialValue = hitsCounter.innerText;
 const searchEngine = new SearchEngine(searchBar, hitsCounter)
 
+// Function called by timeline searchbar "Search" button
 function triggerSearch() {
   searchEngine.scrollToResults();
 }
 
-// Add event listener to the input field
+// Add event listener to the timeline input field to listen for enter keypress
 searchBar.addEventListener("input", () => searchEngine.timelineSearch());
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter" && searchBar.value.length > 0) {

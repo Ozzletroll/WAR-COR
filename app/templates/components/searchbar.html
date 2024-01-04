@@ -9,7 +9,7 @@
   
 #}
 
-{% macro searchbar(campaign, edit=false, timeline=false) %}
+{% macro searchbar(campaign, edit=false, timeline=false, event=false) %}
 
 <div id="searchbar" class="searchbar-border">
   <div class="searchbar-outer">
@@ -32,11 +32,24 @@
     <div class="searchbar-area">
       {% if timeline %}
         <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH">
+      {% elif event %}
+        <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH">
       {% else %}
         <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH">
       {% endif %}
+      
       {% if timeline %}
         <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()">
+          <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
+                    <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
+                </g>
+            </g>
+          </svg>
+        </button>
+      {% elif event %}
+        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEventSearch()">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
@@ -56,19 +69,32 @@
       {% endif %}
     </div>
 
-    <div class="hits-area">
-      <div id="hits-counter" class="hits-counter">
-        {% if request.path == "/campaigns" %}
-          {{ campaigns | length }} CAMPAIGNS
-        {% else %} 
-          {{ campaign.events | length }} EVENTS
-        {% endif %}
+    {% if event %}
+      <div class="hits-area">
+        <div id="hits-counter" class="hits-counter">
+          
+        </div>
       </div>
-    </div>
+    {% else%}
+      <div class="hits-area">
+        <div id="hits-counter" class="hits-counter">
+          {% if request.path == "/campaigns" %}
+            {{ campaigns | length }} CAMPAIGNS
+          {% else %} 
+            {{ campaign.events | length }} EVENTS
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
 
   </div>
 </div>
 
 <script src="/static/js/searchbar.js"></script>
+{% if timeline %}
+<script src="/static/js/timeline_search.js" defer="true"></script>
+{% elif event %}
+  <script src="/static/js/event_search.js" defer="true"></script>
+{% endif %}
 
 {%- endmacro %}

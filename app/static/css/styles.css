@@ -2229,6 +2229,13 @@ p {
 
 }
 
+.search-highlight {
+  font-weight: 500;
+  color: var(--text_header_contrast);
+  scroll-margin: 25vh;
+  background-color: var(--bright_red);
+}
+
 @media screen and (max-width: 380px) {
 
   .searchbar-area {
@@ -3313,6 +3320,10 @@ p {
   margin: 3px;
   cursor: pointer;
   background-color: var(--elem_dark);
+}
+
+.form-container {
+  scroll-margin: 25vh;
 }
 
 /* Edit members page */
@@ -4809,14 +4820,11 @@ for selection in timeline_search.js */
   box-sizing: border-box;
 }
 
-.event-location {
+.event-location, .event-belligerents {
   flex: 1 1 auto;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-}
-
-.event-belligerents {
-  flex: 1 1 auto;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  transition: 0.15s ease;
+  scroll-margin: 25vh;
 }
 
 .event-date-area {
@@ -4865,6 +4873,8 @@ for selection in timeline_search.js */
   margin: 20px 0 20px 0;
   border: 1px solid var(--elem_border);
   border-radius: 5px;
+  transition: 0.15s ease;
+  scroll-margin: 25vh;
 }
 
 .entry-left-padding {
@@ -4917,6 +4927,8 @@ for selection in timeline_search.js */
 .event-page-result {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   width: 100%;
+  transition: 0.15s ease;
+  scroll-margin: 25vh;
 }
 
 .ally-group {
@@ -5306,7 +5318,7 @@ pre {
   height: 20px;
   padding: 5px;
   text-transform: uppercase;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 105% 105%, 0 105%);
   color: var(--text_header_contrast);
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;

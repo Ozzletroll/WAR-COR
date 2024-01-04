@@ -1,4 +1,4 @@
-// Sidebar class
+// Searchbar class
 class SearchbarTab {
   constructor({
     tab,
@@ -39,7 +39,7 @@ class SearchbarTab {
   getWidth() {
     if (window.innerWidth <= 600 && this.state == true) {
       this.outer.style.justifyContent = "space-between";
-      this.tab.style.width = "100vw";
+      this.tab.style.width = "100%";
       this.area.style.flex = "4 1 0";
       this.area.style.marginLeft = "10px";
       this.areaInner.style.width = "100%";
@@ -54,7 +54,7 @@ class SearchbarTab {
   }
 }
 
-// Create sidebar
+// Create searchbar
 const searchbar = new SearchbarTab({
   tab: "searchbar",
   button: "searchbar-button",
