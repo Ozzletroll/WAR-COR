@@ -19,7 +19,25 @@ class Result {
       this.queryMatches.push(this.baseElement);
     }
     else {
-      var elements = this.textElement.querySelectorAll(".event-desc > p, .event-desc > ul > li, .event-desc > ol > li");
+      this.initialHTML = this.textElement.innerHTML;
+      var selector = `.event-desc > p,
+                       .event-desc > ul > li,
+                       .event-desc > ol > li,
+                       .note-editable > ul > li,
+                       .note-editable > ol > li,
+                       .note-editable > p`;
+
+      var elements = this.textElement.querySelectorAll(selector);
+
+      // Exclude user image elements
+      elements = Array.from(elements).filter(function(element) {
+        if (element.matches('.note-editable > p')) {
+          if (element.querySelector('img') !== null) {
+            return false;
+          }
+        }
+        return true;
+      });
 
       elements.forEach((element, index) => {
   
@@ -139,10 +157,16 @@ class SearchEngine {
   }
   else {
     // Get edit event page fields and create result object for each if they exist on page
-    var editFields = ["#date-field", "#title-field", "#type-field", "#location-field", "#belligerents-field", "#result-field"]
+    var editFields = [
+      "#date-field", 
+      "#title-field", 
+      "#type-field", 
+      "#location-field", 
+      "#belligerents-field",  
+      "#result-field"
+    ]
 
     editFields.forEach((field) => {
-
       var element = document.querySelector(field);
       if (element) {
         var newResultObject = new Result({
@@ -151,8 +175,16 @@ class SearchEngine {
         });
         this.results.push(newResultObject);
       }
-
     })
+
+    var element = document.querySelector(".note-editor");
+      if (element) {
+        var newResultObject = new Result({
+          baseElement: ".note-editor",
+          textElement: ".note-editable",
+        });
+        this.results.splice(5, 0, newResultObject);
+      }
 
   }
 
@@ -179,14 +211,34 @@ class SearchEngine {
   resultsCheck() {
     this.results.forEach((result, index) => {
       result.styleReset();
-
-      if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)
-      || (result.textElement.value.toLowerCase().includes(this.searchQuery))) {
-        result.positive = true;
-      }
-      else {
-        result.positive = false;
-      }
+        if (editPage == false) {
+          if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
+            result.positive = true;
+          }
+          else {
+            result.positive = false;
+          }
+        }
+        else {
+          // Handle event description field
+          if (result.baseElement.classList.contains("note-editor")) {
+            if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
+              result.positive = true;
+            }
+            else {
+              result.positive = false;
+            }
+          }
+          // Handle all other edit event fields
+          else {
+            if (result.textElement.value.toLowerCase().includes(this.searchQuery)) {
+              result.positive = true;
+            }
+            else {
+              result.positive = false;
+            }
+          }
+        }
       });
   }
 
@@ -246,6 +298,31 @@ class SearchEngine {
 
   }
 
+  // Method to clear search input and remove all applied result styling
+  // Called when closing searchbar tab, interacting with the event desc input field,
+  // or submitting the form
+  clearSearch() {
+    this.searchBar.value = "";
+    this.searchBar.blur();
+    this.results.forEach((result, index) => {
+      result.styleReset();
+    });
+    this.results = [];
+    this.updateUI();
+
+  }
+
+  // Method called when input detected in description field
+  // Updates the description field result object's stored inital value
+  updateDescription() {
+    this.results.forEach((result, index) => {
+      if (index == 5) {
+        result.initialHTML = result.textElement.innerHTML;
+        console.log("Called")
+      }
+    });
+  }
+
 }
 
 // Determine if we are on the edit page
@@ -273,3 +350,30 @@ searchBar.addEventListener("keydown", function(event) {
   searchEngine.scrollToResults();
   }
 });
+
+// Add event listen to the Summernote editor field to listen for user interaction
+if (editPage == true) {
+
+  var summernoteEditor = document.querySelector(".note-editor");
+  summernoteEditor.addEventListener("input", function(event) {
+    if (searchEngine.searchBar.value != "") {
+      searchEngine.clearSearch();
+    }
+    searchEngine.updateDescription();
+  });
+  
+  summernoteEditor.addEventListener("click", function(event) {
+    if (searchEngine.searchBar.value != "") {
+      searchEngine.clearSearch();
+    }
+  });
+
+  var updateButton = document.getElementById("submit");
+  updateButton.addEventListener("click", function(event) {
+    if (searchEngine.searchBar.value != "") {
+      searchEngine.clearSearch();
+    }
+  });
+
+}
+
