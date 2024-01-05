@@ -2698,7 +2698,7 @@ p {
   flex-direction: column;
   padding: 1px;
   background-color: var(--dark_red);
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,0 100%);
   border-radius: 3px;
 }
 
@@ -2709,7 +2709,7 @@ p {
   background-color: var(--darker_red);
   color: var(--text_normal);
   border: none;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,0 100%);
   text-transform: uppercase;
   border-radius: 3px;
 }
