@@ -35,10 +35,11 @@ def create_app(config_class=Config):
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
 
-        # Initialise APScheduler
-        scheduler.init_app(flask_app)
-        import app.utils.tasks
-        scheduler.start()
+        if not flask_app.config["TESTING"]:
+            # Initialise APScheduler
+            scheduler.init_app(flask_app)
+            import app.utils.tasks
+            scheduler.start()
 
         # Initialise CSRFProtect
         csrf.init_app(flask_app)
