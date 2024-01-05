@@ -5326,6 +5326,10 @@ pre {
 
 /* Event preview HTML elements */
 
+.modal-preview-overflow {
+  overflow-y: scroll;
+}
+
 .modal-body-preview {
   padding: 10px;
 }
