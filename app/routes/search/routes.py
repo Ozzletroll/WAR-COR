@@ -54,10 +54,10 @@ def advanced_search(campaign_name, campaign_id):
                     edit = True
 
             return render_template("advanced_search.html",
-                                    form=form,
-                                    campaign=campaign,
-                                    results=results,
-                                    edit=edit)
+                                   form=form,
+                                   campaign=campaign,
+                                   results=results,
+                                   edit=edit)
 
     return render_template("advanced_search.html",
                            form=form,
