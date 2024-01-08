@@ -5236,11 +5236,10 @@ a.sidebar-button {
 }
 
 .campaign-overview p img {
-  width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
   box-sizing: border-box;
-  border: 1px solid var(--darker_red);
+  border: 1px solid var(--elem_border);
 }
 
 .campaign-overview p .icon.icon-inline {
@@ -5327,6 +5326,10 @@ pre {
   flex-direction: column;
   width: fit-content;
   box-sizing: border-box;
+}
+
+.campaign-image-elem {
+  max-width: fit-content;
 }
 
 .user-image-header {
