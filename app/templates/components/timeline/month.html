@@ -18,22 +18,19 @@ elements.
   {% if edit %}
     {# New Epoch Element #}
     <div class="epoch-between">
-      <div class="epoch-left-area">
-        <div class="line line-dashed line-dashed-heavy"></div>
+      <div class="epoch-left-area"></div>
+      <div class="epoch-right-area">
+        <a class="epoch-centre-area" href="{{ url_for('epoch.new_epoch', 
+                                              campaign_name=campaign.url_title,
+                                              campaign_id=campaign.id,
+                                              date=year.name + '/' + month.name) }}">
+          <button id="new_epoch-{{year.name}}-{{month.name}}" class="new-timeline-item new-epoch-button">
+            <div class="epoch-button-text">NEW EPOCH
+              <div>{{ year.name }} / {{month.name}}</div>
+            </div>
+          </button>
+        </a>
       </div>
-
-      <a class="epoch-centre-area" href="{{ url_for('epoch.new_epoch', 
-                            campaign_name=campaign.url_title,
-                            campaign_id=campaign.id,
-                            date=year.name + '/' + month.name) }}">
-        <button id="new_epoch-{{year.name}}-{{month.name}}" class="new-timeline-item">
-          <div class="epoch-button-text">NEW EPOCH
-            <div>{{ year.name }} / {{month.name}}</div>
-          </div>
-        </button>
-      </a>
-
-      <div class="epoch-right-area"></div>
 
     </div>
   {% endif %}

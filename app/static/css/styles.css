@@ -3686,6 +3686,7 @@ p {
   align-items: center;
   margin-bottom: 5px;
   scroll-margin: 25vh;
+  padding: 10px;
 }
 
 .epoch-header {
@@ -3744,22 +3745,23 @@ p {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
 }
 
 .epoch-left-area {
   display: flex;
-  flex: 1 0 0;
+  min-width: 30%;
+}
+
+.epoch-right-area {
+  display: flex;
+  flex: 3 0 0;
+  justify-content: center;
 }
 
 .epoch-centre-area {
   display: flex;
-  flex: 3 0 0;
   text-decoration: none;
-}
-
-.epoch-right-area {
-  flex: 1 0 0;
 }
 
 .epoch-button-text {
@@ -3769,7 +3771,7 @@ p {
   align-items: center;
   margin: 0;
   padding: 5px;
-  font-size: min(4vw, 24px);
+  font-size: min(4vw, 18px);
   text-transform: uppercase;
   color: var(--text_header);
   font-weight: 500;
@@ -3907,7 +3909,7 @@ p {
 }
 
 .epoch-between a {
-  width: 100%;
+  width: 50%;
 }
 
 .event-between-days {
@@ -4319,12 +4321,11 @@ for selection in timeline_search.js */
 
 @media screen and (min-width: 1200px) {
   
-  .month-connector {
+  .month-connector, .epoch-left-area {
     flex: 2.5 1 0;
   }
 
 }
-
 
 @media screen and (max-width: 650px) { 
 
@@ -4370,7 +4371,7 @@ for selection in timeline_search.js */
     font-size: 18px;
   }
 
-  .month-connector {
+  .month-connector, .epoch-left-area {
     flex: 0.5;
     min-width: 0px;
   }
@@ -4408,7 +4409,7 @@ for selection in timeline_search.js */
 
 @media screen and (max-width: 400px) { 
 
-  .month-connector {
+  .month-connector, .epoch-left-area, .event-line, .edit-line-lower {
     display: none;
   }
 
@@ -4507,6 +4508,10 @@ for selection in timeline_search.js */
   min-height: 40px;
 }
 
+a.sidebar-button {
+  text-decoration: none;
+}
+
 .year-button {
   background-color: var(--dark_red);
   margin-bottom: 0;
@@ -4544,6 +4549,10 @@ for selection in timeline_search.js */
 }
 
 .epoch-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   text-transform: uppercase;
   font-weight: 500;
   text-align: center;
@@ -4553,6 +4562,14 @@ for selection in timeline_search.js */
 
 .epoch-button:hover {
   color: var(--text_header_hover);
+}
+
+.new-epoch-start-marker {
+  width: 100%;
+}
+
+.new-epoch-start-marker .epoch-hor-line {
+  margin-bottom: 0px;
 }
 
 /* Event Page */
