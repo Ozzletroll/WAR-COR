@@ -1,0 +1,148 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/edit_toggle.html" as edit_toggle %}
+{% import "components/searchbar.html" as searchbar %}
+{% import "components/back_button.html" as back_button %}
+{% import "components/adjacent_event_button.html" as adjacent_event_button %}
+{% import "components/summernote_editor.html" as summernote %}
+
+
+{% extends "base/base.html" %}
+
+{# Add Summernote #}
+{% block head %}
+  {% include "base/header.html" %}
+  {% block title %}
+  <title>{{epoch.title.upper()}} | WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+    <link rel="stylesheet" href="/static/css/summernote_comment_theme.css">
+  {% endblock %}
+{% endblock %}
+
+
+{% block content %}
+
+{{ searchbar.searchbar(campaign) }}
+
+{% if current_user.is_authenticated and campaign in current_user.permissions %}
+{#
+  {{ edit_toggle.epoch_edit_toggle(campaign, event) }}
+  #}
+{% endif %}
+
+<div class="sidebar-page">
+  
+  <div class="scrollpage">
+
+      <div class="campaigns-content">
+
+        {# Animation fade in group 1 #}
+        <div class="fade-in-block-1">
+
+          {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
+
+          {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                            is_link=true,
+                                            current_user=current_user,
+                                            campaign=campaign) }}
+
+            <div class="campaigns-title">
+              
+              {# Back button #}
+              {% if request.referrer %}
+                {% if "/search" in request.referrer %}
+                  {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+                {% else %}
+                  {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+                {% endif %}
+              {% else %}
+                {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+              {% endif %}
+              {{ back_button.back_button(url=url, blank=false) }}
+
+              <div class="campaigns-heading-outer">
+                <h3 class="campaigns-heading">{{epoch.title}}</h3>
+              </div>
+              
+            </div>
+      
+            <hr class="campaigns-divider">
+            <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{epoch.id}} // Epoch::Data</p>
+    
+        </div>
+
+        <div class="event-page-container fade-in-block-2">
+
+          <div class="event-main-container">
+            {#
+            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true) }}
+            #}
+
+            <div class="event-centre-container">
+              <div class="epoch-page-upper">
+                  <div class="epoch-date-area">
+                    <h4 class="epoch-page-date">{{epoch.start_date}}</h4>
+                    {% if epoch.start_date != epoch.end_date %}
+                        <h4 class="epoch-page-date">&#160> {{epoch.end_date}}</h4>
+                    {% endif %}
+                  </div>
+
+              </div>
+
+              <div class="event-page-body">
+                  <div class="event-page-elem event-elem-large elem-body epoch-page-description">
+                     {{epoch.description | safe }}
+                  </div>
+                  {% if epoch_events is not none %}
+                    <div class="epoch-events-container">
+                        <h4 class="epoch-events-header">
+                            EVENTS:
+                        </h4>
+                        <ul class="epoch-events-list">
+                            {% for event in epoch_events %}
+                                <li>
+                                    {{ event.title }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                  {% endif %}
+              </div>
+
+              <div class="adjacent-events-lower">
+                <div class="adjacent-lower-left">
+                    {#
+                  {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=true) }}
+                  #}
+                </div>
+                <div class="adjacent-lower-right">
+                    {#
+                  {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=true) }}
+                  #}
+                </div>
+                
+              </div>
+
+            </div>
+            {#
+            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true) }}
+            #}
+
+          </div>
+
+        </div>
+
+      </div>
+
+  </div>
+
+</div>
+
+<script src="/static/js/user_image_styling.js"></script>
+<script>
+    formatImageElements(".epoch-page-description p");
+</script>
+
+{% endblock %}

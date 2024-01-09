@@ -3680,6 +3680,10 @@ p {
   width: 50%;
 }
 
+a.view-epoch {
+  text-decoration: none;
+}
+
 .epoch-container {
   display: flex;
   flex-direction: column;
@@ -5376,6 +5380,50 @@ pre {
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
   font-size: min(3vw, 14px);
+}
+
+/* Epoch Page */
+
+.epoch-page-upper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.epoch-date-area {
+  display: flex;
+}
+
+.epoch-page-date {
+  display: flex;
+  font-size: min(4vw, 36px);
+  font-weight: 500;
+  margin: 0px;
+  color: var(--text_dark);
+}
+
+.epoch-page-description {
+  background-color: none;
+}
+
+.epoch-events-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.epoch-events-header {
+  display: flex;
+  width: fit-content;
+}
+
+.epoch-events-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  padding: 0px;
 }
 
 /* Data backup page */

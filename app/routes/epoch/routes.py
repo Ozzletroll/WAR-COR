@@ -2,17 +2,43 @@ from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required
 
+from app import db, models
 from app.forms import forms
-from app import models
 from app.utils import authenticators
 
-from app import db
 from app.routes.epoch import bp
 
 
 #   =======================================
 #                  EPOCH
 #   =======================================
+
+# View epoch page
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>", methods=["GET"])
+def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
+
+    campaign = db.session.execute(
+            select(models.Campaign)
+            .filter_by(id=campaign_id)).scalar()
+    
+    authenticators.check_campaign_visibility(campaign)
+
+    epoch = db.session.execute(
+        select(models.Epoch)
+        .filter_by(id=epoch_id)).scalar()
+    
+    epoch_events = sorted(epoch.events, key=lambda event: (event.year,
+                                                           event.month,
+                                                           event.day,
+                                                           event.hour,
+                                                           event.minute,
+                                                           event.second))
+    
+    return render_template("epoch_page.html",
+                           campaign=campaign,
+                           epoch=epoch,
+                           epoch_events=epoch_events)
+
 
 # Add new epoch
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/new_epoch", methods=["GET", "POST"])
