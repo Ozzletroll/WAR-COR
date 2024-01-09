@@ -87,6 +87,7 @@
 <script src="/static/js/scroll_target.js"></script> 
 <script src="/static/js/user_image_styling.js"></script>
 <script>
+  formatImageElements(".campaign-overview p");
   window.addEventListener('load', scrollToTarget('{{ url_for("session.campaign_target") }}', '{{ csrf_token() }}'));
 </script>
 

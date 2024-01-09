@@ -246,6 +246,7 @@
 <script src="/static/js/timeline_left_markers.js"></script>
 <script src="/static/js/user_image_styling.js"></script>
 <script>
+  formatImageElements(".campaign-overview p");
   window.addEventListener("resize", marginFix);
   window.addEventListener('DOMContentLoaded', marginFix());
   window.addEventListener('DOMContentLoaded', scrollToTarget('{{ url_for("session.timeline_target") }}', '{{ csrf_token() }}'));
