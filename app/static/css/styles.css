@@ -5239,7 +5239,7 @@ a.sidebar-button {
   padding: 0;
 }
 
-.campaign-overview p img {
+.campaign-overview p img, .epoch-page-description p img {
   max-width: 100% !important;
   height: auto !important;
   box-sizing: border-box;
@@ -5388,10 +5388,13 @@ pre {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  border-bottom: 1px solid var(--elem_border);
 }
 
 .epoch-date-area {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .epoch-page-date {
@@ -5400,10 +5403,6 @@ pre {
   font-weight: 500;
   margin: 0px;
   color: var(--text_dark);
-}
-
-.epoch-page-description {
-  background-color: none;
 }
 
 .epoch-events-container {
@@ -5416,6 +5415,16 @@ pre {
 .epoch-events-header {
   display: flex;
   width: fit-content;
+  color: var(--text_header_dark);
+  margin: 10px 0px 0px 0px;
+}
+
+.epoch-page-start-marker, .epoch-page-end-marker {
+  width: 100%;
+}
+
+.epoch-page-end-marker {
+  margin-top: 20px;
 }
 
 .epoch-events-list {
@@ -5424,6 +5433,36 @@ pre {
   align-items: center;
   list-style: none;
   padding: 0px;
+  width: 100%;
+}
+
+.epoch-page-event {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.epoch-page-event-header {
+  justify-content: space-between;
+}
+
+.epoch-header-left, .epoch-header-right {
+  margin: 0px;
+}
+
+.epoch-header-right {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: right;
+  text-align: right;
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  .epoch-header-right {
+    flex-grow: 0;
+    flex-wrap: wrap;
+    width: 80px;
+  }
 }
 
 /* Data backup page */

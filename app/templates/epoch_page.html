@@ -5,6 +5,7 @@
 {% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
 {% import "components/summernote_editor.html" as summernote %}
+{% import "components/timeline/month.html" as timeline_month %}
 
 
 {% extends "base/base.html" %}
@@ -85,7 +86,7 @@
                   <div class="epoch-date-area">
                     <h4 class="epoch-page-date">{{epoch.start_date}}</h4>
                     {% if epoch.start_date != epoch.end_date %}
-                        <h4 class="epoch-page-date">&#160> {{epoch.end_date}}</h4>
+                        <h4 class="epoch-page-date">{{epoch.end_date}}</h4>
                     {% endif %}
                   </div>
 
@@ -101,11 +102,53 @@
                             EVENTS:
                         </h4>
                         <ul class="epoch-events-list">
-                            {% for event in epoch_events %}
-                                <li>
-                                    {{ event.title }}
-                                </li>
-                            {% endfor %}
+
+                          <div class="epoch-start-marker epoch-page-start-marker">
+                            <div class="epoch-vert-line"></div>
+                            <div class="epoch-hor-line"></div>
+                          </div>
+
+                          {% for event in epoch_events %}
+
+                          <div class="event-outer-container epoch-page-event">
+                            <div class="timeline-event event-outline">
+                              <div id="event-{{event.id}}" class="timeline-event">
+                               
+                                {% if edit %}
+                                  <a href="{{ url_for('event.edit_event', 
+                                              campaign_name=campaign.url_title,
+                                              campaign_id=campaign.id, 
+                                              event_name=event.url_title,
+                                              event_id=event.id) }}"> 
+                                {% else %}
+                                  <a href="{{ url_for('event.view_event', 
+                                  campaign_name=campaign.url_title,
+                                  campaign_id=campaign.id, 
+                                  event_name=event.url_title,
+                                  event_id=event.id) }}">      
+                                {% endif %}
+                      
+                                  <div class="event-header epoch-page-event-header">
+                                    <h4 class="epoch-header-left">
+                                      //{{event.title}}
+                                    </h4>
+                                    <h4 class="epoch-header-right">
+                                      {{event.date}}
+                                    </h4>
+                                  </div>
+                                </a>
+                                
+                              </div>
+                            </div>
+                          </div>
+
+                          {% endfor %}
+
+                          <div class="epoch-end-marker epoch-page-end-marker">
+                            <div class="epoch-hor-line-end"></div>
+                          </div>
+
+
                         </ul>
                     </div>
                   {% endif %}
