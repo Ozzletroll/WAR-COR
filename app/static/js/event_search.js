@@ -338,8 +338,12 @@ const hitsCounter = document.getElementById("hits-counter");
 const initialValue = hitsCounter.innerText;
 const searchEngine = new SearchEngine(searchBar, hitsCounter)
 
-// Function called by timeline searchbar "Search" button
+// Functions called by searchbar "Search" button
 function triggerEventSearch() {
+  searchEngine.scrollToResults();
+}
+
+function triggerEpochSearch() {
   searchEngine.scrollToResults();
 }
 

@@ -2,6 +2,8 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/summernote_editor.html" as summernote %}
+{% import "components/edit_toggle.html" as edit_toggle %}
+{% import "components/searchbar.html" as searchbar %}
 
 
 {% extends "base/base.html" %}
@@ -19,6 +21,14 @@
 
 
 {% block content %}
+
+  {% if not new %}
+    {{ searchbar.searchbar(campaign, epoch=true) }}
+
+    {% if current_user.is_authenticated and campaign in current_user.permissions %}
+      {{ edit_toggle.epoch_edit_toggle(campaign, epoch, edit=true) }}
+    {% endif %}
+  {% endif %}
 
 <div class="scrollpage">
 

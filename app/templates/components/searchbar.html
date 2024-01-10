@@ -9,7 +9,7 @@
   
 #}
 
-{% macro searchbar(campaign, edit=false, timeline=false, event=false) %}
+{% macro searchbar(campaign, edit=false, timeline=false, event=false, epoch=false) %}
 
 <div id="searchbar" class="searchbar-border">
   <div class="searchbar-outer">
@@ -58,6 +58,16 @@
             </g>
           </svg>
         </button>
+      {% elif epoch %}
+        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEpochSearch()">
+          <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
+                    <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
+                </g>
+            </g>
+          </svg>
+        </button>
       {% endif %}
         
       {% if campaign is not none %}
@@ -69,7 +79,7 @@
       {% endif %}
     </div>
 
-    {% if event %}
+    {% if event or search %}
       <div class="hits-area">
         <div id="hits-counter" class="hits-counter">
           
@@ -93,7 +103,7 @@
 <script src="/static/js/searchbar.js"></script>
 {% if timeline %}
 <script src="/static/js/timeline_search.js" defer="true"></script>
-{% elif event %}
+{% elif event or epoch %}
   <script src="/static/js/event_search.js" defer="true"></script>
 {% endif %}
 

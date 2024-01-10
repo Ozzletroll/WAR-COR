@@ -28,9 +28,7 @@
 {{ searchbar.searchbar(campaign) }}
 
 {% if current_user.is_authenticated and campaign in current_user.permissions %}
-{#
-  {{ edit_toggle.epoch_edit_toggle(campaign, event) }}
-  #}
+  {{ edit_toggle.epoch_edit_toggle(campaign, epoch) }}
 {% endif %}
 
 <div class="sidebar-page">
@@ -93,65 +91,76 @@
               </div>
 
               <div class="event-page-body">
-                  <div class="event-page-elem event-elem-large elem-body epoch-page-description">
-                     {{epoch.description | safe }}
-                  </div>
-                  {% if epoch_events is not none %}
-                    <div class="epoch-events-container">
-                        <h4 class="epoch-events-header">
-                            EVENTS:
-                        </h4>
-                        <ul class="epoch-events-list">
+                  <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description">
+      
+                    <div class="entry-left-padding"></div>
 
-                          <div class="epoch-start-marker epoch-page-start-marker">
-                            <div class="epoch-vert-line"></div>
-                            <div class="epoch-hor-line"></div>
-                          </div>
+                    <div class="description-body">
+                      <h4 class="event-desc-header">Archive Entry:</h4>
+                      <div class="event-desc">
+                        {{ epoch.description | safe }}
+                      </div>
 
-                          {% for event in epoch_events %}
+                      {% if epoch_events is not none %}
+                        <div class="epoch-events-container">
+                          <h4 class="epoch-events-header">
+                              EVENTS:
+                          </h4>
 
-                          <div class="event-outer-container epoch-page-event">
-                            <div class="timeline-event event-outline">
-                              <div id="event-{{event.id}}" class="timeline-event">
-                               
-                                {% if edit %}
-                                  <a href="{{ url_for('event.edit_event', 
-                                              campaign_name=campaign.url_title,
-                                              campaign_id=campaign.id, 
-                                              event_name=event.url_title,
-                                              event_id=event.id) }}"> 
-                                {% else %}
-                                  <a href="{{ url_for('event.view_event', 
-                                  campaign_name=campaign.url_title,
-                                  campaign_id=campaign.id, 
-                                  event_name=event.url_title,
-                                  event_id=event.id) }}">      
-                                {% endif %}
-                      
-                                  <div class="event-header epoch-page-event-header">
-                                    <h4 class="epoch-header-left">
-                                      //{{event.title}}
-                                    </h4>
-                                    <h4 class="epoch-header-right">
-                                      {{event.date}}
-                                    </h4>
-                                  </div>
-                                </a>
-                                
-                              </div>
+                          <ul class="epoch-events-list">
+
+                            <div class="epoch-start-marker epoch-page-start-marker">
+                              <div class="epoch-vert-line"></div>
+                              <div class="epoch-hor-line"></div>
                             </div>
-                          </div>
 
-                          {% endfor %}
+                            {% for event in epoch_events %}
 
-                          <div class="epoch-end-marker epoch-page-end-marker">
-                            <div class="epoch-hor-line-end"></div>
-                          </div>
+                              <div class="event-outer-container epoch-page-event">
+                                <div class="timeline-event event-outline">
+                                  <div id="event-{{event.id}}" class="timeline-event">
+                                  
+                                    {% if edit %}
+                                      <a href="{{ url_for('event.edit_event', 
+                                                  campaign_name=campaign.url_title,
+                                                  campaign_id=campaign.id, 
+                                                  event_name=event.url_title,
+                                                  event_id=event.id) }}"> 
+                                    {% else %}
+                                      <a href="{{ url_for('event.view_event', 
+                                      campaign_name=campaign.url_title,
+                                      campaign_id=campaign.id, 
+                                      event_name=event.url_title,
+                                      event_id=event.id) }}">      
+                                    {% endif %}
+                          
+                                      <div class="event-header epoch-page-event-header">
+                                        <h4 class="epoch-header-left">
+                                          //{{event.title}}
+                                        </h4>
+                                        <h4 class="epoch-header-right">
+                                          {{event.date}}
+                                        </h4>
+                                      </div>
+                                    </a>
+                                    
+                                  </div>
+                                </div>
+                              </div>
 
+                            {% endfor %}
 
-                        </ul>
+                            <div class="epoch-end-marker epoch-page-end-marker">
+                              <div class="epoch-hor-line-end"></div>
+                            </div>
+
+                          </ul>
+                        </div>
+                    {% endif %}
                     </div>
-                  {% endif %}
+                  </div>
+
+                
               </div>
 
               <div class="adjacent-events-lower">
