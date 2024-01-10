@@ -189,6 +189,7 @@ def epochs_import(epoch):
         
     try:
         new_epoch.title = epoch["title"]
+        new_epoch.set_url_title()
     except KeyError:
         errors.append("Unable to locate epoch title")
     try:
