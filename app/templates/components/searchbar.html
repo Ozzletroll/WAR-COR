@@ -9,7 +9,7 @@
   
 #}
 
-{% macro searchbar(campaign, edit=false, timeline=false, event=false, epoch=false) %}
+{% macro searchbar(campaign, current_user, edit=false, timeline=false, event=false, epoch=false) %}
 
 <div id="searchbar" class="searchbar-border">
   <div class="searchbar-outer">
@@ -89,8 +89,8 @@
       <div class="hits-area">
         <div id="hits-counter" class="hits-counter">
           {% if request.path == "/campaigns" %}
-            {{ campaigns | length }} CAMPAIGNS
-          {% else %} 
+            {{ current_user.campaigns | length }} CAMPAIGNS
+          {% elif timeline %}
             {{ campaign.events | length }} EVENTS
           {% endif %}
         </div>
