@@ -32,7 +32,7 @@
     <div class="searchbar-area">
       {% if timeline %}
         <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH">
-      {% elif event %}
+      {% elif event or epoch %}
         <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH">
       {% else %}
         <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH">

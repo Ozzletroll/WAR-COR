@@ -4230,6 +4230,8 @@ for selection in timeline_search.js */
   display: flex;
   flex-direction: column;
   width: 100%;
+  transition: 0.5s;
+  scroll-margin: 25vh;
 }
 
 .event-small-date {

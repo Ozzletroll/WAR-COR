@@ -14,10 +14,27 @@ class Result {
 
   stylePositive(searchQuery) {
 
+    // Handle basic event page elements
     if (this.textElement.classList.contains("event-elem-body")
     || this.textElement.classList.contains("event-input")) {
       this.queryMatches.push(this.baseElement);
     }
+    // Handle epoch page event list element
+    else if (this.textElement.classList.contains("epoch-events-list")) {
+      
+      var events = this.textElement.querySelectorAll(".event-outer-container");
+      events.forEach((element) => {
+        var eventName = element.querySelector(".epoch-header-left");
+        if (eventName.innerText.toLowerCase().includes(searchQuery)) {
+          this.queryMatches.push(element);
+        }
+        else {
+          element.style.opacity = fadeValue;
+        }
+      })
+
+    }
+    // Handle user submitted html elements
     else {
       this.initialHTML = this.textElement.innerHTML;
       var selector = `.event-desc > p,
@@ -99,7 +116,6 @@ class SearchEngine {
     // Check if old results are still valid
     this.resultsCheck(this.searchQuery);
     this.scrollIndex = 0;
-
     this.updateUI();
 
     // Clear results and end operation if searchbar cleared
@@ -118,7 +134,7 @@ class SearchEngine {
   this.results = []
 
   if (editPage == false) {
-    // Get event page fields and create result object for each if they exist on page
+    // Get event and epoch page fields and create result object for each if they exist on page
     var element = document.querySelector(".event-location");
     if (element) {
       var eventLocation = new Result({
@@ -153,6 +169,15 @@ class SearchEngine {
         textElement: ".event-elem-body"
       });
       this.results.push(eventResults);
+    }
+
+    var element = document.querySelector(".epoch-events-container");
+    if (element) {
+      var epochResults = new Result({
+        baseElement: ".epoch-events-container",
+        textElement: ".epoch-events-list"
+      });
+      this.results.push(epochResults);
     }
   }
   else {
@@ -318,7 +343,6 @@ class SearchEngine {
     this.results.forEach((result, index) => {
       if (index == 5) {
         result.initialHTML = result.textElement.innerHTML;
-        console.log("Called")
       }
     });
   }
