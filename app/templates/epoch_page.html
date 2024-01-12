@@ -75,9 +75,6 @@
         <div class="event-page-container fade-in-block-2">
 
           <div class="event-main-container">
-            {#
-            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true) }}
-            #}
 
             <div class="event-centre-container">
               <div class="epoch-page-upper">
@@ -91,22 +88,24 @@
               </div>
 
               <div class="event-page-body">
-                  <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description">
-      
-                    <div class="entry-left-padding"></div>
+                  {% if epoch.description is not none %}
+                    <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description">
+        
+                      <div class="entry-left-padding"></div>
 
-                    <div class="description-body">
-                      <h4 class="event-desc-header">Archive Entry:</h4>
-                      <div class="event-desc">
-                        {{ epoch.description | safe }}
+                      <div class="description-body">
+                        <h4 class="event-desc-header">Archive Entry:</h4>
+                        <div class="event-desc">
+                          {{ epoch.description | safe }}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  {% endif %}
 
                   {% if epoch_events is not none %}
-                    <div class="epoch-events-container">
+                    <div class="timeline-container epoch-events-container">
                       <h4 class="epoch-events-header">
-                          EVENTS:
+                          EPOCH DATA:
                       </h4>
 
                       <div class="epoch-start-marker epoch-page-start-marker">
@@ -180,8 +179,6 @@
                     </div>
                   {% endif %}
                   
-
-                
               </div>
 
             </div>
