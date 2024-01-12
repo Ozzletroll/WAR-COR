@@ -5414,6 +5414,10 @@ pre {
   align-items: center;
 }
 
+.epoch-events-container .epoch-hor-line {
+  margin-bottom: 0px;
+}
+
 .epoch-events-header {
   display: flex;
   width: fit-content;
@@ -5426,14 +5430,12 @@ pre {
 }
 
 .epoch-page-end-marker {
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
 .epoch-events-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  list-style: none;
   padding: 0px;
   width: 100%;
 }

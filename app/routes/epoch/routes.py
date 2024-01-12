@@ -37,9 +37,12 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
+    timeline_data = campaign.return_timeline_data(epoch=epoch)
+
     return render_template("epoch_page.html",
                            campaign=campaign,
                            epoch=epoch,
+                           timeline_data=timeline_data,
                            epoch_events=epoch_events)
 
 
