@@ -111,48 +111,10 @@
 
                       <div class="epoch-start-marker epoch-page-start-marker">
                         <div class="epoch-vert-line"></div>
-                        <div class="epoch-hor-line"></div>
+                        <div class="epoch-hor-line epoch-page-hor-line"></div>
                       </div>
 
                       <div class="epoch-events-list timeline-container">
-
-                        {#
-                        {% for event in epoch_events %}
-
-                          <div class="event-outer-container epoch-page-event">
-                            <div class="timeline-event event-outline">
-                              <div id="event-{{event.id}}" class="timeline-event">
-                              
-                                {% if edit %}
-                                  <a href="{{ url_for('event.edit_event', 
-                                              campaign_name=campaign.url_title,
-                                              campaign_id=campaign.id, 
-                                              event_name=event.url_title,
-                                              event_id=event.id) }}"> 
-                                {% else %}
-                                  <a href="{{ url_for('event.view_event', 
-                                  campaign_name=campaign.url_title,
-                                  campaign_id=campaign.id, 
-                                  event_name=event.url_title,
-                                  event_id=event.id) }}">      
-                                {% endif %}
-                      
-                                  <div class="event-header epoch-page-event-header">
-                                    <h4 class="epoch-header-left">
-                                      //{{event.title}}
-                                    </h4>
-                                    <h4 class="epoch-header-right">
-                                      {{event.date}}
-                                    </h4>
-                                  </div>
-                                </a>
-                                
-                              </div>
-                            </div>
-                          </div>
-
-                        {% endfor %}
-                        #}
 
                       {% for year in timeline_data %}
 
