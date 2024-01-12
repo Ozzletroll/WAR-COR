@@ -93,7 +93,8 @@ def new_epoch(campaign_name, campaign_id):
     return render_template("new_epoch.html",
                            campaign=campaign,
                            campaign_name=campaign.url_title,
-                           form=form)
+                           form=form,
+                           new=True)
 
 
 # Edit epoch

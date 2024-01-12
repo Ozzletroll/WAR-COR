@@ -101,6 +101,6 @@ class Campaign(db.Model):
         self.url_title = self.title.replace(" ", "-")
         
 
-    def return_timeline_data(self):
+    def return_timeline_data(self, epoch=None):
         """ Method to return campaign timeline data """
-        return organisers.campaign_sort(self)
+        return organisers.campaign_sort(self, epoch)
