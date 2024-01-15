@@ -40,8 +40,8 @@ property to represent if the epoch has child events.
             {% else %}
               <h4 class="epoch-date">{{ epoch.start_date }}</h4>
             {% endif %}
-            {% if epoch.description is not none %}
-              <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
+            {% if epoch.overview is not none %}
+              <h6 class="epoch-description">{{ epoch.overview | safe }}</h6>
             {% endif %}
           </div>
         </div>

@@ -97,7 +97,7 @@
           <div class="modal-content">
             <div class="modal-content-inner">
               <div class="modal-header">
-                <h2 class="modal-header-small">Epoch</h2>
+                <h2 class="modal-header-small">Epoch Start Date</h2>
                 <span id="close-1" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
@@ -142,7 +142,7 @@
           <div class="modal-content">
             <div class="modal-content-inner">
               <div class="modal-header">
-                <h2 class="modal-header-small">Epoch</h2>
+                <h2 class="modal-header-small">Epoch End Date</h2>
                 <span id="close-2" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
@@ -175,13 +175,38 @@
           
               <h4 class="campaign-form label-title">Overview</h4>
 
+              <div class="form-extra-button-area">
+                
+                <div id="epoch-overview-button" type="button" class="form-button">
+                  {% include "components/help_icon.html" %}
+                </div>
+                
+              </div>
+
             </div>
-            <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
+            <p class="flavour-text">UWC-17-04 //  Epoch::Overview</p>
           </label>
 
           {{ form.overview(id="summernote-overview", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
           {{ summernote.summernote_editor(required=false, epoch_overview=true) }}
         
+        </div>
+
+        <div id="modal-3" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Epoch Overview</h2>
+                <span id="close-3" class="modal-close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>The epoch overview is displayed on the main timeline beneath each epoch marker.
+                  It is best used for a brief description of the epoch.</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="form-container form-container-large">
@@ -191,6 +216,14 @@
           
               <h4 class="campaign-form label-title">Description</h4>
 
+              <div class="form-extra-button-area">
+                
+                <div id="epoch-desc-button" type="button" class="form-button">
+                  {% include "components/help_icon.html" %}
+                </div>
+                
+              </div>
+
             </div>
             <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
           </label>
@@ -198,6 +231,24 @@
           {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
           {{ summernote.summernote_editor(required=false) }}
         
+        </div>
+
+        <div id="modal-4" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Epoch Description</h2>
+                <span id="close-4" class="modal-close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>The epoch description is displayed on the dedicated epoch page itself, allowing
+                  for a longer, more detailed description of the epoch.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
 
