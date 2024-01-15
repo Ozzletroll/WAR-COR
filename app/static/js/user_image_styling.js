@@ -1,4 +1,4 @@
-function formatImageElements(selector) {
+function formatImageElements(selector, header=false) {
   const elements = document.querySelectorAll(selector);
   let imageCount = 0;
 
@@ -22,6 +22,16 @@ function formatImageElements(selector) {
       // Wrap the element within the new div
       element.parentNode.insertBefore(newDiv2, element);
       newDiv2.appendChild(element);
+
+      if (header == true) {
+        // Create header
+        const newHeader = document.createElement("div");
+        newHeader.classList.add("user-image-header");
+        newHeader.textContent = `Image::Data_${String(imageCount).padStart(2, "0")}`;
+
+        // Insert the header
+        element.parentNode.insertBefore(newHeader, element);
+      }
 
       // Centre img elements in user submitted p elements
       element.style.display = "flex";
