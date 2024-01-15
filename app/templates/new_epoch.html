@@ -169,19 +169,34 @@
         </div>
 
         <div class="form-container form-container-large">
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+          
+              <h4 class="campaign-form label-title">Overview</h4>
+
+            </div>
+            <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
+          </label>
+
+          {{ form.overview(id="summernote-overview", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+          {{ summernote.summernote_editor(required=false, epoch_overview=true) }}
         
-            <h4 class="campaign-form label-title">Description</h4>
+        </div>
 
-          </div>
-          <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
-        </label>
+        <div class="form-container form-container-large">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+          
+              <h4 class="campaign-form label-title">Description</h4>
 
-        {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+            </div>
+            <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
+          </label>
 
-        {{ summernote.summernote_editor(required=false) }}
+          {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+          {{ summernote.summernote_editor(required=false) }}
         
         </div>
 

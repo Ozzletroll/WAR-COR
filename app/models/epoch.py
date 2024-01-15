@@ -22,6 +22,7 @@ class Epoch(db.Model):
     end_month = db.Column(db.Integer)
     end_day = db.Column(db.Integer)
 
+    overview = db.Column(db.String(), nullable=True)
     description = db.Column(db.String(), nullable=True)
     has_events = db.Column(db.Boolean(), nullable=False, default=False)
 
