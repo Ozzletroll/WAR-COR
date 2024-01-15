@@ -2301,6 +2301,16 @@ p {
   cursor: pointer;
 }
 
+/* Set scroll margin for toggle scroll to */
+.campaign-members, 
+.timeline-year-header, 
+.campaigns-heading, 
+.campaign-overview, 
+.campaign-members, 
+.last-edited-area {
+  scroll-margin: 33vh;
+}
+
 /* Animation Block */
 
 .fade-in-block-1 {
