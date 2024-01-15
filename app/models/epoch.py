@@ -60,7 +60,7 @@ class Epoch(db.Model):
                     self.end_month = self.split_date(value)[1]
                     self.end_day = self.split_date(value)[2]
 
-                if field == "description":
+                if field == "description" or field == "overview":
                     value = sanitise_input(value)
                     if value == "<p><br></p>":
                         value = None
