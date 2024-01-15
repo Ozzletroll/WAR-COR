@@ -19,21 +19,6 @@ class Result {
     || this.textElement.classList.contains("event-input")) {
       this.queryMatches.push(this.baseElement);
     }
-    // Handle epoch page event list element
-    else if (this.textElement.classList.contains("epoch-events-list")) {
-      
-      var events = this.textElement.querySelectorAll(".event-outer-container");
-      events.forEach((element) => {
-        var eventName = element.querySelector(".epoch-header-left");
-        if (eventName.innerText.toLowerCase().includes(searchQuery)) {
-          this.queryMatches.push(element);
-        }
-        else {
-          element.style.opacity = fadeValue;
-        }
-      })
-
-    }
     // Handle user submitted html elements
     else {
       this.initialHTML = this.textElement.innerHTML;

@@ -5216,6 +5216,8 @@ a.sidebar-button {
 
 /* Campaign Overview HTML Elements */
 
+/* !important is used to overwrite default Summernote editor inline styles */
+
 .campaign-overview {
   color: var(--text_dark);
 }
@@ -5258,6 +5260,10 @@ a.sidebar-button {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.epoch-description p img {
+  height: auto !important;
 }
 
 /* Comment HTML Elements */
