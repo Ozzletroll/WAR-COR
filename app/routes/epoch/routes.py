@@ -27,23 +27,31 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
         select(models.Epoch)
         .filter_by(id=epoch_id)).scalar()
     
-    epoch_events = sorted(epoch.events, key=lambda event: (event.year,
-                                                           event.month,
-                                                           event.day,
-                                                           event.hour,
-                                                           event.minute,
-                                                           event.second))
-    
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
     timeline_data = campaign.return_timeline_data(epoch=epoch)
 
+    # Find all the contained child epochs
+    sub_epochs = [epoch for year in timeline_data 
+                  for month in year.months 
+                  for day in month.days 
+                  if day.has_epoch 
+                  for epoch in day.epochs]
+    
+    # Determine back button functionality if dealing with nested epochs
+    url_titles = [epoch.url_title for epoch in sub_epochs] 
+    url_titles_found = [title for title in url_titles if title in request.referrer]
+    if len(url_titles_found) == 0:
+        can_use_referrer = True
+    else:
+        can_use_referrer = False
+
     return render_template("epoch_page.html",
                            campaign=campaign,
                            epoch=epoch,
                            timeline_data=timeline_data,
-                           epoch_events=epoch_events)
+                           can_use_referrer=can_use_referrer)
 
 
 # Add new epoch

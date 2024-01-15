@@ -53,6 +53,8 @@
               {% if request.referrer %}
                 {% if "/search" in request.referrer %}
                   {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+                {% elif "/epoch" in request.referrer and campaign.url_title in request.referrer and can_use_referrer == true %}
+                  {% set url = request.referrer %}
                 {% else %}
                   {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
                 {% endif %}
