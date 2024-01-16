@@ -81,8 +81,7 @@
 
     {% if event or search %}
       <div class="hits-area">
-        <div id="hits-counter" class="hits-counter">
-          
+        <div id="hits-counter" class="hits-counter">    
         </div>
       </div>
     {% else%}
@@ -102,9 +101,11 @@
 
 <script src="/static/js/searchbar.js"></script>
 {% if timeline %}
-<script src="/static/js/timeline_search.js" defer="true"></script>
-{% elif event or epoch %}
+  <script src="/static/js/timeline_search.js" type="module" defer="true"></script>
+{% elif event %}
   <script src="/static/js/event_search.js" defer="true"></script>
+{% elif epoch %}
+  <script src="/static/js/timeline_search.js" defer="true"></script>
 {% endif %}
 
 {%- endmacro %}
