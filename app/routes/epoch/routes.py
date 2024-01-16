@@ -40,12 +40,12 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                   for epoch in day.epochs]
     
     # Determine back button functionality if dealing with nested epochs
-    url_titles = [epoch.url_title for epoch in sub_epochs] 
-    url_titles_found = [title for title in url_titles if title in request.referrer]
-    if len(url_titles_found) == 0:
-        can_use_referrer = True
-    else:
-        can_use_referrer = False
+    can_use_referrer = False
+    if request.referrer is not None:
+        url_titles = [epoch.url_title for epoch in sub_epochs] 
+        url_titles_found = [title for title in url_titles if title in request.referrer]
+        if len(url_titles_found) == 0:
+            can_use_referrer = True
 
     return render_template("epoch_page.html",
                            campaign=campaign,
