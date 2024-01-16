@@ -33,7 +33,6 @@ function getCentralElement() {
     }
   });
 
-  console.log(closestElement)
   return closestElement;
 }
 
