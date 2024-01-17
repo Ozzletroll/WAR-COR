@@ -270,6 +270,9 @@ export class SearchEngine {
   
   }
 
+  /**
+  * Method to apply visual styling to results
+  */
   applyStyles() {
     if (this.type == "timeline") {
       // Finalise data structure
@@ -348,6 +351,9 @@ export class SearchEngine {
   }
 
 
+  /**
+  * Method to populate array of positive query matching event page elements 
+  */
   populateMatchingElements() {
     this.matchingElements = [];
     this.htmlResults.forEach((result, index) => {
