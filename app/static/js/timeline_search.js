@@ -16,7 +16,8 @@ const searchEngine = new SearchEngine(
   searchBar, 
   hitsCounter, 
   editPage,
-  initialValue
+  initialValue,
+  "timeline"
   )
 
 // Function called by timeline searchbar "Search" button

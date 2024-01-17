@@ -103,9 +103,9 @@
 {% if timeline %}
   <script src="/static/js/timeline_search.js" type="module" defer="true"></script>
 {% elif event %}
-  <script src="/static/js/event_search.js" defer="true"></script>
+  <script src="/static/js/event_search.js" type="module" defer="true"></script>
 {% elif epoch %}
-  <script src="/static/js/timeline_search.js" defer="true"></script>
+  <script src="/static/js/timeline_search.js" type="module" defer="true"></script>
 {% endif %}
 
 {%- endmacro %}
