@@ -270,6 +270,22 @@ export class SearchEngine {
   
   }
 
+
+  /**
+  * Epoch page search method
+  * Performs both an eventSearch() on the epoch description field,
+  * as well a timelineSearch() for the embedded epoch timeline
+  */
+  epochSearch() {
+
+    this.type = "event";
+    this.eventSearch();
+    this.type = "timeline";
+    this.timelineSearch();
+    this.updateUI();
+
+  }
+
   /**
   * Method to apply visual styling to results
   */
@@ -367,32 +383,18 @@ export class SearchEngine {
   * Method to update ui hits counter
   */
   updateUI() {
-    if (this.type == "timeline") {
-      if (this.searchQuery.length == 0) {
-        this.hitsCounter.innerText = this.initialValue;
-      }
-      else {
-        if (this.results.length == 1) {
-          this.hitsCounter.innerText = `${this.results.length} RESULT`;
-        }
-        else {
-          this.hitsCounter.innerText = `${this.results.length} RESULTS`;
-        }
-      }
+    var positiveResults = this.htmlResults.filter(htmlResult => htmlResult.positive);
+    var totalMatches = 0;
+    positiveResults.forEach((result, index) => {
+      totalMatches += result.queryMatches.length;
+    });
+    totalMatches += this.results.length;
+
+    if (this.searchQuery.length == 0) {
+      this.hitsCounter.innerText = this.initialValue;
     }
-    else if (this.type == "event") {
-      var positiveResults = this.htmlResults.filter(htmlResult => htmlResult.positive);
-      var totalMatches = 0;
-      positiveResults.forEach((result, index) => {
-        totalMatches += result.queryMatches.length;
-      });
-  
-      if (this.searchQuery.length == 0) {
-        this.hitsCounter.innerText = this.initialValue;
-      }
-      else {
-        this.hitsCounter.innerText = `${totalMatches} RESULTS`;
-      }
+    else {
+      this.hitsCounter.innerText = `${totalMatches} RESULTS`;
     }
   }
 
