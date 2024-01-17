@@ -31,12 +31,10 @@ export class Result {
       // On edit page, no additional styling required
       // Normal Page Styling
       if (this.editPage == false) {
-  
         // If result has no results below it, set vertical line to fade opacity value
         if (this.resultsBelow == false) {
           this.elements["eventLine"].style.opacity = fadeValue;
         }
-  
       }
     }
   

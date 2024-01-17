@@ -41,7 +41,7 @@ export class HTMLResult {
         return true;
       });
 
-      elements.forEach((element, index) => {
+      elements.forEach(element => {
   
         // Create a regular expression with the "gi" flags (global, case-insensitive)
         const regex = new RegExp(searchQuery, "gi");
@@ -59,8 +59,6 @@ export class HTMLResult {
         })
       });
     }
-    
-
   }
 
   styleNegative() {

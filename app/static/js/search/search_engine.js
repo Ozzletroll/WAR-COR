@@ -5,7 +5,7 @@ import { Month } from './classes/month.js';
 
 
 export class SearchEngine {
-  constructor(searchBar, hitsCounter, editPage, initialValue, type) {
+  constructor(searchBar, hitsCounter, editPage, initialValue) {
     this.searchBar = searchBar;
     this.hitsCounter = hitsCounter;
     this.results = [];
@@ -16,7 +16,6 @@ export class SearchEngine {
     this.scrollIndex = 0;
     this.editPage = editPage;
     this.initialValue = initialValue;
-    this.type = type;
   }
 
   /**
@@ -27,7 +26,7 @@ export class SearchEngine {
   timelineSearch() {
 
     this.searchQuery = this.searchBar.value.toLowerCase();
-    this.resultsCheck(this.searchQuery);
+    this.resultsCheck(this.searchQuery, "timeline");
     this.scrollIndex = 0;
 
     // Clear results and end operation if searchbar cleared
@@ -151,7 +150,7 @@ export class SearchEngine {
     }
 
     // Apply styles to all elements
-    this.applyStyles();
+    this.applyStyles("timeline");
     this.updateUI();
   }
 
@@ -165,7 +164,7 @@ export class SearchEngine {
     this.searchQuery = this.searchBar.value.toLowerCase();
 
     // Check if old results are still valid
-    this.resultsCheck(this.searchQuery);
+    this.resultsCheck(this.searchQuery, "event");
     this.scrollIndex = 0;
     this.updateUI();
 
@@ -263,8 +262,8 @@ export class SearchEngine {
       }
     }
 
-    this.resultsCheck();
-    this.applyStyles();
+    this.resultsCheck(this.searchQuery, "event");
+    this.applyStyles("event");
     this.populateMatchingElements();
     this.updateUI();
   
@@ -277,20 +276,16 @@ export class SearchEngine {
   * as well a timelineSearch() for the embedded epoch timeline
   */
   epochSearch() {
-
-    this.type = "event";
     this.eventSearch();
-    this.type = "timeline";
     this.timelineSearch();
     this.updateUI();
-
   }
 
   /**
   * Method to apply visual styling to results
   */
-  applyStyles() {
-    if (this.type == "timeline") {
+  applyStyles(type) {
+    if (type == "timeline") {
       // Finalise data structure
       this.months.forEach(month => {
         month.days.forEach(day => {
@@ -305,8 +300,8 @@ export class SearchEngine {
         month.setStyle();
       });
     }
-    else if (this.type == "event") {
-      this.htmlResults.forEach((result, index) => {
+    else if (type == "event") {
+      this.htmlResults.forEach(result => {
         result.styleReset();
         if (result.positive) {
           result.stylePositive(this.searchQuery);
@@ -322,8 +317,8 @@ export class SearchEngine {
   * Method to iterate through all current results objects in this.results
   * and remove ones that no longer match the search query.
   */
-  resultsCheck(searchQuery) {
-    if (this.type == "timeline") {
+  resultsCheck(searchQuery, type) {
+    if (type == "timeline") {
       this.results.forEach((result, index) => {
         // Remove result if it no longer matches the search query string
         if (!result.elementText.includes(searchQuery)) {
@@ -331,7 +326,7 @@ export class SearchEngine {
         }
       });
     }
-    else if (this.type == "event") {
+    else if (type == "event") {
       this.htmlResults.forEach((result, index) => {
         result.styleReset();
         if (this.editPage == false) {
@@ -396,6 +391,7 @@ export class SearchEngine {
     else {
       this.hitsCounter.innerText = `${totalMatches} RESULTS`;
     }
+    
   }
 
   /**
@@ -445,7 +441,6 @@ export class SearchEngine {
     });
     this.htmlResults = [];
     this.updateUI();
-    console.log("CALLED")
   }
 
   // Method called when input detected in description field
