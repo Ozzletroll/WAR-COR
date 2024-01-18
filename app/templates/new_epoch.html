@@ -69,7 +69,7 @@
       <form class="edit-form form-column fade-in-block-2" method="POST">
         {{ form.csrf_token }}
 
-        <div class="form-container form-container-small">
+        <div id="start-date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -115,7 +115,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="end-date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -155,7 +155,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="title-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -164,11 +164,11 @@
             <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
           </label>
 
-          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title", placeholder="REQUIRED") }}
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="epoch-title", placeholder="REQUIRED") }}
 
         </div>
 
-        <div class="form-container form-container-large">
+        <div id="epoch-overview-field" class="form-container form-container-large">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -209,7 +209,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-large">
+        <div id="epoch-desc-field" class="form-container form-container-large">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -308,6 +308,8 @@
 
 </div>
 
+{# Variable to determine page type in searchbar script #}
+<div id="editPageVariable" class="hidden" editPage="true"></div>
 
 <script src="/static/js/epoch_form.js"></script>
 

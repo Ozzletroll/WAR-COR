@@ -234,11 +234,13 @@ export class SearchEngine {
       // Get edit event page fields and create result object for each if they exist on page
       var editFields = [
         "#date-field", 
+        "#start-date-field",
+        "#end-date-field",
         "#title-field", 
         "#type-field", 
         "#location-field", 
         "#belligerents-field",  
-        "#result-field"
+        "#result-field",
       ]
 
       editFields.forEach((field) => {
@@ -252,14 +254,32 @@ export class SearchEngine {
         }
       })
 
-      var element = document.querySelector(".note-editor");
+      // Event description summernote field
+      // Result is spliced at pos 5 to put it before the "result" field
+      var element = document.querySelector("#event-desc-field .note-editor");
       if (element) {
         var newResultObject = new HTMLResult({
-          baseElement: ".note-editor",
-          textElement: ".note-editable",
+          baseElement: "#event-desc-field .note-editor",
+          textElement: "#event-desc-field .note-editable",
         });
         this.htmlResults.splice(5, 0, newResultObject);
       }
+
+      var epochSummernoteFields = [
+        "#epoch-overview-field",
+        "#epoch-desc-field"
+      ]
+      epochSummernoteFields.forEach((field) => {
+        // Epoch summernote fields
+        var element = document.querySelector(field);
+        if (element) {
+          var newResultObject = new HTMLResult({
+            baseElement: `${field} .note-editor`,
+            textElement: `${field} .note-editable`,
+          });
+          this.htmlResults.push(newResultObject);
+        }
+      })
     }
 
     this.resultsCheck(this.searchQuery, "event");
