@@ -59,61 +59,115 @@ class SearchEngine:
         query = query.lower()
 
         # Get the columns of the Event model, excluding irrelevant ones
-        excluded_columns = ["id",
-                            "url_title", 
-                            "year", 
-                            "month", 
-                            "day", 
-                            "hour", 
-                            "minute", 
-                            "second", 
-                            "header", 
-                            "hide_time",
-                            "campaign_id",
-                            "following_event_id"]
+        excluded_event_columns = [
+            "id",
+            "url_title",
+            "year",
+            "month",
+            "day",
+            "hour",
+            "minute",
+            "second",
+            "header",
+            "hide_time",
+            "campaign_id",
+            "following_event_id"
+        ]
+
+        excluded_epoch_columns = [
+            "id",
+            "url_title",
+            "start_year",
+            "start_month",
+            "start_day",
+            "end_year",
+            "end_month",
+            "end_day",
+            "has_events"  
+        ]
+                            
+        event_columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns 
+                         if column.name not in excluded_event_columns]
         
-        columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns 
-                   if column.name not in excluded_columns]
+        epoch_columns = [func.lower(column).label(column.name) for column in models.Epoch.__table__.columns 
+                         if column.name not in excluded_epoch_columns]
 
         # Construct .like statements for each column using given search query
-        query_filter = or_(*[column.like(f"%{query}%") for column in columns])
+        event_query_filter = or_(*[column.like(f"%{query}%") for column in event_columns])
+        epoch_query_filter = or_(*[column.like(f"%{query}%") for column in epoch_columns])
 
         # Filter the Event model objects based on the query filter
         event_results = (db.session.query(models.Event)
                          .join(models.Campaign.events)
-                         .filter(models.Campaign.id == campaign.id, query_filter)
+                         .filter(models.Campaign.id == campaign.id, event_query_filter)
+                         .all()) 
+        
+        # Filter the Event model objects based on the query filter
+        epoch_results = (db.session.query(models.Epoch)
+                         .join(models.Campaign.epochs)
+                         .filter(models.Campaign.id == campaign.id, epoch_query_filter)
                          .all()) 
 
-        # Create Result objects
-        for event in event_results:
+        all_results = event_results + epoch_results
+
+        # Create event Result objects
+        for item in all_results:
 
             result = Result()
-            result.object = event
-            result.type = "Event"
-            result.url = url_for("event.view_event",
-                                 campaign_name=campaign.title,
-                                 campaign_id=campaign.id,
-                                 event_name=event.title,
-                                 event_id=event.id)
-            
-            result.edit_url = url_for("event.edit_event",
-                                      campaign_name=campaign.title,
-                                      campaign_id=campaign.id,
-                                      event_name=event.title,
-                                      event_id=event.id)
+            result.object = item
+
+            if isinstance(item, models.Event):
+                result.type = "Event"
+                result.url = url_for("event.view_event",
+                                    campaign_name=campaign.title,
+                                    campaign_id=campaign.id,
+                                    event_name=item.title,
+                                    event_id=item.id)
+                
+                result.edit_url = url_for("event.edit_event",
+                                        campaign_name=campaign.title,
+                                        campaign_id=campaign.id,
+                                        event_name=item.title,
+                                        event_id=item.id)
+                
+                table_columns = event_columns
+                
+            elif isinstance(item, models.Epoch):
+                result.type = "Epoch"
+                result.url = url_for("epoch.view_epoch",
+                                    campaign_name=campaign.title,
+                                    campaign_id=campaign.id,
+                                    epoch_title=item.title,
+                                    epoch_id=item.id)
+                
+                result.edit_url = url_for("epoch.edit_epoch",
+                                          campaign_name=campaign.title,
+                                          campaign_id=campaign.id,
+                                          epoch_title=item.title,
+                                          epoch_id=item.id)
+                
+                table_columns = epoch_columns
 
             scores = []
             
             # Find the matching event attributes
-            for column in columns:
-                attr_value = getattr(event, column.name)
+            for column in table_columns:
+                attr_value = getattr(item, column.name)
                 if query in str(attr_value).lower():
 
                     matching_words = []
                     result.matching_attributes.append(column.name)
-                    result.excerpt = self.create_excerpt(event)
+                    result.excerpt = self.create_excerpt(item)
 
-                    for word in attr_value.split(" "):
+                    # Convert html value entries to plain text
+                    html_columns = ["description", "overview"]
+                    if column.name in html_columns:
+                        soup = BeautifulSoup(attr_value, "html.parser")
+                        value = soup.get_text()
+                    else:
+                        value = attr_value
+
+                    for word in value.split(" "):
                         if query in word.lower():
                             matching_words.append(word)
 
@@ -128,11 +182,13 @@ class SearchEngine:
 
             self.results.append(result)
 
-
     @staticmethod
-    def create_excerpt(event):
+    def create_excerpt(item):
 
-        excerpt_html = event.body
+        if isinstance(item, models.Event):
+            excerpt_html = item.body
+        elif isinstance(item, models.Epoch):
+            excerpt_html = item.description
 
         # Convert html to plaintext with BeautifulSoup
         soup = BeautifulSoup(excerpt_html, "html.parser")
