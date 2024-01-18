@@ -71,6 +71,12 @@
     
         dialogsClass: 'summernote-dialog'
       </script>
+      <script>
+        // Listen for changes to summernote field
+        $("#summernote").on("summernote.change", function() {
+          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+        });
+      </script>
 
     {% elif epoch_overview %}
       <script>
@@ -95,6 +101,12 @@
           });
     
         dialogsClass: 'summernote-dialog'
+      </script>
+      <script>
+        // Listen for changes to summernote field
+        $("#summernote-overview").on("summernote.change", function() {
+          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+        });
       </script>
     {% else %}
 
@@ -121,9 +133,13 @@
     
         dialogsClass: 'summernote-dialog'
       </script>
+      <script>
+        // Listen for changes to summernote field
+        $("#summernote").on("summernote.change", function() {
+          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+        });
+      </script>
 
     {% endif %}
-
-
 
 {%- endmacro %}

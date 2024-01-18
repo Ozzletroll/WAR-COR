@@ -87,7 +87,7 @@
             <p class="flavour-text">UWC-17-01 //  Epoch::Start Marker</p>
           </label>
         
-          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
+          {{ form.start_date(id="start-date", class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -132,7 +132,7 @@
             <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
           </label>
         
-          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
+          {{ form.end_date(id="end-date", class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -312,6 +312,7 @@
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 
 <script src="/static/js/epoch_form.js"></script>
+<script src="/static/js/unsaved_changes_warning.js"></script>
 
 
 {% endblock %}
