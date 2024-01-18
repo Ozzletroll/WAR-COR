@@ -2301,6 +2301,16 @@ p {
   cursor: pointer;
 }
 
+/* Set scroll margin for toggle scroll to */
+.campaign-members, 
+.timeline-year-header, 
+.campaigns-heading, 
+.campaign-overview, 
+.campaign-members, 
+.last-edited-area {
+  scroll-margin: 33vh;
+}
+
 /* Animation Block */
 
 .fade-in-block-1 {
@@ -3680,6 +3690,10 @@ p {
   width: 50%;
 }
 
+a.view-epoch {
+  text-decoration: none;
+}
+
 .epoch-container {
   display: flex;
   flex-direction: column;
@@ -4226,6 +4240,8 @@ for selection in timeline_search.js */
   display: flex;
   flex-direction: column;
   width: 100%;
+  transition: 0.5s;
+  scroll-margin: 25vh;
 }
 
 .event-small-date {
@@ -5210,6 +5226,8 @@ a.sidebar-button {
 
 /* Campaign Overview HTML Elements */
 
+/* !important is used to overwrite default Summernote editor inline styles */
+
 .campaign-overview {
   color: var(--text_dark);
 }
@@ -5235,7 +5253,7 @@ a.sidebar-button {
   padding: 0;
 }
 
-.campaign-overview p img {
+.campaign-overview p img, .epoch-page-description p img {
   max-width: 100% !important;
   height: auto !important;
   box-sizing: border-box;
@@ -5252,6 +5270,10 @@ a.sidebar-button {
 
 .nowrap {
   white-space: nowrap;
+}
+
+.epoch-description p img {
+  height: auto !important;
 }
 
 /* Comment HTML Elements */
@@ -5376,6 +5398,91 @@ pre {
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
   font-size: min(3vw, 14px);
+}
+
+/* Epoch Page */
+
+.epoch-page-upper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-bottom: 1px solid var(--elem_border);
+}
+
+.epoch-date-area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.epoch-page-date {
+  display: flex;
+  font-size: min(4vw, 36px);
+  font-weight: 500;
+  margin: 0px;
+  color: var(--text_dark);
+}
+
+.epoch-events-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.epoch-page-hor-line {
+  margin-bottom: 0px;
+}
+
+.epoch-events-header {
+  display: flex;
+  width: fit-content;
+  color: var(--text_header_dark);
+  margin: 10px 0px 0px 0px;
+}
+
+.epoch-page-start-marker, .epoch-page-end-marker {
+  width: 100%;
+}
+
+.epoch-page-end-marker {
+  margin-top: 50px;
+}
+
+.epoch-events-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  width: 100%;
+}
+
+.epoch-page-event {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.epoch-page-event-header {
+  justify-content: space-between;
+}
+
+.epoch-header-left, .epoch-header-right {
+  margin: 0px;
+}
+
+.epoch-header-right {
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: right;
+  text-align: right;
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 500px) {
+  .epoch-header-right {
+    flex-grow: 0;
+    flex-wrap: wrap;
+    width: 80px;
+  }
 }
 
 /* Data backup page */

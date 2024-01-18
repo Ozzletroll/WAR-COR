@@ -10,6 +10,7 @@ class Epoch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(250), nullable=False)
+    url_title = db.Column(db.String(250))
 
     start_date = db.Column(db.String, nullable=False)
     start_year = db.Column(db.Integer)
@@ -21,6 +22,7 @@ class Epoch(db.Model):
     end_month = db.Column(db.Integer)
     end_day = db.Column(db.Integer)
 
+    overview = db.Column(db.String(), nullable=True)
     description = db.Column(db.String(), nullable=True)
     has_events = db.Column(db.Boolean(), nullable=False, default=False)
 
@@ -58,13 +60,16 @@ class Epoch(db.Model):
                     self.end_month = self.split_date(value)[1]
                     self.end_day = self.split_date(value)[2]
 
-                if field == "description":
+                if field == "description" or field == "overview":
                     value = sanitise_input(value)
+                    if value == "<p><br></p>":
+                        value = None
 
                 setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
+        self.set_url_title()
         
         if new:
             db.session.add(self)
@@ -83,7 +88,13 @@ class Epoch(db.Model):
         day = int(datestring.split("/")[2])
 
         return [year, month, day]
-
+    
+    def set_url_title(self):
+        """ Method to set url safe version of title, replacing spaces
+            with dashes '-'. """
+        
+        self.url_title = self.title.replace(" ", "-")
+        
     def populate_self(self):
         """ Method to get all events in parent campaign that fall
         between the epochs start and end dates, and flag self

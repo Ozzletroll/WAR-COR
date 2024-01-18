@@ -43,6 +43,18 @@ const modal_2 = new Modal({
   span: "close-2",
 })
 
+const modal_3 = new Modal({
+  modal: "modal-3",
+  button: "epoch-overview-button",
+  span: "close-3",
+})
+
+const modal_4 = new Modal({
+  modal: "modal-4",
+  button: "epoch-desc-button",
+  span: "close-4",
+})
+
 // Only create delete modal if elements present (IE, we are actually on the edit epoch template)
 const modalDeleteTest = document.getElementById("modal-delete")
 if (modalDeleteTest != null) {
@@ -61,6 +73,12 @@ window.onclick = function(event) {
   }
   if (event.target == modal_2.modal) {
     modal_2.closeModal();
+  }
+  if (event.target == modal_3.modal) {
+    modal_3.closeModal();
+  }
+  if (event.target == modal_4.modal) {
+    modal_4.closeModal();
   }
   if (modalDeleteTest != null) {
     if (event.target == modal_delete.modal) {

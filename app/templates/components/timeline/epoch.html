@@ -22,8 +22,14 @@ property to represent if the epoch has child events.
         <a class="edit-epoch" href="{{ url_for('epoch.edit_epoch', 
                                       campaign_name=campaign.url_title,
                                       campaign_id=campaign.id,
-                                      epoch_title=epoch.title,
+                                      epoch_title=epoch.url_title,
                                       epoch_id=epoch.id) }}">
+        {% else %}
+        <a class="view-epoch" href="{{ url_for('epoch.view_epoch', 
+                                       campaign_name=campaign.url_title,
+                                       campaign_id=campaign.id,
+                                       epoch_title=epoch.url_title,
+                                       epoch_id=epoch.id) }}">
         {% endif %}
 
         <div id="epoch-{{epoch.id}}" class="epoch-container">
@@ -34,13 +40,13 @@ property to represent if the epoch has child events.
             {% else %}
               <h4 class="epoch-date">{{ epoch.start_date }}</h4>
             {% endif %}
-            <h6 class="epoch-description">{{ epoch.description | safe }}</h6>
+            {% if epoch.overview is not none %}
+              <div class="epoch-description">{{ epoch.overview | safe }}</div>
+            {% endif %}
           </div>
         </div>
 
-        {% if edit %}
         </a>
-        {% endif %}
       {% endfor %}
 
       </div>

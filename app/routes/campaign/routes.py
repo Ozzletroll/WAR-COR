@@ -6,7 +6,6 @@ import werkzeug
 from app.forms import forms
 from app import models
 from app.utils import authenticators
-import app.utils.organisers as organisers
 
 from app import db
 from app.routes.campaign import bp
@@ -41,14 +40,14 @@ def show_timeline(campaign_name, campaign_id):
     authenticators.check_campaign_visibility(campaign)
 
     # Sort event data for template rendering
-    grouped_events = organisers.campaign_sort(campaign)
+    timeline_data = campaign.return_timeline_data()
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("timeline.html", 
                            campaign=campaign, 
-                           timeline_data=grouped_events)
+                           timeline_data=timeline_data)
 
 
 # View campaign editing page
@@ -64,14 +63,14 @@ def edit_timeline(campaign_name, campaign_id):
     authenticators.permission_required(campaign)
 
     # Sort event data for template rendering
-    grouped_events = organisers.campaign_sort(campaign)
+    timeline_data = campaign.return_timeline_data()
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
     return render_template("timeline.html", 
                            campaign=campaign, 
-                           timeline_data=grouped_events,
+                           timeline_data=timeline_data,
                            edit=True)
 
 

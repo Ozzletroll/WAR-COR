@@ -6,7 +6,7 @@
 
 #}
 
-{% macro summernote_editor(comment=false, required=true, campaign_desc=false) %}
+{% macro summernote_editor(comment=false, required=true, campaign_desc=false, epoch_overview=false) %}
 
     {% if required and not comment %}
         {% set text = "REQUIRED" %}
@@ -71,7 +71,43 @@
     
         dialogsClass: 'summernote-dialog'
       </script>
+      <script>
+        // Listen for changes to summernote field
+        $("#summernote").on("summernote.change", function() {
+          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+        });
+      </script>
 
+    {% elif epoch_overview %}
+      <script>
+        $('#summernote-overview').summernote({
+          placeholder: '<p>{{ text }}</p>',
+          dialogsInBody: true,
+          dialogsFade: true, 
+          tabsize: 2,
+          height: "{{ height }}",
+          styleTags: ['p', 'h1', 'h2', 'h3'],
+          toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'italic', 'underline', 'clear']],
+              ['para', ['ul', 'ol', 'paragraph']],,
+              ['insert', ['link', 'picture']]
+          ],
+          popover: {
+            image: [
+              ['remove', ['removeMedia']]
+            ]
+          }
+          });
+    
+        dialogsClass: 'summernote-dialog'
+      </script>
+      <script>
+        // Listen for changes to summernote field
+        $("#summernote-overview").on("summernote.change", function() {
+          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+        });
+      </script>
     {% else %}
 
       <script>
@@ -97,9 +133,13 @@
     
         dialogsClass: 'summernote-dialog'
       </script>
+      <script>
+        // Listen for changes to summernote field
+        $("#summernote").on("summernote.change", function() {
+          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+        });
+      </script>
 
     {% endif %}
-
-
 
 {%- endmacro %}

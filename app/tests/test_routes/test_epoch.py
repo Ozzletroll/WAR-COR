@@ -18,10 +18,6 @@ def test_setup(client, auth, campaign):
     campaign.create(title="Test Campaign",
                     description="A campaign for testing purposes")
 
-    campaign_object = db.session.execute(
-        select(models.Campaign)
-        .filter_by(title="Test Campaign")).scalar()
-
     db.session.commit()
 
 
@@ -53,6 +49,27 @@ def test_new_epoch(client, auth, epoch):
         .filter_by(title="Test Epoch")).scalar()
     assert epoch_object is not None
     assert epoch_object in campaign_object.epochs
+
+
+def test_view_epoch(client, auth, epoch):
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    epoch_object = db.session.execute(
+        select(models.Epoch)
+        .filter_by(title="Test Epoch")).scalar()
+
+    url = url_for("epoch.view_epoch",
+                  campaign_name=campaign_object.title,
+                  campaign_id=campaign_object.id,
+                  epoch_title=epoch_object.title,
+                  epoch_id=epoch_object.id)
+
+    response = client.get(url)
+    assert response.status_code == 200
+    assert b'Test Epoch' in response.data
 
 
 def test_edit_epoch(client, auth, epoch):

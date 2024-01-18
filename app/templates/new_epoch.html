@@ -2,6 +2,8 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/summernote_editor.html" as summernote %}
+{% import "components/edit_toggle.html" as edit_toggle %}
+{% import "components/searchbar.html" as searchbar %}
 
 
 {% extends "base/base.html" %}
@@ -19,6 +21,14 @@
 
 
 {% block content %}
+
+  {% if not new %}
+    {{ searchbar.searchbar(campaign, epoch=true) }}
+
+    {% if current_user.is_authenticated and campaign in current_user.permissions %}
+      {{ edit_toggle.epoch_edit_toggle(campaign, epoch, edit=true) }}
+    {% endif %}
+  {% endif %}
 
 <div class="scrollpage">
 
@@ -59,7 +69,7 @@
       <form class="edit-form form-column fade-in-block-2" method="POST">
         {{ form.csrf_token }}
 
-        <div class="form-container form-container-small">
+        <div id="start-date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -77,7 +87,7 @@
             <p class="flavour-text">UWC-17-01 //  Epoch::Start Marker</p>
           </label>
         
-          {{ form.start_date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
+          {{ form.start_date(id="start-date", class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -87,7 +97,7 @@
           <div class="modal-content">
             <div class="modal-content-inner">
               <div class="modal-header">
-                <h2 class="modal-header-small">Epoch</h2>
+                <h2 class="modal-header-small">Epoch Start Date</h2>
                 <span id="close-1" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
@@ -105,7 +115,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="end-date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -122,7 +132,7 @@
             <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
           </label>
         
-          {{ form.end_date(class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
+          {{ form.end_date(id="end-date", class_="campaign-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
 
         </div>
 
@@ -132,7 +142,7 @@
           <div class="modal-content">
             <div class="modal-content-inner">
               <div class="modal-header">
-                <h2 class="modal-header-small">Epoch</h2>
+                <h2 class="modal-header-small">Epoch End Date</h2>
                 <span id="close-2" class="modal-close">
                   <img class="icon" src="/static/images/icons/cancel.svg">
                 </span>
@@ -145,7 +155,7 @@
           </div>
         </div>
 
-        <div class="form-container form-container-small">
+        <div id="title-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
@@ -154,25 +164,91 @@
             <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
           </label>
 
-          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="event-title", placeholder="REQUIRED") }}
+          {{ form.title(class_="campaign-input event-input", autocomplete="off", id="epoch-title", placeholder="REQUIRED") }}
 
         </div>
 
-        <div class="form-container form-container-large">
-        <label class="campaign-form-label form-icon">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
-        
-            <h4 class="campaign-form label-title">Description</h4>
+        <div id="epoch-overview-field" class="form-container form-container-large">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+          
+              <h4 class="campaign-form label-title">Overview</h4>
 
+              <div class="form-extra-button-area">
+                
+                <div id="epoch-overview-button" type="button" class="form-button">
+                  {% include "components/help_icon.html" %}
+                </div>
+                
+              </div>
+
+            </div>
+            <p class="flavour-text">UWC-17-04 //  Epoch::Overview</p>
+          </label>
+
+          {{ form.overview(id="summernote-overview", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+          {{ summernote.summernote_editor(required=false, epoch_overview=true) }}
+        
+        </div>
+
+        <div id="modal-3" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Epoch Overview</h2>
+                <span id="close-3" class="modal-close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>The epoch overview is displayed on the main timeline beneath each epoch marker.
+                  It is best used for a brief description of the epoch.</p>
+              </div>
+            </div>
           </div>
-          <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
-        </label>
+        </div>
 
-        {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+        <div id="epoch-desc-field" class="form-container form-container-large">
+          <label class="campaign-form-label form-icon">
+            <div class="campaign-form-label-container">
+              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+          
+              <h4 class="campaign-form label-title">Description</h4>
 
-        {{ summernote.summernote_editor(required=false) }}
+              <div class="form-extra-button-area">
+                
+                <div id="epoch-desc-button" type="button" class="form-button">
+                  {% include "components/help_icon.html" %}
+                </div>
+                
+              </div>
+
+            </div>
+            <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
+          </label>
+
+          {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+          {{ summernote.summernote_editor(required=false) }}
         
+        </div>
+
+        <div id="modal-4" class="modal">
+          <div class="modal-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">Epoch Description</h2>
+                <span id="close-4" class="modal-close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+              <div class="modal-body">
+                <p>The epoch description is displayed on the dedicated epoch page itself, allowing
+                  for a longer, more detailed description of the epoch.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
 
@@ -232,8 +308,11 @@
 
 </div>
 
+{# Variable to determine page type in searchbar script #}
+<div id="editPageVariable" class="hidden" editPage="true"></div>
 
 <script src="/static/js/epoch_form.js"></script>
+<script src="/static/js/unsaved_changes_warning.js"></script>
 
 
 {% endblock %}

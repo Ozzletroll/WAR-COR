@@ -2,6 +2,7 @@ from datetime import datetime
 
 from app import db
 from app.utils.sanitisers import sanitise_input
+import app.utils.organisers as organisers
 
 
 class Campaign(db.Model):
@@ -99,3 +100,7 @@ class Campaign(db.Model):
         
         self.url_title = self.title.replace(" ", "-")
         
+
+    def return_timeline_data(self, epoch=None):
+        """ Method to return campaign timeline data """
+        return organisers.campaign_sort(self, epoch)

@@ -19,13 +19,13 @@ const searchEngine = new SearchEngine(
   )
 
 // Function called by searchbar "Search" button
-function triggerEventSearch() {
+function triggerEpochSearch() {
   searchEngine.scrollToResults();
 }
-window.triggerEventSearch = triggerEventSearch;
+window.triggerEpochSearch = triggerEpochSearch;
 
 // Add event listener to the timeline input field to listen for enter keypress
-searchBar.addEventListener("input", () => searchEngine.eventSearch());
+searchBar.addEventListener("input", () => searchEngine.epochSearch());
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter" && searchBar.value.length > 0) {
   searchEngine.scrollToResults();

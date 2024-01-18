@@ -1,0 +1,209 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/edit_toggle.html" as edit_toggle %}
+{% import "components/searchbar.html" as searchbar %}
+{% import "components/back_button.html" as back_button %}
+{% import "components/adjacent_event_button.html" as adjacent_event_button %}
+{% import "components/summernote_editor.html" as summernote %}
+{% import "components/timeline/month.html" as timeline_month %}
+
+
+{% extends "base/base.html" %}
+
+{# Add Summernote #}
+{% block head %}
+  {% include "base/header.html" %}
+  {% block title %}
+  <title>{{epoch.title.upper()}} | WAR/COR</title>
+  {% endblock %}
+  {% block extra_head %}
+    {% include "components/summernote_head.html" %}
+    <link rel="stylesheet" href="/static/css/summernote_comment_theme.css">
+  {% endblock %}
+{% endblock %}
+
+
+{% block content %}
+
+{{ searchbar.searchbar(campaign, epoch=true) }}
+
+{% if current_user.is_authenticated and campaign in current_user.permissions %}
+  {{ edit_toggle.epoch_edit_toggle(campaign, epoch) }}
+{% endif %}
+
+<div class="sidebar-page">
+  
+  <div id="scrollpage" class="scrollpage">
+
+      <div class="campaigns-content">
+
+        {# Animation fade in group 1 #}
+        <div class="fade-in-block-1">
+
+          {% set urls = [url_for('campaign.campaigns'), url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)] %}
+
+          {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                            is_link=true,
+                                            current_user=current_user,
+                                            campaign=campaign) }}
+
+            <div class="campaigns-title">
+              
+              {# Back button #}
+              {% if request.referrer %}
+                {% if "/search" in request.referrer %}
+                  {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+                {% elif "/epoch" in request.referrer and campaign.url_title in request.referrer and can_use_referrer == true %}
+                  {% set url = request.referrer %}
+                {% else %}
+                  {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+                {% endif %}
+              {% else %}
+                {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
+              {% endif %}
+              {{ back_button.back_button(url=url, blank=false) }}
+
+              <div class="campaigns-heading-outer">
+                <h3 class="campaigns-heading">{{epoch.title}}</h3>
+              </div>
+              
+            </div>
+      
+            <hr class="campaigns-divider">
+            <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{epoch.id}} // Epoch::Data</p>
+    
+        </div>
+
+        <div class="event-page-container fade-in-block-2">
+
+          <div class="event-main-container">
+
+            <div class="event-centre-container">
+              <div class="epoch-page-upper">
+                  <div class="epoch-date-area">
+                    <h4 class="epoch-page-date">{{epoch.start_date}}</h4>
+                    {% if epoch.start_date != epoch.end_date %}
+                        <h4 class="epoch-page-date">{{epoch.end_date}}</h4>
+                    {% endif %}
+                  </div>
+
+              </div>
+
+              <div class="event-page-body">
+                  {% if epoch.description is not none %}
+                    <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description">
+        
+                      <div class="entry-left-padding"></div>
+
+                      <div class="description-body">
+                        <h4 class="event-desc-header">Archive Entry:</h4>
+                        <div class="event-desc">
+                          {{ epoch.description | safe }}
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+
+                  {% if epoch_events is not none %}
+                    <div class="timeline-container epoch-events-container">
+                      <h4 class="epoch-events-header">
+                          EPOCH DATA:
+                      </h4>
+
+                      <div class="epoch-start-marker epoch-page-start-marker">
+                        <div class="epoch-vert-line"></div>
+                        <div class="epoch-hor-line epoch-page-hor-line"></div>
+                      </div>
+
+                      <div class="epoch-events-list timeline-container">
+
+                      {% for year in timeline_data %}
+
+                      <!-- Year {{  year.name }} -->
+
+                      <div id="timeline-year-{{year.name}}" class="timeline-year">
+
+                        <!-- Year main axis -->
+                        <div class="timeline-year-outer-container">
+                          <div class="timeline-year-container">
+
+                            <h3 class="timeline-year-header" id="year-{{year.name}}">
+                              {% if year.name.startswith("-") %}
+                                {{ year.name + campaign.negative_date_suffix}}
+                              {% else %}
+                                {{ year.name + campaign.date_suffix}}
+                              {% endif %}
+                            </h3> 
+
+                            <div class="timeline-columns">
+
+                              <div class="timeline-left-marker">
+                                <div class="year-marker-hr"></div>
+                                <div class="year-marker-line"></div>
+                                <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
+                                <div class="year-marker-line"></div>
+                                <div class="year-marker-hr"></div>
+                              </div>
+
+                              <div class="timeline-right-marker">
+                                <div class="timeline-horizontal"></div>
+                                <div class="timeline-line"></div>
+                                <div class="timeline-horizontal"></div>
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
+                    
+                        <!-- Timeline months -->
+                        <div class="timeline-months-container">
+                          {% for month in year.months %}
+
+                            {{ timeline_month.month(campaign,
+                                                    year,
+                                                    month,
+                                                    length=loop.length,
+                                                    index=loop.index0,
+                                                    edit=edit) }}
+            
+                          {% endfor %}
+                        </div>
+
+                      </div>
+                    {% endfor %}
+
+                        <div class="epoch-end-marker epoch-page-end-marker">
+                          <div class="epoch-hor-line-end"></div>
+                        </div>
+
+                      </div>
+                    </div>
+                  {% endif %}
+                  
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+  </div>
+
+</div>
+
+{# Variable to determine page type in searchbar script #}
+<div id="editPageVariable" class="hidden" editPage="false"></div>
+
+<script src="/static/js/user_image_styling.js"></script>
+<script src="/static/js/margin_fix.js"></script>
+<script src="/static/js/epoch_line_adjust.js"></script>
+<script src="/static/js/timeline_left_markers.js"></script>
+<script>
+    formatImageElements(".epoch-page-description p", header=true);
+</script>
+
+{% endblock %}
