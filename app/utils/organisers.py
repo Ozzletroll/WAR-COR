@@ -213,7 +213,8 @@ def campaign_sort(campaign, epoch=None):
                                               models.Epoch.start_day)
                                               .all())
         
-        epochs_by_start_date = [sub_epoch for sub_epoch in all_epochs_by_start_date if sub_epoch in epoch.sub_epochs]
+        epochs_by_start_date = [sub_epoch for sub_epoch in all_epochs_by_start_date 
+                                if sub_epoch in epoch.sub_epochs]
         
         all_epochs_by_end_date = (db.session.query(models.Epoch)
                                   .filter_by(campaign_id=campaign.id)
@@ -222,7 +223,8 @@ def campaign_sort(campaign, epoch=None):
                                             models.Epoch.end_day)
                                             .all())
         
-        epochs_by_end_date = [sub_epoch for sub_epoch in all_epochs_by_end_date if sub_epoch in epoch.sub_epochs]  
+        epochs_by_end_date = [sub_epoch for sub_epoch in all_epochs_by_end_date 
+                              if sub_epoch in epoch.sub_epochs]  
 
     year_dict = create_dict(object_list=events,
                             year_attr="year",
