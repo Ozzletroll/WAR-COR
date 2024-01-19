@@ -1,4 +1,5 @@
 import copy
+from sqlalchemy import and_, or_
 
 from app import db, models
 
@@ -193,50 +194,35 @@ def campaign_sort(campaign, epoch=None):
     # Otherwise, get only events and epochs that fall between the given start and end values,
     # excluding the current epoch
     else:
-        events = (db.session.query(models.Event)
-                 .filter_by(campaign_id=campaign.id)
-                 .filter(models.Event.year >= epoch.start_year)
-                 .filter(models.Event.month >= epoch.start_month)
-                 .filter(models.Event.day >= epoch.start_day)
-                 .filter(models.Event.year <= epoch.end_year)
-                 .filter(models.Event.month <= epoch.end_month)
-                 .filter(models.Event.day <= epoch.end_day)
-                 .order_by(models.Event.year,
-                           models.Event.month,
-                           models.Event.day,
-                           models.Event.hour,
-                           models.Event.minute,
-                           models.Event.second,)
-                 .all())
+        all_events = (db.session.query(models.Event)
+                .filter_by(campaign_id=campaign.id)
+                .order_by(models.Event.year,
+                          models.Event.month,
+                          models.Event.day,
+                          models.Event.hour,
+                          models.Event.minute,
+                          models.Event.second,)
+                          .all())
         
-        epochs_by_start_date = (db.session.query(models.Epoch)
-                                .filter_by(campaign_id=campaign.id)
-                                .filter(models.Epoch.start_year >= epoch.start_year)
-                                .filter(models.Epoch.start_month >= epoch.start_month)
-                                .filter(models.Epoch.start_day >= epoch.start_day)
-                                .filter(models.Epoch.end_year <= epoch.end_year)
-                                .filter(models.Epoch.end_month <= epoch.end_month)
-                                .filter(models.Epoch.end_day <= epoch.end_day)
-                                .filter(models.Epoch.id != epoch.id)
-                                .order_by(models.Epoch.start_year,
-                                        models.Epoch.start_month,
-                                        models.Epoch.start_day)
-                                        .all())
+        events = [event for event in all_events if event in epoch.events]
         
-        epochs_by_end_date = (db.session.query(models.Epoch)
-                              .filter_by(campaign_id=campaign.id)
-                              .filter(models.Epoch.start_year >= epoch.start_year)
-                              .filter(models.Epoch.start_month >= epoch.start_month)
-                              .filter(models.Epoch.start_day >= epoch.start_day)
-                              .filter(models.Epoch.end_year <= epoch.end_year)
-                              .filter(models.Epoch.end_month <= epoch.end_month)
-                              .filter(models.Epoch.end_day <= epoch.end_day)
-                              .filter(models.Epoch.id != epoch.id)
-                              .order_by(models.Epoch.end_year,
-                                        models.Epoch.end_month,
-                                        models.Epoch.end_day)
-                                        .all())
+        all_epochs_by_start_date = (db.session.query(models.Epoch)
+                                    .filter_by(campaign_id=campaign.id)
+                                    .order_by(models.Epoch.start_year,
+                                              models.Epoch.start_month,
+                                              models.Epoch.start_day)
+                                              .all())
         
+        epochs_by_start_date = [sub_epoch for sub_epoch in all_epochs_by_start_date if sub_epoch in epoch.sub_epochs]
+        
+        all_epochs_by_end_date = (db.session.query(models.Epoch)
+                                  .filter_by(campaign_id=campaign.id)
+                                  .order_by(models.Epoch.end_year,
+                                            models.Epoch.end_month,
+                                            models.Epoch.end_day)
+                                            .all())
+        
+        epochs_by_end_date = [sub_epoch for sub_epoch in all_epochs_by_end_date if sub_epoch in epoch.sub_epochs]  
 
     year_dict = create_dict(object_list=events,
                             year_attr="year",

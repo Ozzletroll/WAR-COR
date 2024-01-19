@@ -106,30 +106,60 @@ class Epoch(db.Model):
         between the epochs start and end dates, and flag self
         if containing any events. """
         
-        def is_in_epoch(event, epoch):
+        def is_in_epoch(item_to_check, epoch):
+
+            def date_falls_between(year, month, day):
+                if epoch_start_year <= year <= epoch_end_year:
+                    if epoch_start_year == year and month < epoch_start_month:
+                        return False
+                    if epoch_end_year == year and month > epoch_end_month:
+                        return False
+                    if epoch_start_year == year and month == epoch_start_month and day < epoch_start_day:
+                        return False
+                    if epoch_end_year == year and month == epoch_end_month and day > epoch_end_day:
+                        return False
+                    return True
+                return False
 
             epoch_start_year, epoch_start_month, epoch_start_day = self.split_date(epoch.start_date)
             epoch_end_year, epoch_end_month, epoch_end_day = self.split_date(epoch.end_date)
 
-            event_year = int(event.date.split("/")[0])
-            event_month = int(event.date.split("/")[1])
-            event_day = int(event.date.split("/")[2][:2])
+            # Handle epoch objects
+            if isinstance(item_to_check, Epoch):
+                item_start_year = item_to_check.start_year
+                item_start_month = item_to_check.start_month
+                item_start_day = item_to_check.start_day
+                item_end_year = item_to_check.end_year
+                item_end_month = item_to_check.end_month
+                item_end_day = item_to_check.end_day
 
-            if epoch_start_year <= event_year <= epoch_end_year:
-                if epoch_start_year == event_year and event_month < epoch_start_month:
+                # Return true if the checked epoch's start and end both fall within 
+                # the start and end date values of the potential encapsulating epoch
+                if date_falls_between(item_start_year, item_start_month, item_start_day):
+                    if date_falls_between(item_end_year, item_end_month, item_end_day):
+                        return True
+                    else:
+                        return False
+                else:
                     return False
-                if epoch_end_year == event_year and event_month > epoch_end_month:
-                    return False
-                if epoch_start_year == event_year and event_month == epoch_start_month and event_day < epoch_start_day:
-                    return False
-                if epoch_end_year == event_year and event_month == epoch_end_month and event_day > epoch_end_day:
-                    return False
-                return True
 
-            return False
+            # Handle event objects
+            else:
+                item_year = item_to_check.year
+                item_month = item_to_check.month
+                item_day = item_to_check.day
+
+                # Return true if the event's date falls within the epoch
+                if date_falls_between(item_year, item_month, item_day):
+                    return True
+                else:
+                    return False
 
         self.events.clear()
         self.events = [event for event in self.parent_campaign.events if is_in_epoch(event, self)]
+        self.sub_epochs.clear()
+        self.sub_epochs = [epoch for epoch in self.parent_campaign.epochs 
+                           if is_in_epoch(epoch, self) and epoch.id != self.id]
 
         if len(self.events) > 0:
             self.has_events = True
