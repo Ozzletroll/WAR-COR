@@ -231,7 +231,10 @@ def epochs_import(epoch):
     except ValueError:
         errors.append("Incorrect date format")
     try:
-        new_epoch.description = sanitise_input(epoch["description"])
+        if new_epoch.description is not None:
+            new_epoch.description = sanitise_input(epoch["description"])
+        else:
+            new_epoch.description = None
     except KeyError:
         errors.append("Unable to locate epoch description")
     
