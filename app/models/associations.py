@@ -19,18 +19,23 @@ epoch_events = db.Table("epoch_events",
                         db.Column("event_id", db.Integer, db.ForeignKey("event.id")))
 
 
+# Association table that defines parent_epoch to child_epoch relationship
+epoch_sub_epochs = db.Table("epoch_sub_epochs",
+                            db.Column("parent_epoch_id", db.Integer, db.ForeignKey("epoch.id")),
+                            db.Column("child_epoch_id", db.Integer, db.ForeignKey("epoch.id")))
+
 # Association Object that defines user to campaign membership, and allows
 # users to have a unique callsign for each campaign.
 class UserCampaign(db.Model):
-    __tablename__ = 'user_campaign'
+    __tablename__ = "user_campaign"
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-    campaign_id = db.Column(db.Integer, db.ForeignKey('campaign.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), primary_key=True)
+    campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"), primary_key=True)
     callsign = db.Column(db.String(30))
 
     # Association between UserCampaign -> User
-    user = db.relationship('User', back_populates="campaign_associations", viewonly=True)
+    user = db.relationship("User", back_populates="campaign_associations", viewonly=True)
 
     # Association between UserCampaign -> Campaign
-    campaign = db.relationship('Campaign', back_populates="user_associations", viewonly=True)
+    campaign = db.relationship("Campaign", back_populates="user_associations", viewonly=True)
     

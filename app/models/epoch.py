@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from app import db
+from app.models import associations
 from app.utils.sanitisers import sanitise_input
 
 
@@ -33,10 +34,15 @@ class Epoch(db.Model):
     parent_campaign = db.relationship("Campaign",
                                       back_populates="epochs")
 
-    # Many-to-many relationship to User, bypassing the `UserCampaign` class
     events = db.relationship("Event",
                              secondary="epoch_events",
                              back_populates="epochs")
+    
+    sub_epochs = db.relationship("Epoch",
+                                 secondary="epoch_sub_epochs",
+                                 backref=db.backref("parent_epochs", lazy='dynamic'),
+                                 primaryjoin=(associations.epoch_sub_epochs.c.parent_epoch_id == id),
+                                 secondaryjoin=(associations.epoch_sub_epochs.c.child_epoch_id == id))
     
     # Methods
     def update(self, form, parent_campaign, new=False):
