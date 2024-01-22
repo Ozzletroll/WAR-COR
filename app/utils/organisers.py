@@ -1,5 +1,4 @@
 import copy
-from sqlalchemy import and_, or_
 
 from app import db, models
 
