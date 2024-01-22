@@ -27,6 +27,7 @@ def data_export(campaign):
         epoch_dict = {"title": epoch.title,
                       "start_date": epoch.start_date,
                       "end_date": epoch.end_date,
+                      "overview": epoch.overview,
                       "description": epoch.description}
         
         epoch_data.append(epoch_dict)
@@ -231,11 +232,18 @@ def epochs_import(epoch):
     except ValueError:
         errors.append("Incorrect date format")
     try:
-        if new_epoch.description is not None:
+        if epoch["description"] is not None:
             new_epoch.description = sanitise_input(epoch["description"])
         else:
-            new_epoch.description = None
+            new_epoch.description = None       
     except KeyError:
         errors.append("Unable to locate epoch description")
+    try:
+        if epoch["overview"] is not None:
+            new_epoch.overview = sanitise_input(epoch["overview"])
+        else:
+            new_epoch.overview = None
+    except KeyError:
+        errors.append("Unable to locate epoch overview")
     
     return new_epoch, errors
