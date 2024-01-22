@@ -44,6 +44,7 @@ def test_backup_page(client, auth, campaign, epoch, event):
         "start_date": "5016/01/01",
         "end_date": "5016/01/02",
         "title": "Test Epoch",
+        "overview": "Epoch overview",
         "description": "Epoch description",
     }
 
@@ -106,6 +107,15 @@ def test_backup_campaign(client, auth, campaign):
         assert event.title == campaign_object_2.events[index].title
         assert event.date == campaign_object_2.events[index].date
 
+    epoch_attributes = ["start_date", "end_date", "title", "overview", "description"]
+    event_attributes = ["title", "date", "body", "location", "belligerents", "result", "hide_time"]
+
     for index, epoch in enumerate(campaign_object_1.epochs):
-        assert epoch.start_date == campaign_object_2.epochs[index].start_date
-        assert epoch.end_date == campaign_object_2.epochs[index].end_date
+        # Check epoch attributes
+        for attr in epoch_attributes:
+            assert getattr(campaign_object_1.epochs[index], attr) == getattr(campaign_object_2.epochs[index], attr)
+        # Check contained event attributes
+        for event_index, event in enumerate(epoch.events):
+            for attr in event_attributes:
+                assert getattr(campaign_object_1.epochs[index].events[event_index], attr) \
+                       == getattr(campaign_object_2.epochs[index].events[event_index], attr)
