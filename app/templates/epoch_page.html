@@ -198,12 +198,13 @@
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="false"></div>
 
-<script src="/static/js/user_image_styling.js"></script>
 <script src="/static/js/margin_fix.js"></script>
 <script src="/static/js/epoch_line_adjust.js"></script>
 <script src="/static/js/timeline_left_markers.js"></script>
+<script src="/static/js/user_image_styling.js"></script>
 <script>
     formatImageElements(".epoch-page-description p", header=true);
+    window.addEventListener('DOMContentLoaded', marginFix());
 </script>
 
 {% endblock %}
