@@ -35,7 +35,7 @@ class EventActions(object):
 
         return self._client.post(url, data=data, follow_redirects=True)
 
-    def mass_create(self, campaign_object, number=1):
+    def mass_create(self, campaign_object, number=1, increment="day"):
 
         all_events = []
         for index, value in enumerate(range(0, number)):
@@ -45,7 +45,8 @@ class EventActions(object):
                 self.create(campaign_object=campaign_object,
                             data=new_event.return_new_event_data())
             else:
-                new_event = EventFormat(previous_event=all_events[index - 1])
+                new_event = EventFormat(previous_event=all_events[index - 1],
+                                        increment=increment)
                 all_events.append(new_event)
                 self.create(campaign_object=campaign_object,
                             data=new_event.return_new_event_data())
