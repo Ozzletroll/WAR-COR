@@ -60,7 +60,6 @@ def backup_page(campaign_name, campaign_id):
             # Convert json events into event objects
             for item in data["events"]:
                 event, errors = serialisers.events_import(item)
-
                 event.parent_campaign = campaign
                 db.session.add(event)
 
@@ -70,13 +69,14 @@ def backup_page(campaign_name, campaign_id):
             for item in data["epochs"]:
                 epoch, errors = serialisers.epochs_import(item)
                 db.session.add(epoch)
-
                 epoch.parent_campaign = campaign
                 epoch.populate_self()
 
             db.session.commit()
 
+            # Update campaign event and epoch relationships
             campaign.get_following_events()
+            campaign.check_epochs()
 
             # Commit to db
             db.session.commit()
