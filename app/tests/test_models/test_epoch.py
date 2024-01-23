@@ -53,3 +53,14 @@ def test_update(client):
     assert updated_epoch.end_date == "5016/02/02"
     assert updated_epoch.description == "Updated description"
     assert updated_epoch.overview == "Updated overview"
+
+
+def test_set_url_title():
+
+    # Create a new epoch
+    epoch = models.Epoch()
+    epoch.title = "Test Epoch"
+    epoch.set_url_title()
+
+    # Verify the url_title has been set correctly
+    assert epoch.url_title == "Test-Epoch"
