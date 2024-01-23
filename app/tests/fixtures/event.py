@@ -35,17 +35,22 @@ class EventActions(object):
 
         return self._client.post(url, data=data, follow_redirects=True)
 
-    def mass_create(self, campaign_object, number=1, increment="day"):
+    def mass_create(self,
+                    campaign_object,
+                    number=1,
+                    starting_date="5016/01/01 00:00:00",
+                    increment="day"):
 
         all_events = []
         for index, value in enumerate(range(0, number)):
             if index == 0:
-                new_event = EventFormat()
+                new_event = EventFormat(starting_date=starting_date)
                 all_events.append(new_event)
                 self.create(campaign_object=campaign_object,
                             data=new_event.return_new_event_data())
             else:
                 new_event = EventFormat(previous_event=all_events[index - 1],
+                                        starting_date=starting_date,
                                         increment=increment)
                 all_events.append(new_event)
                 self.create(campaign_object=campaign_object,
@@ -76,7 +81,11 @@ class EventFormat:
 
     """
 
-    def __init__(self, previous_event=None, increment="day"):
+    def __init__(self,
+                 previous_event=None,
+                 starting_date="5016/01/01 00:00:00",
+                 increment="day"):
+
         if previous_event:
             self.number = previous_event.number + 1
             self.title = f"Test Event {self.number}"
@@ -92,7 +101,7 @@ class EventFormat:
         else:
             self.number = 1
             self.title = f"Test Event {self.number}"
-            self.date = "5016/01/01 00:00:00"
+            self.date = starting_date
         self.type = "Test Event"
         self.location = "Location Name"
         self.belligerents = "Belligerent 1, Belligerent 2"
