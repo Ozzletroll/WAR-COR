@@ -32,17 +32,10 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     timeline_data = campaign.return_timeline_data(epoch=epoch)
 
-    # Find all the contained child epochs
-    sub_epochs = [epoch for year in timeline_data 
-                  for month in year.months 
-                  for day in month.days 
-                  if day.has_epoch 
-                  for epoch in day.epochs]
-    
     # Determine back button functionality if dealing with nested epochs
     can_use_referrer = False
     if request.referrer is not None:
-        url_titles = [epoch.url_title for epoch in sub_epochs] 
+        url_titles = [epoch.url_title for epoch in epoch.sub_epochs] 
         url_titles_found = [title for title in url_titles if title in request.referrer]
         if len(url_titles_found) == 0:
             can_use_referrer = True
