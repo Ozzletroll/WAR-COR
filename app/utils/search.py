@@ -21,10 +21,8 @@ class Result:
         self.edit_url = ""
 
 
-
 class SearchEngine:
-
-    """ Search engine class for searching within a campaign from the Advanced Search page. 
+    """ Search engine class for searching within a campaign from the Advanced Search page.
 
             Parameters:
             --------------------------------------
@@ -48,11 +46,9 @@ class SearchEngine:
     def __init__(self):
         self.results = []
 
-  
     def return_results(self):
         return sorted(self.results, key=lambda result: result.relevance)
 
-    
     def search_campaign(self, campaign, query):
 
         self.results = []
@@ -83,13 +79,14 @@ class SearchEngine:
             "end_year",
             "end_month",
             "end_day",
-            "has_events"  
+            "has_events",
+            "campaign_id"
         ]
-                            
-        event_columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns 
+
+        event_columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns
                          if column.name not in excluded_event_columns]
-        
-        epoch_columns = [func.lower(column).label(column.name) for column in models.Epoch.__table__.columns 
+
+        epoch_columns = [func.lower(column).label(column.name) for column in models.Epoch.__table__.columns
                          if column.name not in excluded_epoch_columns]
 
         # Construct .like statements for each column using given search query
@@ -100,13 +97,13 @@ class SearchEngine:
         event_results = (db.session.query(models.Event)
                          .join(models.Campaign.events)
                          .filter(models.Campaign.id == campaign.id, event_query_filter)
-                         .all()) 
-        
+                         .all())
+
         # Filter the Event model objects based on the query filter
         epoch_results = (db.session.query(models.Epoch)
                          .join(models.Campaign.epochs)
                          .filter(models.Campaign.id == campaign.id, epoch_query_filter)
-                         .all()) 
+                         .all())
 
         all_results = event_results + epoch_results
 
@@ -119,37 +116,37 @@ class SearchEngine:
             if isinstance(item, models.Event):
                 result.type = "Event"
                 result.url = url_for("event.view_event",
-                                    campaign_name=campaign.title,
-                                    campaign_id=campaign.id,
-                                    event_name=item.title,
-                                    event_id=item.id)
-                
+                                     campaign_name=campaign.title,
+                                     campaign_id=campaign.id,
+                                     event_name=item.title,
+                                     event_id=item.id)
+
                 result.edit_url = url_for("event.edit_event",
-                                        campaign_name=campaign.title,
-                                        campaign_id=campaign.id,
-                                        event_name=item.title,
-                                        event_id=item.id)
-                
+                                          campaign_name=campaign.title,
+                                          campaign_id=campaign.id,
+                                          event_name=item.title,
+                                          event_id=item.id)
+
                 table_columns = event_columns
-                
+
             elif isinstance(item, models.Epoch):
                 result.type = "Epoch"
                 result.url = url_for("epoch.view_epoch",
-                                    campaign_name=campaign.title,
-                                    campaign_id=campaign.id,
-                                    epoch_title=item.title,
-                                    epoch_id=item.id)
-                
+                                     campaign_name=campaign.title,
+                                     campaign_id=campaign.id,
+                                     epoch_title=item.title,
+                                     epoch_id=item.id)
+
                 result.edit_url = url_for("epoch.edit_epoch",
                                           campaign_name=campaign.title,
                                           campaign_id=campaign.id,
                                           epoch_title=item.title,
                                           epoch_id=item.id)
-                
+
                 table_columns = epoch_columns
 
             scores = []
-            
+
             # Find the matching event attributes
             for column in table_columns:
                 attr_value = getattr(item, column.name)
@@ -198,7 +195,6 @@ class SearchEngine:
         for header in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
             header_text = header.get_text()
             plain_text = plain_text.replace(header_text, "")
-        
+
         excerpt = " ".join(plain_text.split()[:30])
         return f"{excerpt}..."
-    
