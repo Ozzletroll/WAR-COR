@@ -217,9 +217,12 @@
               <h4 class="campaign-form label-title">Description</h4>
 
               <div class="form-extra-button-area">
-                
+
                 <div id="epoch-desc-button" type="button" class="form-button">
                   {% include "components/help_icon.html" %}
+                </div>
+                <div id="html-preview-button" type="button" class="form-button form-preview-button">
+                  HTML PREVIEW
                 </div>
                 
               </div>
@@ -247,6 +250,39 @@
                   for a longer, more detailed description of the epoch.
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {# HTML Preview Modal #}
+
+        <div id="modal-preview" class="modal">
+          <div class="modal-content modal-preview-content">
+            <div class="modal-content-inner">
+              <div class="modal-header">
+                <h2 class="modal-header-small">HTML Preview</h2>
+                <span id="close-preview" class="modal-close">
+                  <img class="icon" src="/static/images/icons/cancel.svg">
+                </span>
+              </div>
+
+              <div class="modal-body modal-preview-overflow">
+                <div class="event-page-elem event-elem-large elem-body event-page-description">
+      
+                  <div class="entry-left-padding"></div>
+  
+                  <div class="description-body">
+                      <h4 class="event-desc-header">Archive Entry:</h4>
+                      <div class="event-desc">
+                        <div id="preview-modal-body" class="modal-body modal-body-preview">
+                          {# Modal text goes here #}
+                        </div>
+                      </div>
+                  </div>
+                
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

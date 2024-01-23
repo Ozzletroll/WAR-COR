@@ -3291,6 +3291,7 @@ p {
   flex: 1 0 auto;
   justify-content: right;
   align-items: center;
+  gap: 10px;
 }
 
 .form-button {
@@ -3310,7 +3311,7 @@ p {
 .form-preview-button {
   justify-content: center;
   align-items: center;
-  padding: 2px 10px;
+  padding: 0px 10px;
   color: var(--text_flavour_bright);
   font-size: min(14px, 3vw);
   width: fit-content;
