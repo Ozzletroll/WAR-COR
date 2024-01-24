@@ -2084,7 +2084,7 @@ p {
   box-sizing: border-box;
   padding: 0px 1px 1px 1px;
   background-color: var(--elem_mid);
-  z-index: 2;
+  z-index: 3;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-left: -40px;
   margin-bottom: -80px;
@@ -2257,7 +2257,7 @@ p {
   box-sizing: border-box;
   padding: 0px 1px 1px 1px;
   background-color: var(--elem_mid);
-  z-index: 1;
+  z-index: 2;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-bottom: -82px;
 }
