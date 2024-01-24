@@ -37,10 +37,32 @@
 
     </div>
   
-
-    <div class="campaign-overview last-edited-area">
-      <h4 class="campaign-entry-title">Last Updated:</h4>
-      <p class="last-updated-text">{{ campaign.last_edited }}</p>
+    <div class="campaign-overview-lower">
+      <div class="campaign-overview last-edited-area">
+        <h4 class="campaign-entry-title">Last Updated:</h4>
+        <p class="last-updated-text">{{ campaign.last_edited }}</p>
+      </div>
+  
+      <div class="campaign-overview-lower-right">
+        <div class="campaign-overview campaign-settings-area">
+          <h4 class="campaign-entry-title">VISIBILITY:</h4>
+          {% if campaign.private %}
+            <h6 class="campaign-settings-text">MEMBERS ONLY</h6>
+          {% else %}
+            <h6 class="campaign-settings-text">ALL</h6>
+          {% endif %}
+        </div>
+    
+        <div class="campaign-overview campaign-settings-area">
+          <h4 class="campaign-entry-title">MEMBERSHIP:</h4>
+          {% if campaign.accepting_applications %}
+            <h6 class="campaign-settings-text">OPEN</h6>
+          {% else %}
+            <h6 class="campaign-settings-text">INVITE ONLY</h6>
+          {% endif %}
+        </div>
+      </div>
+      
     </div>
 
     <div class="campaign-entry-buttons">
