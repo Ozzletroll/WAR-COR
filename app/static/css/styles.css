@@ -3692,7 +3692,12 @@ p {
 }
 
 a.view-epoch {
+  display: flex;
   text-decoration: none;
+}
+
+a.view-epoch:hover .epoch-header {
+  color: var(--text_header_hover);
 }
 
 .epoch-container {
@@ -3713,7 +3718,7 @@ a.view-epoch {
   padding: 10px;
   text-transform: uppercase;
   color: var(--text_header);
-  transition: 0.5s;
+  transition: 0.15s;
   text-align: center;
 }
 
