@@ -13,7 +13,7 @@
 
 <div id="members-list-{{campaign.id}}" class="campaign-members">
   <div class="members-list-title-area">
-    <h4 class="campaign-entry-title">Members:</h4>
+    <h4 class="campaign-entry-title">Members</h4>
 
     {% if edit %}
       <a class="campaign-edit-link" href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">

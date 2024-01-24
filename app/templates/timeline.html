@@ -74,7 +74,7 @@
           <div id="campaign-overview" class="campaign-overview">
 
             <div class="campaign-overview-title-area">
-              <h4 class="campaign-entry-title">Overview:</h4>
+              <h4 class="campaign-entry-title">Overview</h4>
               {% if edit %}
                 <a class="campaign-edit-link" href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
                   <button class="button campaign-edit-button">
@@ -104,7 +104,7 @@
         </div>
 
         <div id="last-edited-area" class="campaign-overview last-edited-area">
-          <h4 class="campaign-entry-title">Last Updated:</h4>
+          <h4 class="campaign-entry-title">Last Updated</h4>
           <p class="last-updated-text">{{ campaign.last_edited }}</p>
         </div>
 

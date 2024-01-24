@@ -2764,11 +2764,17 @@ p {
   height: 100%;
   padding-bottom: 10px;
   scroll-margin-top: 40vh;
+
+}
+
+.settings-title {
+  text-align: center;
 }
 
 .campaign-settings-text {
   display: flex;
   justify-content: center;
+  align-items: center;
   border: 1px solid var(--elem_border);
   border-radius: 3px;
   color: var(--text_flavour);
@@ -2776,6 +2782,7 @@ p {
   font-size: min(3vw, 14px);
   margin: 0;
   padding: 0px 5px;
+  text-align: center;
 }
 
 @media screen and (max-width: 850px) { 
@@ -2798,6 +2805,7 @@ p {
 
   .campaign-overview-lower-right {
     justify-content: flex-start;
+    gap: 0px;
   }
 
   .campaign-settings-area {
