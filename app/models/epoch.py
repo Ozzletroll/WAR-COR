@@ -68,7 +68,7 @@ class Epoch(db.Model):
 
                 if field == "description" or field == "overview":
                     value = sanitise_input(value)
-                    if value == "<p><br></p>":
+                    if value == "<p><br></p>" or value == "":
                         value = None
 
                 setattr(self, field, value)
