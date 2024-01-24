@@ -40,7 +40,7 @@ class Epoch(db.Model):
     
     sub_epochs = db.relationship("Epoch",
                                  secondary="epoch_sub_epochs",
-                                 backref=db.backref("parent_epochs", lazy='dynamic'),
+                                 backref=db.backref("parent_epochs"),
                                  primaryjoin=(associations.epoch_sub_epochs.c.parent_epoch_id == id),
                                  secondaryjoin=(associations.epoch_sub_epochs.c.child_epoch_id == id))
     
