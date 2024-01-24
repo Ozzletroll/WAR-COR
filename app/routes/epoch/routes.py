@@ -37,7 +37,7 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     if request.referrer is not None:
         url_titles = [epoch.url_title for epoch in epoch.sub_epochs] 
         url_titles_found = [title for title in url_titles if title in request.referrer]
-        if len(url_titles_found) == 0:
+        if len(url_titles_found) == 0 and "/edit" not in request.referrer:
             can_use_referrer = True
 
     return render_template("epoch_page.html",
