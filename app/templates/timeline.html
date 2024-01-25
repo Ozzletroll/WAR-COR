@@ -98,7 +98,6 @@
             {{ campaign.description | safe }}
           </div>
 
-          {# Members list #}
           {{ members_list.members_list(campaign, edit=edit) }}
 
         </div>
@@ -161,12 +160,41 @@
 
                 </div>
 
-
-                
               {% else %}
                 <p class="flavour-text">Awaiting conflict data input</p>
               {% endif %}
             </div>
+          {% else %}
+
+            {% if edit %}
+              <div class="new-timeline-data-buttons data-buttons-hor">
+                <div class="data-button">
+                  <a class="first-event-link" 
+                  href="{{ url_for('event.add_event', 
+                  campaign_name=campaign.url_title,
+                  campaign_id=campaign.id) }}">
+                    <button class="button new-timeline-item first-event-button">NEW EVENT</button>
+                  </a>
+                  <p class="flavour-text">Events make up the main structure of the timeline. They represent events or occurences
+                    that take place at specific dates. Events are rendered in grouped year/month/day blocks.
+                  </p>
+                </div>
+
+                <div class="data-button">
+                  <a class="first-event-link" 
+                    href="{{ url_for('epoch.new_epoch', 
+                    campaign_name=campaign.url_title,
+                    campaign_id=campaign.id ) }}">
+                    <button class="button new-timeline-item first-event-button">NEW EPOCH</button>
+                  </a>
+                  <p class="flavour-text">An epoch represents an era or a time period during a campaign.
+                    Epochs are placed at the month level within the timeline, and encapsulate 
+                    all the events that take place within them.</p>
+                </div>
+
+              </div>
+            {% endif %}
+
           {% endif %}
 
           {% for year in timeline_data %}

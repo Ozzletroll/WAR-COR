@@ -3589,6 +3589,30 @@ p {
   gap: 20px;
 }
 
+.data-buttons-hor {
+  flex-direction: row;
+  width: 100%;
+  margin: -50px 0px 50px 0px;
+}
+
+.data-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 auto;
+  height: 100%;
+}
+
+.data-button .flavour-text {
+  display: flex;
+  width: auto;
+  text-align: center;
+}
+
+.data-button .first-event-button.new-timeline-item {
+  display: flex;
+}
+
 .first-event-link {
   text-decoration: none;
 }
@@ -3607,6 +3631,19 @@ p {
 
 .first-event-button.new-timeline-item:hover {
   color: var(--text_header_hover);
+}
+
+@media screen and (max-width: 1000px) {
+
+  .data-buttons-hor {
+    flex-wrap: wrap;
+  }
+
+  .data-button {
+    width: 250px;
+    height: fit-content;
+  }
+
 }
 
 /*  */
