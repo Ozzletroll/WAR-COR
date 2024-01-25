@@ -18,10 +18,52 @@ elements.
 
     {# If event is the only event in the day #}
     {% if length == 1 %}
+
+      {% if day.events | length != 0 %}
+      {# New Epoch Element #}
+      <div class="new-epoch-button-container">
+        <div class="new-epoch-vert-line"></div>
+        <div class="epoch-between event-between-events">
+          <div class="between-events-elements">
+            <div class="line line-dashed line-edit"></div>
+          </div>
+          <a href="{{ url_for('epoch.new_epoch',
+                      campaign_name=campaign.url_title,
+                      campaign_id=campaign.id,
+                      date=year.name + '/' + month.name + '/' + day.name) }}">
+            <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+              <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+            </button>
+          </a>
+          <p class="flavour-text new-event-flavour">//NEW EPOCH</p>
+        </div>
+      </div>
+      {% endif %}
+
     <div class="timeline-day-container day-container-solo">
       <div class="event-line event-line-solo event-line-solo-edit"></div>
     {# If the event is the first in the day #}
     {% elif index == 0 %}
+
+      {# New Epoch Element #}
+      <div class="new-epoch-button-container">
+        <div class="new-epoch-vert-line"></div>
+        <div class="epoch-between event-between-events">
+          <div class="between-events-elements">
+            <div class="line line-dashed line-edit"></div>
+          </div>
+          <a href="{{ url_for('epoch.new_epoch',
+                      campaign_name=campaign.url_title,
+                      campaign_id=campaign.id,
+                      date=year.name + '/' + month.name + '/' + day.name) }}">
+            <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+              <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+            </button>
+          </a>
+          <p class="flavour-text new-event-flavour">//NEW EPOCH</p>
+        </div>
+      </div>
+
     <div class="timeline-day-container">
       <div class="event-line event-line-top event-line-top-edit"></div>
     {# If the event is the last in the day #}
@@ -113,11 +155,16 @@ elements.
       {% if index != length - 1 %}
       <div class="edit-line-lower"></div>
       {% endif %}
+
+      {% if index == length - 1 %}
+      <div class="event-between event-between-events event-between-last">
+      {% else %}
       <div class="event-between event-between-events">
+      {% endif %}
         
         <div class="between-events-elements">
           <div class="line line-dashed line-edit"></div>
-      </div>
+        </div>
         <a href="{{ url_for('event.add_event', 
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id,

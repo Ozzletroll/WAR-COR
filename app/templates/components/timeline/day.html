@@ -134,7 +134,11 @@ elements.
   {% endif %}
 
     {# All events within day #}
+    {% if edit %}
+    <div class="event-group-container event-group-container-edit {{ hidden_class }}">
+    {% else %}
     <div class="event-group-container {{ hidden_class }}">
+    {% endif %}
       {% for event in day.events %}
 
         {% if edit %}

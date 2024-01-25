@@ -2,38 +2,16 @@
 {% import "components/timeline/day.html" as timeline_day %}
 
 {# 
+  MONTH COMPONENT
 
-DAY COMPONENT
+  Placed dynamically on the timeline
 
-Placed dynamically on the timeline
-
-Takes the campaign object, year object, day object, jinja2 loop.length,
-jinja2 index0, and a boolean value to toggle edit page
-elements.
-
+  Takes the campaign object, year object, jinja2 loop.length,
+  jinja2 index0, and a boolean value to toggle edit page
+  elements.
 #}
 
-{% macro month(campaign, year, month, day, length, index, edit=false) %}
-
-  {% if edit %}
-    {# New Epoch Element #}
-    <div class="epoch-between">
-      <div class="epoch-left-area"></div>
-      <div class="epoch-right-area">
-        <a class="epoch-centre-area" href="{{ url_for('epoch.new_epoch', 
-                                              campaign_name=campaign.url_title,
-                                              campaign_id=campaign.id,
-                                              date=year.name + '/' + month.name) }}">
-          <button id="new_epoch-{{year.name}}-{{month.name}}" class="new-timeline-item new-epoch-button">
-            <div class="epoch-button-text">NEW EPOCH
-              <div>{{ year.name }} / {{month.name}}</div>
-            </div>
-          </button>
-        </a>
-      </div>
-
-    </div>
-  {% endif %}
+{% macro month(campaign, year, month, length, index, edit=false) %}
 
   <!-- Month {{ month.name }} -->
 

@@ -3858,27 +3858,31 @@ a.view-epoch:hover .epoch-header {
   border: 1px solid var(--bright_red);
 }
 
+.new-epoch-button-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: -15px;
+}
+
+.new-epoch-vert-line {
+  margin-top: 9px;
+  border-left: 1px dashed var(--bright_red);
+  border-top: 0px;
+  border-right: 0px;
+  border-bottom: 0px;
+  margin-left: -1px;
+}
+
 .epoch-between {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  height: 20px;
+  width: 100%;
   margin-bottom: 50px;
 }
 
-.epoch-left-area {
-  display: flex;
-  min-width: 30%;
-}
-
-.epoch-right-area {
-  display: flex;
-  flex: 3 0 0;
-  justify-content: center;
-}
-
-.epoch-centre-area {
-  display: flex;
-  text-decoration: none;
+.epoch-between a {
+  margin-right: 15px;
 }
 
 .epoch-button-text {
@@ -3899,6 +3903,7 @@ a.view-epoch:hover .epoch-header {
   flex-direction: column;
   align-items: center;
   transition: 0.5s;
+  margin-bottom: 50px;
 }
 
 .epoch-vert-line {
@@ -3917,7 +3922,7 @@ a.view-epoch:hover .epoch-header {
 }
 
 .epoch-end-outer {
-  margin-bottom: 40px;
+  margin-bottom: 70px;
 }
 
 .epoch-end-text {
@@ -4006,6 +4011,8 @@ a.view-epoch:hover .epoch-header {
   align-items: center;
   width: 100%;
   transition: 0.5s;
+  margin-bottom: 75px;
+  margin-top: 5px;
 }
 
 .event-between-missing {
@@ -4025,10 +4032,6 @@ a.view-epoch:hover .epoch-header {
   margin-right: 15px;
 }
 
-.epoch-between a {
-  width: 50%;
-}
-
 .event-between-days {
   width: 100%;
 }
@@ -4042,8 +4045,8 @@ a.view-epoch:hover .epoch-header {
   font-size: min(3vw, 12px);
 }
 
-.between-last {
-  z-index: 1;
+.event-between-last {
+  margin-bottom: 35px;
 }
 
 .new-timeline-item {
@@ -4059,10 +4062,6 @@ a.view-epoch:hover .epoch-header {
   background-color: transparent;
   color: var(--text_header_contrast);
   transition: 0.5s;
-}
-
-.epoch-between .new-timeline-item {
-  width: 100%;
 }
 
 .new-timeline-item:active {
@@ -4190,6 +4189,10 @@ a.view-epoch:hover .epoch-header {
   flex-direction: column;
   flex: 1 0 0;
   transition: 0.5s;
+}
+
+.event-group-container-edit {
+  margin-top: -55px;
 }
 
 /* Different class name to .timeline=day-container 
