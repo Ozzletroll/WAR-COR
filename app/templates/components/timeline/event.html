@@ -60,7 +60,7 @@ elements.
               <img class="icon icon-invert" src="/static/images/icons/plus.svg">
             </button>
           </a>
-          <p class="flavour-text new-event-flavour">//NEW EPOCH</p>
+          <p class="flavour-text new-event-flavour">//NEW EPOCH {{month.name}}/{{day.name}}</p>
         </div>
       </div>
 
@@ -156,8 +156,12 @@ elements.
       <div class="edit-line-lower"></div>
       {% endif %}
 
-      {% if index == length - 1 %}
-      <div class="event-between event-between-events event-between-last">
+      {% if index == length - 1 and day.has_following_day %}
+        {% if not day.has_epoch_end and not day.followed_by_epoch %}
+        <div class="event-between event-between-events event-between-last">
+        {% else %}
+        <div class="event-between event-between-events">
+        {% endif %}
       {% else %}
       <div class="event-between event-between-events">
       {% endif %}

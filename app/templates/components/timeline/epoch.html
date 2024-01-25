@@ -11,7 +11,7 @@ property to represent if the epoch has child events.
 
 #}
 
-{% macro epoch(epochs, campaign, edit=false, contents=true) %}
+{% macro epoch(epochs, campaign, day, edit=false, contents=true) %}
 
   <div class="epoch-start-group">
     <div class="epoch-outer">
@@ -53,10 +53,18 @@ property to represent if the epoch has child events.
 
     </div>
 
-      <div class="epoch-start-marker">
-        <div class="epoch-vert-line"></div>
-        <div class="epoch-hor-line"></div>
-      </div>
+      {% if edit %}
+        <div class="epoch-start-marker epoch-start-marker-edit">
+          <div class="epoch-vert-line"></div>
+          <div class="epoch-hor-line"></div>
+        </div>
+      {% else %}
+        <div class="epoch-start-marker">
+          <div class="epoch-vert-line"></div>
+          <div class="epoch-hor-line"></div>
+        </div>
+      {% endif %}
+
 
   </div>
 
@@ -73,7 +81,7 @@ Takes an a months epochs list as an argument
 
 #}
 
-{% macro epoch_end(epochs, contents=true) %}
+{% macro epoch_end(epochs, day, contents=true) %}
 
 <div class="epoch-end-group">
   
@@ -82,8 +90,12 @@ Takes an a months epochs list as an argument
       <div class="epoch-vert-line"></div>
     </div>
 
-
+  {% if not day.no_following_events %}
   <div class="epoch-outer epoch-end-outer">
+  {% else %}
+  <div class="epoch-outer">
+  {% endif %}
+
 
     <div class="epoch-container">
       <div class="epoch-body">

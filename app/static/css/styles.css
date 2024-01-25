@@ -3903,6 +3903,9 @@ a.view-epoch:hover .epoch-header {
   flex-direction: column;
   align-items: center;
   transition: 0.5s;
+}
+
+.epoch-start-marker-edit {
   margin-bottom: 50px;
 }
 
@@ -4034,6 +4037,12 @@ a.view-epoch:hover .epoch-header {
 
 .event-between-days {
   width: 100%;
+  margin-bottom: 50px;
+}
+
+.event-between-days-offset {
+  margin-top: -51px;
+  margin-bottom: 50px;
 }
 
 .event-between-years {
@@ -4246,7 +4255,7 @@ for selection in timeline_search.js */
 }
 
 .day-line-mid-edit {
-  margin-bottom: -109px;
+  margin-bottom: -39px;
 }
 
 .mid-no-between {
@@ -4262,6 +4271,11 @@ for selection in timeline_search.js */
 .day-line-bottom-edit {
   border-left: 1px dashed var(--bright_red);
   margin-bottom: -35px;
+}
+
+.day-line-bottom-edit-offset {
+  border-left: 1px dashed var(--bright_red);
+  margin-bottom: 35px;
 }
 
 .timeline-day-container {

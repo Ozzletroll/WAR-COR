@@ -5,36 +5,35 @@ Array.from(dayLineFollowed).forEach(element => {
     var computedStyle = window.getComputedStyle(element);
     var marginBottom = parseFloat(computedStyle.getPropertyValue("margin-bottom"));
     startingMargins.push(marginBottom)
-
 });
 
 function epochLineAdjust() {
 
     // Adjust day vertical line lengths to compensate for epoch elements
     Array.from(dayLineFollowed).forEach((element, index) => {
-        
-        var dayElement = element.parentNode;
-        var currentElement = dayElement.nextElementSibling;
-        var epochElements = [];
 
-        while (currentElement) {
-            if (currentElement.classList.contains("epoch-start-group") 
-            || currentElement.classList.contains("epoch-end-group")
-            || currentElement.classList.contains("event-between")) {
-              epochElements.push(currentElement);
-            } else {
-              break;
-            }
-            currentElement = currentElement.nextElementSibling;
+      var dayElement = element.parentNode;
+      var currentElement = dayElement.nextElementSibling;
+      var epochElements = [];
+
+      while (currentElement) {
+          if (currentElement.classList.contains("epoch-start-group") 
+          || currentElement.classList.contains("epoch-end-group")
+          || currentElement.classList.contains("event-between")) {
+            epochElements.push(currentElement);
+          } else {
+            break;
           }
+          currentElement = currentElement.nextElementSibling;
+        }
 
-          var totalHeight = 0;
-          for (var i = 0; i < epochElements.length; i++) {
-            totalHeight += epochElements[i].getBoundingClientRect().height;;
-          }
+        var totalHeight = 0;
+        for (var i = 0; i < epochElements.length; i++) {
+          totalHeight += epochElements[i].getBoundingClientRect().height;;
+        }
 
-        var newMargin = startingMargins[0] - totalHeight;
-        element.style.marginBottom = newMargin + "px";
+      var newMargin = startingMargins[index] - totalHeight;
+      element.style.marginBottom = newMargin + "px";
         
     });
 

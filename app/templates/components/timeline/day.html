@@ -19,15 +19,15 @@ elements.
   {% if day.has_epoch %}
     {% if day.epoch_has_events %}
       {% if edit %}
-        {{ epoch.epoch(day.epochs, campaign=campaign, contents=true, edit=true) }}
+        {{ epoch.epoch(day.epochs, campaign=campaign, day=day, contents=true, edit=true) }}
       {% else %}
-        {{ epoch.epoch(day.epochs, campaign=campaign, contents=true, edit=false) }}
+        {{ epoch.epoch(day.epochs, campaign=campaign, day=day, contents=true, edit=false) }}
       {% endif %}
     {% else %}
       {% if edit %}
-        {{ epoch.epoch(day.epochs, campaign=campaign, contents=false, edit=true) }}
+        {{ epoch.epoch(day.epochs, campaign=campaign, day=day, contents=false, edit=true) }}
       {% else %}
-        {{ epoch.epoch(day.epochs, campaign=campaign, contents=false, edit=false) }}
+        {{ epoch.epoch(day.epochs, campaign=campaign, day=day, contents=false, edit=false) }}
       {% endif %}
     {% endif %}
   {% endif %}
@@ -45,7 +45,8 @@ elements.
      extend line to meet element below #}
   {% if day.followed_by_epoch and not day.no_following_events %}
     {% set followed_by_epoch_class = "day-line-followed" %}
-
+  {% elif day.has_epoch and not day.has_following_day or day.has_epoch_end and not day.has_following_day %}
+    {% set followed_by_epoch_class = "day-line-followed" %}
   {% endif %}
 
   {% if day.no_following_events %}
@@ -65,7 +66,12 @@ elements.
       {% endif %}
     {% elif index == length - 1 %}
     <div class="timeline-day-outer day-container-bottom">
-      <div class="day-line day-line-bottom-edit"></div>
+      {% if day.has_epoch_end %}
+      <div class="day-line day-line-bottom-edit-offset {{ followed_by_epoch_class }}"></div>
+      {% else %}
+      <div class="day-line day-line-bottom-edit {{ followed_by_epoch_class }}"></div>
+      {% endif %}
+
     {% else %}
     <div class="timeline-day-outer day-container-mid">
       {% if day.has_following_day %}
@@ -169,36 +175,37 @@ elements.
 
   </div>
 
-
-  {% if edit and not day.has_following_day %}
-    <!-- Between days event button -->
-    <div class="event-between event-between-days">
-      <div class="between-days-elements">
-        <div class="line line-dashed line-edit"></div>
-    </div>
-      <a href="{{ url_for('event.add_event', 
-                  campaign_name=campaign.url_title,
-                  campaign_id=campaign.id,
-                  new_day=True, 
-                  date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-        <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
-          <img class="icon icon-invert" src="/static/images/icons/plus.svg">
-        </button>
-      </a>
-        <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</p>
-
-    </div>
-  {% endif %}
-
-  
-
 {# End of epoch markers #}
 {% if day.has_epoch_end %}
   {% if day.epoch_has_events %}
-    {{ epoch.epoch_end(day.end_epochs) }}
+    {{ epoch.epoch_end(day.end_epochs, day) }}
   {% else %}
-    {{ epoch.epoch_end(day.end_epochs, contents=false) }}
+    {{ epoch.epoch_end(day.end_epochs, day, contents=false) }}
   {% endif %}
+{% endif %}
+
+{% if edit and not day.has_following_day %}
+  <!-- Between days event button -->
+  {% if index != length - 1 %}
+  <div class="event-between event-between-days event-between-days-offset">
+  {% else %}
+  <div class="event-between event-between-days">
+  {% endif %}
+    <div class="between-days-elements">
+      <div class="line line-dashed line-edit"></div>
+  </div>
+    <a href="{{ url_for('event.add_event', 
+                campaign_name=campaign.url_title,
+                campaign_id=campaign.id,
+                new_day=True, 
+                date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
+      <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+        <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+      </button>
+    </a>
+      <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</p>
+
+  </div>
 {% endif %}
 
 {%- endmacro %}
