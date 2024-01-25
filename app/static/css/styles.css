@@ -3604,7 +3604,6 @@ p {
 }
 
 .data-button .flavour-text {
-  display: flex;
   width: auto;
   text-align: center;
 }
