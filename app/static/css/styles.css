@@ -4494,7 +4494,6 @@ for selection in timeline_search.js */
 
   .event-between-missing {
     padding-bottom: 50px;
-    margin-top: 5.5px;
   }
   
   .timeline-year-header {
@@ -4530,6 +4529,14 @@ for selection in timeline_search.js */
 
   .epoch-elems {
     width: 80%;
+  }
+
+  .epoch-between {
+    margin-bottom: 70px;
+  }
+
+  .event-group-container-edit {
+    margin-top: -75px;
   }
 
 }
