@@ -1,3 +1,49 @@
+// Tab class
+class Tab {
+  constructor({
+    tab,
+    button,
+  }) {
+    this.tab = tab;
+    this.button = button;
+    this.corner = this.button.parentNode.querySelector(".campaign-corner");
+    this.state = false;
+
+    this.button.onclick = event => {
+
+      var screenWidth = window.innerWidth || document.documentElement.clientWidth;
+      
+      if (this.state == false && screenWidth <= 500) {
+        this.openTab(event)
+      }
+      else if (this.state == true && screenWidth <= 500) {
+        this.closeTab(event)
+      }
+    } 
+  }
+  
+  openTab() {
+    this.tab.style.display = "flex";
+    this.tab.style.maxHeight = "fit-content";
+
+    this.button.style.borderBottomLeftRadius = "0px";
+    this.corner.style.borderBottomRightRadius = "0px";
+
+    this.state = true
+  }
+
+  closeTab() {
+    this.tab.style.maxHeight = "0";
+    this.tab.style.display = "none";
+
+    this.button.style.borderBottomLeftRadius = "5px";
+    this.corner.style.borderBottomRightRadius = "5px";
+
+    this.state = false;
+  }
+
+}
+
 // Dropdown class
 class Dropdown {
   constructor({
@@ -91,3 +137,34 @@ window.onclick = event => {
     }
   }
 }
+
+// Create mobile tabs for all campaigns
+const campaigns = [];
+var tabs = document.getElementsByClassName("campaign-entry");
+Array.from(tabs).forEach((element) => {
+
+  var buttonElement = element.querySelector(".campaign-header");
+  var tabElement = element.querySelector(".campaign-body");
+
+  var tab = new Tab({
+    tab: tabElement,
+    button: buttonElement,
+  })
+
+  campaigns.push(tab);
+
+})
+
+// If resizing above 500px, open all tabs again
+window.addEventListener("resize", function() {
+  if (window.innerWidth > 500) {
+    Array.from(campaigns).forEach((tab) => {
+      tab.openTab();
+    })
+  }
+  else {
+    Array.from(campaigns).forEach((tab) => {
+      tab.closeTab();
+    })
+  }
+});

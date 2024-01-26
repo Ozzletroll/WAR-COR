@@ -2779,7 +2779,7 @@ p {
   font-weight: 500;
   font-size: min(3vw, 14px);
   margin: 0;
-  padding: 0px 5px;
+  padding: 2px 5px;
   text-align: center;
   min-height: 22px;
 }
@@ -2810,6 +2810,52 @@ p {
     width: fit-content;
     margin: 0px 40px 0px 0px;
   }  
+
+}
+
+@media screen and (max-width: 500px) {
+
+  .campaign-body {
+    display: none;
+  }
+
+  .campaign-header {
+    border-bottom-left-radius: 3px;
+    cursor: pointer;
+    transition: all 0.5s ease 0s;
+  }
+
+  .campaign-header-section:hover > .campaign-header,
+  .campaign-header-section:hover > .campaign-corner {
+    background-color: var(--dark_red);
+  }
+
+  .campaign-header:active {
+    transition: 0.2s;
+    background-color: var(--bright_red);
+    color: var(--darker_red);
+  }
+
+  .campaign-corner {
+    border-bottom-right-radius: 3px;
+    transition: all 0.5s ease 0s;
+  }
+
+  .campaign-overview-lower-right {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 0px;
+  }
+
+  .campaign-settings-area {
+    margin: 0px;
+  }
+
+  .campaign-settings-text {
+    justify-content: center;
+    align-items: center;
+  }
 
 }
 
