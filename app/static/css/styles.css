@@ -2307,7 +2307,8 @@ p {
 .campaigns-heading, 
 .campaign-overview, 
 .campaign-members, 
-.last-edited-area {
+.last-edited-area,
+.new-timeline-item {
   scroll-margin: 33vh;
 }
 

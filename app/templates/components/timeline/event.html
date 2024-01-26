@@ -31,7 +31,7 @@ elements.
                       campaign_name=campaign.url_title,
                       campaign_id=campaign.id,
                       date=year.name + '/' + month.name + '/' + day.name) }}">
-            <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+            <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
               <img class="icon icon-invert" src="/static/images/icons/plus.svg">
             </button>
           </a>
@@ -56,7 +56,7 @@ elements.
                       campaign_name=campaign.url_title,
                       campaign_id=campaign.id,
                       date=year.name + '/' + month.name + '/' + day.name) }}">
-            <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+            <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
               <img class="icon icon-invert" src="/static/images/icons/plus.svg">
             </button>
           </a>
@@ -174,7 +174,7 @@ elements.
                     campaign_id=campaign.id,
                     new_hour=True, 
                     date=event.date) }}">
-          <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+          <button id="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}" class="new-timeline-item timeline-between-events">
             <img class="icon icon-invert" src="/static/images/icons/plus.svg">
           </button>
         </a>

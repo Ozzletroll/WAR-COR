@@ -97,6 +97,20 @@ def add_event(campaign_name, campaign_id):
         # Prepopulate form
         form = forms.CreateEventForm(obj=event)
 
+        # Set scroll_to target for back button
+        date_value = request.args["date"]
+        if "new_hour" in args:
+            target_date = date_value.replace("/", "-").replace(" ", "-")
+            prefix = "new-event"
+        elif "new_day" in args:
+            target_date = date_value.split(' ')[0][:-3].replace("/", "-")
+            prefix = "new-day-event"
+        elif "new_month" in args:
+            target_date = date_value.split(' ')[0][:-3].replace("/", "-")
+            prefix = "new-month-event"
+
+        session["timeline_scroll_target"] = f"{prefix}-{target_date}"
+
     # Otherwise, create default empty form
     else:
         form = forms.CreateEventForm()

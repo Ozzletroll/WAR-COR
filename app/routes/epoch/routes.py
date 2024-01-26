@@ -58,15 +58,21 @@ def new_epoch(campaign_name, campaign_id):
 
     authenticators.permission_required(campaign)
 
+    args = request.args
+
     # Check if date argument given
-    if "date" in request.args:
+    if "date" in args:
         # Create placeholder event to prepopulate form
         epoch = models.Epoch()
 
         epoch.start_date = request.args["date"]
-        epoch.end_date = formatters.increment_datestring(request.args["date"], args=["new_day", "new_epoch"])
+        epoch.end_date = formatters.increment_datestring(args["date"], args=["new_day", "new_epoch"])
         
         form = forms.CreateEpochForm(obj=epoch)
+
+        # Set scroll_to target for back button
+        target_date = args["date"].replace("/", "-")
+        session["timeline_scroll_target"] = f"new-epoch-{target_date}"
 
     # Otherwise, create default empty form
     else:
