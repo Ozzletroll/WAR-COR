@@ -3907,7 +3907,7 @@ a.view-epoch:hover .epoch-header {
 .new-epoch-button-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: -15px;
+  margin-bottom: -12px;
 }
 
 .new-epoch-vert-line {
@@ -3924,7 +3924,7 @@ a.view-epoch:hover .epoch-header {
   align-items: center;
   height: 20px;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 47px;
 }
 
 .epoch-between a {
@@ -4584,6 +4584,10 @@ for selection in timeline_search.js */
 
   .event-group-container-edit {
     margin-top: -75px;
+  }
+
+  .new-epoch-button-container {
+    margin-bottom: -15px;
   }
 
 }
