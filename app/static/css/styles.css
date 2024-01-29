@@ -4344,7 +4344,9 @@ for selection in timeline_search.js */
 .event-line-top {
   border-bottom: 0;
   border-right: 0;
-  margin-bottom: -40px;
+  margin-bottom: -39.5px; 
+  /* Set margin as -39.5px as compromise between -40px Chrome and -39px Firefox.
+    Otherwise, causes 1px overlap visible when greyed out by search. */
 }
 
 .event-line-top-edit {
