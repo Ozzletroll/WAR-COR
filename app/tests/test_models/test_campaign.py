@@ -78,3 +78,12 @@ def test_get_following_events(client):
 
     assert event_2.following_event is None
     assert event_2.preceding_event is event_1
+
+
+def test_set_url_title():
+
+    campaign = models.Campaign()
+    campaign.title = "Test Campaign Title"
+
+    campaign.set_url_title()
+    assert campaign.url_title == "Test-Campaign-Title"
