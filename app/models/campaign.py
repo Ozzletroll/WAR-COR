@@ -99,7 +99,6 @@ class Campaign(db.Model):
             with dashes '-'. """
         
         self.url_title = self.title.replace(" ", "-")
-        
 
     def return_timeline_data(self, epoch=None):
         """ Method to return campaign timeline data """
