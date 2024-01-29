@@ -11,17 +11,6 @@ def test_setup(client, auth, campaign, event, epoch):
     campaign.create(title="Model Test Campaign",
                     description="A campaign for testing purposes")
 
-    campaign_object = db.session.execute(
-        select(models.Campaign)
-        .filter_by(title="Model Test Campaign")).scalar()
-
-    # Create 2 months with 5 events each, incremented by +1 day
-    for value in range(1, 3):
-        event.mass_create(campaign_object=campaign_object,
-                          starting_date=f"5016/0{value}/01 00:00:00",
-                          number=5,
-                          increment="day")
-
 
 def test_update(client):
 
@@ -55,3 +44,37 @@ def test_check_epochs(client):
 
     campaign.check_epochs()
     epoch.populate_self.assert_called_once()
+
+
+def test_get_following_events(client):
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Updated Title")).scalar()
+
+    # Create test events
+    event_1 = models.Event()
+    data_1 = {
+        "title": "Event 1",
+        "body": "Description",
+        "date": "5016/02/15 09:00:00",
+        "type": "Test",
+    }
+    event_1.update(data_1, campaign, new=True)
+
+    event_2 = models.Event()
+    data_2 = {
+        "title": "Event 2",
+        "body": "Description",
+        "date": "5016/05/21 14:30:00",
+        "type": "Test",
+    }
+    event_2.update(data_2, campaign, new=True)
+
+    campaign.get_following_events()
+
+    assert event_1.following_event is event_2
+    assert event_1.preceding_event is None
+
+    assert event_2.following_event is None
+    assert event_2.preceding_event is event_1
