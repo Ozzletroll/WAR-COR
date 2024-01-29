@@ -1,17 +1,19 @@
 from sqlalchemy import select
+from unittest.mock import MagicMock
+
 
 from app import db, models
 
 
-def test_setup(client, auth, campaign, event):
+def test_setup(client, auth, campaign, event, epoch):
     # Create a new campaign and populate it with events
     auth.register()
-    campaign.create(title="Test Campaign",
+    campaign.create(title="Model Test Campaign",
                     description="A campaign for testing purposes")
 
     campaign_object = db.session.execute(
         select(models.Campaign)
-        .filter_by(title="Test Campaign")).scalar()
+        .filter_by(title="Model Test Campaign")).scalar()
 
     # Create 2 months with 5 events each, incremented by +1 day
     for value in range(1, 3):
@@ -25,7 +27,7 @@ def test_update(client):
 
     campaign_object = db.session.execute(
         select(models.Campaign)
-        .filter_by(title="Test Campaign")).scalar()
+        .filter_by(title="Model Test Campaign")).scalar()
 
     form_data = {
         "title": "Updated Title",
@@ -38,3 +40,18 @@ def test_update(client):
 
     for field in form_data.keys():
         assert getattr(campaign_object, field) == form_data[field]
+
+
+def test_check_epochs(client):
+
+    campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Updated Title")).scalar()
+
+    epoch = MagicMock(spec=models.Epoch)
+    epoch._sa_instance_state = MagicMock()
+    campaign.epochs.append(epoch)
+    epoch.populate_self = MagicMock()
+
+    campaign.check_epochs()
+    epoch.populate_self.assert_called_once()
