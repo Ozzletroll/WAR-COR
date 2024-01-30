@@ -86,7 +86,10 @@
           <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
         </label>
 
-        {{ form.title(class_="campaign-input form-input", autocomplete="off", placeholder="REQUIRED") }}
+        <div class="form-input-container">
+          {{ form.title(class_="campaign-input form-input", autocomplete="off", placeholder="REQUIRED") }}
+          <div class="form-underline"></div>
+        </div>
 
       </div>
 
@@ -105,7 +108,10 @@
           <p class="flavour-text">UWC-5-02 //  Calendar::Suffix</p>
         </label>
 
-        {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
+        <div class="form-input-container">
+          {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
+          <div class="form-underline"></div>
+        </div>
 
       </div>
 
@@ -126,7 +132,10 @@
           <p class="flavour-text">UWC-5-03 //  Calendar::Negative Suffix</p>
         </label>
 
-        {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
+        <div class="form-input-container">
+          {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
+          <div class="form-underline"></div>
+        </div>
 
       </div>
 

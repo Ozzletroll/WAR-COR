@@ -43,11 +43,17 @@
                     <label class="form-icon">
                       <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/user.svg') }}">
                     </label>
-                    {{ form.username(placeholder_='USERNAME', class_='form-field', autocomplete='off') }}
+                    <div class="form-input-container">
+                      {{ form.username(placeholder_='USERNAME', class_='form-input auth-form-input form-field', autocomplete='off') }}
+                      <div class="form-underline"></div>
+                    </div>
                   </div>
                   <div class="form-elem">
                     <label class="form-icon"><img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/lock.svg') }}"></label>
-                    {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
+                    <div class="form-input-container">
+                      {{ form.password(placeholder_='PASSWORD', class_='form-input auth-form-input form-field') }}
+                      <div class="form-underline"></div>
+                    </div>
                   </div>
                 </div>
                   
