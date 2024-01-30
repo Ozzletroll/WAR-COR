@@ -484,6 +484,7 @@ p {
   text-decoration: none;
   transition: 0.5s;
   margin: 0px 10px;
+  white-space: nowrap;
 }
 
 .logo-title:hover {
