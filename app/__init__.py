@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from config import Config
 import os
+from pathlib import Path
 import logging
 from logging.handlers import SMTPHandler
 
@@ -108,28 +109,28 @@ def create_app(config_class=Config):
             response.headers["Pragma"] = "no-cache"
             return response
 
-    # os.path.join is used to allow the test config to also access the data folder
-    data_folder = os.path.join(os.path.dirname(__file__), 'utils', 'data')
+    # Pathlib is used to allow the test config to also access the data folder
+    data_folder = Path(__file__).resolve().parent / "utils" / "data"
 
     # Create data folder if necessary
-    if not os.path.exists(data_folder):
-        os.makedirs(data_folder)
+    if not data_folder.exists():
+        data_folder.mkdir(parents=True)
 
     # If not present, create data for random name generator
     try:
-        with open(os.path.join(data_folder, 'nouns.json'), 'r') as file:
+        with open(Path(data_folder, "nouns.json"), "r") as file:
             pass
     except FileNotFoundError:
         create_data()
 
     try:
-        with open(os.path.join(data_folder, 'adjectives.json'), 'r') as file:
+        with open(Path(data_folder, "adjectives.json"), "r") as file:
             pass
     except FileNotFoundError:
         create_data()    
 
     try:
-        with open(os.path.join(data_folder, 'verbs.json'), 'r') as file:
+        with open(Path(data_folder, "verbs.json"), "r") as file:
             pass
     except FileNotFoundError:
         create_data()
