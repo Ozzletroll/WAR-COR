@@ -76,25 +76,6 @@
 
 
   {% if edit %}
-    <!-- New event within epoch -->
-    {% if month.has_epoch and not month.epoch_has_events %}
-    <div class="month-between event-between-years">
-      <div class="between-months-elements">
-        <div class="line line-dashed line-dashed-heavy"></div>
-      </div>
-      <a href="{{ url_for('event.add_event', 
-                            campaign_name=campaign.url_title,
-                            campaign_id=campaign.id,
-                            date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
-        <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
-          <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-        </button>
-      </a>
-      <p class="flavour-text new-event-flavour">//NEW EVENT WITHIN EPOCH</p>
-    </div>
-    {% endif %}
-
-
     {% if not month.has_following_month %}
     <!-- End of month new event button -->
     <div class="month-between event-between-years">
@@ -105,6 +86,7 @@
                             campaign_name=campaign.url_title,
                             new_month=True, 
                             campaign_id=campaign.id,
+                            elem_id='new-month-event-' + year.name + '-' + month.name,
                             date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
         <button id="new-month-event-{{year.name}}-{{month.name}}" class="new-timeline-item">
           <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">

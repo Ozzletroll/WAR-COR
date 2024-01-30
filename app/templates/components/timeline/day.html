@@ -127,9 +127,10 @@ elements.
         </div>
         <a href="{{ url_for('event.add_event', 
                     campaign_name=campaign.url_title,
-                    campaign_id=campaign.id, 
+                    campaign_id=campaign.id,
+                    elem_id='new-missing-event-' + year.name + '-' + month.name + '-' + day.name, 
                     date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-          <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+          <button id="new-missing-event-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
             <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
           </button>
         </a>
@@ -197,9 +198,10 @@ elements.
     <a href="{{ url_for('event.add_event', 
                 campaign_name=campaign.url_title,
                 campaign_id=campaign.id,
-                new_day=True, 
+                new_day=True,
+                elem_id='new-day-event-' + year.name + '-' + month.name + '-' + day.name,
                 date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-      <button id="new-day-event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
+      <button id="new-day-event-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
         <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
       </button>
     </a>

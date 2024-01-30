@@ -30,6 +30,7 @@ elements.
           <a href="{{ url_for('epoch.new_epoch',
                       campaign_name=campaign.url_title,
                       campaign_id=campaign.id,
+                      elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
                       date=year.name + '/' + month.name + '/' + day.name) }}">
             <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
               <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
@@ -55,6 +56,7 @@ elements.
           <a href="{{ url_for('epoch.new_epoch',
                       campaign_name=campaign.url_title,
                       campaign_id=campaign.id,
+                      elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
                       date=year.name + '/' + month.name + '/' + day.name) }}">
             <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
               <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
@@ -173,6 +175,7 @@ elements.
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id,
                     new_hour=True, 
+                    elem_id='new-event-' + year.name + '-' + month.name + '-' + day.name + '-' + event.date.split(' ')[1],
                     date=event.date) }}">
           <button id="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}" class="new-timeline-item timeline-between-events">
             <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
