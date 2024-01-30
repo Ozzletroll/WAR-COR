@@ -32,7 +32,7 @@ elements.
                       campaign_id=campaign.id,
                       date=year.name + '/' + month.name + '/' + day.name) }}">
             <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
-              <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+              <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
             </button>
           </a>
           <p class="flavour-text new-event-flavour">//NEW EPOCH: {{year.name}}/{{month.name}}/{{day.name}}</p>
@@ -57,7 +57,7 @@ elements.
                       campaign_id=campaign.id,
                       date=year.name + '/' + month.name + '/' + day.name) }}">
             <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
-              <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+              <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
             </button>
           </a>
           <p class="flavour-text new-event-flavour">//NEW EPOCH: {{year.name}}/{{month.name}}/{{day.name}}</p>
@@ -175,7 +175,7 @@ elements.
                     new_hour=True, 
                     date=event.date) }}">
           <button id="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}" class="new-timeline-item timeline-between-events">
-            <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+            <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
           </button>
         </a>
         <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
@@ -185,5 +185,3 @@ elements.
   {% endif %}
 
 {%- endmacro %}
-
-

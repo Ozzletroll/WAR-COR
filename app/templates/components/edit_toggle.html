@@ -42,7 +42,7 @@
   </div>
 </div>
 
-<script src="/static/js/edit_toggle_scroll.js"></script>
+<script src="{{ url_for('static', filename='/js/edit_toggle_scroll.js') }}"></script>
 <script>
   const toggleTargetURL = "{{ url_for('session.timeline_edit_toggle') }}"   
   const csrfTokenForToggle = "{{ csrf_token() }}"

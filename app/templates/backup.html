@@ -43,7 +43,7 @@
         <a class="backup-link" href="{{ url_for('data.campaign_backup', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
           <button class="backup-button">
             <h3 class="backup-title">BACKUP</h3>
-            <img class="icon icon-invert icon-xlarge icon-comp-r" src="/static/images/icons/egress.svg">
+            <img class="icon icon-invert icon-xlarge icon-comp-r" src="{{ url_for('static', filename='/images/icons/egress.svg') }}">
           </button>
         </a>
 
@@ -58,7 +58,7 @@
         <label for="backup-restore" class="backup-link">
           <button class="backup-button">
             <h3 class="backup-title">RESTORE</h3>
-            <img class="icon icon-invert icon-xlarge icon-comp-r" src="/static/images/icons/ingress.svg">
+            <img class="icon icon-invert icon-xlarge icon-comp-r" src="{{ url_for('static', filename='/images/icons/ingress.svg') }}">
           </button>
         </label>
 
@@ -82,7 +82,7 @@
 
     <div class="flavour-text-area fade-in-block-3">
       <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded not to allow NHP access to UWC backups that contain data from [REDACTED] Class endogenous Cascade events. </p>
-      <img src="/static/images/logo-red.png" class="top-logo logo-theme">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>

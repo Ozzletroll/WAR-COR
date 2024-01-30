@@ -130,7 +130,7 @@ elements.
                     campaign_id=campaign.id, 
                     date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
           <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
-            <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+            <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
           </button>
         </a>
         <p class="flavour-text new-event-flavour">//NEW EVENT: Missing Event</p>
@@ -200,7 +200,7 @@ elements.
                 new_day=True, 
                 date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
       <button id="new-day-event-{{year.name}}-{{month.name}}" class="new-timeline-item timeline-between-events">
-        <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+        <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
       </button>
     </a>
       <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</p>

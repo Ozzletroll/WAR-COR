@@ -87,7 +87,7 @@
                             campaign_id=campaign.id,
                             date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
         <button id="new_event-{{year.name}}-{{month.name}}" class="new-timeline-item">
-          <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+          <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
         </button>
       </a>
       <p class="flavour-text new-event-flavour">//NEW EVENT WITHIN EPOCH</p>
@@ -107,7 +107,7 @@
                             campaign_id=campaign.id,
                             date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
         <button id="new-month-event-{{year.name}}-{{month.name}}" class="new-timeline-item">
-          <img class="icon icon-invert" src="/static/images/icons/plus.svg">
+          <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
         </button>
       </a>
       <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Month</p>

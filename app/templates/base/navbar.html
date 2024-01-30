@@ -18,7 +18,7 @@
         {% if request.path != "/campaigns" %}
         <li class="link-toggle">
           <a class="navbar-link-item" href="{{ url_for('campaign.campaigns') }}">
-            <img class="icon campaign-form-icon" src="/static/images/icons/list.svg">
+            <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/list.svg') }} ">
             Campaigns
           </a>
         </li>
@@ -26,14 +26,14 @@
         {% if request.path != url_for('user.user_page', username=current_user.username) %}
         <li class="link-toggle">
           <a class="navbar-link-item" href="{{ url_for('user.user_page', username=current_user.username) }}">
-            <img class="icon campaign-form-icon" src="/static/images/icons/user_white.svg">
+            <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }} ">
             {{ current_user.username }}
           </a>
         </li>
         {% endif %}
         <li class="">
           <button class="navbar-link-item messages-button" id="messages-button">
-            <img class="icon campaign-form-icon" src="/static/images/icons/message.svg">
+            <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/message.svg') }}">
             {{ current_user.messages|length }}
           </button>
         </li>
@@ -93,7 +93,7 @@
 
 
 <!-- Javascript -->
-<script src="/static/js/navbar.js"></script> 
+<script src="{{ url_for('static', filename='/js/navbar.js') }} "></script> 
 {% if current_user.is_authenticated %}
   
 {% endif %}

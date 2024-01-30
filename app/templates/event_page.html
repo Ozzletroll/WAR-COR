@@ -17,7 +17,7 @@
   {% endblock %}
   {% block extra_head %}
     {% include "components/summernote_head.html" %}
-    <link rel="stylesheet" href="/static/css/summernote_comment_theme.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/summernote_comment_theme.css') }}">
   {% endblock %}
 {% endblock %}
 
@@ -214,7 +214,7 @@
                       <div id="comment-{{comment.id}}" class="comment-header">
                       {% endif %}
                         <div class="comment-header-left">
-                          <img class="icon" src="/static/images/icons/user_white.svg">
+                          <img class="icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
                           <h5 class="comment-username">{{ comment.author.username }}</h5>
   
                           {% for entry in comment.author.campaign_associations %}
@@ -231,7 +231,7 @@
                         <div class="comment-header-right">
                           {% if campaign in current_user.permissions or comment.author == current_user %}
                             <button id="button-{{loop.index}}" class="button delete-comment-button">
-                              <img class="icon" src="/static/images/icons/bin_white.svg">
+                              <img class="icon" src="{{ url_for('static', filename='/images/icons/bin_white.svg') }}">
                             </button>
                           {% endif %}
                         </div>
@@ -254,7 +254,7 @@
                         <div class="modal-header">
                           <h2 class="modal-header-small">Delete Comment</h2>
                           <span id="close-{{loop.index}}" class="modal-close">
-                            <img class="icon" src="/static/images/icons/cancel.svg">
+                            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                           </span>
                         </div>
                         <div class="modal-body modal-body-small">
@@ -310,8 +310,8 @@
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="false"></div>
 
-<script src="/static/js/event.js"></script>
-<script src="/static/js/scroll_target.js"></script>
+<script src="{{ url_for('static', filename='/js/event.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/scroll_target.js') }}"></script>
 <script>
   window.addEventListener('DOMContentLoaded', 
                           scrollToTarget('{{ url_for("session.comment_target") }}', 

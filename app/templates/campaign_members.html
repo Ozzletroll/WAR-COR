@@ -57,7 +57,7 @@
     <!-- Tab 1 -->
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t1-button">
-        <img class="icon campaign-form-icon" src="/static/images/icons/user_management.svg">
+        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_management.svg') }}">
         <h2 class="user-page-title">Current Members</h2>
       </button>
 
@@ -123,7 +123,7 @@
 
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t2-button">
-        <img class="icon campaign-form-icon" src="/static/images/icons/user_white.svg">
+        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
         <h2 class="user-page-title">Add New Member</h2>
       </button>
 
@@ -165,7 +165,7 @@
 
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t3-button">
-        <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
+        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
         <h2 class="user-page-title">Visibility and Access</h2>
       </button>
 
@@ -227,7 +227,7 @@
     
     <div class="flavour-text-area fade-in-block-3">
       <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that misusing Campaign Administrator priveleges is a galactic crime and carries a maximum sentence of 0.031536GS.</p>
-      <img src="/static/images/logo-red.png" class="top-logo">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo">
     </div>
       
     {# Confirm Make Admin Modal #}
@@ -241,7 +241,7 @@
               GRANT WARCOR AUTHORISATION
             </h2>
             <span id="admin-close-{{loop.index}}" class="modal-close">
-              <img class="icon" src="/static/images/icons/cancel.svg">
+              <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
             </span>
           </div>
           <div class="modal-body modal-body-small">
@@ -278,7 +278,7 @@
               {% endif %}
             </h2>
             <span id="close-{{loop.index}}" class="modal-close">
-              <img class="icon" src="/static/images/icons/cancel.svg">
+              <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
             </span>
           </div>
           <div class="modal-body modal-body-small">
@@ -313,13 +313,13 @@
 </div>
 
  <!-- Javascript -->
- <script src="/static/js/campaign_members.js"></script>  
+ <script src="{{ url_for('static', filename='/js/campaign_members.js') }}"></script>  
  <script>
   const target_url = "{{ url_for('membership.user_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const csrfToken = "{{ csrf_token() }}"
 </script>
 
-<script src="/static/js/membership_rules.js"></script>
+<script src="{{ url_for('static', filename='/js/membership_rules.js') }}"></script>
 <script>
   const membershipRulesURL = "{{ url_for('membership.update_membership_settings', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const membershipCSRFToken = "{{ csrf_token() }}"

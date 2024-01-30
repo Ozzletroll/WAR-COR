@@ -65,7 +65,7 @@
   </div>
 
   <div id="sidebar-deploy" class="sidebar-deploy">
-    <img id="sidebar-icon" class="icon icon-large" src="/static/images/icons/chevron_right.svg">
+    <img id="sidebar-icon" class="icon icon-large" src="{{ url_for('static', filename='/images/icons/chevron_right.svg') }}">
   </div>
 
 
@@ -73,4 +73,5 @@
 
 
  <!-- Javascript -->
- <script src="/static/js/sidebar.js" defer="True"></script> 
+ <script src="{{ url_for('static', filename='/js/sidebar.js') }}" defer="True"></script> 
+ 

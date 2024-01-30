@@ -57,13 +57,13 @@
 
         <ul id="carousel">
           <li id="carousel-img-1" class="carousel-item">
-            <img class="carousel-img" src="/static/images/slide-1.png">
+            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-1.png') }}">
           </li>
           <li id="carousel-img-2" class="carousel-item">
-            <img class="carousel-img" src="/static/images/slide-2.png">
+            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-2.png') }}">
           </li>
           <li id="carousel-img-3" class="carousel-item">
-            <img class="carousel-img" src="/static/images/slide-3.png">
+            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-3.png') }}">
           </li>
         </ul>
 
@@ -87,7 +87,7 @@
       </div>
 
       <div class="features-lower">
-        <img src="/static/images/custom-date-example.png">
+        <img src="{{ url_for('static', filename='/images/custom-date-example.png') }}">
         <div class="features-text-area">
           <h5 class="feature-title">Freeform Timeline Editing</h5>
           <p>Unbound by the constraints of pre-collapse archiving conventions, 
@@ -102,7 +102,7 @@
           <p>UWC military standardisation ensures reliable performance on a variety 
             of hardware platforms, across any theatre of warfare.</p>
         </div>
-        <img src="/static/images/responsive-mockup.png">
+        <img src="{{ url_for('static', filename='/images/responsive-mockup.png') }}">
       </div>
 
     </section>
@@ -126,11 +126,11 @@
   {% include "base/footer.html" %}
 
 <!-- Javascript -->
-<script src="/static/js/get_screen_height.js"></script> 
-<script src="/static/js/index.js"></script>
-<script src="/static/js/carousel.js"></script>
-<script src="/static/js/margin_fix.js"></script> 
-<script src="/static/js/epoch_line_adjust.js"></script>
+<script src="{{ url_for('static', filename='/js/get_screen_height.js') }}"></script> 
+<script src="{{ url_for('static', filename='/js/index.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/carousel.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/margin_fix.js') }}"></script> 
+<script src="{{ url_for('static', filename='/js/epoch_line_adjust.js') }}"></script>
 <script>
   window.addEventListener("resize", marginFix);
   window.addEventListener('DOMContentLoaded', marginFix());

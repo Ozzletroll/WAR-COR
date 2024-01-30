@@ -72,7 +72,7 @@
         <div id="start-date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
               <h4 class="campaign-form label-title">Start Date</h4>
 
               <div class="form-extra-button-area">
@@ -99,7 +99,7 @@
               <div class="modal-header">
                 <h2 class="modal-header-small">Epoch Start Date</h2>
                 <span id="close-1" class="modal-close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
+                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                 </span>
               </div>
               <div class="modal-body">
@@ -118,7 +118,7 @@
         <div id="end-date-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
               <h4 class="campaign-form label-title">End Date</h4>
 
               <div class="form-extra-button-area">
@@ -144,7 +144,7 @@
               <div class="modal-header">
                 <h2 class="modal-header-small">Epoch End Date</h2>
                 <span id="close-2" class="modal-close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
+                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                 </span>
               </div>
               <div class="modal-body">
@@ -158,7 +158,7 @@
         <div id="title-field" class="form-container form-container-small">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
               <h4 class="campaign-form label-title">Epoch Title</h4>
             </div>
             <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
@@ -171,7 +171,7 @@
         <div id="epoch-overview-field" class="form-container form-container-large">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
           
               <h4 class="campaign-form label-title">Overview</h4>
 
@@ -198,7 +198,7 @@
               <div class="modal-header">
                 <h2 class="modal-header-small">Epoch Overview</h2>
                 <span id="close-3" class="modal-close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
+                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                 </span>
               </div>
               <div class="modal-body">
@@ -212,7 +212,7 @@
         <div id="epoch-desc-field" class="form-container form-container-large">
           <label class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
           
               <h4 class="campaign-form label-title">Description</h4>
 
@@ -242,7 +242,7 @@
               <div class="modal-header">
                 <h2 class="modal-header-small">Epoch Description</h2>
                 <span id="close-4" class="modal-close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
+                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                 </span>
               </div>
               <div class="modal-body">
@@ -262,7 +262,7 @@
               <div class="modal-header">
                 <h2 class="modal-header-small">HTML Preview</h2>
                 <span id="close-preview" class="modal-close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
+                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                 </span>
               </div>
 
@@ -312,7 +312,7 @@
               <div class="modal-header">
                 <h2 class="modal-header-small">Delete Epoch</h2>
                 <span id="close-delete" class="modal-close">
-                  <img class="icon" src="/static/images/icons/cancel.svg">
+                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
                 </span>
               </div>
               <div class="modal-body modal-body-small">
@@ -337,7 +337,7 @@
 
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
       <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
-      <img src="/static/images/logo-red.png" class="top-logo logo-theme">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>
@@ -347,8 +347,8 @@
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 
-<script src="/static/js/epoch_form.js"></script>
-<script src="/static/js/unsaved_changes_warning.js"></script>
+<script src="{{ url_for('static', filename='/js/epoch_form.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/unsaved_changes_warning.js') }}"></script>
 
 
 {% endblock %}

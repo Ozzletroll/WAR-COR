@@ -62,7 +62,7 @@
 
     <div class="callsigns-area">
       <button class="callsign-deploy-button" id="t1-button">
-        <img class="icon campaign-form-icon" src="/static/images/icons/callsigns.svg">
+        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/callsigns.svg') }}">
         <h2 class="user-page-title">Callsigns</h2>
       </button>
 
@@ -110,7 +110,7 @@
 
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t2-button">
-        <img class="icon campaign-form-icon" src="/static/images/icons/cog.svg">
+        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
         <h2 class="user-page-title">Preferences</h2>
       </button>
 
@@ -122,7 +122,7 @@
 
           <div class="user-form-container">
             <button id="p1-button" class="user-settings-button">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="/static/images/icons/dark_mode.svg">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/dark_mode.svg') }}">
               INTERFACE THEME
             </button>
             <p class="flavour-text user-form-flavour">//Imaging::Wavelength </p>
@@ -184,7 +184,7 @@
 
     <div class="settings-area">
       <button class="callsign-deploy-button" id="t3-button">
-        <img class="icon campaign-form-icon" src="/static/images/icons/settings.svg">
+        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/settings.svg') }}">
         <h2 class="user-page-title">Account Management</h2>
       </button>
 
@@ -196,7 +196,7 @@
 
           <div class="user-form-container">
             <button id="f1-button" class="user-settings-button">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="/static/images/icons/admin.svg">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
               CHANGE USERNAME
             </button>
             <p class="flavour-text user-form-flavour">//Ident::Reconfigure </p>
@@ -212,7 +212,7 @@
 
           <div class="user-form-container">
             <button id="f2-button" class="user-settings-button">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="/static/images/icons/lock_key.svg">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/lock_key.sv') }}g">
               CHANGE PASSWORD
             </button>
             <p class="flavour-text user-form-flavour">//Authentication::Update </p>
@@ -237,7 +237,7 @@
             <div class="user-form-container">
             <a class="delete-button" href="{{ url_for('user.delete_user', username=user.username) }}">
               <button class="user-settings-button">
-                <img class="icon icon-invert callsign-form-icon user-icon-trans" src="/static/images/icons/bin.svg">
+                <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/bin.svg') }}">
                 DELETE ACCOUNT
               </button>
             </a>
@@ -255,7 +255,7 @@
 
     <div class="flavour-text-area fade-in-block-3">
       <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>
-      <img src="/static/images/logo-red.png" class="top-logo logo-theme">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>
@@ -263,6 +263,6 @@
 </div>
 
  <!-- Javascript -->
-<script src="/static/js/user_page.js"></script> 
+<script src="{{ url_for('static', filename='/js/user_page.js') }}"></script> 
 
 {% endblock %}

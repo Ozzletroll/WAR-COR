@@ -34,12 +34,12 @@
                 <div class="auth-form-upper">
                   <div class="form-elem">
                     <label class="form-icon">
-                      <img class="icon icon-invert" src="/static/images/icons/user.svg">
+                      <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/user.svg') }}">
                     </label>
                     {{ form.username(placeholder_='USERNAME', class_='form-field', autocomplete='off') }}
                   </div>
                   <div class="form-elem">
-                    <label class="form-icon"><img class="icon icon-invert" src="/static/images/icons/lock.svg"></label>
+                    <label class="form-icon"><img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/lock.svg') }}"></label>
                     {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
                   </div>
                 </div>
@@ -59,7 +59,7 @@
 
         <div class="flavour-text-area">
           <p class="flavour-text flavour-text-centre">By submitting this form you confirm the immediate termination of your UWC WAR/COR contract. All active correspondent authorisations will be immediately revoked. The UWC thanks you for your service, and wishes you prosperity in all your future endeavours. </p>
-          <img src="/static/images/logo-red.png" class="top-logo logo-theme">
+          <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
         </div>
 
     </div>    

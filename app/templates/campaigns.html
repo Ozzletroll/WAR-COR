@@ -81,11 +81,11 @@
 </div>
 
 <!-- Javascript -->
-<script src="/static/js/campaigns.js"></script>
-<script src="/static/js/campaigns_layout.js"></script>
-<script src="/static/js/campaign_search.js"></script> 
-<script src="/static/js/scroll_target.js"></script> 
-<script src="/static/js/user_image_styling.js"></script>
+<script src="{{ url_for('static', filename='/js/campaigns.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/campaigns_layout.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/campaign_search.js') }}"></script> 
+<script src="{{ url_for('static', filename='/js/scroll_target.js') }}"></script> 
+<script src="{{ url_for('static', filename='/js/user_image_styling.js') }}"></script>
 <script>
   formatImageElements(".campaign-overview p");
   window.addEventListener('load', scrollToTarget('{{ url_for("session.campaign_target") }}', '{{ csrf_token() }}'));

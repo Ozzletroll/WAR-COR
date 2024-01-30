@@ -45,9 +45,9 @@
             <th class="table-cell username-cell">
               <div class="username-cell-inner">
                 {% if campaign in user.permissions %}
-                  <img class="icon icon-invert" src="/static/images/icons/admin.svg">
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
                 {% else %}
-                  <img class="icon icon-invert" src="/static/images/icons/user.svg">
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/user.svg') }}">
                 {% endif %}
                 <h6 class="callsign-text callsign-username">
                 {{user.username.upper()}}:

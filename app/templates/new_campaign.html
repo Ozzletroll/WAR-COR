@@ -80,7 +80,7 @@
       <div class="form-container form-container-small">
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+            <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
             <h4 class="campaign-form label-title">Campaign Title</h4>
           </div>
           <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
@@ -94,7 +94,7 @@
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
               <h4 class="campaign-form label-title">Date Suffix</h4>
             </div>
             <div class="label-right">
@@ -113,7 +113,7 @@
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
               <h4 class="campaign-form label-title">Negative Suffix</h4>
             </div>
             <div class="label-right">
@@ -134,7 +134,7 @@
         <label class="campaign-form-label form-icon">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon icon-invert" src="/static/images/icons/edit.svg">
+              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
               <h4 class="campaign-form label-title">Description</h4>
             </div>
             <div class="label-right">
@@ -159,15 +159,15 @@
 
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
       <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
-      <img src="/static/images/logo-red.png" class="top-logo logo-theme">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>
 
 </div>
 
-<script src="/static/js/campaign_form.js"></script>
-<script src="/static/js/char_count.js"></script>
-<script src="/static/js/unsaved_changes_warning.js"></script>
+<script src="{{ url_for('static', filename='/js/campaign_form.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/char_count.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/unsaved_changes_warning.js') }}"></script>
 
 {% endblock %}
