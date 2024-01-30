@@ -1,11 +1,11 @@
-import os
+from pathlib import Path
 import random
 import json
 from nltk.corpus import wordnet as wn
 from lemminflect import getInflection
 
 # Define data folder location
-data_folder = os.path.join(os.path.dirname(__file__), 'data')
+data_folder = Path(__file__).resolve().parent / "data"
 
 
 def create_data():
@@ -41,13 +41,13 @@ def create_data():
             if "_" not in adjective:
                 adjectives.append(adjective)
 
-    with open(os.path.join(data_folder, "nouns.json"), "w") as file:
+    with open(data_folder / "nouns.json", "w") as file:
         json.dump(nouns, file, indent=2)
 
-    with open(os.path.join(data_folder, "adjectives.json"), "w") as file:
+    with open(data_folder / "adjectives.json", "w") as file:
         json.dump(conjugated_verbs, file, indent=2)
 
-    with open(os.path.join(data_folder, "verbs.json"), "w") as file:
+    with open(data_folder / "verbs.json", "w") as file:
         json.dump(adjectives, file, indent=2)
 
 
@@ -55,13 +55,13 @@ class Generator:
     """Random generator for creating Event Titles"""
 
     def __init__(self):
-        with open(os.path.join(data_folder, "nouns.json"), "r") as file:
+        with open(data_folder / "nouns.json", "r") as file:
             self.nouns = json.load(file)
 
-        with open(os.path.join(data_folder, "adjectives.json"), "r") as file:
+        with open(data_folder / "adjectives.json", "r") as file:
             self.verbs = json.load(file)
 
-        with open(os.path.join(data_folder, "verbs.json"), "r") as file:
+        with open(data_folder / "verbs.json", "r") as file:
             self.adjectives = json.load(file)
 
     def random_event_title(self):
