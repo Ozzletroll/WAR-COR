@@ -4031,6 +4031,11 @@ a.view-epoch:hover .epoch-header {
   margin: 0;
 }
 
+.epoch-end-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .epoch-end-marker {
   display: flex;
   flex-direction: column;
