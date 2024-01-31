@@ -452,7 +452,7 @@ p {
   bottom: 54px;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 5;
+  z-index: 6;
   box-shadow: 0px 1px 1px var(--elem_shadow);
 }
 
@@ -660,7 +660,7 @@ p {
   left: 100vw;
   position: -webkit-sticky;
   position: sticky;
-  z-index: 10;
+  z-index: 4;
   overflow-y: scroll;
   margin-bottom: 0;
   width: 400px;
@@ -808,7 +808,7 @@ p {
   display: flex;
   position: fixed;
   top: 54px;
-  z-index: 4;
+  z-index: 5;
   width: 100%;
   transform: translateY(calc(-100% - 54px));
   transition: 0.15s ease;
