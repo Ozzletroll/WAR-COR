@@ -1912,8 +1912,6 @@ p {
 
 }
     
-
-
 /* Top of page navigation elements */
 
 .navigation-area {
@@ -1937,6 +1935,7 @@ p {
   width: fit-content;
   font-size: min(18px, 3vw);
   font-weight: 300;
+  margin: 0px;
 }
 
 .navigation-url:hover {
@@ -2095,6 +2094,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 20px;
   padding-bottom: 50px;
 }
 
@@ -2111,6 +2111,7 @@ p {
 }
 
 .flavour-text-centre {
+  margin-top: 0px;
   text-align: center;
 }
 
@@ -3502,9 +3503,9 @@ p {
 }
 
 .members-content .flavour-text {
-	margin-top: 0;
 	margin-bottom: 25px;
 }
+
 .edit-members-container {
   width: 100%;
 }
