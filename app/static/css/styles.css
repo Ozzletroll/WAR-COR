@@ -1626,6 +1626,7 @@ p {
   display: flex;
   flex-direction: column;
   width: 100%;
+  transition: 0.3s;
 }
 
 .form-input {
@@ -1647,26 +1648,30 @@ p {
   display: block;
   width: 100%;
   height: 2px;
-  bottom: 0px;
+  bottom: 2px;
   left: 0;
-  background-color: var(--bright_red);
+  background-color: none;
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.3s ease;
+  transition: 0.3s ease;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 
-.form-input:hover {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+.auth-form-underline {
+  transition: 0.35s ease;
+}
+
+.auth-form-underline::before {
+  bottom: 0px;
 }
 
 .form-input:focus + .form-underline::before {
   transform: scaleX(1);
+  background-color: var(--bright_red);
 }
 
-.a-form-input:focus + .form-underline::before {
+.auth-form-input:focus + .form-underline::before {
   transform: scaleX(1);
   border-bottom-left-radius: 0px;
 }
@@ -1737,19 +1742,23 @@ p {
   color: var(--text_header_dark);
   border-style: none;
   border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
   background-color: var(--elem_dark);
   font-family: "Roboto Mono", monospace;
   font-size: 18px;
   padding: 3px;
   outline: none;
-  transition: 0.3s;
+  transition: 0.3s ease;
   width: 100%;
 }
 
 .form-field:hover {
   color: var(--bright_red);
   background-color: var(--elem_hover);
+}
+
+.form-field:hover + .form-underline {
+  background-color: var(--elem_hover);
+  border-bottom-right-radius: 3px;
 }
 
 .submit-button {
