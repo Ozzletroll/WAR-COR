@@ -75,7 +75,7 @@
         {% include 'components/flash.html' %}
       </div>
   
-      <form class="edit-form form-column fade-in-block-2" method="POST">
+      <form class="edit-form form-column fade-in-block-2" method="POST" novalidate>
         {{ form.csrf_token }}
 
         <div id="date-field" class="form-container form-container-small">
