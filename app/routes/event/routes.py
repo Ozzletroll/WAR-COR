@@ -131,6 +131,8 @@ def add_event(campaign_name, campaign_id):
     # Flash form errors
     for field_name, errors in form.errors.items():
         for error_message in errors:
+            if field_name == "body":
+                field_name = "description"
             flash(field_name + ": " + error_message)
 
     # Flag "new" to hide searchbar and edit page toggle
