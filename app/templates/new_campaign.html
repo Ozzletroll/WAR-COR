@@ -51,7 +51,11 @@
 
         {# Back button #}
         {% if request.referrer %}
-          {% set url = request.referrer %}
+          {% if "/create-campaign" not in request.referrer %}
+            {% set url = request.referrer %}
+          {% else %}
+            {% set url = url_for('campaign.campaigns') %}
+          {% endif %}
         {% else %}
             {% set url = url_for('campaign.campaigns') %}
         {% endif %}
