@@ -275,7 +275,7 @@ def delete_user(username):
         # Change LoginForm submit button text
         form.submit.label.text = "Terminate Contract"
 
-        return render_template("delete_user.html", form=form)
+        return render_template("delete_user.html", form=form, user=user)
 
 
 # Back button on the user page

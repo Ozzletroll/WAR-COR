@@ -42,6 +42,14 @@
                     <label class="form-icon"><img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/lock.svg') }}"></label>
                     {{ form.password(placeholder_='PASSWORD', class_='form-field') }}
                   </div>
+
+                  <div class="form-paragraph">
+                    <p>
+                      Confirm deletion of campaign:<br>
+                      "{{campaign.title}}"
+                    </p>
+                    <p>This process is irreversible</p>
+                  </div>  
                 </div>
                 
                 <div class="auth-form-lower">
