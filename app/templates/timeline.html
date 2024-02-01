@@ -19,20 +19,21 @@
 
 {% block content %}
 
-
-{% if edit %}
-  {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
-{% else %}
-  {{ searchbar.searchbar(campaign, timeline=true) }}
-{% endif %}
-
-{% if current_user.is_authenticated and campaign in current_user.permissions %}
+<div class="ui-buttons">
   {% if edit %}
-    {{ edit_toggle.edit_toggle(campaign, edit=true) }}
+    {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
   {% else %}
-    {{ edit_toggle.edit_toggle(campaign) }}
+    {{ searchbar.searchbar(campaign, timeline=true) }}
   {% endif %}
-{% endif %}
+
+  {% if current_user.is_authenticated and campaign in current_user.permissions %}
+    {% if edit %}
+      {{ edit_toggle.edit_toggle(campaign, edit=true) }}
+    {% else %}
+      {{ edit_toggle.edit_toggle(campaign) }}
+    {% endif %}
+  {% endif %}
+</div>
 
 <div class="sidebar-page">
   {% include "components/sidebar.html" %}

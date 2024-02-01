@@ -2125,23 +2125,34 @@ p {
 
 /* Search bar */
 
+.ui-buttons {
+  display: flex;
+  flex-direction: column;
+  height: 160px;
+  width: 40px;
+  left: 100vw;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 54px;
+  margin-bottom: -160px;
+  z-index: 3;
+  overflow: visible;
+}
+
 .searchbar-border {
   display: flex;
   position: sticky;
   position: -webkit-sticky;
-  top: 54px;
-  left: 100vw;
   width: 400px;
   height: 80px;
   box-sizing: border-box;
   padding: 0px 1px 1px 1px;
   background-color: var(--elem_mid);
-  z-index: 3;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
-  margin-left: -40px;
   margin-bottom: -80px;
-  transform: translateX(min(360px, 100vw));
+  transform: translateX(0px);
   transition: 0.15s;
+  z-index: 4;
 }
 
 .searchbar-outer {
@@ -2309,7 +2320,7 @@ p {
   box-sizing: border-box;
   padding: 0px 1px 1px 1px;
   background-color: var(--elem_mid);
-  z-index: 2;
+  z-index: 3;
   clip-path: polygon(0 0, 100% 0%, 100% 100%, 15px 100%, 0 calc(100% - 15.00px));
   margin-bottom: -82px;
 }
@@ -4725,7 +4736,7 @@ for selection in timeline_search.js */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  height: 208px;
   width: 50px;
   margin-right: -50px;
   background-color: var(--dark_red);

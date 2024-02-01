@@ -25,14 +25,14 @@ class SearchbarTab {
   }
 
   openTab() {
-    this.tab.style.transform = "translateX(0)";
+    this.tab.style.transform = "translateX(-360px)";
     this.state = true;
     this.getWidth();
   }
 
   closeTab() {
     this.tab.style.width = "";
-    this.tab.style.transform = "translateX(min(360px, 100vw))";
+    this.tab.style.transform = "";
     this.state = false;
   }
 

@@ -20,12 +20,12 @@
 
 
 {% block content %}
-
-{{ searchbar.searchbar(campaign, epoch=true) }}
-
-{% if current_user.is_authenticated and campaign in current_user.permissions %}
-  {{ edit_toggle.epoch_edit_toggle(campaign, epoch) }}
-{% endif %}
+<div class="ui-buttons">
+  {{ searchbar.searchbar(campaign, epoch=true) }}
+  {% if current_user.is_authenticated and campaign in current_user.permissions %}
+    {{ edit_toggle.epoch_edit_toggle(campaign, epoch) }}
+  {% endif %}
+</div>
 
 <div class="sidebar-page">
   

@@ -22,11 +22,12 @@
 
 {% block content %}
   {% if not new %}
-    {{ searchbar.searchbar(campaign, event=true) }}
-
-    {% if current_user.is_authenticated and campaign in current_user.permissions %}
-      {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
-    {% endif %}
+    <div class="ui-buttons">
+      {{ searchbar.searchbar(campaign, event=true) }}
+      {% if current_user.is_authenticated and campaign in current_user.permissions %}
+        {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}
+      {% endif %}
+    </div>
   {% endif %}
 
 <div class="scrollpage">

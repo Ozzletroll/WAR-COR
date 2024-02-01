@@ -14,7 +14,7 @@ class Tab {
     // Call check screensize on initialisation, 
     // and again anytime the viewport is resized
     this.checkScreenSize();
-    window.addEventListener('resize', this.checkScreenSize.bind(this));
+    window.addEventListener("resize", this.checkScreenSize.bind(this));
 
     document.getElementById(this.button).onclick = event => {
 
