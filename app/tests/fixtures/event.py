@@ -1,5 +1,6 @@
 from flask import url_for
 from app.utils.formatters import increment_datestring
+from app.forms.forms import CreateEventForm
 
 
 class EventActions(object):
@@ -12,6 +13,11 @@ class EventActions(object):
         url = url_for("event.add_event",
                       campaign_name=campaign_object.title,
                       campaign_id=campaign_object.id)
+
+        event_form = CreateEventForm()
+        for field in event_form:
+            if field.name not in data:
+                data[field.name] = ""
 
         return self._client.post(url, data=data, follow_redirects=True)
 
