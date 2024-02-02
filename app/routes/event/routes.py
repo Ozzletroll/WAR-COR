@@ -98,7 +98,8 @@ def add_event(campaign_name, campaign_id):
         form = forms.CreateEventForm(obj=event)
 
         # Set scroll_to target for back button
-        session["timeline_scroll_target"] = request.args["elem_id"]
+        if "elem_id" in request.args:
+            session["timeline_scroll_target"] = request.args["elem_id"]
 
     # Otherwise, create default empty form
     else:
