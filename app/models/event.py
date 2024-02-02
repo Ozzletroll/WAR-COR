@@ -56,12 +56,11 @@ class Event(db.Model):
             Set "new" to true if creating new entry  """
 
         for field, value in form.items():
-            if field == "date" and value is not None:
-                self.date = value
-                self.split_date(value)
-                continue
-
             if value is not None:
+                if field == "date":
+                    self.date = value
+                    self.split_date(value)
+
                 if field == "body":
                     value = sanitise_input(value)
 
