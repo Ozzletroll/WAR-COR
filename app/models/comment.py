@@ -4,7 +4,6 @@ from app import db
 from app.utils.sanitisers import sanitise_input
 
 
-
 class Comment(db.Model):
     __tablename__ = "comment"
 
