@@ -87,3 +87,86 @@ def test_set_url_title():
 
     campaign.set_url_title()
     assert campaign.url_title == "Test-Campaign-Title"
+
+
+def test_return_timeline_data(client, auth, campaign, event, epoch):
+
+    auth.login()
+    campaign.create(title="Timeline Test Campaign",
+                    description="For use in testing campaign.return_timeline_data")
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Timeline Test Campaign")).scalar()
+
+    # Year 5016
+    # Create 10 event in months "01", "02", "03", "04"
+    for value in range(1, 5):
+        event.mass_create(campaign_object=campaign_object,
+                          starting_date=f"5016/0{value}/01 00:00:00",
+                          number=10,
+                          increment="day")
+
+    # Year 5017
+    # Create 10 event in months "01", "02", "03", "04"
+    for value in range(1, 5):
+        event.mass_create(campaign_object=campaign_object,
+                          starting_date=f"5017/0{value}/01 00:00:00",
+                          number=10,
+                          increment="day")
+
+    epoch_data = {
+        "title": "Epoch Title",
+        "start_date": "5016/01/05",
+        "end_date": "5016/02/01",
+        "description": "A test epoch",
+        "overview": "A test epoch"
+    }
+    epoch.create(campaign_object, data=epoch_data)
+
+    timeline_data = campaign_object.return_timeline_data()
+
+    # Check if all years were correctly returned
+    years = [year.name for year in timeline_data]
+    assert "5016" in years and "5017" in years
+    assert len(years) == 2
+
+    # Check if all months were correctly returned
+    for year in timeline_data:
+        assert len(year.months) == 4
+        # Check days within month
+        for index, month in enumerate(year.months):
+            target_months = ["01", "02", "03", "04"]
+            assert month.name == target_months[index]
+
+            # Check concurrent months have been flagged
+            if index != len(year.months) - 1:
+                assert month.has_following_month
+            else:
+                assert not month.has_following_month
+
+            for day_index, day in enumerate(month.days):
+
+                # Check concurrent days have been flagged
+                if day_index != len(month.days) - 1:
+                    assert day.has_following_day
+                else:
+                    assert not day.has_following_day
+
+                # Check that there is one event in each day
+                assert len(day.events) == 1
+
+                # Check that epoch properties have been correctly applied
+                if year.name == "5016":
+                    if month.name == "01" and day.name == "05":
+                        assert day.has_epoch
+                        assert day.epoch_has_events
+                    else:
+                        assert not day.has_epoch
+
+                    if month.name == "02" and day.name == "01":
+                        assert day.has_epoch_end
+                    else:
+                        assert not day.has_epoch_end
+
+
