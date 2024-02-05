@@ -24,7 +24,6 @@ def edit_campaign_users(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     search_form = forms.SearchUserForm()
@@ -49,6 +48,8 @@ def user_search(campaign_name, campaign_id):
     campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
+    
+    authenticators.permission_required(campaign)
 
     # Query database for users with similar usernames
     search = request.form["username"]
@@ -87,15 +88,14 @@ def add_user(campaign_name, campaign_id):
     The form is populated dynamically by javascript when the user clicks
     the 'invite' button beside a username search result entry. """
 
-    username = request.form["username"]
-    user_id = request.form["user_id"]
-
     campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
+
+    username = request.form["username"]
+    user_id = request.form["user_id"]
 
     # Check if username exists
     user = db.session.execute(
@@ -131,7 +131,6 @@ def remove_user(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
     
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     username = request.form["username"]
@@ -310,10 +309,8 @@ def decline_invite():
 
     # Check if target message is actually for the current user
     if message.target_user == current_user:
-
         db.session.delete(message)
         db.session.commit()
-
     else:
         abort(403)
 
@@ -336,7 +333,6 @@ def confirm_request():
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
 
-    # Assert current user has campaign editing permissions
     authenticators.permission_required(campaign)
 
     # Check message is valid and user not already in campaign
@@ -374,7 +370,6 @@ def deny_request():
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
 
-    # Assert current user has campaign editing permissions
     authenticators.permission_required(campaign)
 
     # Delete message
@@ -400,7 +395,6 @@ def add_permission(campaign_name, campaign_id):
         select(models.Campaign)
         .filter_by(id=campaign_id)).scalar()
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     # Give user editing permissions
