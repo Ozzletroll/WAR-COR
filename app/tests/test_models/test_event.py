@@ -87,3 +87,12 @@ def test_separate_belligerents(client):
     assert belligerents_2[1][0] == "Group 2"
     assert belligerents_2[2][0] == "Group 3"
     assert belligerents_2[3][0] == "Group 4"
+
+
+def test_set_url_title(client):
+
+    event = models.Event()
+    event.title = "Event Title"
+    event.set_url_title()
+
+    assert event.url_title == "Event-Title"
