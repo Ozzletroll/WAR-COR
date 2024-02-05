@@ -34,3 +34,14 @@ def test_update(client):
 
     for field in event_form.keys():
         assert getattr(event, field) == event_form[field]
+
+
+def test_create_blank(client):
+
+    event = models.Event()
+    event.create_blank(datestring="5016/01/01 12:00:00")
+
+    assert event.title == ""
+    assert event.type == ""
+    assert event.body == ""
+    assert event.date == "5016/01/01 12:00:00"
