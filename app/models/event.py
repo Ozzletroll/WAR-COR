@@ -106,7 +106,7 @@ class Event(db.Model):
         for group in separated_belligerents:
             allied_belligerents = []
             for element in group.split("&"):
-                allied_belligerents.append(element)
+                allied_belligerents.append(element.strip())
             groups.append(allied_belligerents)
             
         return groups
