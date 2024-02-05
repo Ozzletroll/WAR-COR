@@ -80,3 +80,18 @@ def test_get_reset_password_token(client):
     expiry = datetime.now().timestamp() + 600
     assert "exp" in decoded
     assert decoded["exp"] == expiry
+
+
+def test_verify_password_reset_token(client):
+
+    user = models.User()
+    user_form = {
+        "email": "email@testemail.com",
+        "username": "New Username",
+        "password": "Password"
+    }
+    user.update(user_form, new=True)
+
+    token = user.get_reset_password_token()
+    decoded_user = user.verify_password_reset_token(token)
+    assert decoded_user.id == user.id
