@@ -45,3 +45,16 @@ def test_create_blank(client):
     assert event.type == ""
     assert event.body == ""
     assert event.date == "5016/01/01 12:00:00"
+
+
+def test_split_date(client):
+
+    event = models.Event()
+    event.split_date(datestring="5016/01/01 12:00:00")
+
+    assert event.year == 5016
+    assert event.month == 1
+    assert event.day == 1
+    assert event.hour == 12
+    assert event.minute == 0
+    assert event.second == 0
