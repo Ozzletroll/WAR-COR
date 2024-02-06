@@ -34,7 +34,107 @@
       </div>
 
       <hr class="campaigns-divider">
-      <p class="flavour-text">UWC-73-16 // Engineer::Service Record </p>
+      <p class="flavour-text">UWC-73-16 // Application::Overview </p>
+
+      <div class="about-page-content">
+
+        <h3 class="about-page-header">Stack Overview</h3>
+          
+        <p class="about-page-paragraph"> 
+          WAR/COR is written in Python, using the Flask micro web framework and Jinja2 template engine.
+          Data storage is handled via PostgreSQL, using the SQLAlchemy ORM. The frontend is entirely built using 
+          HTML, CSS, and custom Javascript.
+        </p>
+        
+        <div class="about-page-loadout">
+          <div class="loadout-header">//Loadout</div>
+          
+          <div class="loadout-area">
+
+            <div class="loadout-container-border">
+              <div class="loadout-container">
+                <div class="loadout-item-header">
+                  <div class="loadout-icon">
+                    <img class="icon" src="{{ url_for('static', filename='/images/icons/python.svg') }}">
+                  </div>
+                  <h4 class="loadout-heading">Primary Language</h4>
+                </div>
+                <div class="loadout-item-body">Python 3.12.1</div>
+              </div>
+            </div>
+
+            <div class="loadout-container-border">
+              <div class="loadout-container">
+                <div class="loadout-item-header">
+                  <div class="loadout-icon">
+                    <img class="icon" src="{{ url_for('static', filename='/images/icons/heirarchy.svg') }}">
+                  </div>
+                  <h4 class="loadout-heading">Framework</h4>
+                </div>
+                <div class="loadout-item-body">Flask 3.0.2</div>
+              </div>
+            </div>
+
+            <div class="loadout-container-border">
+              <div class="loadout-container">
+                <div class="loadout-item-header">
+                  <div class="loadout-icon">
+                    <img class="icon" src="{{ url_for('static', filename='/images/icons/database-fixed.svg') }}">
+                  </div>
+                  <h4 class="loadout-heading">Database</h4>
+                </div>
+                <div class="loadout-item-body">PostgreSQL 15</div>
+              </div>
+            </div>
+
+            <div class="loadout-container-border">
+              <div class="loadout-container">
+                <div class="loadout-item-header">
+                  <div class="loadout-icon">
+                    <img class="icon" src="{{ url_for('static', filename='/images/icons/ontology.svg') }}">
+                  </div>
+                  <h4 class="loadout-heading">ORM</h4>
+                </div>
+                <div class="loadout-item-body">SQLAlchemy 2.0.23</div>
+              </div>
+            </div>
+
+            <div class="loadout-container-border">
+              <div class="loadout-container">
+                <div class="loadout-item-header">
+                  <div class="loadout-icon">
+                    <img class="icon" src="{{ url_for('static', filename='/images/icons/migration.svg') }}">
+                  </div>
+                  <h4 class="loadout-heading">Database Migration</h4>
+                </div>
+                <div class="loadout-item-body">Flask Migrate 4.0.5</div>
+              </div>
+            </div>
+
+            <div class="loadout-container-border">
+              <div class="loadout-container">
+                <div class="loadout-item-header">
+                  <div class="loadout-icon">
+                    <img class="icon" src="{{ url_for('static', filename='/images/icons/test.svg') }}">
+                  </div>
+                  <h4 class="loadout-heading">Testing Framework</h4>
+                </div>
+                <div class="loadout-item-body">Pytest 8.0.0</div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <h3 class="about-page-header">Personnel Overview</h3>
+          
+        <p class="about-page-paragraph"> 
+          WAR/COR is developed and maintained by Harvey Gent, a self-taught programmer and rpg fan based in the UK.
+        </p>
+
+      </div>
 
     </div>
     
