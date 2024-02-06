@@ -87,12 +87,9 @@ def create_campaign():
         new_campaign.update(form=request.form, 
                             new=True)
         
-        # Add current user as campaign members
+        # Add current user as campaign member and grant admin permissions
         current_user.campaigns.append(new_campaign)
-
-        # Give current user campaign editing permissions
         current_user.permissions.append(new_campaign)
-
         db.session.commit()
 
         # Get campaign for redirect
@@ -135,8 +132,6 @@ def edit_campaign(campaign_name, campaign_id):
     # Update campaign if form submitted
     if form.validate_on_submit():
         campaign.update(form=request.form)
-
-        # Redirect to the page the user came from
         return redirect(url_for("user.back"))
 
     # Set back button scroll target
@@ -180,10 +175,8 @@ def delete_campaign(campaign_name, campaign_id):
         if search_user:
             if search_user.id == current_user.id:
                 if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
-                    
                     # Delete campaign from database
                     db.session.delete(campaign)
-                    # Commit changes
                     db.session.commit()
                     return redirect(url_for("campaign.campaigns"))
 
