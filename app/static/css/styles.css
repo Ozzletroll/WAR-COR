@@ -6178,7 +6178,6 @@ span.email b {
 
 .loadout-item-header {
   display: flex;
-  align-items: center;
   background-color: var(--darker_red);
   color: var(--text_bright);
   text-transform: uppercase;
