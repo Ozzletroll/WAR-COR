@@ -6119,7 +6119,7 @@ pre {
 }
 
 .email {
-  color: var(--text_flavour);
+  color: var(--text_header);
 }
 
 span.email b {
@@ -6179,7 +6179,7 @@ span.email b {
 .loadout-item-header {
   display: flex;
   background-color: var(--darker_red);
-  color: var(--text_bright);
+  color: var(--text_header_contrast);
   text-transform: uppercase;
   padding: 11px;
   font-size: 16px;
@@ -6220,9 +6220,29 @@ span.email b {
   border-bottom-right-radius: 3px;
 }
 
+.contact-page-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-link {
+  text-decoration: none;
+  color: var(--text_flavour);
+  font-weight: 500;
+  transition: 0.15s;
+}
+
+.contact-link:visited {
+  text-decoration: none;
+  color: var(--text_header);
+}
+
+.contact-link:hover {
+  color: var(--text_header_hover);
+}
+
 @media screen and (max-width: 500px) {
 
-  
   .loadout-container, .loadout-container-border {
     width: 100%;
   }
