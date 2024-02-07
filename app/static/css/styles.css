@@ -2111,7 +2111,7 @@ p {
 }
 
 .flavour-text {
-  font-size: min(2vw, 12px);
+  font-size: min(3vw, 12px);
   font-weight: 200;
   width: min(400px, 60vw);
   color: var(--text_flavour);
