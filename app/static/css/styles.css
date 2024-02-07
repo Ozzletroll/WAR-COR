@@ -243,7 +243,7 @@ body {
   display: flex;
   flex-direction: column;
   width: calc(100vw - (100vw - 100%));
-  max-width: 1800px;
+  max-width: 1920px;
   min-height: 100vh;
   overflow-x: clip;
 }
@@ -301,7 +301,7 @@ body {
   }
 }
 
-@media screen and (max-width: 1800px) {
+@media screen and (max-width: 1920px) {
 
   .border {
     display: none;
