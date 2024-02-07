@@ -341,3 +341,6 @@ pyrightconfig.json
 
 # VSCode
 .vscode
+
+# Github issue templates
+.github/ISSUE_TEMPLATE
