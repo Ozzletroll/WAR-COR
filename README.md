@@ -145,12 +145,4 @@ TESTING_USE_POSTGRESQL=False
 ```
 NOTE: Some test cases may behave differently on SQLite.
 
-
-<!-- CONTACT -->
-## Contact
-
-Harvey Gent - <span>harv<b style="display: None">nospam</b>eygen<b style="display: None">CASTIGATE</b>tmusic@gmail<b style="display: None">.example</b>.com</span>
-
-Project Link: [WAR/COR](https://github.com/Ozzletroll/WAR-COR)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
