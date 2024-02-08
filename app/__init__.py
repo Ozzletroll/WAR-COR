@@ -5,7 +5,6 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from config import Config
-import os
 from pathlib import Path
 import logging
 from logging.handlers import SMTPHandler
@@ -36,7 +35,7 @@ def create_app(config_class=Config):
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
 
-        if not flask_app.config["TESTING"]:
+        if not flask_app.config["TESTING"] or not flask_app.config["DEBUG"]:
             # Initialise APScheduler
             scheduler.init_app(flask_app)
             import app.utils.tasks

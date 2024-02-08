@@ -1,4 +1,5 @@
 import pytest
+import os
 from flask import template_rendered
 from app import create_app
 from app import db
@@ -10,12 +11,14 @@ from config import TestingConfig, TestingPostgresConfig
 def app():
     """ 
         Main app fixture for pytest.
-        Either pass TestingConfig to test on SQlite db,
-        or TestingPostgres Config to test on local Postgres db.
+        Uses "TEST_DB_TYPE" environment variable to determine
+        testing config to pass.
         
     """
-
-    app = create_app(config_class=TestingPostgresConfig)
+    if os.environ["TESTING_USE_POSTGRESQL"]:
+        app = create_app(config_class=TestingPostgresConfig)
+    else:
+        app = create_app(config_class=TestingConfig)
     yield app
 
     # Teardown

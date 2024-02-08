@@ -1,6 +1,12 @@
 import os
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.executors.pool import ThreadPoolExecutor
+from dotenv import load_dotenv
+
+
+# Load the environment variables from the .env file if not otherwise set
+if not os.environ.get("SECRET_KEY"):
+    load_dotenv()
 
 
 class Config(object):
