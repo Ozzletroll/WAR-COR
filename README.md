@@ -33,9 +33,6 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
     - Set custom callsigns
     - Leave comments
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ### Built With
 
 - Python
