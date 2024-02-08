@@ -12,14 +12,11 @@
   <p align="center">
     Sci-fi Military RPG Campaign Logger
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/github_username/repo_name">Live Site</a>
+    <a href="https://war-cor.com/">Live Site</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
+    <a href="https://github.com/Ozzletroll/WAR-COR/issues/new?assignees=Ozzletroll&labels=&projects=&template=bug_report.md&title=%5BBUG%5D">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/Ozzletroll/WAR-COR/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=%5BFEATURE%5D">Request Feature</a>
   </p>
 </div>
 
