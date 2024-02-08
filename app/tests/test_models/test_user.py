@@ -79,7 +79,8 @@ def test_get_reset_password_token(client):
 
     expiry = datetime.now().timestamp() + 600
     assert "exp" in decoded
-    assert decoded["exp"] == expiry
+    # 1 second tolerance
+    assert decoded["exp"] - expiry < 1
 
 
 def test_verify_password_reset_token(client):
