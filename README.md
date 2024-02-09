@@ -46,8 +46,8 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 
 ### Extensions
 
-- Flask-Login
 - Flask-APScheduler
+- Flask-Login
 - Flask-Migrate
 - Flask-SQLAlchemy
 - Flask-WTF
@@ -75,15 +75,24 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 
     ```
     SECRET_KEY=YOUR_SECRET_KEY_HERE
-    APP_CONFIG_FILE=config.py
     FLASK_APP=main.py
-    POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
     ```
 
 4. Run:
    ```sh
    flask run --app main
    ```
+
+<br>
+<br>
+
+  By default, WAR/COR will create a local SQLite database for use during development. However, to more closely mirror the production environment, a PostgreSQL database can be used by updating the environment:
+
+    ```
+    POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
+    ```
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -98,10 +107,7 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 
     ```
     SECRET_KEY=YOUR_SECRET_KEY_HERE
-    APP_CONFIG_FILE=config.py
     FLASK_APP=main.py
-    FLASK_DEBUG=1
-    TESTING_USE_POSTGRESQL=True
     POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
     ```
 
@@ -110,11 +116,14 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
    pytest .\app\tests\  
    ```
 
-By default, WAR/COR uses a local PostgreSQL db during testing to better match the production environment. If necessary, this can be changed to a local SQLite instance by updating your environment:
+<br>
+<br>
 
-```
-TESTING_USE_POSTGRESQL=False
-```
-NOTE: Some test cases may behave differently on SQLite.
+  By default, WAR/COR uses a local PostgreSQL database during testing to better match the production environment. If necessary, this can be changed to a local SQLite database by updating your environment:
+
+  ```
+  TESTING_USE_SQLITE=True
+  ```
+  NOTE: Some test cases may behave differently on SQLite.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
