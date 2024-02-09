@@ -33,9 +33,6 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
     - Set custom callsigns
     - Leave comments
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ### Built With
 
 - Python
@@ -147,13 +144,5 @@ By default, WAR/COR uses a local PostgreSQL db during testing to better match th
 TESTING_USE_POSTGRESQL=False
 ```
 NOTE: Some test cases may behave differently on SQLite.
-
-
-<!-- CONTACT -->
-## Contact
-
-Harvey Gent - <span>harv<b style="display: None">nospam</b>eygen<b style="display: None">CASTIGATE</b>tmusic@gmail<b style="display: None">.example</b>.com</span>
-
-Project Link: [WAR/COR](https://github.com/Ozzletroll/WAR-COR)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
