@@ -2307,14 +2307,6 @@ p {
   background-color: var(--bright_red);
 }
 
-@media screen and (max-width: 380px) {
-
-  .searchbar-area {
-    width: 100%;
-  }
-
-}
-
 /* Edit Page Toggle */
 
 .edit-toggle-border {
