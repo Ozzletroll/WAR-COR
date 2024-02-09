@@ -12,7 +12,7 @@ if not os.environ.get("SECRET_KEY"):
 class Config(object):
     # Flask
     SECRET_KEY = os.environ.get("SECRET_KEY")
-    SQLALCHEMY_DATABASE_URI = "sqlite:///war_cor.db"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI", "sqlite:///war_cor.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_HTTPONLY = True
@@ -53,12 +53,12 @@ class TestingConfig(Config):
 class TestingPostgresConfig(TestingConfig):
     SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
     SCHEDULER_JOBSTORES = {
-        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI"))
+        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI", "sqlite:///war_cor.db"))
     }
 
 
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
     SCHEDULER_JOBSTORES = {
-        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI"))
+        "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI", "sqlite:///war_cor.db"))
     }
