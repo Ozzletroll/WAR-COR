@@ -15,10 +15,10 @@ def app():
         testing config to pass.
         
     """
-    if os.environ["TESTING_USE_POSTGRESQL"]:
-        app = create_app(config_class=TestingPostgresConfig)
-    else:
+    if os.environ.get("TESTING_USE_SQLITE", False):
         app = create_app(config_class=TestingConfig)
+    else:
+        app = create_app(config_class=TestingPostgresConfig)
     yield app
 
     # Teardown
