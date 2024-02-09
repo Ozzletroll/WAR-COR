@@ -72,7 +72,6 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
    ```
 3. Set environment variables:
 
-    .env:
     ```
     SECRET_KEY=YOUR_SECRET_KEY_HERE
     APP_CONFIG_FILE=config.py
@@ -80,13 +79,6 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
     POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
     ```
 
-    VSCode launch.json:
-   ```js
-    "APP_CONFIG_FILE": "config.py",
-    "FLASK_APP": "main.py",
-    "SECRET_KEY": "YOUR_SECRET_KEY_HERE",
-    "POSTGRESQL_DATABASE_URI": "postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME",
-   ```
 4. Run:
    ```sh
    flask run --app main
@@ -103,7 +95,6 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 
 2. Set environment variables:
 
-    .env:
     ```
     SECRET_KEY=YOUR_SECRET_KEY_HERE
     APP_CONFIG_FILE=config.py
@@ -113,26 +104,6 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
     POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
     ```
 
-    launch.json:
-   ```js
-    {
-      "name": "Python: Flask Testing",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "pytest",
-      "args": [
-        "${workspaceFolder}/app/tests"
-      ],
-      "env": {
-        "APP_CONFIG_FILE": "config.py",
-        "FLASK_APP": "main.py",
-        "SECRET_KEY": "YOUR_SECRET_KEY_HERE",
-        "FLASK_DEBUG": "1",
-        "TESTING_USE_POSTGRESQL": "POSTGRESQL",
-        "POSTGRESQL_DATABASE_URI": "postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME",
-      }
-    }
-   ```
 3. Run pytest:
    ```sh
    pytest .\app\tests\  
