@@ -2902,7 +2902,8 @@ p {
     background-color: var(--dark_red);
   }
 
-  .campaign-header:active {
+  .campaign-header-section:active > .campaign-header,
+  .campaign-header-section:active > .campaign-corner {
     transition: 0.2s;
     background-color: var(--bright_red);
     color: var(--darker_red);
