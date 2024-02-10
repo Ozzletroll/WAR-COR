@@ -63,7 +63,7 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 
 ### Installation
 
-1. Clone the repo
+1. Clone the repo:
    ```sh
    git clone https://github.com/Ozzletroll/WAR-COR.git
    ```
