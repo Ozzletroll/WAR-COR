@@ -20,6 +20,11 @@ def not_found_error(error):
     return render_template('errors/404.html'), 404
 
 
+@bp.app_errorhandler(429)
+def too_many_requests_error(error):
+    return render_template('errors/429.html', error=error), 429
+
+
 @bp.app_errorhandler(500)
 def internal_error(error):
     db.session.rollback()
