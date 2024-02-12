@@ -1025,6 +1025,14 @@ p {
   margin-top: 60px;
 }
 
+@media screen and (max-width: 800px) {
+  
+  .features-upper {
+    margin-top: 30px;
+  }
+
+}
+
 .features-header {
   display: flex;
   width: fit-content;
@@ -1056,6 +1064,10 @@ p {
 
 .showcase-area {
   width: 100%;
+}
+
+.showcase-area .timeline-months-container {
+  padding-top: 60px;
 }
 
 /* .timeline-showcase-scaledown {
