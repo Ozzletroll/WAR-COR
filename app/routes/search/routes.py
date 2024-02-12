@@ -3,7 +3,7 @@ from flask_login import current_user
 from sqlalchemy import select
 
 from app.forms import forms
-from app import models, db
+from app import db, models, limiter
 import app.utils.search as search
 from app.routes.search import bp
 
@@ -14,6 +14,7 @@ from app.routes.search import bp
 
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])
+@limiter.limit("60/minute")
 def advanced_search(campaign_name, campaign_id):
 
     campaign = db.session.execute(

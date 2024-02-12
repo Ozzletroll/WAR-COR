@@ -4,10 +4,9 @@ from flask_login import login_user, login_required, current_user, logout_user
 import werkzeug
 
 from app.forms import forms
-from app import models
+from app import db, models, limiter
 from app.utils import authenticators, messengers
 
-from app import db
 from app.routes.user import bp
 
 
@@ -17,6 +16,7 @@ from app.routes.user import bp
 
 # New user registration
 @bp.route("/register", methods=["GET", "POST"])
+@limiter.limit("60/minute")
 def register():
 
     # Check if user is already logged in and redirect if they are
@@ -58,6 +58,7 @@ def register():
 
 # Existing user login
 @bp.route("/login", methods=["GET", "POST"])
+@limiter.limit("60/minute")
 def login():
 
     # Check if user is already logged in and redirect if they are
@@ -103,6 +104,7 @@ def logout():
 # Access user page
 @bp.route("/user/<username>", methods=["GET"])
 @login_required
+@limiter.limit("60/minute")
 def user_page(username):
 
     user = db.session.execute(
@@ -132,6 +134,7 @@ def user_page(username):
 
 @bp.route("/user/<username>/update-callsign", methods=["POST"])
 @login_required
+@limiter.limit("60/minute")
 def update_callsign(username):
 
     callsign_form = forms.ChangeCallsignForm()
@@ -163,6 +166,7 @@ def update_callsign(username):
 
 @bp.route("/user/<username>/change-username", methods=["POST"])
 @login_required
+@limiter.limit("60/minute")
 def change_username(username):
 
     user = db.session.execute(
@@ -196,6 +200,7 @@ def change_username(username):
 
 @bp.route("/user/<username>/change-password", methods=["POST"])
 @login_required
+@limiter.limit("60/minute")
 def change_password(username):
 
     user = db.session.execute(
@@ -229,6 +234,7 @@ def change_password(username):
 
 @bp.route("/user/<username>/delete", methods=["GET", "POST"])
 @login_required
+@limiter.limit("60/minute")
 def delete_user(username):
 
     user = db.session.execute(
@@ -279,6 +285,7 @@ def delete_user(username):
 
 # Back button on the user page
 @bp.route("/back", methods=["GET"])
+@limiter.limit("60/minute")
 def back():
     """Function to handle redirects for the back button on the user page.
     Uses request.referrer normally, or defers to stored session variable
@@ -303,6 +310,7 @@ def back():
 # Function called when viewing/dismissing a notification
 @bp.route("/user/messages/dismiss", methods=["POST"])
 @login_required
+@limiter.limit("60/minute")
 def dismiss_message():
 
     message_id = request.form["message_id"]
@@ -345,6 +353,7 @@ def dismiss_message():
 # Function called when dismissing all messages
 @bp.route("/user/messages/dismiss-all", methods=["POST"])
 @login_required
+@limiter.limit("60/minute")
 def dismiss_all():
 
     messages = list(current_user.messages)
@@ -369,6 +378,7 @@ def dismiss_all():
 
 # Function called when recovering password
 @bp.route("/user/request-password-reset", methods=["GET", "POST"])
+@limiter.limit("3/day")
 def request_password_reset():
 
     # Check if user is not logged in
@@ -398,6 +408,7 @@ def request_password_reset():
 
 # Function called via recovery email url
 @bp.route("/user/reset-password/<token>", methods=["GET", "POST"])
+@limiter.limit("3/day")
 def reset_password(token): 
 
     if current_user.is_authenticated:
