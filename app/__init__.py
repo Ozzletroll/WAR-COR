@@ -38,10 +38,10 @@ def create_app(config_class=Config):
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
 
-        # Initialise Flask Limiter
-        limiter.init_app(flask_app)
-
         if not flask_app.config["TESTING"] or not flask_app.config["DEBUG"]:
+            # Initialise Flask Limiter
+            limiter.init_app(flask_app)
+
             # Initialise APScheduler
             scheduler.init_app(flask_app)
             import app.utils.tasks
