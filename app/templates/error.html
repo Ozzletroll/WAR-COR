@@ -1,0 +1,78 @@
+{# Component Macro imports #}
+{% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/back_button.html" as back_button %}
+
+{% extends "base/base.html" %}
+
+{% block content %}
+
+  <div class="scrollpage">
+
+    <div class="campaigns-content">
+      
+        {# Animation fade in group 1 #}
+        <div class="fade-in-block-1">
+
+          {# Create navigation url bar #}
+
+          {% set urls = [url_for('campaign.campaigns')] %}
+
+          {{ page_upper_area.page_upper_area(navigation_urls=urls, 
+                                            is_link=false, 
+                                            current_user=current_user,
+                                            campaign=none) }}
+
+          <div class="campaigns-title">
+
+            {# Blank back button area area. No url needed. #}
+            {% set url = "" %}
+            {{ back_button.back_button(url=url, blank=true) }}
+
+            <h3 class="campaigns-heading">ERROR {{ error.code }} {{ error.name }}</h3>
+          </div>
+
+          <hr class="campaigns-divider">
+          {% if error.code == 403 %}
+            <p class="flavour-text timeline-margin">UWC-40-3 // Authentication::Invalid</p>
+          {% elif error.code == 404 %}
+            <p class="flavour-text timeline-margin">UWC-40-4 // Resource::Not Found</p>
+          {% elif error.code == 429 %}
+            <p class="flavour-text timeline-margin">UWC-42-9 // Limit::Exceeded</p>
+          {% elif error.code == 500 %}
+            <p class="flavour-text timeline-margin">UWC-50-0 // Error::Internal Server Error</p>
+          {% endif %}
+        </div>
+
+        <div class="campaigns-upper-bar">
+          <div class="empty-search-entry fade-in-block-2">
+            {% if error.code == 403 %}
+                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">UWC_IDENT_SERVICE:</h5>
+                <h5 class="flavour-text typing-2 empty-search-header">>AUTHENTICATION::DENIED</h5>
+                <h5 class="flavour-text typing-3 empty-search-blink">>Access to this resource is denied</h5>
+            {% elif error.code == 404 %}
+                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</h5>
+                <h5 class="flavour-text typing-2 empty-search-header">>PAGE::NOT_FOUND</h5>
+                <h5 class="flavour-text typing-3 empty-search-blink">>Please check URL and try again</h5>
+            {% elif error.code == 429 %}
+                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">ACCESS DENIED:</h5>
+                <h5 class="flavour-text typing-2 empty-search-header">>LIMIT::EXCEEDED</h5>
+                <h5 class="flavour-text typing-3 empty-search-blink">>{{ error.description }}</h5>
+            {% elif error.code == 500 %}
+                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</h5>
+                <h5 class="flavour-text typing-2 empty-search-header">>ERROR::UNABLE_TO_COMPLETE</h5>
+                <h5 class="flavour-text typing-3 empty-search-blink">>Server overloaded or error in application</h5>
+            {% endif %}
+            
+          </div>
+        </div>
+
+        <a class="fade-in-block-3" href="{{ url_for('home.home') }}">
+          <button class="button create-campaign-button error-home-button">RETURN TO MAIN PAGE</button>
+        </a>
+        
+
+    </div>
+
+  </div>
+
+{% endblock %}
