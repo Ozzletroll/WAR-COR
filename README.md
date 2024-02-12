@@ -47,6 +47,7 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 ### Extensions
 
 - Flask-APScheduler
+- Flask-Limiter
 - Flask-Login
 - Flask-Migrate
 - Flask-SQLAlchemy

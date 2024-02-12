@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required
 
-from app import db, models
+from app import db, models, limiter
 from app.forms import forms
 from app.utils import authenticators, formatters
 
@@ -15,6 +15,7 @@ from app.routes.epoch import bp
 
 # View epoch page
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>", methods=["GET"])
+@limiter.limit("60/minute")
 def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(
@@ -50,6 +51,7 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 # Add new epoch
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/new_epoch", methods=["GET", "POST"])
 @login_required
+@limiter.limit("60/minute")
 def new_epoch(campaign_name, campaign_id):
 
     campaign = db.session.execute(
@@ -108,6 +110,7 @@ def new_epoch(campaign_name, campaign_id):
 # Edit epoch
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/edit", methods=["GET", "POST"])
 @login_required
+@limiter.limit("60/minute")
 def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(
@@ -155,6 +158,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 # Delete epoch
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/<epoch_title>-<epoch_id>/delete", methods=["POST"])
 @login_required
+@limiter.limit("60/minute")
 def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
     campaign = db.session.execute(

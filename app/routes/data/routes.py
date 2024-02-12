@@ -10,7 +10,7 @@ from app import models
 import app.utils.serialisers as serialisers
 
 from app.routes.data import bp
-from app import db
+from app import db, limiter
 
 
 #   =======================================
@@ -21,6 +21,7 @@ from app import db
 # Data backup main page
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/data", methods=["GET", "POST"])
 @login_required
+@limiter.limit("60/minute")
 def backup_page(campaign_name, campaign_id):
 
     campaign = db.session.execute(
@@ -101,6 +102,7 @@ def backup_page(campaign_name, campaign_id):
 # Backup campaign data
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/data/export")
 @login_required
+@limiter.limit("5/minute")
 def campaign_backup(campaign_name, campaign_id):
 
     campaign = db.session.execute(
