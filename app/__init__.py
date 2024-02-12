@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_apscheduler import APScheduler
 from flask_sqlalchemy import SQLAlchemy
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
@@ -14,6 +16,7 @@ from app.utils.generators import create_data
 db = SQLAlchemy()
 csrf = CSRFProtect()
 scheduler = APScheduler()
+limiter = Limiter(get_remote_address)
 
 
 # Application factory
@@ -34,6 +37,9 @@ def create_app(config_class=Config):
 
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
+
+        # Initialise Flask Limiter
+        limiter.init_app(flask_app)
 
         if not flask_app.config["TESTING"] or not flask_app.config["DEBUG"]:
             # Initialise APScheduler
