@@ -37,8 +37,8 @@ def create_app(config_class=Config):
 
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
-
-        if not flask_app.config["TESTING"] or not flask_app.config["DEBUG"]:
+        
+        if not flask_app.config["TESTING"] and not flask_app.config["DEBUG"]:
             # Initialise Flask Limiter
             limiter.init_app(flask_app)
 

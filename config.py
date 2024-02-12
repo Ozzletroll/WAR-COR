@@ -62,3 +62,7 @@ class ProductionConfig(Config):
     SCHEDULER_JOBSTORES = {
         "default": SQLAlchemyJobStore(url=os.environ.get("POSTGRESQL_DATABASE_URI", "sqlite:///war_cor.db"))
     }
+    # Flask-Limiter
+    RATELIMIT_STORAGE_URI = os.environ.get("REDIS_STORAGE_URI")
+    RATELIMIT_STORAGE_OPTIONS = {"socket_connect_timeout": 30}
+    RATELIMIT_STRATEGY = "fixed-window"
