@@ -1,4 +1,4 @@
-<header id="navbar" class="navbar" title="Navbar">
+<header id="navbar" class="navbar" aria-label="Navbar">
 
   <div class="logo-area">
     <div class="logo">
@@ -12,12 +12,12 @@
     </div>
   </div>
 
-  <nav class="navbar-right" title="Navigation Menu">
+  <nav class="navbar-right" aria-label="Navigation Menu">
 
-    <ul class="navbar-links" title="Navigation Links">
+    <ul class="navbar-links" aria-label="Navbar Buttons">
       {% if current_user.is_authenticated %}
         {% if request.path != "/campaigns" %}
-        <li class="link-toggle" title="Sitrep">
+        <li class="link-toggle" aria-label="View Campaigns Page">
           <a class="navbar-link-item" href="{{ url_for('campaign.campaigns') }}">
             <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/list.svg') }} ">
             Campaigns
@@ -25,24 +25,28 @@
         </li>
         {% endif %}
         {% if request.path != url_for('user.user_page', username=current_user.username) %}
-        <li class="link-toggle">
+        <li class="link-toggle" aria-label="View user {{current_user.username}}'s userpage">
           <a class="navbar-link-item" href="{{ url_for('user.user_page', username=current_user.username) }}">
             <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }} ">
             {{ current_user.username }}
           </a>
         </li>
         {% endif %}
-        <li class="">
-          <button class="navbar-link-item messages-button" id="messages-button">
-            <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/message.svg') }}">
+        <li aria-label="Deploy Messages Tab">
+          <button id="messages-button" 
+          class="navbar-link-item messages-button"  
+          aria-label="Open Messages Tab">
+            <img class="icon campaign-form-icon" 
+            src="{{ url_for('static', filename='/images/icons/message.svg') }}"
+            aria-label="Messages Icon">
             {{ current_user.messages|length }}
           </button>
         </li>
       {% elif request.path == "/" %}
-        <li class="link-toggle">
+        <li class="link-toggle" aria-label="View App Overview">
           <a class="navbar-link-item" href="#main-features">>SITREP</a>
         </li>
-        <li class="link-toggle">
+        <li class="link-toggle" aria-label="View Contact Page">
           <a class="navbar-link-item" href="{{ url_for('home.contact') }}">>COMMS</a>
         </li>
       {% endif %}
@@ -50,15 +54,21 @@
 
     <div class="navbar-buttons">
     {% if not current_user.is_authenticated %}
-      <a href="{{ url_for('user.login') }}"><button type="button" class="navbutton log-in-button">LOG IN</button></a>
-      <a href="{{ url_for('user.register') }}"><button type="button" class="navbutton register-button">REGISTER</button></a>
+      <a href="{{ url_for('user.login') }}">
+        <button type="button" class="navbutton log-in-button" tabindex="-1">LOG IN</button>
+      </a>
+      <a href="{{ url_for('user.register') }}">
+        <button type="button" class="navbutton register-button" tabindex="-1">REGISTER</button>
+      </a>
     {% else %}
-      <a href="{{ url_for('user.logout') }}"><button type="button" class="navbutton log-out-button">LOG OUT</button></a>
+      <a href="{{ url_for('user.logout') }}">
+        <button type="button" class="navbutton log-out-button" tabindex="-1">LOG OUT</button>
+      </a>
     {% endif %}
     </div>
 
-    <button id="hamburger-button" class="hamburger-button">
-      <svg class="icon icon-hamburger" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <button id="hamburger-button" class="hamburger-button" aria-label="Hamburger Menu">
+      <svg aria-label="A Hamburger Menu Icon" class="icon icon-hamburger" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g class="icon-colour-var" transform="translate(42.666667, 106.666667)">
                 <path d="M3.55271368e-14,4.26325641e-14 L426.666667,4.26325641e-14 L426.666667,42.6666667 L3.55271368e-14,42.6666667 L3.55271368e-14,4.26325641e-14 Z M3.55271368e-14,128 L426.666667,128 L426.666667,170.666667 L3.55271368e-14,170.666667 L3.55271368e-14,128 Z M3.55271368e-14,256 L426.666667,256 L426.666667,298.666667 L3.55271368e-14,298.666667 L3.55271368e-14,256 Z" id="Combined-Shape"></path>
@@ -70,24 +80,24 @@
   </nav>
 </header>
 
-<div id="hamburger-menu" class="hamburger-menu">
+<nav id="hamburger-menu" class="hamburger-menu" aria-label="Hamburger Menu">
   {% if current_user.is_authenticated %}
     {% if request.path != "/campaigns" %}
-      <a class="h-menu-item" href="{{ url_for('campaign.campaigns') }}">CAMPAIGNS</a>
+      <a class="h-menu-item" href="{{ url_for('campaign.campaigns') }}" aria-label="Campaigns Page">CAMPAIGNS</a>
     {% endif %}
     {% if request.path != url_for('user.user_page', username=current_user.username) %}
-      <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}">USER/{{ current_user.username}}</a>
+      <a class="h-menu-item" href="{{ url_for('user.user_page', username=current_user.username) }}" aria-label="{{current_user.username}}'s Userpage">USER/{{ current_user.username}}</a>
     {% endif %}
-    <a class="h-menu-item" href="{{ url_for('user.logout') }}">LOGOUT</a>
+    <a class="h-menu-item" href="{{ url_for('user.logout') }}" aria-label="Logout">LOGOUT</a>
   {% else %}
-    <a class="h-menu-item" href="{{ url_for('user.login') }}">LOGIN</a>
-    <a class="h-menu-item" href="{{ url_for('user.register') }}">REGISTER</a>
+    <a class="h-menu-item" href="{{ url_for('user.login') }}" aria-label="Login">LOGIN</a>
+    <a class="h-menu-item" href="{{ url_for('user.register') }}" aria-label="Register">REGISTER</a>
     {% if request.path == url_for("home.home") %}
-      <a class="h-menu-item" href="#main-features">SITREP</a>
-      <a class="h-menu-item" href="{{ url_for('home.contact') }}">COMMS</a>
+      <a class="h-menu-item" href="#main-features" aria-label="App Overview">SITREP</a>
+      <a class="h-menu-item" href="{{ url_for('home.contact') }}" aria-label="Contact Page">COMMS</a>
     {% endif %}
   {% endif %}
-</div>
+</nav>
 
 
 {% if current_user.is_authenticated %}
