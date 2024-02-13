@@ -2157,7 +2157,7 @@ p {
   margin-bottom: -160px;
   z-index: 3;
   overflow: visible;
-  filter: drop-shadow(3px 0px 5px var(--elem_shadow));
+  filter: drop-shadow(3px 1px 3px var(--elem_shadow));
 }
 
 .searchbar-border {
