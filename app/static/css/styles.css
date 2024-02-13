@@ -1605,6 +1605,7 @@ p {
 }
 
 .f-text {
+  color: var(--text_bright);
   padding: 5px;
 }
 
@@ -1645,6 +1646,10 @@ p {
   box-sizing: border-box;
   cursor: text;
   transition: transform 0.3s ease;
+}
+
+.label-hidden {
+  display: none;
 }
 
 .form-underline {

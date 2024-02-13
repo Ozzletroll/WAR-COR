@@ -1,11 +1,11 @@
-<footer class="footer">
+<footer class="footer" aria-label="Footer">
   <div class="footer-links">
     <a href="{{ url_for('home.about') }}">About</a>
     <a href="https://github.com/Ozzletroll/WAR-COR">Github</a>
     <a href="{{ url_for('home.contact') }}">Contact</a>
   </div>
   <div class="footer-text">
-    <div class="f-text slogan">Live from the frontlines<br>in the fight for a better future</div>
-    <div class="f-text copyright">© WAR/COR {{ year }}</div>
+    <p class="f-text slogan" aria-label="Slogan">Live from the frontlines<br aria-hidden="true">in the fight for a better future</p>
+    <p class="f-text copyright" aria-label="Copywrite">© WAR/COR {{ year }}</p>
   </div>
 </footer>

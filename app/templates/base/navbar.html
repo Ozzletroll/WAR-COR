@@ -1,22 +1,23 @@
-<header id="navbar" class="navbar">
+<header id="navbar" class="navbar" title="Navbar">
+
   <div class="logo-area">
     <div class="logo">
-      <img src="/static/images/logo.png" class="top-logo" alt="A triangular white logo">
+      <img src="/static/images/logo.png" class="top-logo" alt="The WAR/COR logo, a triangular white logo that irises open like a camera lens.">
     </div>
     <div class="title-area">
       <a href="{{ url_for('home.home') }}" class="logo-title">WAR/COR</a>
-      <div class="version-number">
+      <div class="version-number" title="Version Number">
         1.0.0
       </div>
     </div>
   </div>
 
-  <div class="navbar-right">
+  <nav class="navbar-right" title="Navigation Menu">
 
-    <ul class="navbar-links">
+    <ul class="navbar-links" title="Navigation Links">
       {% if current_user.is_authenticated %}
         {% if request.path != "/campaigns" %}
-        <li class="link-toggle">
+        <li class="link-toggle" title="Sitrep">
           <a class="navbar-link-item" href="{{ url_for('campaign.campaigns') }}">
             <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/list.svg') }} ">
             Campaigns
@@ -45,7 +46,8 @@
           <a class="navbar-link-item" href="{{ url_for('home.contact') }}">>COMMS</a>
         </li>
       {% endif %}
-    </ul> 
+    </ul>
+
     <div class="navbar-buttons">
     {% if not current_user.is_authenticated %}
       <a href="{{ url_for('user.login') }}"><button type="button" class="navbutton log-in-button">LOG IN</button></a>
@@ -54,8 +56,8 @@
       <a href="{{ url_for('user.logout') }}"><button type="button" class="navbutton log-out-button">LOG OUT</button></a>
     {% endif %}
     </div>
-    <button id="hamburger-button" class="hamburger-button">
 
+    <button id="hamburger-button" class="hamburger-button">
       <svg class="icon icon-hamburger" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g class="icon-colour-var" transform="translate(42.666667, 106.666667)">
@@ -63,10 +65,11 @@
             </g>
         </g>
       </svg>
-
     </button>
-  </div>
+
+  </nav>
 </header>
+
 <div id="hamburger-menu" class="hamburger-menu">
   {% if current_user.is_authenticated %}
     {% if request.path != "/campaigns" %}

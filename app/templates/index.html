@@ -4,12 +4,12 @@
 
   <div class="main-area">
 
-    <section id="hero" class="hero">
+    <section id="hero" class="hero" title="Main Title Area">
 
       <div class="hero-centered hero-fade">
         <div class="hero-title-area">
           <h1 class="main-title">WAR/COR</h1>
-          <hr id="title-hr" class="title-hr">
+          <hr id="title-hr" class="title-hr" aria-hidden="true">
         </div>
         
         <div class="secondary-title hero-fade">
@@ -17,10 +17,10 @@
         </div>
 
       </div>
-      <a href=#main-features class="down-area hero-fade">
+      <a href=#main-features class="down-area hero-fade" title="Proceed Button">
 
         <div class="down-arrow-hidden-spacer"></div>
-        <svg class="down-arrow icon-colour-var" version="1.1" id="down-arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
+        <svg aria-label="A downward pointing chevron arrow" class="down-arrow icon-colour-var" version="1.1" id="down-arrow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve">
           <g id="SVGRepo_bgCarrier" stroke-width="0"/>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
           <g id="SVGRepo_iconCarrier"> <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393 c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393 s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z"/> </g>
@@ -29,92 +29,112 @@
       </a>
     </section>
 
-    <section class="features" id="main-features">
+    <section class="features" id="main-features" aria-label="Features Showcase">
 
-      <div id="features-upper" class="features-upper">
-        <div id="features-header" class="features-header">
-          <h3 class="sub-title">Create Dynamic RPG Timelines</h3>
-          <hr class="campaigns-divider">
-          <p class="flavour-text flavour-text-centred">UWC-0-0 // System::Overview </p>
+      <div id="features-upper" class="features-upper" aria-labelledby="timeline-demo-header">
+        <div id="features-header" class="features-header" aria-label="Section Header">
+          <h3 id="timeline-demo-header" class="sub-title">Create Dynamic RPG Timelines</h3>
+          <hr aria-hidden="true" class="campaigns-divider">
+          <p class="flavour-text flavour-text-centred" aria-label="Flavour Text">UWC-0-0 // System::Overview</p>
         </div>
 
-        <div class="showcase-area">
+        <article class="showcase-area" title="Timeline Demo">
           <div id="timeline-showcase" class="features-timeline-showcase">
             {% include "components/timeline_demo.html" %}
           </div>
-        </div>
+        </article>
 
-        <div id="features-paragraph" class="features-paragraph hero-fade">
-          <p>WAR/COR is a free, lightweight roleplaying game timeline creator, with a focus on
+        <article id="features-paragraph" class="features-paragraph hero-fade" title="App overview">
+          <p aria-label="A short overview of the app's main features">WAR/COR is a free, lightweight roleplaying game timeline creator, with a focus on
             structured, military campaign logging. Create and share session notes with your players,
             document combat reports and track your campaign's history with dynamically generated timelines.
           </p>
-        </div>
+        </article>
 
       </div>
 
       <div class="features-carousel">
 
-        <ul id="carousel">
-          <li id="carousel-img-1" class="carousel-item">
-            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-1.png') }}">
+        <ul id="carousel" aria-label="Image Carousel">
+          <li id="carousel-img-1" class="carousel-item" aria-labelledby="carousel-text-1">
+            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-1.png') }}" 
+            alt="An example of the main 'Campaigns' page, showing an example campaign called 'No Time For A Cliffhanger'.
+            The example user has written a short overview of the campaign, and has added several other users as members,
+            each with their own unique callsigns.">
           </li>
-          <li id="carousel-img-2" class="carousel-item">
-            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-2.png') }}">
+          <li id="carousel-img-2" class="carousel-item" aria-labelledby="carousel-text-2">
+            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-2.png') }}"
+            alt="An example of a user created event. The user has created an event titled 'Operation
+            Proscenium', which has several user created data fields. These include the event's date,
+            type, location, a list of belligerents, as well as a compendium entry.">
           </li>
-          <li id="carousel-img-3" class="carousel-item">
-            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-3.png') }}">
+          <li id="carousel-img-3" class="carousel-item" aria-labelledby="carousel-text-3">
+            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-3.png') }}"
+            alt="An example of the campaigns timeline, showing a vertical timeline along the left-hand 
+            side of the page. At the year '5016' several elements representing months branch off across the page,
+            branching again into individual day, then finally into individual events. This tree-like structure
+            makes up the overall timeline of user-created events.">
           </li>
         </ul>
 
         <div class="carousel-text-area">
-          <div class="carousel-buttons">
-            <input id="carousel-button-1" class="carousel-button" type="radio" value="0" name="carousel-radio" checked>
-            <input id="carousel-button-2" class="carousel-button" type="radio" value="1" name="carousel-radio">
-            <input id="carousel-button-3" class="carousel-button" type="radio" value="2" name="carousel-radio">
+          <div class="carousel-buttons" aria-label="Carousel Buttons">
+            <input id="carousel-button-1" class="carousel-button" type="radio" value="0" name="carousel-radio" aria-label="Show Image 1" checked>
+            <input id="carousel-button-2" class="carousel-button" type="radio" value="1" name="carousel-radio" aria-label="Show Image 2">
+            <input id="carousel-button-3" class="carousel-button" type="radio" value="2" name="carousel-radio" aria-label="Show Image 3">
           </div>
 
-          <p id="carousel-text-1" class="carousel-text">
+          <p id="carousel-text-1" class="carousel-text" aria-hidden="true">
             Create campaigns, add members and set callsigns
           </p>
-          <p id="carousel-text-2" class="carousel-text carousel-text-hidden">
+          <p id="carousel-text-2" class="carousel-text carousel-text-hidden" aria-hidden="true">
             Input conflict data, creating events and epochs
           </p>
-          <p id="carousel-text-3" class="carousel-text carousel-text-hidden">
+          <p id="carousel-text-3" class="carousel-text carousel-text-hidden" aria-hidden="true">
             Visualise campaign chronology
           </p>
         </div>
       </div>
 
-      <div class="features-lower">
-        <img src="{{ url_for('static', filename='/images/custom-date-example.png') }}">
+      <article class="features-lower" aria-labelledby="features-lower-title-1">
+        <img src="{{ url_for('static', filename='/images/custom-date-example.png') }}"
+        alt="An example of the timeline being edited. A branch of the timeline has several 'New Event'
+        buttons extending out between each month, day and event, allowing the user to easily place
+        them with a single action. In addition, the timeline example demonstrates some of the non-standard
+        dates that can be used, with the current month featuring at least 35 days, and containing
+        25 hours in a day.">
         <div class="features-text-area">
-          <h5 class="feature-title">Freeform Timeline Editing</h5>
-          <p>Unbound by the constraints of pre-collapse archiving conventions, 
+          <h5 id="features-lower-title-1" class="feature-title">Freeform Timeline Editing</h5>
+          <p aria-label="A short paragraph about the app's freeform date system">Unbound by the constraints of pre-collapse archiving conventions, 
             WAR/COR allows seamless conflict organisation in accordance with any 
             non-standard local system calendars.</p>
         </div>
-      </div>
+      </article>
 
-      <div class="features-lower lower-2">
+      <article class="features-lower lower-2" aria-labelledby="features-lower-title-2">
         <div class="features-text-area">
-          <h5 class="feature-title">Responsive Battlefield Performance</h5>
-          <p>UWC military standardisation ensures reliable performance on a variety 
+          <h5 id="features-lower-title-2" class="feature-title">Responsive Battlefield Performance</h5>
+          <p aria-label="A short paragraph about the app responsive web design">UWC military standardisation ensures reliable performance on a variety 
             of hardware platforms, across any theatre of warfare.</p>
         </div>
-        <img src="{{ url_for('static', filename='/images/responsive-mockup.png') }}">
-      </div>
+        <img src="{{ url_for('static', filename='/images/responsive-mockup.png') }}"
+        alt="An example of the app running on three different devices, a smartphone, a tablet, and a laptop.">
+      </article>
 
     </section>
 
-    <section class="cta">
+    <section class="cta" aria-label="Call To Action">
       <div class="bottom-cta">
         <h4 class="cta-text">Free for all citizens of Union</h4>
-        <div class="button-area">
+        <div class="button-area" aria-label="Button Area">
           {% if current_user.is_authenticated %}
-          <a href="{{ url_for('campaign.campaigns') }}"><button type="button" class="feature-button">GET STARTED</button></a>
+          <a href="{{ url_for('campaign.campaigns') }}">
+            <button type="button" class="feature-button">GET STARTED</button>
+          </a>
           {% else %}
-          <a href="{{ url_for('user.register') }}"><button type="button" class="feature-button">Enlist today</button></a>
+          <a href="{{ url_for('user.register') }}">
+            <button type="button" class="feature-button">Enlist today</button>
+          </a>
           {% endif %}
         </div>
       </div>
