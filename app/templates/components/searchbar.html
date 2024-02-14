@@ -4,17 +4,17 @@
   
   Found on the campaigns page, timeline page and timeline edit page.
   Edit boolean can be passed to direct advanced search page back 
-  button to edit timeline page. Timeline boolean is used to diffentiate
+  button to edit timeline page. Timeline boolean is used to differentiate
   between campaigns page and timeline page on click functionality.
   
 #}
 
 {% macro searchbar(campaign, current_user, edit=false, timeline=false, event=false, epoch=false) %}
 
-<div id="searchbar" class="searchbar-border">
+<div id="searchbar" class="searchbar-border" role="tab" aria-label="Searchbar">
   <div class="searchbar-outer">
 
-    <button id="searchbar-button" class="button searchbar-button" title="DEPLOY SEARCHBAR">
+    <button id="searchbar-button" class="button searchbar-button" title="DEPLOY SEARCHBAR" aria-label="Deploy Searchbar">
       <label class="search-label">
 
         <svg width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -31,15 +31,18 @@
 
     <div class="searchbar-area">
       {% if timeline %}
-        <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH">
+        <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH" 
+        aria-label="Enter search query" aria-hidden="true" tabindex="-1">
       {% elif event or epoch %}
-        <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH">
+        <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH"
+        aria-label="Enter search query" aria-hidden="true" tabindex="-1">
       {% else %}
-        <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH">
+        <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH"
+        aria-label="Enter search query" aria-hidden="true" tabindex="-1">
       {% endif %}
       
       {% if timeline %}
-        <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()">
+        <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()" aria-label="Search" tabindex="-1">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
@@ -49,7 +52,7 @@
           </svg>
         </button>
       {% elif event %}
-        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEventSearch()">
+        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEventSearch()" tabindex="-1">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
@@ -59,7 +62,7 @@
           </svg>
         </button>
       {% elif epoch %}
-        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEpochSearch()">
+        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEpochSearch()" tabindex="-1">
           <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                 <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
@@ -71,8 +74,9 @@
       {% endif %}
         
       {% if campaign is not none %}
-        <a class="advanced-search-area" href="{{ url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-          <button class="button searchbar-advanced-button">
+        <a class="advanced-search-area" href="{{ url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
+        aria-label="Advanced Search" aria-hidden="true" tabindex="-1">
+          <button class="button searchbar-advanced-button" aria-hidden="true" tabindex="-1">
             ADVANCED
           </button>
         </a>
@@ -80,12 +84,12 @@
     </div>
 
     {% if event or search %}
-      <div class="hits-area">
+      <label class="hits-area" aria-label="Hits Counter" aria-hidden="true">
         <div id="hits-counter" class="hits-counter">    
         </div>
-      </div>
+      </label>
     {% else%}
-      <div class="hits-area">
+      <label class="hits-area" aria-label="Hits Counter" aria-hidden="true">
         <div id="hits-counter" class="hits-counter">
           {% if request.path == "/campaigns" %}
             {{ current_user.campaigns | length }} CAMPAIGNS
@@ -93,7 +97,7 @@
             {{ campaign.events | length }} EVENTS
           {% endif %}
         </div>
-      </div>
+      </label>
     {% endif %}
 
   </div>

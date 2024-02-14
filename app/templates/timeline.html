@@ -19,7 +19,7 @@
 
 {% block content %}
 
-<div class="ui-buttons">
+<nav class="ui-buttons" aria-label="UI Buttons">
   {% if edit %}
     {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
   {% else %}
@@ -33,7 +33,7 @@
       {{ edit_toggle.edit_toggle(campaign) }}
     {% endif %}
   {% endif %}
-</div>
+</nav>
 
 <div class="sidebar-page">
   {% include "components/sidebar.html" %}

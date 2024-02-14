@@ -9,6 +9,8 @@ class SearchbarTab {
     this.outer = this.tab.querySelector(".searchbar-outer");
     this.area = this.tab.querySelector(".searchbar-area");
     this.areaInner = this.tab.querySelector(".search-bar");
+    this.goButton = this.tab.querySelector(".searchbar-go");
+    this.advancedSearch = this.tab.querySelector(".advanced-search-area");
     this.hitsLabel = this.tab.querySelector(".hits-area");
     this.state = false
    
@@ -26,6 +28,15 @@ class SearchbarTab {
 
   openTab() {
     this.tab.style.transform = "translateX(calc(-100% + 40px)";
+    this.areaInner.setAttribute("aria-hidden", "false");
+    this.areaInner.setAttribute("tabindex", "0");
+    if (this.goButton != null) {
+      this.goButton.setAttribute("tabindex", "0");
+    }
+    if (this.advancedSearch != null) {
+      this.advancedSearch.setAttribute("tabindex", "0");
+    }
+    this.hitsLabel.setAttribute("aria-hidden", "false");
     this.state = true;
     this.getWidth();
   }
@@ -33,6 +44,15 @@ class SearchbarTab {
   closeTab() {
     this.tab.style.width = "";
     this.tab.style.transform = "";
+    this.areaInner.setAttribute("aria-hidden", "true");
+    this.areaInner.setAttribute("tabindex", "-1");
+    if (this.goButton != null) {
+      this.goButton.setAttribute("tabindex", "-1");
+    }
+    if (this.advancedSearch != null) {
+      this.advancedSearch.setAttribute("tabindex", "-1");
+    }
+    this.hitsLabel.setAttribute("aria-hidden", "true");
     this.state = false;
   }
 
