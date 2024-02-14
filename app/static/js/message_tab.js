@@ -5,10 +5,11 @@ class messageTab {
     button,
   }) {
     this.tab = document.getElementById(tab);
-    this.button = button;
+    this.button = document.getElementById(button);
+    this.childButtons = this.tab.getElementsByClassName("button");
     this.state = false
 
-    document.getElementById(this.button).onclick = event => {
+    this.button.onclick = event => {
 
       if (this.state == false) {
         this.openTab(event)
@@ -24,13 +25,22 @@ class messageTab {
     this.tab.style.height = "400px"
     this.tab.style.borderBottom = "1px solid var(--dark_red)"
     this.state = true
+    this.tab.setAttribute("aria-hidden", "false");
+    Array.from(this.childButtons).forEach(element => {
+      element.setAttribute("tabIndex", "0")
+    })
+    this.button.setAttribute("aria-label", "Close Messages Tab");
   }
 
   closeTab() {
     this.tab.style.marginBottom = "0"
     this.tab.style.height = "0"
     this.tab.style.borderBottom = "0px solid var(--dark_red)"
-
+    this.tab.setAttribute("aria-hidden", "true");
+    Array.from(this.childButtons).forEach(element => {
+      element.setAttribute("tabIndex", "-1")
+    })
+    this.button.setAttribute("aria-label", "Open Messages Tab: {{current_user.messages | length}} New Messages");
     this.state = false
   }
 

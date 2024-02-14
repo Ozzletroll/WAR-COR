@@ -19,7 +19,7 @@
         {% if request.path != "/campaigns" %}
         <li class="link-toggle" aria-label="View Campaigns Page">
           <a class="navbar-link-item" href="{{ url_for('campaign.campaigns') }}">
-            <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/list.svg') }} ">
+            <img class="icon campaign-form-icon" aria-hidden="true" src="{{ url_for('static', filename='/images/icons/list.svg') }} ">
             Campaigns
           </a>
         </li>
@@ -27,19 +27,19 @@
         {% if request.path != url_for('user.user_page', username=current_user.username) %}
         <li class="link-toggle" aria-label="View user {{current_user.username}}'s userpage">
           <a class="navbar-link-item" href="{{ url_for('user.user_page', username=current_user.username) }}">
-            <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }} ">
+            <img class="icon campaign-form-icon" aria-hidden="true" src="{{ url_for('static', filename='/images/icons/user_white.svg') }} ">
             {{ current_user.username }}
           </a>
         </li>
         {% endif %}
-        <li aria-label="Deploy Messages Tab">
+        <li aria-label="Open Messages Tab: {{current_user.messages | length}} New Messages">
           <button id="messages-button" 
           class="navbar-link-item messages-button"  
           aria-label="Open Messages Tab">
             <img class="icon campaign-form-icon" 
             src="{{ url_for('static', filename='/images/icons/message.svg') }}"
             aria-label="Messages Icon">
-            {{ current_user.messages|length }}
+            {{ current_user.messages | length }}
           </button>
         </li>
       {% elif request.path == "/" %}
