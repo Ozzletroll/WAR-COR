@@ -2275,7 +2275,7 @@ p {
 }
 
 .search-bar:focus {
-  outline: none
+  outline: 2px solid var(--elem_border)
 }
 
 .advanced-search-area {

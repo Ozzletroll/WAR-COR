@@ -23,12 +23,12 @@
 
 
 {% block content %}
-<div class="ui-buttons">
+<nav class="ui-buttons" aria-label="UI Buttons">
   {{ searchbar.searchbar(campaign=campaign, event=true) }}
   {% if current_user.is_authenticated and campaign in current_user.permissions %}
     {{ edit_toggle.event_edit_toggle(campaign, event) }}
   {% endif %}
-</div>
+</nav>
 
 <div class="sidebar-page">
   
