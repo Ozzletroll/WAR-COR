@@ -35,6 +35,7 @@ class SearchbarTab {
     }
     if (this.advancedSearch != null) {
       this.advancedSearch.setAttribute("tabindex", "0");
+      this.advancedSearch.setAttribute("aria-hidden", "false");
     }
     this.hitsLabel.setAttribute("aria-hidden", "false");
     this.state = true;
@@ -51,6 +52,7 @@ class SearchbarTab {
     }
     if (this.advancedSearch != null) {
       this.advancedSearch.setAttribute("tabindex", "-1");
+      this.advancedSearch.setAttribute("aria-hidden", "true");
     }
     this.hitsLabel.setAttribute("aria-hidden", "true");
     this.state = false;

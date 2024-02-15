@@ -2275,7 +2275,11 @@ p {
 }
 
 .search-bar:focus {
-  outline: 2px solid var(--elem_border)
+  outline: 2px solid var(--elem_border);
+}
+
+.search-bar:focus + .searchbar-go {
+  outline: 2px solid var(--elem_border);
 }
 
 .advanced-search-area {
