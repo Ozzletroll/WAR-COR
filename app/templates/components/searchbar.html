@@ -28,77 +28,79 @@
       </label>
     </button>
 
-    <div class="searchbar-area">
-      {% if timeline %}
-        <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH"
-        aria-label="Enter search query" aria-hidden="true" tabindex="-1">
-      {% elif event or epoch %}
-        <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH"
-        aria-label="Enter search query" aria-hidden="true" tabindex="-1">
-      {% else %}
-        <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH"
-        aria-label="Enter search query" aria-hidden="true" tabindex="-1">
-      {% endif %}
-      
-      {% if timeline %}
-        <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()" aria-label="Search" tabindex="-1">
-          <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
-                    <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
-                </g>
-            </g>
-          </svg>
-        </button>
-      {% elif event %}
-        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEventSearch()" aria-label="Search" tabindex="-1">
-          <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
-                    <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
-                </g>
-            </g>
-          </svg>
-        </button>
-      {% elif epoch %}
-        <button id="searchbar-go" class="button searchbar-go" onclick="triggerEpochSearch()" tabindex="-1">
-          <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
-                    <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
-                </g>
-            </g>
-          </svg>
-        </button>
-      {% endif %}
+    <div class="searchbar-tab" role="tabpanel" aria-label="Searchbar Tab">
+      <div class="searchbar-area">
+        {% if timeline %}
+          <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH"
+          aria-label="Enter search query" aria-hidden="true" tabindex="-1">
+        {% elif event or epoch %}
+          <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH"
+          aria-label="Enter search query" aria-hidden="true" tabindex="-1">
+        {% else %}
+          <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH"
+          aria-label="Enter search query" aria-hidden="true" tabindex="-1">
+        {% endif %}
         
-      {% if campaign is not none %}
-        <a class="advanced-search-area" href="{{ url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
-        aria-label="Advanced Search" aria-hidden="true" tabindex="-1">
-          <button class="button searchbar-advanced-button" aria-hidden="true" tabindex="-1">
-            ADVANCED
+        {% if timeline %}
+          <button id="searchbar-go" class="button searchbar-go" onclick="triggerSearch()" aria-label="Search" tabindex="-1">
+            <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
+                      <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
+                  </g>
+              </g>
+            </svg>
           </button>
-        </a>
-      {% endif %}
-    </div>
+        {% elif event %}
+          <button id="searchbar-go" class="button searchbar-go" onclick="triggerEventSearch()" aria-label="Search" tabindex="-1">
+            <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
+                      <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
+                  </g>
+              </g>
+            </svg>
+          </button>
+        {% elif epoch %}
+          <button id="searchbar-go" class="button searchbar-go" onclick="triggerEpochSearch()" tabindex="-1">
+            <svg class="icon" width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <g class="icon-colour-var" transform="translate(123.520000, 134.186667)">
+                      <path d="M158.293333,0 L279.893333,121.813333 L158.293333,243.626667 L128,213.333333 L219.733333,121.813333 L128,30.2933333 L158.293333,0 Z M30.2933333,0 L151.893333,121.813333 L30.2933333,243.626667 L-1.42108547e-14,213.333333 L91.7333333,121.813333 L-1.42108547e-14,30.2933333 L30.2933333,0 Z" id="arrow-double-right"></path>
+                  </g>
+              </g>
+            </svg>
+          </button>
+        {% endif %}
+          
+        {% if campaign is not none %}
+          <a class="advanced-search-area" href="{{ url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
+          aria-label="Advanced Search" aria-hidden="true" tabindex="-1">
+            <button class="button searchbar-advanced-button" aria-hidden="true" tabindex="-1">
+              ADVANCED
+            </button>
+          </a>
+        {% endif %}
+      </div>
 
-    {% if event or search %}
+      {% if event or search %}
       <label class="hits-area" aria-label="Hits Counter" aria-hidden="true">
         <div id="hits-counter" class="hits-counter">    
         </div>
       </label>
-    {% else%}
-      <label class="hits-area" aria-label="Hits Counter" aria-hidden="true">
-        <div id="hits-counter" class="hits-counter">
-          {% if request.path == "/campaigns" %}
-            {{ current_user.campaigns | length }} CAMPAIGNS
-          {% elif timeline %}
-            {{ campaign.events | length }} EVENTS
-          {% endif %}
-        </div>
-      </label>
-    {% endif %}
+      {% else%}
+        <label class="hits-area" aria-label="Hits Counter" aria-hidden="true">
+          <div id="hits-counter" class="hits-counter">
+            {% if request.path == "/campaigns" %}
+              {{ current_user.campaigns | length }} CAMPAIGNS
+            {% elif timeline %}
+              {{ campaign.events | length }} EVENTS
+            {% endif %}
+          </div>
+        </label>
+      {% endif %}
 
+    </div>
   </div>
 </div>
 
