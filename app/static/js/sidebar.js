@@ -10,8 +10,10 @@ class Tab {
     this.buttonElem = document.getElementById(button);
     this.state = false
     this.icon = document.getElementById(icon);
+    this.scrollElem = this.tab.querySelector(".sidebar-scroll");
+    this.childButtons = this.tab.querySelectorAll(".sidebar-button");
 
-    // Call check screensize on initialisation, 
+    // Call check screen size on initialisation, 
     // and again anytime the viewport is resized
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize.bind(this));
@@ -38,17 +40,29 @@ class Tab {
 
   openTab() {
     this.tab.style.transform = "translateX(300px)";
-
     if (window.innerWidth >= 1400 ) {
       this.tab.style.marginRight = "300px"
     }
-
+    this.scrollElem.setAttribute("aria-hidden", "false");
+    this.buttonElem.setAttribute("aria-label", "Close Sidebar");
+    if (this.childButtons != null) {
+      Array.from(this.childButtons).forEach(button => {
+        button.setAttribute("tabindex", "0");
+      })
+    }
     this.state = true;
     this.icon.style.transform = "scaleX(-1)";
   }
 
   closeTab() {
     this.tab.style.transform = "translateX(0)";
+    this.scrollElem.setAttribute("aria-hidden", "true");
+    this.buttonElem.setAttribute("aria-label", "Deploy Sidebar");
+    if (this.childButtons != null) {
+      Array.from(this.childButtons).forEach(button => {
+        button.setAttribute("tabindex", "-1");
+      })
+    }
     this.state = false;
     this.checkScreenSize();
     this.icon.style.transform = "scaleX(1)";

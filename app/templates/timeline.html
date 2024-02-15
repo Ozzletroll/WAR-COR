@@ -19,24 +19,24 @@
 
 {% block content %}
 
-<nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
-  {% if edit %}
-    {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
-  {% else %}
-    {{ searchbar.searchbar(campaign, timeline=true) }}
-  {% endif %}
-
-  {% if current_user.is_authenticated and campaign in current_user.permissions %}
-    {% if edit %}
-      {{ edit_toggle.edit_toggle(campaign, edit=true) }}
-    {% else %}
-      {{ edit_toggle.edit_toggle(campaign) }}
-    {% endif %}
-  {% endif %}
-</nav>
-
 <div class="sidebar-page">
   {% include "components/sidebar.html" %}
+
+  <nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
+    {% if edit %}
+      {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
+    {% else %}
+      {{ searchbar.searchbar(campaign, timeline=true) }}
+    {% endif %}
+  
+    {% if current_user.is_authenticated and campaign in current_user.permissions %}
+      {% if edit %}
+        {{ edit_toggle.edit_toggle(campaign, edit=true) }}
+      {% else %}
+        {{ edit_toggle.edit_toggle(campaign) }}
+      {% endif %}
+    {% endif %}
+  </nav>
 
   <div id="scrollpage" class="scrollpage">
 

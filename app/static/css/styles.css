@@ -4790,6 +4790,9 @@ for selection in timeline_search.js */
   top: 0;
   border-right: 1px solid var(--elem_border);
   background-color: var(--elem_mid);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebar-deploy {
@@ -4804,6 +4807,7 @@ for selection in timeline_search.js */
   clip-path: polygon(100% 0, 100% calc(100% - 10.00px), calc(100% - 10.00px) 100%, 0 100%, 0 0);
   cursor: pointer;
   will-change: transform;
+  border: none;
 }
 
 @media screen and (max-width: 800px) {
@@ -4824,6 +4828,11 @@ for selection in timeline_search.js */
 
 .sidebar-deploy:hover {
   background-color: var(--bright_red);
+}
+
+.sidebar-deploy:focus-visible .icon {
+  outline: 2px solid var(--text_header_contrast);
+  border-radius: 3px;
 }
 
 .sidebar-button > * {
