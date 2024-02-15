@@ -2230,6 +2230,10 @@ p {
   fill: var(--bright_red);
 }
 
+.searchbar-button:focus-visible .search-label {
+  outline: 2px solid var(--darker_red);
+}
+
 .searchbar-tab {
   display: flex;
   align-items: center;
@@ -2407,6 +2411,11 @@ p {
 .edit-toggle-button:hover .icon-colour-var {
   fill: var(--bright_red);
 }
+
+.edit-toggle-button:focus-visible .edit-toggle-label {
+  outline: 2px solid var(--darker_red);
+}
+
 
 .edit-toggle-label {
   cursor: pointer;
