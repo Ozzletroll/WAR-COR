@@ -22,7 +22,7 @@
 
 {% block content %}
   {% if not new %}
-    <nav class="ui-buttons" aria-label="UI Buttons">
+    <nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
       {{ searchbar.searchbar(campaign, event=true) }}
       {% if current_user.is_authenticated and campaign in current_user.permissions %}
         {{ edit_toggle.event_edit_toggle(campaign, event, edit=true) }}

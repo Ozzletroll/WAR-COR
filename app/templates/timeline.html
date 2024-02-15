@@ -19,7 +19,7 @@
 
 {% block content %}
 
-<nav class="ui-buttons" aria-label="UI Buttons">
+<nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
   {% if edit %}
     {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
   {% else %}
