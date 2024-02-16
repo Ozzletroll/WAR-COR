@@ -16,8 +16,7 @@
     <h4 class="campaign-entry-title">Members</h4>
 
     {% if edit %}
-      <a class="campaign-edit-link" href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
-        <button class="button campaign-edit-button" tabindex="-1">
+      <a class="campaign-edit-link button campaign-edit-button" href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
           <div class="campaign-edit-button-left">
             <svg width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <g class="icon-colour-var" stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -30,7 +29,6 @@
           <div class="campaign-edit-button-right">
             EDIT MEMBERS
           </div>
-        </button>
       </a>
     {% endif %}
   </div>

@@ -2704,7 +2704,14 @@ p {
   fill: var(--bright_red);
 }
 
+.campaign-edit-button-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .campaign-edit-button-right {
+  display: flex;
   width: 100%;
   justify-content: center;
 }

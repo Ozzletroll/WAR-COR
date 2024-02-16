@@ -77,8 +77,7 @@
             <div class="campaign-overview-title-area">
               <h4 class="campaign-entry-title">Overview</h4>
               {% if edit %}
-                <a class="campaign-edit-link" href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
-                  <button class="button campaign-edit-button" tabindex="-1">
+                <a class="campaign-edit-link button campaign-edit-button" href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
                     <div class="campaign-edit-button-left">
                       <svg width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -91,7 +90,6 @@
                     <div class="campaign-edit-button-right">
                       EDIT TITLE/OVERVIEW
                     </div>
-                  </button>
                 </a>
               {% endif %}
             </div>
@@ -130,21 +128,21 @@
 
                 <div class="new-timeline-data-buttons">
 
-                  <a class="first-event-link" 
+                  <a class="first-event-link button new-timeline-item first-event-button" 
                     href="{{ url_for('event.add_event', 
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id) }}">
-                    <button class="button new-timeline-item first-event-button">CREATE NEW EVENT</button>
+                    CREATE NEW EVENT
                   </a>
                   <p class="flavour-text">Events make up the main structure of the timeline. They represent events or occurences
                     that take place at specific dates. Events are rendered in grouped year/month/day blocks.
                   </p>
 
-                  <a class="first-event-link" 
+                  <a class="first-event-link button new-timeline-item first-event-button" 
                     href="{{ url_for('epoch.new_epoch', 
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id ) }}">
-                    <button class="button new-timeline-item first-event-button">CREATE NEW EPOCH</button>
+                    CREATE NEW EPOCH
                   </a>
                   <p class="flavour-text">An epoch represents an era or a time period during a campaign.
                     Epochs are placed at the month level within the timeline, and encapsulate 
@@ -170,11 +168,11 @@
             {% if edit %}
               <div class="new-timeline-data-buttons data-buttons-hor">
                 <div class="data-button">
-                  <a class="first-event-link" 
+                  <a class="first-event-link button new-timeline-item first-event-button" 
                   href="{{ url_for('event.add_event', 
                   campaign_name=campaign.url_title,
                   campaign_id=campaign.id) }}">
-                    <button class="button new-timeline-item first-event-button">NEW EVENT</button>
+                  NEW EVENT
                   </a>
                   <p class="flavour-text">Events make up the main structure of the timeline. They represent events or occurences
                     that take place at specific dates. Events are rendered in grouped year/month/day blocks.
@@ -182,11 +180,11 @@
                 </div>
 
                 <div class="data-button">
-                  <a class="first-event-link" 
+                  <a class="first-event-link button new-timeline-item first-event-button" 
                     href="{{ url_for('epoch.new_epoch', 
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id ) }}">
-                    <button class="button new-timeline-item first-event-button">NEW EPOCH</button>
+                    NEW EPOCH
                   </a>
                   <p class="flavour-text">An epoch represents an era or a time period during a campaign.
                     Epochs are placed at the month level within the timeline, and encapsulate 
