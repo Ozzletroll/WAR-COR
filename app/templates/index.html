@@ -128,13 +128,9 @@
         <h4 class="cta-text">Free for all citizens of Union</h4>
         <div class="button-area" aria-label="Button Area">
           {% if current_user.is_authenticated %}
-          <a href="{{ url_for('campaign.campaigns') }}">
-            <button type="button" class="feature-button">GET STARTED</button>
-          </a>
+          <a class="feature-button" href="{{ url_for('campaign.campaigns') }}">GET STARTED</a>
           {% else %}
-          <a href="{{ url_for('user.register') }}">
-            <button type="button" class="feature-button">Enlist today</button>
-          </a>
+          <a class="feature-button" href="{{ url_for('user.register') }}">Enlist today</a>
           {% endif %}
         </div>
       </div>

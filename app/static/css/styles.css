@@ -565,10 +565,7 @@ p {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.navbar-buttons a {
-  padding-left: 10px;
+  gap: 10px;
 }
 
 .navbutton {
@@ -581,6 +578,12 @@ p {
   -webkit-transition: ease-out 0.5s;
   -moz-transition: ease-out 0.5s;
   border-radius: 3px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.navbutton:visited {
+  text-decoration: none;
 }
 
 .navbar-buttons .log-in-button, .register-button, .navbar-buttons .log-out-button {
@@ -1148,6 +1151,11 @@ p {
   width: 150px;
   border-style: none;
   text-transform: uppercase;
+  text-decoration: none;
+}
+
+.feature-button:visited {
+  text-decoration: none;
 }
 
 .feature-button:hover, 
@@ -1360,13 +1368,14 @@ p {
   width: 50%;
 }
 
-.bottom-cta button {
+.bottom-cta .feature-button {
   background-color: var(--darker_red);
   color: var(--fixed-bg-1);
   padding: min(15px, 5%);
   padding-left: min(20px, 8%);
   padding-right: min(20px, 8%);
   height: auto;
+  text-decoration: none;
   text-transform: uppercase;
 }
 

@@ -54,16 +54,10 @@
 
     <div class="navbar-buttons">
     {% if not current_user.is_authenticated %}
-      <a href="{{ url_for('user.login') }}">
-        <button type="button" class="navbutton log-in-button" tabindex="-1">LOG IN</button>
-      </a>
-      <a href="{{ url_for('user.register') }}">
-        <button type="button" class="navbutton register-button" tabindex="-1">REGISTER</button>
-      </a>
+      <a class="navbutton log-in-button" href="{{ url_for('user.login') }}">LOG IN</a>
+      <a class="navbutton register-button" href="{{ url_for('user.register') }}">REGISTER</a>
     {% else %}
-      <a href="{{ url_for('user.logout') }}">
-        <button type="button" class="navbutton log-out-button" tabindex="-1">LOG OUT</button>
-      </a>
+      <a class="navbutton log-out-button" href="{{ url_for('user.logout') }}">LOG OUT</a>
     {% endif %}
     </div>
 
