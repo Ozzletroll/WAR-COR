@@ -2234,6 +2234,7 @@ p {
 
 .searchbar-button:focus-visible .search-label {
   outline: 2px solid var(--darker_red);
+  border-radius: 3px;
 }
 
 .searchbar-tab {
@@ -2416,11 +2417,13 @@ p {
 
 .edit-toggle-button:focus-visible .edit-toggle-label {
   outline: 2px solid var(--darker_red);
+  border-radius: 3px;
 }
 
 
 .edit-toggle-label {
   cursor: pointer;
+  height: 20px;
 }
 
 /* Set scroll margin for toggle scroll to */
