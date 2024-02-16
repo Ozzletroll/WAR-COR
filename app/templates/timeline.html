@@ -78,7 +78,7 @@
               <h4 class="campaign-entry-title">Overview</h4>
               {% if edit %}
                 <a class="campaign-edit-link" href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
-                  <button class="button campaign-edit-button">
+                  <button class="button campaign-edit-button" tabindex="-1">
                     <div class="campaign-edit-button-left">
                       <svg width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
