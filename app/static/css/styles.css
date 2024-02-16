@@ -2179,6 +2179,7 @@ p {
   z-index: 3;
   overflow: visible;
   filter: drop-shadow(3px 1px 3px var(--elem_shadow));
+  margin-left: -40px;
 }
 
 .searchbar-border {

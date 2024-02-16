@@ -11,7 +11,7 @@
 
 {% macro searchbar(campaign, current_user, edit=false, timeline=false, event=false, epoch=false) %}
 
-<div id="searchbar" class="searchbar-border" role="tab" aria-label="Searchbar">
+<aside id="searchbar" class="searchbar-border" aria-label="Searchbar">
   <div class="searchbar-outer">
 
     <button id="searchbar-button" class="button searchbar-button" title="DEPLOY SEARCHBAR" aria-label="Deploy Searchbar">
@@ -28,7 +28,7 @@
       </label>
     </button>
 
-    <div class="searchbar-tab" role="tabpanel" aria-label="Searchbar Tab">
+    <div class="searchbar-tab" aria-label="Searchbar Tab" aria-hidden="true">
       <div class="searchbar-area">
         {% if timeline %}
           <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH"
@@ -100,9 +100,9 @@
         </label>
       {% endif %}
 
-    </div>
+      </div>
   </div>
-</div>
+</aside>
 
 <script src="{{ url_for('static', filename='/js/searchbar.js') }}"></script>
 {% if timeline %}
