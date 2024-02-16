@@ -4799,6 +4799,8 @@ for selection in timeline_search.js */
 
 .sidebar-deploy {
   display: flex;
+  position: relative;
+  left: 300px;
   justify-content: center;
   align-items: center;
   height: 208px;

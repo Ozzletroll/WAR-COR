@@ -8,6 +8,10 @@
 
 <aside id="sidebar-outer" class="sidebar-outer" aria-label="Sidebar" tabindex="-1">
   
+  <button id="sidebar-deploy" class="sidebar-deploy" aria-label="Deploy Sidebar">
+    <img aria-label="Sidebar double chevron symbol" id="sidebar-icon" class="icon icon-large" src="{{ url_for('static', filename='/images/icons/chevron_right.svg') }}">
+  </button>
+
   <ol id="sidebar-scroll" class="sidebar-scroll" aria-label="Timeline Shortcuts" aria-hidden="true" tabindex="-1">
     {% for year in timeline_data %}
 
@@ -19,7 +23,6 @@
       </a>
     </li>
     
-        
       {% for month in year.months %}
         {% for day in month.days %}
           {% if day.has_epoch %}
@@ -54,11 +57,6 @@
 
     {% endfor %}
   </ol>
-
-  <button id="sidebar-deploy" class="sidebar-deploy" aria-label="Deploy Sidebar">
-    <img aria-label="Sidebar double chevron symbol" id="sidebar-icon" class="icon icon-large" src="{{ url_for('static', filename='/images/icons/chevron_right.svg') }}">
-  </button>
-
 
 </aside>
 
