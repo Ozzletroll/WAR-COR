@@ -15,11 +15,9 @@
   <ol id="sidebar-scroll" class="sidebar-scroll" aria-label="Timeline Shortcuts" aria-hidden="true" tabindex="-1">
     {% for year in timeline_data %}
 
-    <li tabindex="-1">
-      <a class="sidebar-button" href="#year-{{year.name}}" tabindex="-1">
-        <button class="year-button entry-button" tabindex="-1">
-          {{ year.name + campaign.date_suffix}}
-        </button> 
+    <li class="sidebar-li">
+      <a class="sidebar-button year-button" href="#year-{{year.name}}" tabindex="-1" data-target-elem="year-{{year.name}}">
+        {{ year.name + campaign.date_suffix}}
       </a>
     </li>
     
@@ -28,10 +26,8 @@
           {% if day.has_epoch %}
             {% for epoch in day.epochs %}
             <li>
-              <a class="sidebar-button" href="#epoch-{{epoch.id}}" tabindex="-1">
-                <button class="event-button epoch-button"tabindex="-1">
-                  -{{epoch.title}}-
-                </button>
+              <a class="sidebar-button event-button epoch-button" href="#epoch-{{epoch.id}}" tabindex="-1" data-target-elem="epoch-{{epoch.id}}">
+                -{{epoch.title}}-
               </a>
             </li>
             {% endfor %}
@@ -39,14 +35,8 @@
 
           {% for event in day.events  %}
           <li>
-            <a class="sidebar-button" href="#event-{{event.id}}" tabindex="-1">
-              {% if event.header %}
-              <button class="event-button event-button-header" onclick="scrollToAnim('event-{{event.id}}')" tabindex="-1">
-              {% else %}
-              <button class="event-button" onclick="scrollToAnim('event-{{event.id}}')" tabindex="-1">
-              {% endif %}
-                {{event.title}}
-              </button>
+            <a class="sidebar-button event-button" href="#event-{{event.id}}" tabindex="-1" data-target-elem="event-{{event.id}}">
+              {{event.title}}
             </a>
           </li>
           {% endfor %}

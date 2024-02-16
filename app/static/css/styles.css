@@ -3990,7 +3990,7 @@ a.view-epoch:hover .epoch-header {
   flex-direction: column;
   align-items: center;
   margin-bottom: 5px;
-  scroll-margin: 25vh;
+  scroll-margin: 15vh;
   padding: 10px;
 }
 
@@ -4858,21 +4858,42 @@ for selection in timeline_search.js */
   border-radius: 3px;
 }
 
-.sidebar-button > * {
-  width: 100%;
-  min-height: 40px;
+.sidebar-li {
+  height: 40px;
 }
 
-a.sidebar-button {
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
   text-decoration: none;
+  transition: 0.2s;
+  color: var(--text_header_contrast);
+  box-sizing: border-box;
+  padding: 10px 12px;
+  position: relative;
+}
+
+.sidebar-button:focus-visible {
+  z-index: 7;
+  outline: 2px solid var(--bright_red);
+  filter: brightness(120%);
+}
+
+.sidebar-button:focus-visible::before {
+  content: ">";
+  color: var(--text_dark);
+  position: absolute;
+  left: 0px;
+  font-size: 18px;
 }
 
 .year-button {
+  justify-content: center;
+  align-items: center;
   background-color: var(--dark_red);
-  margin-bottom: 0;
-  clip-path: none;
-  transition: 0.2s;
-  border-radius: 0px;
+  height: 40px;
 }
 
 .year-button:hover {
@@ -4882,16 +4903,8 @@ a.sidebar-button {
 .event-button {
   font-size: 12px;
   font-weight: 400;
-  min-width: 0;
-  overflow-x: hidden;
-  text-align: left;
-  border-style: none;
-  min-height: 40px;
-  padding: 0;
-  padding: 10px;
   background-color: var(--bg_colour2);
   color: var(--text_dark);
-  transition: 0.2s;
 }
 
 .event-button:hover {
@@ -4903,11 +4916,14 @@ a.sidebar-button {
   color: var(--bright_red);
 }
 
+.event-button:focus-visible {
+  color: var(--text_flavour_bright);
+}
+
 .epoch-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   text-transform: uppercase;
   font-weight: 500;
   text-align: center;

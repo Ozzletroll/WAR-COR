@@ -18,8 +18,7 @@ class Tab {
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize.bind(this));
 
-    document.getElementById(this.button).onclick = event => {
-
+    this.buttonElem.onclick = event => {
       if (this.state == false) {
         this.openTab(event)
       }
@@ -27,6 +26,11 @@ class Tab {
         this.closeTab(event)
       }
     }
+
+    // Call scrollToItem when each button is clicked
+    Array.from(this.childButtons).forEach(button => {
+      button.addEventListener("click", () => this.scrollToItem(button.dataset.targetElem));
+    });
   }
 
   checkScreenSize() {
@@ -68,36 +72,39 @@ class Tab {
     this.icon.style.transform = "scaleX(1)";
   }
 
-}
+  // Method  to animate the highlight for scrollTo behavior
+  scrollToItem(targetEvent) {
 
-
-// Function to animate the highlight for scrollTo behavior
-function scrollToAnim(targetEvent) {
-
-  // Get the scrollTo target
-  var parentElem = document.getElementById(targetEvent);
-  // Select the header element for animation
-  var headerElem = parentElem.querySelector('.event-header');
-  headerElem.style.transition = "0.1s"
-
-  var count = 0;
-  var interval = setInterval(function() {
-    if (count >= 6) {
-      clearInterval(interval); // Stop the flashing after 3 cycles
-      headerElem.style.backgroundColor = ""; // Reset the background color
-      headerElem.style.transition = "" // Reset transition 
-      return;
+    // Ignore year button clicks
+    if (targetEvent.startsWith("year") || targetEvent.startsWith("epoch")) {
+      return
     }
 
-    // Alternate between two CSS variables
-    if (count % 2 === 0) {
-      headerElem.style.backgroundColor = "var(--darker_red)";
-    } else {
-      headerElem.style.backgroundColor = "var(--bright_red)";   
-    }
+    var parentElem = document.getElementById(targetEvent);
+    // Select the header element for animation
+    var flashingElem = parentElem.querySelector('.event-header');
+    flashingElem.style.transition = "0.1s"
 
-    count++;
-  }, 200); // Flashing interval in milliseconds
+    var count = 0;
+    var interval = setInterval(function() {
+      if (count >= 6) {
+        clearInterval(interval); // Stop the flashing after 3 cycles
+        flashingElem.style.backgroundColor = ""; // Reset the background color
+        flashingElem.style.transition = ""; // Reset transition 
+        return;
+      }
+
+      // Alternate between two CSS variables
+      if (count % 2 === 0) {
+        flashingElem.style.backgroundColor = "var(--darker_red)";
+      } else {
+        flashingElem.style.backgroundColor = "var(--bright_red)";   
+      }
+
+      count++;
+    }, 200); // Flashing interval in milliseconds
+  }
+
 }
 
 
