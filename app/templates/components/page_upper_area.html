@@ -37,9 +37,9 @@
                          event=none,
                          homepage=false) %}
 
-<div class="page-upper-area">
+<section class="page-upper-area" aria-label="Top of page shortcuts">
   <div class="navigation-area">
-    <div class="navigation-url">
+    <nav class="navigation-url-full" aria-label="Navigation Shortcuts">
 
       {# Navigation urls #}
 
@@ -47,47 +47,33 @@
       {% if is_link %}
 
         {% for url in navigation_urls %}
-
           {# First url is root campaigns page, unless homepage=true, in which case it is for index.html #}
           {% if loop.first %}
             {% if homepage %}
-            <a href="{{ url }}" class="navigation-url">
-              <h5 class="navigation-heading">WAR-COR/</h5>
-            </a>
-            {% elif current_user.is_authenticated  %}
-              <a href="{{ url }}" class="navigation-url">
-                <h5 class="navigation-heading">CAMPAIGNS/</h5>
-              </a>
+              <a href="{{ url }}" class="navigation-url" aria-label="Main Page">WAR-COR/</a>
+            {% elif current_user.is_authenticated %}
+              <a href="{{ url }}" class="navigation-url trim-whitespace" aria-label="Campaigns Page">CAMPAIGNS/</a>
             {% endif %}
           {# Second url #}
           {% else %}
-
-            <a href="{{ url }}" class="navigation-url">
-              <h5 class="navigation-heading">{{campaign.title}}/</h5>
-            </a>
-
+            <a href="{{ url }}" class="navigation-url" aria-label="{{campaign.title}} Timeline">{{campaign.title}}/</a>
           {% endif %}
-
         {% endfor %}
 
       {# Otherwise, if it is the user page, put the 'false' url #}
       {% elif current_user.is_authenticated %}
 
-       {% if request.path == url_for('user.user_page', username=current_user.username) %} 
-
-          <h5 class="navigation-heading" aria-hidden="true">    
-
+        {% if request.path == url_for('user.user_page', username=current_user.username) %} 
+          <div class="navigation-url">
             {{ navigation_urls[0] }}
-
-          </h5>
-
+          </div>
         {% endif %}
 
       {% endif %}
 
-    </div>
+    </nav>
   </div>
 
-</div>
+</section>
 
 {%- endmacro %}

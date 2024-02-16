@@ -1956,34 +1956,35 @@ p {
 /* Top of page navigation elements */
 
 .navigation-area {
-  display: inline;
+  display: inline-block;
   width: fit-content;
-  gap: 0;
+  gap: 0px;
   min-height: 25px;
-  /* This hides the whitepsace created by the inline display */
-  font-size: 0;
 }
 
 .navigation-url {
   text-decoration: none;
   text-transform: uppercase;
   color: var(--text_header_dark);
-  width: fit-content;
 }
 
-.navigation-heading {
+.navigation-url {
   display: inline;
   width: fit-content;
-  font-size: min(18px, 3vw);
+  font-size: clamp(12px, 3vw, 18px);
   font-weight: 300;
   margin: 0px;
 }
 
-.navigation-url:hover {
+.navigation-url.trim-whitespace {
+  margin-right: -10px;
+}
+
+.navigation-url:hover, .navigation-url:focus-visible {
   color: var(--text_flavour_bright);
 }
 
-.navigation-heading:hover {
+.navigation-url:hover, .navigation-url:focus-visible {
   font-weight: 500;
 }
 
