@@ -857,6 +857,14 @@ p {
   background-color: var(--bg_colour2);
 }
 
+.h-menu-item:focus-visible {
+  background-color: var(--elem_dark);
+}
+
+.h-menu-item:focus-visible::before {
+  content: ">";
+}
+
 .hamburger-menu a:visited {
   color: var(--bright_red);
 }
@@ -2624,6 +2632,18 @@ p {
   box-sizing: border-box;
   /* Prevent subpixel rendering bug causing visible line */
   margin-right: -10px;
+  position: relative;
+}
+
+.campaign-header:focus-visible, .campaign-header:focus-visible + .campaign-corner {
+  background-color: var(--bright_red);
+  outline: none;
+}
+
+.campaign-header:focus-visible::before {
+  content: ">";
+  position: absolute;
+  left: 15px;
 }
 
 .campaign-corner {
@@ -2855,15 +2875,23 @@ p {
 }
 
 .entry-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 14px;
   width: 160px;
+  height: 36px;
   padding: 10px;
   background-color: var(--darker_red);
   color: var(--text_normal);
   border: none;
   clip-path: polygon(0px 0px, calc(100% - 5px) 0px, 100% 5px, 100% 105%, 0px 105%);  
   text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
   border-radius: 3px;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .entry-button:hover {
@@ -2872,6 +2900,17 @@ p {
 
 .entry-button:active {
   background-color: var(--bright_red);
+}
+
+.entry-button:focus-visible {
+  outline: none;
+  background-color: var(--bright_red);
+}
+
+.entry-button:focus-visible::before {
+  content: ">";
+  position: absolute;
+  left: 40px;
 }
 
 .campaign-overview-lower {
@@ -3041,6 +3080,8 @@ p {
   box-shadow: 0px 3px 3px var(--elem_shadow);
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  list-style: none;
+  padding: 0px;
 }
 
 .deploy-button {
@@ -3053,12 +3094,8 @@ p {
   font-size: 13px;
   color: var(--text_flavour);
   width: 100%;
-  height: 30px;
   padding: 5px;
   z-index: 1;
-}
-
-.entry-buttons-deploy a {
   text-decoration: none;
 }
 
@@ -3070,6 +3107,20 @@ p {
 .deploy-button:active {
   color: var(--bright_red);
   background-color: var(--elem_hover);
+}
+
+.deploy-button:focus-visible {
+  background-color: var(--elem_bright);
+  outline: none;
+}
+
+.deploy-button:focus-visible::after {
+  content: "";
+  width: 5px;
+  height: 30px;
+  background-color: var(--bright_red);
+  position: absolute;
+  right: 0px;
 }
 
 /* Campaigns Join/New campaign buttons */
@@ -3084,7 +3135,6 @@ p {
 
 .bar-items-left {
   display: flex;
-  text-decoration: none;
   gap: 10px;
 }
 
@@ -3097,6 +3147,12 @@ p {
   border-radius: 3px;
   padding: 7px 20px;
   transition: 0.1s;
+  text-decoration: none;
+  text-align: center;
+}
+
+.create-campaign-button:visited {
+  text-decoration: none;
 }
 
 .create-campaign-button:hover {

@@ -9,37 +9,52 @@ class Tab {
     this.corner = this.button.parentNode.querySelector(".campaign-corner");
     this.state = false;
 
-    this.button.onclick = event => {
-
+    const handleClick = event => {
       var screenWidth = window.innerWidth || document.documentElement.clientWidth;
-      
       if (this.state == false && screenWidth <= 500) {
         this.openTab(event)
-      }
+      } 
       else if (this.state == true && screenWidth <= 500) {
         this.closeTab(event)
       }
-    } 
+    }
+
+    this.button.addEventListener("click", handleClick);
+    this.button.addEventListener('keydown', event => {
+      // Handle enter key
+      if (event.keyCode === 13) {
+        handleClick(event);
+      }
+    });
+    
   }
   
   openTab() {
     this.tab.style.display = "flex";
     this.tab.style.maxHeight = "fit-content";
-
     this.button.style.borderBottomLeftRadius = "0px";
     this.corner.style.borderBottomRightRadius = "0px";
-
     this.state = true
   }
 
   closeTab() {
     this.tab.style.maxHeight = "0";
     this.tab.style.display = "none";
-
     this.button.style.borderBottomLeftRadius = "5px";
     this.corner.style.borderBottomRightRadius = "5px";
-
     this.state = false;
+  }
+
+  checkStatus() {
+    var screenWidth = window.innerWidth || document.documentElement.clientWidth;
+    if (screenWidth >= 500) {
+      this.button.setAttribute("role", "generic");
+      this.button.setAttribute("tabIndex", "-1");
+    }
+    else {
+      this.button.setAttribute("role", "button");
+      this.button.setAttribute("tabIndex", "0");
+    }
   }
 
 }
@@ -53,6 +68,7 @@ class Dropdown {
     this.dropdown = dropdown;
     this.button = button;
     this.buttonOutline = button.parentNode;
+    this.childButtons = dropdown.getElementsByClassName("deploy-button");
     this.state = false
 
     this.button.onclick = event => {
@@ -79,23 +95,33 @@ class Dropdown {
     this.dropdown.style.height = "150px";
     this.dropdown.style.border = "1px solid var(--dark_red)";
     this.dropdown.style.borderTop = "0px";
+    this.dropdown.setAttribute("aria-hidden", "false");
+    Array.from(this.childButtons).forEach(childButton => {
+      childButton.setAttribute("tabIndex", "0");
+      childButton.setAttribute("aria-hidden", "false");
+    })
     this.state = true
   }
 
   closeDropdown() {
     this.button.style.transitionDelay = "0.1s";
     this.dropdown.style.height = "0";
+    this.dropdown.setAttribute("aria-hidden", "true");
+    Array.from(this.childButtons).forEach(childButton => {
+      childButton.setAttribute("tabIndex", "-1");
+      childButton.setAttribute("aria-hidden", "true");
+    })
     this.state = false;
 
     // Disable transition delay after 0.1s
-  setTimeout(() => {
-    this.button.style.borderBottomLeftRadius = "";
-    this.buttonOutline.style.borderBottomLeftRadius = "";
-    this.button.style.borderBottomRightRadius = "";
-    this.buttonOutline.style.borderBottomRightRadius = "";
-    this.button.style.transitionDelay = "0s";
-    this.dropdown.style.border = "0px";
-  }, 100);
+    setTimeout(() => {
+      this.button.style.borderBottomLeftRadius = "";
+      this.buttonOutline.style.borderBottomLeftRadius = "";
+      this.button.style.borderBottomRightRadius = "";
+      this.buttonOutline.style.borderBottomRightRadius = "";
+      this.button.style.transitionDelay = "0s";
+      this.dropdown.style.border = "0px";
+    }, 100);
   }
 
   closeAllDropdowns() {
@@ -128,7 +154,7 @@ buttons.forEach((button, index) => {
   menuItems.push(dropdown)
 });
 
-// Close drowdowns if another element clicked
+// Close dropdowns if another element clicked
 window.onclick = event => {
   for (let i = 0; i < menuItems.length; i++) {
     const dropdown = menuItems[i];
@@ -165,6 +191,13 @@ window.addEventListener("resize", function() {
   else {
     Array.from(campaigns).forEach((tab) => {
       tab.closeTab();
+      tab.checkStatus();
     })
   }
+});
+
+window.addEventListener("DOMContentLoaded", function() {
+  Array.from(campaigns).forEach((tab) => {
+    tab.checkStatus();
+  })
 });

@@ -37,7 +37,11 @@
                          event=none,
                          homepage=false) %}
 
+{% if is_link %}
 <section class="page-upper-area" aria-label="Top of page shortcuts">
+{% else %}
+<section class="page-upper-area" aria-label="Top of page shortcuts" aria-hidden="true">
+{% endif %}
   <div class="navigation-area">
     <nav class="navigation-url-full" aria-label="Navigation Shortcuts">
 
