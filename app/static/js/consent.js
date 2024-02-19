@@ -1,11 +1,11 @@
 // Function to accept cookies in gdpr consent form
-function acceptCookies(event) {
+function acceptCookies() {
 
-    const button = event.target;
+    const button = document.getElementById("gdpr-consent-accept");
     const consentForm = document.getElementById("consent-form");
   
-    const csrf = button.dataset.csrf;
-    const URL = button.dataset.url;
+    const csrf = consentForm.dataset.csrf;
+    const URL = consentForm.dataset.url;
 
     // Send to server via fetch request
     fetch(URL, {
@@ -21,3 +21,8 @@ function acceptCookies(event) {
     })
   };
   
+// Add event listener to consent form
+document.getElementById("consent-form").addEventListener("submit", function(event) {
+  event.preventDefault();
+  acceptCookies();
+});
