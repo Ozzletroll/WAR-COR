@@ -1,9 +1,7 @@
 // Function to accept cookies in gdpr consent form
 function acceptCookies() {
 
-    const button = document.getElementById("gdpr-consent-accept");
     const consentForm = document.getElementById("consent-form");
-  
     const csrf = consentForm.dataset.csrf;
     const URL = consentForm.dataset.url;
 
