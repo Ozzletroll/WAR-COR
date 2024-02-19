@@ -5,8 +5,8 @@
   #}
 
 {% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class = flashes>
+  {% if messages | length > 0 %}
+    <ul class="flashes" aria-label="Form Flash Messages">
     {% for message in messages %}
       <li>{{ message }}</li>
     {% endfor %}

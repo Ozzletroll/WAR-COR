@@ -18,19 +18,21 @@
     <h1 class="form-heading">REGISTER</h1>
     <div class="form-flash">
       {% include 'components/flash.html' %}
-      <ul class = flashes>
+      {% if form.password.errors | length > 0 %}
+      <ul class = flashes aria-label="Form Flash Messages">
         {% for error in form.password.errors %}
           <li>{{ error }}</li>
         {% endfor %}
       </ul>
+      {% endif %}
     </div>
     <div class="flavour-text-area login-flavour-text">
-      <p class="flavour-text flavour-text-centre">UWC-3-01 // Correspondent::Identification</p>
+      <p class="flavour-text flavour-text-centre" aria-label="Flavour Text">UWC-3-01 // Correspondent::Identification</p>
     </div>
 
     <div class="form-area">
 
-      <form class="form register-form" method="POST" action="/register">
+      <form class="form register-form" method="POST" aria-label="Register Form">
         {{ form.csrf_token }}
         <div class="form-header">
           <h4 class="auth-form-header">/Register</h3>
@@ -40,34 +42,56 @@
 
           <div class="auth-form-upper upper-register">
             <div class="form-elem">
-              <label class="form-icon">
-                <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/email.svg') }}">
-              </label>
+              <div class="form-icon">
+                <img class="icon icon-invert" 
+                src="{{ url_for('static', filename='/images/icons/email.svg') }}"
+                aria-label="Email Icon">
+              </div>
               <div class="form-input-container">
-                {{ form.email(placeholder_='EMAIL', class_='form-input auth-form-input form-field', autocomplete='off') }}
+                {{ form.email(placeholder_="EMAIL", 
+                              class_="form-input auth-form-input form-field", 
+                              autocomplete="off",
+                              aria_label="Email") }}
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
             <div class="form-elem">
-              <label class="form-icon">
-                <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/user.svg') }}">
-              </label>
+              <div class="form-icon">
+                <img class="icon icon-invert" 
+                src="{{ url_for('static', filename='/images/icons/user.svg') }}"
+                aria-label="Username Icon">
+              </div>
               <div class="form-input-container">
-                {{ form.username(placeholder_='USERNAME', class_='form-input auth-form-input form-field', autocomplete='off') }}
+                {{ form.username(placeholder_="USERNAME", 
+                                 class_="form-input auth-form-input form-field",
+                                 autocomplete="off",
+                                 aria_label="Username") }}
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
             <div class="form-elem">
-              <label class="form-icon"><img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/lock.svg') }}"></label>
+              <div class="form-icon">
+                <img class="icon icon-invert" 
+                src="{{ url_for('static', filename='/images/icons/lock.svg') }}",
+                aria-label="Password Icon">
+              </div>
               <div class="form-input-container">
-                {{ form.password(placeholder_='PASSWORD', class_='form-input auth-form-input form-field') }}
+                {{ form.password(placeholder_="PASSWORD", 
+                                 class_="form-input auth-form-input form-field",
+                                 aria_label="Password") }}
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
             <div class="form-elem">
-              <label class="form-icon"><img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/lock_key.svg') }}"></label>
+              <div class="form-icon">
+                <img class="icon icon-invert" 
+                src="{{ url_for('static', filename='/images/icons/lock_key.svg') }}"
+                aria-label="Confirm Password Icon">
+              </div>
               <div class="form-input-container">
-                {{ form.confirm_password(placeholder_='CONFIRM_PASSWORD', class_='form-input auth-form-input form-field') }}
+                {{ form.confirm_password(placeholder_="CONFIRM_PASSWORD", 
+                                         class_="form-input auth-form-input form-field",
+                                         aria_label="Confirm Password") }}
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
@@ -90,9 +114,9 @@
 
     </div>
 
-    <div class="flavour-text-area">
+    <div class="flavour-text-area" aria-label="Footer Flavour Text">
       <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-B-1. Impersonating a registered UWC War Correspondent is a galactic crime, and carries a maximum sentence of 0.7Gs. </p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme" aria-label="WAR/COR Triangle Logo">
     </div>
 
 
