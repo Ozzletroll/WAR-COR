@@ -809,10 +809,10 @@ p {
     border-bottom-left-radius: 0px;
   }
 
-  .message-item {
-    width: max(70%, 150px);
+  .message-header {
+    justify-content: center;
   }
-
+  
   .message-button {
     width: 25vw;
   }
@@ -824,13 +824,27 @@ p {
 .hamburger-menu {
   display: flex;
   position: fixed;
+  left: 0px;
   top: 54px;
-  z-index: 5;
-  width: 100%;
+  width: 100vw;
   transform: translateY(calc(-100% - 54px));
   transition: 0.15s ease;
   border-bottom: 1px solid var(--elem_border);
   box-shadow: 3px 3px 3px var(--elem_shadow);
+  z-index: 5;
+}
+
+.hamburger-menu-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.h-menu-li {
+  width: 100%;
 }
 
 .hamburger-button {
@@ -855,6 +869,10 @@ p {
 .h-menu-item:hover {
   color: var(--bright_red);
   background-color: var(--bg_colour2);
+}
+
+.h-menu-item:hover::before {
+  content: ">";
 }
 
 .h-menu-item:focus-visible {
