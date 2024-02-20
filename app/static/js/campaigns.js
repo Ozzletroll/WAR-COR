@@ -169,15 +169,20 @@ const campaigns = [];
 var tabs = document.getElementsByClassName("campaign-entry");
 Array.from(tabs).forEach((element) => {
 
-  var buttonElement = element.querySelector(".campaign-header");
-  var tabElement = element.querySelector(".campaign-body");
-
-  var tab = new Tab({
-    tab: tabElement,
-    button: buttonElement,
-  })
-
-  campaigns.push(tab);
+  if (element.classList.contains("campaign-new-user-entry")) {
+    return
+  }
+  else {
+    var buttonElement = element.querySelector(".campaign-header");
+    var tabElement = element.querySelector(".campaign-body");
+  
+    var tab = new Tab({
+      tab: tabElement,
+      button: buttonElement,
+    })
+  
+    campaigns.push(tab);
+  }
 
 })
 

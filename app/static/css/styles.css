@@ -3018,10 +3018,19 @@ p {
     display: none;
   }
 
+  .campaign-body.campaign-new-user-body {
+    display: flex;
+  }
+
   .campaign-header {
     border-bottom-left-radius: 3px;
     cursor: pointer;
     transition: all 0.5s ease 0s;
+  }
+
+  .campaign-new-user-header .campaign-header {
+    cursor: initial;
+    border-bottom-left-radius: 0px;
   }
 
   .campaign-header-section:hover > .campaign-header,
@@ -3034,6 +3043,17 @@ p {
     transition: 0.2s;
     background-color: var(--bright_red);
     color: var(--darker_red);
+  }
+
+  .campaign-new-user-header:hover > .campaign-header,
+  .campaign-new-user-header:hover > .campaign-corner {
+    background-color: var(--darker_red);
+  }
+
+  .campaign-new-user-header:active > .campaign-header,
+  .campaign-new-user-header:active > .campaign-corner {
+    background-color: var(--darker_red);
+    color: var(--text_header_contrast);
   }
 
   .campaign-corner {

@@ -154,15 +154,15 @@
 
 {% macro new_user_entry(campaign=campaign, current_user=current_user) %}
 
-<section class="campaign-entry">
+<li class="campaign-entry campaign-new-user-entry" aria-label="New User Welcome Message">
 
-  <div class="campaign-header-section">
+  <div class="campaign-header-section campaign-new-user-header">
     <h2 class="campaign-header">Welcome, {{current_user.username}}</h2>
     <div class="campaign-corner"></div>
   </div>
   
 
-    <div class="campaign-body">
+    <div class="campaign-body campaign-new-user-body">
 
       <p class="flavour-text">UCR-{{current_user.id}}-00 // Correspondent::Briefing </p>
 
@@ -208,6 +208,6 @@
 
       </div>
 
-</section>
+</li>
 
 {%- endmacro %}
