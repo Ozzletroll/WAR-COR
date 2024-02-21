@@ -2608,6 +2608,7 @@ p {
   height: 32px;
   width: 32px;
   appearance: none;
+  cursor: pointer;
 }
 
 .campaigns-divider {
