@@ -2650,7 +2650,7 @@ p {
   margin: 0;
   padding: 20px 50px 20px 50px;
   text-transform: uppercase;
-  scroll-margin: 25vh;
+  scroll-margin: 30vh;
   border-top-left-radius: 5px;
   transition: 0.3s;
   box-sizing: border-box;
