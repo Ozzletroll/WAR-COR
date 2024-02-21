@@ -69,8 +69,8 @@
         {% endif %}
       </div>
 
-      <hr class="campaigns-divider">
-      <p class="flavour-text">UWC-5-00 // Campaign::Index </p>
+      <hr class="campaigns-divider" aria-hidden="true">
+      <p class="flavour-text" aria-label="Flavour Text">UWC-5-00 // Campaign::Index </p>
 
       <div class="form-flash">
         {% include 'components/flash.html' %}
@@ -78,53 +78,58 @@
 
     </div>
 
-    <form class="edit-form form-column fade-in-block-2" method="POST" novalidate>
+    <form class="edit-form form-column fade-in-block-2" aria-label="Campaign Data Form" method="POST" novalidate>
       {{ form.csrf_token }}
 
       <div class="form-container form-container-small">
-        <label class="campaign-form-label form-icon">
+        <label class="campaign-form-label form-icon" aria-label="Campaign Title">
           <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-            <h4 class="campaign-form label-title">Campaign Title</h4>
+            <img class="icon campaign-form-icon icon-invert" aria-label="Campaign Title Symbol" alt="A stylised pen writing"
+            src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+            <h4 id="campaign-title-label" class="campaign-form label-title">Campaign Title</h4>
           </div>
-          <p class="flavour-text">UWC-5-01 //  Campaign::Conflict Designation</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-01 //  Campaign::Conflict Designation</p>
         </label>
 
         <div class="form-input-container">
-          {{ form.title(class_="campaign-input form-input", autocomplete="off", placeholder="REQUIRED") }}
+          {{ form.title(class_="campaign-input form-input", autocomplete="off", 
+             placeholder="REQUIRED", aria_labelledby="campaign-title-label") }}
           <div class="form-underline"></div>
         </div>
 
       </div>
 
       <div class="form-container form-container-small">
-        <label class="campaign-form-label form-icon">
+        <label class="campaign-form-label form-icon" aria-label="Date Suffix">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-              <h4 class="campaign-form label-title">Date Suffix</h4>
+              <img class="icon campaign-form-icon icon-invert" aria-label="Date Suffix Symbol" alt="A stylised pen writing"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <h4 id="date-suffix-label" class="campaign-form label-title">Date Suffix</h4>
             </div>
             <div class="label-right">
               <h4 class="campaign-form label-title label-example">Example: 5016</h4>
               <h4 id="example-date" class="campaign-form label-title label-example"></h4>
             </div>
           </div>
-          <p class="flavour-text">UWC-5-02 //  Calendar::Suffix</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-02 //  Calendar::Suffix</p>
         </label>
 
         <div class="form-input-container">
-          {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
+          {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", 
+             autocomplete="off", maxlength=8, placeholder="OPTIONAL", aria_labelledby="date-suffix-label") }}
           <div class="form-underline"></div>
         </div>
 
       </div>
 
       <div class="form-container form-container-small form-container-margin-auto">
-        <label class="campaign-form-label form-icon">
+        <label class="campaign-form-label form-icon" aria-label="Negative Date Suffix">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-              <h4 class="campaign-form label-title">Negative Suffix</h4>
+              <img class="icon campaign-form-icon icon-invert" aria-label="Negative Date Suffix Symbol" alt="A stylised pen writing"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <h4 id="negative-suffix-label" class="campaign-form label-title">Negative Suffix</h4>
             </div>
             <div class="label-right">
               <div class="example-area">
@@ -133,32 +138,35 @@
               </div>
             </div>
           </div>
-          <p class="flavour-text">UWC-5-03 //  Calendar::Negative Suffix</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-03 //  Calendar::Negative Suffix</p>
         </label>
 
         <div class="form-input-container">
-          {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", autocomplete="off", maxlength=8, placeholder="OPTIONAL") }}
+          {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", 
+          autocomplete="off", maxlength=8, placeholder="OPTIONAL", aria_labelledby="negative-suffix-label") }}
           <div class="form-underline"></div>
         </div>
 
       </div>
 
       <div class="form-container form-container-large">
-        <label class="campaign-form-label form-icon">
+        <label class="campaign-form-label form-icon" aria-label="Campaign Description">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-              <h4 class="campaign-form label-title">Description</h4>
+              <img class="icon campaign-form-icon icon-invert" aria-label="Description Symbol" alt="A stylised pen writing"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <h4 id="campaign-description-label" class="campaign-form label-title">Description</h4>
             </div>
             <div class="label-right">
               <h4 class="campaign-form label-title label-example">Characters left:&nbsp</h4>
               <h4 id="remaining-chars" class="campaign-form label-title label-example">600</h4>
             </div>
           </div>
-          <p class="flavour-text">UWC-5-04 //  Campaign::Conflict Overview</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-04 //  Campaign::Conflict Overview</p>
         </label>
 
-        {{ form.description(id="summernote", class_="campaign-input large-input", autocomplete="off") }}
+        {{ form.description(id="summernote", class_="campaign-input large-input", 
+           autocomplete="off", aria_labelledby="campaign-description-label") }}
 
         {{ summernote.summernote_editor(campaign_desc=true) }}
 
@@ -171,8 +179,9 @@
     </form>
 
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
-      <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      <p class="flavour-text flavour-text-centre" aria-label="Flavour Text">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme"
+      aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens.">
     </div>
 
   </div>

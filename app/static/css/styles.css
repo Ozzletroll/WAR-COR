@@ -2166,6 +2166,11 @@ p {
   background-color: var(--dark_red);
 }
 
+.campaign-submit:focus-visible {
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
+}
+
 .flavour-text-area {
   display: flex;
   flex-direction: column;
@@ -5070,7 +5075,6 @@ for selection in timeline_search.js */
 .back-button {
   border: none;
   padding: 0;
-  margin-right: 10px;
   background: none;
 }
 
