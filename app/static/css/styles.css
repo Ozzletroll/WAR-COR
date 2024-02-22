@@ -5960,21 +5960,20 @@ pre {
   align-items: center;
 }
 
-.backup-link {
-  width: 100%;
-}
-
 .backup-button {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  flex: 1 0 auto;
   width: 100%;
+  height: fit-content;
+  min-height: 220px;
   padding: 40px;
   border-radius: 5px;
   border: 2px solid var(--elem_border);
   background-color: var(--bg_colour1);
   transition: 0.3s;
+  box-sizing: border-box;
 }
 
 .backup-button:hover {
