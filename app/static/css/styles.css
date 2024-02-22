@@ -2272,8 +2272,14 @@ p {
   fill: var(--bright_red);
 }
 
+.searchbar-button:focus-visible,
+.edit-toggle-button:focus-visible {
+  outline: none;
+}
+
 .searchbar-button:focus-visible .search-label {
-  outline: 2px solid var(--darker_red);
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
   border-radius: 3px;
 }
 
@@ -2456,7 +2462,8 @@ p {
 }
 
 .edit-toggle-button:focus-visible .edit-toggle-label {
-  outline: 2px solid var(--darker_red);
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
   border-radius: 3px;
 }
 
@@ -3136,6 +3143,7 @@ p {
   padding: 5px;
   z-index: 1;
   text-decoration: none;
+  box-sizing: border-box;
 }
 
 .deploy-button:hover {
@@ -3150,16 +3158,9 @@ p {
 
 .deploy-button:focus-visible {
   background-color: var(--elem_bright);
-  outline: none;
-}
-
-.deploy-button:focus-visible::after {
-  content: "";
-  width: 5px;
-  height: 30px;
-  background-color: var(--bright_red);
-  position: absolute;
-  right: 0px;
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
 
 /* Campaigns Join/New campaign buttons */
@@ -4960,7 +4961,8 @@ for selection in timeline_search.js */
 }
 
 .sidebar-deploy:focus-visible .icon {
-  outline: 2px solid var(--text_header_contrast);
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
   border-radius: 3px;
 }
 
@@ -4982,17 +4984,9 @@ for selection in timeline_search.js */
 }
 
 .sidebar-button:focus-visible {
-  z-index: 7;
-  outline: 2px solid var(--bright_red);
-  filter: brightness(120%);
-}
-
-.sidebar-button:focus-visible::before {
-  content: ">";
-  color: var(--text_dark);
-  position: absolute;
-  left: 0px;
-  font-size: 18px;
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
+  outline-offset: -5px;
 }
 
 .year-button {
