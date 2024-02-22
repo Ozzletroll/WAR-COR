@@ -44,8 +44,8 @@
 
         <h3 class="campaigns-heading">Edit Members</h3>
       </div>
-      <hr class="campaigns-divider">
-      <p class="flavour-text">CNF-{{campaign.id}}-00 // {{campaign.title}}::Participants </p>
+      <hr class="campaigns-divider" aria-hidden="true">
+      <p class="flavour-text" aria-label="Flavour Text">CNF-{{campaign.id}}-00 // {{campaign.title}}::Participants </p>
 
     </div>
 
@@ -54,204 +54,222 @@
     </div>
 
     <div class="fade-in-block-2">
-    <!-- Tab 1 -->
     <div class="settings-area">
-      <button class="callsign-deploy-button" id="t1-button">
-        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_management.svg') }}">
-        <h2 class="user-page-title">Current Members</h2>
-      </button>
 
-      <div class="callsign-content-area" id="tab-1">
+      <details aria-label="Current Members">
+        <summary class="callsign-deploy-button" id="t1-button" aria-label="Current Members">
+            <img class="icon campaign-form-icon" aria-label="Current Members Icon" alt="Two humanoid figures side by side"
+            src="{{ url_for('static', filename='/images/icons/user_management.svg') }}">
+            <h2 class="user-page-title">Current Members</h2>
+        </summary>
 
-        <p class="flavour-text">CNF-{{campaign.id}}-01 // {{campaign.title}}::Active Personnel </p>
+        <div class="callsign-content-area" id="tab-1" aria-label="Campaign Members Panel">
 
-        <div class="campaign-members edit-members-container">
-          <ul class="campaign-members-list current-members-list">
-            {% for user in campaign.members %}
-              {% if campaign in user.permissions %}
-              <li class="members-list-item members-list-admin">
-                {% else %}
-              <li class="members-list-item">
-              {% endif %}
-                <div class="members-left">
-                {{user.username.upper()}}:
-                {% for entry in user.campaign_associations %}
-                  {%if entry.campaign_id == campaign.id%}
-                    {% if entry.callsign is not none %}
-                      [{{entry.callsign.upper()}}]
-                    {% endif %}
-                  {%endif%}
-                {% endfor %}
+          <p class="flavour-text" aria-label="Flavour Text">CNF-{{campaign.id}}-01 // {{campaign.title}}::Active Personnel </p>
+  
+          <div class="campaign-members edit-members-container">
+            <ul class="campaign-members-list current-members-list" aria-label="Members List">
+              {% for user in campaign.members %}
                 {% if campaign in user.permissions %}
-                [ADMIN]
-                {% endif %}
-                </div>
-                <div class="members-right">
-                  {% if not campaign in user.permissions%}
-
-                    <button id="admin-button-{{ loop.index }}" class="button entry-button" data-modal="True">
-                      <div>MAKE ADMIN</div>
-                    </button>
-
+                <li class="members-list-item members-list-admin">
                   {% else %}
-                    <div id="admin-button-{{ loop.index }}" class="button members-button-spacer">
-                      <div class="spacer-inner">ADMIN</div>
-                    </div>
+                <li class="members-list-item">
+                {% endif %}
+                  <div class="members-left">
+                  {{user.username.upper()}}:
+                  {% for entry in user.campaign_associations %}
+                    {%if entry.campaign_id == campaign.id%}
+                      {% if entry.callsign is not none %}
+                        [{{entry.callsign.upper()}}]
+                      {% endif %}
+                    {%endif%}
+                  {% endfor %}
+                  {% if campaign in user.permissions %}
+                  [ADMIN]
                   {% endif %}
-                  
-                  <button id="button-{{ loop.index }}" class="entry-button">
-                    {% if user.id == current_user.id %}
-                      Leave
+                  </div>
+                  <div class="members-right">
+                    {% if not campaign in user.permissions%}
+                      <button id="admin-button-{{ loop.index }}" class="button entry-button" data-modal="True">
+                        <div>MAKE ADMIN</div>
+                      </button>
                     {% else %}
-                      Remove
+                      <div id="admin-button-{{ loop.index }}" class="button members-button-spacer" aria-label="Admin">
+                        <div class="spacer-inner">ADMIN</div>
+                      </div>
                     {% endif %}
-                  </button>
-                  
-                </div>
-              </li>
-              
+                    <button id="button-{{ loop.index }}" class="entry-button">
+                      {% if user.id == current_user.id %}
+                        Leave
+                      {% else %}
+                        Remove
+                      {% endif %}
+                    </button>
+                    
+                  </div>
+                </li>
+                
+              {% endfor %} 
+            </ul>
+          </div> 
+  
+        </div>
 
-            {% endfor %} 
+      </details>
+
+    </div>
+
+    <div class="settings-area">
+
+      <details aria-label="Add New Member">
+        <summary class="callsign-deploy-button" id="t2-button">
+          <img class="icon campaign-form-icon" aria-label="New Member Icon" alt="A humanoid figure" 
+          src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
+          <h2 class="user-page-title">Add New Member</h2>
+        </summary>
+
+        <div class="callsign-content-area" id="tab-2" aria-label="New Member Search Panel">
+
+          <p class="flavour-text" aria-label="Flavour Text">CNF-{{campaign.id}}-02 // {{campaign.title}}::Recruitment </p>
+  
+          <form id="form-1" class="add-member-form" onsubmit="return false" novalidate aria-label="Username Search Form">
+            {{ search_form.csrf_token }}
+            <div class="user-form-container">
+              {{ search_form.username(id="username-search", 
+                                      class_="callsign-input",
+                                      placeholder="USERNAME SEARCH", 
+                                      autocomplete="off",
+                                      aria_label="Username Search") }}
+              {{ search_form.submit(class_="button submit-button callsign-submit", 
+                                    onClick="user_search(target_url, csrfToken)",
+                                    aria_label="Search") }}
+            </div>
+          </form>
+  
+          <ul id="results-area" class="user-results-area" aria-label="Results">
+            {# This marker is just a reference node for the insertBefore() method #}
+            <div id="results-marker" aria-hidden="true"></div>
           </ul>
-        </div> 
-
-      </div>
+  
+          {# Hidden form, populated via javascript onclick event listener #}
+          <form id="add-user-form" class="add-member-form form-hidden" method="POST">
+            {{ add_form.csrf_token }}
+            <div class="user-form-container">
+              {{ add_form.username }}
+              {{ add_form.user_id }}
+              {{ add_form.submit_button(id="add-user-submit") }}
+            </div>
+          </form>
+  
+        </div>
+      </details>
 
     </div>
 
-    <!-- Tab 2 -->
-
     <div class="settings-area">
-      <button class="callsign-deploy-button" id="t2-button">
-        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
-        <h2 class="user-page-title">Add New Member</h2>
-      </button>
 
-      <div class="callsign-content-area" id="tab-2">
+      <details aria-label="Visibility and Access">
+        <summary class="callsign-deploy-button" id="t3-button">
+          <img class="icon campaign-form-icon" aria-label="Visibility and Access Icon" alt="A gear symbol"
+          src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
+          <h2 class="user-page-title">Visibility and Access</h2>
+        </summary>
 
-        <p class="flavour-text">CNF-{{campaign.id}}-02 // {{campaign.title}}::Recruitment </p>
+        <div class="callsign-content-area" id="tab-3" aria-label="Visibility and Access Settings Panel">
 
-        <form id="form-1" class="add-member-form" onsubmit="return false" novalidate>
-          {{ search_form.csrf_token }}
-          <div class="user-form-container">
-            {{ search_form.username(id="username-search", class_="callsign-input", placeholder="USERNAME SEARCH", autocomplete='off') }}
-            {{ search_form.submit(class_="button submit-button callsign-submit", onClick="user_search(target_url, csrfToken)") }}
+          <p class="flavour-text" aria-label="Flavour Text">CNF-{{campaign.id}}-03 // {{campaign.title}}::Access </p>
+  
+          <div class="user-form-container user-access-form">
+            <form class="preferences-form" aria-label="Visibility">
+  
+              <h4 class="campaign-entry-title access-title">Visibility</h4>
+              <p class="access-description">Adjust who can view the campaign timeline.</p>
+              <div class="pref-item">
+                <input id="visibility-public" value="public" type="radio" aria-labelledby="anyone-label"
+                name="visibility" class="theme-radio" 
+                onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+                <label id="anyone-label" class="theme-label">
+                  Anyone
+                </label>
+              </div>
+              <div class="pref-item">
+                <input id="visibility-private" value="private" type="radio" aria-labelledby="members-only-label"
+                name="visibility" class="theme-radio" 
+                onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+                <label id="members-only-label" class="theme-label">
+                  Members Only
+                </label>
+              </div>
+    
+            </form>
+  
           </div>
-        </form>
-
-        <div id="results-area" class="user-results-area">
-          
-          <!-- This marker is just a reference node for the insertBefore() method -->
-          <div id="results-marker"></div>
-
-        </div>
-
-        {# Hidden form, populated via javascript onclick event listener #}
-        <form id="add-user-form" class="add-member-form form-hidden" method="POST">
-          {{ add_form.csrf_token }}
-          <div class="user-form-container">
-            {{ add_form.username }}
-            {{ add_form.user_id }}
-            {{ add_form.submit_button(id="add-user-submit") }}
+    
+          <div class="user-form-container user-access-form">
+            <form class="preferences-form" aria-label="Membership">
+    
+              <h4 class="campaign-entry-title access-title">Membership</h4>
+              <p class="access-description">Adjust if users can apply for membership to the 
+                campaign via the "Join Campaign" page. If set to "Open", applications still require Admin approval.</p>
+              <div class="pref-item">
+                <input id="membership-invite" value="invite" type="radio" 
+                name="membership" class="theme-radio" aria-labelledby="invite-only"
+                onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+                <label id="invite-only" class="theme-label">
+                  Invite Only
+                </label>
+              </div>
+              <div class="pref-item">
+                <input id="membership-open" value="open" type="radio" 
+                name="membership" class="theme-radio" aria-labelledby="open-to-applications"
+                onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
+                <label id="open-to-applications" class="theme-label">
+                  Open to Applications
+                </label>
+              </div>
+    
+            </form>
           </div>
-        </form>
-
-
-      </div>
-
-    </div>
-
-    <!-- Tab 3 -->
-
-    <div class="settings-area">
-      <button class="callsign-deploy-button" id="t3-button">
-        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
-        <h2 class="user-page-title">Visibility and Access</h2>
-      </button>
-
-      <div class="callsign-content-area" id="tab-3">
-
-        <p class="flavour-text">CNF-{{campaign.id}}-03 // {{campaign.title}}::Access </p>
-
-        <div class="user-form-container user-access-form">
-          <form class="preferences-form">
-
-            <h4 class="campaign-entry-title access-title">Campaign Visibility</h4>
-            <p class="access-description">Adjust who can view the campaign timeline.</p>
-            <div class="pref-item">
-              <input id="visibility-public" value="public" type="radio" name="visibility" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
-              <label class="theme-label">
-                Anyone
-              </label>
-            </div>
-            <div class="pref-item">
-              <input id="visibility-private" value="private" type="radio" name="visibility" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
-              <label class="theme-label">
-                Members Only
-              </label>
-            </div>
-  
-          </form>
-
+         
         </div>
-  
-        <div class="user-form-container user-access-form">
-          <form class="preferences-form">
-  
-            <h4 class="campaign-entry-title access-title">Membership</h4>
-            <p class="access-description">Adjust whether users can apply for membership to the 
-              campaign via the "Join Campaign" page. If set to "Open", applications still require Admin approval.</p>
-            <div class="pref-item">
-              <input id="membership-invite" value="invite" type="radio" name="membership" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
-              <label class="theme-label">
-                Invite Only
-              </label>
-            </div>
-            <div class="pref-item">
-              <input id="membership-open" value="open" type="radio" name="membership" class="theme-radio" onclick="updateMembershipSettings(membershipRulesURL, membershipCSRFToken)">
-              <label class="theme-label">
-                Open to Applications
-              </label>
-            </div>
-  
-          </form>
-        </div>
-       
         
+      </details>
 
-      </div>
 
     </div>
 
   </div>
     
     <div class="flavour-text-area fade-in-block-3">
-      <p class="flavour-text flavour-text-centre"> 
-        All UWC personnel are reminded that misusing Campaign Administrator priveleges 
+      <p class="flavour-text flavour-text-centre" aria-label="Flavour Text"> 
+        All UWC personnel are reminded that misusing Campaign Administrator privileges 
         is a galactic crime, and carries a maximum sentence of 0.031536GS.
       </p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo">
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}"
+       class="top-logo" aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens">
     </div>
       
     {# Confirm Make Admin Modal #}
 
     {% for user in campaign.members %}
-    <div id="admin-modal-{{loop.index}}" class="modal">
-      <div class="modal-content modal-content-mid">
+    <div id="admin-modal-{{loop.index}}" class="modal" aria-label="Make Admin Confirmation Modal">
+      <div class="modal-content modal-content-mid" role="dialog" aria-label="Grant Admin Status Confirmation Modal">
         <div class="modal-content-inner">
           <div class="modal-header">
             <h2 class="modal-header-small">
               GRANT WARCOR AUTHORISATION
             </h2>
-            <span id="admin-close-{{loop.index}}" class="modal-close">
-              <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-            </span>
+            <button id="admin-close-{{loop.index}}" class="modal-close" aria-label="Close">
+              <img class="icon" aria-label="Close Icon" alt="A cross symbol"
+              src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+            </button>
           </div>
           <div class="modal-body modal-body-small">
-            <p class="flavour-text modal-flavour">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::GRANT</p>
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::GRANT</p>
             <p class="modal-text modal-text-upper">Confirm WARCOR admin authorisation for user {{ user.username }} in campaign "{{ campaign.title }}".</p>
 
-            <form id="make-admin-form" class="add-member-form" method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+            <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
+            method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
               {{ add_form.csrf_token }}
               <div>
                 {{ add_form.username(value=user.username, class_="form-hidden") }}
@@ -270,7 +288,7 @@
 
     {% for user in campaign.members %}
     <div id="modal-{{loop.index}}" class="modal">
-      <div class="modal-content modal-content-mid">
+      <div class="modal-content modal-content-mid" role="dialog" aria-label="Leave Campaign Confirmation Modal">
         <div class="modal-content-inner">
           <div class="modal-header">
             <h2 class="modal-header-small">
@@ -280,15 +298,17 @@
               Remove User
               {% endif %}
             </h2>
-            <span id="close-{{loop.index}}" class="modal-close">
-              <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-            </span>
+            <button id="close-{{loop.index}}" class="modal-close" aria-label="Close">
+              <img class="icon" aria-label="Close Icon" alt="A cross symbol"
+              src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+            </button>
           </div>
           <div class="modal-body modal-body-small">
-            <p class="flavour-text modal-flavour">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::REVOKE</p>
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::REVOKE</p>
             <p class="modal-text modal-text-upper">Confirm removal of {{ user.username }} from campaign "{{ campaign.title }}". Any admin privileges will be revoked.</p>
 
-            <form id="remove-user-form" class="add-member-form" method="POST" action="{{ url_for('membership.remove_user', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+            <form id="remove-user-form" class="add-member-form" aria-label="Confirmation Form" 
+            method="POST" action="{{ url_for('membership.remove_user', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
               {{ remove_form.csrf_token }}
               <div class="user-form-container">
                 {{ remove_form.username(value=user.username, class_="form-hidden") }}

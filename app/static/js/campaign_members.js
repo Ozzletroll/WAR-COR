@@ -91,6 +91,7 @@ class Modal {
     this.modal = modal;
     this.button = button;
     this.span = span;
+    this.focusButton = this.modal.querySelector(".modal-close");
 
     this.button.onclick = event => {
       this.openModal(event)
@@ -104,6 +105,7 @@ class Modal {
   
   openModal() {
     this.modal.style.display = "flex";
+    this.focusButton.focus();
   }
 
   closeModal() {
@@ -202,11 +204,11 @@ function user_search(url, csrfToken) {
       // Get the results area div element
       const resultsAreaDiv = document.getElementById("results-area");
       // Delete any existing dynamic elements
-      resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
+      resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
 
       // Create no users found entry
-      const newDiv = Object.assign(
-        document.createElement("div"), 
+      const newLi = Object.assign(
+        document.createElement("li"), 
         {id: "results-none",
         className: "results-area"}
         );
@@ -217,9 +219,9 @@ function user_search(url, csrfToken) {
         innerHTML: "//204: No matching users found"}
         );
 
-        newDiv.appendChild(newHeading);
+        newLi.appendChild(newHeading);
         const startingDiv = document.getElementById("results-marker");
-        resultsAreaDiv.insertBefore(newDiv, startingDiv);
+        resultsAreaDiv.insertBefore(newLi, startingDiv);
 
       return ;
     }
@@ -228,11 +230,11 @@ function user_search(url, csrfToken) {
       // Get the results area div element
       const resultsAreaDiv = document.getElementById("results-area");
       // Delete any existing dynamic elements
-      resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
+      resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
 
       // Create no users found entry
-      const newDiv = Object.assign(
-        document.createElement("div"), 
+      const newLi = Object.assign(
+        document.createElement("li"), 
         {id: "results-none",
         className: "results-area"}
         );
@@ -245,9 +247,9 @@ function user_search(url, csrfToken) {
         innerHTML: `//400: Please enter a search query`}
         );
 
-      newDiv.appendChild(newHeading);
+      newLi.appendChild(newHeading);
       const startingDiv = document.getElementById("results-marker");
-      resultsAreaDiv.insertBefore(newDiv, startingDiv);
+      resultsAreaDiv.insertBefore(newLi, startingDiv);
 
       return;
     }
@@ -259,14 +261,14 @@ function user_search(url, csrfToken) {
       const resultsAreaDiv = document.getElementById("results-area");
 
       // Delete any existing dynamic elements
-      resultsAreaDiv.innerHTML = '<div id="results-marker"></div>';
+      resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
 
       let index = 0
       for (let user in data["results"]) {
 
         // Create the new elements
-        const newDiv = Object.assign(
-          document.createElement("div"), 
+        const newLi = Object.assign(
+          document.createElement("li"), 
           {id: "results-" + user ,
           className: "results-area"}
           );
@@ -279,7 +281,7 @@ function user_search(url, csrfToken) {
 
         const newButton = Object.assign(
           document.createElement("button"), 
-          {className: "submit-button callsign-submit",
+          {className: "button submit-button callsign-submit",
           innerHTML: "Invite"}
           );
 
@@ -295,17 +297,17 @@ function user_search(url, csrfToken) {
         });
 
         // Add the elements as child of parent div
-        newDiv.appendChild(newHeading);
-        newDiv.appendChild(newButton);
+        newLi.appendChild(newHeading);
+        newLi.appendChild(newButton);
 
         // Add the newly created elements
         if (index == 0) {
           const startingDiv = document.getElementById("results-marker");
-          resultsAreaDiv.insertBefore(newDiv, startingDiv);
+          resultsAreaDiv.insertBefore(newLi, startingDiv);
         }
         else {
           const currentDiv = document.getElementById("results-" + user);
-          resultsAreaDiv.insertBefore(newDiv, currentDiv);
+          resultsAreaDiv.insertBefore(newLi, currentDiv);
         }
         
         index += 1

@@ -371,6 +371,11 @@ button {
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
+  transition: 0.15s;
+}
+
+.button:focus-visible {
+  outline-offset: -5px;
 }
 
 .heading-top {
@@ -1579,15 +1584,10 @@ p {
   display: flex;
   align-items: center;
   padding: 10px;
-  opacity: 0.7;
   transition: 0.15s;
-}
-
-.modal-close:hover,
-.modal-close:focus {
-  text-decoration: none;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
-  opacity: 1;
 }
 
 @media screen and (max-width: 500px) { 
@@ -2916,6 +2916,7 @@ p {
   border-radius: 3px;
   box-sizing: border-box;
   position: relative;
+  transition: 0.15s;
 }
 
 .entry-button:hover {
@@ -2927,14 +2928,8 @@ p {
 }
 
 .entry-button:focus-visible {
-  outline: none;
+  outline-offset: -5px;
   background-color: var(--bright_red);
-}
-
-.entry-button:focus-visible::before {
-  content: ">";
-  position: absolute;
-  left: 40px;
 }
 
 .campaign-overview-lower {
@@ -3245,6 +3240,7 @@ p {
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  cursor: pointer;
 }
 
 .callsign-deploy-button:hover {
@@ -3255,6 +3251,11 @@ p {
   transition: 0.2s;
   background-color: var(--bright_red);
   color: var(--darker_red);
+}
+
+.callsign-deploy-button:focus-visible {
+  background-color: var(--dark_red);
+  outline-offset: -10px;
 }
 
 .user-content .flavour-text {
@@ -3390,7 +3391,6 @@ p {
   transition: 0.5s;
   background-color: var(--elem_bright);
   padding: 5px;
-  outline: none;
   position: relative;
   color: var(--text_flavour_bright);
 }
@@ -3401,6 +3401,12 @@ p {
 
 .callsign-input:focus {
   color: var(--bright_red);
+  outline: none;
+}
+
+.callsign-input:focus-visible {
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
 }
 
 .callsign-form-container {
@@ -3790,23 +3796,23 @@ p {
 
 }  
 
+.user-results-area {
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+}
+
 .results-area {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .results-username {
   margin: 2px;
   color: var(--text_dark);
-}
-
-.results-area a {
-  text-decoration: none;
-  height: 20px;
-  font-size: 14px;
-  margin-left: 20px;
 }
 
 /* Timeline */
