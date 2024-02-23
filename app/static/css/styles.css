@@ -3405,13 +3405,14 @@ p {
   outline: none;
 }
 
-.callsign-input:focus-visible {
-  outline: 2px auto Highlight;
-  outline: 2px auto -webkit-focus-ring-color;
+.callsign-input:focus + .form-underline::before {
+  transform: scaleX(1);
+  background-color: var(--bright_red);
 }
 
 .callsign-form-container {
   display: flex;
+  flex-direction: column;
 }
 
 .callsign-submit {
@@ -3436,6 +3437,7 @@ p {
   border-style: none;
   border-radius: 0px;
   padding: 5px;
+  margin-bottom: 15px;
   background-color: var(--bg_colour2);
   display: flex;
   align-items: center;
@@ -3467,10 +3469,14 @@ p {
 
 .user-form-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  justify-content: center;
   margin-bottom: 20px;
-  gap: 15px;
+  width: fit-content;
+}
+
+.new-username-input {
+  width: 400px;
 }
 
 .user-access-form {
@@ -3479,7 +3485,7 @@ p {
 }
 
 .user-buttons .user-form-container .user-form-flavour {
-  margin-bottom: 0;
+  margin-bottom: 15px;
 }
 
 .user-icon-trans {
@@ -3572,6 +3578,11 @@ p {
   .callsign-input {
     text-align: center;
     width: 100%;
+    max-width: none;
+  }
+
+  .change-password-form {
+    align-items: center;
   }
 
   .callsign-form {
@@ -3585,6 +3596,12 @@ p {
   .user-form-container {
     flex-direction: column;
     align-items: center;
+    width: 100%;
+  }
+
+  .user-settings-button {
+    box-sizing: border-box;
+    width: 100%;
   }
 
   .callsign-entry-title {

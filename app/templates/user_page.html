@@ -46,9 +46,9 @@
         <h3 class="user-heading heading-line-2">{{ user.username }}</h3>
       </div>
 
-      <hr class="campaigns-divider">
+      <hr class="campaigns-divider" aria-hidden="true">
 
-      <p class="flavour-text">UWC-16-00 // Personnel::Correspondent Profile</p>
+      <p class="flavour-text" aria-label="Flavour Text">UWC-16-00 // Personnel::Correspondent Profile</p>
 
     </div>
 
@@ -60,17 +60,18 @@
 
     <div class="user-page-tabs fade-in-block-2">
 
-    <div class="callsigns-area">
-      <button class="callsign-deploy-button" id="t1-button">
-        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/callsigns.svg') }}">
+    <details class="callsigns-area" aria-label="Callsigns">
+      <summary class="callsign-deploy-button" id="t1-button" aria-label="Callsigns">
+        <img class="icon campaign-form-icon" aria-label="Callsign Icon" alt="A stylised headset"
+        src="{{ url_for('static', filename='/images/icons/callsigns.svg') }}">
         <h2 class="user-page-title">Callsigns</h2>
-      </button>
+      </summary>
 
-      <div class="callsign-content-area" id="tab-1">
+      <div class="callsign-content-area" id="tab-1" aria-label="Callsigns Panel">
 
-        <p class="flavour-text">UWC-16-01 // Personnel::Known Aliases </p>
+        <p class="flavour-text" aria-label="Flavour Text">UWC-16-01 // Personnel::Known Aliases </p>
 
-        <ul class="user-callsigns">
+        <ul class="user-callsigns" aria-label="Campaign Callsign List">
           {% for campaign in user.campaigns %}
             <li class="user-service-record-entry">
               <h5 class="user-campaigns-headings">{{ campaign.title }}</h5>
@@ -91,9 +92,13 @@
                     {{ callsign_form.csrf_token }}
 
                     <div class="callsign-form-container">
-                      {{ callsign_form.callsign(class_="callsign-input", placeholder="NEW CALLSIGN", autocomplete="off") }}
+                      {{ callsign_form.callsign(class_="callsign-input", 
+                                                placeholder="NEW CALLSIGN", 
+                                                autocomplete="off",
+                                                aria_label="New Callsign") }}
+                      <div class="form-underline"></div>
                     </div>
-                    {{ callsign_form.submit(class_="submit-button callsign-submit") }}
+                    {{ callsign_form.submit(class_="button submit-button callsign-submit") }}
                   </form>
 
                 {%endif%}
@@ -104,144 +109,155 @@
         </ul>
 
       </div>
-    </div>
+    </details>
 
     <!-- Tab 2 -->
 
-    <div class="settings-area">
-      <button class="callsign-deploy-button" id="t2-button">
-        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
+    <details class="settings-area" aria-label="Preferences">
+      <summary class="callsign-deploy-button" id="t2-button" aria-label="Preferences">
+        <img class="icon campaign-form-icon" aria-label="User Settings Icon" alt="A stylised gear"
+        src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
         <h2 class="user-page-title">Preferences</h2>
-      </button>
+      </summary>
 
-      <div class="callsign-content-area" id="tab-2">
+      <div class="callsign-content-area" id="tab-2" aria-label="Preferences Panel">
 
-        <p class="flavour-text">UWC-16-02 // Personnel::User Preferences </p>
+        <p class="flavour-text" aria-label="Flavour Text">UWC-16-02 // Personnel::User Preferences </p>
+        <details class="user-form-container">
+          <summary id="p1-button" class="button user-settings-button">
+            <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Theme Icon" alt="A circular icon alternating between black and white"
+            src="{{ url_for('static', filename='/images/icons/dark_mode.svg') }}">
+            INTERFACE THEME
+          </summary>
+          <p class="flavour-text user-form-flavour flavour-gap" aria-label="Flavour Text">//Imaging::Wavelength </p>
 
-        <div class="user-buttons">
+          <div id="pref-1" class="change-password-form" aria-label="UI Theme Panel">
+            <form class="preferences-form" aria-label="UI Theme Selection">
 
-          <div class="user-form-container">
-            <button id="p1-button" class="user-settings-button">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/dark_mode.svg') }}">
-              INTERFACE THEME
-            </button>
-            <p class="flavour-text user-form-flavour">//Imaging::Wavelength </p>
+              <div class="pref-item">
+                <input id="theme-1" value="light" type="radio" aria-labelledby="theme-gms"
+                name="theme" class="theme-radio" onclick="themeToggle()">
+                <label id="theme-gms" class="theme-label">
+                  GMS Visible Spectrum Optics
+                </label>
+              </div>
+
+              <div class="pref-item">
+                <input id="theme-2" value="dark" type="radio" aria-labelledby="theme-ssc" 
+                name="theme" class="theme-radio" onclick="themeToggle()">
+                <label id="theme-ssc" class="theme-label">
+                  SSC Thermal Imaging Systems
+                </label>
+              </div>
+
+              <div class="pref-item">
+                <input id="theme-3" value="ironbow" type="radio" aria-labelledby="theme-ha"
+                name="theme" class="theme-radio" onclick="themeToggle()">
+                <label id="theme-ha" class="theme-label">
+                  HA Ironbow Smart-Targeting
+                </label>
+              </div>
+
+              <div class="pref-item">
+                <input id="theme-4" value="green" type="radio" aria-labelledby="theme-ipsn"
+                name="theme" class="theme-radio" onclick="themeToggle()">
+                <label id="theme-ipsn" class="theme-label">
+                  IPS-N ENV Fusion Display
+                </label>
+              </div>
+
+              <div class="pref-item">
+                <input id="theme-5" value="horus" type="radio" aria-labelledby="theme-horus"
+                name="theme" class="theme-radio" onclick="themeToggle()">
+                <label id="theme-horus" class="theme-label">
+                  HORUS Burning Gaze of the Udjat
+                </label>
+              </div>
+
+            </form>
           </div>
-
-          <div id="pref-1" class="change-password-form">
-
-            <div class="user-form-container">
-
-              <form class="preferences-form">
-
-                <div class="pref-item">
-                  <input id="theme-1" value="light" type="radio" label="AAA" name="theme" class="theme-radio" onclick="themeToggle()">
-                  <label class="theme-label">
-                    GMS Visible Spectrum Optics
-                  </label>
-                </div>
-
-                <div class="pref-item">
-                  <input id="theme-2" value="dark" type="radio" name="theme" class="theme-radio" onclick="themeToggle()">
-                  <label class="theme-label">
-                    SSC Thermal Imaging Systems
-                  </label>
-                </div>
-
-                <div class="pref-item">
-                  <input id="theme-3" value="ironbow" type="radio" name="theme" class="theme-radio" onclick="themeToggle()">
-                  <label class="theme-label">
-                    HA Ironbow Smart-Targeting
-                  </label>
-                </div>
-
-                <div class="pref-item">
-                  <input id="theme-4" value="green" type="radio" name="theme" class="theme-radio" onclick="themeToggle()">
-                  <label class="theme-label">
-                    IPS-N ENV Fusion Display
-                  </label>
-                </div>
-
-                <div class="pref-item">
-                  <input id="theme-5" value="horus" type="radio" name="theme" class="theme-radio" onclick="themeToggle()">
-                  <label class="theme-label">
-                    HORUS Burning Gaze of the Udjat
-                  </label>
-                </div>
-
-              </form>
-
-            </div>
-          </div>
-
-        </div>
-
+        </details>
       </div>
-
-    </div>
+    </details>
 
    <!-- Tab 3 -->
 
-    <div class="settings-area">
-      <button class="callsign-deploy-button" id="t3-button">
-        <img class="icon campaign-form-icon" src="{{ url_for('static', filename='/images/icons/settings.svg') }}">
+    <details class="settings-area" aria-label="Account Management">
+      <summary class="button callsign-deploy-button" id="t3-button" aria-label="Account Management">
+        <img class="icon campaign-form-icon" aria-label="Account Management Icon" alt="A stylised spanner"
+        src="{{ url_for('static', filename='/images/icons/settings.svg') }}">
         <h2 class="user-page-title">Account Management</h2>
-      </button>
+      </summary>
 
-      <div class="callsign-content-area" id="tab-3">
+      <div class="callsign-content-area" id="tab-3" aria-label="Account Management Panel">
 
-        <p class="flavour-text">UWC-16-02 // Personnel::Preferences </p>
+        <p class="flavour-text" aria-label="Flavour Text">UWC-16-02 // Personnel::Details </p>
 
         <div class="user-buttons">
 
-          <div class="user-form-container">
-            <button id="f1-button" class="user-settings-button">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
+          <details class="user-form-container" aria-label="Change Username">
+            <summary id="f1-button" class="button user-settings-button" aria-label="Change Username">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Username Icon"
+              alt="A stylised figure beside a gear" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
               CHANGE USERNAME
-            </button>
-            <p class="flavour-text user-form-flavour">//Ident::Reconfigure </p>
-          </div>
+            </summary>
+            <p class="flavour-text user-form-flavour" aria-label="Flavour Text">//Ident::Reconfigure </p>
+
+            <form id="form-1" class="change-password-form" aria-label="Change Username Form"
+            method="POST" action="{{ url_for('user.change_username', username=user.username) }}">
+              {{ username_form.csrf_token }}
+              <div class="user-form-container">
+                {{ username_form.username(class_="callsign-input new-username-input", 
+                                          placeholder="NEW USERNAME", 
+                                          autocomplete='off') }}
+                <div class="form-underline"></div>
+              </div>
+              {{ username_form.submit(class_="button submit-button callsign-submit") }}
+            </form>
+
+          </details>
           
-          <form id="form-1" class="change-password-form" method="POST" action="{{ url_for('user.change_username', username=user.username) }}">
-            {{ username_form.csrf_token }}
-            <div class="user-form-container">
-              {{ username_form.username(class_="callsign-input", placeholder="NEW USERNAME", autocomplete='off') }}
-              {{ username_form.submit(class_="submit-button callsign-submit") }}
-            </div>
-          </form>
 
-          <div class="user-form-container">
-            <button id="f2-button" class="user-settings-button">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/lock_key.sv') }}g">
+          <details class="user-form-container" aria-label="Change Password">
+            <summary id="f2-button" class="button user-settings-button" aria-label="Change Password">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Password Icon"
+              alt="A stylised padlock and key" src="{{ url_for('static', filename='/images/icons/lock_key.sv') }}g">
               CHANGE PASSWORD
-            </button>
-            <p class="flavour-text user-form-flavour">//Authentication::Update </p>
-         </div>
+            </summary>
+            <p class="flavour-text user-form-flavour" aria-label="Flavour Text">//Authentication::Update </p>
 
-          <form id="form-2" class="change-password-form" method="POST" action="{{ url_for('user.change_password', username=user.username) }}">
-            {{ password_form.csrf_token }}
+            <form id="form-2" class="change-password-form" aria-label="Change Password Form"
+            method="POST" action="{{ url_for('user.change_password', username=user.username) }}">
+              {{ password_form.csrf_token }}
+  
+              <div class="user-form-container">
+                {{ password_form.old_password(class_="callsign-input new-username-input", 
+                                              placeholder="OLD PASSWORD",
+                                              aria_label="Old Password") }}
+                <div class="form-underline"></div>
+              </div>
+              <div class="user-form-container">
+                {{ password_form.new_password(class_="callsign-input new-username-input", 
+                                              placeholder="NEW PASSWORD",
+                                              aria_label="New Password") }}
+                <div class="form-underline"></div>
+              </div>
+              <div class="user-form-container">
+                {{ password_form.confirm_password(class_="callsign-input new-username-input", placeholder="CONFIRM PASSWORD") }}
+                <div class="form-underline"></div>
+              </div>
+              {{ password_form.submit(class_="button submit-button callsign-submit") }}
+  
+            </form>
+
+          </details>
 
             <div class="user-form-container">
-              {{ password_form.old_password(class_="callsign-input", placeholder="OLD PASSWORD") }}
-            </div>
-            <div class="user-form-container">
-              {{ password_form.new_password(class_="callsign-input", placeholder="NEW PASSWORD") }}
-            </div>
-            <div class="user-form-container">
-              {{ password_form.confirm_password(class_="callsign-input", placeholder="CONFIRM PASSWORD") }}
-              {{ password_form.submit(class_="submit-button callsign-submit") }}
-            </div>
-
-          </form>
-
-            <div class="user-form-container">
-            <a class="delete-button" href="{{ url_for('user.delete_user', username=user.username) }}">
-              <button class="user-settings-button">
-                <img class="icon icon-invert callsign-form-icon user-icon-trans" src="{{ url_for('static', filename='/images/icons/bin.svg') }}">
-                DELETE ACCOUNT
-              </button>
+            <a class="button delete-button user-settings-button" href="{{ url_for('user.delete_user', username=user.username) }}">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Delete Account Icon"
+              alt="A stylised bin" src="{{ url_for('static', filename='/images/icons/bin.svg') }}">
+              DELETE ACCOUNT
             </a>
-            <p class="flavour-text user-form-flavour">//Contract::Terminate </p>
           </div>
 
 
@@ -249,13 +265,14 @@
 
       </div>
 
-    </div>
+    </details>
 
   </div>
 
     <div class="flavour-text-area fade-in-block-3">
-      <p class="flavour-text flavour-text-centre"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      <p class="flavour-text flavour-text-centre" aria-label="Flavour Text"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme"
+      aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens.">
     </div>
 
   </div>
