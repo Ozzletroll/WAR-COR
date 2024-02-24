@@ -89,9 +89,9 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 
   By default, WAR/COR will create a local SQLite database for use during development. However, to more closely mirror the production environment, a PostgreSQL database can be used by updating the environment:
 
-    ```
-    POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
-    ```
+  ```
+  POSTGRESQL_DATABASE_URI=postgresql://DATABASE_USER:PASSWORD@DATABASE_HOST_NAME:DATABASE_PORT/DATABASE_NAME
+  ```
 
 
 
