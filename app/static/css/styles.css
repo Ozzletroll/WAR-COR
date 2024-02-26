@@ -3739,6 +3739,15 @@ p {
   background-position: left;
 }
 
+.add-member-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-member-form .user-form-container {
+  margin-right: 20px;
+}
+
 .members-button-spacer {
   display: flex;
   font-size: 14px;
@@ -3800,6 +3809,10 @@ p {
   align-items: flex-start;
 }
 
+.add-member-form {
+  flex-direction: column;
+}
+
 }
 
 @media screen and (max-width: 500px) { 
@@ -3810,6 +3823,30 @@ p {
 
   .members-right {
     flex-direction: column;
+  }
+
+  .add-member-form {
+    align-items: center;
+  }
+
+  .add-member-form .user-form-container {
+    margin-right: 0px;
+  }
+
+  .user-access-form .preferences-form {
+    align-items: center;
+  }
+
+  .access-description {
+    text-align: center;
+  }
+
+  .pref-item {
+    width: 150px;
+  }
+
+  .user-page-title {
+    padding-right: 10px;
   }
 
 }  

@@ -140,10 +140,11 @@
                                       placeholder="USERNAME SEARCH", 
                                       autocomplete="off",
                                       aria_label="Username Search") }}
-              {{ search_form.submit(class_="button submit-button callsign-submit", 
+              <div class="form-underline"></div>
+            </div>
+            {{ search_form.submit(class_="button submit-button callsign-submit", 
                                     onClick="user_search(target_url, csrfToken)",
                                     aria_label="Search") }}
-            </div>
           </form>
   
           <ul id="results-area" class="user-results-area" aria-label="Results">
