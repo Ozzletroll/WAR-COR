@@ -49,7 +49,7 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
 
 # Add new epoch
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/new_epoch", methods=["GET", "POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/epoch/new-epoch", methods=["GET", "POST"])
 @login_required
 @limiter.limit("60/minute")
 def new_epoch(campaign_name, campaign_id):
