@@ -2668,13 +2668,10 @@ p {
 
 .campaign-header:focus-visible, .campaign-header:focus-visible + .campaign-corner {
   background-color: var(--bright_red);
-  outline: none;
 }
 
-.campaign-header:focus-visible::before {
-  content: ">";
-  position: absolute;
-  left: 15px;
+.campaign-header:focus-visible {
+  outline-offset: -15px;
 }
 
 .campaign-corner {
