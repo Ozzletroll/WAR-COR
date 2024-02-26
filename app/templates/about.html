@@ -33,107 +33,120 @@
 
       </div>
 
-      <hr class="campaigns-divider">
-      <p class="flavour-text">UWC-73-16 // Application::Overview </p>
+      <hr class="campaigns-divider" aria-hidden="true">
+      <p class="flavour-text" aria-label="Flavour Text">UWC-73-16 // Application::Overview </p>
 
       <div class="about-page-content">
 
-        <h3 class="about-page-header">Stack Overview</h3>
-          
-        <p class="about-page-paragraph"> 
-          WAR/COR is written in Python, using the Flask micro web framework and Jinja2 template engine.
-          Data storage is handled via PostgreSQL, using the SQLAlchemy ORM. The frontend is built using 
-          HTML, CSS, and Javascript.
-        </p>
+        <section aria-label="Stack Overview">
+          <h3 class="about-page-header">Stack Overview</h3>
+          <p class="about-page-paragraph"> 
+            WAR/COR is written in Python, using the Flask micro web framework and Jinja2 template engine.
+            Data storage is handled via PostgreSQL, using the SQLAlchemy ORM. The frontend is built using 
+            HTML, CSS, and Javascript.
+          </p>
+          <p class="about-page-paragraph"> 
+            For more information, including a full list of extensions, please see the project's <a class="about-link" href="https://github.com/Ozzletroll/WAR-COR">github page</a>.
+          </p>
+        </section>
 
-        <div class="about-page-loadout">
-          <div class="loadout-header">//Loadout</div>
+        
+        <section class="about-page-loadout" aria-label="Loadout">
+          <h3 class="loadout-header">//Loadout</h3>
           
-          <div class="loadout-area">
+          <ul class="loadout-area" aria-label="Loadout">
 
-            <div class="loadout-container-border">
+            <li class="loadout-container-border">
               <div class="loadout-container">
                 <div class="loadout-item-header">
                   <div class="loadout-icon">
-                    <img class="icon" src="{{ url_for('static', filename='/images/icons/python.svg') }}">
+                    <img class="icon" aria-label="Python Icon" alt="Two snakes, one yellow and one blue"
+                    src="{{ url_for('static', filename='/images/icons/python.svg') }}">
                   </div>
                   <h4 class="loadout-heading">Primary Language</h4>
                 </div>
                 <div class="loadout-item-body">Python 3.11.0</div>
               </div>
-            </div>
+            </li>
 
-            <div class="loadout-container-border">
+            <li class="loadout-container-border">
               <div class="loadout-container">
                 <div class="loadout-item-header">
                   <div class="loadout-icon">
-                    <img class="icon" src="{{ url_for('static', filename='/images/icons/heirarchy.svg') }}">
+                    <img class="icon" aria-label="Framework Icon" alt="A branching tree diagram"
+                    src="{{ url_for('static', filename='/images/icons/heirarchy.svg') }}">
                   </div>
                   <h4 class="loadout-heading">Framework</h4>
                 </div>
                 <div class="loadout-item-body">Flask 3.0.2</div>
               </div>
-            </div>
+            </li>
 
-            <div class="loadout-container-border">
+            <li class="loadout-container-border">
               <div class="loadout-container">
                 <div class="loadout-item-header">
                   <div class="loadout-icon">
-                    <img class="icon" src="{{ url_for('static', filename='/images/icons/database-fixed.svg') }}">
+                    <img class="icon" aria-label="Database Icon" alt="A stylised depiction of stacked disk platters"
+                    src="{{ url_for('static', filename='/images/icons/database-fixed.svg') }}">
                   </div>
                   <h4 class="loadout-heading">Database</h4>
                 </div>
                 <div class="loadout-item-body">PostgreSQL 15</div>
               </div>
-            </div>
+            </li>
 
-            <div class="loadout-container-border">
+            <li class="loadout-container-border">
               <div class="loadout-container">
                 <div class="loadout-item-header">
                   <div class="loadout-icon">
-                    <img class="icon" src="{{ url_for('static', filename='/images/icons/ontology.svg') }}">
+                    <img class="icon" aria-label="ORM Icon" alt="A diagram representing linked object relationships"
+                    src="{{ url_for('static', filename='/images/icons/ontology.svg') }}">
                   </div>
                   <h4 class="loadout-heading">ORM</h4>
                 </div>
                 <div class="loadout-item-body">SQLAlchemy 2.0.23</div>
               </div>
-            </div>
+            </li>
 
-            <div class="loadout-container-border">
+            <li class="loadout-container-border">
               <div class="loadout-container">
                 <div class="loadout-item-header">
                   <div class="loadout-icon">
-                    <img class="icon" src="{{ url_for('static', filename='/images/icons/migration.svg') }}">
+                    <img class="icon" aria-label="Database Migration Icon" alt="An icon representing data ingress/egress"
+                    src="{{ url_for('static', filename='/images/icons/migration.svg') }}">
                   </div>
                   <h4 class="loadout-heading">Database Migration</h4>
                 </div>
                 <div class="loadout-item-body">Flask Migrate 4.0.5</div>
               </div>
-            </div>
+            </li>
 
-            <div class="loadout-container-border">
+            <li class="loadout-container-border">
               <div class="loadout-container">
                 <div class="loadout-item-header">
                   <div class="loadout-icon">
-                    <img class="icon" src="{{ url_for('static', filename='/images/icons/test.svg') }}">
+                    <img class="icon" aria-label="Testing Icon" alt="A stylised alchemic flask"
+                    src="{{ url_for('static', filename='/images/icons/test.svg') }}">
                   </div>
                   <h4 class="loadout-heading">Testing Framework</h4>
                 </div>
                 <div class="loadout-item-body">Pytest 8.0.0</div>
               </div>
-            </div>
+            </li>
 
-          </div>
+          </ul>
 
-        </div>
+        </section>
 
-
-        <h3 class="about-page-header">Personnel Overview</h3>
+        <section aria-label="Personnel Overview">
+          <h3 class="about-page-header">Personnel Overview</h3>
           
-        <p class="about-page-paragraph"> 
-          WAR/COR is developed and maintained by Harvey Gent, a self-taught programmer, composer, 
-          musician and RPG fan based in the UK.
-        </p>
+          <p class="about-page-paragraph"> 
+            WAR/COR is developed and maintained by Harvey Gent, a self-taught programmer, composer, 
+            musician and RPG fan based in the UK.
+          </p>
+        </section>
+
 
       </div>
 

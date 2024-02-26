@@ -6335,6 +6335,10 @@ pre {
   color: var(--text_dark);
 }
 
+.about-link, .about-link:visited {
+  color: var(--text_header);
+}
+
 .email {
   color: var(--text_header);
 }
@@ -6359,6 +6363,7 @@ span.email b {
   flex-wrap: wrap;
   gap: 20px;
   padding: 20px;
+  margin: 0px;
   background-color: var(--elem_mid);
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
@@ -6374,6 +6379,7 @@ span.email b {
   text-transform: uppercase;
   clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 105% 105%, 0 100%);
   border-top-left-radius: 3px;
+  margin: 0px;
 }
 
 .loadout-container-border {
