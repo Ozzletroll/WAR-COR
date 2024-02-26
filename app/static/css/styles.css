@@ -6335,10 +6335,6 @@ pre {
   color: var(--text_dark);
 }
 
-.about-link, .about-link:visited {
-  color: var(--text_header);
-}
-
 .email {
   color: var(--text_header);
 }
