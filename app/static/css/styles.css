@@ -1707,6 +1707,7 @@ p {
   height: 2px;
   width: 100%;
   position: relative;
+  margin-bottom: -2px;
 }
 
 .form-underline::before {
@@ -1726,6 +1727,7 @@ p {
 }
 
 .auth-form-underline {
+  margin-bottom: 0px;
   transition: 0.35s ease;
 }
 
@@ -6218,6 +6220,10 @@ pre {
 
 /* Advanced Search Page */
 
+.search-form-container {
+  margin: 0px;
+}
+
 .advanced-search-results-area {
   display: flex;
   flex-direction: column;
@@ -6250,6 +6256,8 @@ pre {
   margin-bottom: 10px;
   color: var(--text_header);
   transition: 0.15s;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 .result-url:hover {
@@ -6265,6 +6273,7 @@ pre {
 .result-excerpt {
   color: var(--text_dark);
   font-weight: 300;
+  margin: 0px;
 }
 
 .result-header {

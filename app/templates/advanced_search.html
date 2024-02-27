@@ -36,7 +36,6 @@
           
           {# Only render usable back button if referrer has a url #}
           {% if request.referrer %}
-          {# User page back button #}
             {% set url = url_for("user.back") %}
             {{ back_button.back_button(url=url, blank=false) }}
           {% else %}
@@ -45,25 +44,29 @@
             {{ back_button.back_button(url=url, blank=true) }}
           {% endif %}
 
-          {{ back_button.back_button(url=url, blank=false) }}
-
           <div class="campaigns-heading-outer">
             <h3 class="campaigns-heading">Advanced Search</h1>
           </div>
           
         </div>
   
-        <hr class="campaigns-divider">
-        <p class="flavour-text timeline-margin">UWC-71-04 // Advanced::Search</p>
+        <hr class="campaigns-divider" aria-hidden="true">
+        <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-71-04 // Advanced::Search</p>
 
     </div>
     
     <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
       <div class="bar-items-left">
 
-        <form class="search-form fade-in-block-2" method="POST">
+        <form class="search-form fade-in-block-2" method="POST" aria-label="Advanced Search Form">
           {{ form.csrf_token }}
-          {{form.search(class_="form-input callsign-input search-input", placeholder="SEARCH QUERY", autocomplete="off")}}
+          <div class="user-form-container search-form-container">
+            {{form.search(class_="form-input callsign-input search-input", 
+                          placeholder="SEARCH QUERY", 
+                          autocomplete="off",
+                          aria_label="Search Query")}}
+            <div class="form-underline"></div>
+          </div>
           {{form.submit(class_="button submit-button callsign-submit search-submit")}}
         </form>
 
@@ -87,7 +90,7 @@
       <div class="search-campaigns-upper">
   
         {% if results is none %}
-          <div id="empty-flavour" class="empty-search-entry">
+          <div id="empty-flavour" class="empty-search-entry" aria-label="No Results Flavour Text">
             <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
             <h5 class="flavour-text typing-2 empty-search-header">>DATABASE::SEARCH</h5>
             <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
@@ -98,7 +101,7 @@
           {% include 'components/flash.html' %}
         </div>
 
-        <ol id="campaigns-list" class="advanced-search-results-area">
+        <ol id="campaigns-list" class="advanced-search-results-area" aria-label="Search Results">
 
           {# Results go here #}
           {% if results is not none %}

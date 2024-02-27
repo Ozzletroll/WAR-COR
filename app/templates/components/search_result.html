@@ -8,34 +8,32 @@
 
 {% macro result(result, edit=false) %}
 
-  <li class="search-result">
+  <li class="search-result" aria-label="{{ result.type + ': ' + result.object.title }}">
 
-    <a class="result-url" href="{{ result.url }}">
+    <div class="result-url">
       <div class="results-title-area">
-        <h4 class="results-header-main">
+        <a href="{{ result.url }}" class="result-url">
           {{ result.type }}:
           {{ result.object.title }}
-        </h4>
+        </a>
         {% if edit %}
           <a class="result-url results-edit-button" href="{{ result.edit_url }}">
             EDIT
           </a>
         {% endif %}
         </div>
-    </a>
+      </div>
 
-    <div class="result-excerpt">
+    <p class="result-excerpt" aria-label="Excerpt">
       {% if result.excerpt is not none %}
         {{ result.excerpt | safe }}
       {% endif %}
-    </div>
+    </p>
 
     <div class="result-matching-fields">
       <h5 class="result-header">Matching fields: {{ result.matching_attributes_text }}</h5>
     </div>
 
-    
   </li>
     
-
 {%- endmacro %}
