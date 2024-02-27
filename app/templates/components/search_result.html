@@ -25,9 +25,9 @@
     </a>
 
     <div class="result-excerpt">
-
-      {{ result.excerpt | safe }}
-
+      {% if result is not none %}
+        {{ result.excerpt | safe }}
+      {% endif %}
     </div>
 
     <div class="result-matching-fields">

@@ -185,16 +185,20 @@ class SearchEngine:
         if isinstance(item, models.Event):
             excerpt_html = item.body
         elif isinstance(item, models.Epoch):
-            excerpt_html = item.description
+            excerpt_html = item.description or item.overview
 
         # Convert html to plaintext with BeautifulSoup
-        soup = BeautifulSoup(excerpt_html, "html.parser")
-        plain_text = soup.get_text()
+        if excerpt_html is not None:
+            soup = BeautifulSoup(excerpt_html, "html.parser")
+            plain_text = soup.get_text()
 
-        # Ignore words within header tags
-        for header in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
-            header_text = header.get_text()
-            plain_text = plain_text.replace(header_text, "")
+            # Ignore words within header tags
+            for header in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
+                header_text = header.get_text()
+                plain_text = plain_text.replace(header_text, "")
 
-        excerpt = " ".join(plain_text.split()[:30])
-        return f"{excerpt}..."
+            excerpt = " ".join(plain_text.split()[:30])
+            return f"{excerpt}..."
+        else:
+            return None
+        
