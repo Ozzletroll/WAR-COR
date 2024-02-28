@@ -2345,6 +2345,7 @@ p {
 
 .searchbar-go:focus {
   outline: 2px solid var(--elem_border);
+  outline-offset: 0px;
 }
 
 .advanced-search-area {
@@ -2763,6 +2764,10 @@ p {
   fill: var(--bright_red);
 }
 
+.campaign-edit-button:focus-visible {
+  outline-offset: 0px;
+}
+
 .campaign-edit-button-left {
   display: flex;
   align-items: center;
@@ -2979,6 +2984,7 @@ p {
 .campaign-settings-text {
   display: flex;
   justify-content: center;
+  align-items: center;
   border: 1px solid var(--elem_border);
   border-radius: 3px;
   color: var(--text_flavour);
@@ -2987,7 +2993,7 @@ p {
   margin: 0;
   padding: 2px 5px;
   text-align: center;
-  min-height: 22px;
+  height: 22px;
 }
 
 @media screen and (max-width: 850px) { 
@@ -3904,7 +3910,9 @@ p {
   flex: 1 0 0;
   margin-top: 50px;
   margin-bottom: 150px;
+  padding-left: 0px;
   transition: all 0.25s ease 0s;
+  list-style: none;
 }
 
 /* No Events found elements */
@@ -3922,7 +3930,7 @@ p {
   width: 80%;
   padding: 0;
   color: var(--text_header);
-  margin-top: 0px;
+  margin: 0px;
 }
 
 .no-events-hr {
@@ -3941,7 +3949,6 @@ p {
 .data-buttons-hor {
   flex-direction: row;
   width: 100%;
-  margin: -50px 0px 50px 0px;
 }
 
 .data-button {
@@ -3980,6 +3987,11 @@ p {
 .first-event-button.new-timeline-item:hover {
   color: var(--text_header_hover);
 }
+
+.first-event-button.new-timeline-item:focus-visible {
+  outline-offset: 0px;
+}
+
 
 @media screen and (max-width: 1000px) {
 
@@ -4333,6 +4345,8 @@ a.view-epoch:hover .epoch-header {
   the Safari iOS clip-path rendering bug. */
   padding-top: 150px;
   padding-bottom: 25px;
+  padding-left: 0px;
+  list-style: none;
   filter: drop-shadow(1px 2px 3px var(--elem_shadow));
 }
 
@@ -4544,6 +4558,8 @@ a.view-epoch:hover .epoch-header {
   display: flex;
   flex: 3 0 0;
   flex-direction: column;
+  padding-left: 0px;
+  list-style: none;
 }
 
 .event-group-container {
@@ -4754,6 +4770,7 @@ for selection in timeline_search.js */
 
 .timeline-event a {
   text-decoration: none;
+  outline-offset: -10px;
 }
 
 .event-header {
