@@ -21,60 +21,70 @@ elements.
 
       {% if day.events | length != 0 %}
       {# New Epoch Element #}
-      <div class="new-epoch-button-container">
+      <li class="new-epoch-button-container">
         <div class="new-epoch-vert-line"></div>
         <div class="epoch-between event-between-events">
           <div class="between-events-elements">
             <div class="line line-dashed line-edit"></div>
           </div>
-          <a href="{{ url_for('epoch.new_epoch',
-                      campaign_name=campaign.url_title,
-                      campaign_id=campaign.id,
-                      elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
-                      date=year.name + '/' + month.name + '/' + day.name) }}">
-            <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
-              <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-            </button>
+          <a id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" 
+          class="new-timeline-item timeline-between-events"
+          aria-label="New Epoch: {{year.name}}/{{month.name}}/{{day.name}}"
+          href="{{ url_for('epoch.new_epoch',
+                           campaign_name=campaign.url_title,
+                           campaign_id=campaign.id,
+                           elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
+                           date=year.name + '/' + month.name + '/' + day.name) }}">
+            <img class="icon icon-invert" aria-label="New Epoch Icon"
+            src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
           </a>
-          <p class="flavour-text new-event-flavour">//NEW EPOCH: {{year.name}}/{{month.name}}/{{day.name}}</p>
+          <label for="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}"
+          class="flavour-text new-event-flavour">
+            //NEW EPOCH: {{year.name}}/{{month.name}}/{{day.name}}
+          </label>
         </div>
-      </div>
+      </li>
       {% endif %}
 
-    <div class="timeline-day-container day-container-solo">
+    <li class="timeline-day-container day-container-solo">
       <div class="event-line event-line-solo event-line-solo-edit"></div>
     {# If the event is the first in the day #}
     {% elif index == 0 %}
 
       {# New Epoch Element #}
-      <div class="new-epoch-button-container">
+      <li class="new-epoch-button-container">
         <div class="new-epoch-vert-line"></div>
         <div class="epoch-between event-between-events">
           <div class="between-events-elements">
             <div class="line line-dashed line-edit"></div>
           </div>
-          <a href="{{ url_for('epoch.new_epoch',
-                      campaign_name=campaign.url_title,
-                      campaign_id=campaign.id,
-                      elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
-                      date=year.name + '/' + month.name + '/' + day.name) }}">
-            <button id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
-              <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-            </button>
+          <a id="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}" 
+          class="new-timeline-item timeline-between-events"
+          aria-label="New Epoch: {{year.name}}/{{month.name}}/{{day.name}}"
+          href="{{ url_for('epoch.new_epoch',
+                           campaign_name=campaign.url_title,
+                           campaign_id=campaign.id,
+                           elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
+                           date=year.name + '/' + month.name + '/' + day.name) }}">
+            <img class="icon icon-invert" aria-label="New Epoch Icon"
+            src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
           </a>
-          <p class="flavour-text new-event-flavour">//NEW EPOCH: {{year.name}}/{{month.name}}/{{day.name}}</p>
+          <label for="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}"
+          class="flavour-text new-event-flavour">
+            //NEW EPOCH: {{year.name}}/{{month.name}}/{{day.name}}
+          </label>
         </div>
-      </div>
+      </li>
 
-    <div class="timeline-day-container">
+    <li class="timeline-day-container">
       <div class="event-line event-line-top event-line-top-edit"></div>
     {# If the event is the last in the day #}
     {% elif index == length - 1 %}
-    <div class="timeline-day-container day-container-bottom">
+    <li class="timeline-day-container day-container-bottom">
       <div class="event-line event-line-bottom event-line-bottom-edit"></div>
     {# All other events #}
     {% else %}
-    <div class="timeline-day-container day-container-mid">
+    <li class="timeline-day-container day-container-mid">
       <div class="event-line event-line-mid event-line-mid-edit"></div>
     {% endif %}
 
@@ -82,19 +92,19 @@ elements.
 
     {# If event is the only event in the day #}
     {% if length == 1 %}
-    <div class="timeline-day-container day-container-solo">
+    <li class="timeline-day-container day-container-solo">
       <div class="event-line event-line-solo"></div>
     {# If the event is the first in the day #}
     {% elif index == 0  %}
-    <div class="timeline-day-container">
+    <li class="timeline-day-container">
       <div class="event-line event-line-top"></div>
     {# If the event is the last in the day #}
     {% elif index == length - 1 %}
-    <div class="timeline-day-container day-container-bottom">
+    <li class="timeline-day-container day-container-bottom">
       <div class="event-line event-line-bottom"></div>
     {# All other events #}
     {% else %}
-    <div class="timeline-day-container day-container-mid">
+    <li class="timeline-day-container day-container-mid">
       <div class="event-line event-line-mid"></div>
     {% endif %}
 
@@ -112,7 +122,7 @@ elements.
       <div class="date-label-area">
         <div class="line line-first"></div>
         <div class="connector-date connector-date-outline">
-          <div class="connector-date">
+          <div class="connector-date" aria-hidden="true">
             {{event.date[-8:]}}
           </div>
         </div>
@@ -148,11 +158,11 @@ elements.
         </div>
       </div>
     </div>
-  </div>
+  </li>
 
   {% if edit %}
     <!-- Between events new event button -->
-    <div class="edit-line-container">
+    <li class="edit-line-container" aria-label="New Event: +1 Hour">
 
       {% if index != length - 1 %}
       <div class="edit-line-lower"></div>
@@ -171,20 +181,25 @@ elements.
         <div class="between-events-elements">
           <div class="line line-dashed line-edit"></div>
         </div>
-        <a href="{{ url_for('event.add_event', 
-                    campaign_name=campaign.url_title,
-                    campaign_id=campaign.id,
-                    new_hour=True, 
-                    elem_id='new-event-' + year.name + '-' + month.name + '-' + day.name + '-' + event.date.split(' ')[1],
-                    date=event.date) }}">
-          <button id="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}" class="new-timeline-item timeline-between-events">
-            <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-          </button>
+        <a id="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}" 
+        class="new-timeline-item timeline-between-events"
+        aria-label="New Event: +1 Hour"
+        href="{{ url_for('event.add_event',
+                         campaign_name=campaign.url_title,
+                         campaign_id=campaign.id,
+                         new_hour=True,
+                         elem_id='new-event-' + year.name + '-' + month.name + '-' + day.name + '-' + event.date.split(' ')[1],
+                         date=event.date) }}">
+          <img class="icon icon-invert" aria-label="New Event Icon"
+          src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
         </a>
-        <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Hour</p>
+        <label for="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}"
+        class="flavour-text new-event-flavour">
+          //NEW EVENT: +1 Hour
+        </label>
       </div>
 
-    </div>
+    </li>
   {% endif %}
 
 {%- endmacro %}

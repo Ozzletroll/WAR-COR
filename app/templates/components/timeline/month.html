@@ -21,11 +21,11 @@
   {% endif %}
 
   {% if index == 0 %}
-    <div class="month-outer month-outer-top">
+    <li class="month-outer month-outer-top" aria-label="{{ month.name }}">
   {% elif index == length - 1 %}
-    <div class="month-outer month-outer-bottom">
+    <li class="month-outer month-outer-bottom" aria-label="{{ month.name }}">
   {% else %}
-    <div class="month-outer">
+    <li class="month-outer" aria-label="{{ month.name }}">
   {% endif %}
 
   {% if month.days | length != 0 %}
@@ -38,7 +38,7 @@
 
       <div class="line line-first"></div>
       <div class="connector-date connector-date-outline">
-        <div class="connector-date">
+        <div class="connector-date" aria-hidden="true">
           {{ month.name }}
         </div>
       </div>
@@ -47,7 +47,7 @@
 
   {% endif %}
 
-  <div class="timeline-month">
+  <ol class="timeline-month" aria-label="Day List">
 
     {% for day in month.days %}
 
@@ -70,30 +70,30 @@
 
     {% endfor %}
 
-  </div>
+  </ol>
 
-  </div>
-
+  
+</li>
 
   {% if edit %}
     {% if not month.has_following_month %}
     <!-- End of month new event button -->
-    <div class="month-between event-between-years">
+    <li class="month-between event-between-years" aria-label="New Event: +1 Month">
       <div class="between-months-elements">
         <div class="line line-dashed line-dashed-heavy"></div>
       </div>
-      <a href="{{ url_for('event.add_event', 
-                            campaign_name=campaign.url_title,
-                            new_month=True, 
-                            campaign_id=campaign.id,
-                            elem_id='new-month-event-' + year.name + '-' + month.name,
-                            date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
-        <button id="new-month-event-{{year.name}}-{{month.name}}" class="new-timeline-item">
-          <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-        </button>
+      <a id="new-month-event-{{year.name}}-{{month.name}}" class="new-timeline-item" aria-label="New Event +1 Month"
+      href="{{ url_for('event.add_event',
+                        campaign_name=campaign.url_title,
+                        new_month=True,
+                        campaign_id=campaign.id,
+                        elem_id='new-month-event-' + year.name + '-' + month.name,
+                        date=year.name + '/' + month.name + '/' + '01' + ' 00:00:00') }}">
+        <img class="icon icon-invert" aria-label="New Event Icon"
+        src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
       </a>
-      <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Month</p>
-    </div>
+      <label for="new-month-event-{{year.name}}-{{month.name}}" class="flavour-text new-event-flavour">//NEW EVENT: +1 Month</label>
+    </li>
     {% endif %}
 
   {% endif %}

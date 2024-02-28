@@ -58,28 +58,28 @@ elements.
 
   {% if edit %}
     {% if length == 1 %}
-    <div class="timeline-day-outer">
+    <li class="timeline-day-outer" aria-label="{{ day.name }}">
       {% if day.has_epoch_end %}
         <div class="day-line day-line-solo-edit day-line-bottom-edit-offset {{ followed_by_epoch_class }}"></div>
       {% else %}
         <div class="day-line day-line-solo-edit {{ followed_by_epoch_class }}"></div>
       {% endif %}
     {% elif index == 0  %}
-    <div class="timeline-day-outer">
+    <li class="timeline-day-outer" aria-label="{{ day.name }}">
       {% if day.has_following_day %}
       <div class="day-line day-line-top-edit top-no-between {{ followed_by_epoch_class }}"></div>
       {% else %}
       <div class="day-line day-line-top-edit {{ followed_by_epoch_class }}"></div>
       {% endif %}
     {% elif index == length - 1 %}
-    <div class="timeline-day-outer day-container-bottom">
+    <li class="timeline-day-outer day-container-bottom" aria-label="{{ day.name }}">
       {% if day.has_epoch_end %}
       <div class="day-line day-line-bottom-edit-offset {{ followed_by_epoch_class }}"></div>
       {% else %}
       <div class="day-line day-line-bottom-edit {{ followed_by_epoch_class }}"></div>
       {% endif %}
     {% else %}
-    <div class="timeline-day-outer day-container-mid">
+    <li class="timeline-day-outer day-container-mid" aria-label="{{ day.name }}">
       {% if day.has_following_day %}
       <div class="day-line day-line-mid-edit mid-no-between {{ followed_by_epoch_class }}"></div>
       {% else %}
@@ -89,40 +89,40 @@ elements.
   {% else %}
     {# If day is the only day in the month #}
     {% if length == 1 %}
-      <div class="timeline-day-outer">
+      <li class="timeline-day-outer" aria-label="{{ day.name }}">
         <div class="day-line day-line-solo {{ followed_by_epoch_class }} {{ hide_next_day_line }}"></div>
     {# If day is the first in the month #}
     {% elif index == 0  %}
-    <div class="timeline-day-outer">
-      <div class="day-line day-line-top {{ followed_by_epoch_class }} {{ hide_next_day_line }}"></div>
+      <li class="timeline-day-outer" aria-label="{{ day.name }}">
+        <div class="day-line day-line-top {{ followed_by_epoch_class }} {{ hide_next_day_line }}"></div>
     {# If the day is the last in the month #}
     {% elif index == length - 1 %}
-      <div class="timeline-day-outer day-container-bottom">
+      <li class="timeline-day-outer day-container-bottom" aria-label="{{ day.name }}">
         <div class="day-line day-line-bottom"></div>
     {# All other days #}
     {% else %}
-      <div class="timeline-day-outer day-container-mid">
+      <li class="timeline-day-outer day-container-mid" aria-label="{{ day.name }}">
         <div class="day-line day-line-mid {{ followed_by_epoch_class }} {{ hide_next_day_line }}"></div>
     {% endif %}
   {% endif %}
 
 
-  <div class="right-branch-label">
-    <div class="date-label-area {{ hidden_mobile_class}}">
-      <div class="line line-first"></div>
-      <div class="connector-date connector-date-outline">
-        <div class="connector-date">
-          {{day.name}}
+    <div class="right-branch-label">
+      <div class="date-label-area {{ hidden_mobile_class}}">
+        <div class="line line-first"></div>
+        <div class="connector-date connector-date-outline">
+          <div class="connector-date" aria-hidden="true">
+            {{day.name}}
+          </div>
         </div>
+        {% if edit and not day.has_events %}
+        <div class="line line-spacer line-dashed"></div>
+        {% else %}
+        <div class="line line-spacer {{ hidden_class }}"></div>
+        {% endif %}
       </div>
-      {% if edit and not day.has_events %}
-      <div class="line line-spacer line-dashed"></div>
-      {% else %}
-      <div class="line line-spacer {{ hidden_class }}"></div>
-      {% endif %}
-    </div>
 
-  </div>
+    </div>
 
   {% if edit and not day.has_events %}
     <div class="missing-event-area">
@@ -131,16 +131,21 @@ elements.
         <div class="between-events-elements">
           <div class="line line-dashed line-edit"></div>
         </div>
-        <a href="{{ url_for('event.add_event', 
+        <a id="new-missing-event-{{year.name}}-{{month.name}}-{{day.name}}"
+        aria-label="New Event: Missing Event"
+        class="new-timeline-item timeline-between-events"
+        href="{{ url_for('event.add_event', 
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id,
                     elem_id='new-missing-event-' + year.name + '-' + month.name + '-' + day.name, 
                     date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-          <button id="new-missing-event-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
-            <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-          </button>
+          <img class="icon icon-invert" aria-label="New Event Icon"
+          src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
         </a>
-        <p class="flavour-text new-event-flavour">//NEW EVENT: Missing Event</p>
+        <label for="new-missing-event-{{year.name}}-{{month.name}}-{{day.name}}"
+        class="flavour-text new-event-flavour">
+          //NEW EVENT: Missing Event
+        </label>
 
       </div>
     </div>
@@ -148,9 +153,9 @@ elements.
 
     {# All events within day #}
     {% if edit %}
-    <div class="event-group-container event-group-container-edit {{ hidden_class }}">
+    <ol class="event-group-container event-group-container-edit {{ hidden_class }}" aria-label="Event List">
     {% else %}
-    <div class="event-group-container {{ hidden_class }}">
+    <ol class="event-group-container {{ hidden_class }}" aria-label="Event List">
     {% endif %}
       {% for event in day.events %}
 
@@ -178,9 +183,9 @@ elements.
         {% endif %}
 
       {% endfor %}
-    </div>
+    </ol>
 
-  </div>
+  </li>
 
 {# End of epoch markers #}
 {% if day.has_epoch_end %}
@@ -194,26 +199,29 @@ elements.
 {% if edit and not day.has_following_day %}
   <!-- Between days event button -->
   {% if index != length - 1 %}
-  <div class="event-between event-between-days event-between-days-offset">
+  <li class="event-between event-between-days event-between-days-offset" aria-label="New Event: +1 Day">
   {% else %}
-  <div class="event-between event-between-days">
+  <li class="event-between event-between-days" aria-label="New Event: +1 Day">
   {% endif %}
     <div class="between-days-elements">
       <div class="line line-dashed line-edit"></div>
-  </div>
-    <a href="{{ url_for('event.add_event', 
-                campaign_name=campaign.url_title,
-                campaign_id=campaign.id,
-                new_day=True,
-                elem_id='new-day-event-' + year.name + '-' + month.name + '-' + day.name,
-                date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-      <button id="new-day-event-{{year.name}}-{{month.name}}-{{day.name}}" class="new-timeline-item timeline-between-events">
-        <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
-      </button>
+    </div>
+    <a id="new-day-event-{{year.name}}-{{month.name}}-{{day.name}}"
+    aria-label="New Event: +1 Day" 
+    class="new-timeline-item timeline-between-events"
+    href="{{ url_for('event.add_event',
+                     campaign_name=campaign.url_title,
+                     campaign_id=campaign.id,
+                     new_day=True,
+                     elem_id='new-day-event-' + year.name + '-' + month.name + '-' + day.name,
+                     date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
+      <img class="icon icon-invert" aria-label="New Event Icon" 
+      src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
     </a>
-      <p class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</p>
+    <label for="new-day-event-{{year.name}}-{{month.name}}-{{day.name}}"
+    class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</label>
 
-  </div>
+  </li>
 {% endif %}
 
 {%- endmacro %}
