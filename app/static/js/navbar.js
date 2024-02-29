@@ -39,7 +39,7 @@ class hamburgerMenu {
 
     // Hide hamburger menu if screen has been resized beyond 700px
     var newWidth = window.innerWidth;
-    if (newWidth >= 700) {
+    if (newWidth > 700) {
       this.menu.style.display = "none";
     }
     else {
