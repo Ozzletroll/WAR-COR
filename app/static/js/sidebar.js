@@ -44,6 +44,7 @@ class Tab {
 
   openTab() {
     this.tab.style.transform = "translateX(300px)";
+    this.tab.style.filter = "drop-shadow(3px 0px 5px var(--elem_shadow))"
     if (window.innerWidth >= 1400 ) {
       this.tab.style.marginRight = "300px"
     }
@@ -60,6 +61,7 @@ class Tab {
 
   closeTab() {
     this.tab.style.transform = "translateX(0)";
+    this.tab.style.filter = "";
     this.scrollElem.setAttribute("aria-hidden", "true");
     this.buttonElem.setAttribute("aria-label", "Deploy Sidebar");
     if (this.childButtons != null) {

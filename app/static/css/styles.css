@@ -4982,8 +4982,6 @@ for selection in timeline_search.js */
   z-index: 1;
   transition: 0.3s;
   will-change: transform;
-  filter: drop-shadow(3px 0px 5px var(--elem_shadow));
-
 }
 
 .sidebar-scroll {
