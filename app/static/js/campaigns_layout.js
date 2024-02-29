@@ -48,7 +48,7 @@ function matchOverviewHeight() {
   // Set matching height of overview elements for each pair of campaign cards
   var campaignOverviewElements = document.querySelectorAll(".campaign-entry-container .campaign-overview");
   var campaignHeaderElements = document.querySelectorAll(".campaign-header");
-
+  var campaignMemberElements = document.querySelectorAll(".campaign-members");
 
   for (var index = 0; index + 1 < campaignOverviewElements.length; index += 2) {
     var firstElement = campaignOverviewElements[index];
@@ -59,7 +59,6 @@ function matchOverviewHeight() {
     firstElement.style.minHeight = "";
     secondElement.style.minHeight = "";
 
- 
     // Get the height of the campaign card headers
     var firstHeaderElement = campaignHeaderElements[index];
     var secondHeaderElement = campaignHeaderElements[index + 1];
@@ -68,14 +67,12 @@ function matchOverviewHeight() {
     secondHeaderElement.style.height = "";
     
     // Match the header element heights
-
     var firstHeaderHeight = firstHeaderElement.clientHeight;
     var secondHeaderHeight = secondHeaderElement.clientHeight;
     var maxHeaderHeight = Math.max(firstHeaderHeight, secondHeaderHeight);
 
     firstHeaderElement.style.height = maxHeaderHeight + "px";
     secondHeaderElement.style.height = maxHeaderHeight + "px";
-
 
     // Match card overview element heights
     var firstElementHeight = firstElement.clientHeight;
@@ -84,6 +81,17 @@ function matchOverviewHeight() {
 
     firstElement.style.minHeight = maxHeight + "px";
     secondElement.style.minHeight = maxHeight + "px";
+
+    // Match members list element heights
+    var firstMembersList = campaignMemberElements[index];
+    var secondMembersList = campaignMemberElements[index + 1];
+    
+    var firstMembersHeight = firstMembersList.clientHeight;
+    var secondMembersHeight = secondMembersList.clientHeight;
+    var maxMembersHeight = Math.max(firstMembersHeight, secondMembersHeight);
+
+    firstMembersList.style.minHeight = maxMembersHeight + "px";
+    secondMembersList.style.minHeight = maxMembersHeight + "px";
   }
 }
 
