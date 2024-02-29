@@ -2390,7 +2390,8 @@ p {
 
 .hits-area {
   display: flex;
-  flex: 1 0 0;
+  flex: 1 0 80px;
+  min-width: 80px;
   justify-content: center;
   color: var(--text_dark);
   font-size: 10px;
@@ -2401,7 +2402,6 @@ p {
   text-align: center;
   text-transform: uppercase;
   padding: 5px;
-
 }
 
 .search-highlight {

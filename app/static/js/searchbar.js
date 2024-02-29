@@ -12,6 +12,7 @@ class SearchbarTab {
     this.goButton = this.tab.querySelector(".searchbar-go");
     this.advancedSearch = this.tab.querySelector(".advanced-search-area");
     this.hitsLabel = this.tab.querySelector(".hits-area");
+    this.page = document.querySelector(".page");
     this.state = false
    
     window.addEventListener('resize', this.getWidth.bind(this));
@@ -27,7 +28,8 @@ class SearchbarTab {
   }
 
   openTab() {
-    this.tab.style.transform = "translateX(calc(-100% + 40px)";
+    this.getWidth();
+    this.tab.style.transform = `translateX(calc(-100% + ${40}px)`;
     this.areaInner.setAttribute("aria-hidden", "false");
     this.areaInner.setAttribute("tabindex", "0");
     if (this.goButton != null) {
@@ -39,7 +41,6 @@ class SearchbarTab {
     }
     this.hitsLabel.setAttribute("aria-hidden", "false");
     this.state = true;
-    this.getWidth();
   }
 
   closeTab() {
@@ -59,20 +60,25 @@ class SearchbarTab {
   }
 
   getWidth() {
-    if (window.innerWidth <= 600 && this.state == true) {
+    if (window.innerWidth <= 600) {
       this.outer.style.justifyContent = "space-between";
-      this.tab.style.width = "100vw";
-      this.area.style.flex = "4 1 0";
+      this.tab.style.width = `${window.innerWidth - this.getScrollbarWidth()}px`;
       this.area.style.marginLeft = "10px";
+      this.area.style.width = "100%";
       this.areaInner.style.width = "100%";
     }
     else {
       this.outer.style.justifyContent = "";
       this.tab.style.width = "";
-      this.area.style.flex = "";
+      this.area.style.width = "";
       this.area.style.marginLeft = "";
       this.areaInner.style.width = "";
     }
+  }
+
+  getScrollbarWidth() {
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    return scrollbarWidth;
   }
 }
 
