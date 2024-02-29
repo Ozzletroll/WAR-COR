@@ -24,6 +24,9 @@ def campaigns():
     campaigns = current_user.campaigns
     campaigns.sort(key=lambda campaign: campaign.last_edited, reverse=True)
 
+    # Clear any existing event scroll target
+    session.pop("timeline_scroll_target", None)
+
     return render_template("campaigns.html", 
                            campaigns=campaigns)
 
