@@ -2951,7 +2951,7 @@ p {
 
 .campaign-overview-lower-right {
   display: flex;
-  gap: 42px;
+  gap: 26px;
 }
 
 .last-edited-area {
@@ -2994,6 +2994,7 @@ p {
   padding: 2px 5px;
   text-align: center;
   height: 22px;
+  width: 98px;
 }
 
 @media screen and (max-width: 850px) { 
