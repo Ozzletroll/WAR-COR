@@ -36,9 +36,9 @@ def campaigns():
 @limiter.limit("60/minute")
 def show_timeline(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     # Check campaign's privacy settings allow access
     authenticators.check_campaign_visibility(campaign)
@@ -60,9 +60,9 @@ def show_timeline(campaign_name, campaign_id):
 @limiter.limit("60/minute")
 def edit_timeline(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
@@ -99,9 +99,9 @@ def create_campaign():
         db.session.commit()
 
         # Get campaign for redirect
-        campaign = db.session.execute(
-            select(models.Campaign)
-            .filter_by(id=new_campaign.id)).scalar()
+        campaign = (db.session.query(models.Campaign)
+                    .filter(models.Campaign.id == new_campaign.id)
+                    .first_or_404(description="No matching campaign found"))
 
         return redirect(url_for("campaign.edit_timeline", 
                                 campaign_name=campaign.url_title,
@@ -122,9 +122,9 @@ def create_campaign():
 @limiter.limit("60/minute")
 def edit_campaign(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     # Set the last visited url, excluding this route
     if request.referrer and "/data/edit" not in request.referrer:
@@ -161,9 +161,9 @@ def edit_campaign(campaign_name, campaign_id):
 @limiter.limit("60/minute")
 def delete_campaign(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     authenticators.permission_required(campaign)
 

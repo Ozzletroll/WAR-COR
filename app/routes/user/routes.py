@@ -107,9 +107,9 @@ def logout():
 @limiter.limit("60/minute")
 def user_page(username):
 
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=username)).scalar()
+    user = (db.session.query(models.User)
+            .filter(models.User.username == username)
+            .first_or_404(description="No matching user found"))
 
     # Check if the user is actually the owner of the account they are trying to modify
     authenticators.user_verification(user)
@@ -169,9 +169,9 @@ def update_callsign(username):
 @limiter.limit("60/minute")
 def change_username(username):
 
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=username)).scalar()
+    user = (db.session.query(models.User)
+            .filter(models.User.username == username)
+            .first_or_404(description="No matching user found"))
     
     authenticators.user_verification(user)
 
@@ -203,9 +203,9 @@ def change_username(username):
 @limiter.limit("60/minute")
 def change_password(username):
 
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=username)).scalar()
+    user = (db.session.query(models.User)
+            .filter(models.User.username == username)
+            .first_or_404(description="No matching user found"))
     
     authenticators.user_verification(user)
 
@@ -237,9 +237,9 @@ def change_password(username):
 @limiter.limit("60/minute")
 def delete_user(username):
 
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=username)).scalar()
+    user = (db.session.query(models.User)
+            .filter(models.User.username == username)
+            .first_or_404(description="No matching user found"))
     
     authenticators.user_verification(user)
 
@@ -315,9 +315,9 @@ def dismiss_message():
 
     message_id = request.form["message_id"]
 
-    message = db.session.execute(
-        select(models.Message)
-        .filter_by(id=message_id)).scalar()
+    message = (db.session.query(models.Message)
+               .filter(models.Message.id == message_id)
+               .first_or_404(description="No matching message found"))
 
     # Remove notification from user's messages
     if message in current_user.messages:

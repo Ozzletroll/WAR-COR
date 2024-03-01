@@ -18,15 +18,15 @@ from app.routes.epoch import bp
 @limiter.limit("60/minute")
 def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
-    campaign = db.session.execute(
-            select(models.Campaign)
-            .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     authenticators.check_campaign_visibility(campaign)
 
-    epoch = db.session.execute(
-        select(models.Epoch)
-        .filter_by(id=epoch_id)).scalar()
+    epoch = (db.session.query(models.Epoch)
+                .filter(models.Epoch.id == epoch_id)
+                .first_or_404(description="No matching epoch found"))
     
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
@@ -54,10 +54,10 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 @limiter.limit("60/minute")
 def new_epoch(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
-
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+    
     authenticators.permission_required(campaign)
 
     args = request.args
@@ -113,15 +113,15 @@ def new_epoch(campaign_name, campaign_id):
 @limiter.limit("60/minute")
 def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
-
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+    
     authenticators.permission_required(campaign)
 
-    epoch = db.session.execute(
-        select(models.Epoch)
-        .filter_by(id=epoch_id)).scalar()
+    epoch = (db.session.query(models.Epoch)
+             .filter(models.Epoch.id == epoch_id)
+             .first_or_404(description="No matching epoch found"))
 
     # Set back button scroll target
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
@@ -161,15 +161,15 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 @limiter.limit("60/minute")
 def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     authenticators.permission_required(campaign)
 
-    epoch = db.session.execute(
-        select(models.Epoch)
-        .filter_by(id=epoch_id)).scalar()
+    epoch = (db.session.query(models.Epoch)
+                .filter(models.Epoch.id == epoch_id)
+                .first_or_404(description="No matching epoch found"))
 
     db.session.delete(epoch)
     db.session.commit()

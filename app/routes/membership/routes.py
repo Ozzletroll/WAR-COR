@@ -20,9 +20,9 @@ from app.routes.membership import bp
 @limiter.limit("60/minute")
 def edit_campaign_users(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     authenticators.permission_required(campaign)
 
@@ -46,9 +46,9 @@ def edit_campaign_users(campaign_name, campaign_id):
 @limiter.limit("60/minute")
 def user_search(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     authenticators.permission_required(campaign)
 
@@ -90,9 +90,9 @@ def add_user(campaign_name, campaign_id):
     The form is populated dynamically by javascript when the user clicks
     the 'invite' button beside a username search result entry. """
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     authenticators.permission_required(campaign)
 
@@ -130,9 +130,9 @@ def add_user(campaign_name, campaign_id):
 @limiter.limit("60/minute")
 def remove_user(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     authenticators.permission_required(campaign)
 
@@ -236,9 +236,9 @@ def join_campaign():
 @limiter.limit("60/minute")
 def request_membership(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
     
     # Retrieve the users with editing permissions for the campaign
     campaign_admins = campaign.admins
@@ -262,13 +262,13 @@ def accept_invite():
     message_id = request.form["message_id"]
     campaign_id = request.form["campaign_id"]
 
-    message = db.session.execute(
-        select(models.Message)
-        .filter_by(id=message_id)).scalar()
+    message = (db.session.query(models.Message)
+               .filter(models.Message.id == message_id)
+               .first_or_404(description="No matching message found"))
     
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     # Check if the campaign invitation is valid and for the current user
     if message in campaign.pending_invites and message.target_user == current_user:
@@ -310,9 +310,9 @@ def decline_invite():
 
     message_id = request.form["message_id"]
 
-    message = db.session.execute(
-        select(models.Message)
-        .filter_by(id=message_id)).scalar()
+    message = (db.session.query(models.Message)
+               .filter(models.Message.id == message_id)
+               .first_or_404(description="No matching message found"))
 
     # Check if target message is actually for the current user
     if message.target_user == current_user:
@@ -333,13 +333,13 @@ def confirm_request():
     campaign_id = request.form["campaign_id"]
     message_id = request.form["message_id"]
 
-    message = db.session.execute(
-        select(models.Message)
-        .filter_by(id=message_id)).scalar()
+    message = (db.session.query(models.Message)
+               .filter(models.Message.id == message_id)
+               .first_or_404(description="No matching message found"))
     
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     authenticators.permission_required(campaign)
 
@@ -371,13 +371,13 @@ def deny_request():
     campaign_id = request.form["campaign_id"]
     message_id = request.form["message_id"]
 
-    message = db.session.execute(
-        select(models.Message)
-        .filter_by(id=message_id)).scalar()
+    message = (db.session.query(models.Message)
+               .filter(models.Message.id == message_id)
+               .first_or_404(description="No matching message found"))
     
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     authenticators.permission_required(campaign)
 
@@ -397,13 +397,14 @@ def add_permission(campaign_name, campaign_id):
     user_to_add = request.form["username"]
     user_id = request.form["user_id"]
 
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=user_to_add, id=user_id)).scalar()
+    user = (db.session.query(models.User)
+            .filter(models.User.id == user_id)
+            .filter(models.User.username == user_to_add)
+            .first_or_404(description="No matching user found"))
     
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     authenticators.permission_required(campaign)
 
@@ -424,10 +425,10 @@ def add_permission(campaign_name, campaign_id):
 @limiter.limit("60/minute")
 def update_membership_settings(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
-    
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+
     authenticators.permission_required(campaign)
 
     visibility = request.form["visibility"]

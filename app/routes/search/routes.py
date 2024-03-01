@@ -17,9 +17,9 @@ from app.routes.search import bp
 @limiter.limit("60/minute")
 def advanced_search(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
 
     form = forms.SearchForm()
 

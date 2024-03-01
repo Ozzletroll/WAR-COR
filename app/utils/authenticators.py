@@ -32,10 +32,11 @@ def check_membership(campaign):
 def check_campaign_visibility(campaign):
     """Function to require login if campaign is private"""
     if campaign.private:
+        description = "This campaign is flagged as 'Members Only'. To obtain access, please contact the campaign administrator."
         if current_user.is_authenticated:
             if current_user not in campaign.members:
-                abort(403)
+                abort(403, description=description)
             else:
                 return
         else:
-            abort(401)
+            abort(403, description=description)

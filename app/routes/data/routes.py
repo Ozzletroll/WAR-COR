@@ -24,10 +24,10 @@ from app import db, limiter
 @limiter.limit("60/minute")
 def backup_page(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
-
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+    
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
@@ -105,10 +105,10 @@ def backup_page(campaign_name, campaign_id):
 @limiter.limit("5/minute")
 def campaign_backup(campaign_name, campaign_id):
 
-    campaign = db.session.execute(
-        select(models.Campaign)
-        .filter_by(id=campaign_id)).scalar()
-
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+    
     # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 

@@ -2478,7 +2478,6 @@ p {
   border-radius: 3px;
 }
 
-
 .edit-toggle-label {
   cursor: pointer;
   height: 20px;
@@ -6213,6 +6212,17 @@ pre {
   0% {
     opacity: 0;
   }
+}
+
+.error-hr {
+  width: 100%;
+  background-color: var(--darker_red);
+  height: 1px;
+  border: none;
+}
+
+.error-flavour {
+  margin: 0px;
 }
 
 .join-campaign-upper .bar-items-left {
