@@ -67,8 +67,8 @@
               
             </div>
       
-            <hr class="campaigns-divider">
-            <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{epoch.id}} // Epoch::Data</p>
+            <hr class="campaigns-divider" aria-hidden="true">
+            <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-{{campaign.id}}-{{epoch.id}} // Epoch::Data</p>
     
         </div>
 
@@ -77,19 +77,20 @@
           <div class="event-main-container">
 
             <div class="event-centre-container">
-              <div class="epoch-page-upper">
+              <section class="epoch-page-upper" aria-label="Epoch Start/End">
                   <div class="epoch-date-area">
-                    <h4 class="epoch-page-date">{{epoch.start_date}}</h4>
+                    <h4 class="epoch-page-date" aria-label="Start Date">{{epoch.start_date}}</h4>
                     {% if epoch.start_date != epoch.end_date %}
-                        <h4 class="epoch-page-date">{{epoch.end_date}}</h4>
+                        <h4 class="epoch-page-date" aria-label="End Date">{{epoch.end_date}}</h4>
                     {% endif %}
                   </div>
 
-              </div>
+                </section>
 
-              <div class="event-page-body">
+              <section class="event-page-body" aria-label="Epoch Data">
                   {% if epoch.description is not none %}
-                    <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description">
+                    <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description"
+                    aria-label="Archive Entry">
         
                       <div class="entry-left-padding"></div>
 
@@ -103,9 +104,9 @@
                   {% endif %}
 
                   {% if epoch_events is not none %}
-                    <div class="timeline-container epoch-events-container">
+                    <div class="timeline-container epoch-events-container" aria-label="Epoch Timeline">
                       <h4 class="epoch-events-header">
-                          EPOCH DATA:
+                          EPOCH DATA
                       </h4>
 
                       <div class="epoch-start-marker epoch-page-start-marker">
@@ -113,16 +114,16 @@
                         <div class="epoch-hor-line epoch-page-hor-line"></div>
                       </div>
 
-                      <div class="epoch-events-list timeline-container">
+                      <ol class="epoch-events-list timeline-container" aria-label="Year List">
 
                       {% for year in timeline_data %}
 
                       <!-- Year {{  year.name }} -->
 
-                      <div id="timeline-year-{{year.name}}" class="timeline-year">
+                      <li id="timeline-year-{{year.name}}" class="timeline-year" aria-labelledby="year-{{year.name}}">
 
                         <!-- Year main axis -->
-                        <div class="timeline-year-outer-container">
+                        <div class="timeline-year-outer-container" aria-hidden="true">
                           <div class="timeline-year-container">
 
                             <h3 class="timeline-year-header" id="year-{{year.name}}">
@@ -155,7 +156,7 @@
                         </div>
                     
                         <!-- Timeline months -->
-                        <div class="timeline-months-container">
+                        <ol class="timeline-months-container" aria-label="Month List">
                           {% for month in year.months %}
 
                             {{ timeline_month.month(campaign,
@@ -166,20 +167,20 @@
                                                     edit=edit) }}
             
                           {% endfor %}
-                        </div>
+                        </ol>
 
-                      </div>
+                      </li>
                     {% endfor %}
 
                         <div class="epoch-end-marker epoch-page-end-marker">
                           <div class="epoch-hor-line-end"></div>
                         </div>
 
-                      </div>
+                      </ol>
                     </div>
                   {% endif %}
                   
-              </div>
+              </section>
 
             </div>
 
