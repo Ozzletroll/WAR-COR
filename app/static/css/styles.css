@@ -6212,6 +6212,8 @@ pre {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 25px;
+  padding-left: 0px;
+  list-style: none;
 }
 
 .results-counter {

@@ -74,7 +74,8 @@
           </a>
         </div>
       {% else %}
-        <form method="POST" action="{{ url_for('membership.request_membership', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
+        <form method="POST" aria-label="Request Membership Form"
+        action="{{ url_for('membership.request_membership', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
           {{ form.csrf_token }}
           <div class="entry-button-outline">
             {{ form.submit(class_="button entry-button request-button", 

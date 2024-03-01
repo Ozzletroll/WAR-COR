@@ -33,8 +33,8 @@
 
       </div>
 
-      <hr class="campaigns-divider">
-      <p class="flavour-text">UWC-6-45 // Active Conflict::Search </p>
+      <hr class="campaigns-divider" aria-hidden="true">
+      <p class="flavour-text" aria-label="Flavour Text">UWC-6-45 // Active Conflict::Search </p>
 
     </div>
 
@@ -42,10 +42,16 @@
     <div class="campaigns-upper-bar join-campaign-upper fade-in-block-1">
       <div class="bar-items-left">
 
-        <form class="join-campaign-form search-form fade-in-block-2" method="POST">
+        <form class="join-campaign-form search-form fade-in-block-2" method="POST" aria-label="Campaign Search Form">
           {{ form.csrf_token }}
-          {{form.search(class_="form-input callsign-input search-input", placeholder="CAMPAIGN NAME", autocomplete="off")}}
-          {{form.submit(class_="button submit-button callsign-submit search-submit")}}
+          <div class="user-form-container search-form-container">
+            {{ form.search(class_="form-input callsign-input search-input", 
+                          placeholder="CAMPAIGN NAME", 
+                          autocomplete="off",
+                          aria_label="Campaign Name")}}
+            <div class="form-underline"></div>
+          </div>
+          {{ form.submit(class_="button submit-button callsign-submit search-submit")}}
         </form>
 
         {% if results is not none %}
@@ -69,7 +75,7 @@
       <div class="search-campaigns-upper">
 
         {% if results is none %}
-          <div id="empty-flavour" class="empty-search-entry">
+          <div id="empty-flavour" class="empty-search-entry" aria-label="No Results Text">
             <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
             <h5 class="flavour-text typing-2 empty-search-header">>CAMPAIGN::SEARCH</h5>
             <h5 class="flavour-text typing-3 empty-search-blink">>Please enter a search query</h5>
@@ -80,17 +86,13 @@
           {% include 'components/flash.html' %}
         </div>
 
-        <div id="campaigns-list" class="campaign-search-results-area">
-
+        <ul id="campaigns-list" class="campaign-search-results-area" aria-label="Search Results List">
           {% if results is not none %}
             {% for campaign in results %}
-
               {{ campaign_entry.campaign_entry(campaign=campaign, current_user=current_user, search_result=true, form=request_form) }}
-
             {% endfor %}
           {% endif %}
-
-        </div>
+        </ul>
 
       </div>
 
@@ -99,8 +101,9 @@
     </div>
 
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
-      <p class="flavour-text flavour-text-centre">All UWC Correspondents are reminded that collaboration and cooperation are the cornerstones of our organisation. UWC personnel are expected to treat each other with respect, and to adhere to the UWC Code of Conduct in all dealings.</p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      <p class="flavour-text flavour-text-centre" aria-label="Flavour Text">All UWC Correspondents are reminded that collaboration and cooperation are the cornerstones of our organisation. UWC personnel are expected to treat each other with respect, and to adhere to the UWC Code of Conduct in all dealings.</p>
+      <img aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens."
+      src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>
