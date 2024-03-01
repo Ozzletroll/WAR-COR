@@ -1233,6 +1233,10 @@ p {
     text-align: center;
   }
 
+  .features-paragraph {
+    margin: 40px 0px
+  }
+
  }
 
 .features-carousel {
