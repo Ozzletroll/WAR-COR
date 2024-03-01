@@ -74,6 +74,14 @@
           </a>
         </div>
       {% else %}
+        {% if not campaign.private %}
+          <div class="entry-button-outline">
+            <a class="entry-button" aria-label="View"
+            href="{{ url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
+              VIEW
+            </a>
+          </div>
+        {% endif %}
         <form method="POST" aria-label="Request Membership Form"
         action="{{ url_for('membership.request_membership', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
           {{ form.csrf_token }}
@@ -85,9 +93,7 @@
         </form>
       {% endif %}
 
-    
       {% if campaign in current_user.permissions %}
-      
         <div class="dropdown-area">
           <div class="entry-button-outline">
             <button id="button-{{campaign.id}}" class="entry-button edit-button" aria-label="Edit">EDIT</button>
@@ -131,7 +137,6 @@
             </li>
           </ul>  
         </div>
-
       {% endif %}
 
       

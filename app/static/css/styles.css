@@ -378,6 +378,10 @@ button {
   outline-offset: -5px;
 }
 
+.button-noclick {
+  cursor: initial;
+}
+
 .heading-top {
   margin-top: 25px;
 }
@@ -2947,6 +2951,16 @@ p {
   background-color: var(--bright_red);
 }
 
+.entry-button.button-noclick {
+  background-color: var(--elem_mid);
+  color: var(--text_header);
+}
+
+.entry-button.button-noclick:hover {
+  background-color: var(--elem_mid);
+}
+
+
 .campaign-overview-lower {
   display: flex;
   justify-content: flex-start;
@@ -2955,7 +2969,7 @@ p {
 
 .campaign-overview-lower-right {
   display: flex;
-  gap: 26px;
+  gap: 36px;
 }
 
 .last-edited-area {
@@ -2998,7 +3012,7 @@ p {
   padding: 2px 5px;
   text-align: center;
   height: 22px;
-  width: 98px;
+  width: 130px;
 }
 
 @media screen and (max-width: 850px) { 
@@ -3025,7 +3039,6 @@ p {
 
   .campaign-settings-area {
     width: fit-content;
-    margin: 0px 40px 0px 0px;
   }  
 
 }
