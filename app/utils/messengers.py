@@ -14,12 +14,11 @@ def send_invite_message(sender, recipient, campaign):
     a campaign object."""
 
     # Check for existing pending invite
-    message = db.session.execute(
-        select(models.Message)
-        .filter(models.Message.target_campaign.has(id=campaign.id))
-        .filter(models.Message.target_user.has(id=recipient.id))
-        .filter(models.Message.invite == True)
-    ).scalar()
+    message = (db.session.execute(select(models.Message)
+               .filter(models.Message.target_campaign.has(id=campaign.id))
+               .filter(models.Message.target_user.has(id=recipient.id))
+               .filter(models.Message.invite == True))
+               .scalar())
 
     # If invitation message already exists, update date
     # to push to top of notifications list
@@ -56,11 +55,11 @@ def send_membership_request(sender, recipients, campaign):
     campaign_title = campaign.title
 
     # Check for existing pending request
-    message = db.session.execute(
-        select(models.Message)
-        .filter(models.Message.target_campaign.has(id=campaign.id))
-        .filter(models.Message.author.has(id=sender.id))
-        .filter(models.Message.request == True)).scalar()
+    message = (db.session.execute(select(models.Message)
+               .filter(models.Message.target_campaign.has(id=campaign.id))
+               .filter(models.Message.author.has(id=sender.id))
+               .filter(models.Message.request == True))
+               .scalar())
 
     # If invitation message already exists, update date
     # to push to top of notifications list
@@ -159,12 +158,11 @@ def send_comment_notification(sender, recipients, campaign, event):
     campaign_title = campaign.title
 
     # Check for existing comment messages
-    messages = db.session.execute(
-        select(models.Message)
-        .filter(models.Message.target_campaign.has(id=campaign.id))
-        .filter(models.Message.target_event.has(id=event.id))
-        .filter(models.Message.notification == True)
-    ).scalars()
+    messages = (db.session.execute(select(models.Message)
+                .filter(models.Message.target_campaign.has(id=campaign.id))
+                .filter(models.Message.target_event.has(id=event.id))
+                .filter(models.Message.notification == True))
+                .scalars())
 
     # Convert the query result to a list to avoid ResourceClosedError
     messages_list = list(messages)

@@ -244,8 +244,8 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
     campaign = event.parent_campaign
     
     comment = (db.session.query(models.Comment)
-             .filter(models.Comment.id == target_comment_id)
-             .first_or_404(description="No matching comment found"))
+               .filter(models.Comment.id == target_comment_id)
+               .first_or_404(description="No matching comment found"))
 
     # Check if it is the comment author who is deleting the comment
     if comment.author == current_user:

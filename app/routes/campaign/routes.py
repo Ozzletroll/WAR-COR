@@ -176,9 +176,9 @@ def delete_campaign(campaign_name, campaign_id):
         password = request.form["password"]
 
         user = current_user
-        search_user = db.session.execute(
-            select(models.User)
-            .filter_by(username=search_username)).scalar()
+        search_user = (db.session.execute(select(models.User)
+                       .filter_by(username=search_username))
+                       .scalar())
 
         if search_user:
             if search_user.id == current_user.id:

@@ -25,8 +25,8 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     authenticators.check_campaign_visibility(campaign)
 
     epoch = (db.session.query(models.Epoch)
-                .filter(models.Epoch.id == epoch_id)
-                .first_or_404(description="No matching epoch found"))
+             .filter(models.Epoch.id == epoch_id)
+             .first_or_404(description="No matching epoch found"))
     
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"

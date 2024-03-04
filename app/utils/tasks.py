@@ -12,10 +12,9 @@ def delete_old_messages():
 
     with scheduler.app.app_context():
 
-        messages = db.session.execute(
-            select(models.Message)
-            .filter(models.Message.date < one_week_ago)
-            ).scalars()
+        messages = (db.session.execute(select(models.Message)
+                    .filter(models.Message.date < one_week_ago))
+                    .scalars())
 
         for message in messages:
             db.session.delete(message)
