@@ -30,15 +30,14 @@ def register():
         proposed_username = request.form["username"]
         proposed_email = request.form["email"]
         # Check if username already exists in database
-        username_search = db.session.execute(
-            select(models.User)
-            .filter_by(username=proposed_username)).first()
-        email_search = db.session.execute(
-            select(models.User)
-            .filter_by(email=proposed_email)).first()
+        username_search = (db.session.execute(select(models.User)
+                           .filter_by(username=proposed_username))
+                           .first())
+        email_search = (db.session.execute(select(models.User)
+                        .filter_by(email=proposed_email))
+                        .first())
 
         if username_search:
-            # Debug message
             flash("Username already in use. Please choose a new username.")
             return redirect(url_for("user.register"))
         elif email_search:
@@ -72,9 +71,8 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        user = db.session.execute(
-            select(models.User)
-            .filter_by(username=username)).scalar()
+        user = (db.session.execute(select(models.User)
+                .filter_by(username=username)).scalar())
 
         if user:
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
@@ -146,9 +144,9 @@ def update_callsign(username):
         callsign = request.form["callsign"]
         
         # Update the users callsign
-        user_campaign = db.session.execute(
-            select(models.UserCampaign)
-            .filter_by(user_id=user_id, campaign_id=campaign_id)).scalar()
+        user_campaign = (db.session.execute(select(models.UserCampaign)
+                         .filter_by(user_id=user_id, campaign_id=campaign_id))
+                         .scalar())
         
         user_campaign.callsign = callsign
         db.session.commit()
@@ -182,9 +180,9 @@ def change_username(username):
         flash("New username must be 3 or more characters")
         return redirect(url_for("user.user_page", username=user.username))
 
-    username_check = db.session.execute(
-        select(models.User)
-        .filter_by(username=new_username)).scalar()
+    username_check = (db.session.execute(select(models.User)
+                      .filter_by(username=new_username))
+                      .scalar())
     
     if not username_check:
         # Set username to new value
@@ -251,9 +249,9 @@ def delete_user(username):
         search_username = request.form["username"]
         password = request.form["password"]
 
-        search_user = db.session.execute(
-            select(models.User)
-            .filter_by(username=search_username)).scalar()
+        search_user = (db.session.execute(select(models.User)
+                       .filter_by(username=search_username))
+                       .scalar())
 
         if search_user and authenticators.user_verification(search_user):
             if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
@@ -335,9 +333,9 @@ def dismiss_message():
                                 event_id=message.target_event.id)
     
         # Check if message is still in any users messages list by querying association table
-        message_query = db.session.execute(
-            select(models.user_messages.c.user_id)
-            .where(models.user_messages.c.message_id == message_id)).scalar()
+        message_query = (db.session.execute(select(models.user_messages.c.user_id)
+                         .where(models.user_messages.c.message_id == message_id))
+                         .scalar())
     
         # If message is no longer needed, delete it
         if not message_query:
@@ -364,9 +362,9 @@ def dismiss_all():
         db.session.commit()
 
         # Check if message is still in any users messages list by querying association table
-        message_query = db.session.execute(
-            select(models.user_messages.c.user_id)
-            .where(models.user_messages.c.message_id == message.id)).scalar()
+        message_query = (db.session.execute(select(models.user_messages.c.user_id)
+                         .where(models.user_messages.c.message_id == message.id))
+                         .scalar())
         
         # If message is no longer needed, delete it
         if not message_query:
@@ -388,9 +386,9 @@ def request_password_reset():
         if form.validate_on_submit():
             
             email = request.form["email"].lower()
-            user = db.session.execute(
-                select(models.User)
-                .filter_by(email=email)).scalar()
+            user = (db.session.execute(select(models.User)
+                    .filter_by(email=email))
+                    .scalar())
             
             if user:
                 messengers.send_recovery_email(recipient_email=email,

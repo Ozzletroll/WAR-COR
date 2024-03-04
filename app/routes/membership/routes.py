@@ -59,8 +59,9 @@ def user_search(campaign_name, campaign_id):
         return response
     
     search_format = "%{}%".format(search)
-    users = db.session.execute(select(models.User)
-                               .filter(models.User.username.like(search_format))).scalars()
+    users = (db.session.execute(select(models.User)
+             .filter(models.User.username.like(search_format)))
+             .scalars())
 
     # Format results as dict
     results = {"results": {user.username: {"id": user.id,
@@ -100,10 +101,9 @@ def add_user(campaign_name, campaign_id):
     user_id = request.form["user_id"]
 
     # Check if username exists
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=username, 
-                   id=user_id)).scalar()
+    user = (db.session.execute(select(models.User)
+            .filter_by(username=username, id=user_id))
+            .scalar())
     
     if user:
         # Check if user isn't already a member
@@ -140,10 +140,9 @@ def remove_user(campaign_name, campaign_id):
     user_id = request.form["user_id"]
 
     # Check if username exists
-    user = db.session.execute(
-        select(models.User)
-        .filter_by(username=username, 
-                   id=user_id)).scalar()
+    user = (db.session.execute(select(models.User)
+            .filter_by(username=username, id=user_id))
+            .scalar())
 
     if user:
         # Check is user is actually a member of the campaign
@@ -201,10 +200,9 @@ def join_campaign():
 
         else:
             search_format = "%{}%".format(search)
-            campaigns = db.session.execute(
-                select(models.Campaign)
-                .filter(func.lower(models.Campaign.title).like(search_format))
-            ).scalars()
+            campaigns = (db.session.execute(select(models.Campaign)
+                        .filter(func.lower(models.Campaign.title).like(search_format)))
+                        .scalars())
 
             results = [campaign for campaign in campaigns 
                        if campaign not in current_user.campaigns 
