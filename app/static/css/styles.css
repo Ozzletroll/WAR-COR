@@ -6225,6 +6225,10 @@ pre {
   margin: 0px;
 }
 
+.error-home-button {
+  width: fit-content;
+}
+
 .join-campaign-upper .bar-items-left {
   width: 100%;
 }
