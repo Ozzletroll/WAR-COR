@@ -33,52 +33,52 @@
 
           <hr class="campaigns-divider">
           {% if error.code == 403 %}
-            <p class="flavour-text timeline-margin">UWC-40-3 // Authentication::Invalid</p>
+            <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-40-3 // Authentication::Invalid</p>
           {% elif error.code == 404 %}
-            <p class="flavour-text timeline-margin">UWC-40-4 // Resource::Not Found</p>
+            <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-40-4 // Resource::Not Found</p>
           {% elif error.code == 429 %}
-            <p class="flavour-text timeline-margin">UWC-42-9 // Limit::Exceeded</p>
+            <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-42-9 // Limit::Exceeded</p>
           {% elif error.code == 500 %}
-            <p class="flavour-text timeline-margin">UWC-50-0 // Error::Internal Server Error</p>
+            <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-50-0 // Error::Internal Server Error</p>
           {% endif %}
         </div>
 
         <div class="campaigns-upper-bar">
           <div class="empty-search-entry fade-in-block-2">
             {% if error.code == 403 %}
-                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">UWC_IDENT_SERVICE:</h5>
-                <h5 class="flavour-text typing-2 empty-search-header">>AUTHENTICATION::DENIED</h5>
-                <h5 class="flavour-text typing-3 empty-search-blink">>Access to this resource is denied</h5>
-                <hr class="error-hr">
-                <h5 class="flavour-text error-flavour">>{{ error.description }}</h5>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">UWC_IDENT_SERVICE:</p>
+                <p class="flavour-text typing-2 empty-search-header">>AUTHENTICATION::DENIED</p>
+                <p class="flavour-text typing-3 empty-search-blink">>Access to this resource is denied</p>
+                <hr class="error-hr" aria-hidden="true">
+                <p class="flavour-text error-flavour" aria-label="Error Description">>{{ error.description }}</p>
             {% elif error.code == 404 %}
-                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</h5>
-                <h5 class="flavour-text typing-2 empty-search-header">>PAGE::NOT_FOUND</h5>
-                <h5 class="flavour-text typing-3 empty-search-blink">>Please check URL and try again</h5>
-                <hr class="error-hr">
-                <h5 class="flavour-text error-flavour">>{{ error.description }}</h5>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</p>
+                <p class="flavour-text typing-2 empty-search-header">>PAGE::NOT_FOUND</p>
+                <p class="flavour-text typing-3 empty-search-blink">>Please check URL and try again</p>
+                <hr class="error-hr" aria-hidden="true">
+                <p class="flavour-text error-flavour" aria-label="Error Description">>{{ error.description }}</p>
             {% elif error.code == 429 %}
-                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">ACCESS DENIED:</h5>
-                <h5 class="flavour-text typing-2 empty-search-header">>LIMIT::EXCEEDED</h5>
-                <h5 class="flavour-text typing-3 empty-search-blink">>{{ error.description }}</h5>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">ACCESS DENIED:</p>
+                <p class="flavour-text typing-2 empty-search-header">>LIMIT::EXCEEDED</p>
+                <p class="flavour-text typing-3 empty-search-blink" aria-label="Error Description">>{{ error.description }}</p>
             {% elif error.code == 500 %}
-                <h5 class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</h5>
-                <h5 class="flavour-text typing-2 empty-search-header">>ERROR::UNABLE_TO_COMPLETE</h5>
-                <h5 class="flavour-text typing-3 empty-search-blink">>Server overloaded or error in application</h5>
-                <hr class="error-hr">
-                <h5 class="flavour-text error-flavour">>{{ error.description }}</h5>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</p>
+                <p class="flavour-text typing-2 empty-search-header">>ERROR::UNABLE_TO_COMPLETE</p>
+                <p class="flavour-text typing-3 empty-search-blink">>Server overloaded or error in application</p>
+                <hr class="error-hr" aria-hidden="true">
+                <p class="flavour-text error-flavour" aria-label="Error Description">>{{ error.description }}</p>
             {% endif %}
             
           </div>
         </div>
 
         {% if current_user.is_authenticated %}
-        <a class="fade-in-block-3" href="{{ url_for('campaign.campaigns') }}">
-          <button class="button create-campaign-button error-home-button">RETURN TO CAMPAIGNS</button>
+        <a class="fade-in-block-3 button create-campaign-button error-home-button" href="{{ url_for('campaign.campaigns') }}">
+          >RETURN TO CAMPAIGNS
         </a>
         {% else %}
-        <a class="fade-in-block-3" href="{{ url_for('home.home') }}">
-          <button class="button create-campaign-button error-home-button">RETURN TO MAIN PAGE</button>
+        <a class="fade-in-block-3 button create-campaign-button error-home-button" href="{{ url_for('home.home') }}">
+          >RETURN TO MAIN PAGE
         </a>
         {% endif %}
 
