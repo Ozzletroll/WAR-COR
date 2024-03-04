@@ -15,10 +15,10 @@ def sanitise_input(value):
         }
     allowed_styles = ["height", "width", "margin-left"]
     
-    css_santizer = CSSSanitizer(allowed_css_properties=allowed_styles)
+    css_sanitiser = CSSSanitizer(allowed_css_properties=allowed_styles)
     value = bleach.clean(value, 
                         tags=allowed_tags,
                         attributes=allowed_attrs,
-                        css_sanitizer=css_santizer)
+                        css_sanitizer=css_sanitiser)
     
     return value
