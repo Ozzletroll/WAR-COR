@@ -230,7 +230,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
 
 
 # Delete comment
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment/<comment_id>/delete", methods=["POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment-<comment_id>/delete", methods=["POST"])
 @login_required
 @limiter.limit("60/minute")
 def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id):

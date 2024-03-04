@@ -80,7 +80,7 @@ def edit_timeline(campaign_name, campaign_id):
 
 
 # Create new campaign
-@bp.route("/campaigns/create-campaign", methods=["GET", "POST"])
+@bp.route("/campaigns/new-campaign", methods=["GET", "POST"])
 @login_required
 @limiter.limit("60/minute")
 def create_campaign():
