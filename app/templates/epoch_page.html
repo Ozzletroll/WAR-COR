@@ -78,107 +78,106 @@
 
             <div class="event-centre-container">
               <section class="epoch-page-upper" aria-label="Epoch Start/End">
-                  <div class="epoch-date-area">
-                    <h4 class="epoch-page-date" aria-label="Start Date">{{epoch.start_date}}</h4>
-                    {% if epoch.start_date != epoch.end_date %}
-                        <h4 class="epoch-page-date" aria-label="End Date">{{epoch.end_date}}</h4>
-                    {% endif %}
-                  </div>
-
-                </section>
+                <div class="epoch-date-area">
+                  <h4 class="epoch-page-date" aria-label="Start Date">{{epoch.start_date}}</h4>
+                  {% if epoch.start_date != epoch.end_date %}
+                      <h4 class="epoch-page-date" aria-label="End Date">{{epoch.end_date}}</h4>
+                  {% endif %}
+                </div>
+              </section>
 
               <section class="event-page-body" aria-label="Epoch Data">
-                  {% if epoch.description is not none %}
-                    <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description"
-                    aria-label="Archive Entry">
-        
-                      <div class="entry-left-padding"></div>
+                {% if epoch.description is not none %}
+                  <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description"
+                  aria-label="Archive Entry">
+      
+                    <div class="entry-left-padding"></div>
 
-                      <div class="description-body">
-                        <h4 class="event-desc-header">Archive Entry:</h4>
-                        <div class="event-desc">
-                          {{ epoch.description | safe }}
-                        </div>
+                    <div class="description-body">
+                      <h4 class="event-desc-header">Archive Entry:</h4>
+                      <div class="event-desc">
+                        {{ epoch.description | safe }}
                       </div>
                     </div>
-                  {% endif %}
+                  </div>
+                {% endif %}
 
-                  {% if epoch_events is not none %}
-                    <div class="timeline-container epoch-events-container" aria-label="Epoch Timeline">
-                      <h4 class="epoch-events-header">
-                          EPOCH DATA
-                      </h4>
+                {% if epoch_events is not none %}
+                  <div class="timeline-container epoch-events-container" aria-label="Epoch Timeline">
+                    <h4 class="epoch-events-header">
+                        EPOCH DATA
+                    </h4>
 
-                      <div class="epoch-start-marker epoch-page-start-marker">
-                        <div class="epoch-vert-line"></div>
-                        <div class="epoch-hor-line epoch-page-hor-line"></div>
-                      </div>
+                    <div class="epoch-start-marker epoch-page-start-marker">
+                      <div class="epoch-vert-line"></div>
+                      <div class="epoch-hor-line epoch-page-hor-line"></div>
+                    </div>
 
-                      <ol class="epoch-events-list timeline-container" aria-label="Year List">
+                    <ol class="epoch-events-list timeline-container" aria-label="Year List">
 
-                      {% for year in timeline_data %}
+                    {% for year in timeline_data %}
 
-                      <!-- Year {{  year.name }} -->
+                    <!-- Year {{  year.name }} -->
 
-                      <li id="timeline-year-{{year.name}}" class="timeline-year" aria-labelledby="year-{{year.name}}">
+                    <li id="timeline-year-{{year.name}}" class="timeline-year" aria-labelledby="year-{{year.name}}">
 
-                        <!-- Year main axis -->
-                        <div class="timeline-year-outer-container" aria-hidden="true">
-                          <div class="timeline-year-container">
+                      <!-- Year main axis -->
+                      <div class="timeline-year-outer-container" aria-hidden="true">
+                        <div class="timeline-year-container">
 
-                            <h3 class="timeline-year-header" id="year-{{year.name}}">
-                              {% if year.name.startswith("-") %}
-                                {{ year.name + campaign.negative_date_suffix}}
-                              {% else %}
-                                {{ year.name + campaign.date_suffix}}
-                              {% endif %}
-                            </h3> 
+                          <h3 class="timeline-year-header" id="year-{{year.name}}">
+                            {% if year.name.startswith("-") %}
+                              {{ year.name + campaign.negative_date_suffix}}
+                            {% else %}
+                              {{ year.name + campaign.date_suffix}}
+                            {% endif %}
+                          </h3> 
 
-                            <div class="timeline-columns">
+                          <div class="timeline-columns">
 
-                              <div class="timeline-left-marker">
-                                <div class="year-marker-hr"></div>
-                                <div class="year-marker-line"></div>
-                                <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
-                                <div class="year-marker-line"></div>
-                                <div class="year-marker-hr"></div>
-                              </div>
+                            <div class="timeline-left-marker">
+                              <div class="year-marker-hr"></div>
+                              <div class="year-marker-line"></div>
+                              <h5 class="year-marker">{{ year.name + campaign.date_suffix}}</h5>
+                              <div class="year-marker-line"></div>
+                              <div class="year-marker-hr"></div>
+                            </div>
 
-                              <div class="timeline-right-marker">
-                                <div class="timeline-horizontal"></div>
-                                <div class="timeline-line"></div>
-                                <div class="timeline-horizontal"></div>
-                              </div>
-
+                            <div class="timeline-right-marker">
+                              <div class="timeline-horizontal"></div>
+                              <div class="timeline-line"></div>
+                              <div class="timeline-horizontal"></div>
                             </div>
 
                           </div>
+
                         </div>
-                    
-                        <!-- Timeline months -->
-                        <ol class="timeline-months-container" aria-label="Month List">
-                          {% for month in year.months %}
+                      </div>
+                  
+                      <!-- Timeline months -->
+                      <ol class="timeline-months-container" aria-label="Month List">
+                        {% for month in year.months %}
 
-                            {{ timeline_month.month(campaign,
-                                                    year,
-                                                    month,
-                                                    length=loop.length,
-                                                    index=loop.index0,
-                                                    edit=edit) }}
-            
-                          {% endfor %}
-                        </ol>
-
-                      </li>
-                    {% endfor %}
-
-                        <div class="epoch-end-marker epoch-page-end-marker">
-                          <div class="epoch-hor-line-end"></div>
-                        </div>
-
+                          {{ timeline_month.month(campaign,
+                                                  year,
+                                                  month,
+                                                  length=loop.length,
+                                                  index=loop.index0,
+                                                  edit=edit) }}
+          
+                        {% endfor %}
                       </ol>
-                    </div>
-                  {% endif %}
+
+                    </li>
+                  {% endfor %}
+
+                      <div class="epoch-end-marker epoch-page-end-marker">
+                        <div class="epoch-hor-line-end"></div>
+                      </div>
+
+                    </ol>
+                  </div>
+                {% endif %}
                   
               </section>
 
