@@ -26,21 +26,19 @@
       <div class="adjacent-event-area area-left">
     {% endif %}
         <div class="adjacent-elem-container">
-          <a href="{{ url_for('event.view_event', 
-                              campaign_name=campaign.url_title,
-                              campaign_id=campaign.id,  
-                              event_name=event.preceding_event.url_title,
-                              event_id=event.preceding_event.id) }}" class="adjacent-event-a">
-            <button class="adjacent-button">
-
-              <svg class="icon adjacent-icon-left" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <a class="adjacent-event-a adjacent-button" aria-label="Preceded by: {{ event.preceding_event.title }}"
+          href="{{ url_for('event.view_event',
+                            campaign_name=campaign.url_title,
+                            campaign_id=campaign.id,
+                            event_name=event.preceding_event.url_title,
+                            event_id=event.preceding_event.id) }}">
+              <svg aria-label="Left Icon" class="icon adjacent-icon-left" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                     <g class="icon-colour-var" id="add" transform="translate(157.440000, 80.853333)">
                         <polygon id="Path" points="205.254834 320 175.084945 350.169889 -5.68434189e-14 175.084945 175.084945 0 205.254834 30.1698893 60.356556 175.084945"></polygon>
                     </g>
                 </g>
               </svg>
-            </button>
             <div class="adjacent-headers-left">
               <h5 class="adjacent-event-header">PRECEDED BY:</h5>
               <h5 class="adjacent-event-header">{{ event.preceding_event.title }}</h5>
@@ -57,17 +55,18 @@
   {% endif %}
       <div class="adjacent-elem-container">
       
-        <a href="{{ url_for('event.view_event', 
-                            campaign_name=campaign.url_title,
-                            campaign_id=campaign.id, 
-                            event_name=event.following_event.url_title,
-                            event_id=event.following_event.id) }}" class="adjacent-event-a">
+        <a class="adjacent-event-a adjacent-button" aria-label="Followed by: {{ event.following_event.title }}"
+        href="{{ url_for('event.view_event',
+                          campaign_name=campaign.url_title,
+                          campaign_id=campaign.id,
+                          event_name=event.following_event.url_title,
+                          event_id=event.following_event.id) }}">
           <div class="adjacent-headers-right">
             <h5 class="adjacent-event-header">FOLLOWED BY:</h5>
             <h5 class="adjacent-event-header">{{ event.following_event.title }}</h5>
           </div>
           <button class="adjacent-button">
-            <svg class="icon adjacent-icon-right" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg aria-label="Right Icon" class="icon adjacent-icon-right" width="40px" height="40px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g class="icon-colour-var" id="add" transform="translate(149.333333, 80.853333)">
                       <polygon id="Path" points="-2.84217094e-14 320 30.1698893 350.169889 205.254834 175.084945 30.1698893 0 -2.84217094e-14 30.1698893 144.898278 175.084945"></polygon>
@@ -81,8 +80,6 @@
 {% else %}
 <div class="adjacent-event-area area-right">
   <div class="adjacent-elem-container">
-  
-  
   </div>
 </div>
 {% endif %}
