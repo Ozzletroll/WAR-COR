@@ -1467,6 +1467,7 @@ p {
   box-sizing: border-box;
   border: none;
   border-radius: 5px;
+  outline: none;
 }
 
 .modal-content-inner {

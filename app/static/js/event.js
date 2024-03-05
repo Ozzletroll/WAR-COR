@@ -8,7 +8,8 @@ class Modal {
     this.modal = modal;
     this.button = button;
     this.span = span;
-
+    this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
+ 
     this.button.onclick = event => {
       this.openModal(event)
     } 
@@ -21,10 +22,18 @@ class Modal {
   
   openModal() {
     this.modal.style.display = "flex";
+    this.modal.setAttribute("aria-modal", "true")
+    Array.from(this.hiddenElements).forEach(element => {
+      element.inert = true;
+    })
   }
 
   closeModal() {
     this.modal.style.display = "none";
+    this.modal.setAttribute("aria-modal", "false")
+    Array.from(this.hiddenElements).forEach(element => {
+      element.inert = false;
+    })
   }
 
 }
@@ -33,11 +42,11 @@ class Modal {
 const modalItems = []
 
 // Select all dropdown elements
-var modals = document.querySelectorAll('[id^="modal-"]');
-var buttons = document.querySelectorAll('[id^="button-"]');
-var spans = document.querySelectorAll('[id^="close-"]');
+var modals = document.querySelectorAll('[id^="comment-modal-"]');
+var buttons = document.querySelectorAll('[id^="comment-button-"]');
+var spans = document.querySelectorAll('[id^="comment-close-"]');
 
-// Iterate through both arrays, creating dropdown objects
+// Iterate through both arrays, creating modal objects
 buttons.forEach((button, index) => {
 
   var modal = new Modal({

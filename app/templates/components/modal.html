@@ -1,0 +1,57 @@
+
+
+{% macro modal(type,
+               title, 
+               aria_label, 
+               flavour_text, 
+               body_text, 
+               button_text, 
+               model_id, 
+               form, 
+               form_action,
+               form_target, 
+               loop_index) %}
+  
+  <div id="{{ type }}-modal-{{ loop_index }}" class="modal">
+    <dialog class="modal-content modal-content-small" role="dialog" aria-label="{{ aria_label }}" aria-modal="false">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">{{ title }}</h2>
+          <button id="{{ type }}-close-{{ loop_index }}" class="modal-close" aria-label="Close Modal">
+              <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </button>
+        </div>
+        <div class="modal-body modal-body-small">
+          {% if type == "comment" %}
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM"</p>
+            <p class="modal-text modal-text-upper">{{ body_text }}</p>
+          {% elif type == "admin" %}
+          <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
+          <p class="modal-text modal-text-upper">
+            Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> in campaign <strong>{{ body_text }}</strong>:
+          </p>
+          {% endif %}
+          
+          {% if type == "comment" %}
+            <form method="POST" action="{{ form_action }}" aria-label="Delete Form">
+              {{ form.csrf_token }}
+              {{ form.submit(class_="button modal-confirm-button", value=button_text) }}
+            </form>
+          {% elif type == "admin" %}
+            <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
+            method="POST" action="{{ form_action }}">
+              {{ form.csrf_token }}
+              <div>
+                {{ form.username(value=form_target.username, class_="form-hidden") }}
+                {{ form.user_id(value=form_target.id, class_="form-hidden") }}
+                {{ form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
+              </div>
+            </form>
+          {% endif %}
+
+        </div>
+      </div>
+    </dialog>
+  </div>
+
+{%- endmacro %}

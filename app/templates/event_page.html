@@ -4,6 +4,7 @@
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
+{% import "components/modal.html" as modal %}
 {% import "components/summernote_editor.html" as summernote %}
 
 
@@ -21,8 +22,28 @@
   {% endblock %}
 {% endblock %}
 
-
 {% block content %}
+
+  {# Delete comment confirm modals #}
+  {% for comment in event.comments %}
+  
+    {{ modal.modal(type="comment",
+                   title="Delete Comment",
+                   aria_label="Delete Comment Confirmation",
+                   body_text="Confirm comment termination:",
+                   button_text="Delete",
+                   model_id=event.id,
+                   loop_index=loop.index,
+                   form=form,
+                   form_action=url_for('event.delete_comment',
+                                       campaign_name=campaign.url_title,
+                                       campaign_id=campaign.id,
+                                       event_name=event.url_title,
+                                       event_id=event.id,
+                                       comment_id=comment.id)) }}
+
+  {% endfor %}
+
 <nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
   {{ searchbar.searchbar(campaign=campaign, event=true) }}
   {% if current_user.is_authenticated and campaign in current_user.permissions %}
@@ -223,7 +244,7 @@
 
                         <div class="comment-header-right">
                           {% if campaign in current_user.permissions or comment.author == current_user %}
-                            <button id="button-{{loop.index}}" class="button delete-comment-button">
+                            <button id="comment-button-{{loop.index}}" class="button delete-comment-button">
                               <img class="icon" src="{{ url_for('static', filename='/images/icons/bin_white.svg') }}">
                             </button>
                           {% endif %}
