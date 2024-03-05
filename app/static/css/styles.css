@@ -1435,7 +1435,7 @@ p {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   left: 0;
   top: 0;
   width: 100%;
@@ -1465,6 +1465,7 @@ p {
   animation-duration: 0.5s;
   clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 100% 100% ,0 100%);
   box-sizing: border-box;
+  border: none;
   border-radius: 5px;
 }
 
@@ -2227,7 +2228,7 @@ p {
   position: -webkit-sticky;
   top: 54px;
   margin-bottom: -160px;
-  z-index: 3;
+  z-index: 2;
   overflow: visible;
   filter: drop-shadow(3px 1px 3px var(--elem_shadow));
   margin-left: -40px;
@@ -5506,6 +5507,11 @@ for selection in timeline_search.js */
   width: 100%;
   transition: 0.15s ease;
   scroll-margin: 25vh;
+}
+
+.belligerents-list {
+  list-style: none;
+  margin: 0px;
 }
 
 .ally-group {

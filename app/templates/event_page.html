@@ -68,8 +68,8 @@
               
             </div>
       
-            <hr class="campaigns-divider">
-            <p class="flavour-text timeline-margin">UWC-{{campaign.id}}-{{event.id}} // Event::Data</p>
+            <hr class="campaigns-divider" aria-hidden="true">
+            <p class="flavour-text timeline-margin" aria-label="Flavour Text">UWC-{{campaign.id}}-{{event.id}} // Event::Data</p>
     
         </div>
 
@@ -82,85 +82,78 @@
             <div class="event-centre-container">
               <div class="event-page-upper">
                 {% if event.hide_time or event.header %}
-                  <div class="event-page-elem event-date-area">
-                      <h4 class="event-page-date">{{event.date.split(" ")[0]}}</h4>
-                  </div>
+                  <section class="event-page-elem event-date-area" aria-label="Event Date">
+                    <h4 class="event-page-date">{{event.date.split(" ")[0]}}</h4>
+                  </section>
                 {% else %}
-                  <div class="event-page-elem event-date-area">
+                  <section class="event-page-elem event-date-area" aria-label="Event Date">
                     <h4 class="event-page-date">{{event.date}}</h4>
-                  </div>
+                  </section>
                 {% endif %}
 
-                <div class="event-page-elem type-area">
-                    <h4 class="event-page-type">{{event.type}}</h4>
-                </div>
+                <section class="event-page-elem type-area" aria-label="Event Type">
+                  <h4 class="event-page-type">{{event.type}}</h4>
+                </section>
               </div>
 
               <div class="event-page-body">
 
                   <div class="event-body-top">
-                      {# Only render if it is needed #}
-                      {% if event.location | length > 0 %}
-                      <div class="event-page-elem event-location">
-          
-                          <div class="event-elem-header">
-                              <h4 class="event-elem-h">Location</h4>
-                          </div>
-                          <div class="event-elem-body">
-                              {{event.location}}
-                          </div>  
-                      </div>
-                      {% endif %}
-          
-                      {# Only render if it is needed #}
-                      {% if belligerents %}
-                        <div class="event-page-elem event-belligerents">
-            
-                            <div class="event-elem-header">
-                                <h4 class="event-elem-h">Belligerents</h4>
-                            </div>
-                            <div class="event-elem-body">
-                                {% for group in belligerents %}
-
-                                  {% if group | length == 1 and belligerents | length == 1  %}
-                                    <div class="ally-group ally-group-solo">
-                                  {% else %}
-                                    <div class="ally-group">
-                                  {% endif %}
-
-                                    {% for ally in group %}
-                                        <div class="ally-elem">
-                                            {{ally}}
-                                        </div>
-                                    {% endfor %}
-                                    </div> 
-                                    {% if not loop.last %}
-                                    <div class="vs-area">vs</div>
-                                    {% endif %}
-                                {% endfor %}
-                            </div>
-                          
+                    {# Only render if it is needed #}
+                    {% if event.location | length > 0 %}
+                    <section class="event-page-elem event-location" aria-label="Event Location">
+                        <div class="event-elem-header">
+                            <h4 class="event-elem-h">Location</h4>
                         </div>
-                      {% endif %}
+                        <div class="event-elem-body">
+                            {{event.location}}
+                        </div>  
+                      </section>
+                    {% endif %}
+          
+                    {# Only render if it is needed #}
+                    {% if belligerents %}
+                      <section class="event-page-elem event-belligerents" aria-label="Event Belligerents">
+                        <div class="event-elem-header">
+                            <h4 class="event-elem-h">Belligerents</h4>
+                        </div>
+                        <ul class="event-elem-body belligerents-list">
+                          {% for group in belligerents %}
+
+                            {% if group | length == 1 and belligerents | length == 1  %}
+                              <li class="ally-group ally-group-solo">
+                            {% else %}
+                              <li class="ally-group">
+                            {% endif %}
+                              {% for ally in group %}
+                                <div class="ally-elem">
+                                    {{ally}}
+                                </div>
+                              {% endfor %}
+                              </li> 
+                              {% if not loop.last %}
+                              <li class="vs-area">vs</li>
+                              {% endif %}
+                          {% endfor %}
+                        </ul>
+                      </section>
+                    {% endif %}
 
                   </div>
       
-                  <div class="event-page-elem event-elem-large elem-body event-page-description">
-      
-                      <div class="entry-left-padding"></div>
-
-                      <div class="description-body">
-                          <h4 class="event-desc-header">Archive Entry:</h4>
-                          <div class="event-desc">
-                            {{event.body | safe }}
-                          </div>
+                  <section class="event-page-elem event-elem-large elem-body event-page-description" aria-label="Archive Entry">
+                    <div class="entry-left-padding"></div>
+                    <div class="description-body">
+                      <h4 class="event-desc-header">Archive Entry:</h4>
+                      <div class="event-desc">
+                        {{event.body | safe }}
                       </div>
-                      
-                  </div>
+                    </div>
+                  </section>
       
                   {# Only render if it is needed #}
                   {% if event.result | length > 0 %}  
-                  <div class="event-elem-centre">
+                    <section class="event-elem-centre" aria-label="Event Result">
                       <div class="event-page-elem elem-body event-page-result">
                           <div class="event-elem-header">
                               <h4 class="event-elem-h">RESULT</h4>
@@ -169,7 +162,7 @@
                               {{event.result}}
                           </div>
                       </div>
-                  </div>
+                    </section>
                   {% endif %}
 
               </div>
@@ -192,16 +185,16 @@
 
 
             <!-- User comments area -->
-            <div class="comments-area fade-in-block-3">
+            <section class="comments-area fade-in-block-3" aria-label="Comments Area">
 
                 <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
-                <hr class="campaigns-divider">
+                <hr class="campaigns-divider" aria-hidden="true">
               
                 {% if event.comments | length == 0 %}
                   <h6 class="comments-count">[NO MESSAGE DATA]</h5>
                 {% endif %}
 
-                <ol class="comments-list">
+                <ol class="comments-list" aria-label="Comments">
                 {% for comment in event.comments %}
 
                     <li class="event-comment">
@@ -245,39 +238,8 @@
 
                     </li>
 
-
-                  {# Delete comment confirm modal #}
-
-                  <div id="modal-{{loop.index}}" class="modal">
-                    <div class="modal-content modal-content-small">
-                      <div class="modal-content-inner">
-                        <div class="modal-header">
-                          <h2 class="modal-header-small">Delete Comment</h2>
-                          <span id="close-{{loop.index}}" class="modal-close">
-                            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                          </span>
-                        </div>
-                        <div class="modal-body modal-body-small">
-                          <p class="flavour-text modal-flavour">MSG-{{event.id}}-{{loop.index}} // DELETION::CONFIRM</p>
-                          <p class="modal-text modal-text-upper">Confirm comment termination:</p>
-
-                          <form method="POST" action="{{ url_for('event.delete_comment',
-                                                         campaign_name=campaign.url_title,
-                                                         campaign_id=campaign.id,
-                                                         event_name=event.url_title,
-                                                         event_id=event.id,
-                                                         comment_id=comment.id) }}">
-                            {{ delete_form.csrf_token }}
-                            {{ delete_form.submit(class_="button modal-confirm-button", value="DELETE") }}
-                          </form>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
                 {% endfor  %}
-              </ol>
+                </ol>
 
               <!-- New Comment Area -->
               {% if current_user.is_authenticated and current_user in campaign.members %}
@@ -297,7 +259,7 @@
                 
               {% endif %}
 
-            </div>
+            </section>
 
         </div>
 
