@@ -1,5 +1,5 @@
 // Generate random event name
-function user_search(url) {
+function getRequest(url) {
 
   var target_url = url
 
@@ -10,7 +10,7 @@ function user_search(url) {
     .then(data => {
 
         // Update form input to use result
-        const titleInput = document.getElementById("event-title");
+        const titleInput = document.getElementById("event-form-title");
         titleInput.value = data["Result"];
 
     })

@@ -1,78 +1,35 @@
-// Modal class
-class Modal {
-  constructor({
-    modal,
-    button,
-    span,
-  }) {
-    this.modal = document.getElementById(modal);
-    this.button = button;
-    this.span = span;
-
-    document.getElementById(this.button).onclick = event => {
-      this.openModal(event)
-    } 
-
-    document.getElementById(this.span).onclick = event => {
-      this.closeModal(event)
-    } 
-
-  }
-  
-  openModal() {
-    this.modal.style.display = "flex";
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-  }
-
-}
-
+import { Modal } from "./modal.js";
 
 
 // Preview Area Modal class
-class PreviewModal {
+class PreviewModal extends Modal{
   constructor({
     modal,
     button,
     span,
   }) {
-    this.modal = document.getElementById(modal);
-    this.button = button;
-    this.span = span;
+    super({ modal, button, span });
 
-    document.getElementById(this.button).onclick = event => {
+    this.button.onclick = event => {
       this.openModal(event)
+      this.htmlPreview()
     } 
 
-    document.getElementById(this.span).onclick = event => {
+    this.span.onclick = event => {
       this.closeModal(event)
     } 
 
   }
   
-  openModal() {
-    this.modal.style.display = "flex";
-    this.htmlPreview()
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-  }
-
   htmlPreview() {
 
-    // Get the content of the Summernote
+    // Get the content of the Summernote editor and add it to the modal
     var editor = document.querySelector('.note-editable');
     var content = editor.innerHTML;
-
-    // Get the preview modal text area and add html
     var modalBody = document.getElementById("preview-modal-body");
     modalBody.innerHTML = content;
    
     this.formatImages();
-  
   }
 
   formatImages() {
@@ -124,39 +81,38 @@ class PreviewModal {
 
 // Create modals
 const modal_1 = new Modal({
-  modal: "modal-1",
-  button: "event-date-help-button",
-  span: "close-1",
+  modal: document.getElementById("help-modal-1"),
+  button: document.getElementById("event-date-help-button"),
+  span: document.getElementById("help-close-1"),
 })
 
 const modal_2 = new Modal({
-  modal: "modal-2",
-  button: "event-belligerents-help-button",
-  span: "close-2",
+  modal: document.getElementById("help-modal-2"),
+  button: document.getElementById("event-belligerents-help-button"),
+  span: document.getElementById("help-close-2"),
 })
 
 const modal_3 = new Modal({
-  modal: "modal-3",
-  button: "event-format-help-button",
-  span: "close-3",
+  modal: document.getElementById("help-modal-3"),
+  button: document.getElementById("event-format-help-button"),
+  span: document.getElementById("help-close-3"),
 })
 
 // HTML Preview Area Modal
 const modal_preview = new PreviewModal({
-  modal: "modal-preview",
-  button: "html-preview-button",
-  span: "close-preview",
+  modal: document.getElementById("preview-modal-4"),
+  button: document.getElementById("html-preview-button"),
+  span: document.getElementById("preview-close-4"),
 })
 
-// Check if page has delete button
-const deleteButton = document.getElementById("modal-delete");
-let modal_delete;
-if (deleteButton != null) {
-  // If delete button is present, creating modal instance
-  modal_delete = new Modal({
-    modal: "modal-delete",
-    button: "button-delete",
-    span: "close-delete",
+// Check if page has delete button and create modal instance
+const deleteModalCheck = document.getElementById("event-modal-0");
+let deleteModal;
+if (deleteModalCheck!= null) {
+  deleteModal = new Modal({
+    modal: document.getElementById("event-modal-0"),
+    button: document.getElementById("event-delete-button"),
+    span: document.getElementById("event-close-0"),
   })
 }
 
@@ -174,9 +130,9 @@ window.onclick = function(event) {
   if (event.target == modal_preview.modal) {
     modal_preview.closeModal();
   }
-  if (deleteButton != null) {
-    if (event.target == modal_delete.modal) {
-      modal_delete.closeModal();
+  if (deleteModalCheck != null) {
+    if (event.target == deleteModal.modal) {
+      deleteModal.closeModal();
     }
   }
 }

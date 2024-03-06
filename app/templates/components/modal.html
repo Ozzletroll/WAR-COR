@@ -1,19 +1,24 @@
 
 
-{% macro modal(type,
-               title, 
-               aria_label, 
-               flavour_text, 
-               body_text, 
-               button_text, 
-               model_id, 
-               form, 
-               form_action,
-               form_target, 
-               loop_index) %}
+{% macro modal(type=none,
+               subtype=none,
+               title=none, 
+               aria_label=none, 
+               flavour_text=none, 
+               body_text=none, 
+               button_text=none, 
+               model_id=none, 
+               form=none, 
+               form_action=none,
+               form_target=none, 
+               loop_index=none) %}
   
   <div id="{{ type }}-modal-{{ loop_index }}" class="modal">
+    {% if type == "preview" %}
+    <dialog class="modal-content modal-preview-content" role="dialog" aria-label="{{ aria_label }}" aria-modal="false" tabindex="-1">
+    {% else %}
     <dialog class="modal-content modal-content-small" role="dialog" aria-label="{{ aria_label }}" aria-modal="false" tabindex="-1">
+    {% endif %}
       <div class="modal-content-inner">
         <div class="modal-header">
           <h2 class="modal-header-small">{{ title }}</h2>
@@ -21,28 +26,37 @@
             <img class="icon" aria-label="Close Icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
           </button>
         </div>
+        {% if type == "preview" %}
+        <div class="modal-body modal-preview-overflow">
+        {% elif type == "help" %}
+        <div class="modal-body modal-body-scroll">
+        {% else %}
         <div class="modal-body modal-body-small">
-          {% if type == "comment" %}
+        {% endif %}
+          {% if type == "preview" %}
+            <div class="event-page-elem event-elem-large elem-body event-page-description">
+              <div class="entry-left-padding"></div>
+              <div class="description-body">
+                  <h4 class="event-desc-header">Archive Entry:</h4>
+                  <div class="event-desc">
+                    <div id="preview-modal-body" class="modal-body modal-body-preview">
+                      {# Modal text goes here #}
+                    </div>
+                  </div>
+              </div>
+            </div>
+          {% elif type == "comment" %}
             <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM</p>
             <p class="modal-text modal-text-upper">{{ body_text }}</p>
-          {% elif type == "admin" %}
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
-            <p class="modal-text modal-text-upper">
-              Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> in campaign <strong>{{ body_text }}</strong>:
-            </p>
-          {% elif type == "remove" %}
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::REVOKE</p>
-            <p class="modal-text modal-text-upper">
-              Confirm removal of <strong>{{ form_target.username }}</strong> from campaign <strong>{{ body_text }}</strong>. Any admin privileges will be revoked.
-            </p>
-          {% endif %}
-          
-          {% if type == "comment" %}
             <form method="POST" action="{{ form_action }}" aria-label="Confirmation Form">
               {{ form.csrf_token }}
               {{ form.submit(class_="button modal-confirm-button", value=button_text, formmethod="dialog") }}
             </form>
           {% elif type == "admin" %}
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
+            <p class="modal-text modal-text-upper">
+              Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> in campaign <strong>{{ body_text }}</strong>:
+            </p>
             <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
             method="POST" action="{{ form_action }}">
               {{ form.csrf_token }}
@@ -51,6 +65,10 @@
               {{ form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
             </form>
           {% elif type == "remove" %}
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::REVOKE</p>
+            <p class="modal-text modal-text-upper">
+              Confirm removal of <strong>{{ form_target.username }}</strong> from campaign <strong>{{ body_text }}</strong>. Any admin privileges will be revoked.
+            </p>
             <form id="remove-user-form" class="add-member-form" aria-label="Confirmation Form" 
             method="POST" action="{{ form_action }}">
               {{ form.csrf_token }}
@@ -58,8 +76,32 @@
               {{ form.user_id(value=form_target.id, class_="form-hidden") }}
               {{ form.submit_button(value=button_text, class_="button modal-confirm-button") }}
             </form>
+          {% elif type == "event" %}
+            <p class="flavour-text modal-flavour">CMB-3-{{model_id}} // DELETION::CONFIRM</p>
+            <p class="modal-text modal-text-upper">Confirm termination of event <strong>{{body_text}}</strong>:</p>
+            <form method="POST" action="{{ form_action }}">
+              {{ form.csrf_token }}
+              {{ form.submit(class_="button modal-confirm-button", value="DELETE") }}
+            </form>
+          {% elif type == "help" %}
+            {% if subtype == "date" %}
+              <p>WAR/COR organises all events in chronological order. Dates should be entered in a 
+                "YEAR/MONTH/DAY HOUR:MINUTE:SECONDS" format.</p>
+              <p>WAR/COR does not enforce standard year/month/day/hour/second lengths, which may be any value between 1 and 99.</p>
+              <p>The year value can be any value of 1-9 digits, either positive or negative. This allows the placement of events in a similar manner to the BC/BCE system,
+                using your campaign's chosen suffix/negative suffix.</p>
+              <p class="modal-highlight-text">Example: "5016/15/40 25:00:00" is a valid date.</p>
+            {% elif subtype == "belligerents" %}
+              <p>An event's belligerents list represents active combatants and participants.</p>
+              <p>Allied belligerents should be ampersand "&" separated, whilst opposing forces should be comma "," separated.</p>
+              <p class="modal-highlight-text">Example: "Ally Faction 1 & Ally Faction 2, Enemy Faction"</p>
+            {% elif subtype == "format" %}
+              <p>An event with the "Hide Time" tag will not render the time label on the timeline. This can be useful to represent events
+                that take up the entire day, or do not require a specific time label.
+              </p>
+            {% endif %}
           {% endif %}
-
+        
         </div>
       </div>
     </dialog>

@@ -1,3 +1,6 @@
+import { Modal } from "./modal.js";
+
+
 // Tab class
 class Tab {
   constructor({
@@ -28,7 +31,6 @@ class Tab {
     document.getElementById(this.button).style.borderBottomLeftRadius = "0px";
     document.getElementById(this.button).style.borderBottomRightRadius = "0px";
 
-
     this.state = true
   }
 
@@ -45,76 +47,6 @@ class Tab {
   }
 
 }
-
-// Dropdown user results class
-class ToggleButton {
-  constructor({
-    area,
-    button,
-  }) {
-    this.area = document.getElementById(area);
-    this.button = button;
-    this.state = false
-
-    document.getElementById(this.button).onclick = event => {
-      
-      if (this.state == false) {
-        this.openArea(event)
-      }
-      else if (this.state == true) {
-        this.closeArea(event)
-      }
-    } 
-  }
-  
-  openArea() {
-    this.area.style.display = "flex"
-    this.state = true
-  }
-
-  closeArea() {
-    this.area.style.display = "none"
-    this.state = false
-  }
-
-}
-
-
-
-// Modal class
-class Modal {
-  constructor({
-    modal,
-    button,
-    span,
-  }) {
-    this.modal = modal;
-    this.button = button;
-    this.span = span;
-    this.focusButton = this.modal.querySelector(".modal-close");
-
-    this.button.onclick = event => {
-      this.openModal(event)
-    } 
-
-    this.span.onclick = event => {
-      this.closeModal(event)
-    } 
-
-  }
-  
-  openModal() {
-    this.modal.style.display = "flex";
-    this.focusButton.focus();
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-  }
-
-}
-
-
 
 
 // Create tabs
@@ -138,14 +70,13 @@ const tab_3 = new Tab({
 const modalItems = []
 
 // Select all dropdown elements
-var modals = document.querySelectorAll('[id^="modal-"]');
-var buttons = document.querySelectorAll('[id^="button-"]');
-var spans = document.querySelectorAll('[id^="close-"]');
+var modals = document.querySelectorAll('[id^="remove-modal-"]');
+var buttons = document.querySelectorAll('[id^="remove-button-"]');
+var spans = document.querySelectorAll('[id^="remove-close-"]');
 
 var adminModals = document.querySelectorAll('[id^="admin-modal-"]');
 var adminButtons = document.querySelectorAll('[id^="admin-button-"]');
 var adminSpans = document.querySelectorAll('[id^="admin-close-"]');
-
 
 buttons.forEach((button, index) => {
 
