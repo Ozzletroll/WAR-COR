@@ -43,6 +43,6 @@ function updateMembershipSettings(target_url, csrfToken) {
         "body" : data,
     })
     .then(function(response) {
-
+        return
     })
 }
