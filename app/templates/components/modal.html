@@ -13,39 +13,50 @@
                loop_index) %}
   
   <div id="{{ type }}-modal-{{ loop_index }}" class="modal">
-    <dialog class="modal-content modal-content-small" role="dialog" aria-label="{{ aria_label }}" aria-modal="false">
+    <dialog class="modal-content modal-content-small" role="dialog" aria-label="{{ aria_label }}" aria-modal="false" tabindex="-1">
       <div class="modal-content-inner">
         <div class="modal-header">
           <h2 class="modal-header-small">{{ title }}</h2>
           <button id="{{ type }}-close-{{ loop_index }}" class="modal-close" aria-label="Close Modal">
-              <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+            <img class="icon" aria-label="Close Icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
           </button>
         </div>
         <div class="modal-body modal-body-small">
           {% if type == "comment" %}
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM"</p>
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM</p>
             <p class="modal-text modal-text-upper">{{ body_text }}</p>
           {% elif type == "admin" %}
-          <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
-          <p class="modal-text modal-text-upper">
-            Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> in campaign <strong>{{ body_text }}</strong>:
-          </p>
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
+            <p class="modal-text modal-text-upper">
+              Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> in campaign <strong>{{ body_text }}</strong>:
+            </p>
+          {% elif type == "remove" %}
+            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::REVOKE</p>
+            <p class="modal-text modal-text-upper">
+              Confirm removal of <strong>{{ form_target.username }}</strong> from campaign <strong>{{ body_text }}</strong>. Any admin privileges will be revoked.
+            </p>
           {% endif %}
           
           {% if type == "comment" %}
-            <form method="POST" action="{{ form_action }}" aria-label="Delete Form">
+            <form method="POST" action="{{ form_action }}" aria-label="Confirmation Form">
               {{ form.csrf_token }}
-              {{ form.submit(class_="button modal-confirm-button", value=button_text) }}
+              {{ form.submit(class_="button modal-confirm-button", value=button_text, formmethod="dialog") }}
             </form>
           {% elif type == "admin" %}
             <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
             method="POST" action="{{ form_action }}">
               {{ form.csrf_token }}
-              <div>
-                {{ form.username(value=form_target.username, class_="form-hidden") }}
-                {{ form.user_id(value=form_target.id, class_="form-hidden") }}
-                {{ form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
-              </div>
+              {{ form.username(value=form_target.username, class_="form-hidden") }}
+              {{ form.user_id(value=form_target.id, class_="form-hidden") }}
+              {{ form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
+            </form>
+          {% elif type == "remove" %}
+            <form id="remove-user-form" class="add-member-form" aria-label="Confirmation Form" 
+            method="POST" action="{{ form_action }}">
+              {{ form.csrf_token }}
+              {{ form.username(value=form_target.username, class_="form-hidden") }}
+              {{ form.user_id(value=form_target.id, class_="form-hidden") }}
+              {{ form.submit_button(value=button_text, class_="button modal-confirm-button") }}
             </form>
           {% endif %}
 

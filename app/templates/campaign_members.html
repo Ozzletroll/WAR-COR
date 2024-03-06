@@ -1,10 +1,57 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/modal.html" as modal %}
 
 {% extends "base/base.html" %}
 
 {% block content %}
+
+{# Confirm Make Admin Modals #}
+{% for user in campaign.members %}
+
+  {{ modal.modal(type="admin",
+                 title="Grant Authorisation",
+                 aria_label="Grant Admin Status Confirmation Modal",
+                 body_text=campaign.title,
+                 button_text="Delete",
+                 model_id=user.id,
+                 loop_index=loop.index,
+                 form=add_form,
+                 form_action=url_for('membership.add_permission',
+                                     campaign_name=campaign.url_title,
+                                     campaign_id=campaign.id),
+                 form_target=user) }}
+
+  {% if user.id == current_user.id %}
+    {{ modal.modal(type="remove",
+                  title="Leave",
+                  aria_label="Leave Campaign Confirmation Modal",
+                  body_text=campaign.title,
+                  button_text="Leave",
+                  model_id=user.id,
+                  loop_index=loop.index,
+                  form=remove_form,
+                  form_action=url_for('membership.remove_user', 
+                                      campaign_name=campaign.url_title, 
+                                      campaign_id=campaign.id),
+                  form_target=user) }}
+  {% else %}
+    {{ modal.modal(type="remove",
+                   title="Remove",
+                   aria_label="Remove User Confirmation Modal",
+                   body_text=campaign.title,
+                   button_text="Leave",
+                   model_id=user.id,
+                   loop_index=loop.index,
+                   form=remove_form,
+                   form_action=url_for('membership.remove_user', 
+                                       campaign_name=campaign.url_title, 
+                                       campaign_id=campaign.id),
+                   form_target=user) }}
+  {% endif %}
+
+{% endfor %}
 
 <div class="scrollpage">
 
@@ -98,7 +145,7 @@
                         <div class="spacer-inner">ADMIN</div>
                       </div>
                     {% endif %}
-                    <button id="button-{{ loop.index }}" class="entry-button">
+                    <button id="remove-button-{{ loop.index }}" class="entry-button">
                       {% if user.id == current_user.id %}
                         Leave
                       {% else %}
@@ -249,87 +296,6 @@
       <img src="{{ url_for('static', filename='/images/logo-red.png') }}"
        class="top-logo" aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens">
     </div>
-      
-    {# Confirm Make Admin Modal #}
-
-    {% for user in campaign.members %}
-    <div id="admin-modal-{{loop.index}}" class="modal" aria-label="Make Admin Confirmation Modal">
-      <div class="modal-content modal-content-mid" role="dialog" aria-label="Grant Admin Status Confirmation Modal">
-        <div class="modal-content-inner">
-          <div class="modal-header">
-            <h2 class="modal-header-small">
-              GRANT WARCOR AUTHORISATION
-            </h2>
-            <button id="admin-close-{{loop.index}}" class="modal-close" aria-label="Close">
-              <img class="icon" aria-label="Close Icon" alt="A cross symbol"
-              src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-            </button>
-          </div>
-          <div class="modal-body modal-body-small">
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::GRANT</p>
-            <p class="modal-text modal-text-upper">Confirm WARCOR admin authorisation for user {{ user.username }} in campaign "{{ campaign.title }}".</p>
-
-            <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
-            method="POST" action="{{ url_for('membership.add_permission', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-              {{ add_form.csrf_token }}
-              <div>
-                {{ add_form.username(value=user.username, class_="form-hidden") }}
-                {{ add_form.user_id(value=user.id, class_="form-hidden") }}
-                {{ add_form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
-              </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-
-    {# Confirm Leave/Remove Modal #}
-
-    {% for user in campaign.members %}
-    <div id="modal-{{loop.index}}" class="modal">
-      <div class="modal-content modal-content-mid" role="dialog" aria-label="Leave Campaign Confirmation Modal">
-        <div class="modal-content-inner">
-          <div class="modal-header">
-            <h2 class="modal-header-small">
-              {% if user.id == current_user.id %}
-              Leave Campaign
-              {% else %}
-              Remove User
-              {% endif %}
-            </h2>
-            <button id="close-{{loop.index}}" class="modal-close" aria-label="Close">
-              <img class="icon" aria-label="Close Icon" alt="A cross symbol"
-              src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-            </button>
-          </div>
-          <div class="modal-body modal-body-small">
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{campaign.id}}-{{loop.index}} // AUTHORISATION::REVOKE</p>
-            <p class="modal-text modal-text-upper">Confirm removal of {{ user.username }} from campaign "{{ campaign.title }}". Any admin privileges will be revoked.</p>
-
-            <form id="remove-user-form" class="add-member-form" aria-label="Confirmation Form" 
-            method="POST" action="{{ url_for('membership.remove_user', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-              {{ remove_form.csrf_token }}
-              <div class="user-form-container">
-                {{ remove_form.username(value=user.username, class_="form-hidden") }}
-                {{ remove_form.user_id(value=user.id, class_="form-hidden") }}
-                  {% if user.id == current_user.id %}
-                    {% set text = "Leave" %}
-                    {{ remove_form.submit_button(value=text, class_="button modal-confirm-button") }}
-                  {% else %}
-                    {% set text = "Remove" %}
-                    {{ remove_form.submit_button(value=text, class_="button modal-confirm-button") }}
-                  {% endif %}
-              </div>
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-
 
   </div>
 
@@ -337,7 +303,7 @@
 </div>
 
  <!-- Javascript -->
- <script src="{{ url_for('static', filename='/js/campaign_members.js') }}"></script>  
+ <script src="{{ url_for('static', filename='/js/campaign_members.js') }}" type="module"></script>  
  <script>
   const target_url = "{{ url_for('membership.user_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const csrfToken = "{{ csrf_token() }}"

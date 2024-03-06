@@ -1541,6 +1541,11 @@ p {
   text-align: center;
 }
 
+.modal-text strong {
+  font-weight: 500;
+  color: var(--text_header);
+}
+
 .modal-highlight-text {
   color: var(--text_flavour_bright);
 }

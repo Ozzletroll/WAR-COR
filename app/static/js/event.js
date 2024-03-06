@@ -1,42 +1,5 @@
-// Modal class
-class Modal {
-  constructor({
-    modal,
-    button,
-    span,
-  }) {
-    this.modal = modal;
-    this.button = button;
-    this.span = span;
-    this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
- 
-    this.button.onclick = event => {
-      this.openModal(event)
-    } 
+import { Modal } from "./modal.js";
 
-    this.span.onclick = event => {
-      this.closeModal(event)
-    } 
-
-  }
-  
-  openModal() {
-    this.modal.style.display = "flex";
-    this.modal.setAttribute("aria-modal", "true")
-    Array.from(this.hiddenElements).forEach(element => {
-      element.inert = true;
-    })
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-    this.modal.setAttribute("aria-modal", "false")
-    Array.from(this.hiddenElements).forEach(element => {
-      element.inert = false;
-    })
-  }
-
-}
 
 // Create array to hold modal objects
 const modalItems = []
