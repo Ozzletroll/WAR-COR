@@ -407,11 +407,11 @@ def add_permission(campaign_name, campaign_id):
     authenticators.permission_required(campaign)
 
     # Give user editing permissions
-    if campaign not in user.permissions:
+    if user in campaign.members and campaign not in user.permissions:
         user.permissions.append(campaign)
         db.session.commit()
-
-    flash(f"Granted {user.username} campaign editing permissions.")
+        flash(f"Granted {user.username} campaign editing permissions.")
+        
     return redirect(url_for("membership.edit_campaign_users", 
                             campaign_name=campaign.url_title,
                             campaign_id=campaign.id))
