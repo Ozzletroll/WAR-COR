@@ -27,6 +27,7 @@ export class Modal {
       Array.from(this.hiddenElements).forEach(element => {
         element.inert = true;
       })
+      this.span.focus();
     }
   
     closeModal() {
@@ -35,6 +36,7 @@ export class Modal {
       Array.from(this.hiddenElements).forEach(element => {
         element.inert = false;
       })
+      this.button.focus();
     }
   
   }
