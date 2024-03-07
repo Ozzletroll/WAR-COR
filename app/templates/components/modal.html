@@ -50,7 +50,7 @@
             <p class="modal-text modal-text-upper">{{ body_text }}</p>
             <form method="POST" action="{{ form_action }}" aria-label="Confirmation Form">
               {{ form.csrf_token }}
-              {{ form.submit(class_="button modal-confirm-button", value=button_text, formmethod="dialog") }}
+              {{ form.submit(class_="button modal-confirm-button", value=button_text) }}
             </form>
           {% elif type == "admin" %}
             <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
