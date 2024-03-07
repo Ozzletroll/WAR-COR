@@ -170,7 +170,7 @@
 
   --elem_dark: #242424;
   --elem_mid: #1a201f;
-  --elem_bright: #3c635a;
+  --elem_bright: #2c3d3a;
   --elem_hover: #3d3d3d;
   --elem_trans: #aaaaaa2d;
   --elem_border: #20df96;
@@ -182,7 +182,7 @@
   --text_flavour: #2ef5b9;
   --text_flavour_bright: #39ffad;
   --text_header: #37ff91;
-  --text_header_dark: #1a7768;
+  --text_header_dark: #218d7b;
   --text_header_hover: #2cff9c;
   --text_header_contrast: #ffffff;
 
@@ -1881,13 +1881,13 @@ p {
 
 .submit-button:hover {
   background-color: var(--bright_red);
-  color: #ffffff;
+  color: var(--text_header_contrast);
   transition: 0.5s;
 }
 
 .submit-button:active {
-  background-color: #660c0c;
-  color: #ff0000;
+  background-color: var(--dark_red);
+  color: var(--text_header_hover);
   transition: 0.1s;
 }
 
