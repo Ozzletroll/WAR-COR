@@ -46,7 +46,9 @@ function setHORUSStyling() {
     Array.from(elements).forEach((element) => {
       if (element.tagName == "P" 
       && (element.parentElement.className != "note-editable" 
-      && (element.querySelector("img") == null))) {
+      && (!element.classList.contains("modal-text"))
+      && (element.querySelector("img") == null))
+      ) {
           // Split paragraph into words
           var paragraphText = element.textContent.split(" ");
           
