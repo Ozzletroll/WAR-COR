@@ -29,6 +29,9 @@ class messageTab {
     Array.from(this.childButtons).forEach(element => {
       element.setAttribute("tabIndex", "0")
     })
+    if (this.childButtons.length > 0) {
+      this.childButtons[0].focus();
+    }
     this.button.setAttribute("aria-label", "Close Messages Tab");
   }
 
