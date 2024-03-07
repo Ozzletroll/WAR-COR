@@ -1678,6 +1678,11 @@ p {
 .f-text {
   color: var(--text_bright);
   padding: 5px;
+  margin: 0px;
+}
+
+.f-text-lower {
+  margin-bottom: 10px;
 }
 
 /* Forms */
