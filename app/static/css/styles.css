@@ -6474,7 +6474,7 @@ span.email b {
   justify-content: space-evenly;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 40px;
   margin: 0px;
   background-color: var(--elem_mid);
   border-bottom-left-radius: 3px;
