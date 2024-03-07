@@ -23,52 +23,6 @@
 
 {% block content %}
 
-  {% if edit %}
-  {# Delete event confirm modal #}
-    {{ modal.modal(type="event",
-                  title="Delete Event",
-                  aria_label="Delete Event Confirmation",
-                  body_text=event.title,
-                  button_text="Delete",
-                  model_id=event.id,
-                  loop_index=0,
-                  form=form,
-                  form_action=url_for('event.delete_event',
-                                      campaign_name=campaign.url_title,
-                                      campaign_id=campaign.id,
-                                      event_name=event.url_title,
-                                      event_id=event.id)) }}
-
-  {% endif %}
-
-  {# Date Help Modal #}
-  {{ modal.modal(type="help",
-                 subtype="date",
-                 title="Event Date",
-                 aria_label="Event Date Help",
-                 loop_index=1) }}
-
-  {# Belligerents Help Modal #}
-  {{ modal.modal(type="help",
-                 subtype="belligerents",
-                 title="Belligerents",
-                 aria_label="Belligerents Help",
-                 loop_index=2) }}
-
-  {# Event Formatting Help Modal #}
-  {{ modal.modal(type="help",
-                 subtype="format",
-                 title="Event Formatting",
-                 aria_label="Formatting Help",
-                 loop_index=3) }}
-
-  {# HTML Preview Modal #}
-  {{ modal.modal(type="preview",
-                 title="HTML Preview",
-                 aria_label="HTML Preview",
-                 loop_index=4) }}
-
-
   {% if not new %}
     <nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
       {{ searchbar.searchbar(campaign, event=true) }}
@@ -362,6 +316,53 @@
   </div>
 
 </div>
+
+{# Modals #}
+
+{% if edit %}
+{# Delete event confirm modal #}
+  {{ modal.modal(type="event",
+                title="Delete Event",
+                aria_label="Delete Event Confirmation",
+                body_text=event.title,
+                button_text="Delete",
+                model_id=event.id,
+                loop_index=0,
+                form=form,
+                form_action=url_for('event.delete_event',
+                                    campaign_name=campaign.url_title,
+                                    campaign_id=campaign.id,
+                                    event_name=event.url_title,
+                                    event_id=event.id)) }}
+
+{% endif %}
+
+{# Date Help Modal #}
+{{ modal.modal(type="help",
+               subtype="date",
+               title="Event Date",
+               aria_label="Event Date Help",
+               loop_index=1) }}
+
+{# Belligerents Help Modal #}
+{{ modal.modal(type="help",
+               subtype="belligerents",
+               title="Belligerents",
+               aria_label="Belligerents Help",
+               loop_index=2) }}
+
+{# Event Formatting Help Modal #}
+{{ modal.modal(type="help",
+               subtype="format",
+               title="Event Formatting",
+               aria_label="Formatting Help",
+               loop_index=3) }}
+
+{# HTML Preview Modal #}
+{{ modal.modal(type="preview",
+               title="HTML Preview",
+               aria_label="HTML Preview",
+               loop_index=4) }}
 
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>

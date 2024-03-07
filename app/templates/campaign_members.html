@@ -7,52 +7,6 @@
 
 {% block content %}
 
-{# Confirm Make Admin Modals #}
-{% for user in campaign.members %}
-
-  {{ modal.modal(type="admin",
-                 title="Grant Authorisation",
-                 aria_label="Grant Admin Status Confirmation Modal",
-                 body_text=campaign.title,
-                 button_text="Delete",
-                 model_id=user.id,
-                 loop_index=loop.index,
-                 form=add_form,
-                 form_action=url_for('membership.add_permission',
-                                     campaign_name=campaign.url_title,
-                                     campaign_id=campaign.id),
-                 form_target=user) }}
-
-  {% if user.id == current_user.id %}
-    {{ modal.modal(type="remove",
-                  title="Leave",
-                  aria_label="Leave Campaign Confirmation Modal",
-                  body_text=campaign.title,
-                  button_text="Leave",
-                  model_id=user.id,
-                  loop_index=loop.index,
-                  form=remove_form,
-                  form_action=url_for('membership.remove_user', 
-                                      campaign_name=campaign.url_title, 
-                                      campaign_id=campaign.id),
-                  form_target=user) }}
-  {% else %}
-    {{ modal.modal(type="remove",
-                   title="Remove",
-                   aria_label="Remove User Confirmation Modal",
-                   body_text=campaign.title,
-                   button_text="Leave",
-                   model_id=user.id,
-                   loop_index=loop.index,
-                   form=remove_form,
-                   form_action=url_for('membership.remove_user', 
-                                       campaign_name=campaign.url_title, 
-                                       campaign_id=campaign.id),
-                   form_target=user) }}
-  {% endif %}
-
-{% endfor %}
-
 <div class="scrollpage">
 
   <div class="campaigns-content members-content">
@@ -301,6 +255,54 @@
 
 
 </div>
+
+{# Modals #}
+
+{# Confirm Make Admin Modals #}
+{% for user in campaign.members %}
+
+  {{ modal.modal(type="admin",
+                 title="Grant Authorisation",
+                 aria_label="Grant Admin Status Confirmation Modal",
+                 body_text=campaign.title,
+                 button_text="Delete",
+                 model_id=user.id,
+                 loop_index=loop.index,
+                 form=add_form,
+                 form_action=url_for('membership.add_permission',
+                                     campaign_name=campaign.url_title,
+                                     campaign_id=campaign.id),
+                 form_target=user) }}
+
+  {% if user.id == current_user.id %}
+    {{ modal.modal(type="remove",
+                  title="Leave",
+                  aria_label="Leave Campaign Confirmation Modal",
+                  body_text=campaign.title,
+                  button_text="Leave",
+                  model_id=user.id,
+                  loop_index=loop.index,
+                  form=remove_form,
+                  form_action=url_for('membership.remove_user', 
+                                      campaign_name=campaign.url_title, 
+                                      campaign_id=campaign.id),
+                  form_target=user) }}
+  {% else %}
+    {{ modal.modal(type="remove",
+                   title="Remove",
+                   aria_label="Remove User Confirmation Modal",
+                   body_text=campaign.title,
+                   button_text="Leave",
+                   model_id=user.id,
+                   loop_index=loop.index,
+                   form=remove_form,
+                   form_action=url_for('membership.remove_user', 
+                                       campaign_name=campaign.url_title, 
+                                       campaign_id=campaign.id),
+                   form_target=user) }}
+  {% endif %}
+
+{% endfor %}
 
  <!-- Javascript -->
  <script src="{{ url_for('static', filename='/js/campaign_members.js') }}" type="module"></script>  
