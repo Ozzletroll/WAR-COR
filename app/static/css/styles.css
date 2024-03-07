@@ -2964,7 +2964,6 @@ p {
 
 .entry-button:focus-visible {
   outline-offset: -5px;
-  background-color: var(--bright_red);
 }
 
 .entry-button.button-noclick {
