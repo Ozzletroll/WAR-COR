@@ -4,6 +4,7 @@
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/searchbar.html" as searchbar %}
+{% import "components/modal.html" as modal%}
 
 
 {% extends "base/base.html" %}
@@ -215,7 +216,7 @@
           
         {% if edit_page %}
         <div class="fade-in-block-2 campaign-submit-area event-submit-area">
-          <button id="button-delete" class="campaign-input campaign-submit" type="button">
+          <button id="epoch-delete-button" class="campaign-input campaign-submit" type="button">
             Delete Epoch
           </button>
         </div>
@@ -236,152 +237,59 @@
 
 </div>
 
-
-  {# Start Date Modal #}
-
-  <div id="modal-1" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Epoch Start Date</h2>
-          <span id="close-1" class="modal-close">
-            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>An epoch represents an era or a time period during a campaign, grouping together
-            any events that occur within the epoch start and end dates.
-            Epochs are placed at the day level within the timeline, and encapsulate 
-            all the events that take place within.
-          </p>
-          <p>The epoch markers are placed at the beginning of the START DATE day,
-            and the end of the END DATE day.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# End Date Modal #}
-
-  <div id="modal-2" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Epoch End Date</h2>
-          <span id="close-2" class="modal-close">
-            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>The END DATE of the epoch specifies the position of the end of epoch marker.</p>
-          <p>Events that occur within the END DATE day are considered part of the epoch.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# Epoch Overview Modal #}
-  <div id="modal-3" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Epoch Overview</h2>
-          <span id="close-3" class="modal-close">
-            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>The epoch overview is displayed on the main timeline beneath each epoch marker.
-            It is best used for a brief description of the epoch.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div id="modal-4" class="modal">
-    <div class="modal-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Epoch Description</h2>
-          <span id="close-4" class="modal-close">
-            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-          </span>
-        </div>
-        <div class="modal-body">
-          <p>The epoch description is displayed on the dedicated epoch page itself, allowing
-            for a longer, more detailed description of the epoch.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  {# HTML Preview Modal #}
-
-  <div id="modal-preview" class="modal">
-    <div class="modal-content modal-preview-content">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">HTML Preview</h2>
-          <span id="close-preview" class="modal-close">
-            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-          </span>
-        </div>
-
-        <div class="modal-body modal-preview-overflow">
-          <div class="event-page-elem event-elem-large elem-body event-page-description">
-
-            <div class="entry-left-padding"></div>
-
-            <div class="description-body">
-                <h4 class="event-desc-header">Archive Entry:</h4>
-                <div class="event-desc">
-                  <div id="preview-modal-body" class="modal-body modal-body-preview">
-                    {# Modal text goes here #}
-                  </div>
-                </div>
-            </div>
-          
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-  {% if edit_page %}
-
-  {# Delete event confirm modal #}
-
-  <div id="modal-delete" class="modal">
-    <div class="modal-content modal-content-small">
-      <div class="modal-content-inner">
-        <div class="modal-header">
-          <h2 class="modal-header-small">Delete Epoch</h2>
-          <span id="close-delete" class="modal-close">
-            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-          </span>
-        </div>
-        <div class="modal-body modal-body-small">
-          <p class="flavour-text modal-flavour">EPC-{{campaign.id}}-{{epoch.id}} // DELETION::CONFIRM</p>
-          <p class="modal-text modal-text-upper">Confirm termination of epoch: "{{epoch.title}}".</p>
-
-          <form method="POST" action="{{ url_for('epoch.delete_epoch',
-                                                  campaign_name=campaign.url_title,
-                                                  campaign_id=campaign.id,
-                                                  epoch_title=epoch.title,
-                                                  epoch_id=epoch.id) }}">
-            {{ delete_form.csrf_token }}
-            {{ delete_form.submit(class_="button modal-confirm-button", value="DELETE") }}
-          </form>
-
-        </div>
-      </div>
-    </div>
-  </div>
+{% if edit_page %}
+{# Delete epoch confirm modal #}
+  {{ modal.modal(type="epoch",
+                 title="Delete Epoch",
+                 aria_label="Delete Epoch Confirmation",
+                 body_text=epoch.title,
+                 button_text="Delete",
+                 model_id=epoch.id,
+                 loop_index=0,
+                 form=form,
+                 form_action=url_for("epoch.delete_epoch",
+                                     campaign_name=campaign.url_title,
+                                     campaign_id=campaign.id,
+                                     epoch_title=epoch.title,
+                                     epoch_id=epoch.id)) }}
 
 {% endif %}
+
+
+{# Start Date Modal #}
+{{ modal.modal(type="help",
+                subtype="epoch_start_date",
+                title="Epoch Start Date",
+                aria_label="Epoch Start Date Help",
+                loop_index=1) }}
+
+{# End Date Modal #}
+{{ modal.modal(type="help",
+                subtype="epoch_end_date",
+                title="Epoch End Date",
+                aria_label="Epoch End Date Help",
+                loop_index=2) }}
+
+{# Epoch Overview Modal #}
+{{ modal.modal(type="help",
+                subtype="epoch_overview",
+                title="Epoch Overview",
+                aria_label="Epoch Overview Help",
+                loop_index=3) }}
+
+{# Epoch Description Modal #}
+{{ modal.modal(type="help",
+               subtype="epoch_description",
+               title="Epoch Description",
+               aria_label="Epoch Description Help",
+               loop_index=4) }}
+
+{# HTML Preview Modal #}
+{{ modal.modal(type="preview",
+              title="HTML Preview",
+              aria_label="HTML Preview",
+              loop_index=5) }}
+
 
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>

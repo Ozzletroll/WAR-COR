@@ -1,165 +1,47 @@
-// Modal class
-class Modal {
-  constructor({
-    modal,
-    button,
-    span,
-  }) {
-    this.modal = document.getElementById(modal);
-    this.button = button;
-    this.span = span;
-
-    document.getElementById(this.button).onclick = event => {
-      this.openModal(event)
-    } 
-
-    document.getElementById(this.span).onclick = event => {
-      this.closeModal(event)
-    } 
-
-  }
-  
-  openModal() {
-    this.modal.style.display = "flex";
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-  }
-
-}
-
-
-// Preview Area Modal class
-class PreviewModal {
-  constructor({
-    modal,
-    button,
-    span,
-  }) {
-    this.modal = document.getElementById(modal);
-    this.button = button;
-    this.span = span;
-
-    document.getElementById(this.button).onclick = event => {
-      this.openModal(event)
-    } 
-
-    document.getElementById(this.span).onclick = event => {
-      this.closeModal(event)
-    } 
-
-  }
-  
-  openModal() {
-    this.modal.style.display = "flex";
-    this.htmlPreview()
-  }
-
-  closeModal() {
-    this.modal.style.display = "none";
-  }
-
-  htmlPreview() {
-
-    // Get the content of the Summernote
-    var editor = document.querySelector("#epoch-desc-field .note-editable");
-    var content = editor.innerHTML;
-
-    // Get the preview modal text area and add html
-    var modalBody = document.getElementById("preview-modal-body");
-    modalBody.innerHTML = content;
-   
-    this.formatImages();
-  
-  }
-
-  formatImages() {
-    // Apply styling to user submitted image links
-    const elements = document.querySelectorAll(".modal-body-preview p");
-    let imageCount = 0;
-
-    elements.forEach((element) => {
-      if (element.querySelector("img")) {
-        imageCount++;
-
-        // Create surrounding element
-        const newDiv1 = document.createElement("div");
-        newDiv1.classList.add("user-image-area");
-
-        // Wrap the element within the new div
-        element.parentNode.insertBefore(newDiv1, element);
-        newDiv1.appendChild(element);
-
-        // Create surrounding element
-        const newDiv2 = document.createElement("div");
-        newDiv2.classList.add("user-image-elem");
-
-        // Wrap the element within the new div
-        element.parentNode.insertBefore(newDiv2, element);
-        newDiv2.appendChild(element);
-
-        // Create header
-        const newHeader = document.createElement("div");
-        newHeader.classList.add("user-image-header");
-        newHeader.textContent = `Image::Data_${String(imageCount).padStart(2, "0")}`;
-
-        // Insert the header
-        element.parentNode.insertBefore(newHeader, element);
-
-        // Centre img elements in user submitted p elements
-        element.style.display = "flex";
-        element.style.width = "auto";
-        element.style.justifyContent = "center";
-        element.style.margin = "0";
-
-      }});
-
-  }
-
-}
+import { Modal, PreviewModal } from "./modal.js";
 
 
 // Create modals
 const modal_1 = new Modal({
-  modal: "modal-1",
-  button: "epoch-start-button",
-  span: "close-1",
+  modal: document.getElementById("help-modal-1"),
+  button: document.getElementById("epoch-start-button"),
+  span: document.getElementById("help-close-1"),
 })
 
 const modal_2 = new Modal({
-  modal: "modal-2",
-  button: "epoch-end-button",
-  span: "close-2",
+  modal: document.getElementById("help-modal-2"),
+  button: document.getElementById("epoch-end-button"),
+  span: document.getElementById("help-close-2"),
 })
 
 const modal_3 = new Modal({
-  modal: "modal-3",
-  button: "epoch-overview-button",
-  span: "close-3",
+  modal: document.getElementById("help-modal-3"),
+  button: document.getElementById("epoch-overview-button"),
+  span: document.getElementById("help-close-3"),
 })
 
 const modal_4 = new Modal({
-  modal: "modal-4",
-  button: "epoch-desc-button",
-  span: "close-4",
+  modal: document.getElementById("help-modal-4"),
+  button: document.getElementById("epoch-desc-button"),
+  span: document.getElementById("help-close-4"),
 })
 
 // HTML Preview Area Modal
 const modal_preview = new PreviewModal({
-  modal: "modal-preview",
-  button: "html-preview-button",
-  span: "close-preview",
+  modal: document.getElementById("preview-modal-5"),
+  button: document.getElementById("html-preview-button"),
+  span: document.getElementById("preview-close-5"),
+  editor: document.getElementById("epoch-desc-field")
 })
 
-
 // Only create delete modal if elements present (IE, we are actually on the edit epoch template)
-const modalDeleteTest = document.getElementById("modal-delete")
+const modalDeleteTest = document.getElementById("epoch-delete-button");
+var modalDelete;
 if (modalDeleteTest != null) {
-  modal_delete = new Modal({
-    modal: "modal-delete",
-    button: "button-delete",
-    span: "close-delete",
+  modalDelete = new Modal({
+    modal: document.getElementById("epoch-modal-0"),
+    button: document.getElementById("epoch-delete-button"),
+    span: document.getElementById("epoch-close-0"),
   })
 }
 
@@ -181,8 +63,8 @@ window.onclick = function(event) {
     modal_preview.closeModal();
   }
   if (modalDeleteTest != null) {
-    if (event.target == modal_delete.modal) {
-      modal_delete.closeModal();
+    if (event.target == modalDelete.modal) {
+      modalDelete.closeModal();
     }
   }
 }
