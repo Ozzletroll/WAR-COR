@@ -140,11 +140,11 @@
                 Epochs are placed at the month level within the timeline, and encapsulate 
                 all the events that take place within them.</p>
 
-              <a class="first-event-link" 
+              <a class="first-event-link button new-timeline-item first-event-button" 
                 href="{{ url_for('data.backup_page',
                           campaign_id=campaign.id,
                           campaign_name=campaign.url_title) }}">
-                <button class="button new-timeline-item first-event-button">RESTORE FROM BACKUP</button>
+                RESTORE FROM BACKUP
               </a>
               <p class="flavour-text">Restore a campaign from a WAR/COR .json backup file.</p>
 
@@ -153,7 +153,7 @@
           {% else %}
             <p class="flavour-text">Awaiting conflict data input</p>
           {% endif %}
-        </div>
+        </section>
       {% else %}
         {% if edit %}
           <section class="new-timeline-data-buttons data-buttons-hor" aria-label="New Timeline Item Buttons">
