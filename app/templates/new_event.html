@@ -78,7 +78,7 @@
         {% include 'components/flash.html' %}
       </div>
   
-      <form class="edit-form form-column fade-in-block-2" method="POST" novalidate>
+      <form class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Event Form">
         {{ form.csrf_token }}
 
         <div id="date-field" class="form-container form-container-small">
@@ -329,7 +329,7 @@
                 model_id=event.id,
                 loop_index=0,
                 form=form,
-                form_action=url_for('event.delete_event',
+                form_action=url_for("event.delete_event",
                                     campaign_name=campaign.url_title,
                                     campaign_id=campaign.id,
                                     event_name=event.url_title,
