@@ -48,8 +48,10 @@ export class PreviewModal extends Modal{
     modal,
     button,
     span,
+    editor,
   }) {
     super({ modal, button, span });
+    this.editor = editor.querySelector(".note-editable");
 
     this.button.onclick = event => {
       this.openModal(event)
@@ -65,8 +67,7 @@ export class PreviewModal extends Modal{
   htmlPreview() {
 
     // Get the content of the Summernote editor and add it to the modal
-    var editor = document.querySelector('.note-editable');
-    var content = editor.innerHTML;
+    var content = this.editor.innerHTML;
     var modalBody = document.getElementById("preview-modal-body");
     modalBody.innerHTML = content;
    
