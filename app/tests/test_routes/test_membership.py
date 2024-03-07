@@ -432,6 +432,10 @@ def test_add_permission(client, auth, campaign):
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
 
+    # Add new user as member (user_1 is already a member from earlier test in module)
+    campaign_object.members.append(user_2)
+    db.session.commit()
+
     url = url_for("membership.add_permission",
                   campaign_name=campaign_object.title,
                   campaign_id=campaign_object.id)
