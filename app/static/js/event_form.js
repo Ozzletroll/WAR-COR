@@ -25,6 +25,7 @@ const modal_preview = new PreviewModal({
   modal: document.getElementById("preview-modal-4"),
   button: document.getElementById("html-preview-button"),
   span: document.getElementById("preview-close-4"),
+  editor: document.getElementById("event-desc-field")
 })
 
 // Check if page has delete button and create modal instance
