@@ -58,8 +58,8 @@
           {% endif %}
         </div>
 
-        <hr class="campaigns-divider">
-        <p class="flavour-text">UWC-17-00 // Epoch::Designation </p>
+        <hr class="campaigns-divider" aria-hidden="true">
+        <p class="flavour-text" aria-label="Flavour Text">UWC-17-00 // Epoch::Designation </p>
 
     </div>
 
@@ -67,236 +67,147 @@
         {% include 'components/flash.html' %}
       </div>
   
-      <form class="edit-form form-column fade-in-block-2" method="POST" novalidate>
+      <form class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Epoch Form">
         {{ form.csrf_token }}
 
         <div id="start-date-field" class="form-container form-container-small">
-          <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-              <h4 class="campaign-form label-title">Start Date</h4>
+              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <label for="epoch-form-start-date">
+                <h4 class="campaign-form label-title">Start Date</h4>
+              </label>
 
               <div class="form-extra-button-area">
-                
-                <div id="epoch-start-button" type="button" class="form-button">
+                <button id="epoch-start-button" type="button" class="form-button">
                   {% include "components/help_icon.html" %}
-                </div>
-                
+                </button>
               </div>
               
             </div>
-            <p class="flavour-text">UWC-17-01 //  Epoch::Start Marker</p>
-          </label>
+            <p class="flavour-text" aria-label="Flavour Text">UWC-17-01 //  Epoch::Start Marker</p>
+          </div>
         
           <div class="form-input-container">
-            {{ form.start_date(id="start-date", class_="campaign-input form-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
+            {{ form.start_date(id="epoch-form-start-date", 
+                               class_="campaign-input form-input event-input", 
+                               placeholder_="YYYY/MM/DD REQUIRED", 
+                               autocomplete="off") }}
             <div class="form-underline"></div>
           </div>
 
         </div>
 
-        {# Start Date Modal #}
-
-        <div id="modal-1" class="modal">
-          <div class="modal-content">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">Epoch Start Date</h2>
-                <span id="close-1" class="modal-close">
-                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                </span>
-              </div>
-              <div class="modal-body">
-                <p>An epoch represents an era or a time period during a campaign, grouping together
-                  any events that occur within the epoch start and end dates.
-                  Epochs are placed at the day level within the timeline, and encapsulate 
-                  all the events that take place within.
-                </p>
-                <p>The epoch markers are placed at the beginning of the START DATE day,
-                  and the end of the END DATE day.</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div id="end-date-field" class="form-container form-container-small">
-          <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-              <h4 class="campaign-form label-title">End Date</h4>
+              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <label for="epoch-form-end-date">
+                <h4 class="campaign-form label-title">End Date</h4>
+              </label>
 
               <div class="form-extra-button-area">
-                
-                <div id="epoch-end-button" type="button" class="form-button">
+                <button id="epoch-end-button" type="button" class="form-button">
                   {% include "components/help_icon.html" %}
-                </div>
-                
+                </button>
               </div>
             </div>
-            <p class="flavour-text">UWC-17-02 //  Epoch::End Marker</p>
-          </label>
+            <p class="flavour-text" aria-label="Flavour Text">UWC-17-02 //  Epoch::End Marker</p>
+          </div>
         
           <div class="form-input-container">
-            {{ form.end_date(id="end-date", class_="campaign-input form-input event-input", placeholder_="YYYY/MM/DD REQUIRED", autocomplete="off") }}
+            {{ form.end_date(id="epoch-form-end-date", 
+                             class_="campaign-input form-input event-input", 
+                             placeholder_="YYYY/MM/DD REQUIRED", 
+                             autocomplete="off") }}
             <div class="form-underline"></div>
           </div>
 
-        </div>
-
-        {# Start Date Modal #}
-
-        <div id="modal-2" class="modal">
-          <div class="modal-content">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">Epoch End Date</h2>
-                <span id="close-2" class="modal-close">
-                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                </span>
-              </div>
-              <div class="modal-body">
-                <p>The END DATE of the epoch specifies the position of the end of epoch marker.</p>
-                <p>Events that occur within the END DATE day are considered part of the epoch.</p>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div id="title-field" class="form-container form-container-small">
-          <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
-              <h4 class="campaign-form label-title">Epoch Title</h4>
+              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <label for="epoch-form-title">
+                <h4 class="campaign-form label-title">Epoch Title</h4>
+              </label>
             </div>
-            <p class="flavour-text">UWC-17-03 //  Epoch::Designation</p>
-          </label>
+            <p class="flavour-text" aria-label="Flavour Text">UWC-17-03 //  Epoch::Designation</p>
+          </div>
 
           <div class="form-input-container">
-            {{ form.title(class_="campaign-input form-input event-input", autocomplete="off", id="epoch-title", placeholder="REQUIRED") }}
+            {{ form.title(id="epoch-form-title", 
+                          class_="campaign-input form-input event-input", 
+                          autocomplete="off", 
+                          placeholder="REQUIRED") }}
             <div class="form-underline"></div>
           </div>
 
         </div>
 
         <div id="epoch-overview-field" class="form-container form-container-large">
-          <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
           
-              <h4 class="campaign-form label-title">Overview</h4>
+              <label for="summernote-overview">
+                <h4 class="campaign-form label-title">Overview</h4>
+              </label>
 
               <div class="form-extra-button-area">
-                
-                <div id="epoch-overview-button" type="button" class="form-button">
+                <button id="epoch-overview-button" type="button" class="form-button">
                   {% include "components/help_icon.html" %}
-                </div>
-                
+                </button>
               </div>
 
             </div>
-            <p class="flavour-text">UWC-17-04 //  Epoch::Overview</p>
-          </label>
+            <p class="flavour-text" aria-label="Flavour Text">UWC-17-04 //  Epoch::Overview</p>
+          </div>
 
-          {{ form.overview(id="summernote-overview", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+          {{ form.overview(id="summernote-overview", 
+                           class_="campaign-input large-input event-input", 
+                           autocomplete="off", 
+                           placeholder="OPTIONAL") }}
           {{ summernote.summernote_editor(required=false, epoch_overview=true) }}
         
         </div>
 
-        <div id="modal-3" class="modal">
-          <div class="modal-content">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">Epoch Overview</h2>
-                <span id="close-3" class="modal-close">
-                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                </span>
-              </div>
-              <div class="modal-body">
-                <p>The epoch overview is displayed on the main timeline beneath each epoch marker.
-                  It is best used for a brief description of the epoch.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div id="epoch-desc-field" class="form-container form-container-large">
-          <label class="campaign-form-label form-icon">
+          <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
+              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
           
-              <h4 class="campaign-form label-title">Description</h4>
+              <label for="summernote">
+                <h4 class="campaign-form label-title">Description</h4>
+              </label>
 
               <div class="form-extra-button-area">
-
-                <div id="epoch-desc-button" type="button" class="form-button">
+                <button id="epoch-desc-button" type="button" class="form-button">
                   {% include "components/help_icon.html" %}
-                </div>
-                <div id="html-preview-button" type="button" class="form-button form-preview-button">
+                </button>
+                <button id="html-preview-button" type="button" class="form-button form-preview-button">
                   HTML PREVIEW
-                </div>
-                
+                </button>
               </div>
 
             </div>
-            <p class="flavour-text">UWC-17-04 //  Epoch::Description</p>
-          </label>
+            <p class="flavour-text" aria-label="Flavour Text">UWC-17-04 //  Epoch::Description</p>
+          </div>
 
-          {{ form.description(id="summernote", class_="campaign-input large-input event-input", autocomplete="off", placeholder="OPTIONAL") }}
+          {{ form.description(id="summernote", 
+                              class_="campaign-input large-input event-input", 
+                              autocomplete="off", 
+                              placeholder="OPTIONAL") }}
           {{ summernote.summernote_editor(required=false) }}
         
         </div>
-
-        <div id="modal-4" class="modal">
-          <div class="modal-content">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">Epoch Description</h2>
-                <span id="close-4" class="modal-close">
-                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                </span>
-              </div>
-              <div class="modal-body">
-                <p>The epoch description is displayed on the dedicated epoch page itself, allowing
-                  for a longer, more detailed description of the epoch.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {# HTML Preview Modal #}
-
-        <div id="modal-preview" class="modal">
-          <div class="modal-content modal-preview-content">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">HTML Preview</h2>
-                <span id="close-preview" class="modal-close">
-                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                </span>
-              </div>
-
-              <div class="modal-body modal-preview-overflow">
-                <div class="event-page-elem event-elem-large elem-body event-page-description">
-      
-                  <div class="entry-left-padding"></div>
-  
-                  <div class="description-body">
-                      <h4 class="event-desc-header">Archive Entry:</h4>
-                      <div class="event-desc">
-                        <div id="preview-modal-body" class="modal-body modal-body-preview">
-                          {# Modal text goes here #}
-                        </div>
-                      </div>
-                  </div>
-                
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
 
         <div class="campaign-submit-area event-submit-area">
           {{ form.submit(class_="campaign-input campaign-submit", ) }}
@@ -312,52 +223,170 @@
 
       </form>
 
-      {% if edit_page %}
-
-        {# Delete event confirm modal #}
-
-        <div id="modal-delete" class="modal">
-          <div class="modal-content modal-content-small">
-            <div class="modal-content-inner">
-              <div class="modal-header">
-                <h2 class="modal-header-small">Delete Epoch</h2>
-                <span id="close-delete" class="modal-close">
-                  <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
-                </span>
-              </div>
-              <div class="modal-body modal-body-small">
-                <p class="flavour-text modal-flavour">EPC-{{campaign.id}}-{{epoch.id}} // DELETION::CONFIRM</p>
-                <p class="modal-text modal-text-upper">Confirm termination of epoch: "{{epoch.title}}".</p>
-
-                <form method="POST" action="{{ url_for('epoch.delete_epoch',
-                                                        campaign_name=campaign.url_title,
-                                                        campaign_id=campaign.id,
-                                                        epoch_title=epoch.title,
-                                                        epoch_id=epoch.id) }}">
-                  {{ delete_form.csrf_token }}
-                  {{ delete_form.submit(class_="button modal-confirm-button", value="DELETE") }}
-                </form>
-
-              </div>
-            </div>
-          </div>
-        </div>
-
-      {% endif %}
-
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
-      <p class="flavour-text flavour-text-centre">By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs. </p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      <p class="flavour-text flavour-text-centre" aria-label="Flavour Text">
+        By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. 
+        Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs.
+      </p>
+      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme"
+      aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens">
     </div>
 
   </div>
 
 </div>
 
+
+  {# Start Date Modal #}
+
+  <div id="modal-1" class="modal">
+    <div class="modal-content">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">Epoch Start Date</h2>
+          <span id="close-1" class="modal-close">
+            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </span>
+        </div>
+        <div class="modal-body">
+          <p>An epoch represents an era or a time period during a campaign, grouping together
+            any events that occur within the epoch start and end dates.
+            Epochs are placed at the day level within the timeline, and encapsulate 
+            all the events that take place within.
+          </p>
+          <p>The epoch markers are placed at the beginning of the START DATE day,
+            and the end of the END DATE day.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# End Date Modal #}
+
+  <div id="modal-2" class="modal">
+    <div class="modal-content">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">Epoch End Date</h2>
+          <span id="close-2" class="modal-close">
+            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </span>
+        </div>
+        <div class="modal-body">
+          <p>The END DATE of the epoch specifies the position of the end of epoch marker.</p>
+          <p>Events that occur within the END DATE day are considered part of the epoch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Epoch Overview Modal #}
+  <div id="modal-3" class="modal">
+    <div class="modal-content">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">Epoch Overview</h2>
+          <span id="close-3" class="modal-close">
+            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </span>
+        </div>
+        <div class="modal-body">
+          <p>The epoch overview is displayed on the main timeline beneath each epoch marker.
+            It is best used for a brief description of the epoch.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="modal-4" class="modal">
+    <div class="modal-content">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">Epoch Description</h2>
+          <span id="close-4" class="modal-close">
+            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </span>
+        </div>
+        <div class="modal-body">
+          <p>The epoch description is displayed on the dedicated epoch page itself, allowing
+            for a longer, more detailed description of the epoch.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# HTML Preview Modal #}
+
+  <div id="modal-preview" class="modal">
+    <div class="modal-content modal-preview-content">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">HTML Preview</h2>
+          <span id="close-preview" class="modal-close">
+            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </span>
+        </div>
+
+        <div class="modal-body modal-preview-overflow">
+          <div class="event-page-elem event-elem-large elem-body event-page-description">
+
+            <div class="entry-left-padding"></div>
+
+            <div class="description-body">
+                <h4 class="event-desc-header">Archive Entry:</h4>
+                <div class="event-desc">
+                  <div id="preview-modal-body" class="modal-body modal-body-preview">
+                    {# Modal text goes here #}
+                  </div>
+                </div>
+            </div>
+          
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {% if edit_page %}
+
+  {# Delete event confirm modal #}
+
+  <div id="modal-delete" class="modal">
+    <div class="modal-content modal-content-small">
+      <div class="modal-content-inner">
+        <div class="modal-header">
+          <h2 class="modal-header-small">Delete Epoch</h2>
+          <span id="close-delete" class="modal-close">
+            <img class="icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+          </span>
+        </div>
+        <div class="modal-body modal-body-small">
+          <p class="flavour-text modal-flavour">EPC-{{campaign.id}}-{{epoch.id}} // DELETION::CONFIRM</p>
+          <p class="modal-text modal-text-upper">Confirm termination of epoch: "{{epoch.title}}".</p>
+
+          <form method="POST" action="{{ url_for('epoch.delete_epoch',
+                                                  campaign_name=campaign.url_title,
+                                                  campaign_id=campaign.id,
+                                                  epoch_title=epoch.title,
+                                                  epoch_id=epoch.id) }}">
+            {{ delete_form.csrf_token }}
+            {{ delete_form.submit(class_="button modal-confirm-button", value="DELETE") }}
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 
-<script src="{{ url_for('static', filename='/js/epoch_form.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/epoch_form.js') }}" type="module"></script>
 <script src="{{ url_for('static', filename='/js/unsaved_changes_warning.js') }}"></script>
 
 
