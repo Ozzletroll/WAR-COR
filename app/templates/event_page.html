@@ -188,99 +188,97 @@
 
               </div>
 
-              <div class="adjacent-events-lower">
-                <div class="adjacent-lower-left">
-                  {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=true) }}
-                </div>
-                <div class="adjacent-lower-right">
-                  {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=true) }}
-                </div>
-              </div>
-
             </div>
 
             {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true) }}
 
           </div>
 
+          <div class="adjacent-events-lower">
+            <div class="adjacent-lower-left">
+              {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=true) }}
+            </div>
+            <div class="adjacent-lower-right">
+              {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=true) }}
+            </div>
+          </div>
 
+          <!-- User comments area -->
+          <section class="comments-area fade-in-block-3" aria-label="Comments Area">
 
-            <!-- User comments area -->
-            <section class="comments-area fade-in-block-3" aria-label="Comments Area">
-
-                <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
-                <hr class="campaigns-divider" aria-hidden="true">
-              
-                {% if event.comments | length == 0 %}
-                  <h6 class="comments-count">[NO MESSAGE DATA]</h5>
-                {% endif %}
-
-                <ol class="comments-list" aria-label="Comments">
-                {% for comment in event.comments %}
-
-                    <li class="event-comment">
-
-                      <p class="comment-date">{{ comment.date }}</p>
-
-                      {% if comment.author == current_user %}
-                      <div id="comment-{{comment.id}}" class="comment-header comment-header-user">
-                      {% else %}
-                      <div id="comment-{{comment.id}}" class="comment-header">
-                      {% endif %}
-                        <div class="comment-header-left">
-                          <img class="icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
-                          <h5 class="comment-username">{{ comment.author.username }}</h5>
-  
-                          {% for entry in comment.author.campaign_associations %}
-                            {%if entry.campaign_id == campaign.id%}
-                              {% if entry.callsign is not none %}
-                                <h6 class="comment-callsign callsign-break">
-                                  [{{entry.callsign.upper()}}]
-                                </h6>
-                              {% endif %}
-                            {%endif%}
-                          {% endfor %}
-                        </div>
-
-                        <div class="comment-header-right">
-                          {% if campaign in current_user.permissions or comment.author == current_user %}
-                            <button id="comment-button-{{loop.index}}" class="button delete-comment-button">
-                              <img class="icon" src="{{ url_for('static', filename='/images/icons/bin_white.svg') }}">
-                            </button>
-                          {% endif %}
-                        </div>
-
-                      </div>
-
-                      <div class="comment-body">
-                        <p class="flavour-text">MSG-{{event.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
-                        {{ comment.body | safe }}
-                      </div>
-
-                    </li>
-
-                {% endfor  %}
-                </ol>
-
-              <!-- New Comment Area -->
-              {% if current_user.is_authenticated and current_user in campaign.members %}
-
-                <div class="new-comment-area">
-                  <div class="new-comment-area-header">
-                    <h4 class="new-comment-heading">//COMMENT</h4>
-                  </div>
-
-                  <form class="form comment-form" method="post">
-                    {{ form.csrf_token }}
-                    {{ form.body(id="summernote") }}
-                    {{ summernote.summernote_editor(comment=true) }}
-                    {{ form.submit(class_="button comment-submit") }}
-                  </form>
-                </div>
-                
+              <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
+              <hr class="campaigns-divider" aria-hidden="true">
+            
+              {% if event.comments | length == 0 %}
+                <h6 class="comments-count">[NO MESSAGE DATA]</h5>
               {% endif %}
 
-            </section>
+              <ol class="comments-list" aria-label="Comments">
+              {% for comment in event.comments %}
+
+                  <li class="event-comment">
+
+                    <p class="comment-date">{{ comment.date }}</p>
+
+                    {% if comment.author == current_user %}
+                    <div id="comment-{{comment.id}}" class="comment-header comment-header-user">
+                    {% else %}
+                    <div id="comment-{{comment.id}}" class="comment-header">
+                    {% endif %}
+                      <div class="comment-header-left">
+                        <img class="icon" src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
+                        <h5 class="comment-username">{{ comment.author.username }}</h5>
+
+                        {% for entry in comment.author.campaign_associations %}
+                          {%if entry.campaign_id == campaign.id%}
+                            {% if entry.callsign is not none %}
+                              <h6 class="comment-callsign callsign-break">
+                                [{{entry.callsign.upper()}}]
+                              </h6>
+                            {% endif %}
+                          {%endif%}
+                        {% endfor %}
+                      </div>
+
+                      <div class="comment-header-right">
+                        {% if campaign in current_user.permissions or comment.author == current_user %}
+                          <button id="comment-button-{{loop.index}}" class="button delete-comment-button">
+                            <img class="icon" src="{{ url_for('static', filename='/images/icons/bin_white.svg') }}">
+                          </button>
+                        {% endif %}
+                      </div>
+
+                    </div>
+
+                    <div class="comment-body">
+                      <p class="flavour-text">MSG-{{event.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
+                      {{ comment.body | safe }}
+                    </div>
+
+                  </li>
+
+              {% endfor  %}
+              </ol>
+
+            <!-- New Comment Area -->
+            {% if current_user.is_authenticated and current_user in campaign.members %}
+
+              <div class="new-comment-area">
+                <div class="new-comment-area-header">
+                  <h4 class="new-comment-heading">//COMMENT</h4>
+                </div>
+
+                <form class="form comment-form" method="post">
+                  {{ form.csrf_token }}
+                  {{ form.body(id="summernote") }}
+                  {{ summernote.summernote_editor(comment=true) }}
+                  {{ form.submit(class_="button comment-submit") }}
+                </form>
+              </div>
+              
+            {% endif %}
+
+          </section>
 
         </div>
 
