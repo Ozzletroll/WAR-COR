@@ -4872,6 +4872,10 @@ for selection in timeline_search.js */
     flex: 2.5 1 0;
   }
 
+  .epoch-events-container .month-connector, .epoch-left-area {
+    flex: 1 1 0;
+  }
+
 }
 
 @media screen and (max-width: 650px) { 
@@ -5300,6 +5304,7 @@ for selection in timeline_search.js */
 .adjacent-events-lower {
   display: flex;
   width: 100%;
+  max-width: 900px;
   margin-top: 50px;
   justify-content: space-between;
   align-items: center;
