@@ -291,6 +291,16 @@ body {
   box-shadow: inset 3px 0px 12px var(--elem_shadow);
 }
 
+/* Hide summary arrows on Chrome and Safari */
+
+summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
+
 @keyframes backgroundscroll {
   from {
     background-position:  400px 0;
