@@ -42,12 +42,16 @@ function setHORUSStyling() {
   if (storedTheme == "horus") {
     // Set additional HORUS theme styling
     var elements = document.querySelectorAll("p");
+    const excludedParentElements = ["note-editable"];
+    const excludedElements = ["modal-text", "modal-highlight-text", "about-page-paragraph"];
 
     Array.from(elements).forEach((element) => {
-      if (element.tagName == "P" 
-      && (element.parentElement.className != "note-editable" 
-      && (!element.classList.contains("modal-text"))
-      && (element.querySelector("img") == null))
+      if (element.parentElement && excludedParentElements.includes(element.parentElement.className)) {
+        return;
+      }
+      else if (element.tagName == "P" 
+      && (element.querySelector("img") == null)
+      && !excludedElements.some(className => element.classList.contains(className))
       ) {
           // Split paragraph into words
           var paragraphText = element.textContent.split(" ");

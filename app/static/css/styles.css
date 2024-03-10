@@ -1546,6 +1546,10 @@ p {
   text-align: center;
 }
 
+.modal-text-left {
+  text-align: left;
+}
+
 .modal-text strong {
   font-weight: 500;
   color: var(--text_header);

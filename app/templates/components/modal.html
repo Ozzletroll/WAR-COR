@@ -96,36 +96,36 @@
           {% elif type == "help" %}
 
             {% if subtype == "date" %}
-              <p>WAR/COR organises all events in chronological order. Dates should be entered in a 
+              <p class="modal-text modal-text-left">WAR/COR organises all events in chronological order. Dates should be entered in a 
                 "YEAR/MONTH/DAY HOUR:MINUTE:SECONDS" format.</p>
-              <p>WAR/COR does not enforce standard year/month/day/hour/second lengths, which may be any value between 1 and 99.</p>
-              <p>The year value can be any value of 1-9 digits, either positive or negative. This allows the placement of events in a similar manner to the BC/BCE system,
+              <p class="modal-text modal-text-left">WAR/COR does not enforce standard year/month/day/hour/second lengths, which may be any value between 1 and 99.</p>
+              <p class="modal-text modal-text-left">The year value can be any value of 1-9 digits, either positive or negative. This allows the placement of events in a similar manner to the BC/BCE system,
                 using your campaign's chosen suffix/negative suffix.</p>
               <p class="modal-highlight-text">Example: "5016/15/40 25:00:00" is a valid date.</p>
             {% elif subtype == "belligerents" %}
-              <p>An event's belligerents list represents active combatants and participants.</p>
-              <p>Allied belligerents should be ampersand "&" separated, whilst opposing forces should be comma "," separated.</p>
+              <p class="modal-text modal-text-left">An event's belligerents list represents active combatants and participants.</p>
+              <p class="modal-text modal-text-left">Allied belligerents should be ampersand "&" separated, whilst opposing forces should be comma "," separated.</p>
               <p class="modal-highlight-text">Example: "Ally Faction 1 & Ally Faction 2, Enemy Faction"</p>
             {% elif subtype == "format" %}
-              <p>An event with the "Hide Time" tag will not render the time label on the timeline. This can be useful to represent events
+              <p class="modal-text modal-text-left">An event with the "Hide Time" tag will not render the time label on the timeline. This can be useful to represent events
                 that take up the entire day, or do not require a specific time label.
               </p>
             {% elif subtype == "epoch_start_date" %}
-              <p>An epoch represents an era or a time period during a campaign, grouping together
+              <p class="modal-text modal-text-left">An epoch represents an era or a time period during a campaign, grouping together
                 any events that occur within the epoch start and end dates.
                 Epochs are placed at the day level within the timeline, and encapsulate 
                 all the events that take place within.
               </p>
-              <p>The epoch markers are placed at the beginning of the START DATE day,
+              <p class="modal-text modal-text-left">The epoch markers are placed at the beginning of the START DATE day,
                 and the end of the END DATE day.</p>
             {% elif subtype == "epoch_end_date" %}
-              <p>The END DATE of the epoch specifies the position of the end of epoch marker.</p>
-              <p>Events that occur within the END DATE day are considered part of the epoch.</p>
+              <p class="modal-text modal-text-left">The END DATE of the epoch specifies the position of the end of epoch marker.</p>
+              <p class="modal-text modal-text-left">Events that occur within the END DATE day are considered part of the epoch.</p>
             {% elif subtype == "epoch_overview" %}
-              <p>The epoch overview is displayed on the main timeline beneath each epoch marker.
+              <p class="modal-text modal-text-left">The epoch overview is displayed on the main timeline beneath each epoch marker.
                 It is best used for a brief description of the epoch.</p>
             {% elif subtype == "epoch_description" %}
-              <p>The epoch description is displayed on the dedicated epoch page itself, allowing
+              <p class="modal-text modal-text-left">The epoch description is displayed on the dedicated epoch page itself, allowing
                 for a longer, more detailed description of the epoch.
               </p>
             {% endif %}
