@@ -57,6 +57,11 @@ class TestingPostgresConfig(TestingConfig):
     }
 
 
+class TestingLocalNetwork(Config):
+    WTF_CSRF_ENABLED = False
+    SESSION_COOKIE_SECURE = False
+
+
 class ProductionConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.environ.get("POSTGRESQL_DATABASE_URI")
     SCHEDULER_JOBSTORES = {
