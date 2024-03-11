@@ -91,7 +91,7 @@
               </label>
 
               <div class="form-extra-button-area">
-                <button id="event-date-help-button" class="form-button" type="button" aria-label="Help">
+                <button id="event-date-help-button" class="button form-button" type="button" aria-label="Help">
                   {% include "components/help_icon.html" %}
                 </button>
               </div>
@@ -120,15 +120,16 @@
               </label>
 
               <div class="form-extra-button-area">
-                
-                <button type="button" class="form-button" type="button" onClick="getRequest(target_url)" aria-label="Generate Random Title">
-                  <svg class="icon icon-colour-var" aria-label="Random Title Icon" width="20px" height="20px" viewBox="0 -4 32 32" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m24.983 8.539v-2.485h-4.902l-3.672 5.945-2.099 3.414-3.24 5.256c-.326.51-.889.844-1.53.845h-9.54v-3.568h8.538l3.673-5.946 2.099-3.414 3.24-5.256c.325-.509.886-.843 1.525-.845h5.904v-2.485l7.417 4.27-7.417 4.27z"/>
-                    <path d="m12.902 6.316-.63 1.022-1.468 2.39-2.265-3.675h-8.538v-3.568h9.54c.641.001 1.204.335 1.526.838l.004.007 1.836 2.985z"/>
-                    <path d="m24.983 24v-2.485h-5.904c-.639-.002-1.201-.336-1.521-.838l-.004-.007-1.836-2.985.63-1.022 1.468-2.39 2.264 3.675h4.902v-2.485l7.417 4.27-7.417 4.27z"/>
-                  </svg>
+
+                <button class="button form-button" type="button" onClick="getRequest(target_url)" aria-label="Generate Random Title">
+                  <div class="icon-safari-fix">
+                    <svg class="icon icon-colour-var" aria-label="Random Title Icon" width="20px" height="20px" viewBox="0 -4 32 32" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: auto;">
+                      <path d="m24.983 8.539v-2.485h-4.902l-3.672 5.945-2.099 3.414-3.24 5.256c-.326.51-.889.844-1.53.845h-9.54v-3.568h8.538l3.673-5.946 2.099-3.414 3.24-5.256c.325-.509.886-.843 1.525-.845h5.904v-2.485l7.417 4.27-7.417 4.27z"/>
+                      <path d="m12.902 6.316-.63 1.022-1.468 2.39-2.265-3.675h-8.538v-3.568h9.54c.641.001 1.204.335 1.526.838l.004.007 1.836 2.985z"/>
+                      <path d="m24.983 24v-2.485h-5.904c-.639-.002-1.201-.336-1.521-.838l-.004-.007-1.836-2.985.63-1.022 1.468-2.39 2.264 3.675h4.902v-2.485l7.417 4.27-7.417 4.27z"/>
+                    </svg>
+                  </div>
                 </button>
-                
               </div>
               
             </div>
@@ -199,7 +200,7 @@
               </label>
 
               <div class="form-extra-button-area">
-                <button id="event-belligerents-help-button" class="form-button" type="button" aria-label="Help">
+                <button id="event-belligerents-help-button" class="button form-button" type="button" aria-label="Help">
                   {% include "components/help_icon.html" %}
                 </button>
               </div>
@@ -225,7 +226,7 @@
               <h4 class="campaign-form label-title">Timeline Display</h4>
               <div class="form-extra-button-area">
                 
-                <button id="event-format-help-button" class="form-button" type="button" aria-label="Help">
+                <button id="event-format-help-button" class="button form-button" type="button" aria-label="Help">
                   {% include "components/help_icon.html" %}
                 </button>
                 
@@ -254,7 +255,7 @@
               </label>
               <div class="form-extra-button-area">
                   
-                <button id="html-preview-button" type="button" class="form-button form-preview-button">
+                <button id="html-preview-button" type="button" class="button form-button form-preview-button">
                   HTML PREVIEW
                 </button>
                 
