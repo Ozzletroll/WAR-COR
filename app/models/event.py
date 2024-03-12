@@ -52,19 +52,28 @@ class Event(db.Model):
     # Methods
     def update(self, form, parent_campaign, new=False):
         """ Method to populate and update self.
-            Takes form data from form.data
-            Set "new" to true if creating new entry  """
+            Takes form data from form.data, but only updates if respective
+            "edit_" field has been set to True via event page Javascript.
+            Set "new" to true if creating new entry.  """
+        
+        # If new event, use all fields except those with "edit_" prefix
+        # Otherwise, iterate over only those with the "edit_" prefix
+        fields = {field: value for field, value in form.items() 
+                  if (not new and field.startswith("edit_")) 
+                  or (new and not field.startswith("edit_"))}
 
-        for field, value in form.items():
-            if value is not None:
-                if field == "date":
-                    self.date = value
-                    self.split_date(value)
+        for field, value in fields.items():
+            matching_field = field.replace("edit_", "")
+            
+            if value or new:
+                if matching_field == "date":
+                    self.date = form[matching_field]
+                    self.split_date(form[matching_field])
 
-                if field == "body":
-                    value = sanitise_input(value)
+                if matching_field == "body":
+                    value = sanitise_input(form[matching_field])
 
-                setattr(self, field, value)
+                setattr(self, matching_field, form[matching_field])
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()

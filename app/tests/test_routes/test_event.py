@@ -127,12 +127,19 @@ def test_edit_event(client, auth, campaign, event):
 
     event_data = {
         "type": "Test",
+        "edit_type": True,
         "title": "Test Event",
+        "edit_title": True,
         "date": "5016/01/01 09:00:00",
+        "edit_date": True,
         "location": "Edited Test Location",
+        "edit_location": True,
         "belligerents": "Belligerent 1, Belligerent 2",
+        "edit_belligerents": True,
         "body": "Edited Test Body Text",
+        "edit_body": True,
         "result": "Edited Test Result",
+        "edit_result": True,
         "header": False,
         "hide_time": False,
     }

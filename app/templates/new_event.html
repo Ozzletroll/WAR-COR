@@ -78,8 +78,17 @@
         {% include 'components/flash.html' %}
       </div>
   
-      <form class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Event Form">
+      <form id="edit-event-form" class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Event Form">
         {{ form.csrf_token }}
+        <div id="event-form-edit-fields" class="form-hidden">
+          {{ form.edit_title(id="event-form-title-edit", value=false) }}
+          {{ form.edit_type(id="event-form-type-edit", value=false) }}
+          {{ form.edit_date(id="event-form-date-edit", value=false) }}
+          {{ form.edit_location(id="event-form-location-edit", value=false) }}
+          {{ form.edit_belligerents(id="event-form-belligerents-edit", value=false) }}
+          {{ form.edit_body(id="summernote-edit", value=false) }}
+          {{ form.edit_result(id="event-form-result-edit", value=false) }}
+        </div>
 
         <div id="date-field" class="form-container form-container-small">
           <div class="campaign-form-label form-icon">
@@ -369,6 +378,7 @@
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 
 <script src="{{ url_for('static', filename='/js/event_form.js') }}" type="module"></script>
+<script src="{{ url_for('static', filename='/js/form_edited.js') }}"></script>
 <script src="{{ url_for('static', filename='/js/event_gen.js') }}"></script> 
 <script src="{{ url_for('static', filename='/js/unsaved_changes_warning.js') }}"></script>
 <script>

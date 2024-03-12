@@ -63,6 +63,21 @@ class CreateCampaignForm(FlaskForm):
 
 
 class CreateEventForm(FlaskForm):
+    """ 
+        The "edit_" prefix fields are rendered as hidden fields on the page,
+        and toggled via Javascript when the user makes a change to the corresponding field.
+        This helps prevent unnecessary overwrites if multiple users are editing
+        the same model at once.
+        
+    """
+    edit_title = BooleanField("Edit Title")
+    edit_type = BooleanField("Edit Type")
+    edit_date = BooleanField("Edit Date")
+    edit_location = BooleanField("Edit Location")
+    edit_belligerents = BooleanField("Edit Belligerents")
+    edit_body = BooleanField("Edit Body")
+    edit_result = BooleanField("Edit Result")
+
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
     date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
