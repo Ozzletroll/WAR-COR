@@ -5611,7 +5611,8 @@ for selection in timeline_search.js */
   font-weight: 300;
   text-transform: uppercase;
   text-align: center;
-  padding: 0;
+  padding: 0px;
+  margin: 0px;
 }
 
 .comments-list {
@@ -5752,6 +5753,7 @@ for selection in timeline_search.js */
   font-weight: 500;
   clip-path: polygon(0 0,calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
   border-style: none;
+  border-radius: 3px;
   text-transform: uppercase;
   transition: 0.3s;
 }
