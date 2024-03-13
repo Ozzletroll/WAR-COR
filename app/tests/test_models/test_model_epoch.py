@@ -42,7 +42,9 @@ def test_update(client):
         "description": "Updated description",
         "overview": "Updated overview"
     }
-    epoch.update(form, parent_campaign=campaign_object, new=False)
+    epoch.update(form, 
+                 parent_campaign=campaign_object, 
+                 new=True)
 
     # Verify the changes
     updated_epoch = db.session.execute(

@@ -1,5 +1,16 @@
 import { Modal, PreviewModal } from "./modal.js";
+import { Form } from "./form_edited.js";
 
+// Create form edit check
+const editEpochForm = new Form({
+  form: "edit-epoch-form",
+  fields: [
+    "epoch-form-title",
+    "epoch-form-start-date",
+    "epoch-form-end-date",
+    "summernote-overview",
+    "summernote"]
+})
 
 // Create modals
 const modal_1 = new Modal({

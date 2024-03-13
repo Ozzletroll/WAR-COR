@@ -50,28 +50,36 @@ class Epoch(db.Model):
             Takes form data from request.form
             Set "new" to true if creating new entry.  """
 
-        for field, value in form.items():
-            
-            if value is not None:
+        # If new event, use all fields except those with "edit_" prefix
+        # Otherwise, iterate over only those with the "edit_" prefix
+        fields = {field: value for field, value in form.items() 
+                  if (not new and field.startswith("edit_")) 
+                  or (new and not field.startswith("edit_"))}
 
-                if field == "start_date":
-                    self.start_date = value
-                    self.start_year = self.split_date(value)[0]
-                    self.start_month = self.split_date(value)[1]
-                    self.start_day = self.split_date(value)[2]
+        for field, value in fields.items():
+            matching_field = field.replace("edit_", "")
 
-                if field == "end_date":
-                    self.end_date = value
-                    self.end_year = self.split_date(value)[0]
-                    self.end_month = self.split_date(value)[1]
-                    self.end_day = self.split_date(value)[2]
+            if value or new:
+                form_value = form[matching_field]
 
-                if field == "description" or field == "overview":
-                    value = sanitise_input(value)
-                    if value == "<p><br></p>" or value == "":
-                        value = None
+                if matching_field == "start_date":
+                    self.start_date = form_value
+                    self.start_year = self.split_date(form_value)[0]
+                    self.start_month = self.split_date(form_value)[1]
+                    self.start_day = self.split_date(form_value)[2]
 
-                setattr(self, field, value)
+                elif matching_field == "end_date":
+                    self.end_date = form_value
+                    self.end_year = self.split_date(form_value)[0]
+                    self.end_month = self.split_date(form_value)[1]
+                    self.end_day = self.split_date(form_value)[2]
+
+                elif matching_field in ["description", "overview"]:
+                    form_value = sanitise_input(form_value)
+                    if form_value in ["<p><br></p>", ""]:
+                        form_value = None
+
+                setattr(self, matching_field, form_value)
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
