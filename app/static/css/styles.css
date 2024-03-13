@@ -818,6 +818,11 @@ p {
   width: 100px;
 }
 
+#dismiss-all.message-button {
+  scroll-margin: 200px;
+  transition: 1s;
+}
+
 .message-button:hover {
   background-color: var(--dark_red);
 }

@@ -24,12 +24,17 @@ class messageTab {
     this.tab.style.marginBottom = "-400px"
     this.tab.style.height = "400px"
     this.tab.style.borderBottom = "1px solid var(--dark_red)"
+    this.tab.scrollTop = 50;
     this.state = true
     this.tab.setAttribute("aria-hidden", "false");
     Array.from(this.childButtons).forEach(element => {
       element.setAttribute("tabIndex", "0")
     })
-    if (this.childButtons.length > 0) {
+    if (this.childButtons.length > 2) {
+      document.getElementById("dismiss-all").focus();
+      document.getElementById("dismiss-all").scrollIntoView({ block: "start", inline: "start", behavior: "smooth" });
+    }
+    else if (this.childButtons.length > 0) {
       this.childButtons[0].focus();
     }
     this.button.setAttribute("aria-label", "Close Messages Tab");
