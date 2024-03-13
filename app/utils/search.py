@@ -116,15 +116,15 @@ class SearchEngine:
             if isinstance(item, models.Event):
                 result.type = "Event"
                 result.url = url_for("event.view_event",
-                                     campaign_name=campaign.title,
+                                     campaign_name=campaign.url_title,
                                      campaign_id=campaign.id,
-                                     event_name=item.title,
+                                     event_name=item.url_title,
                                      event_id=item.id)
 
                 result.edit_url = url_for("event.edit_event",
-                                          campaign_name=campaign.title,
+                                          campaign_name=campaign.url_title,
                                           campaign_id=campaign.id,
-                                          event_name=item.title,
+                                          event_name=item.url_title,
                                           event_id=item.id)
 
                 table_columns = event_columns
@@ -132,15 +132,15 @@ class SearchEngine:
             elif isinstance(item, models.Epoch):
                 result.type = "Epoch"
                 result.url = url_for("epoch.view_epoch",
-                                     campaign_name=campaign.title,
+                                     campaign_name=campaign.url_title,
                                      campaign_id=campaign.id,
-                                     epoch_title=item.title,
+                                     epoch_title=item.url_title,
                                      epoch_id=item.id)
 
                 result.edit_url = url_for("epoch.edit_epoch",
-                                          campaign_name=campaign.title,
+                                          campaign_name=campaign.url_title,
                                           campaign_id=campaign.id,
-                                          epoch_title=item.title,
+                                          epoch_title=item.url_title,
                                           epoch_id=item.id)
 
                 table_columns = epoch_columns

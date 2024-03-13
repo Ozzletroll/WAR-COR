@@ -1,6 +1,7 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
+from urllib.parse import unquote
 import werkzeug
 
 from app.forms import forms
@@ -49,6 +50,9 @@ def show_timeline(campaign_name, campaign_id):
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
+    # Set advanced search back button route,
+    session["previous_url"] = request.url
+
     return render_template("timeline.html", 
                            campaign=campaign, 
                            timeline_data=timeline_data)
@@ -72,6 +76,9 @@ def edit_timeline(campaign_name, campaign_id):
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
+
+    # Set advanced search back button route,
+    session["previous_url"] = request.url
 
     return render_template("timeline.html", 
                            campaign=campaign, 

@@ -1,6 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from flask_login import current_user
-from sqlalchemy import select
+from urllib.parse import urlparse, quote, unquote
 
 from app.forms import forms
 from app import db, models, limiter
@@ -24,10 +24,11 @@ def advanced_search(campaign_name, campaign_id):
     form = forms.SearchForm()
 
     # Set back button route, excluding this route
-    if request.referrer:
-        if "/search" not in request.referrer:
-            session["previous_url"] = request.referrer
-        
+    if not session["previous_url"]:
+        session["previous_url"] = url_for("campaign.show_timeline", 
+                                          campaign_name=campaign.url_title, 
+                                          campaign_id=campaign.id)
+    
     # Check if page has any results to render
     if "results" not in request.args:
         results = None
