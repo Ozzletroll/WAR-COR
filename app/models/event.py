@@ -66,14 +66,16 @@ class Event(db.Model):
             matching_field = field.replace("edit_", "")
             
             if value or new:
+                form_value = form[matching_field]
+
                 if matching_field == "date":
-                    self.date = form[matching_field]
-                    self.split_date(form[matching_field])
+                    self.date = form_value
+                    self.split_date(form_value)
 
                 if matching_field == "body":
-                    value = sanitise_input(form[matching_field])
+                    form_value = sanitise_input(form_value)
 
-                setattr(self, matching_field, form[matching_field])
+                setattr(self, matching_field, form_value)
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
