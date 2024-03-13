@@ -1,5 +1,18 @@
 import { Modal, PreviewModal } from "./modal.js";
+import { Form } from "./form_edited.js";
 
+// Create form edit check
+const editEventForm = new Form({
+  form: "edit-event-form",
+  fields: [
+    "event-form-title",
+    "event-form-type",
+    "event-form-date",
+    "event-form-location",
+    "event-form-belligerents",
+    "summernote",
+    "event-form-result"]
+})
 
 // Create modals
 const modal_1 = new Modal({
