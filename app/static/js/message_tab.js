@@ -7,6 +7,7 @@ class messageTab {
     this.tab = document.getElementById(tab);
     this.button = document.getElementById(button);
     this.childButtons = this.tab.getElementsByClassName("button");
+    this.messages = this.tab.querySelectorAll(".message-item").length;
     this.state = false
 
     this.button.onclick = event => {
@@ -30,7 +31,7 @@ class messageTab {
     Array.from(this.childButtons).forEach(element => {
       element.setAttribute("tabIndex", "0")
     })
-    if (this.childButtons.length > 2) {
+    if (this.messages >= 2) {
       document.getElementById("dismiss-all").focus();
       document.getElementById("dismiss-all").scrollIntoView({ block: "start", inline: "start", behavior: "smooth" });
     }
