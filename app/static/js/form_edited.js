@@ -21,7 +21,7 @@ class Field {
 }
 
 
-class Form {
+export class Form {
   constructor({
       form,
       fields
@@ -48,15 +48,3 @@ class Form {
   }
 
 }
-
-const editEventForm = new Form({
-  form: "edit-event-form",
-  fields: [
-    "event-form-title",
-    "event-form-type",
-    "event-form-date",
-    "event-form-location",
-    "event-form-belligerents",
-    "summernote",
-    "event-form-result"]
-})
