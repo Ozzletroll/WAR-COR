@@ -35,6 +35,34 @@ def test_update(client):
     for field in event_form.keys():
         assert getattr(event, field) == event_form[field]
 
+    # Test that form field without corresponding "edit_" field value of True
+    # does not update model
+    event_update_form = {
+       "type": "Test Edit",
+       "edit_type": False,
+       "title": "Test Event Edit",
+       "edit_title": False,
+       "date": "5016/01/01 09:00:01",
+       "edit_date": True,
+       "location": "Location Edit",
+       "edit_location": False,
+       "belligerents": "Belligerent 1, Belligerent 2, New Belligerent",
+       "edit_belligerents": False,
+       "body": "Test Body Text Edit",
+       "edit_body": True,
+       "result": "Test Result Edit",
+       "edit_result": False,
+       "header": False,
+       "hide_time": False,
+    }
+
+    event.update(form=event_update_form,
+                 parent_campaign=campaign_object)
+
+    assert event.type == "Test"
+    assert event.date == "5016/01/01 09:00:01"
+    assert event.body == "Test Body Text Edit"
+
 
 def test_create_blank(client):
 
