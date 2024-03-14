@@ -57,6 +57,28 @@ def test_update(client):
     assert updated_epoch.description == "Updated description"
     assert updated_epoch.overview == "Updated overview"
 
+    # Test that form field without corresponding "edit_" field value of True
+    # does not update model
+
+    edit_form = {
+        "title": "Updated Epoch Edit",
+        "edit_title": True,
+        "start_date": "5016/01/01",
+        "edit_start": False,
+        "end_date": "5016/05/05",
+        "edit_end_date": True,
+        "description": "Updated description edit",
+        "edit_description": False,
+        "overview": "Updated overview edit",
+        "edit_overview": True,
+    }
+
+    updated_epoch.update(edit_form, parent_campaign=campaign_object)
+    assert updated_epoch.title == "Updated Epoch Edit"
+    assert updated_epoch.end_date == "5016/05/05"
+    assert updated_epoch.description == "Updated description"
+    assert updated_epoch.overview == "Updated overview edit"
+
 
 def test_set_url_title():
     # Create a new epoch
