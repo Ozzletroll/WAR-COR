@@ -32,7 +32,7 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
     - Share editing privileges
     - Set custom callsigns
     - Leave comments
-- Local backup/restore campaign data
+- Locally backup/restore campaign data
 
 ### Built With
 
