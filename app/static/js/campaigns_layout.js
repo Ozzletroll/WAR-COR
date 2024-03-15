@@ -109,7 +109,13 @@ function undoOverviewHeight() {
 
   for (var index = 0; index < campaignHeaderElements.length; index ++) {
     campaignHeaderElements[index].style.height = "";
-    }
+  }
+
+  // Rest height of all members lists
+  var membersListElements = document.querySelectorAll(".campaign-members");
+  for (var index = 0; index < membersListElements.length; index ++) {
+    membersListElements[index].style.minHeight = "";
+  }
 
 }
 
