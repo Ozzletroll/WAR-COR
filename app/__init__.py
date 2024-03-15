@@ -42,6 +42,7 @@ def create_app(config_class=Config):
             # Initialise Flask Limiter
             limiter.init_app(flask_app)
 
+        if not flask_app.config["DEBUG"]:
             # Initialise APScheduler
             scheduler.init_app(flask_app)
             import app.utils.tasks

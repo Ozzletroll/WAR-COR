@@ -2,7 +2,7 @@ import pytest
 import os
 from flask import template_rendered
 from app import create_app
-from app import db
+from app import db, scheduler
 from app.tests.fixtures import *
 from config import TestingConfig, TestingPostgresConfig
 
@@ -23,6 +23,7 @@ def app():
 
     # Teardown
     with app.app_context():
+        scheduler.shutdown()
         db.session.close()
         db.drop_all()
 
