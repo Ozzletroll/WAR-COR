@@ -1518,7 +1518,7 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 5%;
+  padding: 10px 20px;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
   text-transform: uppercase;
