@@ -47,6 +47,7 @@
   font-size: 16px;
   background-color: var(--elem_mid);
   color: var(--text_dark);
+  min-height: 150px;
 }
 
 .note-editable::after {
