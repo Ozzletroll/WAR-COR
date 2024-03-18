@@ -14,6 +14,7 @@ class Tab {
     this.childButtons = this.tab.querySelectorAll(".sidebar-button");
 
     window.addEventListener("DOMContentLoaded", this.initialise.bind(this));
+    window.addEventListener("load", this.afterInitiliase.bind(this));
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize.bind(this));
 
@@ -37,6 +38,11 @@ class Tab {
     if (this.state == true) {
       this.openTab();
     }
+  }
+
+  afterInitiliase() {
+    // Set transition value after initial load
+    this.tab.style.transition = "0.3s";
   }
 
   checkScreenSize() {

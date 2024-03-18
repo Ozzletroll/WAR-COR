@@ -5042,7 +5042,6 @@ for selection in timeline_search.js */
   height: calc(100vh - 54px);
   margin-left: -300px;
   z-index: 1;
-  transition: 0.3s;
   will-change: transform;
 }
 
