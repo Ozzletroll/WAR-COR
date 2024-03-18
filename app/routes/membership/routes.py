@@ -1,11 +1,11 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
 from sqlalchemy import select, func
 from flask_login import login_required, current_user
+import json
 
-from app.utils import authenticators
+from app.utils import authenticators, formatters, messengers
 from app.forms import forms
 from app import db, models, limiter
-import app.utils.messengers as messengers
 
 from app.routes.membership import bp
 
@@ -52,7 +52,6 @@ def user_search(campaign_name, campaign_id):
     
     authenticators.permission_required(campaign)
 
-    # Query database for users with similar usernames
     search = request.form["username"]
     if len(search) == 0:
         response = make_response(jsonify({"message": "Please enter a search query"}), 400)
@@ -63,21 +62,12 @@ def user_search(campaign_name, campaign_id):
              .filter(models.User.username.like(search_format)))
              .scalars())
 
-    # Format results as dict
-    results = {"results": {user.username: {"id": user.id,
-                                           "username": user.username} 
-                                           for user in users 
-                                           if user not in campaign.members},
-               "target_url": url_for('membership.add_user',
-                                     campaign_name=campaign.url_title,
-                                     campaign_id=campaign.id)}
+    results = formatters.format_user_search_results(users, campaign, search)
     
-    # Check if query returned no results
     if len(results["results"]) == 0:
         response = make_response(jsonify({"message": "No users found"}), 204)
-    # Otherwise, send good response
     else:
-        response = make_response(results, 200)
+        response = make_response(json.dumps(results), 200)
         
     return response
 

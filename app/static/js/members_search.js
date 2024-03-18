@@ -93,7 +93,7 @@ function userSearch(url, csrfToken) {
           const newHeading = Object.assign(
             document.createElement("h4"), 
             {className: "results-username",
-            innerHTML: "User: " + user}
+            innerHTML: user}
             );
   
           const newButton = Object.assign(

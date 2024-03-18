@@ -1,3 +1,7 @@
+from flask import url_for
+import editdistance
+
+
 def split_date(datestring, epoch_date=False):
     """Function that splits a datestring into individual values,
     returns a list of integers"""
@@ -80,3 +84,24 @@ def increment_datestring(datestring, args):
                       + "/" + "01 00:00:00")
 
     return datestring
+
+
+def format_user_search_results(users, campaign, query):
+    """ Function to format add user query results """
+
+    results = {"results": {user.username: {"id": user.id,
+                                           "username": user.username,
+                                           "relevance": editdistance.eval(user.username, query)} 
+                                           for user in users 
+                                           if user not in campaign.members},
+               "target_url": url_for("membership.add_user",
+                                     campaign_name=campaign.url_title,
+                                     campaign_id=campaign.id)}
+    
+    sorted_results = {"results": {key: value for key, value in sorted(results["results"].items(), 
+                                                                      key=lambda item: item[1]["relevance"])},
+                      "target_url": url_for("membership.add_user",
+                                            campaign_name=campaign.url_title,
+                                            campaign_id=campaign.id)}
+
+    return sorted_results
