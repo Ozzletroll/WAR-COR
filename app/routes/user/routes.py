@@ -1,7 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
-import werkzeug
 
 from app.forms import forms
 from app import db, models, limiter
@@ -75,7 +74,7 @@ def login():
                 .filter_by(username=username)).scalar())
 
         if user:
-            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+            if user.check_password(password):
                 login_user(user)
                 return redirect(request.args.get("next") or url_for("campaign.campaigns"))
             else:
@@ -254,7 +253,7 @@ def delete_user(username):
                        .scalar())
 
         if search_user and authenticators.user_verification(search_user):
-            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+            if search_user.check_password(password):
                 
                 # Check if user deletion will leave any campaigns without any members
                 for campaign in user.campaigns:
@@ -391,8 +390,7 @@ def request_password_reset():
                     .scalar())
             
             if user:
-                messengers.send_recovery_email(recipient_email=email,
-                                               user=user)
+                messengers.send_recovery_email(recipient_email=email, user=user)
                 flash(f"Account recovery email sent to {email}")
             else:
                 flash("No account matching given email found. Please check your email address and try again.")
@@ -420,11 +418,8 @@ def reset_password(token):
     form = forms.ResetPasswordForm()
 
     if form.validate_on_submit():
-
-        # Update users password
         if user.change_password(form=request.form, reset=True):
             flash("Password updated, please login using new password")
-        
         return redirect(url_for("user.login"))
 
     return render_template("password_reset.html", form=form)

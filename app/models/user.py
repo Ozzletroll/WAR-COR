@@ -43,10 +43,13 @@ class User(UserMixin, db.Model):
     open_invites = db.relationship("Message", back_populates="target_user", foreign_keys="[Message.target_user_id]")
 
     # Methods
+    def check_password(self, password):
+        return werkzeug.security.check_password_hash(pwhash=self.password, 
+                                                     password=password)
+
     def update(self, form, new=False):
         """ Method to populate and update self.
             Takes form data from request.form.
-            Email and username booleans
             Set "new" to true if creating new entry. """
 
         for field, value in form.items():
@@ -89,10 +92,7 @@ class User(UserMixin, db.Model):
             old_password = form["old_password"]
             new_password = form["new_password"]
 
-            # Check if the given old password matches the db password
-            if werkzeug.security.check_password_hash(pwhash=self.password, password=old_password):
-                
-                # Salt and hash new password
+            if self.check_password(password=old_password):
                 sh_password = werkzeug.security.generate_password_hash(
                     new_password,
                     method="pbkdf2:sha256",
@@ -106,7 +106,6 @@ class User(UserMixin, db.Model):
                 return False
 
     def get_reset_password_token(self, expiration=600):
-
         return jwt.encode(
             {"reset_password": self.id, "exp": datetime.now().timestamp() + expiration},
             current_app.config["SECRET_KEY"], 
@@ -116,7 +115,8 @@ class User(UserMixin, db.Model):
     def verify_password_reset_token(token):
 
         try:
-            id = jwt.decode(token, current_app.config["SECRET_KEY"],
+            id = jwt.decode(token,
+                            current_app.config["SECRET_KEY"],
                             algorithms=["HS256"])["reset_password"]
         except:
             return
