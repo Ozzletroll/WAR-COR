@@ -14,6 +14,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="shortcut icon" href="{{ url_for('static', filename='/images/favicon.ico') }}">
   <script src="{{ url_for('static', filename='/js/theme.js') }}"></script>
-  {% block extra_header %}
+  {% block meta %}
+    <meta name="description" content="Frontline reporting in the year 5016u. WAR/COR is a free, 
+    lightweight RPG campaign logger built for the mechanised battlefields of the distant future.">
+  {% endblock %}
+  {% block extra_head %}
   {% endblock %}
 </head>
