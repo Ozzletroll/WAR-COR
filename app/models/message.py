@@ -1,4 +1,6 @@
+from sqlalchemy import select
 from app import db
+from app.models.associations import user_messages
 
 
 class Message(db.Model):
@@ -27,3 +29,20 @@ class Message(db.Model):
 
     target_user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     target_user = db.relationship("User", back_populates="open_invites", foreign_keys=[target_user_id])
+
+    def dismiss(self, user):
+        if self in user.messages:
+            user.messages.remove(self)
+            db.session.commit()
+
+            # Check if message is still in any user's messages list
+            # by querying association table
+            message_query = (db.session.execute(
+                             select(user_messages.c.user_id)
+                             .where(user_messages.c.message_id == self.id))
+                             .scalar())
+
+            # If message is no longer needed, delete it
+            if not message_query:
+                db.session.delete(self)
+                db.session.commit()

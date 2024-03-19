@@ -316,33 +316,20 @@ def dismiss_message():
                .filter(models.Message.id == message_id)
                .first_or_404(description="No matching message found"))
 
-    # Remove notification from user's messages
-    if message in current_user.messages:
-        current_user.messages.remove(message)
-        db.session.commit()
+    # If redirecting to event, build url prior to potential message deletion
+    view = request.args.get("view", None)
 
-        # If redirecting to event, build url prior to potential message deletion
-        view = request.args.get("view", None)
-        
-        if view and hasattr(message, 'target_event'):
-            event_url = url_for("event.view_event", 
-                                campaign_name=message.target_campaign.url_title,
-                                campaign_id=message.target_campaign.id,
-                                event_name=message.target_event.url_title,
-                                event_id=message.target_event.id)
-    
-        # Check if message is still in any users messages list by querying association table
-        message_query = (db.session.execute(select(models.user_messages.c.user_id)
-                         .where(models.user_messages.c.message_id == message_id))
-                         .scalar())
-    
-        # If message is no longer needed, delete it
-        if not message_query:
-            db.session.delete(message)
-            db.session.commit()
+    if view and hasattr(message, "target_event"):
+        event_url = url_for("event.view_event",
+                            campaign_name=message.target_campaign.url_title,
+                            campaign_id=message.target_campaign.id,
+                            event_name=message.target_event.url_title,
+                            event_id=message.target_event.id)
 
-        if view:
-            return redirect(event_url)
+    message.dismiss(current_user)
+
+    if view:
+        return redirect(event_url)
         
     return redirect(request.referrer)
 
@@ -353,22 +340,10 @@ def dismiss_message():
 @limiter.limit("60/minute")
 def dismiss_all():
 
-    messages = list(current_user.messages)
+    messages = current_user.messages
 
     for message in messages:
-        
-        current_user.messages.remove(message)
-        db.session.commit()
-
-        # Check if message is still in any users messages list by querying association table
-        message_query = (db.session.execute(select(models.user_messages.c.user_id)
-                         .where(models.user_messages.c.message_id == message.id))
-                         .scalar())
-        
-        # If message is no longer needed, delete it
-        if not message_query:
-            db.session.delete(message)
-            db.session.commit()
+        message.dismiss(current_user)
      
     return redirect(request.referrer)
 
