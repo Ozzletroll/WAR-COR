@@ -1,7 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
-import werkzeug
 
 from app.forms import forms
 from app import db, models, limiter
@@ -75,7 +74,7 @@ def login():
                 .filter_by(username=username)).scalar())
 
         if user:
-            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+            if user.check_password(password):
                 login_user(user)
                 return redirect(request.args.get("next") or url_for("campaign.campaigns"))
             else:
@@ -254,7 +253,7 @@ def delete_user(username):
                        .scalar())
 
         if search_user and authenticators.user_verification(search_user):
-            if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
+            if search_user.check_password(password):
                 
                 # Check if user deletion will leave any campaigns without any members
                 for campaign in user.campaigns:
@@ -317,33 +316,20 @@ def dismiss_message():
                .filter(models.Message.id == message_id)
                .first_or_404(description="No matching message found"))
 
-    # Remove notification from user's messages
-    if message in current_user.messages:
-        current_user.messages.remove(message)
-        db.session.commit()
+    # If redirecting to event, build url prior to potential message deletion
+    view = request.args.get("view", None)
 
-        # If redirecting to event, build url prior to potential message deletion
-        view = request.args.get("view", None)
-        
-        if view and hasattr(message, 'target_event'):
-            event_url = url_for("event.view_event", 
-                                campaign_name=message.target_campaign.url_title,
-                                campaign_id=message.target_campaign.id,
-                                event_name=message.target_event.url_title,
-                                event_id=message.target_event.id)
-    
-        # Check if message is still in any users messages list by querying association table
-        message_query = (db.session.execute(select(models.user_messages.c.user_id)
-                         .where(models.user_messages.c.message_id == message_id))
-                         .scalar())
-    
-        # If message is no longer needed, delete it
-        if not message_query:
-            db.session.delete(message)
-            db.session.commit()
+    if view and hasattr(message, "target_event"):
+        event_url = url_for("event.view_event",
+                            campaign_name=message.target_campaign.url_title,
+                            campaign_id=message.target_campaign.id,
+                            event_name=message.target_event.url_title,
+                            event_id=message.target_event.id)
 
-        if view:
-            return redirect(event_url)
+    message.dismiss(current_user)
+
+    if view:
+        return redirect(event_url)
         
     return redirect(request.referrer)
 
@@ -354,22 +340,10 @@ def dismiss_message():
 @limiter.limit("60/minute")
 def dismiss_all():
 
-    messages = list(current_user.messages)
+    messages = current_user.messages
 
     for message in messages:
-        
-        current_user.messages.remove(message)
-        db.session.commit()
-
-        # Check if message is still in any users messages list by querying association table
-        message_query = (db.session.execute(select(models.user_messages.c.user_id)
-                         .where(models.user_messages.c.message_id == message.id))
-                         .scalar())
-        
-        # If message is no longer needed, delete it
-        if not message_query:
-            db.session.delete(message)
-            db.session.commit()
+        message.dismiss(current_user)
      
     return redirect(request.referrer)
 
@@ -391,8 +365,7 @@ def request_password_reset():
                     .scalar())
             
             if user:
-                messengers.send_recovery_email(recipient_email=email,
-                                               user=user)
+                messengers.send_recovery_email(recipient_email=email, user=user)
                 flash(f"Account recovery email sent to {email}")
             else:
                 flash("No account matching given email found. Please check your email address and try again.")
@@ -420,11 +393,8 @@ def reset_password(token):
     form = forms.ResetPasswordForm()
 
     if form.validate_on_submit():
-
-        # Update users password
         if user.change_password(form=request.form, reset=True):
             flash("Password updated, please login using new password")
-        
         return redirect(url_for("user.login"))
 
     return render_template("password_reset.html", form=form)

@@ -23,6 +23,20 @@ def test_update(client):
         password="Password")
 
 
+def test_check_password(client):
+
+    user = models.User()
+    user_form = {
+        "email": "email@testemail.com",
+        "username": "New Username",
+        "password": "Password"
+    }
+    user.update(user_form, new=True)
+
+    assert user.check_password(password="Password")
+    assert not user.check_password(password="Wrong Password")
+    
+
 def test_change_password(client):
 
     user = models.User()
