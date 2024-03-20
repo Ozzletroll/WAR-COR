@@ -13,11 +13,13 @@ var timeout;
 function checkScrollPos () {
   var navbar = document.getElementById("navbar");
   var downArrow = document.getElementById("down-arrow");
+  var downArrowArea = downArrow.parentElement;
   
   if (window.scrollY == 0) {
     navbar.style.boxShadow = "none";
     downArrow.style.opacity = "";
     downArrow.style.display = "flex";
+    downArrowArea.setAttribute("tabIndex", 0);
 
     // Clear timeout
     clearTimeout(timeout);
@@ -31,6 +33,7 @@ function checkScrollPos () {
     clearTimeout(timeout);
     timeout = setTimeout(function() {
       downArrow.style.display = "none";
+      downArrowArea.setAttribute("tabIndex", -1);
     }, 300);
   }
 }
