@@ -57,3 +57,25 @@ def test_check_membership(client, auth):
     with pytest.raises(Exception) as error:
         check_membership(test_campaign)
     assert "403" in str(error)
+
+
+def test_check_campaign_visibility(client, auth):
+
+    test_campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+    test_campaign.private = True
+
+    auth.login(username="User_1", password="12345678")
+    assert check_campaign_visibility(test_campaign)
+    auth.logout()
+
+    auth.login(username="User_2", password="12345678")
+    with pytest.raises(Exception) as error:
+        check_campaign_visibility(test_campaign)
+    assert "403" in str(error)
+    auth.logout()
+
+    with pytest.raises(Exception) as error:
+        check_campaign_visibility(test_campaign)
+    assert "403" in str(error)
