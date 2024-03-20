@@ -14,7 +14,6 @@ def test_permission_required(client, auth, campaign):
     test_campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
-    user_1.permissions.append(test_campaign)
     assert permission_required(test_campaign)
     auth.logout()
 
@@ -43,3 +42,18 @@ def test_user_verification(client, auth):
         user_verification(user_2)
     assert "403" in str(error)
     auth.logout()
+
+
+def test_check_membership(client, auth):
+
+    auth.login(username="User_1", password="12345678")
+    test_campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+    assert check_membership(test_campaign)
+    auth.logout()
+
+    auth.login(username="User_2", password="12345678")
+    with pytest.raises(Exception) as error:
+        check_membership(test_campaign)
+    assert "403" in str(error)
