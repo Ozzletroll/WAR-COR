@@ -20,7 +20,6 @@ def split_date(datestring, epoch_date=False):
         return [int(year), int(month), int(day)]
 
 
-
 def increment_datestring(datestring, args):
     """Function that takes a datestring, and the dictionary from request.args, 
     and returns the next day/week/month/year date as a string,
@@ -66,14 +65,14 @@ def increment_datestring(datestring, args):
         incremented_values = increment(values, 3)
         # Format date as string for form field
         if "new_epoch" in args:
-            datestring = (str(incremented_values[0]).zfill(year_format) 
-                        + "/" + str(incremented_values[1]).zfill(2) 
-                        + "/" + str(incremented_values[2]).zfill(2))
+            datestring = (str(incremented_values[0]).zfill(year_format)
+                          + "/" + str(incremented_values[1]).zfill(2)
+                          + "/" + str(incremented_values[2]).zfill(2))
         else:
-            datestring = (str(incremented_values[0]).zfill(year_format) 
-                        + "/" + str(incremented_values[1]).zfill(2) 
-                        + "/" + str(incremented_values[2]).zfill(2) 
-                        + " 00:00:00")
+            datestring = (str(incremented_values[0]).zfill(year_format)
+                          + "/" + str(incremented_values[1]).zfill(2)
+                          + "/" + str(incremented_values[2]).zfill(2)
+                          + " 00:00:00")
 
     # Move to the next month and format the string
     if "new_month" in args:
