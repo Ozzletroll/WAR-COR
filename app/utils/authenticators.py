@@ -37,6 +37,6 @@ def check_campaign_visibility(campaign):
             if current_user not in campaign.members:
                 abort(403, description=description)
             else:
-                return
+                return True
         else:
             abort(403, description=description)
