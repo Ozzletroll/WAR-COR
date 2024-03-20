@@ -26,3 +26,20 @@ def test_permission_required(client, auth, campaign):
         permission_required(test_campaign)
     assert "403" in str(error)
     auth.logout()
+
+
+def test_user_verification(client, auth):
+
+    auth.login(username="User_1", password="12345678")
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User_1")).scalar()
+    assert user_verification(user_1)
+
+    user_2 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User_2")).scalar()
+    with pytest.raises(Exception) as error:
+        user_verification(user_2)
+    assert "403" in str(error)
+    auth.logout()
