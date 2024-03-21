@@ -1,3 +1,4 @@
+from app import models
 from app.utils import formatters
 
 
@@ -45,3 +46,32 @@ def test_increment_datestring():
     test_string_6 = "5016/99/99 99:00:00"
     output_6 = formatters.increment_datestring(test_string_6, args={"new_hour": True})
     assert output_6 == "5017/01/01 01:00:00"
+
+
+def test_format_user_search_results(client):
+
+    user_1 = models.User()
+    user_1.username = "TestUser"
+    user_1.id = 1
+
+    user_2 = models.User()
+    user_2.username = "TestUser123"
+    user_2.id = 2
+
+    campaign = models.Campaign()
+    campaign.title = "Test Campaign"
+    campaign.set_url_title()
+    campaign.id = 1
+
+    users = [user_1, user_2]
+
+    query = "TestUser"
+
+    results = formatters.format_user_search_results(users, campaign, query)
+
+    assert results["results"]["TestUser"]["relevance"] \
+           <= results["results"]["TestUser123"]["relevance"]
+
+    # Assert that "TestUser" comes before "TestUser123" in the list
+    keys_list = list(results["results"].keys())
+    assert keys_list.index("TestUser") < keys_list.index("TestUser123")
