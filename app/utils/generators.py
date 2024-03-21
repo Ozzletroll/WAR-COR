@@ -45,10 +45,10 @@ def create_data():
         json.dump(nouns, file, indent=2)
 
     with open(data_folder / "adjectives.json", "w") as file:
-        json.dump(conjugated_verbs, file, indent=2)
+        json.dump(adjectives, file, indent=2)
 
     with open(data_folder / "verbs.json", "w") as file:
-        json.dump(adjectives, file, indent=2)
+        json.dump(conjugated_verbs, file, indent=2)
 
 
 class Generator:
@@ -59,10 +59,10 @@ class Generator:
             self.nouns = json.load(file)
 
         with open(data_folder / "adjectives.json", "r") as file:
-            self.verbs = json.load(file)
+            self.adjectives = json.load(file)
 
         with open(data_folder / "verbs.json", "r") as file:
-            self.adjectives = json.load(file)
+            self.verbs = json.load(file)
 
     def random_event_title(self):
 
@@ -85,18 +85,3 @@ class Generator:
         formats = [format_1, format_2, format_3]
         choice = random.choice(formats)
         return choice
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
