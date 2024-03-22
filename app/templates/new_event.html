@@ -81,11 +81,12 @@
       <form id="edit-event-form" class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Event Form">
         {{ form.csrf_token }}
         <div id="event-form-edit-fields" class="form-hidden">
+          {{ form.edit_date(id="event-form-date-edit", value=false) }}
           {{ form.edit_title(id="event-form-title-edit", value=false) }}
           {{ form.edit_type(id="event-form-type-edit", value=false) }}
-          {{ form.edit_date(id="event-form-date-edit", value=false) }}
           {{ form.edit_location(id="event-form-location-edit", value=false) }}
           {{ form.edit_belligerents(id="event-form-belligerents-edit", value=false) }}
+          {{ form.edit_hide_time(id="event-form-hide-time-edit", value=false) }}
           {{ form.edit_body(id="summernote-edit", value=false) }}
           {{ form.edit_result(id="event-form-result-edit", value=false) }}
         </div>
@@ -246,7 +247,7 @@
           </div>
 
           <div class="form-toggle-inputs">
-            {{ form.hide_time(id="hide-time-input", 
+            {{ form.hide_time(id="event-form-hide-time", 
                               class_="event-input input-checkbox theme-radio", 
                               autocomplete="off") }}
             <label class="form-toggle-label" for="hide-time-input">Hide Time</label>

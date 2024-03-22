@@ -6,10 +6,24 @@ class Field {
     this.element = document.getElementById(elementID);
     this.editMarker = document.getElementById(elementID + "-edit");
     this.summernote = summernote;
-    this.initialValue = this.element.value;
+
+    if (this.element.type === "checkbox") {
+      this.initialValue = this.element.checked;
+    }
+    else {
+      this.initialValue = this.element.value;
+    }
   }
 
   checkEditStatus() {
+    if (this.element.type === "checkbox") {
+      if (this.element.checked != this.initialValue) {
+        this.editMarker.checked = true;
+      }
+      else {
+        this.editMarker.checked = false;
+      }
+    }
     if (this.element.value != this.initialValue) {
       this.editMarker.checked = true;
     }
@@ -17,7 +31,6 @@ class Field {
       this.editMarker.checked = false;
     }
   }
-
 }
 
 

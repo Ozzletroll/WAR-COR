@@ -75,6 +75,7 @@ class CreateEventForm(FlaskForm):
     edit_date = BooleanField("Edit Date")
     edit_location = BooleanField("Edit Location")
     edit_belligerents = BooleanField("Edit Belligerents")
+    edit_hide_time = BooleanField("Edit Hide Time")
     edit_body = BooleanField("Edit Body")
     edit_result = BooleanField("Edit Result")
 
