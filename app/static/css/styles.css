@@ -1732,7 +1732,7 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  clip-path: polygon(0 0, calc(101% - 11.00px) 0, 101% 11.00px, 100% 101%, 0 100%);
+  clip-path: polygon(0 0, calc(101% - 11.00px) 0, 101% 11.00px, 101% 101%, 0 100%);
   border-radius: 5px;
 }
 
@@ -2040,6 +2040,14 @@ p {
   .callsign-input.search-input {
     font-size: min(14px, 3vw);
     text-align: left;
+  }
+
+  .flavour-text-area.login-flavour-text {
+    display: none;
+  }
+
+  .flavour-text-area .flavour-text {
+    font-size: 10px;
   }
 
 }
