@@ -1,4 +1,4 @@
-from flask import session, jsonify, make_response, request, redirect
+from flask import current_app, session, jsonify, make_response, request, redirect
 from datetime import timedelta
 from app.routes.session import bp
 
@@ -16,7 +16,7 @@ def check_consent():
 
     if request.path not in excluded_routes:
         
-        if not request.cookies.get("warcor_consent"):
+        if not request.cookies.get("warcor_consent") and current_app.config["DEBUG"] == False:
             return dict(consent=False)
         else:
             return dict(consent=True)
