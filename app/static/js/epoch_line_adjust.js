@@ -25,10 +25,10 @@ function epochLineAdjust() {
           currentElement = currentElement.nextElementSibling;
         }
 
-        var totalHeight = 0;
-        for (var i = 0; i < epochElements.length; i++) {
-          totalHeight += epochElements[i].getBoundingClientRect().height;;
-        }
+      var totalHeight = 0;
+      for (var i = 0; i < epochElements.length; i++) {
+        totalHeight += epochElements[i].getBoundingClientRect().height;;
+      }
 
       var newMargin = startingMargins[index] - totalHeight;
       element.style.marginBottom = newMargin + "px";

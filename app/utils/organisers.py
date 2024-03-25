@@ -285,11 +285,6 @@ def campaign_sort(campaign, epoch=None):
                                 "has_epoch_end",
                                 day_object.end_epochs)
 
-                # Flag day object as having epoch end element after it for
-                # template rendering
-                if day_object.has_epoch_end:
-                    day_object.followed_by_epoch = True
-
                 # Check if day markers can be hidden due to only having an epoch and no events
                 if day_object.has_epoch or day_object.has_epoch_end:
                     if len(day_object.events) == 0:

@@ -4585,7 +4585,7 @@ a.view-epoch:hover .epoch-header {
 
 .between-events-elements {
   display: flex;
-  flex: 0.5 0 0;
+  flex: 1 0 0;
   max-width: calc(30px + 1.5vw);
 }
 
@@ -4924,7 +4924,7 @@ for selection in timeline_search.js */
 @media screen and (max-width: 650px) { 
 
   .day-line-top-edit {
-    margin-bottom: -135px;
+    margin-bottom: -175px;
   }
 
   .top-no-between {
@@ -4932,7 +4932,7 @@ for selection in timeline_search.js */
   }
 
   .day-line-mid-edit {
-    margin-bottom: -135px;
+    margin-bottom: -175px;
   }
 
   .mid-no-between {

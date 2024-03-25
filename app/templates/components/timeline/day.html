@@ -45,11 +45,6 @@ elements.
      extend line to meet element below #}
   {% if day.followed_by_epoch and not day.no_following_events %}
     {% set followed_by_epoch_class = "day-line-followed" %}
-  {% elif day.has_epoch_end %}
-    {% if not day.has_following_day %}
-      {% set followed_by_epoch_class = "day-line-followed" %}
-    {% endif %}
-
   {% endif %}
 
   {% if day.no_following_events %}
