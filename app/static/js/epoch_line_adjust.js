@@ -53,16 +53,18 @@ const epochEndGroups = document.getElementsByClassName("epoch-end-group");
 const rightBranchLabel = document.getElementsByClassName("right-branch-label")[0];
 
 function offsetEndEpochMargin() {
-  var offsetWidth = rightBranchLabel.getBoundingClientRect().width * -1;
-  Array.from(epochEndGroups).forEach(element => {
-
-    if (window.innerWidth > 650) {
-      element.style.marginLeft = offsetWidth + "px";
-    }
-    else {
-      element.style.marginLeft = "0px";
-    }
-  })
+  if (rightBranchLabel != null) {
+    var offsetWidth = rightBranchLabel.getBoundingClientRect().width * -1;
+    Array.from(epochEndGroups).forEach(element => {
+  
+      if (window.innerWidth > 650) {
+        element.style.marginLeft = offsetWidth + "px";
+      }
+      else {
+        element.style.marginLeft = "0px";
+      }
+    })
+  }
 }
 
 // Trigger margin adjust on sidebar page element resize (usually from sidebar deployment)
