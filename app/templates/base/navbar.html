@@ -39,7 +39,7 @@
             <img class="icon campaign-form-icon" 
             src="{{ url_for('static', filename='/images/icons/message.svg') }}"
             aria-label="Messages Icon">
-            {{ current_user.messages | length }}
+            <div id="message-count">{{ current_user.messages | length }}</div>
           </button>
         </li>
       {% elif request.path == "/" %}

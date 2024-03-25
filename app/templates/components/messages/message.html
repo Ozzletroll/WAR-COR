@@ -1,7 +1,7 @@
 
 {% macro invite(message) %}
 
-<li class="message-item" aria-label="Invite: {{ message.date }}">
+<li id="message-{{message.id}}" class="message-item" aria-label="Invite: {{ message.date }}">
   <h4 class="message-header">INVITE {{message.date}}</h4>   
   <p class=message-body aria-label="Message Text">{{message.body}}</p>
   <div class="message-button-area">
@@ -31,7 +31,7 @@
 
 {% macro notification(message) %}
 
-  <li class="message-item" aria-label="Alert: New Event {{ message.date }}">
+  <li id="message-{{message.id}}" class="message-item" aria-label="Alert: New Event {{ message.date }}">
     <h4 class="message-header">ALERT {{message.date}}</h4>
     <p class=message-body aria-label="Message Text">{{message.body}}</p>
     <div class="message-button-area">
@@ -62,7 +62,7 @@
 
 
 {% macro request(message) %}
-  <li class="message-item">
+  <li id="message-{{message.id}}" class="message-item">
     <h4 class="message-header">REQUEST {{message.date}}</h4>   
     <div class=message-body>{{message.body}}</div>
     <div class="message-button-area">

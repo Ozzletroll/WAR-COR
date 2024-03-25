@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request, url_for, flash, session
+from flask import render_template, redirect, request, url_for, flash, session, make_response, jsonify
 from sqlalchemy import select
 from flask_login import login_user, login_required, current_user, logout_user
 
@@ -330,8 +330,9 @@ def dismiss_message():
 
     if view:
         return redirect(event_url)
-        
-    return redirect(request.referrer)
+    else:   
+        response = make_response(jsonify({"Message": "Message dismissed"}), 200)
+        return response
 
 
 # Function called when dismissing all messages
@@ -340,7 +341,7 @@ def dismiss_message():
 @limiter.limit("60/minute")
 def dismiss_all():
 
-    messages = current_user.messages
+    messages = current_user.messages.copy()
 
     for message in messages:
         message.dismiss(current_user)

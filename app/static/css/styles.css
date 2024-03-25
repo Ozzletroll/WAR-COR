@@ -768,6 +768,10 @@ p {
   font-weight: 300;
 }
 
+.forced-space {
+  margin: 0px;
+}
+
 .no-message-header {
   display: flex;
   justify-content: center;

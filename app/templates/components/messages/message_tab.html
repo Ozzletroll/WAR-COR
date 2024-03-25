@@ -16,8 +16,10 @@
       </div>
     </div>
   {% elif current_user.messages | length >= 2 %}
-    <div class="messages-upper" aria-label="View Message Count">
-      <h4 class="message-count" aria-label="Message Count">{{current_user.messages | length}} New Messages</h4>
+    <div id="messages-upper-area" class="messages-upper" aria-label="View Message Count">
+      <h4 class="message-count" aria-label="Message Count">
+        <div id="message-tab-count">{{current_user.messages | length}}</div> <p class="forced-space">&nbsp</p>
+        New Messages</h4>
       <button id="dismiss-all" class="button message-button" tabindex="-1"
       onclick="handleMessage(event)"
       data-csrf="{{ csrf_token() }}"
