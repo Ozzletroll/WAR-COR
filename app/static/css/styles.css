@@ -798,7 +798,8 @@ p {
   color: var(--text_dark);
   font-size: min(12px, 3vw);
   text-transform: uppercase;
-  padding: 10px;
+  text-align: center;
+  padding: 10px 20px;
 }
 
 .message-button-area {

@@ -137,7 +137,7 @@
 </nav>
 
 {% if current_user.is_authenticated %}
-  {% include "components/message_tab.html" %}
+  {% include "components/messages/message_tab.html" %}
 {% endif %}
 
 <script src="{{ url_for('static', filename='/js/navbar.js') }} "></script> 

@@ -1,0 +1,90 @@
+
+{% macro invite(message) %}
+
+<li class="message-item" aria-label="Invite: {{ message.date }}">
+  <h4 class="message-header">INVITE {{message.date}}</h4>   
+  <p class=message-body aria-label="Message Text">{{message.body}}</p>
+  <div class="message-button-area">
+
+    <button id="message-accept-{{ message.id }}" class="button message-button accept-button" tabindex="-1" 
+    onclick="handleMessage(event)"
+    data-csrf="{{ csrf_token() }}"
+    data-url="{{ url_for('membership.accept_invite') }}"
+    data-campaign-id="{{ message.target_campaign.id }}"
+    data-message-id="{{ message.id }}">
+    ACCEPT
+    </button>
+
+    <button id="message-decline-{{ message.id }}" class="button message-button decline-button" tabindex="-1"
+    onclick="handleMessage(event)"
+    data-csrf="{{ csrf_token() }}"
+    data-url="{{ url_for('membership.decline_invite') }}"
+    data-campaign-id="{{ message.target_campaign.id }}"
+    data-message-id="{{ message.id }}">
+    DECLINE
+    </button>
+
+  </div>
+</li>
+
+{%- endmacro %}
+
+{% macro notification(message) %}
+
+  <li class="message-item" aria-label="Alert: New Event {{ message.date }}">
+    <h4 class="message-header">ALERT {{message.date}}</h4>
+    <p class=message-body aria-label="Message Text">{{message.body}}</p>
+    <div class="message-button-area">
+      {% if message.target_event is not none %}
+        <button id="view-message-{{ message.id }}" class="button message-button accept-button" tabindex="-1"
+        onclick="handleMessage(event)"
+        data-csrf="{{ csrf_token() }}"
+        data-url="{{ url_for('user.dismiss_message', view=True) }}"
+        data-campaign-id="{{ message.target_campaign.id }}"
+        data-message-id="{{ message.id }}">
+        VIEW
+        </button>
+      {% endif %}
+
+      <button id="dismiss-message-{{ message.id }}" class="button message-button decline-button" tabindex="-1"
+      onclick="handleMessage(event)"
+      data-csrf="{{ csrf_token() }}"
+      data-url="{{ url_for('user.dismiss_message') }}"
+      data-campaign-id="{{ message.target_campaign.id }}"
+      data-message-id="{{ message.id }}">
+      DISMISS
+      </button>
+
+    </div>
+  </li>
+
+{%- endmacro %}
+
+
+{% macro request(message) %}
+  <li class="message-item">
+    <h4 class="message-header">REQUEST {{message.date}}</h4>   
+    <div class=message-body>{{message.body}}</div>
+    <div class="message-button-area">
+
+      <button id="invite-accept-{{ message.id }}" class="button message-button accept-button" tabindex="-1"
+      onclick="handleMessage(event)"
+      data-csrf="{{ csrf_token() }}"
+      data-url="{{ url_for('membership.confirm_request') }}"
+      data-campaign-id="{{ message.target_campaign.id }}"
+      data-message-id="{{ message.id }}">
+      ACCEPT
+      </button>
+
+      <button id="invite-decline-{{ message.id }}" class="button message-button decline-button" tabindex="-1"
+      onclick="handleMessage(event)"
+      data-csrf="{{ csrf_token() }}"
+      data-url="{{ url_for('membership.deny_request') }}"
+      data-campaign-id="{{ message.target_campaign.id }}"
+      data-message-id="{{ message.id }}">
+      DECLINE
+      </button>
+
+    </div>
+  </li>
+{%- endmacro %}
