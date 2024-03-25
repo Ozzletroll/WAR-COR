@@ -1,7 +1,6 @@
 const dayLineFollowed = document.getElementsByClassName("day-line-followed");
 const startingMargins = []
 Array.from(dayLineFollowed).forEach(element => {
-
     var computedStyle = window.getComputedStyle(element);
     var marginBottom = parseFloat(computedStyle.getPropertyValue("margin-bottom"));
     startingMargins.push(marginBottom)
@@ -17,13 +16,12 @@ function epochLineAdjust() {
       var epochElements = [];
 
       while (currentElement) {
-          if (currentElement.classList.contains("epoch-start-group") 
-          || currentElement.classList.contains("epoch-end-group")
-          || currentElement.classList.contains("event-between")) {
+        if (currentElement.classList.contains("epoch-start-group")) {
             epochElements.push(currentElement);
-          } else {
-            break;
-          }
+          } 
+        else {
+          break;
+        }
           currentElement = currentElement.nextElementSibling;
         }
 
@@ -51,6 +49,22 @@ function epochLineAdjust() {
 
 }
 
+const epochEndGroups = document.getElementsByClassName("epoch-end-group");
+const rightBranchLabel = document.getElementsByClassName("right-branch-label")[0];
+
+function offsetEndEpochMargin() {
+  var offsetWidth = rightBranchLabel.getBoundingClientRect().width * -1;
+  Array.from(epochEndGroups).forEach(element => {
+
+    if (window.innerWidth > 650) {
+      element.style.marginLeft = offsetWidth + "px";
+    }
+    else {
+      element.style.marginLeft = "0px";
+    }
+  })
+}
+
 // Trigger margin adjust on sidebar page element resize (usually from sidebar deployment)
 const element = document.getElementById("scrollpage") || document.getElementById("main-features");
 
@@ -66,3 +80,5 @@ resizeObserver.observe(element);
 // Add conventional event listeners for page load and resize
 window.addEventListener("resize", epochLineAdjust);
 window.addEventListener("load", epochLineAdjust);
+window.addEventListener("resize", offsetEndEpochMargin);
+window.addEventListener("load", offsetEndEpochMargin);
