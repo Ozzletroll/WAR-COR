@@ -121,9 +121,8 @@
       <div id="message-count-text">New Message</div>
     </h5>
     {% endif %}
-    
-
-    {% if messages | length > 1 %}
+  </div>
+  {% if messages | length > 1 %}
       <button id="dismiss-all" class="button message-button" tabindex="-1"
       onclick="handleMessage(event)"
       data-csrf="{{ csrf_token() }}"
@@ -131,6 +130,5 @@
       DISMISS ALL
       </button>
     {% endif %}
-  </div>
 
 {%- endmacro %}

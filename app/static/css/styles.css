@@ -684,7 +684,9 @@ p {
 }
 
 .notifications-dropdown {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   top: 54px;
   left: 100vw;
   position: -webkit-sticky;
@@ -710,7 +712,11 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: 25px;
+  z-index: 3;
+  position: sticky;
+  top: 0px;
 }
 
 .no-messages-upper {
@@ -718,6 +724,8 @@ p {
   align-items: initial;
   height: 100%;
   gap: 0px;
+  position: sticky;
+  top: 0px;
 }
 
 .message-tab-header {
@@ -730,12 +738,14 @@ p {
   text-transform: uppercase;
   width: 100%;
   box-sizing: border-box;
+  box-shadow: 0px 1px 1px var(--elem_shadow);
 }
 
 .notifications-list {
   display: flex;
   align-items: center;
   padding: 20px;
+  margin: 0px;
   list-style: none;
   flex-direction: column;
   gap: 25px;
@@ -843,6 +853,7 @@ p {
 #dismiss-all.message-button {
   scroll-margin: 54px;
   transition: 1s;
+  margin: 20px;
 }
 
 .message-button:hover {

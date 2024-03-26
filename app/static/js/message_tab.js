@@ -130,6 +130,7 @@ function handleMessage(event) {
       `;
 
       messagesTab.innerHTML = htmlString;
+      document.getElementById("no-messages-flavour-text").style.display = "flex";
     }
   }
 
