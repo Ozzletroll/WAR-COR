@@ -706,6 +706,7 @@ p {
   box-sizing: border-box;
   transition: 0.3s;
   box-shadow: -1px 2px 3px var(--elem_shadow);
+  overscroll-behavior-y: none;
 }
 
 .messages-upper {
@@ -851,7 +852,7 @@ p {
 }
 
 #dismiss-all.message-button {
-  scroll-margin: 54px;
+  scroll-margin: -200px;
   transition: 1s;
   margin: 20px;
 }

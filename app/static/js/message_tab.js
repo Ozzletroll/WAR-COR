@@ -33,7 +33,10 @@ class messageTab {
     })
     if (this.messages >= 2) {
       document.getElementById("dismiss-all").focus();
-      this.tab.scrollTop = 0;
+
+      setTimeout(() => {
+        this.tab.scrollTop = 0;
+      }, 50);
     }
     else if (this.childButtons.length > 0) {
       this.childButtons[0].focus();
