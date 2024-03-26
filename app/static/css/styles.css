@@ -3560,6 +3560,13 @@ p {
   transition: 0.3s;
 }
 
+.user-settings-button:focus-visible .settings-button-inner {
+  outline-offset: -5px;
+  outline: 2px auto Highlight;
+  outline: 2px auto -webkit-focus-ring-color;
+  border-radius: 3px;
+}
+
 .delete-button {
   text-decoration: none;
 }
@@ -3703,10 +3710,6 @@ p {
 
   .callsign-form {
     justify-content: center;
-  }
-
-  .user-form-flavour {
-    display: none;
   }
 
   .user-form-container {
@@ -3952,10 +3955,6 @@ p {
 
   .access-description {
     text-align: center;
-  }
-
-  .pref-item {
-    width: 150px;
   }
 
   .user-page-title {
