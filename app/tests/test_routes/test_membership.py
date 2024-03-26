@@ -299,7 +299,7 @@ def test_decline_invite(client, auth, campaign):
     # Test that declining the invite succeeds if logged in as target user
     auth.login(username=user_2.username, password=TEST_PASSWORD)
     response_3 = client.post(url, data=data)
-    assert response_3.status_code == 302
+    assert response_3.status_code == 200
 
     pending_invitation = db.session.query(models.Message) \
         .filter(models.Message.invite == True,
@@ -407,7 +407,7 @@ def test_deny_request(client, auth, campaign):
     # Test that admin can deny request
     auth.login(username="Admin", password=TEST_PASSWORD)
     response_2 = client.post(url, data=data)
-    assert response_2.status_code == 302
+    assert response_2.status_code == 200
     assert user_2 not in campaign_object.members
 
     pending_request = db.session.query(models.Message) \
