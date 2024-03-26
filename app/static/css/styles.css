@@ -691,10 +691,11 @@ p {
   position: sticky;
   z-index: 4;
   overflow-y: scroll;
+  overflow-x: hidden;
   margin-bottom: 0;
   width: 400px;
   height: 0;
-  background-color: var(--elem_mid);
+  background-color: var(--elem_trans);
   border-top: 0px solid;
   border-left: 1px solid;
   border-bottom: 0px solid;
@@ -709,14 +710,26 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
   gap: 25px;
 }
 
 .no-messages-upper {
+  margin: auto;
   align-items: initial;
-  background-color: var(--elem_dark);
+  height: 100%;
   gap: 0px;
+}
+
+.message-tab-header {
+  display: flex;
+  justify-content: center;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+  margin: 0;
+  padding: 5px;
+  text-transform: uppercase;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .notifications-list {
@@ -777,16 +790,19 @@ p {
   justify-content: center;
   background-color: var(--darker_red);
   color: var(--text_header_contrast);
-  border-top-left-radius: 5px;
   margin: 0;
   padding: 5px;
-  clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5px,100% 100%,0 100%);
 }
 
 .no-message-text-area {
   display: flex;
   flex-direction: column;
   padding: 10px;
+}
+
+.no-messages-text {
+  display: none;
+  flex-direction: column;
 }
 
 .flavour-text.no-message-flavour {
@@ -6273,6 +6289,10 @@ pre {
   font-weight: 500;
   font-size: min(2vw, 11px);
   animation: cursor-blink 1.5s steps(2) infinite;
+}
+
+.empty-search-blink.search-header-bold::after {
+  color: var(--text_flavour_bright);
 }
 
 .typing-1 {

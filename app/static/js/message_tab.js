@@ -39,6 +39,14 @@ class messageTab {
       this.childButtons[0].focus();
     }
     this.button.setAttribute("aria-label", "Close Messages Tab");
+
+    this.tab.style.backdropFilter = "blur(15px)";
+    this.tab.style.webkitBackdropFilter = "blur(15px)";
+
+    var noMessagesText = this.tab.querySelector("#no-messages-flavour-text");
+    if (noMessagesText != null) {
+      noMessagesText.style.display = "flex";
+    }
   }
 
   closeTab() {
@@ -50,8 +58,19 @@ class messageTab {
       element.setAttribute("tabIndex", "-1")
     })
     this.button.setAttribute("aria-label", "Open Messages Tab: {{current_user.messages | length}} New Messages");
+
+    this.tab.style.backdropFilter = "";
+    this.tab.style.webkitBackdropFilter = "";
+
+    var noMessagesText = this.tab.querySelector("#no-messages-flavour-text");
+    if (noMessagesText != null) {
+      noMessagesText.style.display = "none";
+    }
+
     this.state = false
   }
+
+  
 
 }
 
@@ -72,7 +91,7 @@ function handleMessage(event) {
       var messageCount = document.getElementById("message-count");
       value = parseInt(messageCount.innerText);
       value--;
-      messageCount.innerText = value;  
+      messageCount.innerText = value; 
     }
 
     var messageTabCount = document.getElementById("message-tab-count");
@@ -80,6 +99,14 @@ function handleMessage(event) {
       tabValue = parseInt(messageTabCount.innerText);
       tabValue--;
       messageTabCount.innerText = tabValue.toString();
+
+      var messageText = messageTabCount.parentElement.querySelector("#message-count-text");
+      if (value == 1) {
+        messageText.innerText = "New Message";
+      } 
+      else {
+        messageText.innerText = "New Messages";
+      }
     }
   }
 
@@ -89,17 +116,17 @@ function handleMessage(event) {
     if (messages.length == 0) {
       const messagesTab = document.getElementById('messages-tab');
       const htmlString = `
-          <div class="messages-upper no-messages-upper" aria-label="No Messages">
-              <h5 id="no-messages" class="no-message-header" aria-label="No Messages">NO MESSAGES</h5>
-              <div class="no-message-text-area">
-                  <p class="flavour-text no-message-flavour" aria-label="Message flavour text">
-                      //Communications:Online<br aria-hidden="true">
-                      //Satellite:Lock<br aria-hidden="true">
-                      >Awaiting Uplink_
-                  </p>
-                  <div class="no-message-flavour no-message-spacer"></div>
-              </div>
+        <div class="messages-upper no-messages-upper" aria-label="No Messages">
+          <h5 id="no-messages" class="no-message-header" aria-label="No Messages">NO MESSAGES</h5>
+          <div class="no-message-text-area">
+            <div id="no-messages-flavour-text" class="no-messages-text" aria-label="Message flavour text">
+              <h5 class="flavour-text typing-1 empty-search-header search-header-bold">//Communications::Online</h5>
+              <h5 class="flavour-text typing-2 empty-search-header search-header-bold">//Satellite:Lock</h5>
+              <h5 class="flavour-text typing-3 empty-search-blink search-header-bold">>Awaiting Uplink</h5>
+            </div>
+            <div class="no-message-flavour no-message-spacer"></div>
           </div>
+        </div>
       `;
 
       messagesTab.innerHTML = htmlString;

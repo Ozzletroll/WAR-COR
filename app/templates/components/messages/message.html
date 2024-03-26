@@ -88,3 +88,49 @@
     </div>
   </li>
 {%- endmacro %}
+
+
+{% macro no_messages() %}
+
+  <div class="messages-upper no-messages-upper" aria-label="No Messages">
+    <h5 id="no-messages" class="no-message-header" aria-label="No Messages">NO MESSAGES</h5>
+    <div class="no-message-text-area">
+      <div id="no-messages-flavour-text" class="no-messages-text" aria-label="Message flavour text">
+        <h5 class="flavour-text typing-1 empty-search-header search-header-bold">//Communications::Online</h5>
+        <h5 class="flavour-text typing-2 empty-search-header search-header-bold">//Satellite:Lock</h5>
+        <h5 class="flavour-text typing-3 empty-search-blink search-header-bold">>Awaiting Uplink</h5>
+      </div>
+      <div class="no-message-flavour no-message-spacer"></div>
+    </div>
+  </div>
+
+{%- endmacro %}
+
+
+{% macro dismiss_all(messages) %}
+
+  <div id="messages-upper-area" class="messages-upper" aria-label="View Message Count">
+    {% if messages | length > 1 %}
+    <h5 class="message-tab-header" aria-label="Message Count">
+      <div id="message-tab-count">{{ messages | length }}</div> <p class="forced-space">&nbsp</p>
+      <div id="message-count-text">New Messages</div>
+    </h5>
+    {% else %}
+    <h5 class="message-tab-header" aria-label="Message Count">
+      <div id="message-tab-count">{{ messages | length }}</div> <p class="forced-space">&nbsp</p>
+      <div id="message-count-text">New Message</div>
+    </h5>
+    {% endif %}
+    
+
+    {% if messages | length > 1 %}
+      <button id="dismiss-all" class="button message-button" tabindex="-1"
+      onclick="handleMessage(event)"
+      data-csrf="{{ csrf_token() }}"
+      data-url="{{ url_for('user.dismiss_all') }}">
+      DISMISS ALL
+      </button>
+    {% endif %}
+  </div>
+
+{%- endmacro %}
