@@ -125,11 +125,13 @@
         <p class="flavour-text" aria-label="Flavour Text">UWC-16-02 // Personnel::User Preferences </p>
         <details class="user-form-container">
           <summary id="p1-button" class="button user-settings-button">
-            <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Theme Icon" alt="A circular icon alternating between black and white"
-            src="{{ url_for('static', filename='/images/icons/dark_mode.svg') }}">
-            INTERFACE THEME
+            <div class="settings-button-inner">
+              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Theme Icon" alt="A circular icon alternating between black and white"
+              src="{{ url_for('static', filename='/images/icons/dark_mode.svg') }}">
+              INTERFACE THEME
+            </div>
           </summary>
-          <p class="flavour-text user-form-flavour flavour-gap" aria-label="Flavour Text">//Imaging::Wavelength </p>
+          <p class="flavour-text user-form-flavour flavour-dropdown" aria-label="Flavour Text">//Imaging::Wavelength </p>
 
           <div id="pref-1" class="change-password-form" aria-label="UI Theme Panel">
             <form class="preferences-form" aria-label="UI Theme Selection">
@@ -197,11 +199,13 @@
 
           <details class="user-form-container" aria-label="Change Username">
             <summary id="f1-button" class="button user-settings-button" aria-label="Change Username">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Username Icon"
-              alt="A stylised figure beside a gear" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
-              CHANGE USERNAME
+              <div class="settings-button-inner">
+                <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Username Icon"
+                alt="A stylised figure beside a gear" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
+                CHANGE USERNAME
+              </div>
             </summary>
-            <p class="flavour-text user-form-flavour" aria-label="Flavour Text">//Ident::Reconfigure </p>
+            <p class="flavour-text user-form-flavour flavour-dropdown" aria-label="Flavour Text">//Ident::Reconfigure </p>
 
             <form id="form-1" class="change-password-form" aria-label="Change Username Form"
             method="POST" action="{{ url_for('user.change_username', username=user.username) }}">
@@ -220,11 +224,13 @@
 
           <details class="user-form-container" aria-label="Change Password">
             <summary id="f2-button" class="button user-settings-button" aria-label="Change Password">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Password Icon"
-              alt="A stylised padlock and key" src="{{ url_for('static', filename='/images/icons/lock_key.sv') }}g">
-              CHANGE PASSWORD
+              <div class="settings-button-inner">
+                <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Password Icon"
+                alt="A stylised padlock and key" src="{{ url_for('static', filename='/images/icons/lock_key.sv') }}g">
+                CHANGE PASSWORD
+              </div>
             </summary>
-            <p class="flavour-text user-form-flavour" aria-label="Flavour Text">//Authentication::Update </p>
+            <p class="flavour-text user-form-flavour flavour-dropdown" aria-label="Flavour Text">//Authentication::Update </p>
 
             <form id="form-2" class="change-password-form" aria-label="Change Password Form"
             method="POST" action="{{ url_for('user.change_password', username=user.username) }}">
@@ -254,9 +260,11 @@
 
             <div class="user-form-container">
             <a class="button delete-button user-settings-button" href="{{ url_for('user.delete_user', username=user.username) }}">
-              <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Delete Account Icon"
-              alt="A stylised bin" src="{{ url_for('static', filename='/images/icons/bin.svg') }}">
-              DELETE ACCOUNT
+              <div class="settings-button-inner">
+                <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Delete Account Icon"
+                alt="A stylised bin" src="{{ url_for('static', filename='/images/icons/bin.svg') }}">
+                DELETE ACCOUNT
+              </div>
             </a>
           </div>
 

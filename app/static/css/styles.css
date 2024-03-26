@@ -2747,7 +2747,7 @@ p {
   display: flex;
   background-color: var(--darker_red);
   width: 50px;
-  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 102% 100%, 0 102%);
 }
 
 .campaign-body {
@@ -2757,6 +2757,9 @@ p {
   gap: 15px;
   padding: 20px 50px 20px 50px;
   box-sizing: border-box;
+  border: 1px solid var(--darker_red);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   background-color: var(--elem_mid);
 }
 
@@ -3315,8 +3318,7 @@ p {
   color: white;
   text-align: left;
   padding-left: 15px;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-  transition: 0.5s;
+  transition: background-color 0.5s;
   gap: 15px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -3360,16 +3362,19 @@ p {
   display: flex;
   flex-direction: column;
   background-color: var(--elem_mid);
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0, calc(100% - 10.00px) 0, 100% 10.00px, 102% 102%, 0 102%);
   margin-bottom: 50px;
   border-radius: 5px;
 }
 
 .callsign-content-area {
-  margin-top: -20px;
-  padding: 0px 5% 20px 5%;
+  padding: 20px 5% 20px 5%;
   max-height: 0px;
   display: none;
+  border: 1px solid var(--darker_red);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-sizing: border-box;
 }
 
 .user-title {
@@ -3516,30 +3521,44 @@ p {
   min-width: 200px;
   border-style: none;
   border-radius: 0px;
-  padding: 5px;
-  margin-bottom: 15px;
+  padding: 1px;
   background-color: var(--bg_colour2);
   display: flex;
   align-items: center;
   justify-content: left;
-  gap: 15px;
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
   color: var(--text_dark);
+  transition: 0.15s;
+  border-radius: 5px;
+}
+
+.settings-button-inner {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: center;
+  gap: 15px;
+  padding: 5px;
+  clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
+  background-color: var(--bg_colour1);
+  border-radius: 5px;
   transition: 0.3s;
-  border-radius: 3px;
 }
 
 .delete-button {
   text-decoration: none;
 }
 
-.user-settings-button:hover {
-  background-color: var(--elem_hover);
+.user-settings-button:hover .settings-button-inner {
+  background-color: var(--elem_dar);
 }
 
 .user-settings-button:active {
   background-color: var(--bg_colour2);
   color: var(--bright_red);
+}
+
+.user-settings-button:active .settings-button-inner {
+  background-color: var(--bg_colour1);
 }
 
 .change-password-form {
@@ -3564,7 +3583,8 @@ p {
   align-items: flex-start;
 }
 
-.user-buttons .user-form-container .user-form-flavour {
+.flavour-text.flavour-dropdown {
+  margin-top: 15px;
   margin-bottom: 15px;
 }
 
@@ -3889,10 +3909,6 @@ p {
   align-items: flex-start;
 }
 
-.add-member-form {
-  flex-direction: column;
-}
-
 }
 
 @media screen and (max-width: 500px) { 
@@ -3906,6 +3922,7 @@ p {
   }
 
   .add-member-form {
+    flex-direction: column;
     align-items: center;
   }
 
@@ -3942,7 +3959,7 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .results-username {

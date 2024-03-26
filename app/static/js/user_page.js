@@ -20,7 +20,6 @@ class Tab {
   }
   
   openTab() {
-    this.tab.style.marginTop = "20px";
     this.tab.style.display = "flex";
     this.tab.style.flexDirection = "column";
     this.tab.style.maxHeight = "fit-content";
@@ -34,7 +33,6 @@ class Tab {
 
   closeTab() {
     this.tab.style.maxHeight = "0";
-    this.tab.style.marginTop = "-20px";
     this.tab.style.display = "none";
 
     document.getElementById(this.button).style.borderBottomLeftRadius = "5px";
