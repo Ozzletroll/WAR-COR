@@ -120,8 +120,8 @@ function handleMessage(event) {
           <h5 id="no-messages" class="no-message-header" aria-label="No Messages">NO MESSAGES</h5>
           <div class="no-message-text-area">
             <div id="no-messages-flavour-text" class="no-messages-text" aria-label="Message flavour text">
-              <h5 class="flavour-text typing-1 empty-search-header search-header-bold">//Communications::Online</h5>
-              <h5 class="flavour-text typing-2 empty-search-header search-header-bold">//Satellite:Lock</h5>
+              <h5 class="flavour-text typing-1 empty-search-header search-header-bold">Communications Online:</h5>
+              <h5 class="flavour-text typing-2 empty-search-header search-header-bold">>Satellite::Lock</h5>
               <h5 class="flavour-text typing-3 empty-search-blink search-header-bold">>Awaiting Uplink</h5>
             </div>
             <div class="no-message-flavour no-message-spacer"></div>
