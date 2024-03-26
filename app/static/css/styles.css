@@ -825,7 +825,7 @@ p {
 }
 
 #dismiss-all.message-button {
-  scroll-margin: 200px;
+  scroll-margin: 54px;
   transition: 1s;
 }
 
