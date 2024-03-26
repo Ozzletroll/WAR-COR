@@ -846,6 +846,7 @@ p {
   color: var(--text_header_contrast);
   border-style: none;
   border-radius: 3px;
+  border: 1px solid var(--elem_border);
   padding: 5px;
   transition: 0.3s;
   width: 100px;
