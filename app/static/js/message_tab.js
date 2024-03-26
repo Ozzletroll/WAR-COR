@@ -33,7 +33,7 @@ class messageTab {
     })
     if (this.messages >= 2) {
       document.getElementById("dismiss-all").focus();
-      document.getElementById("dismiss-all").scrollIntoView({ block: "start", inline: "start", behavior: "smooth" });
+      this.tab.scrollTop = 0;
     }
     else if (this.childButtons.length > 0) {
       this.childButtons[0].focus();
@@ -65,8 +65,48 @@ const messages_tab = new messageTab({
 // Function to accept/decline campaign invite messages
 function handleMessage(event) {
 
-  const button = event.target;
+  function deleteMessage(messageID) {
+    var messageElement = document.getElementById(`message-${messageID}`);
+    if (messageElement != null) {
+      messageElement.remove();
+      var messageCount = document.getElementById("message-count");
+      value = parseInt(messageCount.innerText);
+      value--;
+      messageCount.innerText = value;  
+    }
 
+    var messageTabCount = document.getElementById("message-tab-count");
+    if (messageTabCount != null) {
+      tabValue = parseInt(messageTabCount.innerText);
+      tabValue--;
+      messageTabCount.innerText = tabValue.toString();
+    }
+  }
+
+  function checkIfNoMessages() {
+    var messagesArea = document.getElementById("notifications-list");
+    var messages = messagesArea.querySelectorAll(".message-item");
+    if (messages.length == 0) {
+      const messagesTab = document.getElementById('messages-tab');
+      const htmlString = `
+          <div class="messages-upper no-messages-upper" aria-label="No Messages">
+              <h5 id="no-messages" class="no-message-header" aria-label="No Messages">NO MESSAGES</h5>
+              <div class="no-message-text-area">
+                  <p class="flavour-text no-message-flavour" aria-label="Message flavour text">
+                      //Communications:Online<br aria-hidden="true">
+                      //Satellite:Lock<br aria-hidden="true">
+                      >Awaiting Uplink_
+                  </p>
+                  <div class="no-message-flavour no-message-spacer"></div>
+              </div>
+          </div>
+      `;
+
+      messagesTab.innerHTML = htmlString;
+    }
+  }
+
+  const button = event.target;
   const csrf = button.dataset.csrf;
   const URL = button.dataset.url;
   const campaignID = button.dataset.campaignId;
@@ -86,9 +126,13 @@ function handleMessage(event) {
     },
     body: formData
   })
-  .then((response)=>{         
-    if(response.redirected){
+  .then((response)=>{ 
+    if (response.redirected) {
       window.location.href = response.url;
     } 
+    if (response.status == 200) {
+      deleteMessage(messageID);
+      checkIfNoMessages();
+    }
   })
 };

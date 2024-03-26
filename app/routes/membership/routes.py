@@ -309,7 +309,8 @@ def decline_invite():
     else:
         abort(403)
 
-    return redirect(request.referrer)
+    response = make_response(jsonify({"Message": "Invite declined"}), 200)
+    return response
 
 
 # Function called when admin accepts new membership request
@@ -373,7 +374,8 @@ def deny_request():
     db.session.delete(message)
     db.session.commit()
 
-    return redirect(request.referrer)
+    response = make_response(jsonify({"Message": "Request declined"}), 200)
+    return response
 
 
 # Function called when granting a user campaign editing permissions

@@ -768,6 +768,10 @@ p {
   font-weight: 300;
 }
 
+.forced-space {
+  margin: 0px;
+}
+
 .no-message-header {
   display: flex;
   justify-content: center;
@@ -798,7 +802,8 @@ p {
   color: var(--text_dark);
   font-size: min(12px, 3vw);
   text-transform: uppercase;
-  padding: 10px;
+  text-align: center;
+  padding: 10px 20px;
 }
 
 .message-button-area {
@@ -820,7 +825,7 @@ p {
 }
 
 #dismiss-all.message-button {
-  scroll-margin: 200px;
+  scroll-margin: 54px;
   transition: 1s;
 }
 
@@ -4357,10 +4362,6 @@ a.view-epoch:hover .epoch-header {
   margin-bottom: 50px;
 }
 
-.epoch-end-outer {
-  margin-bottom: 70px;
-}
-
 .epoch-end-text {
   scroll-margin: 25vh;
   display: flex;
@@ -4370,6 +4371,8 @@ a.view-epoch:hover .epoch-header {
 .epoch-end-group {
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 .epoch-end-marker {
@@ -4460,7 +4463,7 @@ a.view-epoch:hover .epoch-header {
 
 .event-between-missing {
   width: 100%;
-  padding-bottom: 0px;
+  padding-bottom: 20px;
 }
 
 .event-between-events {
@@ -4481,8 +4484,8 @@ a.view-epoch:hover .epoch-header {
 }
 
 .event-between-days-offset {
-  margin-top: -51px;
-  margin-bottom: 50px;
+  margin-top: -10px;
+  margin-bottom: 85px;
 }
 
 .event-between-years {
@@ -4583,7 +4586,7 @@ a.view-epoch:hover .epoch-header {
 
 .between-events-elements {
   display: flex;
-  flex: 0.5 0 0;
+  flex: 1 0 0;
   max-width: calc(30px + 1.5vw);
 }
 
@@ -4686,7 +4689,7 @@ for selection in timeline_search.js */
 }
 
 .day-line-top-edit {
-  margin-bottom: -111px;
+  margin-bottom: -185px;
 }
 
 .top-no-between {
@@ -4700,7 +4703,7 @@ for selection in timeline_search.js */
 }
 
 .day-line-mid-edit {
-  margin-bottom: -39px;
+  margin-bottom: -185px;
 }
 
 .mid-no-between {
@@ -4720,7 +4723,7 @@ for selection in timeline_search.js */
 
 .day-line-bottom-edit-offset {
   border-left: 1px dashed var(--bright_red);
-  margin-bottom: 35px;
+  margin-bottom: -35px;
 }
 
 .timeline-day-container {
@@ -4730,7 +4733,11 @@ for selection in timeline_search.js */
   flex: 1 0 0;
 }
 
- .event-line {
+.day-container-column {
+  flex-direction: column;
+}
+
+.event-line {
   display: flex;
   flex: 0 0 1px;
   border: 1px solid var(--bright_red);
@@ -4918,7 +4925,7 @@ for selection in timeline_search.js */
 @media screen and (max-width: 650px) { 
 
   .day-line-top-edit {
-    margin-bottom: -135px;
+    margin-bottom: -175px;
   }
 
   .top-no-between {
@@ -4926,7 +4933,7 @@ for selection in timeline_search.js */
   }
 
   .day-line-mid-edit {
-    margin-bottom: -135px;
+    margin-bottom: -175px;
   }
 
   .mid-no-between {

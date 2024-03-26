@@ -1,0 +1,51 @@
+{% import "components/messages/message.html" as message_item %}
+
+
+<nav id="messages-tab" class="notifications-dropdown" aria-label="Messages Tab" aria-hidden="true" tabindex="-1">
+  
+  {% if current_user.messages | length == 0 %}
+    <div class="messages-upper no-messages-upper" aria-label="No Messages">
+      <h5 id="no-messages" class="no-message-header" aria-label="No Messages">NO MESSAGES</h5>
+      <div class="no-message-text-area">
+        <p class="flavour-text no-message-flavour" aria-label="Message flavour text">
+          //Communications:Online<br aria-hidden="true">
+          //Satellite:Lock<br aria-hidden="true">
+          >Awaiting Uplink_
+        </p>
+        <div class="no-message-flavour no-message-spacer"></div>
+      </div>
+    </div>
+  {% elif current_user.messages | length >= 2 %}
+    <div id="messages-upper-area" class="messages-upper" aria-label="View Message Count">
+      <h4 class="message-count" aria-label="Message Count">
+        <div id="message-tab-count">{{current_user.messages | length}}</div> <p class="forced-space">&nbsp</p>
+        New Messages</h4>
+      <button id="dismiss-all" class="button message-button" tabindex="-1"
+      onclick="handleMessage(event)"
+      data-csrf="{{ csrf_token() }}"
+      data-url="{{ url_for('user.dismiss_all') }}">
+      DISMISS ALL
+      </button>
+    </div>
+  {% endif %}
+
+    {% if current_user.messages | length > 0 %}
+    <ul id="notifications-list" class="notifications-list" aria-label="Messages">
+
+      {% for message in current_user.messages | sort(attribute="date") | reverse %}
+    
+        {% if message.invite %}
+          {{ message_item.invite(message) }} 
+        {% elif message.notification %}
+          {{ message_item.notification(message) }}
+        {% elif message.request %}
+          {{ message_item.request(message) }}
+        {% endif %}
+    
+      {% endfor %}
+    </ul>
+    {% endif %}
+  
+  </nav>
+
+<script src="{{ url_for('static', filename='/js/message_tab.js') }}"></script> 
