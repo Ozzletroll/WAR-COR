@@ -4372,6 +4372,7 @@ a.view-epoch:hover .epoch-header {
   display: flex;
   flex-direction: column;
   margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 .epoch-end-marker {
