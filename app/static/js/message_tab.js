@@ -31,21 +31,20 @@ class messageTab {
     Array.from(this.childButtons).forEach(element => {
       element.setAttribute("tabIndex", "0")
     })
+    this.messages = this.tab.querySelectorAll(".message-item").length;
     if (this.messages >= 2) {
       document.getElementById("dismiss-all").focus();
-
       setTimeout(() => {
         this.tab.scrollTop = 0;
       }, 50);
     }
-    else if (this.childButtons.length > 0) {
+    else if (this.messages > 0) {
+      this.childButtons = this.tab.getElementsByClassName("button");
       this.childButtons[0].focus();
     }
     this.button.setAttribute("aria-label", "Close Messages Tab");
-
     this.tab.style.backdropFilter = "blur(15px)";
     this.tab.style.webkitBackdropFilter = "blur(15px)";
-
     var noMessagesText = this.tab.querySelector("#no-messages-flavour-text");
     if (noMessagesText != null) {
       noMessagesText.style.display = "flex";
