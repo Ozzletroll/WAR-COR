@@ -702,7 +702,6 @@ p {
   border-left: 1px solid;
   border-bottom: 0px solid;
   border-color: var(--dark_red);
-  border-bottom-left-radius: 5px;
   box-sizing: border-box;
   transition: 0.3s;
   box-shadow: -1px 2px 3px var(--elem_shadow);
