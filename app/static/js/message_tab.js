@@ -89,7 +89,11 @@ function handleMessage(event) {
   function deleteMessage(messageID) {
     var messageElement = document.getElementById(`message-${messageID}`);
     if (messageElement != null) {
-      messageElement.remove();
+      messageElement.style.transition = "0.3s";
+      messageElement.style.opacity = "0";
+      setTimeout(() => {
+        messageElement.remove();
+      }, 300);
       var messageCount = document.getElementById("message-count");
       value = parseInt(messageCount.innerText);
       value--;
