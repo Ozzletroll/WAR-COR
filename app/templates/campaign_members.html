@@ -304,10 +304,10 @@
 
 {% endfor %}
 
- <!-- Javascript -->
- <script src="{{ url_for('static', filename='/js/campaign_members.js') }}" type="module"></script>  
- <script src="{{ url_for('static', filename='/js/members_search.js') }}"></script>  
- <script>
+<!-- Javascript -->
+<script src="{{ url_for('static', filename='/js/campaign_members.js') }}" type="module"></script>  
+<script src="{{ url_for('static', filename='/js/members_search.js') }}"></script>  
+<script>
   const target_url = "{{ url_for('membership.user_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const csrfToken = "{{ csrf_token() }}"
 </script>

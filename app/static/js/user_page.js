@@ -1,3 +1,6 @@
+import { Modal } from "./modal.js";
+
+
 // Tab class
 class Tab {
   constructor({
@@ -185,3 +188,27 @@ if (storedTheme) {
   document.getElementById(radio).checked = true;
 
 }
+
+// Create array to hold modal objects
+const modalItems = []
+
+// Select all dropdown elements
+var modals = document.querySelectorAll('[id^="remove-modal-"]');
+var buttons = document.querySelectorAll('[id^="remove-button-"]');
+var spans = document.querySelectorAll('[id^="remove-close-"]');
+
+buttons.forEach((button, index) => {
+
+  var modal = new Modal({
+    modal: modals[index],
+    button: button,
+    span: spans[index],
+  })
+  modalItems.push(modal)
+  window.addEventListener('click', function(event) {
+    if (event.target == modal.modal) {
+      modal.closeModal();
+    }
+  });
+  
+});

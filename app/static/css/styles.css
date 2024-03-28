@@ -749,6 +749,7 @@ p {
   list-style: none;
   flex-direction: column;
   gap: 25px;
+  transition: 0.3s;
 }
 
 .message-date {
@@ -3428,23 +3429,38 @@ p {
 
 .user-campaigns-headings {
   display: flex;
-  flex: 1 1 0;
+  flex: 1 0 0;
   font-size: clamp(14px, 5vw, 20px);
   text-transform: uppercase;
-  max-width: 340px;
+  width: 100%;
   color: var(--text_dark);
   margin: 0;
 }
 
+.leave-campaign-button {
+  height: 28px;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+}
+
+.leave-campaign-button:hover {
+  background-color: var(--bright_red);
+}
+
 .callsign-entry-area {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  color: var(--dark_red);
+  color: var(--text_header);
+  margin-bottom: 5px;
 }
 
 .callsign-entry-title {
   font-size: clamp(10px, 3vw, 14px);
   text-transform: uppercase;
+  margin: 0px;
 }
 
 .heading-line-2 {
@@ -3453,13 +3469,25 @@ p {
 
 .user-service-record-entry {
   display: flex;
+  flex: 1 0 500px;
   flex-direction: column;
   margin-bottom: 25px;
-  flex: 1 1 400px;
+  max-width: 500px;
+  padding: 15px;
+  border: 1px solid var(--elem_border);
+  border-radius: 5px;
+}
+
+.callsign-card-title-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .user-callsigns {
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   flex-wrap: wrap;
   list-style: none;
@@ -3473,13 +3501,15 @@ p {
   font-size: min(16px, 4vw);
   font-weight: 400;
   margin: 0;
-  width: max-content;
+  word-wrap: break-word;
+  word-break: break-all;
+  margin-left: 10px;
 }
 
 .callsign-form {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
@@ -3494,12 +3524,10 @@ p {
 .callsign-input {
   display: flex;
   flex: 1 0 0;
-  max-width: 250px;
   font-size: 16px;
   font-family: "Roboto Mono", monospace;
   font-weight: 500;
-  border: 2px solid;
-  border-color: var(--bg_colour2);
+  border: 1px solid var(--bg_colour2);
   border-radius: 3px;
   box-sizing: border-box;
   transition: 0.5s;
@@ -3526,6 +3554,8 @@ p {
 .callsign-form-container {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  max-width: 400px;
 }
 
 .callsign-submit {
@@ -3685,7 +3715,7 @@ p {
   
   .user-callsigns {
     flex-direction: row;
-    gap: 45px;
+    gap: 20px;
   }
 
 }

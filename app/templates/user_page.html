@@ -1,11 +1,12 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/modal.html" as modal %}
 
 {% extends "base/base.html" %}
 
 {% block head %}
-  {% include 'base/header.html' %}
+  {% include "base/header.html" %}
   {% block title %}
     <title>{{user.username.upper()}} | WAR/COR</title>
   {% endblock %}
@@ -53,7 +54,7 @@
     </div>
 
     <div class="form-flash">
-      {% include 'components/flash.html' %}
+      {% include "components/flash.html" %} 
     </div>
 
     <!-- Tab 1 -->
@@ -61,34 +62,49 @@
     <div class="user-page-tabs fade-in-block-2">
 
     <details class="callsigns-area" aria-label="Callsigns">
-      <summary class="callsign-deploy-button" id="t1-button" aria-label="Callsigns">
+      <summary class="callsign-deploy-button" id="t1-button" aria-label="Callsigns and Membership">
         <img class="icon campaign-form-icon" aria-label="Callsign Icon" alt="A stylised headset"
         src="{{ url_for('static', filename='/images/icons/callsigns.svg') }}">
-        <h2 class="user-page-title">Callsigns</h2>
+        <h2 class="user-page-title">Callsigns and Membership</h2>
       </summary>
 
-      <div class="callsign-content-area" id="tab-1" aria-label="Callsigns Panel">
+      <div class="callsign-content-area" id="tab-1" aria-label="Callsigns and Membership Panel">
 
         <p class="flavour-text" aria-label="Flavour Text">UWC-16-01 // Personnel::Known Aliases </p>
 
         <ul class="user-callsigns" aria-label="Campaign Callsign List">
           {% for campaign in user.campaigns %}
             <li class="user-service-record-entry">
-              <h5 class="user-campaigns-headings">{{ campaign.title }}</h5>
+              <div class="callsign-card-title-area">
+                <h5 class="user-campaigns-headings">{{ campaign.title }}</h5>
+                <button id="remove-button-{{ loop.index }}" class="button leave-campaign-button">LEAVE</button>
+              </div>
+
+              <hr class="campaigns-divider" aria-hidden="true">
 
               {% for entry in user.campaign_associations %}
                 {%if entry.campaign_id == campaign.id%}
                   
-                    <div class="callsign-entry-area">
-                      <h4 class="callsign-entry-title">Current callsign:</h4>
-                      {% if entry.callsign is not none %}
-                        <h6 class="callsign callsign-large">[{{entry.callsign.upper()}}]</h6>
-                      {% else %}
-                        <h6 class="callsign callsign-large">[NO CALLSIGN REGISTERED]</h6>
-                      {% endif %}
-                    </div>
+                  <div class="callsign-entry-area">
+                    <h4 class="callsign-entry-title">Role:</h4>
+                    {% if user in campaign.admins %}
+                      <h6 class="callsign callsign-large">[WARCOR]</h6>
+                    {% else %}
+                      <h6 class="callsign callsign-large">[MEMBER]</h6>
+                    {% endif %}
+                  </div>
+
+                  <div class="callsign-entry-area">
+                    <h4 class="callsign-entry-title">Callsign:</h4>
+                    {% if entry.callsign is not none %}
+                      <h6 class="callsign callsign-large">[{{entry.callsign.upper()}}]</h6>
+                    {% else %}
+                      <h6 class="callsign callsign-large">[NO CALLSIGN REGISTERED]</h6>
+                    {% endif %}
+                  </div>
                     
-                  <form class="callsign-form" method="POST" action="{{ url_for('user.update_callsign', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
+                  <form class="callsign-form" aria-label="Callsign Update Form"
+                  method="POST" action="{{ url_for('user.update_callsign', username=user.username, user_id=user.id, campaign_id=campaign.id) }}">
                     {{ callsign_form.csrf_token }}
 
                     <div class="callsign-form-container">
@@ -287,7 +303,23 @@
 
 </div>
 
- <!-- Javascript -->
-<script src="{{ url_for('static', filename='/js/user_page.js') }}"></script> 
+{# Modals #}
+{% for campaign in user.campaigns %}
+  {{ modal.modal(type="remove",
+                 title="Leave",
+                 aria_label="Leave Campaign Confirmation Modal",
+                 body_text=campaign.title,
+                 button_text="Leave",
+                 model_id=campaign.id,
+                 loop_index=loop.index,
+                 form=remove_form,
+                 form_action=url_for("membership.leave_campaign",
+                                     campaign_name=campaign.url_title,
+                                     campaign_id=campaign.id),
+                                     form_target=current_user) }}
+{% endfor %}
+
+<!-- Javascript -->
+<script src="{{ url_for('static', filename='/js/user_page.js') }}" type="module"></script> 
 
 {% endblock %}
