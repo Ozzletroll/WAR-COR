@@ -121,7 +121,6 @@ function handleMessage(event) {
     setTimeout(() => {
       var messagesArea = document.getElementById("notifications-list");
       var messages = messagesArea.querySelectorAll(".message-item");
-      console.log(messages.length)
       if (messages.length == 0) {
         const messagesTab = document.getElementById('messages-tab');
         const htmlString = `
