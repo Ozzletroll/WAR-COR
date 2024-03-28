@@ -66,6 +66,25 @@ class Campaign(db.Model):
 
         db.session.commit()
 
+    def remove_user(self, user):
+        """ Method to remove a given user from campaign """
+
+        if user in self.members:
+            self.members.remove(user)
+        if user in self.admins:
+            self.admins.remove(user)
+        # If campaign left with no admins, upgrade all user to admin status
+        if len(self.admins) == 0:
+            for user in self.members:
+                user.permissions.append(self)
+            db.session.commit()
+        #  Delete campaign if left with no members
+        if len(self.members) == 0:
+            db.session.delete(self)
+            db.session.commit()
+
+        db.session.commit()
+
     def check_epochs(self):
         """ Method to clear and recheck all epochs for containing
             events. """
