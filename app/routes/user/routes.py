@@ -111,6 +111,7 @@ def user_page(username):
     # Check if the user is actually the owner of the account they are trying to modify
     authenticators.user_verification(user)
 
+    remove_form = forms.AddUserForm()
     callsign_form = forms.ChangeCallsignForm()
     username_form = forms.ChangeUsernameForm()
     password_form = forms.ChangePasswordForm()
@@ -124,6 +125,7 @@ def user_page(username):
 
     return render_template("user_page.html",
                            user=user,
+                           remove_form = remove_form,
                            callsign_form=callsign_form,
                            username_form=username_form,
                            password_form=password_form)

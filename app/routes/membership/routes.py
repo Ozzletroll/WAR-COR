@@ -129,40 +129,56 @@ def remove_user(campaign_name, campaign_id):
     username = request.form["username"]
     user_id = request.form["user_id"]
 
-    # Check if username exists
     user = (db.session.execute(select(models.User)
             .filter_by(username=username, id=user_id))
             .scalar())
 
     if user:
-        # Check is user is actually a member of the campaign
-        if user in campaign.members:
-            user.campaigns.remove(campaign)
-            flash(f"Removed {user.username} from campaign.")
-        # Remove editing permissions if they exist
-        if campaign in user.permissions:
-            user.permissions.remove(campaign)
-            flash(f"Removed {user.username}'s campaign permissions.")
-        # Check if campaign is left with no users, and delete if so
-        if len(campaign.members) == 0:
-            db.session.delete(campaign)
-            db.session.commit()
+        campaign.remove_user(user)
+        if user.id == current_user.id:
+            flash(f"Left campaign '{campaign.title}'")
+        else:
+            flash(f"Removed {user.username} from campaign")
+
+    # Query campaign again in case the remove_user method deleted it
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first())
+
+    if campaign:
+        if current_user in campaign.members:
+            return redirect(url_for("membership.edit_campaign_users", 
+                                    campaign_name=campaign_name, 
+                                    campaign_id=campaign.id))
+        else:
             return redirect(url_for("campaign.campaigns"))
-
-        db.session.commit()
-
-        # Check if campaign left with no admins
-        if len(campaign.admins) == 0:
-            for user in campaign.members:
-                user.permissions.append(campaign)
-            db.session.commit()
-            return redirect(url_for("campaign.campaigns"))
-
     else:
-        flash("User not in database, please check username.")
-    return redirect(url_for("membership.edit_campaign_users", 
-                            campaign_name=campaign_name, 
-                            campaign_id=campaign.id))
+        return redirect(url_for("campaign.campaigns"))
+
+
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/leave", methods=["POST"])
+@login_required
+@limiter.limit("60/minute")
+def leave_campaign(campaign_name, campaign_id):
+
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+    
+    username = request.form["username"]
+    user_id = request.form["user_id"]
+
+    user = (db.session.execute(select(models.User)
+            .filter_by(username=username, id=user_id))
+            .scalar())
+
+    authenticators.user_verification(user)
+
+    campaign.remove_user(user)
+    flash(f"Left campaign '{campaign.title}'")
+
+    return redirect(url_for("user.user_page", 
+                            username=current_user.username))
 
 
 # Join campaign page
