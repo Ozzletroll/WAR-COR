@@ -24,26 +24,6 @@
 
 {% block content %}
 
-  {# Delete comment confirm modals #}
-  {% for comment in event.comments %}
-  
-    {{ modal.modal(type="comment",
-                   title="Delete Comment",
-                   aria_label="Delete Comment Confirmation",
-                   body_text="Confirm comment termination:",
-                   button_text="Delete",
-                   model_id=event.id,
-                   loop_index=loop.index,
-                   form=form,
-                   form_action=url_for('event.delete_comment',
-                                       campaign_name=campaign.url_title,
-                                       campaign_id=campaign.id,
-                                       event_name=event.url_title,
-                                       event_id=event.id,
-                                       comment_id=comment.id)) }}
-
-  {% endfor %}
-
 <nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
   {{ searchbar.searchbar(campaign=campaign, event=true) }}
   {% if current_user.is_authenticated and campaign in current_user.permissions %}
@@ -291,6 +271,30 @@
   </div>
 
 </div>
+
+{# Delete comment confirm modals #}
+{% for comment in event.comments %}
+
+  {% if current_user in campaign.admins or current_user == comment.author %}
+
+  {{ modal.modal(type="comment",
+                 title="Delete Comment",
+                 aria_label="Delete Comment Confirmation",
+                 body_text="Confirm comment termination:",
+                 button_text="Delete",
+                 model_id=event.id,
+                 loop_index=loop.index,
+                 form=form,
+                 form_action=url_for('event.delete_comment',
+                                      campaign_name=campaign.url_title,
+                                      campaign_id=campaign.id,
+                                      event_name=event.url_title,
+                                      event_id=event.id,
+                                      comment_id=comment.id)) }}
+
+  {% endif %}
+
+{% endfor %}
 
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="false"></div>
