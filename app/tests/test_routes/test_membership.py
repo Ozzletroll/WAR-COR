@@ -117,7 +117,7 @@ def test_remove_user(client, auth, campaign):
     assert response_1.status_code == 200
     assert b'<li>Please log in to access this page</li>' in response_1.data
 
-    # Test admin can remove user 1 to campaign
+    # Test admin can remove user 1 from campaign
     auth.login(username="Admin", password=TEST_PASSWORD)
     response_2 = campaign.remove_user(campaign_name=campaign_object.title,
                                       campaign_id=campaign_object.id,
