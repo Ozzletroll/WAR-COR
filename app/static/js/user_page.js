@@ -189,6 +189,8 @@ if (storedTheme) {
 
 }
 
+window.themeToggle = themeToggle;
+
 // Create array to hold modal objects
 const modalItems = []
 
