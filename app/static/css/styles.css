@@ -5746,7 +5746,7 @@ for selection in timeline_search.js */
   align-items: center;
   background-color: var(--darker_red);
   padding: 10px;
-  clip-path: polygon(0 0,calc(101% - 10.00px) 0, 101% 10.00px, 101% 102%, 0 102%);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0, 100% 10.00px, 103% 103%, 0 103%);
   border-top-left-radius: 3px;
 }
 
@@ -5806,6 +5806,10 @@ for selection in timeline_search.js */
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   box-sizing: border-box;
+}
+
+.comment-body-user {
+  border: 1px solid var(--dark_red);
 }
 
 .comment-flavour-text {

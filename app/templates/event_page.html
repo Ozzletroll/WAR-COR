@@ -250,8 +250,12 @@
 
                     </div>
 
+                    {% if comment.author == current_user %}
+                    <div class="comment-body comment-body-user">
+                    {% else %}
                     <div class="comment-body">
-                      <p class="flavour-text">MSG-{{event.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
+                    {% endif %}
+                      <p class="flavour-text comment-flavour-text">MSG-{{event.id}}-{{loop.index}} // Correspondent::{{comment.author.username}}</p>
                       {{ comment.body | safe }}
                     </div>
 
