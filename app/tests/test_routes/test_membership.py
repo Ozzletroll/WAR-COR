@@ -62,10 +62,6 @@ def test_edit_campaign_members(client, auth, campaign):
 
 def test_add_user(client, auth, campaign):
 
-    admin = db.session.execute(
-        select(models.User)
-        .filter_by(username="Admin")).scalar()
-
     user_1 = db.session.execute(
         select(models.User)
         .filter_by(username="User 1")).scalar()
@@ -173,6 +169,39 @@ def test_join_campaign(client, auth, campaign):
     response_5 = client.post(url, data=data, follow_redirects=True)
     assert response_5.status_code == 200
     assert b'<li>No campaigns matching query found</li>' in response_5.data
+
+
+def test_leave_campaign(client, auth, campaign):
+
+    user_1 = db.session.execute(
+        select(models.User)
+        .filter_by(username="User 1")).scalar()
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    # Manually add user_1 to campaign members
+    campaign_object.members.append(user_1)
+    db.session.commit()
+
+    assert user_1 in campaign_object.members
+
+    auth.login(username=user_1.username,
+               password=TEST_PASSWORD)
+
+    url = url_for("membership.leave_campaign",
+                  campaign_name=campaign_object.url_title,
+                  campaign_id=campaign_object.id)
+
+    form = {
+        "username": user_1.username,
+        "user_id": user_1.id,
+    }
+
+    response = client.post(url, data=form, follow_redirects=True)
+    assert response.status_code == 200
+    assert user_1 not in campaign_object.members
 
 
 def test_request_membership(client, auth, campaign):
