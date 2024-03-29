@@ -750,6 +750,7 @@ p {
   flex-direction: column;
   gap: 25px;
   transition: 0.3s;
+  filter: drop-shadow(1px 3px 3px var(--elem_shadow));
 }
 
 .message-date {
@@ -771,6 +772,7 @@ p {
   background-color: var(--elem_dark);
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
   border-radius: 5px;
+  border: 1px solid var(--darker_red);
 }
 
 .message-header {
@@ -782,6 +784,7 @@ p {
   margin-bottom: 5px;
   margin-top: 0;
   border-top-left-radius: 5px;
+  font-size: 14px;
 }
 
 .message-count {
