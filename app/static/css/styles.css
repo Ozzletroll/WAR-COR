@@ -5012,7 +5012,7 @@ for selection in timeline_search.js */
 @media screen and (max-width: 650px) { 
 
   .day-line-top-edit {
-    margin-bottom: -175px;
+    margin-bottom: -210px;
   }
 
   .top-no-between {
@@ -5020,11 +5020,11 @@ for selection in timeline_search.js */
   }
 
   .day-line-mid-edit {
-    margin-bottom: -175px;
+    margin-bottom: -210px;
   }
 
   .mid-no-between {
-    margin-bottom: -39px;
+    margin-bottom: -40px;
   }
 
   .event-outer-container .event-small-date {
