@@ -71,9 +71,6 @@ class messageTab {
 
     this.state = false
   }
-
-  
-
 }
 
 // Create messages tab
@@ -83,8 +80,7 @@ const messages_tab = new messageTab({
 })
 
 
-// Function to accept/decline campaign invite messages
-function handleMessage(event) {
+function handleMessage(event, dismissAll=false) {
 
   function deleteMessage(messageID) {
     var messageElement = document.getElementById(`message-${messageID}`);
@@ -114,6 +110,21 @@ function handleMessage(event) {
         messageText.innerText = "New Messages";
       }
     }
+  }
+
+  function deleteAllMessages() {
+    var messageElements = document.getElementsByClassName("message-item");
+    var messageCount = document.getElementById("message-count");
+
+    Array.from(messageElements).forEach(message => {
+      message.style.transition = "0.3s";
+      message.style.opacity = "0";
+      setTimeout(() => {
+        message.remove();
+      }, 300);
+      message.remove();
+    })
+    messageCount.innerText = "0";
   }
 
   function checkIfNoMessages() {
@@ -164,12 +175,15 @@ function handleMessage(event) {
     body: formData
   })
   .then((response)=>{ 
-    if (response.redirected) {
-      window.location.href = response.url;
-    } 
     if (response.status == 200) {
-      deleteMessage(messageID);
-      checkIfNoMessages();
+      if (dismissAll) {
+        deleteAllMessages();
+        checkIfNoMessages();
+      }
+      else {
+        deleteMessage(messageID);
+        checkIfNoMessages();
+      }
     }
   })
 };

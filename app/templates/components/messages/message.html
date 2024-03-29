@@ -124,7 +124,7 @@
   </div>
   {% if messages | length > 1 %}
       <button id="dismiss-all" class="button message-button" tabindex="-1"
-      onclick="handleMessage(event)"
+      onclick="handleMessage(event, dismissAll=true)"
       data-csrf="{{ csrf_token() }}"
       data-url="{{ url_for('user.dismiss_all') }}">
       DISMISS ALL

@@ -348,7 +348,8 @@ def dismiss_all():
     for message in messages:
         message.dismiss(current_user)
      
-    return redirect(request.referrer)
+    response = make_response(jsonify({"Message": "All messages dismissed"}), 200)
+    return response
 
 
 # Function called when recovering password
