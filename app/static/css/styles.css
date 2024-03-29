@@ -6394,6 +6394,10 @@ pre {
   width: 100%;
 }
 
+.search-campaigns-upper {
+  width: 100%;
+}
+
 .campaign-search-results-area {
   display: flex;
   flex-direction: column;
@@ -6428,8 +6432,8 @@ pre {
 }
 
 .request-button {
+  height: auto;
   text-transform: uppercase;
-  width: 180px;
   font-family: "Roboto Mono", monospace;
 }
 
