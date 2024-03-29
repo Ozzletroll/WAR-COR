@@ -3443,6 +3443,7 @@ p {
   color: var(--text_header_contrast);
   border: 1px solid var(--elem_border);
   border-radius: 3px;
+  margin-left: 10px;
 }
 
 .leave-campaign-button:hover {
@@ -3666,6 +3667,15 @@ p {
   font-size: 14px;
   font-weight: 300;
 }
+
+@media screen and (max-width: 600px) {
+  
+  .user-campaigns-headings {
+    font-size: 18px;
+  }
+
+}
+
 
 /* Theme selector */
 
