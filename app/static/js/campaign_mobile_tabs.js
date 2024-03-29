@@ -1,3 +1,7 @@
+import { CampaignCard } from "./campaign_card.js";
+
+
+
 // Create mobile tabs for all campaigns
 const campaigns = [];
 var tabs = document.getElementsByClassName("campaign-entry");
@@ -10,7 +14,7 @@ Array.from(tabs).forEach((element) => {
     var buttonElement = element.querySelector(".campaign-header");
     var tabElement = element.querySelector(".campaign-body");
   
-    var tab = new Tab({
+    var tab = new CampaignCard({
       tab: tabElement,
       button: buttonElement,
     })
