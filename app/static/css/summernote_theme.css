@@ -96,13 +96,14 @@
 .note-modal-content {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0, 100% 10.00px, 103% 103%, 0 103%);
   background-color: var(--elem_mid);
+  border: 2px solid var(--darker_red);
 }
 
 .note-modal-header {
   background-color: var(--darker_red);
   border: none;
   text-transform: uppercase;
-  border-top-left-radius: 5px;
+  border-top-left-radius: 3px;
 }
 
 .note-modal-header .close {
@@ -111,6 +112,8 @@
 
 .note-modal-title {
   color: var(--text_header_contrast);
+  font-size: min(18px, 4vw);
+  font-weight: 500;
 }
 
 .note-modal-body .note-form-label {
@@ -129,4 +132,27 @@
 
 .note-modal-body label input:checked {
   accent-color: var(--darker_red);
+}
+
+.note-modal-footer input {
+  color: var(--text_dark);
+}
+
+.note-modal.open {
+  background-color: #2b2b2bb0;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  top: 54px;
+}
+
+.note-modal .close {
+  opacity: 0.5;
+}
+
+.note-modal .close:hover {
+  opacity: 1;
+}
+
+.note-modal-backdrop {
+  top: 54px;
 }
