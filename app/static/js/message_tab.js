@@ -182,5 +182,8 @@ function handleMessage(event, dismissAll=false) {
         checkIfNoMessages();
       }
     }
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
   })
 };

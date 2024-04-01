@@ -39,7 +39,7 @@
         <button id="view-message-{{ message.id }}" class="button message-button accept-button" tabindex="-1"
         onclick="handleMessage(event)"
         data-csrf="{{ csrf_token() }}"
-        data-url="{{ url_for('user.dismiss_message', view=True) }}"
+        data-url="{{ url_for('user.dismiss_message', view=true) }}"
         data-campaign-id="{{ message.target_campaign.id }}"
         data-message-id="{{ message.id }}">
         VIEW
