@@ -22,14 +22,14 @@ class messageTab {
   }
 
   openTab() {
-    this.tab.style.marginBottom = "-400px"
-    this.tab.style.height = "400px"
-    this.tab.style.borderBottom = "1px solid var(--dark_red)"
+    this.tab.style.marginBottom = "-400px";
+    this.tab.style.height = "400px";
+    this.tab.style.borderBottom = "1px solid var(--dark_red)";
     this.tab.scrollTop = 50;
-    this.state = true
+    this.state = true;
     this.tab.setAttribute("aria-hidden", "false");
     Array.from(this.childButtons).forEach(element => {
-      element.setAttribute("tabIndex", "0")
+      element.setAttribute("tabIndex", "0");
     })
     this.messages = this.tab.querySelectorAll(".message-item").length;
     if (this.messages >= 2) {
@@ -52,24 +52,21 @@ class messageTab {
   }
 
   closeTab() {
-    this.tab.style.marginBottom = "0"
-    this.tab.style.height = "0"
-    this.tab.style.borderBottom = "0px solid var(--dark_red)"
+    this.tab.style.marginBottom = "0";
+    this.tab.style.height = "0";
+    this.tab.style.borderBottom = "0px solid var(--dark_red)";
     this.tab.setAttribute("aria-hidden", "true");
     Array.from(this.childButtons).forEach(element => {
-      element.setAttribute("tabIndex", "-1")
+      element.setAttribute("tabIndex", "-1");
     })
     this.button.setAttribute("aria-label", "Open Messages Tab: {{current_user.messages | length}} New Messages");
-
     this.tab.style.backdropFilter = "";
     this.tab.style.webkitBackdropFilter = "";
-
     var noMessagesText = this.tab.querySelector("#no-messages-flavour-text");
     if (noMessagesText != null) {
       noMessagesText.style.display = "none";
     }
-
-    this.state = false
+    this.state = false;
   }
 }
 
