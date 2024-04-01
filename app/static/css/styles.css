@@ -5373,6 +5373,10 @@ for selection in timeline_search.js */
 }
 
 @media screen and (max-width: 600px) {
+
+  .campaigns-heading {
+    width: 80%;
+  }
   
   .event-back-button-area {
     width: 40px;
