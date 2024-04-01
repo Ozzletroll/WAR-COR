@@ -13,6 +13,11 @@ function epochLineAdjust() {
 
       var dayElement = element.parentNode;
       var currentElement = dayElement.nextElementSibling;
+      // Skip to next element if .event-between element present
+      if (currentElement.classList.contains("event-between")) {
+        var currentElement = currentElement.nextElementSibling;
+      }
+
       var epochElements = [];
 
       while (currentElement) {
