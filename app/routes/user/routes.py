@@ -116,10 +116,7 @@ def user_page(username):
     username_form = forms.ChangeUsernameForm()
     password_form = forms.ChangePasswordForm()
 
-    # Set url for back button as session variable
-    # Only updates if not redirecting from inside the user page
-    # to avoid overwriting the referrer page during user page
-    # form submission.
+    # Set url for back button
     if request.referrer and "/user" not in request.referrer:
         session["previous_url"] = request.referrer
 
@@ -280,30 +277,6 @@ def delete_user(username):
         form.submit.label.text = "Terminate Contract"
 
         return render_template("delete_user.html", form=form, user=user)
-
-
-# Back button on the user page
-@bp.route("/back", methods=["GET"])
-@limiter.limit("60/minute")
-def back():
-    """Function to handle redirects for the back button on the user page.
-    Uses request.referrer normally, or defers to stored session variable
-    upon form submission."""
-
-    # If the previous URL is stored in session, use it as the referrer
-    if "previous_url" in session:
-        referrer = session["previous_url"]
-    elif request.referrer:
-        # Use a fallback URL if the previous URL is not available
-        referrer = request.referrer
-    elif current_user.is_authenticated:
-        # If no session var or referrer, and user is logged in, redirect to homepage
-        referrer = url_for("campaign.campaigns")
-    else:
-        # Otherwise, redirect to homepage
-        referrer = url_for("home.home")
-
-    return redirect(referrer)
 
 
 # Function called when viewing/dismissing a notification

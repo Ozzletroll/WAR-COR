@@ -36,7 +36,7 @@
         {# Only render usable back button if referrer has a url #}
         {% if request.referrer %}
           {# User page back button #}
-          {% set url = url_for('user.back') %}
+          {% set url = url_for("session.back") %}
           {{ back_button.back_button(url=url, blank=false) }}
         {% else %}
           {# Blank back button area area. No url needed. #}

@@ -1,5 +1,8 @@
-from flask import current_app, session, jsonify, make_response, request, redirect
+from flask import current_app, url_for, session, jsonify, make_response, request, redirect
+from flask_login import current_user
 from datetime import timedelta
+from app import limiter
+
 from app.routes.session import bp
 
 
@@ -122,3 +125,24 @@ def comment_target():
         response = make_response({"Message": "Session variable not set"}, 204)
 
     return response
+
+
+# Back button route
+@bp.route("/back", methods=["GET"])
+@limiter.limit("60/minute")
+def back():
+    """Function to handle redirects for the back button on the user, 
+    members and advanced search pages.
+    Uses stored "previous_url" session variable if available, otherwise
+    users fallback urls."""
+
+    if "previous_url" in session:
+        referrer = session["previous_url"]
+    elif request.referrer:
+        referrer = request.referrer
+    elif current_user.is_authenticated:
+        referrer = url_for("campaign.campaigns")
+    else:
+        referrer = url_for("home.home")
+
+    return redirect(referrer)

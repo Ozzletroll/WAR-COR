@@ -146,7 +146,7 @@ def edit_campaign(campaign_name, campaign_id):
     # Update campaign if form submitted
     if form.validate_on_submit():
         campaign.update(form=request.form)
-        return redirect(url_for("user.back"))
+        return redirect(url_for("session.back"))
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
