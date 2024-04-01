@@ -3137,8 +3137,18 @@ p {
 
 @media screen and (max-width: 500px) {
 
+  .campaign-header {
+    font-size: 18px;
+    padding: 20px;
+  }
+
+  .campaigns-list {
+    gap: 20px;
+  }
+
   .campaign-body {
     display: none;
+    padding: 20px;
   }
 
   .campaign-body.campaign-new-user-body {
