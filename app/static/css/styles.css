@@ -4592,6 +4592,7 @@ a.view-epoch:hover .epoch-header {
 .new-event-flavour {
   width: auto;
   font-size: min(3vw, 12px);
+  font-weight: 300;
 }
 
 .event-between-last {
