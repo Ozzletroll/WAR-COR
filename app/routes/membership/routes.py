@@ -30,6 +30,10 @@ def edit_campaign_users(campaign_name, campaign_id):
     add_form = forms.AddUserForm()
     remove_form = forms.AddUserForm()
 
+    # Set url for back button
+    if request.referrer and "/edit-members" not in request.referrer:
+        session["previous_url"] = request.referrer
+
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 

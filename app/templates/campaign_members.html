@@ -33,14 +33,10 @@
                                         current_user=current_user,
                                         campaign=campaign) }}
 
-      <div class="campaigns-title">
+      <div class="campaigns-title"> 
 
         {# Back button #}
-        {% if request.referrer %}
-          {% set url = request.referrer %}
-        {% else %}
-          {% set url = url_for('campaign.campaigns') %}
-        {% endif %}
+        {% set url = url_for("user.back") %}
         {{ back_button.back_button(url=url, blank=false) }}
 
         <h3 class="campaigns-heading">Edit Members</h3>
