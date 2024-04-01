@@ -37,10 +37,10 @@ def register():
                         .first())
 
         if username_search:
-            flash("Username already in use. Please choose a new username.")
+            flash("Username already in use, please choose a different username")
             return redirect(url_for("user.register"))
         elif email_search:
-            flash("Account already registered with that email, please login instead.")
+            flash("Account already registered with that email, please login instead")
             return redirect(url_for("user.register"))
         else:
             # Create new user
@@ -78,10 +78,10 @@ def login():
                 login_user(user)
                 return redirect(request.args.get("next") or url_for("campaign.campaigns"))
             else:
-                flash("Incorrect password or username.")
+                flash("Incorrect password or username")
                 return redirect(url_for("user.login"))
         else:
-            flash("Username not found. Please check login details.")
+            flash("Incorrect password or username")
             return redirect(url_for("user.login"))
 
     return render_template("login.html", form=form)
@@ -267,15 +267,14 @@ def delete_user(username):
                 db.session.commit()
                 return redirect(url_for("home.home"))
             else:
-                flash("Authentication failed. Incorrect password.")
+                flash("Authentication failed, incorrect username or password")
                 return redirect(url_for("user.user_page", username=current_user.username))
         else:
-            flash("Authentication failed. Incorrect username.")
+            flash("Authentication failed, incorrect username or password")
             return redirect(url_for("user.user_page", username=current_user.username))
     else:
         # Change LoginForm submit button text
         form.submit.label.text = "Terminate Contract"
-
         return render_template("delete_user.html", form=form, user=user)
 
 
@@ -345,7 +344,7 @@ def request_password_reset():
                 messengers.send_recovery_email(recipient_email=email, user=user)
                 flash(f"Account recovery email sent to {email}")
             else:
-                flash("No account matching given email found. Please check your email address and try again.")
+                flash("No account matching given email found. Please check your email address and try again")
 
         return render_template("password_recovery.html",
                                form=form)

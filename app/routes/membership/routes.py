@@ -107,11 +107,11 @@ def add_user(campaign_name, campaign_id):
                                            recipient=user,
                                            campaign=campaign)
 
-            flash(f"{user.username} invited to campaign.")
+            flash(f"{user.username} invited to campaign")
         else:
-            flash(f"{user.username} is already a member of this campaign.")
+            flash(f"{user.username} is already a member of this campaign")
     else:
-        flash("User not in database, please check username.")
+        flash("User not in database, please check username")
 
     return redirect(url_for("membership.edit_campaign_users",
                             campaign_name=campaign_name,
@@ -422,7 +422,7 @@ def add_permission(campaign_name, campaign_id):
     if user in campaign.members and campaign not in user.permissions:
         user.permissions.append(campaign)
         db.session.commit()
-        flash(f"Granted {user.username} campaign editing permissions.")
+        flash(f"Granted {user.username} campaign editing permissions")
         
     return redirect(url_for("membership.edit_campaign_users", 
                             campaign_name=campaign.url_title,

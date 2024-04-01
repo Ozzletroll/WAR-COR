@@ -195,7 +195,7 @@ def delete_campaign(campaign_name, campaign_id):
                     db.session.commit()
                     return redirect(url_for("campaign.campaigns"))
 
-        flash("Authentication failed. Please check username/password.")
+        flash("Authentication failed - Please check username/password")
         return redirect(url_for("campaign.delete_campaign", 
                                 campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
