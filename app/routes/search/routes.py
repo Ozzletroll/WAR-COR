@@ -1,6 +1,5 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from flask_login import current_user
-from urllib.parse import urlparse, quote, unquote
 
 from app.forms import forms
 from app import db, models, limiter
