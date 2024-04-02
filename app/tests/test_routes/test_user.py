@@ -59,7 +59,7 @@ def test_duplicate_user_registration(client, app, auth):
                              password=TEST_PASSWORD)
     assert response.status_code == 200
     # Test if user has been redirected due to username already being in use
-    assert b"<li>Username already in use. Please choose a new username.</li>" in response.data
+    assert b"<li>Username already in use, please choose a different username</li>" in response.data
 
     # Test if only 1 user matching that user exists in database
     query = db.session.execute(select(models.User).filter_by(username=TEST_USERNAME)).all()
@@ -84,14 +84,14 @@ def test_delete_user(client, app, auth):
                              given_username="Incorrect Username",
                              given_password=new_password)
     assert response_2.status_code == 200
-    assert b"<li>Authentication failed. Incorrect username.</li>" in response_2.data
+    assert b"<li>Authentication failed, incorrect username or password</li>" in response_2.data
 
     # Test if incorrect password fails
     response_3 = auth.delete(username=new_username,
                              given_username=new_username,
                              given_password="Incorrect Password")
     assert response_3.status_code == 200
-    assert b"<li>Authentication failed. Incorrect password.</li>" in response_3.data
+    assert b"<li>Authentication failed, incorrect username or password</li>" in response_3.data
 
     # Test if user can be deleted if logged in as another user
     auth.logout()
