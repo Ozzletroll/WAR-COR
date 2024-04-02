@@ -1,7 +1,7 @@
 // Check for stored theme preferences
-var storedTheme = localStorage.getItem('theme')
+var storedTheme = localStorage.getItem("theme")
 if (storedTheme) {
-  document.documentElement.setAttribute('theme', storedTheme)
+  document.documentElement.setAttribute("theme", storedTheme)
 
   // Get the stylesheet
   var stylesheet = document.styleSheets[1];
@@ -9,7 +9,7 @@ if (storedTheme) {
   
   // Iterate through all the rules and get the icon rule
   for(let i = 0; i < stylesheet.cssRules.length; i++) {
-    if(stylesheet.cssRules[i].selectorText === '.icon-invert') {
+    if(stylesheet.cssRules[i].selectorText === ".icon-invert") {
       iconRule = stylesheet.cssRules[i];
     }
   }
@@ -24,8 +24,8 @@ if (storedTheme) {
 
 }
 else {
-  document.documentElement.setAttribute('theme', null)
-  localStorage.setItem('theme', null);
+  document.documentElement.setAttribute("theme", null)
+  localStorage.setItem("theme", null);
 }
 
 
@@ -37,7 +37,7 @@ function getRandomInt(max) {
 // Function to be called after page load
 function setHORUSStyling() {
   // Add extra HORUS theme styling
-  var storedTheme = localStorage.getItem('theme');
+  var storedTheme = localStorage.getItem("theme");
 
   if (storedTheme == "horus") {
     // Set additional HORUS theme styling
@@ -54,8 +54,8 @@ function setHORUSStyling() {
       && !excludedElements.some(className => element.classList.contains(className))
       ) {
           // Split paragraph into words
-          var paragraphText = element.textContent.split(" ");
-          
+          var paragraphText = element.innerHTML.split(" ");
+
           paragraphText.forEach((word, index) => {
             var randomNumber = getRandomInt(100);
             var castigateNumber = getRandomInt(100);
@@ -78,7 +78,7 @@ function setHORUSStyling() {
             }
           });
 
-          var modifiedText = paragraphText.join(' ');
+          var modifiedText = paragraphText.join(" ");
           element.innerHTML = modifiedText;
       }
 
