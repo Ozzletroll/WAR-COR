@@ -186,7 +186,15 @@
           <!-- User comments area -->
           <section class="comments-area fade-in-block-3" aria-label="Comments Area">
 
-              <h3 class="comments-heading">::COMMS CHANNEL [OPEN]</h3>
+            {% if campaign.comments == "private" %}
+              {% set comment_text = "Secure" %}
+            {% elif campaign.comments == "open" %}
+              {% set comment_text = "Open" %}
+            {% else %}
+              {% set comment_text = "Closed" %}
+            {% endif %}
+
+              <h3 class="comments-heading">::COMMS CHANNEL [{{comment_text}}]</h3>
               <hr class="campaigns-divider" aria-hidden="true">
             
               {% if event.comments | length == 0 %}
