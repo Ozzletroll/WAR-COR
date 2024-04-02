@@ -11,14 +11,3 @@
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
 }
-
-.note-btn {
-    border: 1px solid var(--text_header_contrast);
-    background-color: transparent;
-    color: white;
-}
-
-.note-btn:hover {
-    background-color: var(--elem_bright);
-    color: var(--bright_red);
-}
