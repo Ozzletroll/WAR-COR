@@ -432,7 +432,7 @@ def add_permission(campaign_name, campaign_id):
 # Function called via fetch request to update campaign membership settings
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/update-membership-settings", methods=["POST"])
 @login_required
-@limiter.limit("10/minute")
+@limiter.limit("20/minute")
 def update_membership_settings(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -443,6 +443,7 @@ def update_membership_settings(campaign_name, campaign_id):
 
     visibility = request.form["visibility"]
     membership = request.form["membership"]
+    comment = request.form["comment"]
 
     if visibility == "private":
         campaign.private = True
@@ -453,6 +454,13 @@ def update_membership_settings(campaign_name, campaign_id):
         campaign.accepting_applications = True
     else:
         campaign.accepting_applications = False
+
+    if comment == "private":
+        campaign.comments = "private"
+    elif comment == "open":
+        campaign.comments = "open"
+    else:
+        campaign.comments = "disabled"
 
     db.session.commit()
 
