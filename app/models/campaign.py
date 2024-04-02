@@ -18,6 +18,7 @@ class Campaign(db.Model):
     negative_date_suffix = db.Column(db.String(8), nullable=True)
     private = db.Column(db.Boolean(), default=False)
     accepting_applications = db.Column(db.Boolean(), default=False)
+    comments = db.Column(db.String(), default="private")
 
     # Database relationships
     # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
