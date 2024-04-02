@@ -104,6 +104,11 @@
   color: var(--bright_red);
 }
 
+.note-dropdown-menu .note-btn {
+  border: 1px solid var(--text_header);
+  color: var(--text_header);
+}
+
 .note-modal-content {
   clip-path: polygon(0 0,calc(100% - 10.00px) 0, 100% 10.00px, 103% 103%, 0 103%);
   background-color: var(--elem_mid);
