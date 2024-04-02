@@ -28,8 +28,8 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     campaign = event.parent_campaign
 
     authenticators.check_campaign_visibility(campaign)
+    comment_form_visible = authenticators.check_comment_form_visibility(campaign)
 
-    # Format belligerents data
     belligerents = event.separate_belligerents() 
 
     form = forms.CommentForm()
@@ -41,8 +41,8 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     # Check if new comment submitted
     if form.validate_on_submit():
         
-        # Check user is a member of the campaign
-        authenticators.check_membership(campaign)
+        # Check user is allowed to comment
+        authenticators.check_campaign_comment_status(campaign)
 
         # Create new comment
         comment = models.Comment()
@@ -70,7 +70,8 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                             campaign=campaign,
                             belligerents=belligerents,
                             form=form,
-                            delete_form=delete_form)
+                            delete_form=delete_form,
+                            comment_form_visible=comment_form_visible)
 
 
 # Add new event

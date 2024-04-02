@@ -245,7 +245,7 @@
               </ol>
 
             <!-- New Comment Area -->
-            {% if current_user.is_authenticated and current_user in campaign.members %}
+            {% if comment_form_visible %}
 
               <div class="new-comment-area">
                 <div class="new-comment-area-header">
