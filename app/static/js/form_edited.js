@@ -43,7 +43,7 @@ export class Form {
     this.fields = [];
 
     fields.forEach(field => {
-      var isSummernote = field == "summernote";
+      var isSummernote = field.startsWith("summernote");
       var element = new Field({
         elementID: field,
         summernote: isSummernote,

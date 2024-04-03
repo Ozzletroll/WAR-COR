@@ -1,6 +1,6 @@
 // Get the date suffix input field and the element to update
-var suffixField = document.getElementById("suffix-input");
-var negativeSuffixField = document.getElementById("negative-suffix-input");
+var suffixField = document.getElementById("campaign-form-suffix");
+var negativeSuffixField = document.getElementById("campaign-form-negative-suffix");
 
 var exampleSuffixDate = document.getElementById("example-date");
 var exampleNegativeSuffixDate = document.getElementById("negative-example-date");

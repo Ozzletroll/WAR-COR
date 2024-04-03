@@ -59,7 +59,7 @@
       </script>
       <script>
         // Listen for changes to summernote field
-        $("#summernote").on("summernote.change", function() {
+        $('#summernote' + "{{ id_suffix }}").on("summernote.change", function() {
           $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
         });
       </script>
@@ -91,7 +91,7 @@
       </script>
       <script>
         // Listen for changes to summernote field
-        $("#summernote").on("summernote.change", function() {
+        $('#summernote' + "{{ id_suffix }}").on("summernote.change", function() {
           $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
         });
       </script>

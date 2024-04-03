@@ -92,7 +92,7 @@
         </label>
 
         <div class="form-input-container">
-          {{ form.title(class_="campaign-input form-input", autocomplete="off", 
+          {{ form.title(id="campaign-form-title", class_="campaign-input form-input", autocomplete="off", 
              placeholder="REQUIRED", aria_labelledby="campaign-title-label") }}
           <div class="form-underline"></div>
         </div>
@@ -116,7 +116,7 @@
         </label>
 
         <div class="form-input-container">
-          {{ form.date_suffix(id="suffix-input", class_="campaign-input form-input", 
+          {{ form.date_suffix(id="campaign-form-suffix", class_="campaign-input form-input", 
              autocomplete="off", maxlength=8, placeholder="OPTIONAL", aria_labelledby="date-suffix-label") }}
           <div class="form-underline"></div>
         </div>
@@ -142,7 +142,7 @@
         </label>
 
         <div class="form-input-container">
-          {{ form.negative_date_suffix(id="negative-suffix-input", class_="campaign-input form-input", 
+          {{ form.negative_date_suffix(id="campaign-form-negative-suffix", class_="campaign-input form-input", 
           autocomplete="off", maxlength=8, placeholder="OPTIONAL", aria_labelledby="negative-suffix-label") }}
           <div class="form-underline"></div>
         </div>

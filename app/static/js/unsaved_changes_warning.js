@@ -3,19 +3,22 @@ var fieldDataChanged = false;
 
 // Add event listener to each input field
 const fields = [
-    "#title",
-    "#suffix-input",
-    "#negative-suffix-input",
-    "#date",
-    "#event-title",
-    "#type",
-    "#location",
-    "#belligerents",
-    "#hide-time-input",
-    "#result",
-    "#start-date",
-    "#end-date",
-    "#epoch-title",
+    // CAMPAIGN FORM
+    "#campaign-form-title",
+    "#campaign-form-suffix",
+    "#campaign-form-negative-suffix",
+    // EVENT FORM
+    "#event-form-title",
+    "#event-form-date",
+    "#event-form-type",
+    "#event-form-location",
+    "#event-form-belligerents",
+    "#event-form-hide-time",
+    "#event-form-results",
+    // EPOCH FORM
+    "#epoch-form-start-date",
+    "#epoch-form-end-date",
+    "#epoch-form-title",
 ]
 fields.forEach(field => {
     var element = document.querySelector(field);
@@ -48,7 +51,6 @@ excludedButtons.forEach(button => {
 // Add event listener to show message before navigating away
 window.addEventListener("beforeunload", (event) => {
     if (fieldDataChanged) {
-        console.log("AAAAAAAAAAA")
         event.preventDefault();
     }
 });
