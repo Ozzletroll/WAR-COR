@@ -5839,6 +5839,7 @@ for selection in timeline_search.js */
 
 .comment-body-user {
   border: 1px solid var(--dark_red);
+  word-break: break-all;
 }
 
 .comment-flavour-text {
@@ -5849,19 +5850,40 @@ for selection in timeline_search.js */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  max-width: 100%;
+  max-width: 75%;
+  width: 75%;
+  filter: drop-shadow(1px 3px 3px var(--elem_shadow));
 }
 
 .new-comment-area-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   background-color: var(--darker_red);
   width: 100%;
   clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-  padding: 6px;
+  padding: 10px;
+  gap: 10px;
   box-sizing: border-box;
   border-top-left-radius: 3px;
   margin-bottom: -1px;
+}
+
+.new-comment-area-header .label-left,
+.new-comment-area-header .label-right  {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.new-comment-area-header .label-right {
+  gap: 0px;
+  padding: 0px;
+  margin-right: 10px;
+}
+
+.new-comment-area-header .label-right .label-example {
+  color: var(--text_header_contrast);
+  text-transform: uppercase;
 }
 
 .new-comment-heading {

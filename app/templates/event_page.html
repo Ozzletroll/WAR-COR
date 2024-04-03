@@ -257,11 +257,17 @@
 
               <div class="new-comment-area">
                 <div class="new-comment-area-header">
-                  <h4 class="new-comment-heading">//COMMENT</h4>
+                  <div class="label-left">
+                    <img class="icon" aria-label="Callsign Icon" alt="A stylised headset"
+                    src="{{ url_for('static', filename='/images/icons/callsigns.svg') }}">
+                    <h4 class="new-comment-heading">NEW COMMENT</h4>
+                  </div>
+ 
                   <div class="label-right">
                     <h4 class="campaign-form label-title label-example">Characters left:&nbsp</h4>
                     <h4 id="remaining-chars" class="campaign-form label-title label-example">300</h4>
                   </div>
+
                 </div>
 
                 <form class="form comment-form" method="post">

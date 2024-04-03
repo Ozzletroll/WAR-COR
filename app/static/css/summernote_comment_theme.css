@@ -5,6 +5,7 @@
 
 .note-editor.note-frame {
     border: none;
+    width: 100%;
 }
 
 .note-toolbar {
