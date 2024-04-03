@@ -5981,6 +5981,7 @@ for selection in timeline_search.js */
 
 .campaign-overview {
   color: var(--text_dark);
+  word-wrap: break-word;
 }
 
 .campaign-overview h1 {
