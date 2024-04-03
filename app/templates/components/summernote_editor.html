@@ -1,32 +1,18 @@
 {#
     Summernote editor configuration component.
-    
-    The "required" boolean parameter is to determine placeholder text.
-    If "campaign" == True, then 600 char limit is enforced.
-
 #}
 
-{% macro summernote_editor(comment=false, required=true, campaign_desc=false, epoch_overview=false) %}
-
-    {% if required and not comment %}
-        {% set text = "REQUIRED" %}
-    {% elif not comment %}
-      {% set text = "OPTIONAL" %}
-    {% elif comment %}
-      {% set text = "LEAVE A COMMENT" %}
-    {% else %}
-      {% set text = "" %}
-    {% endif %}
+{% macro summernote_editor(placeholder="REQUIRED", char_limit=none) %}
 
     {% set height = "fit-content" %}
-  
-    {% if campaign_desc %}
+
+    {% if char_limit is not none %}
       <script>
         $('#summernote').summernote({
           callbacks: {
             onKeydown: function (e) { 
                 var t = e.currentTarget.innerText; 
-                if (t.trim().length >= 600) {
+                if (t.trim().length >= parseInt("{{char_limit}}") ) {
                     //delete keys, arrow keys, copy, cut, select all
                     if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
                     e.preventDefault(); 
@@ -34,23 +20,23 @@
             },
             onKeyup: function (e) {
                 var t = e.currentTarget.innerText;
-                $('#maxContentPost').text(600 - t.trim().length);
+                $('#maxContentPost').text(parseInt("{{char_limit}}") - t.trim().length);
             },
             onPaste: function (e) {
                 var t = e.currentTarget.innerText;
                 var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
                 e.preventDefault();
                 var maxPaste = bufferText.length;
-                if(t.length + bufferText.length > 600){
-                    maxPaste = 600 - t.length;
+                if(t.length + bufferText.length > parseInt("{{char_limit}}")){
+                    maxPaste = parseInt("{{char_limit}}") - t.length;
                 }
                 if(maxPaste > 0){
                     document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
                 }
-                $('#maxContentPost').text(600 - t.length);
+                $('#maxContentPost').text(parseInt("{{char_limit}}") - t.length);
             }
           },
-          placeholder: '<p>{{ text }}</p>',
+          placeholder: '<p>{{ placeholder }}</p>',
           dialogsInBody: true,
           dialogsFade: true, 
           tabsize: 2,
@@ -77,42 +63,11 @@
           $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
         });
       </script>
-
-    {% elif epoch_overview %}
-      <script>
-        $('#summernote-overview').summernote({
-          placeholder: '<p>{{ text }}</p>',
-          dialogsInBody: true,
-          dialogsFade: true, 
-          tabsize: 2,
-          height: "{{ height }}",
-          styleTags: ['p', 'h1', 'h2', 'h3'],
-          toolbar: [
-              ['style', ['style']],
-              ['font', ['bold', 'italic', 'underline', 'clear']],
-              ['para', ['ul', 'ol', 'paragraph']],,
-              ['insert', ['link', 'picture']]
-          ],
-          popover: {
-            image: [
-              ['remove', ['removeMedia']]
-            ]
-          }
-          });
-    
-        dialogsClass: 'summernote-dialog'
-      </script>
-      <script>
-        // Listen for changes to summernote field
-        $("#summernote-overview").on("summernote.change", function() {
-          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
-        });
-      </script>
     {% else %}
 
       <script>
         $('#summernote').summernote({
-          placeholder: '<p>{{ text }}</p>',
+          placeholder: '<p>{{ placeholder }}</p>',
           dialogsInBody: true,
           dialogsFade: true, 
           tabsize: 2,

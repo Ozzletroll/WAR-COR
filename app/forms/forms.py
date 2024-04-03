@@ -56,7 +56,7 @@ class ResetPasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired(), Length(max=250)])
-    description = TextAreaField("Description", validators=[DataRequired(), Length(max=700)])
+    description = TextAreaField("Description", validators=[DataRequired(), plain_text_length(max=600)])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
     submit = SubmitField("Create Campaign")
@@ -151,7 +151,7 @@ class UploadJsonForm(FlaskForm):
 
 
 class CommentForm(FlaskForm):
-    body = TextAreaField("Comment", validators=[DataRequired(), Length(max=300)])
+    body = TextAreaField("Comment", validators=[DataRequired(), plain_text_length(max=300)])
     submit = SubmitField("Submit")
 
 

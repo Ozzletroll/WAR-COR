@@ -1,5 +1,6 @@
 from wtforms.validators import ValidationError
 import re
+import bleach
 
 
 # Custom validators
@@ -47,3 +48,13 @@ def date_is_after(form, field):
 
     if (start_year, start_month, start_day) > (end_year, end_month, end_day):
         raise ValidationError("End Date must be after Start Date")
+
+
+def plain_text_length(max=600):
+
+    def _plain_text_length(form, field):
+        plain_text = bleach.clean(field.data, tags=[], strip=True)
+        if len(plain_text) > max:
+            raise ValidationError(f"Field must be less than {max} characters")
+        
+    return _plain_text_length

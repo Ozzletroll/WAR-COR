@@ -168,7 +168,7 @@
         {{ form.description(id="summernote", class_="campaign-input large-input", 
            autocomplete="off", aria_labelledby="campaign-description-label") }}
 
-        {{ summernote.summernote_editor(campaign_desc=true) }}
+        {{ summernote.summernote_editor(placeholder="REQUIRED", char_limit=600) }}
 
       </div>
 

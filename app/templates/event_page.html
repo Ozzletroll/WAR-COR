@@ -258,12 +258,16 @@
               <div class="new-comment-area">
                 <div class="new-comment-area-header">
                   <h4 class="new-comment-heading">//COMMENT</h4>
+                  <div class="label-right">
+                    <h4 class="campaign-form label-title label-example">Characters left:&nbsp</h4>
+                    <h4 id="remaining-chars" class="campaign-form label-title label-example">300</h4>
+                  </div>
                 </div>
 
                 <form class="form comment-form" method="post">
                   {{ form.csrf_token }}
                   {{ form.body(id="summernote") }}
-                  {{ summernote.summernote_editor(comment=true) }}
+                  {{ summernote.summernote_editor(placeholder="LEAVE A COMMENT", char_limit=300) }}
                   {{ form.submit(class_="button comment-submit") }}
                 </form>
               </div>
@@ -309,6 +313,8 @@
 
 <script src="{{ url_for('static', filename='/js/event.js') }}" type="module"></script>
 <script src="{{ url_for('static', filename='/js/scroll_target.js') }}"></script>
+<script src="{{ url_for('static', filename='/js/char_count.js') }}"></script>
+
 <script>
   window.addEventListener('DOMContentLoaded', 
                           scrollToTarget('{{ url_for("session.comment_target") }}', 
