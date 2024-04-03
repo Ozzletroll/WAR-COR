@@ -275,10 +275,10 @@
             <p class="flavour-text" aria-label="Flavour Text">UWC-6-07 //  Event::Overview</p>
           </div>
 
-          {{ form.body(id="summernote", 
+          {{ form.body(id="summernote-desc", 
                        class_="campaign-input large-input event-input", 
                        autocomplete="off") }}
-          {{ summernote.summernote_editor(placeholder="REQUIRED", char_limit=none) }}
+          {{ summernote.summernote_editor(placeholder="REQUIRED", char_limit=none, id_suffix="-desc") }}
           
         </div>
 

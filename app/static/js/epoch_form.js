@@ -9,7 +9,7 @@ const editEpochForm = new Form({
     "epoch-form-start-date",
     "epoch-form-end-date",
     "summernote-overview",
-    "summernote"]
+    "summernote-desc"]
 })
 
 // Create modals

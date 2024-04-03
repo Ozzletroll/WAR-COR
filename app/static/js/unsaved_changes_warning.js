@@ -48,6 +48,7 @@ excludedButtons.forEach(button => {
 // Add event listener to show message before navigating away
 window.addEventListener("beforeunload", (event) => {
     if (fieldDataChanged) {
+        console.log("AAAAAAAAAAA")
         event.preventDefault();
     }
 });

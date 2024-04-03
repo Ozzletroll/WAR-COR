@@ -182,7 +182,7 @@
                            class_="campaign-input large-input event-input", 
                            autocomplete="off", 
                            placeholder="OPTIONAL") }}
-          {{ summernote.summernote_editor(placeholder="OPTIONAL", char_limit=none) }}
+          {{ summernote.summernote_editor(placeholder="OPTIONAL", char_limit=none, id_suffix="-overview") }}
         
         </div>
 
@@ -209,11 +209,11 @@
             <p class="flavour-text" aria-label="Flavour Text">UWC-17-04 //  Epoch::Description</p>
           </div>
 
-          {{ form.description(id="summernote", 
+          {{ form.description(id="summernote-desc", 
                               class_="campaign-input large-input event-input", 
                               autocomplete="off", 
                               placeholder="OPTIONAL") }}
-          {{ summernote.summernote_editor(placeholder="OPTIONAL", char_limit=none) }}
+          {{ summernote.summernote_editor(placeholder="OPTIONAL", char_limit=none, id_suffix="-desc") }}
         
         </div>
 

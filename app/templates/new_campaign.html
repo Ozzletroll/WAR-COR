@@ -165,10 +165,10 @@
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-04 //  Campaign::Conflict Overview</p>
         </label>
 
-        {{ form.description(id="summernote", class_="campaign-input large-input", 
+        {{ form.description(id="summernote-desc", class_="campaign-input large-input", 
            autocomplete="off", aria_labelledby="campaign-description-label") }}
 
-        {{ summernote.summernote_editor(placeholder="REQUIRED", char_limit=600) }}
+        {{ summernote.summernote_editor(placeholder="REQUIRED", char_limit=600, id_suffix="-desc") }}
 
       </div>
 

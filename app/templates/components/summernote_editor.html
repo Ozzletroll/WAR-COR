@@ -2,13 +2,13 @@
     Summernote editor configuration component.
 #}
 
-{% macro summernote_editor(placeholder="REQUIRED", char_limit=none) %}
+{% macro summernote_editor(placeholder="REQUIRED", char_limit=none, id_suffix=none) %}
 
     {% set height = "fit-content" %}
 
     {% if char_limit is not none %}
       <script>
-        $('#summernote').summernote({
+        $('#summernote' + "{{ id_suffix }}").summernote({
           callbacks: {
             onKeydown: function (e) { 
                 var t = e.currentTarget.innerText; 
@@ -63,10 +63,11 @@
           $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
         });
       </script>
-    {% else %}
 
+    {% else %}
+    
       <script>
-        $('#summernote').summernote({
+        $('#summernote' + "{{ id_suffix }}").summernote({
           placeholder: '<p>{{ placeholder }}</p>',
           dialogsInBody: true,
           dialogsFade: true, 

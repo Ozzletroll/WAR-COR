@@ -11,7 +11,7 @@ const editEventForm = new Form({
     "event-form-location",
     "event-form-belligerents",
     "event-form-hide-time",
-    "summernote",
+    "summernote-desc",
     "event-form-result"]
 })
 
