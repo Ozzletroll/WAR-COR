@@ -2191,14 +2191,23 @@ p {
   color: var(--text_dark);
 }
 
+.campaign-form-label .negative-label-right {
+  flex: 1 0 auto;
+  justify-content: end;
+}
+
+#negative-suffix-label {
+  flex: 1 1 auto;
+}
+
 .example-area {
   display: flex;
   flex-direction: row;
   justify-content: right;
-  width: 120px;
 }
 
 .label-example {
+  height: 16px;
   font-size: min(12px, 3vw);
   text-transform: none;
 }
