@@ -6682,6 +6682,7 @@ span.email b {
   display: flex;
   flex-direction: column;
   margin-top: 30px;
+  filter: drop-shadow(1px 3px 3px var(--elem_shadow));
 }
 
 .loadout-area {
@@ -6692,6 +6693,7 @@ span.email b {
   padding: 20px 40px;
   margin: 0px;
   background-color: var(--elem_mid);
+  border: 1px solid var(--darker_red);
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }
@@ -6766,8 +6768,8 @@ span.email b {
   text-transform: uppercase;
   padding: 11px;
   font-size: 14px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 .contact-page-items {
