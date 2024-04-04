@@ -172,3 +172,11 @@
 .note-modal-backdrop {
   top: 54px;
 }
+
+.popover-content .note-btn {
+  color: var(--darker_red);
+}
+
+.popover-content .note-btn:hover {
+  color: var(--bright_red);
+}
