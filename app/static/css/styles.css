@@ -5866,6 +5866,7 @@ for selection in timeline_search.js */
 
 .new-comment-area-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   background-color: var(--darker_red);
   width: 100%;
@@ -5951,8 +5952,6 @@ for selection in timeline_search.js */
     width: 100%;
   }
 
-
-  
 }
 
 @media screen and (max-width: 500px) {
@@ -5960,6 +5959,15 @@ for selection in timeline_search.js */
   .delete-comment-button {
     margin-right: 5px;
     font-size: min(12px, 2.5vw);
+  }
+
+  .comments-list {
+    width: 100%;
+  }
+
+  .new-comment-area {
+    max-width: 100%;
+    width: 100%;
   }
 
 }
