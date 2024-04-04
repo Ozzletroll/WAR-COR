@@ -1,5 +1,7 @@
 import bleach
 from bleach.css_sanitizer import CSSSanitizer
+from bs4 import BeautifulSoup
+
 
 
 def sanitise_input(value):
@@ -21,4 +23,11 @@ def sanitise_input(value):
                         attributes=allowed_attrs,
                         css_sanitizer=css_sanitiser)
     
-    return value
+    # Wrap unstyled text in <p> tags
+    soup = BeautifulSoup(value, "html.parser")
+    for text in soup.find_all(text=True):
+        if text.parent.name not in allowed_tags:
+            new_tag = soup.new_tag("p")
+            text.wrap(new_tag)
+
+    return str(soup)
