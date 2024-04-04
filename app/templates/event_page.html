@@ -319,7 +319,10 @@
 
 <script src="{{ url_for('static', filename='/js/event.js') }}" type="module"></script>
 <script src="{{ url_for('static', filename='/js/scroll_target.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/char_count.js') }}"></script>
+
+{% if comment_form_visible %}
+  <script src="{{ url_for('static', filename='/js/char_count.js') }}"></script>
+{% endif %}
 
 <script>
   window.addEventListener('DOMContentLoaded', 
