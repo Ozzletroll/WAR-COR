@@ -25,7 +25,7 @@ def sanitise_input(value):
     
     # Wrap unstyled text in <p> tags
     soup = BeautifulSoup(value, "html.parser")
-    for text in soup.find_all(text=True):
+    for text in soup.find_all(string=True):
         if text.parent.name not in allowed_tags:
             new_tag = soup.new_tag("p")
             text.wrap(new_tag)
