@@ -2788,7 +2788,7 @@ p {
   display: flex;
   background-color: var(--darker_red);
   width: 50px;
-  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 102% 100%, 0 102%);
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 102% 103%, 0 102%);
 }
 
 .campaign-body {
