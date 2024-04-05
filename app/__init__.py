@@ -82,6 +82,9 @@ def create_app(config_class=Config):
     from app.routes.membership import bp as membership_bp
     flask_app.register_blueprint(membership_bp)
 
+    from app.routes.message import bp as message_bp
+    flask_app.register_blueprint(message_bp)
+
     from app.routes.epoch import bp as epoch_bp
     flask_app.register_blueprint(epoch_bp)
 
