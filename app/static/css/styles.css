@@ -5872,7 +5872,7 @@ for selection in timeline_search.js */
   justify-content: space-between;
   background-color: var(--darker_red);
   width: 100%;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px, 102% 102%,0 102%);
   padding: 10px;
   gap: 10px;
   box-sizing: border-box;
