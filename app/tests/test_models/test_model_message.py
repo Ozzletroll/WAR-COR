@@ -18,7 +18,7 @@ def test_dismiss(client, auth):
     message.invite = False
     message.notification = True
     message.request = False
-    message.body = "Test Message"
+    message.body = "<p>Test Message</p>"
     message.date = datetime.now()
     user.messages.append(message)
 
@@ -32,4 +32,3 @@ def test_dismiss(client, auth):
                .first())
 
     assert message is None
-

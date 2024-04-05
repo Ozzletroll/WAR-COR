@@ -45,11 +45,11 @@ def test_update(auth, client, event):
 
     comment = db.session.execute(
         select(models.Comment)
-        .filter_by(body="Comment text goes here")).scalar()
+        .filter_by(body="<p>Comment text goes here</p>")).scalar()
 
     form = {"body": "Updated comment text"}
     comment.update(form=form,
                    parent_event=event_object,
                    author=user)
 
-    assert comment.body == "Updated comment text"
+    assert comment.body == "<p>Updated comment text</p>"

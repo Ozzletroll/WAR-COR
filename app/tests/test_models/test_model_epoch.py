@@ -54,8 +54,8 @@ def test_update(client):
     assert updated_epoch.title == "Updated Epoch"
     assert updated_epoch.start_date == "5016/01/02"
     assert updated_epoch.end_date == "5016/02/02"
-    assert updated_epoch.description == "Updated description"
-    assert updated_epoch.overview == "Updated overview"
+    assert updated_epoch.description == "<p>Updated description</p>"
+    assert updated_epoch.overview == "<p>Updated overview</p>"
 
     # Test that form field without corresponding "edit_" field value of True
     # does not update model
@@ -76,8 +76,8 @@ def test_update(client):
     updated_epoch.update(edit_form, parent_campaign=campaign_object)
     assert updated_epoch.title == "Updated Epoch Edit"
     assert updated_epoch.end_date == "5016/05/05"
-    assert updated_epoch.description == "Updated description"
-    assert updated_epoch.overview == "Updated overview edit"
+    assert updated_epoch.description == "<p>Updated description</p>"
+    assert updated_epoch.overview == "<p>Updated overview edit</p>"
 
 
 def test_set_url_title():

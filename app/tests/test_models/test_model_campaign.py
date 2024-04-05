@@ -28,7 +28,7 @@ def test_update(client):
     campaign_object.update(form=form_data)
 
     for field in form_data.keys():
-        assert getattr(campaign_object, field) == form_data[field]
+        assert form_data[field] in getattr(campaign_object, field)
 
 
 def test_check_epochs(client):

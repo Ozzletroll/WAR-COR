@@ -180,7 +180,7 @@ def test_edit_event(client, auth, campaign, event):
     assert response_7.status_code == 200
     response_8 = event.edit(campaign_object, event_object, data=event_data)
     assert response_8.status_code == 200
-    assert event_object.body == "Edited Test Body Text"
+    assert event_object.body == "<p>Edited Test Body Text</p>"
     auth.logout()
 
 
@@ -241,7 +241,7 @@ def test_leave_comment(client, auth, campaign, event):
                                       event_object=event_object,
                                       data=data)
     assert response_2.status_code == 200
-    assert event_object.comments[0].body == "Comment text"
+    assert event_object.comments[0].body == "<p>Comment text</p>"
 
 
 def test_delete_comment(client, auth, campaign, event):
@@ -264,7 +264,7 @@ def test_delete_comment(client, auth, campaign, event):
 
     comment_object = db.session.query(models.Comment) \
         .filter(models.Comment.author_id == 2,
-                models.Comment.body == "Comment text",
+                models.Comment.body == "<p>Comment text</p>",
                 models.Comment.event_id == event_object.id).scalar()
 
     url = url_for("event.delete_comment",
@@ -293,7 +293,7 @@ def test_delete_comment(client, auth, campaign, event):
     auth.login(username="Admin", password=TEST_PASSWORD)
 
     second_comment_object = db.session.query(models.Comment) \
-        .filter(models.Comment.body == "Comment text",
+        .filter(models.Comment.body == "<p>Comment text</p>",
                 models.Comment.event_id == event_object.id).scalar()
 
     url = url_for("event.delete_comment",

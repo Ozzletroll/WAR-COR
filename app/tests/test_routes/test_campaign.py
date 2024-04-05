@@ -154,7 +154,7 @@ def test_campaign_editing(client, auth, campaign):
         select(models.Campaign)
         .filter_by(title="Edited Title")).scalar()
     assert edited_campaign.title == "Edited Title"
-    assert edited_campaign.description == "Edited Description"
+    assert edited_campaign.description == "<p>Edited Description</p>"
     auth.logout()
 
 

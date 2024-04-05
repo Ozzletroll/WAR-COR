@@ -33,7 +33,10 @@ def test_update(client):
                  new=True)
 
     for field in event_form.keys():
-        assert getattr(event, field) == event_form[field]
+        if field == "body":
+            assert event_form[field] in getattr(event, field)
+        else:
+            assert getattr(event, field) == event_form[field]
 
     # Test that form field without corresponding "edit_" field value of True
     # does not update model
@@ -61,7 +64,7 @@ def test_update(client):
 
     assert event.type == "Test"
     assert event.date == "5016/01/01 09:00:01"
-    assert event.body == "Test Body Text Edit"
+    assert event.body == "<p>Test Body Text Edit</p>"
 
 
 def test_create_blank(client):
