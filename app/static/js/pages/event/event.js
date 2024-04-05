@@ -1,4 +1,4 @@
-import { Modal } from "./modal.js";
+import { Modal } from "../../components/modal.js";
 
 
 // Create array to hold modal objects

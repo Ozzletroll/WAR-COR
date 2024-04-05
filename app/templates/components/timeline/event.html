@@ -36,7 +36,7 @@ elements.
                            elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
                            date=year.name + '/' + month.name + '/' + day.name) }}">
             <img class="icon icon-invert" aria-label="New Epoch Icon"
-            src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
+            src="{{ url_for('static', filename='images/icons/plus.svg') }}">
           </a>
           <label for="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}"
           class="flavour-text new-event-flavour">
@@ -67,7 +67,7 @@ elements.
                            elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
                            date=year.name + '/' + month.name + '/' + day.name) }}">
             <img class="icon icon-invert" aria-label="New Epoch Icon"
-            src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
+            src="{{ url_for('static', filename='images/icons/plus.svg') }}">
           </a>
           <label for="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}"
           class="flavour-text new-event-flavour">
@@ -191,7 +191,7 @@ elements.
                          elem_id='new-event-' + year.name + '-' + month.name + '-' + day.name + '-' + event.date.split(' ')[1],
                          date=event.date) }}">
           <img class="icon icon-invert" aria-label="New Event Icon"
-          src="{{ url_for('static', filename='/images/icons/plus.svg') }}">
+          src="{{ url_for('static', filename='images/icons/plus.svg') }}">
         </a>
         <label for="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}"
         class="flavour-text new-event-flavour">

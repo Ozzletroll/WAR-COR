@@ -87,5 +87,3 @@ const searchbar = new SearchbarTab({
   tab: "searchbar",
   button: "searchbar-button",
 })
-
-

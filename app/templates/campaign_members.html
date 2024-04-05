@@ -56,7 +56,7 @@
       <details aria-label="Current Members">
         <summary class="callsign-deploy-button" id="t1-button" aria-label="Current Members">
           <img class="icon campaign-form-icon" aria-label="Current Members Icon" alt="Two humanoid figures side by side"
-          src="{{ url_for('static', filename='/images/icons/user_management.svg') }}">
+          src="{{ url_for('static', filename='images/icons/user_management.svg') }}">
           <h2 class="user-page-title">Current Members</h2>
         </summary>
 
@@ -121,7 +121,7 @@
       <details aria-label="Add New Member">
         <summary class="callsign-deploy-button" id="t2-button">
           <img class="icon campaign-form-icon" aria-label="New Member Icon" alt="A humanoid figure" 
-          src="{{ url_for('static', filename='/images/icons/user_white.svg') }}">
+          src="{{ url_for('static', filename='images/icons/user_white.svg') }}">
           <h2 class="user-page-title">Add New Member</h2>
         </summary>
 
@@ -169,7 +169,7 @@
       <details aria-label="Visibility and Access">
         <summary class="callsign-deploy-button" id="t3-button">
           <img class="icon campaign-form-icon" aria-label="Visibility and Access Icon" alt="A gear symbol"
-          src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
+          src="{{ url_for('static', filename='images/icons/cog.svg') }}">
           <h2 class="user-page-title">Visibility and Access</h2>
         </summary>
 
@@ -268,7 +268,7 @@
         All UWC personnel are reminded that misusing Campaign Administrator privileges 
         is a galactic crime, and carries a maximum sentence of 0.031536GS.
       </p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}"
+      <img src="{{ url_for('static', filename='images/logo-red.png') }}"
        class="top-logo" aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens">
     </div>
 
@@ -326,14 +326,15 @@
 {% endfor %}
 
 <!-- Javascript -->
-<script src="{{ url_for('static', filename='/js/campaign_members.js') }}" type="module"></script>  
-<script src="{{ url_for('static', filename='/js/members_search.js') }}"></script>  
+<script src="{{ url_for('static', filename='js/pages/members/campaign_members.js') }}" type="module"></script>  
+<script src="{{ url_for('static', filename='js/pages/members/members_search.js') }}"></script>  
+<script src="{{ url_for('static', filename='js/pages/members/membership_rules.js') }}"></script>
+
 <script>
   const target_url = "{{ url_for('membership.user_search', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const csrfToken = "{{ csrf_token() }}"
 </script>
 
-<script src="{{ url_for('static', filename='/js/membership_rules.js') }}"></script>
 <script>
   const membershipRulesURL = "{{ url_for('membership.update_membership_settings', campaign_name=campaign.url_title, campaign_id=campaign.id) }}"
   const membershipCSRFToken = "{{ csrf_token() }}"

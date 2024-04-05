@@ -1,4 +1,4 @@
-import { SearchEngine } from "./search/search_engine.js"
+import { SearchEngine } from "../../components/search/search_engine.js"
 
 
 // Determine if we are on the edit page

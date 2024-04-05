@@ -57,19 +57,19 @@
 
         <ul id="carousel" aria-label="Image Carousel">
           <li id="carousel-img-1" class="carousel-item" aria-labelledby="carousel-text-1">
-            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-1.png') }}" 
+            <img class="carousel-img" src="{{ url_for('static', filename='images/slide-1.png') }}" 
             alt="An example of the main 'Campaigns' page, showing an example campaign called 'No Time For A Cliffhanger'.
             The example user has written a short overview of the campaign, and has added several other users as members,
             each with their own unique callsigns.">
           </li>
           <li id="carousel-img-2" class="carousel-item" aria-labelledby="carousel-text-2">
-            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-2.png') }}"
+            <img class="carousel-img" src="{{ url_for('static', filename='images/slide-2.png') }}"
             alt="An example of a user created event. The user has created an event titled 'Operation
             Proscenium', which has several user created data fields. These include the event's date,
             type, location, a list of belligerents, as well as a compendium entry.">
           </li>
           <li id="carousel-img-3" class="carousel-item" aria-labelledby="carousel-text-3">
-            <img class="carousel-img" src="{{ url_for('static', filename='/images/slide-3.png') }}"
+            <img class="carousel-img" src="{{ url_for('static', filename='images/slide-3.png') }}"
             alt="An example of the campaigns timeline, showing a vertical timeline along the left-hand 
             side of the page. At the year '5016' several elements representing months branch off across the page,
             branching again into individual day, then finally into individual events. This tree-like structure
@@ -97,7 +97,7 @@
       </div>
 
       <article class="features-lower" aria-labelledby="features-lower-title-1">
-        <img src="{{ url_for('static', filename='/images/custom-date-example.png') }}"
+        <img src="{{ url_for('static', filename='images/custom-date-example.png') }}"
         alt="An example of the timeline being edited. A branch of the timeline has several 'New Event'
         buttons extending out between each month, day and event, allowing the user to easily place
         them with a single action. In addition, the timeline example demonstrates some of the non-standard
@@ -117,7 +117,7 @@
           <p aria-label="A short paragraph about the app responsive web design">UWC military standardisation ensures reliable performance on a variety 
             of hardware platforms, across any theatre of warfare.</p>
         </div>
-        <img src="{{ url_for('static', filename='/images/responsive-mockup.png') }}"
+        <img src="{{ url_for('static', filename='images/responsive-mockup.png') }}"
         alt="An example of the app running on three different devices, a smartphone, a tablet, and a laptop.">
       </article>
 
@@ -142,17 +142,9 @@
   {% include "base/footer.html" %}
 
 <!-- Javascript -->
-<script src="{{ url_for('static', filename='/js/get_screen_height.js') }}"></script> 
-<script src="{{ url_for('static', filename='/js/index.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/carousel.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/margin_fix.js') }}"></script> 
-<script src="{{ url_for('static', filename='/js/epoch_line_adjust.js') }}"></script>
-<script>
-  window.addEventListener("resize", marginFix);
-  window.addEventListener('DOMContentLoaded', marginFix());
-</script>
-
+<script src="{{ url_for('static', filename='js/pages/index/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/index/carousel.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/timeline/margin_fix.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/pages/timeline/epoch_line_adjust.js') }}"></script>
 
 {% endblock %}
-
-

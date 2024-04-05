@@ -1,4 +1,4 @@
-import { Modal } from "./modal.js";
+import { Modal } from "../../components/modal.js";
 
 
 // Tab class
@@ -26,22 +26,16 @@ class Tab {
     this.tab.style.display = "flex";
     this.tab.style.flexDirection = "column";
     this.tab.style.maxHeight = "fit-content";
-
     document.getElementById(this.button).style.borderBottomLeftRadius = "0px";
     document.getElementById(this.button).style.borderBottomRightRadius = "0px";
-
-
     this.state = true
   }
 
   closeTab() {
     this.tab.style.maxHeight = "0";
     this.tab.style.display = "none";
-
     document.getElementById(this.button).style.borderBottomLeftRadius = "5px";
     document.getElementById(this.button).style.borderBottomRightRadius = "5px";
-
-
     this.state = false;
   }
 

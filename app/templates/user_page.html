@@ -64,7 +64,7 @@
     <details class="callsigns-area" aria-label="Callsigns">
       <summary class="callsign-deploy-button" id="t1-button" aria-label="Callsigns and Membership">
         <img class="icon campaign-form-icon" aria-label="Callsign Icon" alt="A stylised headset"
-        src="{{ url_for('static', filename='/images/icons/callsigns.svg') }}">
+        src="{{ url_for('static', filename='images/icons/callsigns.svg') }}">
         <h2 class="user-page-title">Callsigns and Membership</h2>
       </summary>
 
@@ -132,7 +132,7 @@
     <details class="settings-area" aria-label="Preferences">
       <summary class="callsign-deploy-button" id="t2-button" aria-label="Preferences">
         <img class="icon campaign-form-icon" aria-label="User Settings Icon" alt="A stylised gear"
-        src="{{ url_for('static', filename='/images/icons/cog.svg') }}">
+        src="{{ url_for('static', filename='images/icons/cog.svg') }}">
         <h2 class="user-page-title">Preferences</h2>
       </summary>
 
@@ -143,7 +143,7 @@
           <summary id="p1-button" class="button user-settings-button">
             <div class="settings-button-inner">
               <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Theme Icon" alt="A circular icon alternating between black and white"
-              src="{{ url_for('static', filename='/images/icons/dark_mode.svg') }}">
+              src="{{ url_for('static', filename='images/icons/dark_mode.svg') }}">
               INTERFACE THEME
             </div>
           </summary>
@@ -203,7 +203,7 @@
     <details class="settings-area" aria-label="Account Management">
       <summary class="button callsign-deploy-button" id="t3-button" aria-label="Account Management">
         <img class="icon campaign-form-icon" aria-label="Account Management Icon" alt="A stylised spanner"
-        src="{{ url_for('static', filename='/images/icons/settings.svg') }}">
+        src="{{ url_for('static', filename='images/icons/settings.svg') }}">
         <h2 class="user-page-title">Account Management</h2>
       </summary>
 
@@ -217,7 +217,7 @@
             <summary id="f1-button" class="button user-settings-button" aria-label="Change Username">
               <div class="settings-button-inner">
                 <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Username Icon"
-                alt="A stylised figure beside a gear" src="{{ url_for('static', filename='/images/icons/admin.svg') }}">
+                alt="A stylised figure beside a gear" src="{{ url_for('static', filename='images/icons/admin.svg') }}">
                 CHANGE USERNAME
               </div>
             </summary>
@@ -242,7 +242,7 @@
             <summary id="f2-button" class="button user-settings-button" aria-label="Change Password">
               <div class="settings-button-inner">
                 <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Change Password Icon"
-                alt="A stylised padlock and key" src="{{ url_for('static', filename='/images/icons/lock_key.sv') }}g">
+                alt="A stylised padlock and key" src="{{ url_for('static', filename='images/icons/lock_key.sv') }}g">
                 CHANGE PASSWORD
               </div>
             </summary>
@@ -278,7 +278,7 @@
             <a class="button delete-button user-settings-button" href="{{ url_for('user.delete_user', username=user.username) }}">
               <div class="settings-button-inner">
                 <img class="icon icon-invert callsign-form-icon user-icon-trans" aria-label="Delete Account Icon"
-                alt="A stylised bin" src="{{ url_for('static', filename='/images/icons/bin.svg') }}">
+                alt="A stylised bin" src="{{ url_for('static', filename='images/icons/bin.svg') }}">
                 DELETE ACCOUNT
               </div>
             </a>
@@ -295,7 +295,7 @@
 
     <div class="flavour-text-area fade-in-block-3">
       <p class="flavour-text flavour-text-centre" aria-label="Flavour Text"> All UWC personnel are reminded that registering an obscene, crude or otherwise immature callsign is a galactic crime, and carries a maximum community sentence of 0.0000864GS.</p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme"
+      <img src="{{ url_for('static', filename='images/logo-red.png') }}" class="top-logo logo-theme"
       aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens.">
     </div>
 
@@ -320,6 +320,6 @@
 {% endfor %}
 
 <!-- Javascript -->
-<script src="{{ url_for('static', filename='/js/user_page.js') }}" type="module"></script> 
+<script src="{{ url_for('static', filename='js/pages/user/user_page.js') }}" type="module"></script> 
 
 {% endblock %}

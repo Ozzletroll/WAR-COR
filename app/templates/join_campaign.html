@@ -101,15 +101,14 @@
     <div class="flavour-text-area fade-in-block-3 z-index-anim">
       <p class="flavour-text flavour-text-centre" aria-label="Flavour Text">All UWC Correspondents are reminded that collaboration and cooperation are the cornerstones of our organisation. UWC personnel are expected to treat each other with respect, and to adhere to the UWC Code of Conduct in all dealings.</p>
       <img aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens."
-      src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      src="{{ url_for('static', filename='images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>
 </div>
 
 <!-- Javascript -->
-<script src="{{ url_for('static', filename='/js/campaigns.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/campaigns_layout.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/campaign_mobile_tabs.js') }}" type="module"></script>
+<script src="{{ url_for('static', filename='js/pages/campaign/campaign_layout.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/campaign/campaign_mobile_tabs.js') }}" type="module"></script>
 
 {% endblock %}

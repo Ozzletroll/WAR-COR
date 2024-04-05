@@ -82,7 +82,7 @@
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
               <label for="epoch-form-start-date">
                 <h4 class="campaign-form label-title">Start Date</h4>
               </label>
@@ -112,7 +112,7 @@
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
               <label for="epoch-form-end-date">
                 <h4 class="campaign-form label-title">End Date</h4>
               </label>
@@ -140,7 +140,7 @@
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
               <label for="epoch-form-title">
                 <h4 class="campaign-form label-title">Epoch Title</h4>
               </label>
@@ -162,7 +162,7 @@
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
           
               <label for="summernote-overview">
                 <h4 class="campaign-form label-title">Overview</h4>
@@ -190,7 +190,7 @@
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
               <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='/images/icons/edit.svg') }}">
+              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
           
               <label for="summernote">
                 <h4 class="campaign-form label-title">Description</h4>
@@ -236,7 +236,7 @@
         By submitting this form you attest that all information given is accurate and in accordance with Protocal 79-C-2. 
         Knowingly providing false or misleading conflict data is a galactic crime, and carries a maximum sentence of 0.4Gs.
       </p>
-      <img src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme"
+      <img src="{{ url_for('static', filename='images/logo-red.png') }}" class="top-logo logo-theme"
       aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol irising open like a camera lens">
     </div>
 
@@ -301,8 +301,8 @@
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 
-<script src="{{ url_for('static', filename='/js/epoch_form.js') }}" type="module"></script>
-<script src="{{ url_for('static', filename='/js/form_edited.js') }}" type="module"></script>
-<script src="{{ url_for('static', filename='/js/unsaved_changes_warning.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/epoch/epoch_form.js') }}" type="module"></script>
+<script src="{{ url_for('static', filename='js/components/form_edited.js') }}" type="module"></script>
+<script src="{{ url_for('static', filename='js/components/unsaved_changes_warning.js') }}"></script>
 
 {% endblock %}
