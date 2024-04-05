@@ -894,7 +894,7 @@ p {
   position: fixed;
   left: 0px;
   top: 54px;
-  width: 100vw;
+  width: 100%;
   transform: translateY(calc(-100% - 54px));
   transition: 0.15s ease;
   border-bottom: 1px solid var(--elem_border);
