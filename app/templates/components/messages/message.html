@@ -39,7 +39,7 @@
         <button id="view-message-{{ message.id }}" class="button message-button accept-button" tabindex="-1"
         onclick="handleMessage(event)"
         data-csrf="{{ csrf_token() }}"
-        data-url="{{ url_for('user.dismiss_message', view=true) }}"
+        data-url="{{ url_for('message.dismiss_message', view=true) }}"
         data-campaign-id="{{ message.target_campaign.id }}"
         data-message-id="{{ message.id }}">
         VIEW
@@ -49,7 +49,7 @@
       <button id="dismiss-message-{{ message.id }}" class="button message-button decline-button" tabindex="-1"
       onclick="handleMessage(event)"
       data-csrf="{{ csrf_token() }}"
-      data-url="{{ url_for('user.dismiss_message') }}"
+      data-url="{{ url_for('message.dismiss_message') }}"
       data-campaign-id="{{ message.target_campaign.id }}"
       data-message-id="{{ message.id }}">
       DISMISS
@@ -126,7 +126,7 @@
       <button id="dismiss-all" class="button message-button" tabindex="-1"
       onclick="handleMessage(event, dismissAll=true)"
       data-csrf="{{ csrf_token() }}"
-      data-url="{{ url_for('user.dismiss_all') }}">
+      data-url="{{ url_for('message.dismiss_all') }}">
       DISMISS ALL
       </button>
     {% endif %}
