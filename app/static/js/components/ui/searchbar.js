@@ -1,4 +1,3 @@
-// Searchbar class
 class SearchbarTab {
   constructor({
     tab,
@@ -87,5 +86,3 @@ const searchbar = new SearchbarTab({
   tab: "searchbar",
   button: "searchbar-button",
 })
-
-

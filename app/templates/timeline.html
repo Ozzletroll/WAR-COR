@@ -260,11 +260,11 @@
 {% else %}
   <div id="editPageVariable" class="hidden" editPage="false"></div>
 {% endif %}
-<script src="{{ url_for('static', filename='/js/scroll_target.js') }}"></script> 
-<script src="{{ url_for('static', filename='/js/margin_fix.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/epoch_line_adjust.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/timeline_left_markers.js') }}"></script>
-<script src="{{ url_for('static', filename='/js/user_image_styling.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/timeline/margin_fix.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/timeline/epoch_line_adjust.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/timeline/timeline_left_markers.js') }}"></script>
+<script src="{{ url_for('static', filename='js/components/scroll_target.js') }}"></script> 
+<script src="{{ url_for('static', filename='js/components/user_image_styling.js') }}"></script>
 <script>
   formatImageElements(".campaign-overview p");
   window.addEventListener("resize", marginFix);

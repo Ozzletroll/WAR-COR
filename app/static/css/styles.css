@@ -894,7 +894,7 @@ p {
   position: fixed;
   left: 0px;
   top: 54px;
-  width: 100vw;
+  width: 100%;
   transform: translateY(calc(-100% - 54px));
   transition: 0.15s ease;
   border-bottom: 1px solid var(--elem_border);
@@ -2788,7 +2788,7 @@ p {
   display: flex;
   background-color: var(--darker_red);
   width: 50px;
-  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 102% 100%, 0 102%);
+  clip-path: polygon(0 0, calc(100% - 15.00px) 0, 100% 15.00px, 102% 103%, 0 102%);
 }
 
 .campaign-body {
@@ -3702,6 +3702,12 @@ p {
 /* Theme selector */
 
 .preferences-form {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.pref-container {
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -5872,7 +5878,7 @@ for selection in timeline_search.js */
   justify-content: space-between;
   background-color: var(--darker_red);
   width: 100%;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px, 102% 102%,0 102%);
   padding: 10px;
   gap: 10px;
   box-sizing: border-box;
@@ -5948,7 +5954,7 @@ for selection in timeline_search.js */
 
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 950px) {
 
   .comments-area {
     width: 100%;

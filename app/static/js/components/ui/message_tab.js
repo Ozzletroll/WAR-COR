@@ -1,4 +1,3 @@
-// Message tab class
 class messageTab {
   constructor({
     tab,

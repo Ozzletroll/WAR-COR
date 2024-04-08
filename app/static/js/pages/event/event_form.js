@@ -1,5 +1,6 @@
-import { Modal, PreviewModal } from "./modal.js";
-import { Form } from "./form_edited.js";
+import { Modal, PreviewModal } from "../../components/modal.js";
+import { Form } from "../../components/form_edited.js";
+
 
 // Create form edit check
 const editEventForm = new Form({

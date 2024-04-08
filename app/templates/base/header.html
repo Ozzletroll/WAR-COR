@@ -4,16 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preload" href="{{ url_for('static', filename='/css/styles.css') }}" as="style">
-  <link rel="stylesheet" href="{{ url_for('static', filename='/css/normalise.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='/css/styles.css') }}">
+  <link rel="preload" href="{{ url_for('static', filename='css/styles.css') }}" as="style">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/normalise.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <noscript>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/noscript.css') }}">
   </noscript>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="shortcut icon" href="{{ url_for('static', filename='/images/favicon.ico') }}">
-  <script src="{{ url_for('static', filename='/js/theme.js') }}"></script>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <script src="{{ url_for('static', filename='js/components/theme.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/components/get_screen_height.js') }}"></script>
   {% block meta %}
     <meta name="description" content="Frontline reporting in the year 5016u. WAR/COR is a free, 
     lightweight RPG campaign logger built for the mechanised battlefields of the distant future.">

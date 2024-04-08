@@ -21,3 +21,6 @@ function marginFix() {
     }
 
 }
+
+window.addEventListener("resize", marginFix);
+window.addEventListener('DOMContentLoaded', marginFix());

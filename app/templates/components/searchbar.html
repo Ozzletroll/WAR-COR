@@ -104,13 +104,13 @@
   </div>
 </aside>
 
-<script src="{{ url_for('static', filename='/js/searchbar.js') }}"></script>
+<script src="{{ url_for('static', filename='js/components/ui/searchbar.js') }}"></script>
 {% if timeline %}
-  <script src="{{ url_for('static', filename='/js/timeline_search.j') }}s" type="module" defer="true"></script>
+  <script src="{{ url_for('static', filename='js/pages/timeline/timeline_search.js') }}" type="module" defer="true"></script>
 {% elif event %}
-  <script src="{{ url_for('static', filename='/js/event_search.js') }}" type="module" defer="true"></script>
+  <script src="{{ url_for('static', filename='js/pages/event/event_search.js') }}" type="module" defer="true"></script>
 {% elif epoch %}
-  <script src="{{ url_for('static', filename='/js/epoch_search.js') }}" type="module" defer="true"></script>
+  <script src="{{ url_for('static', filename='js/pages/epoch/epoch_search.js') }}" type="module" defer="true"></script>
 {% endif %}
 
 {%- endmacro %}

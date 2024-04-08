@@ -89,7 +89,7 @@ class Carousel {
         text.classList.remove("carousel-text-hidden");
       }
     })
-    // Update curret position
+    // Update current position
     this.currentSlide = targetIndex;
   }
 

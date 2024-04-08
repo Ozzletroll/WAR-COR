@@ -44,7 +44,7 @@
         href="{{ url_for('data.campaign_backup', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
           <h3 class="backup-title">BACKUP</h3>
           <img class="icon icon-invert icon-xlarge icon-comp-r" aria-label="Backup Icon"
-           src="{{ url_for('static', filename='/images/icons/egress.svg') }}">
+           src="{{ url_for('static', filename='images/icons/egress.svg') }}">
         </a>
 
         <p class="backup-text">>Export data as JSON</p>
@@ -59,7 +59,7 @@
         <button type="submit" id="backup-restore" class="backup-link backup-button" aria-label="Restore">
           <h3 class="backup-title">RESTORE</h3>
           <img class="icon icon-invert icon-xlarge icon-comp-r" aria-label="Restore Icon"
-          src="{{ url_for('static', filename='/images/icons/ingress.svg') }}">
+          src="{{ url_for('static', filename='images/icons/ingress.svg') }}">
         </button>
 
         <p class="backup-text">>Import data from JSON</p>
@@ -81,7 +81,7 @@
     <div class="flavour-text-area fade-in-block-3">
       <p class="flavour-text flavour-text-centre" aria-label="Flavour Text"> All UWC personnel are reminded not to allow NHP access to UWC backups that contain data from [REDACTED] Class endogenous Cascade events. </p>
       <img aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol that irises open like a camera lens."
-      src="{{ url_for('static', filename='/images/logo-red.png') }}" class="top-logo logo-theme">
+      src="{{ url_for('static', filename='images/logo-red.png') }}" class="top-logo logo-theme">
     </div>
 
   </div>

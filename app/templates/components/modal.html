@@ -23,7 +23,7 @@
         <div class="modal-header">
           <h2 class="modal-header-small">{{ title }}</h2>
           <button id="{{ type }}-close-{{ loop_index }}" class="modal-close" aria-label="Close Modal">
-            <img class="icon" aria-label="Close Icon" src="{{ url_for('static', filename='/images/icons/cancel.svg') }}">
+            <img class="icon" aria-label="Close Icon" src="{{ url_for('static', filename='images/icons/cancel.svg') }}">
           </button>
         </div>
         {% if type == "preview" %}

@@ -1,4 +1,4 @@
-import { CampaignCard } from "./campaign_card.js";
+import { CampaignCard } from "../../components/campaign_card.js";
 
 
 

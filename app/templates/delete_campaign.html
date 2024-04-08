@@ -35,7 +35,7 @@
                   <div class="form-elem">
                     <label class="form-icon">
                       <img class="icon icon-invert" aria-label="Username Icon"
-                      src="{{ url_for('static', filename='/images/icons/user.svg') }}">
+                      src="{{ url_for('static', filename='images/icons/user.svg') }}">
                     </label>
                     <div class="form-input-container">
                       {{ form.username(placeholder_="USERNAME", 
@@ -48,7 +48,7 @@
                   <div class="form-elem">
                     <label class="form-icon">
                       <img class="icon icon-invert" aria-label="Password Icon"
-                      src="{{ url_for('static', filename='/images/icons/lock.svg') }}">
+                      src="{{ url_for('static', filename='images/icons/lock.svg') }}">
                     </label>
                     <div class="form-input-container">
                       {{ form.password(placeholder_="PASSWORD", 
@@ -82,7 +82,7 @@
 
         <div class="flavour-text-area">
           <p class="flavour-text flavour-text-centre" aria-label="Flavour Text">By submitting this form you confirm the immediate deletion of all UWC records pertaining to the campaign: {{campaign.title}}. All active member authorisations will be immediately revoked, and all associated event data will be purged. This process is irreversible. </p>
-          <img src="{{ url_for('static', filename='/images/logo-red.png') }}" 
+          <img src="{{ url_for('static', filename='images/logo-red.png') }}" 
           class="top-logo logo-theme" aria-label="WAR/COR Logo" alt="The WAR/COR logo, a triangular symbol that irises open like a camera lens.">
         </div>
 

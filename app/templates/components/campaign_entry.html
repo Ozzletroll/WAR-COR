@@ -103,35 +103,35 @@
             <li class="dropdown-list-item">
               <a class="deploy-button deploy-button-first" aria-hidden="true" tabindex="-1"
               href="{{ url_for('campaign.edit_campaign', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
-                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/edit.svg') }}"> 
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='images/icons/edit.svg') }}"> 
                   Title/Overview
               </a>
             </li>
             <li class="dropdown-list-item">
               <a class="deploy-button" aria-hidden="true" tabindex="-1"
               href="{{ url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
-                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/docs.svg') }}"> 
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='images/icons/docs.svg') }}"> 
                   Timeline Data
               </a>
             </li>
             <li class="dropdown-list-item">
               <a class="deploy-button" aria-hidden="true" tabindex="-1"
               href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.url_title, campaign_id=campaign.id)}}">
-                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/user_management_dark.svg') }}"> 
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='images/icons/user_management_dark.svg') }}"> 
                   Members
               </a>
             </li>
             <li class="dropdown-list-item">
               <a class="deploy-button" aria-hidden="true" tabindex="-1"
               href="{{ url_for('data.backup_page', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/database.svg') }}"> 
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='images/icons/database.svg') }}"> 
                   Data Backup
               </a>
             </li>
             <li class="dropdown-list-item">
               <a class="deploy-button" aria-hidden="true" tabindex="-1"
               href="{{ url_for('campaign.delete_campaign', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-                  <img class="icon icon-invert" src="{{ url_for('static', filename='/images/icons/bin.svg') }}"> 
+                  <img class="icon icon-invert" src="{{ url_for('static', filename='images/icons/bin.svg') }}"> 
                   Delete
               </a>
             </li>
