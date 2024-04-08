@@ -1,4 +1,3 @@
-// Searchbar class
 class SearchbarTab {
   constructor({
     tab,

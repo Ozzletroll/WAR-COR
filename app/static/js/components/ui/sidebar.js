@@ -1,5 +1,4 @@
-// Sidebar class
-class Tab {
+class Sidebar {
   constructor({
     tab,
     button,
@@ -125,11 +124,8 @@ class Tab {
 
 
 // Create sidebar
-const sidebar = new Tab({
+const sidebar = new Sidebar({
   tab: "sidebar-outer",
   button: "sidebar-deploy",
   icon: "sidebar-icon"
 })
-
-
-
