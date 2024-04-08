@@ -6081,8 +6081,9 @@ pre {
 }
 
 .comment-body p img {
-  max-width: min(250px, 100%) !important;
+  max-width: 100% !important;
   height: auto !important;
+  border: 1px solid var(--elem_border);
 }
 
 /* Event HTML Elements */
