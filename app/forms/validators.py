@@ -1,9 +1,11 @@
 from wtforms.validators import ValidationError
 import re
 import bleach
+from urllib.request import urlopen
+from urllib.error import HTTPError
 
 
-# Custom validators
+
 def date_format(format):
 
     if format == "event":
@@ -32,6 +34,25 @@ def file_format():
                 raise ValidationError('File size must be less than 5MB.')
 
     return _file_format
+
+
+def image_url():
+
+    def _image_url(form, field):
+
+        allowed_filetypes = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/webp"]
+        
+        try:
+            url = urlopen(field.data)
+            meta = url.info()
+
+            if meta["content-type"] not in allowed_filetypes:
+                raise ValidationError("URL must be a valid image link")
+
+        except HTTPError:
+            raise ValidationError("URL must be a valid image link")
+
+    return _image_url
 
 
 def date_is_after(form, field):
