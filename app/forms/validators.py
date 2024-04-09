@@ -1,8 +1,9 @@
 from wtforms.validators import ValidationError
 import re
 import bleach
-from urllib.request import urlopen
+
 from urllib.error import HTTPError
+from requests import Session
 
 
 
@@ -41,16 +42,20 @@ def image_url():
     def _image_url(form, field):
 
         allowed_filetypes = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/webp"]
-        
+        session = Session()
+
         try:
-            url = urlopen(field.data)
-            meta = url.info()
-
-            if meta["content-type"] not in allowed_filetypes:
+            request = session.get(field.data)
+            
+        except HTTPError as error:
+            if error.code == 403:
+                raise ValidationError("Access to the URL is forbidden")
+            else:
                 raise ValidationError("URL must be a valid image link")
-
-        except HTTPError:
-            raise ValidationError("URL must be a valid image link")
+        
+        else:
+            if request.headers["content-type"] not in allowed_filetypes:
+                raise ValidationError("URL must be a valid image link")
 
     return _image_url
 
