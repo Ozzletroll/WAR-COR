@@ -101,6 +101,24 @@
 
       <div class="form-container form-container-small">
         <label class="campaign-form-label form-icon" aria-label="Date Suffix">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon icon-invert" aria-label="Date Suffix Symbol" alt="A stylised pen writing"
+            src="{{ url_for('static', filename='images/icons/edit.svg') }}">
+            <h4 id="image-url-label" class="campaign-form label-title">Image URL</h4>
+          </div>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-02 // Campaign::Image</p>
+        </label>
+
+        <div class="form-input-container">
+          {{ form.image_url(id="campaign-form-image", class_="campaign-input form-input", 
+             autocomplete="off", placeholder="OPTIONAL", aria_labelledby="image-url-label") }}
+          <div class="form-underline"></div>
+        </div>
+
+      </div>
+
+      <div class="form-container form-container-small">
+        <label class="campaign-form-label form-icon" aria-label="Date Suffix">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
               <img class="icon campaign-form-icon icon-invert" aria-label="Date Suffix Symbol" alt="A stylised pen writing"
@@ -112,7 +130,7 @@
               <h4 id="example-date" class="campaign-form label-title label-example"></h4>
             </div>
           </div>
-          <p class="flavour-text" aria-label="Flavour Text">UWC-5-02 //  Calendar::Suffix</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-03 // Calendar::Suffix</p>
         </label>
 
         <div class="form-input-container">
@@ -123,7 +141,7 @@
 
       </div>
 
-      <div class="form-container form-container-small form-container-margin-auto">
+      <div class="form-container form-container-small">
         <label class="campaign-form-label form-icon" aria-label="Negative Date Suffix">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
@@ -138,7 +156,7 @@
               </div>
             </div>
           </div>
-          <p class="flavour-text" aria-label="Flavour Text">UWC-5-03 //  Calendar::Negative Suffix</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-04 //  Calendar::Negative Suffix</p>
         </label>
 
         <div class="form-input-container">
@@ -162,7 +180,7 @@
               <h4 id="remaining-chars" class="campaign-form label-title label-example">600</h4>
             </div>
           </div>
-          <p class="flavour-text" aria-label="Flavour Text">UWC-5-04 //  Campaign::Conflict Overview</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-05 //  Campaign::Conflict Overview</p>
         </label>
 
         {{ form.description(id="summernote-desc", class_="campaign-input large-input", 
