@@ -12,6 +12,7 @@ class Campaign(db.Model):
 
     title = db.Column(db.String(250))
     url_title = db.Column(db.String(250))
+    image_url = db.Column(db.String(), nullable=True)
     description = db.Column(db.String(), nullable=False)
     last_edited = db.Column(db.DateTime, nullable=False)
     date_suffix = db.Column(db.String(8), nullable=True)
