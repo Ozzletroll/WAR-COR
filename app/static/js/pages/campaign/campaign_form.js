@@ -36,3 +36,30 @@ suffixField.addEventListener("input", function() {
 negativeSuffixField.addEventListener("input", function() {
   updateSuffix(negativeSuffixField, exampleNegativeSuffixDate);
 });
+
+
+// Function to match the "Date Suffix" header height with 
+// the "Negative Suffix" header when the negative suffix text
+// splits onto two lines.
+function matchSuffixFieldHeights() {
+
+  var dateSuffix = document.getElementById("date-suffix-label");
+  var negativeSuffix = document.getElementById("negative-suffix-label");
+
+  var dateSuffixHeight = dateSuffix.offsetHeight;
+  var negativeSuffixHeight = negativeSuffix.offsetHeight;
+
+  if (negativeSuffixHeight > dateSuffixHeight && window.innerWidth > 800) {
+    dateSuffix.style.height = `${negativeSuffixHeight}px`;
+    var words = dateSuffix.innerText.split(" ");
+    dateSuffix.innerHTML = words.join("<br>");
+  }
+  else if (dateSuffixHeight > negativeSuffixHeight) {
+    dateSuffix.style.height = "";
+    dateSuffix.innerHTML = "Date Suffix";
+  }
+  
+}
+
+window.addEventListener("load", matchSuffixFieldHeights);
+window.addEventListener("resize", matchSuffixFieldHeights);
