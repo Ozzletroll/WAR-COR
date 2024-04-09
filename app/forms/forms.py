@@ -56,7 +56,7 @@ class ResetPasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired(), Length(max=250)])
-    image_url = StringField("Image URL", validators=[DataRequired(), URL(), image_url()])
+    image_url = StringField("Image URL", validators=[image_url()])
     description = TextAreaField("Description", validators=[DataRequired(), plain_text_length(max=600)])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])

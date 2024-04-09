@@ -58,6 +58,10 @@ class Campaign(db.Model):
                 if field == "description":
                     value = sanitise_input(value)
 
+                if field == "image_url":
+                    if value == "":
+                        value = None
+
                 setattr(self, field, value)
 
         self.last_edited = datetime.now()
