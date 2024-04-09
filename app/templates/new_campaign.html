@@ -2,6 +2,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/summernote_editor.html" as summernote %}
+{% import "components/modal.html" as modal %}
 
 
 {% extends "base/base.html" %}
@@ -104,7 +105,13 @@
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" aria-label="Date Suffix Symbol" alt="A stylised pen writing"
             src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-            <h4 id="image-url-label" class="campaign-form label-title">Image URL</h4>
+            <h4 id="image-url-label" class="campaign-form label-title">Banner Image URL</h4>
+
+            <div class="form-extra-button-area">
+              <button id="campaign-image-help-button" class="button form-button" type="button" aria-label="Help">
+                {% include "components/help_icon.html" %}
+              </button>
+            </div>
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-02 // Campaign::Image</p>
         </label>
@@ -206,7 +213,14 @@
 
 </div>
 
-<script src="{{ url_for('static', filename='js/pages/campaign/campaign_form.js') }}"></script>
+{# Image Help Modal #}
+{{ modal.modal(type="help",
+               subtype="image",
+               title="Banner Image",
+               aria_label="Banner Image Help",
+               loop_index=1) }}
+
+<script src="{{ url_for('static', filename='js/pages/campaign/campaign_form.js') }}" type="module"></script>
 <script src="{{ url_for('static', filename='js/components/char_count.js') }}"></script>
 <script src="{{ url_for('static', filename='js/components/unsaved_changes_warning.js') }}"></script>
 

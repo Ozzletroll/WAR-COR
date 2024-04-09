@@ -128,6 +128,11 @@
               <p class="modal-text modal-text-left">The epoch description is displayed on the dedicated epoch page itself, allowing
                 for a longer, more detailed description of the epoch.
               </p>
+            {% elif subtype == "image" %}
+              <p class="modal-text modal-text-left">The banner image should be a URL to a .jpg, .jpeg, .png, .gif or 
+                .webp image file. The banner image will be cropped if it exceeds 400px in height, and works best with a 
+                wide, panoramic image.
+              </p>
             {% endif %}
 
           {% endif %}

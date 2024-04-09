@@ -1,3 +1,6 @@
+import { Modal } from "../../components/modal.js";
+
+
 // Get the date suffix input field and the element to update
 var suffixField = document.getElementById("campaign-form-suffix");
 var negativeSuffixField = document.getElementById("campaign-form-negative-suffix");
@@ -63,3 +66,16 @@ function matchSuffixFieldHeights() {
 
 window.addEventListener("load", matchSuffixFieldHeights);
 window.addEventListener("resize", matchSuffixFieldHeights);
+
+const imageHelpModal = new Modal({
+  modal: document.getElementById("help-modal-1"),
+  button: document.getElementById("campaign-image-help-button"),
+  span: document.getElementById("help-close-1"),
+})
+
+// Close modals if the user clicks anywhere else
+window.onclick = function(event) {
+  if (event.target == imageHelpModal.modal) {
+    imageHelpModal.closeModal();
+  }
+}
