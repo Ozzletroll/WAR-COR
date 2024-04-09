@@ -3163,7 +3163,7 @@ p {
 
   .campaign-header {
     font-size: 18px;
-    padding: 20px;
+    padding: 10px 20px;
   }
 
   .campaigns-list {
@@ -3239,9 +3239,12 @@ p {
 @media screen and (max-width: 400px) {
 
   .campaign-overview-lower-right {
-    flex-wrap: wrap;
     flex: 1 1 auto;
     height: fit-content;
+  }
+
+  .campaign-settings-text {
+    width: 80px;
   }
 
 }
