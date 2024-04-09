@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, EmailField, SubmitField, PasswordField, \
                     BooleanField, FileField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email, URL
 
 from app.forms.validators import *
 
@@ -56,6 +56,7 @@ class ResetPasswordForm(FlaskForm):
 
 class CreateCampaignForm(FlaskForm):
     title = StringField("Campaign Title", validators=[DataRequired(), Length(max=250)])
+    image_url = StringField("Image URL", validators=[DataRequired(), URL(), image_url()])
     description = TextAreaField("Description", validators=[DataRequired(), plain_text_length(max=600)])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
