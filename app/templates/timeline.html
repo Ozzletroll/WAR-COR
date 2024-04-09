@@ -70,6 +70,13 @@
 
       <section class="campaign-entry timeline-upper fade-in-block-2" aria-label="Campaign Overview">
 
+        {% if campaign.image_url is not none %}
+          <div class="banner-image-area image-area-timeline">
+            <img src="{{ campaign.image_url }}" class="campaign-banner-image"
+            aria-label="{{ campaign.title }} Banner Image">
+          </div>
+        {% endif %}
+
         <!-- Overview and members list -->
         <div class="campaign-entry-container timeline-overview">
           <div id="campaign-overview" class="campaign-overview">

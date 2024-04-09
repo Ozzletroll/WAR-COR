@@ -2824,6 +2824,10 @@ p {
   border-radius: 3px;
 }
 
+.image-area-timeline {
+  margin-top: 20px;
+}
+
 .campaign-banner-image {
   max-width: 100%;
   width: 100%;
