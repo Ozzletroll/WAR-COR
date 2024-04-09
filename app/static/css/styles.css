@@ -2817,13 +2817,16 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  max-height: 400px;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
 }
 
 .campaign-banner-image {
-  max-height: 400px;
   max-width: 100%;
-  border: 1px solid var(--elem_border);
-  border-radius: 3px;
+  width: 100%;
 }
 
 .campaign-overview {
