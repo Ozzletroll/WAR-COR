@@ -2813,6 +2813,19 @@ p {
   gap: 15px;
 }
 
+.banner-image-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.campaign-banner-image {
+  max-height: 400px;
+  max-width: 100%;
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+}
+
 .campaign-overview {
   display: flex;
   flex-direction: column;
@@ -3056,7 +3069,6 @@ p {
 .entry-button.button-noclick:hover {
   background-color: var(--elem_mid);
 }
-
 
 .campaign-overview-lower {
   display: flex;

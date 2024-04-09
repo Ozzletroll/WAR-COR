@@ -147,6 +147,12 @@ function toggleLayout() {
       entry.style.justifyContent = "flex-start";
     });
 
+    // Reset banner images
+    var campaignImages = document.getElementsByClassName("banner-image-area");
+    Array.from(campaignImages).forEach(image => {
+      image.style.display = "";
+    })
+
     // Reset overview height matching
     undoOverviewHeight();
 
@@ -172,34 +178,37 @@ function toggleLayout() {
         entry.style.justifyContent = "space-between";
     });
 
+    // Hide banner images
+    var campaignImages = document.getElementsByClassName("banner-image-area");
+    Array.from(campaignImages).forEach(image => {
+      image.style.display = "none";
+    })
+
     // Make overview areas heights match
     matchOverviewHeight();
   }
 
-    if (radioList.checked) {
+  if (radioList.checked) {
 
-      // Set user preference to "list"
-      localStorage.setItem('campaign_layout', "list");
-
-      setListLayout();
-      
-    } else if (radioGrid.checked ) {
-
-      // Set user preference to "grid"
-      localStorage.setItem('campaign_layout', "grid");
-
-      // Check if screen is wide enough to allow grid layout
-      if (window.innerWidth >= 1200) {
-        setGridLayout();
-      }
-      // Otherwise, toggle back to list layout
-      else {
-        setListLayout();
-        // Reset overview height matching
-        undoOverviewHeight();
-      }
+    // Set user preference to "list"
+    localStorage.setItem('campaign_layout', "list");
+    setListLayout();
     
+  } else if (radioGrid.checked ) {
 
+    // Set user preference to "grid"
+    localStorage.setItem('campaign_layout', "grid");
+
+    // Check if screen is wide enough to allow grid layout
+    if (window.innerWidth >= 1200) {
+      setGridLayout();
+    }
+    // Otherwise, toggle back to list layout
+    else {
+      setListLayout();
+      // Reset overview height matching
+      undoOverviewHeight();
+    }
   }
 
 

@@ -27,6 +27,14 @@
     <p class="flavour-text" aria-label="Flavour Text">UCR-{{current_user.id}}-{{campaign.id}} // Campaign::Dossier</p>
 
     <div class="campaign-entry-container">
+
+      {% if campaign.image_url is not none and not search_result %}
+        <div class="banner-image-area">
+          <img src="{{ campaign.image_url }}" class="campaign-banner-image"
+          aria-label="{{ campaign.title }} Banner Image">
+        </div>
+      {% endif %}
+
       <div class="campaign-overview" aria-label="Campaign Overview">
         <h4 class="campaign-entry-title">Overview</h4>
         {{ campaign.description | safe }}
