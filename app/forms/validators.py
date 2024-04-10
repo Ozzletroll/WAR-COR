@@ -41,7 +41,7 @@ def image_url():
 
     def _image_url(form, field):
 
-        if field.data == "":
+        if not field.data or field.data == "":
             return
 
         allowed_filetypes = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/webp"]
