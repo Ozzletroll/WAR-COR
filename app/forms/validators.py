@@ -65,20 +65,25 @@ def image_url():
     return _image_url
 
 
-def date_is_after(form, field):
-    start_date = form.start_date.data
-    end_date = field.data
+def date_is_after():
 
-    # Convert to integers, catching exception if incorrect format submitted
-    try:
-        start_year, start_month, start_day = map(int, start_date.split("/"))
-        end_year, end_month, end_day = map(int, end_date.split("/"))
-    except ValueError:
-        # The date_format validator will raise a Validation error already.
-        return
+    def _date_is_after(form, field):
 
-    if (start_year, start_month, start_day) > (end_year, end_month, end_day):
-        raise ValidationError("End Date must be after Start Date")
+        start_date = form.start_date.data
+        end_date = field.data
+
+        # Convert to integers, catching exception if incorrect format submitted
+        try:
+            start_year, start_month, start_day = map(int, start_date.split("/"))
+            end_year, end_month, end_day = map(int, end_date.split("/"))
+        except ValueError:
+            # The date_format validator will raise a Validation error already.
+            return
+
+        if (start_year, start_month, start_day) > (end_year, end_month, end_day):
+            raise ValidationError("End Date must be after Start Date")
+
+    return _date_is_after
 
 
 def plain_text_length(max=600):

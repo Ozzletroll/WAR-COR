@@ -100,13 +100,6 @@ class CreateEpochForm(FlaskForm):
         
     """
 
-    # Register custom validators for error collection
-    class Meta:
-        validators = {
-            'start_date': [date_format(format="epoch")],
-            'end_date': [date_format(format="epoch"), date_is_after]
-        }
-
     edit_title = BooleanField("Edit Title")
     edit_start_date = BooleanField("Edit Start Date")
     edit_end_date = BooleanField("Edit End Date")
@@ -115,7 +108,7 @@ class CreateEpochForm(FlaskForm):
 
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after])
+    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after()])
     overview = TextAreaField("Overview")
     description = TextAreaField("Description")
     submit = SubmitField("Create Epoch")
@@ -128,7 +121,7 @@ class SearchUserForm(FlaskForm):
 
 class AddUserForm(FlaskForm):
     """ The name "submit_button" is used rather than "submit" as to avoid conflict 
-        with javascript form.submit() funtion. """
+        with javascript form.submit() function. """
     username = StringField("Username", validators=[DataRequired()])
     user_id = IntegerField("User ID", validators=[DataRequired()])
     submit_button = SubmitField("Invite")
