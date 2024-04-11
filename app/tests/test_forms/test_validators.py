@@ -45,3 +45,17 @@ def test_date_format(validate_fixture):
     validate_fixture(date_format("epoch"),
                      {"date": correct_epoch_format},
                      correct_epoch_format)
+
+
+def test_file_format(validate_fixture):
+
+    # Test that 6MB file raises ValidationError
+    with pytest.raises(ValidationError):
+        validate_fixture(file_format(),
+                         {},
+                         type("obj", (object,), {"content_length": 6 * 1024 * 1024}))
+
+    # Test that 3MB file passes
+    validate_fixture(file_format(),
+                     {},
+                     type("obj", (object,), {"content_length": 3 * 1024 * 1024}))
