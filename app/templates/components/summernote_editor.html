@@ -2,9 +2,12 @@
     Summernote editor configuration component.
 #}
 
-{% macro summernote_editor(placeholder="REQUIRED", char_limit=none, id_suffix=none) %}
+{% macro summernote_editor(placeholder="REQUIRED", char_limit=none, id_suffix=none, allow_images=false) %}
 
     {% set height = "fit-content" %}
+    {% if allow_images %}
+      {% set allow_images = "picture" %}
+    {% endif %}
 
     {% if char_limit is not none %}
       <script>
@@ -52,7 +55,7 @@
               ['style', ['style']],
               ['font', ['bold', 'italic', 'underline', 'clear']],
               ['para', ['ul', 'ol', 'paragraph']],,
-              ['insert', ['link', 'picture']]
+              ['insert', ['link', "{{ allow_images }}"]]
           ],
           popover: {
             image: [
