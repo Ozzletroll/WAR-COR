@@ -3,8 +3,7 @@ import re
 import bleach
 
 from urllib.error import HTTPError
-from requests import Session
-
+from requests import Session, exceptions
 
 
 def date_format(format):
@@ -43,7 +42,7 @@ def image_url():
 
         if not field.data or field.data == "":
             return
-
+        
         allowed_filetypes = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/webp"]
         session = Session()
 
@@ -56,6 +55,9 @@ def image_url():
             else:
                 raise ValidationError("URL must be a valid image link")
         
+        except exceptions.MissingSchema:
+            raise ValidationError("URL must be a valid image link")
+
         else:
             if request.headers["content-type"] not in allowed_filetypes:
                 raise ValidationError("URL must be a valid image link")
