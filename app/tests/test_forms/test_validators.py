@@ -59,3 +59,29 @@ def test_file_format(validate_fixture):
     validate_fixture(file_format(),
                      {},
                      type("obj", (object,), {"content_length": 3 * 1024 * 1024}))
+
+
+def test_image_url(validate_fixture):
+
+    no_image_url = ""
+    broken_image_url = "asd"
+    non_image_url = "https://www.google.com/"
+    correct_image_url = "https://massifpress.com/_next/image?url=%2Fimages%2Flancer%2Flancer-carousel.webp&w=1920&q=75"
+
+    validate_fixture(image_url(),
+                     {},
+                     no_image_url)
+
+    with pytest.raises(ValidationError):
+        validate_fixture(image_url(),
+                         {},
+                         broken_image_url)
+
+    with pytest.raises(ValidationError):
+        validate_fixture(image_url(),
+                         {},
+                         non_image_url)
+
+    validate_fixture(image_url(),
+                     {},
+                     correct_image_url)
