@@ -95,3 +95,18 @@ def test_image_url(validate_fixture):
                      forms.CreateCampaignForm,
                      {},
                      correct_image_url)
+
+
+def test_date_is_after(validate_fixture):
+    with pytest.raises(ValidationError):
+        validate_fixture(date_is_after(),
+                         forms.CreateEpochForm,
+                         form_data={"start_date": "5016/01/05",
+                                    "end_date": "5015/12/04"},
+                         field_data="5015/12/04")
+
+    validate_fixture(date_is_after(),
+                     forms.CreateEpochForm,
+                     form_data={"start_date": "5016/01/05",
+                                "end_date": "5016/02/11"},
+                     field_data="5016/02/11")
