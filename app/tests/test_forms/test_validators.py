@@ -110,3 +110,17 @@ def test_date_is_after(validate_fixture):
                      form_data={"start_date": "5016/01/05",
                                 "end_date": "5016/02/11"},
                      field_data="5016/02/11")
+
+
+def test_plain_text_length(validate_fixture):
+
+    with pytest.raises(ValidationError):
+        validate_fixture(plain_text_length(),
+                         forms.CreateCampaignForm,
+                         form_data={"description": "A" * 601},
+                         field_data="A" * 601)
+
+    validate_fixture(plain_text_length(),
+                     forms.CreateCampaignForm,
+                     form_data={"description": "A" * 480},
+                     field_data="A" * 480)
