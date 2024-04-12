@@ -5,7 +5,7 @@ import { Month } from './classes/month.js';
 
 
 export class SearchEngine {
-  constructor(searchBar, hitsCounter, editPage, initialValue) {
+  constructor(searchBar, hitsCounter, editPage, initialValue, searchType) {
     this.searchBar = searchBar;
     this.hitsCounter = hitsCounter;
     this.results = [];
@@ -16,6 +16,10 @@ export class SearchEngine {
     this.scrollIndex = 0;
     this.editPage = editPage;
     this.initialValue = initialValue;
+    this.searchType = searchType;
+
+    document.addEventListener("clearSearchEvent", () => this.clearSearch())
+
   }
 
   /**
@@ -455,12 +459,8 @@ export class SearchEngine {
   // or submitting the form
   clearSearch() {
     this.searchBar.value = "";
+    this[this.searchType]();
     this.searchBar.blur();
-    this.htmlResults.forEach((result, index) => {
-      result.styleReset();
-    });
-    this.htmlResults = [];
-    this.updateUI();
   }
 
   // Method called when input detected in description field

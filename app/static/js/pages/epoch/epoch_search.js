@@ -16,7 +16,8 @@ const searchEngine = new SearchEngine(
   searchBar, 
   hitsCounter,
   editPage,
-  initialValue
+  initialValue,
+  "epochSearch"
   )
 
 // Function called by searchbar "Search" button

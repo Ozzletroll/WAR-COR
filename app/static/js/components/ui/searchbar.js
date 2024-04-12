@@ -56,6 +56,10 @@ class SearchbarTab {
     }
     this.hitsLabel.setAttribute("aria-hidden", "true");
     this.state = false;
+
+    // Trigger event to searchEngine class to clear search
+    var clearSearchEvent = new CustomEvent("clearSearchEvent");
+    document.dispatchEvent(clearSearchEvent)
   }
 
   getWidth() {
