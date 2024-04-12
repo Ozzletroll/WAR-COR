@@ -182,7 +182,10 @@
                            class_="campaign-input large-input event-input", 
                            autocomplete="off", 
                            placeholder="OPTIONAL") }}
-          {{ summernote.summernote_editor(placeholder="OPTIONAL", char_limit=none, id_suffix="-overview") }}
+          {{ summernote.summernote_editor(placeholder="OPTIONAL", 
+                                          char_limit=none, 
+                                          id_suffix="-overview",
+                                          allow_images=true) }}
         
         </div>
 
@@ -213,7 +216,10 @@
                               class_="campaign-input large-input event-input", 
                               autocomplete="off", 
                               placeholder="OPTIONAL") }}
-          {{ summernote.summernote_editor(placeholder="OPTIONAL", char_limit=none, id_suffix="-desc") }}
+          {{ summernote.summernote_editor(placeholder="OPTIONAL", 
+                                          char_limit=none, 
+                                          id_suffix="-desc",
+                                          allow_images=true) }}
         
         </div>
 

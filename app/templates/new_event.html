@@ -278,7 +278,10 @@
           {{ form.body(id="summernote-desc", 
                        class_="campaign-input large-input event-input", 
                        autocomplete="off") }}
-          {{ summernote.summernote_editor(placeholder="REQUIRED", char_limit=none, id_suffix="-desc") }}
+          {{ summernote.summernote_editor(placeholder="REQUIRED", 
+                                          char_limit=none, 
+                                          id_suffix="-desc",
+                                          allow_images=true) }}
           
         </div>
 
