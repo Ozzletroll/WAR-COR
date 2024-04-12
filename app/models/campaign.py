@@ -59,7 +59,7 @@ class Campaign(db.Model):
                 if field == "description":
                     value = sanitise_input(value, allow_images=False)
 
-                if field == "image_url":
+                if field in ["image_url", "system"]:
                     if value == "":
                         value = None
 
