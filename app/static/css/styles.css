@@ -2650,7 +2650,7 @@ p {
 
 .campaigns-title {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   text-align: left;
 }
 
@@ -2863,6 +2863,10 @@ p {
   margin-bottom: 15px;
 }
 
+.system-timeline {
+  width: fit-content;
+}
+
 .system-title {
   margin: 0px;
 }
@@ -2886,6 +2890,10 @@ p {
   gap: 15px;
   flex-wrap: wrap;
   width: fit-content;
+}
+
+.members-list-timeline {
+  width: initial;
 }
 
 .members-list-title-area, .campaign-overview-title-area {

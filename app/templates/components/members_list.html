@@ -11,7 +11,11 @@
 
 {% macro members_list(campaign, edit=false) %}
 
+{% if edit %}
+<div id="members-list-{{campaign.id}}" class="campaign-members members-list-timeline" aria-label="Members List">
+{% else %}
 <div id="members-list-{{campaign.id}}" class="campaign-members" aria-label="Members List">
+{% endif %}
   <div class="members-list-title-area">
     <h4 class="campaign-entry-title">Members</h4>
 
