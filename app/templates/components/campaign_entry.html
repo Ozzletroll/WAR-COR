@@ -40,7 +40,19 @@
         {{ campaign.description | safe }}
       </div>
 
-      {{ members_list.members_list(campaign) }}
+      <div class="campaign-members-system-row">
+        {{ members_list.members_list(campaign) }}
+        {% if campaign.system is not none %}
+          <div class="system-container">
+        {% else %}
+          <div class="system-container hidden">
+        {% endif %}
+            <h4 class="campaign-entry-title system-title">System</h4>
+            <h6 class="system-text">
+              [{{ campaign.system }}]
+            </h6>
+          </div>
+      </div>
 
     </div>
   
