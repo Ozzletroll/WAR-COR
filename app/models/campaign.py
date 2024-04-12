@@ -17,6 +17,7 @@ class Campaign(db.Model):
     last_edited = db.Column(db.DateTime, nullable=False)
     date_suffix = db.Column(db.String(8), nullable=True)
     negative_date_suffix = db.Column(db.String(8), nullable=True)
+    system = db.Column(db.String(250), nullable=True)
     private = db.Column(db.Boolean(), default=False)
     accepting_applications = db.Column(db.Boolean(), default=False)
     comments = db.Column(db.String(), default="private")
