@@ -83,14 +83,17 @@
       {{ form.csrf_token }}
 
       <div class="form-container form-container-small">
-        <label class="campaign-form-label form-icon" aria-label="Campaign Title">
+        <div class="campaign-form-label form-icon" aria-label="Campaign Title">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" aria-label="Campaign Title Symbol" alt="A stylised pen writing"
             src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-            <h4 id="campaign-title-label" class="campaign-form label-title">Campaign Title</h4>
+
+            <label for="campaign-form-title">
+              <h4 id="campaign-title-label" class="campaign-form label-title">Campaign Title</h4>
+            </label>
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-01 //  Campaign::Conflict Designation</p>
-        </label>
+        </div>
 
         <div class="form-input-container">
           {{ form.title(id="campaign-form-title", class_="campaign-input form-input", autocomplete="off", 
@@ -101,20 +104,23 @@
       </div>
 
       <div class="form-container form-container-small">
-        <label class="campaign-form-label form-icon" aria-label="Date Suffix">
+        <div class="campaign-form-label form-icon" aria-label="Date Suffix">
           <div class="campaign-form-label-container">
             <img class="icon campaign-form-icon icon-invert" aria-label="Date Suffix Symbol" alt="A stylised pen writing"
             src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-            <h4 id="image-url-label" class="campaign-form label-title">Banner Image URL</h4>
+            <label for="campaign-form-image">
+              <h4 id="image-url-label" class="campaign-form label-title">Banner Image URL</h4>
+            </label>
 
             <div class="form-extra-button-area">
               <button id="campaign-image-help-button" class="button form-button" type="button" aria-label="Help">
                 {% include "components/help_icon.html" %}
               </button>
             </div>
+            
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-02 // Campaign::Image</p>
-        </label>
+        </div>
 
         <div class="form-input-container">
           {{ form.image_url(id="campaign-form-image", class_="campaign-input form-input", 
@@ -125,12 +131,14 @@
       </div>
 
       <div class="form-container form-container-small">
-        <label class="campaign-form-label form-icon" aria-label="Date Suffix">
+        <div class="campaign-form-label form-icon" aria-label="Date Suffix">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
               <img class="icon campaign-form-icon icon-invert" aria-label="Date Suffix Symbol" alt="A stylised pen writing"
               src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-              <h4 id="date-suffix-label" class="campaign-form label-title">Date Suffix</h4>
+              <label for="campaign-form-suffix">
+                <h4 id="date-suffix-label" class="campaign-form label-title">Date Suffix</h4>
+              </label>
             </div>
             <div class="label-right">
               <h4 class="campaign-form label-title label-example">Example: 5016</h4>
@@ -138,7 +146,7 @@
             </div>
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-03 // Calendar::Suffix</p>
-        </label>
+        </div>
 
         <div class="form-input-container">
           {{ form.date_suffix(id="campaign-form-suffix", class_="campaign-input form-input", 
@@ -149,12 +157,14 @@
       </div>
 
       <div class="form-container form-container-small">
-        <label class="campaign-form-label form-icon" aria-label="Negative Date Suffix">
+        <div class="campaign-form-label form-icon" aria-label="Negative Date Suffix">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
               <img class="icon campaign-form-icon icon-invert" aria-label="Negative Date Suffix Symbol" alt="A stylised pen writing"
               src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-              <h4 id="negative-suffix-label" class="campaign-form label-title">Negative Suffix</h4>
+              <label for="campaign-form-negative-suffix">
+                <h4 id="negative-suffix-label" class="campaign-form label-title">Negative Suffix</h4>
+              </label>
             </div>
             <div class="label-right negative-label-right">
               <div class="example-area">
@@ -164,7 +174,7 @@
             </div>
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-04 //  Calendar::Negative Suffix</p>
-        </label>
+        </div>
 
         <div class="form-input-container">
           {{ form.negative_date_suffix(id="campaign-form-negative-suffix", class_="campaign-input form-input", 
@@ -175,12 +185,14 @@
       </div>
 
       <div class="form-container form-container-large">
-        <label class="campaign-form-label form-icon" aria-label="Campaign Description">
+        <div class="campaign-form-label form-icon" aria-label="Campaign Description">
           <div class="campaign-form-label-container label-split">
             <div class="label-left">
               <img class="icon campaign-form-icon icon-invert" aria-label="Description Symbol" alt="A stylised pen writing"
               src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-              <h4 id="campaign-description-label" class="campaign-form label-title">Description</h4>
+              <label for="summernote-desc">
+                <h4 id="campaign-description-label" class="campaign-form label-title">Description</h4>
+              </label>
             </div>
             <div class="label-right">
               <h4 class="campaign-form label-title label-example">Characters left:&nbsp</h4>
@@ -188,7 +200,7 @@
             </div>
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-05 //  Campaign::Conflict Overview</p>
-        </label>
+        </div>
 
         {{ form.description(id="summernote-desc", class_="campaign-input large-input", 
            autocomplete="off", aria_labelledby="campaign-description-label") }}
