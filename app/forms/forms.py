@@ -60,6 +60,7 @@ class CreateCampaignForm(FlaskForm):
     description = TextAreaField("Description", validators=[DataRequired(), plain_text_length(max=600)])
     date_suffix = StringField("Date Suffix", validators=[Optional()])
     negative_date_suffix = StringField("Negative Date Suffix", validators=[Optional()])
+    system = StringField("System", validators=[Optional(), Length(max=250)])
     submit = SubmitField("Create Campaign")
 
 

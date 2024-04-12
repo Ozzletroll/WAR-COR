@@ -184,6 +184,26 @@
 
       </div>
 
+      <div class="form-container form-container-small">
+        <div class="campaign-form-label form-icon" aria-label="System">
+          <div class="campaign-form-label-container">
+            <img class="icon campaign-form-icon icon-invert" aria-label="System Symbol" alt="A stylised pen writing"
+            src="{{ url_for('static', filename='images/icons/edit.svg') }}">
+            <label for="campaign-form-system">
+              <h4 id="negative-suffix-label" class="campaign-form label-title">System</h4>
+            </label>
+          </div>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-05 // Engagement::Directives</p>
+        </div>
+
+        <div class="form-input-container">
+          {{ form.system(id="campaign-form-system", class_="campaign-input form-input", 
+          autocomplete="off", maxlength=250, placeholder="OPTIONAL") }}
+          <div class="form-underline"></div>
+        </div>
+
+      </div>
+
       <div class="form-container form-container-large">
         <div class="campaign-form-label form-icon" aria-label="Campaign Description">
           <div class="campaign-form-label-container label-split">
@@ -199,7 +219,7 @@
               <h4 id="remaining-chars" class="campaign-form label-title label-example">600</h4>
             </div>
           </div>
-          <p class="flavour-text" aria-label="Flavour Text">UWC-5-05 //  Campaign::Conflict Overview</p>
+          <p class="flavour-text" aria-label="Flavour Text">UWC-5-06 //  Campaign::Conflict Overview</p>
         </div>
 
         {{ form.description(id="summernote-desc", class_="campaign-input large-input", 
