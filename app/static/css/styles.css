@@ -2853,6 +2853,7 @@ p {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 15px;
 }
 
 .system-container {
@@ -2860,11 +2861,6 @@ p {
   flex-direction: column;
   width: 320px;
   gap: 15px;
-  margin-bottom: 15px;
-}
-
-.system-timeline {
-  width: fit-content;
 }
 
 .system-title {
@@ -2949,13 +2945,9 @@ p {
   margin: 0;
 }
 
-.campaign-members {
-  margin-bottom: 15px;
-}
-
 .campaign-members-list {
   font-size: clamp( 10px, 2vw, 14px);
-  margin: 0;
+  margin: 0px 0px 0px -5px;
   padding-left: 0;
   list-style: none;
   color: var(--text_flavour);
@@ -3068,6 +3060,14 @@ p {
 
   .callsign-text, .system-text {
     font-size: 12px;
+  }
+
+}
+
+@media screen and (max-width: 350px) {
+
+  .admin-cell {
+    display: none;
   }
 
 }
@@ -4131,7 +4131,6 @@ p {
 
 .timeline-upper {
   background-color: transparent;
-  gap: 15px;
   margin-bottom: 50px;
 }
 
