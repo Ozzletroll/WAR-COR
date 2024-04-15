@@ -34,9 +34,10 @@ def data_export(campaign):
 
     campaign_data = {"title": campaign.title,
                      "description": campaign.description,
-                     "last_edited": campaign.last_edited,
+                     "image_url": campaign.image_url,
                      "date_suffix": campaign.date_suffix,
-                     "negative_date_suffix": campaign.negative_date_suffix}
+                     "negative_date_suffix": campaign.negative_date_suffix,
+                     "system": campaign.system}
     
     final_output = {"campaign_data": campaign_data,
                     "events": events_data,
@@ -111,23 +112,29 @@ def campaign_import(json, campaign):
         campaign.title = json["title"]
         campaign.set_url_title()
     except KeyError:
-        errors.append("Unable to locate campaign title.")
+        errors.append("Unable to locate campaign title")
     try:
         campaign.description = sanitise_input(json["description"])
     except KeyError:
-        errors.append("Unable to locate campaign description.")
+        errors.append("Unable to locate campaign description")
+    try:
+        campaign.image_url = json["image_url"]
+    except KeyError:
+        errors.append("Unable to locate image url")
     try:
         campaign.date_suffix = json["date_suffix"]
     except KeyError:
-        errors.append("Unable to locate date suffix.")
+        errors.append("Unable to locate date suffix")
     try:
         campaign.negative_date_suffix = json["negative_date_suffix"]
     except KeyError:
-        errors.append("Unable to locate negative date suffix.")
+        errors.append("Unable to locate negative date suffix")
     try:
-        campaign.last_edited = datetime.now()
+        campaign.system = json["system"]
     except KeyError:
-        errors.append("Unable to locate campaign last edited date.")
+        errors.append("Unable to locate campaign system")
+
+    campaign.last_edited = datetime.now()
 
     return campaign, errors
 
