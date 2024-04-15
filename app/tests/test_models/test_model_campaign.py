@@ -23,6 +23,8 @@ def test_update(client):
         "description": "Updated Description",
         "date_suffix": "ACE",
         "negative_date_suffix": "BCE",
+        "system": "Lancer",
+        "image_url": "https://massifpress.com/_next/image?url=%2Fimages%2Flancer%2Flancer-carousel.webp&w=1920&q=75"
     }
 
     campaign_object.update(form=form_data)
