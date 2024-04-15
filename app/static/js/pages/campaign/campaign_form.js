@@ -1,4 +1,5 @@
 import { Modal } from "../../components/modal.js";
+import { CharCount } from "../../components/char_count.js";
 
 
 // Get the date suffix input field and the element to update
@@ -79,3 +80,15 @@ window.onclick = function(event) {
     imageHelpModal.closeModal();
   }
 }
+
+// Create char count instances
+const systemCharCount = new CharCount({
+  charField: document.getElementById("campaign-form-system"),
+  charCount: document.getElementById("remaining-chars-system"),
+})
+
+const descCharCount = new CharCount({
+  charField: document.getElementsByClassName("note-editable")[0],
+  charCount: document.getElementById("remaining-chars"),
+  summernote: true
+})
