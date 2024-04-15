@@ -1,4 +1,5 @@
 import { Modal } from "../../components/modal.js";
+import { CharCount } from "../../components/char_count.js";
 
 
 // Create array to hold modal objects
@@ -103,7 +104,15 @@ function checkHeader() {
 window.addEventListener('resize', checkHeader);
 window.addEventListener('load', checkHeader);
 
-
+// Create char count on comment form
+var commentFormPresent = document.getElementById("summernote-comment");
+if (commentFormPresent) {
+  const commentCharCount = new CharCount({
+    charField: document.getElementsByClassName("note-editable")[0],
+    charCount: document.getElementById("remaining-chars"),
+    summernote: true,
+  })
+}
 
 // Apply styling to user submitted image links
 const elements = document.querySelectorAll(".event-desc p");
