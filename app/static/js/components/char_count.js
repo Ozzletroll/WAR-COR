@@ -6,12 +6,8 @@ export class CharCount {
     this.summernote = summernote;
 
     this.updateCharCount();
-    this.charField.addEventListener("input", () => {
-      this.updateCharCount();
-    });
-    this.charField.addEventListener("keydown", () => {
-      this.updateCharCount();
-    });
+    this.charField.addEventListener("input", this.updateCharCount.bind(this));
+    this.charField.addEventListener("keydown", this.updateCharCount.bind(this));
   }
 
   updateCharCount() {
