@@ -186,12 +186,18 @@
 
       <div class="form-container form-container-small">
         <div class="campaign-form-label form-icon" aria-label="System">
-          <div class="campaign-form-label-container">
-            <img class="icon campaign-form-icon icon-invert" aria-label="System Symbol" alt="A stylised pen writing"
-            src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-            <label for="campaign-form-system">
-              <h4 id="negative-suffix-label" class="campaign-form label-title">System</h4>
-            </label>
+          <div class="campaign-form-label-container label-split">
+            <div class="label-left">
+              <img class="icon campaign-form-icon icon-invert" aria-label="System Symbol" alt="A stylised pen writing"
+              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
+              <label for="campaign-form-system">
+                <h4 id="negative-suffix-label" class="campaign-form label-title">System</h4>
+              </label>
+            </div>
+            <div class="label-right">
+              <h4 class="campaign-form label-title label-example">Characters left:&nbsp</h4>
+              <h4 id="remaining-chars-system" class="campaign-form label-title label-example">40</h4>
+            </div>
           </div>
           <p class="flavour-text" aria-label="Flavour Text">UWC-5-05 // Engagement::Directives</p>
         </div>
@@ -253,7 +259,6 @@
                loop_index=1) }}
 
 <script src="{{ url_for('static', filename='js/pages/campaign/campaign_form.js') }}" type="module"></script>
-<script src="{{ url_for('static', filename='js/components/char_count.js') }}"></script>
 <script src="{{ url_for('static', filename='js/components/unsaved_changes_warning.js') }}"></script>
 
 {% endblock %}
