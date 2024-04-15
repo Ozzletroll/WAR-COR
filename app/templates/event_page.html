@@ -273,7 +273,10 @@
                 <form class="form comment-form" method="post">
                   {{ form.csrf_token }}
                   {{ form.body(id="summernote-comment") }}
-                  {{ summernote.summernote_editor(placeholder="LEAVE A COMMENT", char_limit=300, id_suffix="-comment") }}
+                  {{ summernote.summernote_editor(placeholder="LEAVE A COMMENT", 
+                                                  char_limit=300, 
+                                                  allow_images=true, 
+                                                  id_suffix="-comment") }}
                   {{ form.submit(class_="button comment-submit") }}
                 </form>
               </div>
@@ -320,9 +323,6 @@
 <script src="{{ url_for('static', filename='js/pages/event/event.js') }}" type="module"></script>
 <script src="{{ url_for('static', filename='js/components/scroll_target.js') }}"></script>
 
-{% if comment_form_visible %}
-  <script src="{{ url_for('static', filename='js/components/char_count.js') }}"></script>
-{% endif %}
 
 <script>
   window.addEventListener('DOMContentLoaded', 
