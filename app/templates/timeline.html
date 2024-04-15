@@ -61,6 +61,7 @@
           {{ back_button.back_button(url=url, blank=true) }}
 
           <h3 id="campaigns-heading" class="campaigns-heading">{{campaign.title}}</h3>
+
         </div>
 
         <hr class="campaigns-divider" aria-hidden="true">
@@ -103,6 +104,16 @@
 
             {{ campaign.description | safe }}
             {{ members_list.members_list(campaign, edit=edit) }}
+
+            {% if campaign.system is not none %}
+              <div class="system-container">
+                <h4 class="campaign-entry-title system-title">System</h4>
+                <h6 class="system-text">
+                  [{{ campaign.system }}]
+                </h6>
+              </div>
+            {% endif %}
+
             <div id="last-edited-area" class="campaign-overview last-edited-area" aria-label="Last Edited Date">
               <h4 class="campaign-entry-title">Last Updated</h4>
               <p class="last-updated-text">{{ campaign.last_edited }}</p>

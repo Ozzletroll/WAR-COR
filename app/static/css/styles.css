@@ -2650,7 +2650,7 @@ p {
 
 .campaigns-title {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   text-align: left;
 }
 
@@ -2849,12 +2849,47 @@ p {
   margin: 0;
 }
 
+.campaign-members-system-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.system-container {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  gap: 15px;
+}
+
+.system-title {
+  margin: 0px;
+}
+
+.system-text {
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  color: var(--text_flavour);
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0px;
+  padding: 1px;
+  min-height: 22px;
+}
+
 .campaign-members {
   display: flex;
   flex-direction: column;
   margin: 0;
   gap: 15px;
   flex-wrap: wrap;
+  width: fit-content;
+}
+
+.members-list-timeline {
+  width: initial;
 }
 
 .members-list-title-area, .campaign-overview-title-area {
@@ -2912,7 +2947,7 @@ p {
 
 .campaign-members-list {
   font-size: clamp( 10px, 2vw, 14px);
-  margin: 0;
+  margin: 0px 0px 0px -5px;
   padding-left: 0;
   list-style: none;
   color: var(--text_flavour);
@@ -2940,7 +2975,7 @@ p {
 .callsign-text {
   display: flex;
   flex: 2 1 0px;
-  font-size: min(14px, 2.5vw);
+  font-size: 14px;
   font-weight: 400;
   margin: 0;
   flex-wrap: wrap;
@@ -3020,6 +3055,18 @@ p {
   }
 
   .campaign-edit-button-right {
+    display: none;
+  }
+
+  .callsign-text, .system-text {
+    font-size: 12px;
+  }
+
+}
+
+@media screen and (max-width: 350px) {
+
+  .admin-cell {
     display: none;
   }
 
@@ -4084,7 +4131,6 @@ p {
 
 .timeline-upper {
   background-color: transparent;
-  gap: 15px;
   margin-bottom: 50px;
 }
 

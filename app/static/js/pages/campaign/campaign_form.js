@@ -1,45 +1,18 @@
 import { Modal } from "../../components/modal.js";
+import { CharCount } from "../../components/char_count.js";
+import { SuffixExample } from "../../components/suffix_example.js";
 
 
-// Get the date suffix input field and the element to update
-var suffixField = document.getElementById("campaign-form-suffix");
-var negativeSuffixField = document.getElementById("campaign-form-negative-suffix");
+// Create instances of SuffixExamples to update the suffix preview text 
+const dateSuffixExample = new SuffixExample({
+  suffixField: document.getElementById("campaign-form-suffix"),
+  suffixExample: document.getElementById("example-date")
+})
 
-var exampleSuffixDate = document.getElementById("example-date");
-var exampleNegativeSuffixDate = document.getElementById("negative-example-date");
-
-// Store the initial suffix text
-var suffixText = exampleSuffixDate.textContent;
-var negativeSuffixText = exampleNegativeSuffixDate.textContent;
-
-// Function to update suffix example
-function updateSuffix(suffixField, exampleSuffixDate) {
-
-  var inputValue = suffixField.value;
-
-  // If the input value is shorter than the stored suffix text,
-  // remove the last character from the suffix text
-  if (inputValue.length < suffixText.length) {
-    suffixText = suffixText.slice(0, -1);
-  }
-
-  // Add the input value as a suffix to the element's text
-  exampleSuffixDate.textContent = suffixText + inputValue;
-}
-
-// Call updateSuffix once when the page loads to display the initial values
-updateSuffix(suffixField, exampleSuffixDate);
-updateSuffix(negativeSuffixField, exampleNegativeSuffixDate);
-
-// Add event listener to the input field
-suffixField.addEventListener("input", function() {
-  updateSuffix(suffixField, exampleSuffixDate);
-});
-
-negativeSuffixField.addEventListener("input", function() {
-  updateSuffix(negativeSuffixField, exampleNegativeSuffixDate);
-});
-
+const negativeDateSuffixExample = new SuffixExample({
+  suffixField: document.getElementById("campaign-form-negative-suffix"),
+  suffixExample: document.getElementById("negative-example-date")
+})
 
 // Function to match the "Date Suffix" header height with 
 // the "Negative Suffix" header when the negative suffix text
@@ -79,3 +52,15 @@ window.onclick = function(event) {
     imageHelpModal.closeModal();
   }
 }
+
+// Create char count instances
+const systemCharCount = new CharCount({
+  charField: document.getElementById("campaign-form-system"),
+  charCount: document.getElementById("remaining-chars-system"),
+})
+
+const descCharCount = new CharCount({
+  charField: document.getElementsByClassName("note-editable")[0],
+  charCount: document.getElementById("remaining-chars"),
+  summernote: true
+})

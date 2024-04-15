@@ -48,7 +48,7 @@ function matchOverviewHeight() {
   // Set matching height of overview elements for each pair of campaign cards
   var campaignOverviewElements = document.querySelectorAll(".campaign-entry-container .campaign-overview");
   var campaignHeaderElements = document.querySelectorAll(".campaign-header");
-  var campaignMemberElements = document.querySelectorAll(".campaign-members");
+  var campaignMemberElements = document.querySelectorAll(".campaign-members-system-row");
 
   for (var index = 0; index + 1 < campaignOverviewElements.length; index += 2) {
     var firstElement = campaignOverviewElements[index];

@@ -1,16 +1,26 @@
-const charField = document.getElementsByClassName("note-editable")[0];
-const charCount = document.getElementById("remaining-chars");
-const charLimit = parseInt(charCount.innerText);
+export class CharCount {
+  constructor({charField, charCount, summernote=false}) {
+    this.charField = charField;
+    this.charCount = charCount;
+    this.charLimit = parseInt(this.charCount.innerText);
+    this.summernote = summernote;
 
-function updateCharCount(charField) {
-    var currentChars = charField.textContent.length;
-    var remainingChars = charLimit - currentChars;
-    charCount.innerText = remainingChars;
+    this.updateCharCount();
+    this.charField.addEventListener("input", this.updateCharCount.bind(this));
+    this.charField.addEventListener("keydown", this.updateCharCount.bind(this));
+  }
+
+  updateCharCount() {
+    if (this.summernote) {
+      var currentChars = this.charField.textContent.length;
+    }
+    else {
+      var currentChars = this.charField.value.length;
+    }
+
+    var remainingChars = this.charLimit - currentChars;
+    this.charCount.innerText = remainingChars;
+    
+  }
+
 }
-
-updateCharCount(charField);
-
-// Add event listener to the input field
-charField.addEventListener("input", function() {
-  updateCharCount(charField);
-});
