@@ -19,7 +19,7 @@ export class Modal {
         this.closeModal(event)
       }
       
-      window.addEventListener("click", event => {
+      this.modal.addEventListener("click", event => {
         if (event.target == this.modal) {
           this.closeModal();
         }
