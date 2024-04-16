@@ -37,7 +37,6 @@
               </div>
                 
               <div class="form-layout">
-
                 <div class="auth-form-upper">
                   <div class="form-elem">
                     <div class="form-icon">
@@ -46,10 +45,12 @@
                       aria-label="Username Icon">
                     </div>
                     <div class="form-input-container">
-                      {{ form.username(placeholder_="USERNAME", 
+                      {{ form.username(id="auth-form-username",
+                                       placeholder_=" ",
                                        class_="form-input auth-form-input form-field", 
                                        autocomplete="off",
                                        aria_label="Username") }}
+                      <label for="auth-form-username" class="form-label">Username</label>
                       <div class="form-underline auth-form-underline"></div>
                     </div>
                   </div>
@@ -60,9 +61,11 @@
                       aria-label="Password Icon">
                     </div>
                     <div class="form-input-container">
-                      {{ form.password(placeholder_="PASSWORD", 
+                      {{ form.password(id="auth-form-password",
+                                       placeholder_=" ",
                                        class_="form-input auth-form-input form-field",
                                        aria_label="Password") }}
+                      <label for="auth-form-password" class="form-label">Password</label>
                       <div class="form-underline auth-form-underline"></div>
                     </div>
                   </div>

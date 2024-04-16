@@ -1778,6 +1778,36 @@ p {
   flex-direction: column;
   width: 100%;
   transition: 0.3s;
+  position: relative;
+}
+
+.form-label {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 18px;
+  color: var(--text_header_dark);
+  transition: 0.3s;
+  opacity: 0.6;
+  padding: 2px 4px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  cursor: text;
+}
+
+.form-input:focus + .form-label,
+.form-input:not(:placeholder-shown) + .form-label {
+  top: -15px;
+  left: 0px;
+  font-size: 12px;
+  background-color: var(--elem_dark);
+  opacity: 1;
+  padding-bottom: 0px;
+}
+
+.form-input:focus.form-input:hover + .form-label {
+  color: var(--text_header_hover);
+  background-color: var(--elem_hover);
 }
 
 .form-input {
@@ -1823,12 +1853,12 @@ p {
   bottom: 0px;
 }
 
-.form-input:focus + .form-underline::before {
+.form-input:focus ~ .form-underline::before {
   transform: scaleX(1);
   background-color: var(--bright_red);
 }
 
-.auth-form-input:focus + .form-underline::before {
+.auth-form-input:focus ~ .form-underline::before {
   transform: scaleX(1);
   border-bottom-left-radius: 0px;
 }
