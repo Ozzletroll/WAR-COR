@@ -46,10 +46,12 @@
                 aria-label="Email Icon">
               </div>
               <div class="form-input-container">
-                {{ form.email(placeholder_="EMAIL", 
+                {{ form.email(id="auth-form-email", 
+                              placeholder_=" ", 
                               class_="form-input auth-form-input form-field", 
                               autocomplete="off",
                               aria_label="Email") }}
+                <label for="auth-form-email" class="form-label">Email</label>
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
@@ -60,10 +62,12 @@
                 aria-label="Username Icon">
               </div>
               <div class="form-input-container">
-                {{ form.username(placeholder_="USERNAME", 
+                {{ form.username(id="auth-form-username",
+                                 placeholder_=" ", 
                                  class_="form-input auth-form-input form-field",
                                  autocomplete="off",
                                  aria_label="Username") }}
+                <label for="auth-form-username" class="form-label">Username</label>
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
@@ -74,9 +78,11 @@
                 aria-label="Password Icon">
               </div>
               <div class="form-input-container">
-                {{ form.password(placeholder_="PASSWORD", 
+                {{ form.password(id="auth-form-password",
+                                 placeholder_=" ",
                                  class_="form-input auth-form-input form-field",
                                  aria_label="Password") }}
+                <label for="auth-form-password" class="form-label">Password</label>
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
@@ -87,9 +93,11 @@
                 aria-label="Confirm Password Icon">
               </div>
               <div class="form-input-container">
-                {{ form.confirm_password(placeholder_="CONFIRM_PASSWORD", 
+                {{ form.confirm_password(id="auth-form-confirm-password",
+                                         placeholder_=" ", 
                                          class_="form-input auth-form-input form-field",
                                          aria_label="Confirm Password") }}
+                <label for="auth-form-confirm-password" class="form-label">Confirm Password</label>
                 <div class="form-underline auth-form-underline"></div>
               </div>
             </div>
