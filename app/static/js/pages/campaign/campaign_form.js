@@ -46,13 +46,6 @@ const imageHelpModal = new Modal({
   span: document.getElementById("help-close-1"),
 })
 
-// Close modals if the user clicks anywhere else
-window.onclick = function(event) {
-  if (event.target == imageHelpModal.modal) {
-    imageHelpModal.closeModal();
-  }
-}
-
 // Create char count instances
 const systemCharCount = new CharCount({
   charField: document.getElementById("campaign-form-system"),

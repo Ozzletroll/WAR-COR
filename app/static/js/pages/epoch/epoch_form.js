@@ -56,27 +56,3 @@ if (modalDeleteTest != null) {
     span: document.getElementById("epoch-close-0"),
   })
 }
-
-// Close modals if the user clicks anywhere else
-window.onclick = function(event) {
-  if (event.target == modal_1.modal) {
-    modal_1.closeModal();
-  }
-  if (event.target == modal_2.modal) {
-    modal_2.closeModal();
-  }
-  if (event.target == modal_3.modal) {
-    modal_3.closeModal();
-  }
-  if (event.target == modal_4.modal) {
-    modal_4.closeModal();
-  }
-  if (event.target == modal_preview.modal) {
-    modal_preview.closeModal();
-  }
-  if (modalDeleteTest != null) {
-    if (event.target == modalDelete.modal) {
-      modalDelete.closeModal();
-    }
-  }
-}

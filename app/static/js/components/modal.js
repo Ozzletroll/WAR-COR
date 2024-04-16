@@ -17,7 +17,13 @@ export class Modal {
   
       this.span.onclick = event => {
         this.closeModal(event)
-      } 
+      }
+      
+      window.addEventListener("click", event => {
+        if (event.target == this.modal) {
+          this.closeModal();
+        }
+      });
   
     }
     

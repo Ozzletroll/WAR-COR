@@ -201,10 +201,4 @@ buttons.forEach((button, index) => {
     span: spans[index],
   })
   modalItems.push(modal)
-  window.addEventListener('click', function(event) {
-    if (event.target == modal.modal) {
-      modal.closeModal();
-    }
-  });
-  
 });
