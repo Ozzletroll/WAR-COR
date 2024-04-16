@@ -1784,7 +1784,7 @@ p {
 .form-label {
   position: absolute;
   top: 2px;
-  left: 5px;
+  left: 0px;
   font-size: 18px;
   color: var(--text_header_dark);
   transition: 0.3s;
