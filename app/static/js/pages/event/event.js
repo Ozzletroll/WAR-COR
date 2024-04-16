@@ -18,17 +18,7 @@ buttons.forEach((button, index) => {
     button: button,
     span: spans[index],
   })
-
-  // Append object to array
   modalItems.push(modal)
-
-  // Add click event listener to close the modal when clicking outside
-  window.addEventListener('click', function(event) {
-    if (event.target == modal.modal) {
-      modal.closeModal();
-    }
-  });
-  
 });
 
 // Show/hide lower adjacent element links based on event-main-container height
