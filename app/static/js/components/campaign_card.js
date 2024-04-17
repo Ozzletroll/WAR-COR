@@ -5,7 +5,6 @@ export class CampaignCard {
     }) {
       this.tab = tab;
       this.button = button;
-      this.corner = this.button.parentNode.querySelector(".campaign-corner");
       this.state = false;
   
       const handleClick = event => {
@@ -32,7 +31,7 @@ export class CampaignCard {
       this.tab.style.display = "flex";
       this.tab.style.maxHeight = "fit-content";
       this.button.style.borderBottomLeftRadius = "0px";
-      this.corner.style.borderBottomRightRadius = "0px";
+      this.button.style.borderBottomRightRadius = "0px";
       this.state = true
     }
   
@@ -40,7 +39,7 @@ export class CampaignCard {
       this.tab.style.maxHeight = "0";
       this.tab.style.display = "none";
       this.button.style.borderBottomLeftRadius = "5px";
-      this.corner.style.borderBottomRightRadius = "5px";
+      this.button.style.borderBottomRightRadius = "5px";
       this.state = false;
     }
   
