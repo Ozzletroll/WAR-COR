@@ -92,11 +92,14 @@ def date_is_after():
     return _date_is_after
 
 
-def plain_text_length(max=600):
+def plain_text_length(max=600, required=False):
 
     def _plain_text_length(form, field):
         plain_text = bleach.clean(field.data, tags=[], strip=True)
-        if len(plain_text) > max:
-            raise ValidationError(f"Field must be less than {max} characters")
+        if required and len(plain_text) == 0:
+            raise ValidationError("This field is required")
+        if max is not None:
+            if len(plain_text) > max:
+                raise ValidationError(f"Field must be less than {max} characters")
         
     return _plain_text_length
