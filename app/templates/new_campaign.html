@@ -51,17 +51,12 @@
       <div class="campaigns-title">
 
         {# Back button #}
-        {% if request.referrer %}
-          {% if "/new-campaign" not in request.referrer %}
-            {% set url = request.referrer %}
-          {% else %}
-            {% set url = url_for('campaign.campaigns') %}
-          {% endif %}
+        {% if session["previous_url"] %}
+          {% set url = session["previous_url"] %}
         {% else %}
-            {% set url = url_for('campaign.campaigns') %}
+          {% set url = url_for("campaign.campaigns") %}
         {% endif %}
         {{ back_button.back_button(url=url, blank=false) }}
-
 
         {% if edit %}
           <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
