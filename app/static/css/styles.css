@@ -2806,7 +2806,7 @@ p {
   position: relative;
 }
 
-.campaign-header:focus-visible, .campaign-header:focus-visible + .campaign-corner {
+.campaign-header:focus-visible {
   background-color: var(--bright_red);
 }
 
@@ -3262,25 +3262,21 @@ p {
     border-bottom-left-radius: 0px;
   }
 
-  .campaign-header-section:hover > .campaign-header,
-  .campaign-header-section:hover > .campaign-corner {
+  .campaign-header-section:hover > .campaign-header{
     background-color: var(--dark_red);
   }
 
-  .campaign-header-section:active > .campaign-header,
-  .campaign-header-section:active > .campaign-corner {
+  .campaign-header-section:active > .campaign-header {
     transition: 0.2s;
     background-color: var(--bright_red);
     color: var(--darker_red);
   }
 
-  .campaign-new-user-header:hover > .campaign-header,
-  .campaign-new-user-header:hover > .campaign-corner {
+  .campaign-new-user-header:hover > .campaign-header {
     background-color: var(--darker_red);
   }
 
-  .campaign-new-user-header:active > .campaign-header,
-  .campaign-new-user-header:active > .campaign-corner {
+  .campaign-new-user-header:active > .campaign-header {
     background-color: var(--darker_red);
     color: var(--text_header_contrast);
   }
