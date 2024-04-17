@@ -55,8 +55,14 @@ def image_url():
             else:
                 raise ValidationError("URL must be a valid image link")
         
+        except exceptions.ConnectionError:
+            raise ValidationError("Invalid URL. The server could not be reached.")
+
         except exceptions.MissingSchema:
             raise ValidationError("URL must be a valid image link")
+    
+        except Exception:
+            raise ValidationError("Unforeseen error occurred while validating URL")
 
         else:
             if request.headers["content-type"] not in allowed_filetypes:
