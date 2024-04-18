@@ -51,7 +51,7 @@ def register():
             login_user(user)
             return redirect(url_for("campaign.campaigns"))
 
-    return render_template("register.html", form=form)
+    return render_template("pages/register.html", form=form)
 
 
 # Existing user login
@@ -84,7 +84,7 @@ def login():
             flash("Incorrect password or username")
             return redirect(url_for("user.login"))
 
-    return render_template("login.html", form=form)
+    return render_template("pages/login.html", form=form)
 
 
 # Logout user
@@ -120,7 +120,7 @@ def user_page(username):
     if request.referrer and "/user" not in request.referrer:
         session["previous_url"] = request.referrer
 
-    return render_template("user_page.html",
+    return render_template("pages/user_page.html",
                            user=user,
                            remove_form = remove_form,
                            callsign_form=callsign_form,
@@ -275,7 +275,7 @@ def delete_user(username):
     else:
         # Change LoginForm submit button text
         form.submit.label.text = "Terminate Contract"
-        return render_template("delete_user.html", form=form, user=user)
+        return render_template("pages/delete_user.html", form=form, user=user)
 
 
 # Function called when recovering password
@@ -300,7 +300,7 @@ def request_password_reset():
             else:
                 flash("No account matching given email found. Please check your email address and try again")
 
-        return render_template("password_recovery.html",
+        return render_template("pages/password_recovery.html",
                                form=form)
     
     else:
@@ -327,4 +327,4 @@ def reset_password(token):
             flash("Password updated, please login using new password")
         return redirect(url_for("user.login"))
 
-    return render_template("password_reset.html", form=form)
+    return render_template("pages/password_reset.html", form=form)

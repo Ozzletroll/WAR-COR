@@ -4,6 +4,7 @@ from flask_login import current_user
 from app.forms import forms
 from app import db, models, limiter
 import app.utils.search as search
+
 from app.routes.search import bp
 
 
@@ -54,13 +55,13 @@ def advanced_search(campaign_name, campaign_id):
                 if campaign in current_user.permissions:
                     edit = True
 
-            return render_template("advanced_search.html",
+            return render_template("pages/advanced_search.html",
                                    form=form,
                                    campaign=campaign,
                                    results=results,
                                    edit=edit)
 
-    return render_template("advanced_search.html",
+    return render_template("pages/advanced_search.html",
                            form=form,
                            campaign=campaign,
                            results=results)

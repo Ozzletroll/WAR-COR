@@ -1,5 +1,4 @@
 from flask import render_template, redirect, request, url_for, flash, session
-from sqlalchemy import select
 from flask_login import login_required
 
 from app import db, models, limiter
@@ -41,7 +40,7 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
         if len(url_titles_found) == 0 and "/edit" not in request.referrer:
             can_use_referrer = True
 
-    return render_template("epoch_page.html",
+    return render_template("pages/epoch_page.html",
                            campaign=campaign,
                            epoch=epoch,
                            timeline_data=timeline_data,
@@ -100,7 +99,7 @@ def new_epoch(campaign_name, campaign_id):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_epoch.html",
+    return render_template("pages/new_epoch.html",
                            campaign=campaign,
                            campaign_name=campaign.url_title,
                            form=form,
@@ -146,7 +145,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     # Change form label to 'update'
     form.submit.label.text = "Update Epoch"
 
-    return render_template("new_epoch.html",
+    return render_template("pages/new_epoch.html",
                            campaign=campaign,
                            campaign_name=campaign.url_title,
                            form=form,

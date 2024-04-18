@@ -95,7 +95,7 @@ def backup_page(campaign_name, campaign_id):
         for error_message in errors:
             flash(error_message)
 
-    return render_template("backup.html", campaign=campaign, form=form)
+    return render_template("pages/backup.html", campaign=campaign, form=form)
 
 
 # Backup campaign data

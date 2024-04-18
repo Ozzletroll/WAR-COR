@@ -1,5 +1,4 @@
 from flask import render_template, redirect, request, url_for, session, flash, make_response
-from sqlalchemy import select
 from flask_login import login_required, current_user
 from datetime import datetime
 
@@ -11,6 +10,7 @@ import app.utils.messengers as messengers
 
 from app.routes.event import bp
 
+
 #   =======================================
 #                  Event
 #   =======================================
@@ -20,17 +20,16 @@ from app.routes.event import bp
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
 @limiter.limit("60/minute")
 def view_event(campaign_name, campaign_id, event_name, event_id):
-
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
              .first_or_404(description="No matching event found"))
-    
+
     campaign = event.parent_campaign
 
     authenticators.check_campaign_visibility(campaign)
     comment_form_visible = authenticators.check_comment_form_visibility(campaign)
 
-    belligerents = event.separate_belligerents() 
+    belligerents = event.separate_belligerents()
 
     form = forms.CommentForm()
     delete_form = forms.SubmitForm()
@@ -40,7 +39,6 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
 
     # Check if new comment submitted
     if form.validate_on_submit():
-        
         # Check user is allowed to comment
         authenticators.check_campaign_comment_status(campaign)
 
@@ -55,23 +53,23 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                                              recipients=campaign.members,
                                              campaign=campaign,
                                              event=event)
-        
+
         # Set scroll to target to newly created comment
         session["comment_scroll_target"] = f"comment-{comment.id}"
 
-        return redirect(url_for('event.view_event', 
+        return redirect(url_for('event.view_event',
                                 campaign_name=campaign.url_title,
-                                campaign_id=campaign.id, 
+                                campaign_id=campaign.id,
                                 event_name=event.url_title,
                                 event_id=event.id))
 
-    return render_template("event_page.html",
-                            event=event,
-                            campaign=campaign,
-                            belligerents=belligerents,
-                            form=form,
-                            delete_form=delete_form,
-                            comment_form_visible=comment_form_visible)
+    return render_template("pages/event_page.html",
+                           event=event,
+                           campaign=campaign,
+                           belligerents=belligerents,
+                           form=form,
+                           delete_form=delete_form,
+                           comment_form_visible=comment_form_visible)
 
 
 # Add new event
@@ -79,7 +77,6 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
 @login_required
 @limiter.limit("60/minute")
 def add_event(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -139,8 +136,8 @@ def add_event(campaign_name, campaign_id):
             flash(field_name + ": " + error_message)
 
     # Flag "new" to hide searchbar and edit page toggle
-    return render_template("new_event.html", 
-                           form=form, 
+    return render_template("pages/new_event.html",
+                           form=form,
                            campaign=campaign,
                            new=True)
 
@@ -150,11 +147,10 @@ def add_event(campaign_name, campaign_id):
 @login_required
 @limiter.limit("60/minute")
 def edit_event(campaign_name, campaign_id, event_name, event_id):
-
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
              .first_or_404(description="No matching event found"))
-    
+
     campaign = event.parent_campaign
 
     # Check if the user has permissions to edit the target campaign.
@@ -168,7 +164,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
 
     if form.validate_on_submit():
         # Update event object using form data
-        event.update(form=form.data, 
+        event.update(form=form.data,
                      parent_campaign=campaign)
 
         # Update "following_event" relationships for all events
@@ -177,7 +173,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         # Update all epochs
         campaign.check_epochs()
 
-        return redirect(url_for("campaign.edit_timeline", 
+        return redirect(url_for("campaign.edit_timeline",
                                 campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
 
@@ -189,7 +185,7 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_event.html",
+    return render_template("pages/new_event.html",
                            campaign=campaign,
                            campaign_name=campaign.url_title,
                            event_name=event.url_title,
@@ -204,11 +200,10 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
 @login_required
 @limiter.limit("60/minute")
 def delete_event(campaign_name, campaign_id, event_name, event_id):
-
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
              .first_or_404(description="No matching event found"))
-    
+
     campaign = event.parent_campaign
 
     # Check if the user has permissions to edit the target campaign.
@@ -231,19 +226,19 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
 
 
 # Delete comment
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment-<comment_id>/delete", methods=["POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment-<comment_id>/delete",
+          methods=["POST"])
 @login_required
 @limiter.limit("60/minute")
 def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id):
-    
     target_comment_id = comment_id
 
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
              .first_or_404(description="No matching event found"))
-    
+
     campaign = event.parent_campaign
-    
+
     comment = (db.session.query(models.Comment)
                .filter(models.Comment.id == target_comment_id)
                .first_or_404(description="No matching comment found"))
@@ -261,8 +256,8 @@ def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id)
         db.session.delete(comment)
         db.session.commit()
 
-    return redirect(url_for('event.view_event', 
+    return redirect(url_for('event.view_event',
                             campaign_name=campaign.url_title,
-                            campaign_id=campaign.id, 
+                            campaign_id=campaign.id,
                             event_name=event.url_title,
                             event_id=event.id))

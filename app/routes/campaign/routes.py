@@ -28,7 +28,7 @@ def campaigns():
     # Clear any existing event scroll target
     session.pop("timeline_scroll_target", None)
 
-    return render_template("campaigns.html", 
+    return render_template("pages/campaigns.html", 
                            campaigns=campaigns)
 
 
@@ -53,7 +53,7 @@ def show_timeline(campaign_name, campaign_id):
     # Set advanced search back button route,
     session["previous_url"] = request.url
 
-    return render_template("timeline.html", 
+    return render_template("pages/timeline.html", 
                            campaign=campaign, 
                            timeline_data=timeline_data)
 
@@ -80,7 +80,7 @@ def edit_timeline(campaign_name, campaign_id):
     # Set advanced search back button route,
     session["previous_url"] = request.url
 
-    return render_template("timeline.html", 
+    return render_template("pages/timeline.html", 
                            campaign=campaign, 
                            timeline_data=timeline_data,
                            edit=True)
@@ -119,7 +119,7 @@ def create_campaign():
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_campaign.html", 
+    return render_template("pages/new_campaign.html", 
                            form=form)
 
 
@@ -156,7 +156,7 @@ def edit_campaign(campaign_name, campaign_id):
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("new_campaign.html", 
+    return render_template("pages/new_campaign.html", 
                            form=form, 
                            campaign=campaign,
                            edit=True)
@@ -204,6 +204,6 @@ def delete_campaign(campaign_name, campaign_id):
         # Change LoginForm submit button text
         form.submit.label.text = "Delete Campaign"
 
-        return render_template("delete_campaign.html", 
+        return render_template("pages/delete_campaign.html", 
                                form=form, 
                                campaign=campaign)

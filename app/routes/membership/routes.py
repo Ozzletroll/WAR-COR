@@ -37,7 +37,7 @@ def edit_campaign_users(campaign_name, campaign_id):
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
-    return render_template("campaign_members.html", 
+    return render_template("pages/campaign_members.html", 
                            campaign=campaign, 
                            search_form=search_form,
                            add_form=add_form,
@@ -222,7 +222,7 @@ def join_campaign():
                 flash("No campaigns matching query found")
                 return redirect(url_for("membership.join_campaign"))
 
-            return render_template("join_campaign.html",
+            return render_template("pages/join_campaign.html",
                                    form=form,
                                    request_form=request_form,
                                    results=results)
@@ -232,7 +232,7 @@ def join_campaign():
         for error_message in errors:
             flash(field_name + ": " + error_message)
 
-    return render_template("join_campaign.html",
+    return render_template("pages/join_campaign.html",
                            form=form,
                            request_form=request_form,
                            results=results)
