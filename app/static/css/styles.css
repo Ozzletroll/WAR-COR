@@ -2690,7 +2690,7 @@ p {
 
 .campaigns-title {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   text-align: left;
 }
 
