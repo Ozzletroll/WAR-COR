@@ -3,7 +3,7 @@
 
 <li id="message-{{message.id}}" class="message-item" aria-label="Invite: {{ message.date }}">
   <h4 class="message-header">INVITE {{message.date}}</h4>   
-  <p class=message-body aria-label="Message Text">{{message.body}}</p>
+  <p class=message-body aria-label="Message Text">{{ message.body | safe }}</p>
   <div class="message-button-area">
 
     <button id="message-accept-{{ message.id }}" class="button message-button accept-button" tabindex="-1" 
@@ -33,7 +33,7 @@
 
   <li id="message-{{message.id}}" class="message-item" aria-label="Alert: New Event {{ message.date }}">
     <h4 class="message-header">ALERT {{message.date}}</h4>
-    <p class=message-body aria-label="Message Text">{{message.body}}</p>
+    <p class=message-body aria-label="Message Text">{{ message.body | safe }}</p>
     <div class="message-button-area">
       {% if message.target_event is not none %}
         <button id="view-message-{{ message.id }}" class="button message-button accept-button" tabindex="-1"
@@ -64,7 +64,7 @@
 {% macro request(message) %}
   <li id="message-{{message.id}}" class="message-item">
     <h4 class="message-header">REQUEST {{message.date}}</h4>   
-    <div class=message-body>{{message.body}}</div>
+    <div class=message-body>{{ message.body | safe }}</div>
     <div class="message-button-area">
 
       <button id="invite-accept-{{ message.id }}" class="button message-button accept-button" tabindex="-1"

@@ -3,11 +3,11 @@ from bleach.css_sanitizer import CSSSanitizer
 from bs4 import BeautifulSoup
 
 
-def sanitise_input(value, allow_images=True):
+def sanitise_input(value, allow_images=True, comment_text=False):
     """ Method to sanitise user submitted html input. Uses Bleach
         and CSSSanitizer. """
 
-    allowed_tags = ["p", "b", "i", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol"]
+    allowed_tags = ["p", "b", "i", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol", "strong"]
     if not allow_images:
         allowed_tags.remove("img")
         
@@ -26,10 +26,14 @@ def sanitise_input(value, allow_images=True):
                          css_sanitizer=css_sanitiser)
 
     # Wrap any text without tags in <p> tags
-    soup = BeautifulSoup(value, "html.parser")
-    for text in soup.find_all(string=True):
-        if text.parent.name not in allowed_tags:
-            new_tag = soup.new_tag("p")
-            text.wrap(new_tag)
-
-    return str(soup)
+    # Not applicable for comment message text
+    if not comment_text:
+        soup = BeautifulSoup(value, "html.parser")
+        for text in soup.find_all(string=True):
+            if text.parent.name not in allowed_tags:
+                new_tag = soup.new_tag("p")
+                text.wrap(new_tag)
+        return str(soup)
+    else:
+        return value
+    

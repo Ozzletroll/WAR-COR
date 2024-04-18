@@ -3,8 +3,10 @@ from datetime import datetime
 from sqlalchemy import select
 from mailersend import emails
 
+from app.utils.sanitisers import sanitise_input
 from app import models
 from app import db
+
 
 
 def send_invite_message(sender, recipient, campaign):
@@ -28,11 +30,13 @@ def send_invite_message(sender, recipient, campaign):
 
     # Otherwise, create a new message
     else:
+        message_text = f"<strong>{sender.username}</strong> has invited you to the campaign <strong>{campaign.title}</strong>"
+
         message = models.Message()
 
         message.author = sender
         message.invite = True
-        message.body = f"{sender.username} has invited you to the campaign: {campaign.title}"
+        message.body = sanitise_input(message_text, comment_text=True)
         message.target_user = recipient
         message.target_campaign = campaign
         message.date = datetime.now()
@@ -69,11 +73,13 @@ def send_membership_request(sender, recipients, campaign):
 
     # Otherwise, create a new message
     else:
+        message_text = f"<strong>{sender_username}</strong> has requested to join the campaign <strong>{campaign_title}<strong>"
+
         message = models.Message()
 
         message.author = sender
         message.request = True
-        message.body = f"{sender_username} has requested to join the campaign: {campaign_title}"
+        message.body = sanitise_input(message_text, comment_text=True)
         message.target_user = sender
         message.target_campaign = campaign
         message.date = datetime.now()
@@ -93,12 +99,13 @@ def send_new_member_notification(sender, recipients, campaign, new_user_username
 
     # Get body values here rather than in f string to avoid SAWarning from autoflush process
     campaign_title = campaign.title
+    message_text = f"<strong>{new_user_username}</strong> has joined the campaign <strong>{campaign_title}</strong>"
 
     message = models.Message()
 
     message.author = sender
     message.notification = True
-    message.body = f"{new_user_username} has joined the campaign: {campaign_title}"
+    message.body = sanitise_input(message_text, comment_text=True)
     message.target_campaign = campaign
     message.date = datetime.now()
 
@@ -117,12 +124,13 @@ def send_event_notification(sender, recipients, campaign, event):
     # Get body values here rather than in f string to avoid SAWarning from autoflush process
     campaign_title = campaign.title
     event_title = event.title
+    message_text = f"The campaign <strong>{campaign_title}</strong> has been updated with the new event <strong>{event_title}</strong>"
 
     message = models.Message()
 
     message.author = sender
     message.notification = True
-    message.body = f"The campaign: {campaign_title} has been updated with the new event: {event_title}"
+    message.body = sanitise_input(message_text, comment_text=True)
     message.target_campaign = campaign
     message.target_event = event
     message.date = datetime.now()
@@ -141,9 +149,10 @@ def send_comment_notification(sender, recipients, campaign, event):
     Message is added to all recipients messages list."""
 
     def format_message(message):
+        message_text = f"New comments for event <strong>{event_title}</strong> in campaign <strong>{campaign_title}</strong>"
         message.author = sender
         message.notification = True
-        message.body = f"New comments for event: '{event_title}' in campaign: '{campaign_title}'."
+        message.body = sanitise_input(message_text, comment_text=True)
         message.target_campaign = campaign
         message.target_event = event
         message.date = datetime.now()

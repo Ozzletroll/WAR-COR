@@ -770,7 +770,7 @@ p {
   flex-direction: column;
   width: 100%;
   background-color: var(--elem_dark);
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
+  clip-path: polygon(0 0, calc(100% - 10.00px) 0,100% 10.00px,102% 102%, 0 102%);
   border-radius: 5px;
   border: 1px solid var(--darker_red);
 }
@@ -783,7 +783,7 @@ p {
   border-style: none;
   margin-bottom: 5px;
   margin-top: 0;
-  border-top-left-radius: 5px;
+  border-top-left-radius: 3px;
   font-size: 14px;
 }
 
@@ -834,6 +834,11 @@ p {
   text-transform: uppercase;
   text-align: center;
   padding: 10px 20px;
+}
+
+.message-body strong {
+  font-weight: 500;
+  color: var(--text_header);
 }
 
 .message-button-area {
