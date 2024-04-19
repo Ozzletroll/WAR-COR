@@ -275,7 +275,8 @@
                   {{ form.body(id="summernote-comment") }}
                   {{ summernote.summernote_editor(placeholder="LEAVE A COMMENT", 
                                                   char_limit=300, 
-                                                  allow_images=true, 
+                                                  allow_images=true,
+                                                  allow_urls=true,  
                                                   id_suffix="-comment") }}
                   {{ form.submit(class_="button comment-submit") }}
                 </form>

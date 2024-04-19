@@ -74,8 +74,13 @@ class Epoch(db.Model):
                     self.end_month = self.split_date(form_value)[1]
                     self.end_day = self.split_date(form_value)[2]
 
-                elif matching_field in ["description", "overview"]:
+                elif matching_field == "description":
                     form_value = sanitise_input(form_value)
+                    if form_value in ["<p><br></p>", ""]:
+                        form_value = None
+
+                elif matching_field == "overview":
+                    form_value = sanitise_input(form_value, allow_urls=False)
                     if form_value in ["<p><br></p>", ""]:
                         form_value = None
 

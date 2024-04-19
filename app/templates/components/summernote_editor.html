@@ -2,11 +2,18 @@
     Summernote editor configuration component.
 #}
 
-{% macro summernote_editor(placeholder="REQUIRED", char_limit=none, id_suffix=none, allow_images=false) %}
+{% macro summernote_editor(placeholder="REQUIRED", 
+                           char_limit=none, 
+                           id_suffix=none, 
+                           allow_images=false,
+                           allow_urls=false) %}
 
     {% set height = "fit-content" %}
     {% if allow_images %}
       {% set allow_images = "picture" %}
+    {% endif %}
+    {% if allow_urls%}
+      {% set allow_urls = "link" %}
     {% endif %}
 
     {% if char_limit is not none %}
@@ -55,7 +62,7 @@
               ['style', ['style']],
               ['font', ['bold', 'italic', 'underline', 'clear']],
               ['para', ['ul', 'ol', 'paragraph']],,
-              ['insert', ['link', "{{ allow_images }}"]]
+              ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
           ],
           popover: {
             image: [
@@ -98,7 +105,7 @@
               ['style', ['style']],
               ['font', ['bold', 'italic', 'underline', 'clear']],
               ['para', ['ul', 'ol', 'paragraph']],,
-              ['insert', ['link', "{{ allow_images }}"]]
+              ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
           ],
           popover: {
             image: [

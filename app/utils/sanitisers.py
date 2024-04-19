@@ -2,12 +2,14 @@ import nh3
 from bs4 import BeautifulSoup
 
 
-def sanitise_input(value, allow_images=True, message_body=False):
+def sanitise_input(value, allow_images=True, allow_urls=True, message_body=False):
     """ Method to sanitise user submitted html input using nh3. """
 
     allowed_tags = {"p", "b", "i", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol", "strong"}
     if not allow_images:
         allowed_tags.remove("img")
+    if not allow_urls:
+        allowed_tags.remove("a")
 
     allowed_attrs = {
         "*": {"class"},
