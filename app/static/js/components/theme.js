@@ -50,7 +50,9 @@ function setHORUSStyling() {
         return;
       }
       else if (element.tagName == "P" 
-      && (element.querySelector("img") == null)
+      && !element.querySelector("img")
+      && !element.querySelector("a")
+      && !element.querySelector("br")
       && !excludedElements.some(className => element.classList.contains(className))
       ) {
           // Split paragraph into words
