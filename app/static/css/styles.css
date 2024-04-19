@@ -6165,6 +6165,17 @@ pre {
   color: var(--text_dark);
 }
 
+.comment-body a,
+.comment-body a:visited {
+  color: var(--text_header);
+  font-weight: 500;
+}
+
+.comment-body a:hover {
+  color: var(--text_header_hover);
+  font-weight: 500;
+}
+
 .comment-body p img {
   max-width: 100% !important;
   height: auto !important;
@@ -6189,6 +6200,17 @@ pre {
   font-size: min(18px, 4vw);
   color: var(--text_header);
   padding: 0;
+}
+
+.event-desc a,
+.event-desc a:visited {
+  color: var(--text_header);
+  font-weight: 500;
+}
+
+.event-desc a:hover {
+  color: var(--text_header_hover);
+  font-weight: 500;
 }
 
 .event-desc p img {
@@ -6262,6 +6284,26 @@ pre {
   box-sizing: border-box;
   border: 1px solid var(--darker_red);
   font-size: min(3vw, 14px);
+}
+
+/* Epoch overview user HTML elements */
+
+.epoch-description h1 {
+  font-size: min(24px, 5vw);
+  color: var(--text_header);
+  padding: 0;
+}
+
+.epoch-description h2 {
+  font-size: min(20px, 4.5vw);
+  color: var(--text_header);
+  padding: 0;
+}
+
+.epoch-description h3 {
+  font-size: min(18px, 4vw);
+  color: var(--text_header);
+  padding: 0;
 }
 
 /* Epoch Page */
