@@ -36,7 +36,7 @@ def send_invite_message(sender, recipient, campaign):
 
         message.author = sender
         message.invite = True
-        message.body = sanitise_input(message_text, comment_text=True)
+        message.body = sanitise_input(message_text, message_body=True)
         message.target_user = recipient
         message.target_campaign = campaign
         message.date = datetime.now()
@@ -79,7 +79,7 @@ def send_membership_request(sender, recipients, campaign):
 
         message.author = sender
         message.request = True
-        message.body = sanitise_input(message_text, comment_text=True)
+        message.body = sanitise_input(message_text, message_body=True)
         message.target_user = sender
         message.target_campaign = campaign
         message.date = datetime.now()
@@ -105,7 +105,7 @@ def send_new_member_notification(sender, recipients, campaign, new_user_username
 
     message.author = sender
     message.notification = True
-    message.body = sanitise_input(message_text, comment_text=True)
+    message.body = sanitise_input(message_text, message_body=True)
     message.target_campaign = campaign
     message.date = datetime.now()
 
@@ -130,7 +130,7 @@ def send_event_notification(sender, recipients, campaign, event):
 
     message.author = sender
     message.notification = True
-    message.body = sanitise_input(message_text, comment_text=True)
+    message.body = sanitise_input(message_text, message_body=True)
     message.target_campaign = campaign
     message.target_event = event
     message.date = datetime.now()
@@ -152,7 +152,7 @@ def send_comment_notification(sender, recipients, campaign, event):
         message_text = f"New comments for event <strong>{event_title}</strong> in campaign <strong>{campaign_title}</strong>"
         message.author = sender
         message.notification = True
-        message.body = sanitise_input(message_text, comment_text=True)
+        message.body = sanitise_input(message_text, message_body=True)
         message.target_campaign = campaign
         message.target_event = event
         message.date = datetime.now()

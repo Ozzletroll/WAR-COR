@@ -3,7 +3,7 @@ from bleach.css_sanitizer import CSSSanitizer
 from bs4 import BeautifulSoup
 
 
-def sanitise_input(value, allow_images=True, comment_text=False):
+def sanitise_input(value, allow_images=True, message_body=False):
     """ Method to sanitise user submitted html input. Uses Bleach
         and CSSSanitizer. """
 
@@ -19,15 +19,14 @@ def sanitise_input(value, allow_images=True, comment_text=False):
     }
     allowed_styles = ["height", "width", "margin-left"]
 
-    css_sanitiser = CSSSanitizer(allowed_css_properties=allowed_styles)
     value = bleach.clean(value,
                          tags=allowed_tags,
                          attributes=allowed_attrs,
-                         css_sanitizer=css_sanitiser)
+                         css_sanitizer=CSSSanitizer(allowed_css_properties=allowed_styles))
 
     # Wrap any text without tags in <p> tags
-    # Not applicable for comment message text
-    if not comment_text:
+    # Not applicable for message body text
+    if not message_body:
         soup = BeautifulSoup(value, "html.parser")
         for text in soup.find_all(string=True):
             if text.parent.name not in allowed_tags:
