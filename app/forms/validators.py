@@ -1,7 +1,6 @@
 from wtforms.validators import ValidationError
 import re
-import bleach
-
+import nh3
 from urllib.error import HTTPError
 from requests import Session, exceptions
 
@@ -95,7 +94,9 @@ def date_is_after():
 def plain_text_length(max=600, required=False):
 
     def _plain_text_length(form, field):
-        plain_text = bleach.clean(field.data, tags=[], strip=True)
+        
+        plain_text = nh3.clean(field.data, tags=set())
+
         if required and len(plain_text) == 0:
             raise ValidationError("This field is required")
         if max is not None:
