@@ -190,7 +190,7 @@ def events_import(event):
 
 
 def epochs_import(epoch):
-    """Creates new epoch from jsons epochs list item."""    
+    """Creates new epoch from json epochs list item."""    
 
     new_epoch = models.Epoch()
     errors = []
