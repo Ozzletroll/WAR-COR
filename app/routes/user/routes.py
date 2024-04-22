@@ -318,6 +318,7 @@ def reset_password(token):
     # Verify that password reset token is valid
     user = models.User.verify_password_reset_token(token)
     if not user:
+        flash("Token has either expired of is invalid")
         return redirect(url_for("home.home"))
     
     form = forms.ResetPasswordForm()
