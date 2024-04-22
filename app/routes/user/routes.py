@@ -280,7 +280,7 @@ def delete_user(username):
 
 # Function called when recovering password
 @bp.route("/user/request-password-reset", methods=["GET", "POST"])
-@limiter.limit("3/day")
+@limiter.limit("3/day", methods=["POST"])
 def request_password_reset():
 
     # Check if user is not logged in
@@ -309,7 +309,7 @@ def request_password_reset():
 
 # Function called via recovery email url
 @bp.route("/user/reset-password/<token>", methods=["GET", "POST"])
-@limiter.limit("3/day")
+@limiter.limit("60/minute")
 def reset_password(token): 
 
     if current_user.is_authenticated:
