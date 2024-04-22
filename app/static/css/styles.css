@@ -2819,6 +2819,10 @@ p {
   outline-offset: -15px;
 }
 
+.campaign-header.campaign-welcome-header {
+  border-bottom-right-radius: 0px;
+}
+
 .campaign-body {
   display: flex;
   height: 100%;
