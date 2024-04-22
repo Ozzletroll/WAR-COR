@@ -2,8 +2,6 @@ from flask import current_app, url_for, session, jsonify, make_response, request
 from flask_login import current_user
 from datetime import timedelta
 
-from app import limiter
-
 from app.routes.session import bp
 
 
@@ -130,7 +128,6 @@ def comment_target():
 
 # Back button route
 @bp.route("/back", methods=["GET"])
-@limiter.limit("60/minute")
 def back():
     """Function to handle redirects for the back button on the user, 
     members and advanced search pages.

@@ -16,7 +16,8 @@ from app.utils.generators import create_data
 db = SQLAlchemy()
 csrf = CSRFProtect()
 scheduler = APScheduler()
-limiter = Limiter(get_remote_address)
+limiter = Limiter(get_remote_address,
+                  default_limits=["2/second", "30/minute"])
 
 
 # Application factory
@@ -38,12 +39,12 @@ def create_app(config_class=Config):
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
         
+        # Initialise Flask Limiter
         if not flask_app.config["TESTING"] and not flask_app.config["DEBUG"]:
-            # Initialise Flask Limiter
             limiter.init_app(flask_app)
 
+        # Initialise APScheduler
         if not flask_app.config["DEBUG"]:
-            # Initialise APScheduler
             scheduler.init_app(flask_app)
             import app.utils.tasks
             scheduler.start()

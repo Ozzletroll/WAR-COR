@@ -5,7 +5,7 @@ import json
 
 from app.utils import authenticators, formatters, messengers
 from app.forms import forms
-from app import db, models, limiter
+from app import db, models
 
 from app.routes.membership import bp
 
@@ -17,7 +17,6 @@ from app.routes.membership import bp
 # View and add campaign users
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/edit-members", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def edit_campaign_users(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -47,7 +46,6 @@ def edit_campaign_users(campaign_name, campaign_id):
 # Function called by user searching for new members on edit members page
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def user_search(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -79,7 +77,6 @@ def user_search(campaign_name, campaign_id):
 # Function called when inviting a new user via new user page
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/add-user", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def add_user(campaign_name, campaign_id):
     """ Function called via hidden form submission from add members page.
     The form is populated dynamically by javascript when the user clicks
@@ -121,7 +118,6 @@ def add_user(campaign_name, campaign_id):
 # Remove campaign users
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def remove_user(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -162,7 +158,6 @@ def remove_user(campaign_name, campaign_id):
 
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/leave", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def leave_campaign(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -188,7 +183,6 @@ def leave_campaign(campaign_name, campaign_id):
 # Join campaign page
 @bp.route("/campaigns/join-campaign", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def join_campaign():
 
     form = forms.SearchForm()
@@ -241,7 +235,6 @@ def join_campaign():
 # Function called when applying to join campaign 
 @bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def request_membership(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -263,7 +256,6 @@ def request_membership(campaign_name, campaign_id):
 # Function called when user accepts a campaign invitation
 @bp.route("/campaigns/accept-invite", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def accept_invite():
     """ Function called via fetch request from navbar template when user accepts a campaign invitation. """
 
@@ -313,7 +305,6 @@ def accept_invite():
 # Function called when user declines a campaign invitation
 @bp.route("/campaigns/decline-invite", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def decline_invite():
 
     message_id = request.form["message_id"]
@@ -336,7 +327,6 @@ def decline_invite():
 # Function called when admin accepts new membership request
 @bp.route("/campaigns/confirm-join-request", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def confirm_request():
 
     campaign_id = request.form["campaign_id"]
@@ -374,7 +364,6 @@ def confirm_request():
 # Function called when admin declines new membership request
 @bp.route("/campaigns/deny-join-request", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def deny_request():
 
     campaign_id = request.form["campaign_id"]
@@ -401,7 +390,6 @@ def deny_request():
 # Function called when granting a user campaign editing permissions
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def add_permission(campaign_name, campaign_id):
 
     user_to_add = request.form["username"]
@@ -432,7 +420,6 @@ def add_permission(campaign_name, campaign_id):
 # Function called via fetch request to update campaign membership settings
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/update-membership-settings", methods=["POST"])
 @login_required
-@limiter.limit("20/minute")
 def update_membership_settings(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
