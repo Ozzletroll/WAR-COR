@@ -1,14 +1,13 @@
 from flask import redirect, request, url_for, make_response, jsonify
 from flask_login import login_required, current_user
 
-from app import db, models, limiter
+from app import db, models
 from app.routes.message import bp
 
 
 # Function called when viewing/dismissing a notification
 @bp.route("/user/messages/dismiss", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def dismiss_message():
 
     message_id = request.form["message_id"]
@@ -39,7 +38,6 @@ def dismiss_message():
 # Function called when dismissing all messages
 @bp.route("/user/messages/dismiss-all", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def dismiss_all():
 
     messages = current_user.messages.copy()

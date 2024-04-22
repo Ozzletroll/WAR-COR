@@ -1,5 +1,6 @@
 from flask import render_template
 import datetime
+
 from app.routes.home import bp
 
 #   =======================================
@@ -7,7 +8,6 @@ from app.routes.home import bp
 #   =======================================
 
 
-# Main page
 @bp.route("/")
 def home():
     date = datetime.date.today()

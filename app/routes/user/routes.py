@@ -15,7 +15,6 @@ from app.routes.user import bp
 
 # New user registration
 @bp.route("/register", methods=["GET", "POST"])
-@limiter.limit("60/minute")
 def register():
 
     # Check if user is already logged in and redirect if they are
@@ -56,7 +55,6 @@ def register():
 
 # Existing user login
 @bp.route("/login", methods=["GET", "POST"])
-@limiter.limit("60/minute")
 def login():
 
     # Check if user is already logged in and redirect if they are
@@ -101,7 +99,6 @@ def logout():
 # Access user page
 @bp.route("/user/<username>", methods=["GET"])
 @login_required
-@limiter.limit("60/minute")
 def user_page(username):
 
     user = (db.session.query(models.User)
@@ -130,7 +127,6 @@ def user_page(username):
 
 @bp.route("/user/<username>/update-callsign", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def update_callsign(username):
 
     callsign_form = forms.ChangeCallsignForm()
@@ -162,7 +158,6 @@ def update_callsign(username):
 
 @bp.route("/user/<username>/change-username", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def change_username(username):
 
     user = (db.session.query(models.User)
@@ -196,7 +191,6 @@ def change_username(username):
 
 @bp.route("/user/<username>/change-password", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def change_password(username):
 
     user = (db.session.query(models.User)
@@ -230,7 +224,6 @@ def change_password(username):
 
 @bp.route("/user/<username>/delete", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def delete_user(username):
 
     user = (db.session.query(models.User)
@@ -309,7 +302,6 @@ def request_password_reset():
 
 # Function called via recovery email url
 @bp.route("/user/reset-password/<token>", methods=["GET", "POST"])
-@limiter.limit("60/minute")
 def reset_password(token): 
 
     if current_user.is_authenticated:

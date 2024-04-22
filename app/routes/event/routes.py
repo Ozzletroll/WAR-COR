@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from datetime import datetime
 
 from app.forms import forms
-from app import db, models, limiter
+from app import db, models
 from app.utils import authenticators
 import app.utils.formatters as formatters
 import app.utils.messengers as messengers
@@ -18,7 +18,6 @@ from app.routes.event import bp
 
 # View event
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
-@limiter.limit("60/minute")
 def view_event(campaign_name, campaign_id, event_name, event_id):
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
@@ -75,7 +74,6 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
 # Add new event
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/new-event", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def add_event(campaign_name, campaign_id):
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
@@ -145,7 +143,6 @@ def add_event(campaign_name, campaign_id):
 # Edit existing event
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/edit", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def edit_event(campaign_name, campaign_id, event_name, event_id):
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
@@ -198,7 +195,6 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
 # Delete existing event
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/delete", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def delete_event(campaign_name, campaign_id, event_name, event_id):
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
@@ -226,10 +222,8 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
 
 
 # Delete comment
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment-<comment_id>/delete",
-          methods=["POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>/comment-<comment_id>/delete", methods=["POST"])
 @login_required
-@limiter.limit("60/minute")
 def delete_comment(campaign_name, campaign_id, event_name, event_id, comment_id):
     target_comment_id = comment_id
 

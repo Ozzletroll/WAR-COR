@@ -1,13 +1,12 @@
 from flask import render_template, redirect, request, url_for, flash, session
 from sqlalchemy import select
 from flask_login import login_required, current_user
-from urllib.parse import unquote
 import werkzeug
 
 from app.forms import forms
 from app.utils import authenticators
 
-from app import db, models, limiter
+from app import db, models
 from app.routes.campaign import bp
 
 
@@ -19,7 +18,6 @@ from app.routes.campaign import bp
 # View all campaigns
 @bp.route("/campaigns")
 @login_required
-@limiter.limit("60/minute")
 def campaigns():
 
     campaigns = current_user.campaigns
@@ -34,7 +32,6 @@ def campaigns():
 
 # View campaign overview
 @bp.route("/campaigns/<campaign_name>-<campaign_id>")
-@limiter.limit("60/minute")
 def show_timeline(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -61,7 +58,6 @@ def show_timeline(campaign_name, campaign_id):
 # View campaign editing page
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/edit")
 @login_required
-@limiter.limit("60/minute")
 def edit_timeline(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -89,7 +85,6 @@ def edit_timeline(campaign_name, campaign_id):
 # Create new campaign
 @bp.route("/campaigns/new-campaign", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def create_campaign():
     form = forms.CreateCampaignForm()
 
@@ -126,7 +121,6 @@ def create_campaign():
 # Edit campaign data
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/data/edit", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def edit_campaign(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -165,7 +159,6 @@ def edit_campaign(campaign_name, campaign_id):
 # Delete campaign
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/delete", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def delete_campaign(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)

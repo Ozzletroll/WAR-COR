@@ -20,7 +20,6 @@ from app import db, limiter
 # Data backup main page
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/data", methods=["GET", "POST"])
 @login_required
-@limiter.limit("60/minute")
 def backup_page(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -101,7 +100,7 @@ def backup_page(campaign_name, campaign_id):
 # Backup campaign data
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/data/export")
 @login_required
-@limiter.limit("5/minute")
+@limiter.limit("2/second;5/minute")
 def campaign_backup(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)

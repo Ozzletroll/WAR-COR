@@ -2,7 +2,7 @@ from flask import render_template, redirect, request, url_for, flash, session
 from flask_login import current_user
 
 from app.forms import forms
-from app import db, models, limiter
+from app import db, models
 import app.utils.search as search
 
 from app.routes.search import bp
@@ -14,7 +14,6 @@ from app.routes.search import bp
 
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])
-@limiter.limit("60/minute")
 def advanced_search(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
