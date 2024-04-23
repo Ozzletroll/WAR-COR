@@ -170,7 +170,7 @@ def change_username(username):
     new_username = request.form["username"]
 
     if len(new_username) < 3:
-        flash("New username must be 3 or more characters")
+        flash("Username: New username must be 3 or more characters")
         return redirect(url_for("user.user_page", username=user.username))
 
     username_check = (db.session.execute(select(models.User)
@@ -184,7 +184,7 @@ def change_username(username):
     
     # Otherwise, redirect back to user page
     else:
-        flash("Username already in use, please choose another")
+        flash("New Username: Username already in use, please choose another")
 
     return redirect(url_for("user.user_page", username=user.username))
         
@@ -209,14 +209,14 @@ def change_password(username):
                 flash("Password updated")
                 return redirect(url_for("user.user_page", username=user.username))
             else:
-                flash("Incorrect password")
+                flash("Old Password: Incorrect password")
                 return redirect(url_for("user.user_page", username=user.username))
 
         else:
             # Flash any form errors
             for field_name, errors in password_form.errors.items():
                 for error_message in errors:
-                    flash(error_message)        
+                    flash(field_name + ": " + error_message)      
 
     # Redirect to user page
     return redirect(url_for("user.user_page", username=user.username))
