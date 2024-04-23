@@ -226,10 +226,12 @@
             <form id="form-1" class="change-password-form" aria-label="Change Username Form"
             method="POST" action="{{ url_for('user.change_username', username=user.username) }}">
               {{ username_form.csrf_token }}
-              <div class="user-form-container">
-                {{ username_form.username(class_="callsign-input new-username-input", 
-                                          placeholder="NEW USERNAME", 
+              <div class="form-input-container user-form-container">
+                {{ username_form.username(id="username-form-username",
+                                          class_="form-input new-username-input form-field", 
+                                          placeholder=" ", 
                                           autocomplete='off') }}
+                <label for="username-form-username" class="form-label user-form-label">New Username</label>
                 <div class="form-underline"></div>
               </div>
               {{ username_form.submit(class_="button submit-button callsign-submit") }}
@@ -252,20 +254,28 @@
             method="POST" action="{{ url_for('user.change_password', username=user.username) }}">
               {{ password_form.csrf_token }}
   
-              <div class="user-form-container">
-                {{ password_form.old_password(class_="callsign-input new-username-input", 
-                                              placeholder="OLD PASSWORD",
+              <div class="form-input-container user-form-container">
+                {{ password_form.old_password(id="user-form-old-password",
+                                              class_="form-input new-username-input form-field", 
+                                              placeholder=" ",
                                               aria_label="Old Password") }}
+                <label for="username-form-old-password" class="form-label user-form-label">Old Password</label>
                 <div class="form-underline"></div>
               </div>
-              <div class="user-form-container">
-                {{ password_form.new_password(class_="callsign-input new-username-input", 
-                                              placeholder="NEW PASSWORD",
+              <div class="form-input-container user-form-container">
+                {{ password_form.new_password(id="user-form-new-password",
+                                              class_="form-input new-username-input form-field", 
+                                              placeholder=" ",
                                               aria_label="New Password") }}
+                <label for="username-form-new-password" class="form-label user-form-label">New Password</label>
                 <div class="form-underline"></div>
               </div>
-              <div class="user-form-container">
-                {{ password_form.confirm_password(class_="callsign-input new-username-input", placeholder="CONFIRM PASSWORD") }}
+              <div class="form-input-container user-form-container">
+                {{ password_form.confirm_password(id="user-form-confirm-password",
+                                                  class_="form-input new-username-input form-field", 
+                                                  placeholder="",
+                                                  aria_label="Confirm Password") }}
+                <label for="username-form-confirm-password" class="form-label user-form-label">Confirm Password</label>
                 <div class="form-underline"></div>
               </div>
               {{ password_form.submit(class_="button submit-button callsign-submit") }}
@@ -273,6 +283,10 @@
             </form>
 
           </details>
+
+            <!-- <div class="danger-zone-container">
+              <h4 class="danger-zone-header">Danger Zone</h4>
+            </div> -->
 
             <div class="user-form-container">
             <a class="button delete-button user-settings-button" href="{{ url_for('user.delete_user', username=user.username) }}">
