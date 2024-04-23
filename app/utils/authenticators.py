@@ -45,12 +45,15 @@ def check_campaign_visibility(campaign):
 def check_campaign_comment_status(campaign):
     """ Function to check if campaign comments are enabled """
     if campaign.comments == "private":
+        description = "Comments are set to 'Members Only' for this campaign"
         if current_user in campaign.members:
             return True
     elif campaign.comments == "open":
         return True
+    else:
+        description = "Comments are disabled for this campaign"
 
-    abort(403, description="Comments are set to 'Members Only' for this campaign.")
+    abort(403, description=description)
 
 
 def check_comment_form_visibility(campaign):
