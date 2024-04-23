@@ -1810,7 +1810,8 @@ p {
   padding-bottom: 0px;
 }
 
-.form-input:focus.form-input:hover + .form-label {
+.form-input:focus.form-input:hover + .form-label,
+.form-input:hover + .form-label {
   color: var(--text_header_hover);
   background-color: var(--elem_hover);
 }
@@ -3762,12 +3763,55 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   width: fit-content;
+  position: relative;
+}
+
+.user-form-label {
+  color: var(--text_header_hover);
+  top: 2px;
+  opacity: 0.9;
+  border-color: transparent;
+}
+
+.form-input:focus + .user-form-label,
+.form-input:not(:placeholder-shown) + .user-form-label {
+  top: -16px;
+  left: 0px;
+  font-size: 12px;
+  background-color: var(--bg_colour1);
+  opacity: 1;
+  padding: 0px 2px;
+  border-top: 1px;
+  border-left: 1px;
+  border-right: 1px;
+  border-bottom: 0px;
+  border-style: solid;
+  border-color: var(--bg_colour2);
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.new-username-input:focus.form-input:hover + .user-form-label,
+.new-username-input:hover + .user-form-label {
+  color: var(--text_header_hover);
+  background-color: var(--elem_hover);
 }
 
 .new-username-input {
   width: 400px;
+  box-sizing: border-box;
+  background-color: var(--bg_colour1);
+  color: var(--text_header_hover);
+  border: 1px solid var(--elem_mid);
+  border-radius: 3px;
+}
+
+.new-username-input:active,
+.new-username-input:focus,
+.new-username-input:not(:placeholder-shown) {
+  border: 1px solid var(--bg_colour2);
 }
 
 .user-access-form {
@@ -3777,7 +3821,7 @@ p {
 
 .flavour-text.flavour-dropdown {
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .user-icon-trans {
@@ -3801,7 +3845,6 @@ p {
   }
 
 }
-
 
 /* Theme selector */
 
@@ -3871,7 +3914,7 @@ p {
 
 }
 
-@media screen and (max-width: 500px) { 
+@media screen and (max-width: 550px) { 
   
   .user-service-record-entry {
     align-items: center;
@@ -3886,6 +3929,10 @@ p {
     text-align: center;
     width: 100%;
     max-width: none;
+  }
+
+  .new-username-input {
+    width: 100%;
   }
 
   .change-password-form {
