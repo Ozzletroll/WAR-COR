@@ -227,11 +227,11 @@
             method="POST" action="{{ url_for('user.change_username', username=user.username) }}">
               {{ username_form.csrf_token }}
               <div class="form-input-container user-form-container">
-                {{ username_form.username(id="username-form-username",
+                {{ username_form.username(id="user-form-username",
                                           class_="form-input new-username-input form-field", 
                                           placeholder=" ", 
                                           autocomplete='off') }}
-                <label for="username-form-username" class="form-label user-form-label">New Username</label>
+                <label for="user-form-username" class="form-label user-form-label">New Username</label>
                 <div class="form-underline"></div>
               </div>
               {{ username_form.submit(class_="button submit-button callsign-submit") }}
@@ -259,7 +259,7 @@
                                               class_="form-input new-username-input form-field", 
                                               placeholder=" ",
                                               aria_label="Old Password") }}
-                <label for="username-form-old-password" class="form-label user-form-label">Old Password</label>
+                <label for="user-form-old-password" class="form-label user-form-label">Old Password</label>
                 <div class="form-underline"></div>
               </div>
               <div class="form-input-container user-form-container">
@@ -267,7 +267,7 @@
                                               class_="form-input new-username-input form-field", 
                                               placeholder=" ",
                                               aria_label="New Password") }}
-                <label for="username-form-new-password" class="form-label user-form-label">New Password</label>
+                <label for="user-form-new-password" class="form-label user-form-label">New Password</label>
                 <div class="form-underline"></div>
               </div>
               <div class="form-input-container user-form-container">
@@ -275,7 +275,7 @@
                                                   class_="form-input new-username-input form-field", 
                                                   placeholder="",
                                                   aria_label="Confirm Password") }}
-                <label for="username-form-confirm-password" class="form-label user-form-label">Confirm Password</label>
+                <label for="user-form-confirm-password" class="form-label user-form-label">Confirm Password</label>
                 <div class="form-underline"></div>
               </div>
               {{ password_form.submit(class_="button submit-button callsign-submit") }}
