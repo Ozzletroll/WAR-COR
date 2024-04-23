@@ -3711,7 +3711,7 @@ p {
   padding: 5px;
   clip-path: polygon(0 0,calc(100% - 5.00px) 0,100% 5.00px,100% 100%,0 100%);
   background-color: var(--bg_colour1);
-  border-radius: 5px;
+  border-radius: 3px;
   transition: 0.3s;
 }
 
@@ -3723,7 +3723,21 @@ p {
 }
 
 .delete-button {
+  color: var(--text_header_hover);
   text-decoration: none;
+}
+
+.delete-button-text {
+  margin: 0px;
+  font-weight: 400;
+}
+
+.delete-button .settings-button-inner {
+  align-items: center;
+}
+
+.delete-button:hover .settings-button-inner {
+  background-color: var(--elem_dar);
 }
 
 .user-settings-button:hover .settings-button-inner {
