@@ -7,9 +7,6 @@ from app.utils.authenticators import *
 def test_permission_required(client, auth, campaign):
 
     auth.register(username="User_1", password="12345678")
-    user_1 = db.session.execute(
-        select(models.User)
-        .filter_by(username="User_1")).scalar()
     campaign.create(title="Test Campaign")
     test_campaign = db.session.execute(
         select(models.Campaign)
@@ -79,3 +76,57 @@ def test_check_campaign_visibility(client, auth):
     with pytest.raises(Exception) as error:
         check_campaign_visibility(test_campaign)
     assert "403" in str(error)
+
+
+def test_check_campaign_comment_status(client, auth):
+
+    test_campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    auth.register(username="member", email="member@email.com")
+    auth.logout()
+
+    member_user = db.session.execute(
+        select(models.User)
+        .filter_by(username="member")).scalar()
+
+    test_campaign.members.append(member_user)
+
+    # Test unauthenticated member cannot post comments when they are disabled
+    test_campaign.comments = "disabled"
+
+    with pytest.raises(Exception) as exception:
+        check_campaign_comment_status(test_campaign)
+
+    error = exception.value
+    assert error.code == 403
+    assert error.description == "Comments are disabled for this campaign"
+
+    # Test unauthenticated user can post when comments set to open
+    test_campaign.comments = "open"
+    check_campaign_comment_status(test_campaign)
+
+    # Test authenticated member cannot post comments when set to disabled
+    test_campaign.comments = "disabled"
+    auth.login(username="member", password="12345678")
+    with pytest.raises(Exception) as exception:
+        check_campaign_comment_status(test_campaign)
+    error = exception.value
+    assert error.code == 403
+    assert error.description == "Comments are disabled for this campaign"
+
+    # Test authenticated non-member cannot post comments when set to private
+    test_campaign.members.remove(member_user)
+    test_campaign.comments = "private"
+    with pytest.raises(Exception) as exception:
+        check_campaign_comment_status(test_campaign)
+    error = exception.value
+    assert error.code == 403
+    assert error.description == "Comments are set to 'Members Only' for this campaign"
+
+    # Test authenticated member can post comments when set to private
+    test_campaign.members.append(member_user)
+    auth.login(username="member")
+    test_campaign.comments = "private"
+    assert check_campaign_comment_status(test_campaign)
