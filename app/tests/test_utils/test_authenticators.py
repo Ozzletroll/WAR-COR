@@ -130,3 +130,37 @@ def test_check_campaign_comment_status(client, auth):
     auth.login(username="member")
     test_campaign.comments = "private"
     assert check_campaign_comment_status(test_campaign)
+    auth.logout()
+
+
+def test_check_comment_form_visibility(client, auth):
+
+    test_campaign = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Test Campaign")).scalar()
+
+    member_user = db.session.execute(
+        select(models.User)
+        .filter_by(username="member")).scalar()
+
+    test_campaign.members.append(member_user)
+
+    auth.login(username="member", password="12345678")
+    test_campaign.comments = "private"
+    assert check_comment_form_visibility(test_campaign)
+
+    auth.logout()
+    test_campaign.comments = "private"
+    assert not check_comment_form_visibility(test_campaign)
+
+    test_campaign.comments = "disabled"
+    assert not check_comment_form_visibility(test_campaign)
+
+    auth.login(username="member", password="12345678")
+    test_campaign.comments = "disabled"
+    assert not check_comment_form_visibility(test_campaign)
+
+    test_campaign.comments = "open"
+    assert check_comment_form_visibility(test_campaign)
+    auth.logout()
+    assert check_comment_form_visibility(test_campaign)
