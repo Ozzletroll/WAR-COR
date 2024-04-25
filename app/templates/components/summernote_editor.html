@@ -28,11 +28,12 @@
                     e.preventDefault(); 
                 }
                 // Prevent deletion of opening style tag of empty editor
-                if (t.trim().length == 0 ) {
-                  if (e.keyCode == 46 ||  e.keyCode == 8 ) {
+                var html = e.currentTarget.innerHTML; 
+                if (html.trim() == "<p><br></p>" ) {
+                  if (e.keyCode == 46 || e.keyCode == 8 ) {
                     e.preventDefault(); 
                   }
-              }
+                }
             },
             onKeyup: function (e) {
                 var t = e.currentTarget.innerText;
@@ -42,12 +43,13 @@
                 var t = e.currentTarget.innerText;
                 var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
                 e.preventDefault();
+
                 var maxPaste = bufferText.length;
-                if(t.length + bufferText.length > parseInt("{{char_limit}}")){
+                if (t.length + bufferText.length > parseInt("{{char_limit}}")){
                     maxPaste = parseInt("{{char_limit}}") - t.length;
                 }
-                if(maxPaste > 0){
-                    document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
+                if (maxPaste > 0){
+                  document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
                 }
                 $('#maxContentPost').text(parseInt("{{char_limit}}") - t.length);
             }
@@ -86,14 +88,20 @@
         $('#summernote' + "{{ id_suffix }}").summernote({
           callbacks: {
             onKeydown: function (e) { 
-                var t = e.currentTarget.innerText; 
-                // Prevent deletion of opening style tag of empty editor
-                if (t.trim().length == 0 ) {
-                  if (e.keyCode == 46 ||  e.keyCode == 8 ) {
-                    e.preventDefault(); 
-                  }
+              var t = e.currentTarget.innerHTML; 
+              // Prevent deletion of opening style tag of empty editor
+              if (t.trim() == "<p><br></p>" ) {
+                if (e.keyCode == 46 || e.keyCode == 8 ) {
+                  e.preventDefault(); 
+                }
               }
             },
+            onPaste: function (e) {
+              // Paste only plain text from clipboard
+              var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+              e.preventDefault();
+              document.execCommand('insertText', false, bufferText);
+          }
           },
           placeholder: '<p>{{ placeholder }}</p>',
           dialogsInBody: true,
