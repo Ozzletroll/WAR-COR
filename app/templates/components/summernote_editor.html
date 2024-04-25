@@ -8,129 +8,91 @@
                            allow_images=false,
                            allow_urls=false) %}
 
-    {% set height = "fit-content" %}
-    {% if allow_images %}
-      {% set allow_images = "picture" %}
-    {% endif %}
-    {% if allow_urls%}
-      {% set allow_urls = "link" %}
-    {% endif %}
+  {% if allow_images %}
+    {% set allow_images = "picture" %}
+  {% endif %}
+  {% if allow_urls %}
+    {% set allow_urls = "link" %}
+  {% endif %}
 
-    {% if char_limit is not none %}
-      <script>
-        $('#summernote' + "{{ id_suffix }}").summernote({
-          callbacks: {
-            onKeydown: function (e) { 
-                var t = e.currentTarget.innerText; 
-                if (t.trim().length >= parseInt("{{char_limit}}") ) {
-                    //Delete keys, arrow keys, copy, cut, select all
-                    if (e.keyCode != 8 && !(e.keyCode >=37 && e.keyCode <=40) && e.keyCode != 46 && !(e.keyCode == 88 && e.ctrlKey) && !(e.keyCode == 67 && e.ctrlKey) && !(e.keyCode == 65 && e.ctrlKey))
-                    e.preventDefault(); 
-                }
-                // Prevent deletion of opening style tag of empty editor
-                var html = e.currentTarget.innerHTML; 
-                if (html.trim() == "<p><br></p>" ) {
-                  if (e.keyCode == 46 || e.keyCode == 8 ) {
-                    e.preventDefault(); 
-                  }
-                }
-            },
-            onKeyup: function (e) {
-                var t = e.currentTarget.innerText;
-                $('#maxContentPost').text(parseInt("{{char_limit}}") - t.trim().length);
-            },
-            onPaste: function (e) {
-                var t = e.currentTarget.innerText;
-                var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-                e.preventDefault();
+  <script src="{{ url_for('static', filename='js/components/summernote_callbacks.js') }}"></script>
 
-                var maxPaste = bufferText.length;
-                if (t.length + bufferText.length > parseInt("{{char_limit}}")){
-                    maxPaste = parseInt("{{char_limit}}") - t.length;
-                }
-                if (maxPaste > 0){
-                  document.execCommand('insertText', false, bufferText.substring(0, maxPaste));
-                }
-                $('#maxContentPost').text(parseInt("{{char_limit}}") - t.length);
-            }
+  {% if char_limit is not none %}
+    <script>
+      var editor = "#summernote" + "{{ id_suffix }}"
+      $(editor).summernote({
+        callbacks: {
+          onKeydown: function(event) {
+            enforceCharLimit(event, "{{ char_limit }}");
+            preventDelete(event, editor);
           },
-          placeholder: '<p>{{ placeholder }}</p>',
-          dialogsInBody: true,
-          dialogsFade: true, 
-          tabsize: 2,
-          height: "{{ height }}",
-          styleTags: ['p', 'h1', 'h2', 'h3'],
-          toolbar: [
-              ['style', ['style']],
-              ['font', ['bold', 'italic', 'underline', 'clear']],
-              ['para', ['ul', 'ol', 'paragraph']],,
-              ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
-          ],
-          popover: {
-            image: [
-              ['remove', ['removeMedia']]
-            ]
-          }
-          });
-    
-        dialogsClass: 'summernote-dialog'
-      </script>
-      <script>
-        // Listen for changes to summernote field
-        $('#summernote' + "{{ id_suffix }}").on("summernote.change", function() {
-          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+          onChange: function(contents, $editable) {
+            handleUnwrappedTags(editor, $editable);
+            $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+          },
+          onPaste: function(event) {
+            pastePlainText(event, editor, "{{ char_limit }}");
+          },
+        },
+        placeholder: '<p>{{ placeholder }}</p>',
+        dialogsClass: 'summernote-dialog',
+        dialogsInBody: true,
+        dialogsFade: true, 
+        tabsize: 2,
+        height: "fit-content",
+        styleTags: ['p', 'h1', 'h2', 'h3'],
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],,
+            ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
+        ],
+        popover: {
+          image: [
+            ['remove', ['removeMedia']]
+          ]
+        }
         });
       </script>
 
-    {% else %}
+  {% else %}
     
-      <script>
-        $('#summernote' + "{{ id_suffix }}").summernote({
-          callbacks: {
-            onKeydown: function (e) { 
-              var t = e.currentTarget.innerHTML; 
-              // Prevent deletion of opening style tag of empty editor
-              if (t.trim() == "<p><br></p>" ) {
-                if (e.keyCode == 46 || e.keyCode == 8 ) {
-                  e.preventDefault(); 
-                }
-              }
-            },
-            onPaste: function (e) {
-              // Paste only plain text from clipboard
-              var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
-              e.preventDefault();
-              document.execCommand('insertText', false, bufferText);
-          }
+    <script>
+      var editor = "#summernote" + "{{ id_suffix }}"
+      $(editor).summernote({
+        callbacks: {
+          onKeydown: function(event) {
+            preventDelete(event, editor);
           },
-          placeholder: '<p>{{ placeholder }}</p>',
-          dialogsInBody: true,
-          dialogsFade: true, 
-          tabsize: 2,
-          height: "{{ height }}",
-          styleTags: ['p', 'h1', 'h2', 'h3'],
-          toolbar: [
-              ['style', ['style']],
-              ['font', ['bold', 'italic', 'underline', 'clear']],
-              ['para', ['ul', 'ol', 'paragraph']],,
-              ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
-          ],
-          popover: {
-            image: [
-              ['remove', ['removeMedia']]
-            ]
-          }
-          });
-    
-        dialogsClass: 'summernote-dialog'
-      </script>
-      <script>
-        // Listen for changes to summernote field
-        $('#summernote' + "{{ id_suffix }}").on("summernote.change", function() {
-          $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+          onChange: function(contents, $editable) {
+            handleUnwrappedTags(editor, $editable);
+            $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+          },
+          onPaste: function(event) {
+            pastePlainText(event, editor, "{{ char_limit }}");
+          },
+        },
+        placeholder: '<p>{{ placeholder }}</p>',
+        dialogsClass: 'summernote-dialog',
+        dialogsInBody: true,
+        dialogsFade: true, 
+        tabsize: 2,
+        height: "fit-content",
+        styleTags: ['p', 'h1', 'h2', 'h3'],
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],,
+            ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
+        ],
+        popover: {
+          image: [
+            ['remove', ['removeMedia']]
+          ]
+        }
         });
-      </script>
+    </script>
 
-    {% endif %}
+  {% endif %}
 
 {%- endmacro %}
