@@ -15,84 +15,13 @@
     {% set allow_urls = "link" %}
   {% endif %}
 
-  <script src="{{ url_for('static', filename='js/components/summernote_callbacks.js') }}"></script>
-
-  {% if char_limit is not none %}
-    <script>
-      var editor = "#summernote" + "{{ id_suffix }}"
-      $(editor).summernote({
-        callbacks: {
-          onKeydown: function(event) {
-            enforceCharLimit(event, "{{ char_limit }}");
-            preventDelete(event, editor);
-          },
-          onChange: function(contents, $editable) {
-            handleUnwrappedTags(editor, $editable);
-            $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
-          },
-          onPaste: function(event) {
-            pastePlainText(event, editor, "{{ char_limit }}");
-          },
-        },
-        placeholder: '<p>{{ placeholder }}</p>',
-        dialogsClass: 'summernote-dialog',
-        dialogsInBody: true,
-        dialogsFade: true, 
-        tabsize: 2,
-        height: "fit-content",
-        styleTags: ['p', 'h1', 'h2', 'h3'],
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['para', ['ul', 'ol', 'paragraph']],,
-            ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
-        ],
-        popover: {
-          image: [
-            ['remove', ['removeMedia']]
-          ]
-        }
-        });
-      </script>
-
-  {% else %}
-    
-    <script>
-      var editor = "#summernote" + "{{ id_suffix }}"
-      $(editor).summernote({
-        callbacks: {
-          onKeydown: function(event) {
-            preventDelete(event, editor);
-          },
-          onChange: function(contents, $editable) {
-            handleUnwrappedTags(editor, $editable);
-            $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
-          },
-          onPaste: function(event) {
-            pastePlainText(event, editor, "{{ char_limit }}");
-          },
-        },
-        placeholder: '<p>{{ placeholder }}</p>',
-        dialogsClass: 'summernote-dialog',
-        dialogsInBody: true,
-        dialogsFade: true, 
-        tabsize: 2,
-        height: "fit-content",
-        styleTags: ['p', 'h1', 'h2', 'h3'],
-        toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'italic', 'underline', 'clear']],
-            ['para', ['ul', 'ol', 'paragraph']],,
-            ['insert', ["{{ allow_urls }}", "{{ allow_images }}"]]
-        ],
-        popover: {
-          image: [
-            ['remove', ['removeMedia']]
-          ]
-        }
-        });
-    </script>
-
-  {% endif %}
+  <script src="{{ url_for('static', filename='js/components/summernote_initialise.js') }}"></script>
+  <script>
+    summernoteInitialise("{{ id_suffix }}", 
+                         "{{ placeholder }}", 
+                         "{{  char_limit }}", 
+                         "{{ allow_images }}", 
+                         "{{ allow_urls }}")
+  </script>
 
 {%- endmacro %}
