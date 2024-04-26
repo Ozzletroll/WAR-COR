@@ -76,12 +76,12 @@ class Epoch(db.Model):
 
                 elif matching_field == "description":
                     form_value = sanitise_input(form_value)
-                    if form_value in ["<p><br></p>", ""]:
+                    if form_value in ["<p><br/></p>", ""]:
                         form_value = None
 
                 elif matching_field == "overview":
                     form_value = sanitise_input(form_value, allow_urls=False)
-                    if form_value in ["<p><br></p>", ""]:
+                    if form_value in ["<p><br/></p>", ""]:
                         form_value = None
 
                 setattr(self, matching_field, form_value)
