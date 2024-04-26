@@ -8,39 +8,38 @@ function summernoteInitialise(idSuffix,
   var editor = "#summernote" + idSuffix;
   
   $(editor).summernote({
-  callbacks: {
-    onKeydown: function(event) {
-      enforceCharLimit(event, charLimit);
-      preventDelete(event, editor);
+    callbacks: {
+      onKeydown: function(event) {
+        enforceCharLimit(event, charLimit);
+        preventDelete(event, editor);
+      },
+      onChange: function(contents, $editable) {
+        handleUnwrappedTags(editor, $editable);
+        $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
+      },
+      onPaste: function(event) {
+        pastePlainText(event, editor, charLimit);
+      },
     },
-    onChange: function(contents, $editable) {
-      handleUnwrappedTags(editor, $editable);
-      $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
-    },
-    onPaste: function(event) {
-      pastePlainText(event, editor, charLimit);
-    },
-  },
-  placeholder: "<p>" + placeholder + "</p>",
-  dialogsClass: "summernote-dialog",
-  dialogsInBody: true,
-  dialogsFade: true, 
-  tabsize: 2,
-  height: "fit-content",
-  styleTags: ['p', 'h1', 'h2', 'h3'],
-  toolbar: [
-    ['style', ['style']],
-    ['font', ['bold', 'italic', 'underline', 'clear']],
-    ['para', ['ul', 'ol', 'paragraph']],,
-    ['insert', [allowURLS, allowImages]]
-  ],
-  popover: {
-    image: [
-      ['remove', ['removeMedia']]
-    ]
-  }
+    placeholder: "<p>" + placeholder + "</p>",
+    dialogsClass: "summernote-dialog",
+    dialogsInBody: true,
+    dialogsFade: true, 
+    tabsize: 2,
+    height: "fit-content",
+    styleTags: ['p', 'h1', 'h2', 'h3'],
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'italic', 'underline', 'clear']],
+      ['para', ['ul', 'ol', 'paragraph']],,
+      ['insert', [allowURLS, allowImages]]
+    ],
+    popover: {
+      image: [
+        ['remove', ['removeMedia']]
+      ]
+    }
   });
-
 }
 
 // Callbacks
@@ -71,15 +70,15 @@ function pastePlainText (event, editor, charLimit) {
 
   if (charLimit != null) {
     charLimit = charLimit;
-    var text = event.currentTarget.innerText;
-    var maxPaste = bufferText.length;
-    if (text.length + bufferText.length > charLimit){
-      maxPaste = charLimit - text.length;
+    var currentTextLength = event.currentTarget.innerText.length - 1;
+    var pasteLength = bufferText.length;
+    var proposedTextLength = currentTextLength + pasteLength;
+
+    if (proposedTextLength > charLimit) {
+      pasteLength = pasteLength - (proposedTextLength - charLimit);
     }
 
-    if (maxPaste > 0){
-      $(editor).summernote("insertText", bufferText.substring(0, maxPaste));
-    }
+    $(editor).summernote("insertText", bufferText.substring(0, pasteLength));
   }
   else {
     $(editor).summernote("insertText", bufferText);
@@ -96,15 +95,16 @@ function enforceCharLimit(event, charLimit) {
   }
 
   charLimit = charLimit;
-  var innerTextLength = event.currentTarget.innerText.trim().length;
+  var innerTextLength = event.currentTarget.innerText.length - 1; // Summernote's default formatting adds 1 char
+
+  const isCtrlKeyCombination = (keyCode) => [65, 67, 88].includes(keyCode);
+  const isArrowKey = (keyCode) => keyCode >= 37 && keyCode <= 40;
+  const isDeleteOrBackspace = (keyCode) => [8, 46].includes(keyCode);
 
   if (innerTextLength >= charLimit) {
-    if (event.keyCode != 8 && 
-      !(event.keyCode >=37 && event.keyCode <=40) 
-      && event.keyCode != 46 && 
-      !(event.keyCode == 88 && event.ctrlKey) && 
-      !(event.keyCode == 67 && event.ctrlKey) && 
-      !(event.keyCode == 65 && event.ctrlKey)) {
+    if (!isDeleteOrBackspace(event.keyCode) && 
+        !isArrowKey(event.keyCode) && 
+        !(isCtrlKeyCombination(event.keyCode) && event.ctrlKey)) {
       event.preventDefault(); 
     }
   }
