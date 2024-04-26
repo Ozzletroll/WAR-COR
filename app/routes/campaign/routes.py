@@ -26,6 +26,9 @@ def campaigns():
     # Clear any existing event scroll target
     session.pop("timeline_scroll_target", None)
 
+    # Set back button URL
+    session["previous_url"] = request.url
+
     return render_template("pages/campaigns.html", 
                            campaigns=campaigns)
 
