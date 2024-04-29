@@ -48,6 +48,7 @@ def backup_page(campaign_name, campaign_id):
 
             # Delete all existing current campaign data
             for epoch in campaign.epochs:
+                epoch.sub_epochs.clear()
                 db.session.delete(epoch)
             for event in campaign.events:
                 db.session.delete(event)
