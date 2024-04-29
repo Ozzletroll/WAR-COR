@@ -4087,6 +4087,7 @@ p {
   gap: 15px;
   margin-bottom: 20px;
   background-position: left;
+  color: var(--text_dark);
 }
 
 .add-member-form {
