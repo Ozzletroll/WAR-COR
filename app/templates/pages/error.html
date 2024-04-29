@@ -28,7 +28,7 @@
             {% set url = "" %}
             {{ back_button.back_button(url=url, blank=true) }}
 
-            <h3 class="campaigns-heading">ERROR {{ error.code }} {{ error.name }}</h3>
+            <h3 class="campaigns-heading">{{ error.code }} {{ error.name }}</h3>
           </div>
 
           <hr class="campaigns-divider">
@@ -46,7 +46,7 @@
         <div class="campaigns-upper-bar">
           <div class="empty-search-entry fade-in-block-2">
             {% if error.code == 403 %}
-                <p class="flavour-text typing-1 empty-search-header search-header-bold">UWC_IDENT_SERVICE:</p>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">UWC IDENT SERVICE:</p>
                 <p class="flavour-text typing-2 empty-search-header">>AUTHENTICATION::DENIED</p>
                 <p class="flavour-text typing-3 empty-search-blink">>Access to this resource is denied</p>
                 <hr class="error-hr" aria-hidden="true">
@@ -58,17 +58,17 @@
                 <hr class="error-hr" aria-hidden="true">
                 <p class="flavour-text error-flavour" aria-label="Error Description">>{{ error.description }}</p>
             {% elif error.code == 429 %}
-                <p class="flavour-text typing-1 empty-search-header search-header-bold">ACCESS DENIED:</p>
-                <p class="flavour-text typing-2 empty-search-header">>LIMIT::EXCEEDED</p>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">RATE LIMITER:</p>
+                <p class="flavour-text typing-2 empty-search-header">>REQUEST_LIMIT::EXCEEDED</p>
                 <p class="flavour-text typing-3 empty-search-blink" aria-label="Error Description">>{{ error.description }}</p>
             {% elif error.code == 500 %}
-                <p class="flavour-text typing-1 empty-search-header search-header-bold">RESOURCE SEARCH:</p>
+                <p class="flavour-text typing-1 empty-search-header search-header-bold">SERVER ERROR:</p>
                 <p class="flavour-text typing-2 empty-search-header">>ERROR::UNABLE_TO_COMPLETE</p>
                 <p class="flavour-text typing-3 empty-search-blink">>Server overloaded or error in application</p>
                 <hr class="error-hr" aria-hidden="true">
                 <p class="flavour-text error-flavour" aria-label="Error Description">>{{ error.description }}</p>
             {% endif %}
-            
+          
           </div>
         </div>
 

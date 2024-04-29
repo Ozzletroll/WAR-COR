@@ -6599,7 +6599,7 @@ pre {
   overflow: hidden;
   white-space: nowrap;
   animation: typing 1s steps(50, end);
-  width: 300px;
+  width: 320px;
   visibility: hidden;
   animation-fill-mode: both;
 }
