@@ -75,9 +75,7 @@ class Campaign(db.Model):
         db.session.commit()
 
     def clear_cache(self):
-        """ Method to update last_edited value, and clear any out of date
-            cached data. Set commit to True if needing to call db.session.commit,
-            IE - from """
+        """ Method to clear any out of date cached data. """
     
         cache.delete_memoized(self.return_timeline_data)
 
