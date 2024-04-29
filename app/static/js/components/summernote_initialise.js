@@ -70,7 +70,7 @@ function pastePlainText (event, editor, charLimit) {
 
   if (charLimit != null) {
     charLimit = charLimit;
-    var currentTextLength = event.currentTarget.innerText.length - 1;
+    var currentTextLength = event.currentTarget.textContent.length;
     var pasteLength = bufferText.length;
     var proposedTextLength = currentTextLength + pasteLength;
 
@@ -95,7 +95,7 @@ function enforceCharLimit(event, charLimit) {
   }
 
   charLimit = charLimit;
-  var innerTextLength = event.currentTarget.innerText.length - 1; // Summernote's default formatting adds 1 char
+  var innerTextLength = event.currentTarget.textContent.length; // Summernote's default formatting adds 1 char
 
   const isCtrlKeyCombination = (keyCode) => [65, 67, 88].includes(keyCode);
   const isArrowKey = (keyCode) => keyCode >= 37 && keyCode <= 40;
