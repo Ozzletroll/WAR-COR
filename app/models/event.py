@@ -79,6 +79,7 @@ class Event(db.Model):
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
+        self.parent_campaign.clear_cache()
         self.set_url_title()
         
         if new:

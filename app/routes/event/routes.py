@@ -206,6 +206,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
     authenticators.permission_required(campaign)
 
     campaign.last_edited = datetime.now()
+    campaign.clear_cache()
 
     db.session.delete(event)
     db.session.commit()
