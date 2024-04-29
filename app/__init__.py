@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_apscheduler import APScheduler
+from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -13,11 +14,13 @@ from logging.handlers import SMTPHandler
 
 from app.utils.generators import create_data
 
-db = SQLAlchemy()
+
+cache = Cache()
 csrf = CSRFProtect()
-scheduler = APScheduler()
+db = SQLAlchemy()
 limiter = Limiter(get_remote_address,
                   default_limits=["2/second", "30/minute"])
+scheduler = APScheduler()
 
 
 # Application factory
@@ -38,7 +41,10 @@ def create_app(config_class=Config):
 
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
-        
+
+        # Initiliase cache
+        cache.init_app(flask_app)
+
         # Initialise Flask Limiter
         if not flask_app.config["TESTING"] and not flask_app.config["DEBUG"]:
             limiter.init_app(flask_app)

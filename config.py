@@ -38,6 +38,8 @@ class Config(object):
     SCHEDULER_TIMEZONE = "UTC"
     # Flask-APScheduler
     SCHEDULER_API_ENABLED = False
+    # Flask-Caching
+    CACHE_TYPE = "SimpleCache"
 
 
 class TestingConfig(Config):
@@ -71,3 +73,7 @@ class ProductionConfig(Config):
     RATELIMIT_STORAGE_URI = os.environ.get("REDIS_STORAGE_URI")
     RATELIMIT_STORAGE_OPTIONS = {"socket_connect_timeout": 30}
     RATELIMIT_STRATEGY = "fixed-window"
+    # Flask-Caching
+    CACHE_TYPE = "RedisCache"
+    CACHE_REDIS_URL = os.environ.get("REDIS_STORAGE_URI")
+    
