@@ -170,5 +170,3 @@ def test_return_timeline_data(client, auth, campaign, event, epoch):
                         assert day.has_epoch_end
                     else:
                         assert not day.has_epoch_end
-
-

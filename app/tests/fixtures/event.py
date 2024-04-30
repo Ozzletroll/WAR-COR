@@ -8,7 +8,7 @@ class EventActions(object):
     def __init__(self, client):
         self._client = client
 
-    def create(self, campaign_object, data):
+    def create(self, campaign_object, data, no_redirect=False):
 
         url = url_for("event.add_event",
                       campaign_name=campaign_object.title,
@@ -19,7 +19,10 @@ class EventActions(object):
             if field.name not in data:
                 data[field.name] = ""
 
-        return self._client.post(url, data=data, follow_redirects=True)
+        if no_redirect:
+            return self._client.post(url, data=data, follow_redirects=False)
+        else:
+            return self._client.post(url, data=data, follow_redirects=True)
 
     def edit(self, campaign_object, event_object, data):
 
@@ -53,14 +56,16 @@ class EventActions(object):
                 new_event = EventFormat(starting_date=starting_date)
                 all_events.append(new_event)
                 self.create(campaign_object=campaign_object,
-                            data=new_event.return_new_event_data())
+                            data=new_event.return_new_event_data(),
+                            no_redirect=True)
             else:
                 new_event = EventFormat(previous_event=all_events[index - 1],
                                         starting_date=starting_date,
                                         increment=increment)
                 all_events.append(new_event)
                 self.create(campaign_object=campaign_object,
-                            data=new_event.return_new_event_data())
+                            data=new_event.return_new_event_data(),
+                            no_redirect=True)
 
 
 class EventFormat:
