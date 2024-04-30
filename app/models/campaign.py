@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from app import db
+from app import db, cache
 from app.utils.sanitisers import sanitise_input
 import app.utils.organisers as organisers
 
@@ -66,12 +66,18 @@ class Campaign(db.Model):
                 setattr(self, field, value)
 
         self.last_edited = datetime.now()
+        self.clear_cache()
         self.set_url_title()
 
         if new:
             db.session.add(self)
 
         db.session.commit()
+
+    def clear_cache(self):
+        """ Method to clear any out of date cached data. """
+    
+        cache.delete_memoized(self.return_timeline_data)
 
     def remove_user(self, user):
         """ Method to remove a given user from campaign """
@@ -126,6 +132,8 @@ class Campaign(db.Model):
         
         self.url_title = self.title.replace(" ", "-")
 
+    @cache.memoize(900)
     def return_timeline_data(self, epoch=None):
         """ Method to return campaign timeline data """
+        
         return organisers.campaign_sort(self, epoch)

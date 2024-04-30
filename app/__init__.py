@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_apscheduler import APScheduler
+from flask_caching import Cache
 from flask_sqlalchemy import SQLAlchemy
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -13,11 +14,13 @@ from logging.handlers import SMTPHandler
 
 from app.utils.generators import create_data
 
-db = SQLAlchemy()
+
+cache = Cache()
 csrf = CSRFProtect()
-scheduler = APScheduler()
+db = SQLAlchemy()
 limiter = Limiter(get_remote_address,
                   default_limits=["2/second", "30/minute"])
+scheduler = APScheduler()
 
 
 # Application factory
@@ -29,21 +32,22 @@ def create_app(config_class=Config):
 
     with flask_app.app_context():
 
-        # Initialise database and import models
+        # Initialise database
         db.init_app(flask_app)
         import app.models
-
-        # Create the database
         db.create_all()
 
         # Initialise db migrations
         migrate = Migrate(flask_app, db)
-        
-        # Initialise Flask Limiter
+
+        # Initialise Flask-Caching
+        cache.init_app(flask_app)
+
+        # Initialise Flask-Limiter
         if not flask_app.config["TESTING"] and not flask_app.config["DEBUG"]:
             limiter.init_app(flask_app)
 
-        # Initialise APScheduler
+        # Initialise Flask-APScheduler
         if not flask_app.config["DEBUG"]:
             scheduler.init_app(flask_app)
             import app.utils.tasks
@@ -111,7 +115,7 @@ def create_app(config_class=Config):
     flask_app.register_blueprint(test_bp)
 
     # Disable browser caching during debug
-    if flask_app.config["DEBUG"]:
+    if flask_app.debug:
         @flask_app.after_request
         def after_request(response):
             response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
@@ -146,7 +150,7 @@ def create_app(config_class=Config):
         create_data()
 
     # Configure email error logging via SMTP
-    if not flask_app.debug:
+    if not flask_app.debug and not flask_app.testing:
 
         if flask_app.config["MAIL_SERVER"]:
             auth = None
@@ -156,7 +160,7 @@ def create_app(config_class=Config):
 
             secure = None
 
-            if flask_app.config['MAIL_USE_TLS']:
+            if flask_app.config["MAIL_USE_TLS"]:
                 secure = ()
                 
             mail_handler = SMTPHandler(
