@@ -189,7 +189,7 @@ def join_campaign():
     request_form = forms.SubmitForm()
 
     page = request.args.get("page", 1, type=int)
-    per_page = 2
+    per_page = 6
 
     if request.method == "GET":
         
