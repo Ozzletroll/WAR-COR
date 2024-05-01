@@ -1,0 +1,15 @@
+{% macro render_pagination(pagination, endpoint, class_prefix) %}
+  <nav class="{{ class_prefix }}-pagination" aria-label="Page Selection">
+    {% for page in pagination.iter_pages() %}
+      {% if page %}
+        {% if page != pagination.page %}
+          <a class="pagination-item" href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+        {% else %}
+          <strong class="pagination-item current-page-item" aria-label="Current Page">{{ page }}</strong>
+        {% endif %}
+      {% else %}
+        <span class=ellipsis>…</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endmacro %}

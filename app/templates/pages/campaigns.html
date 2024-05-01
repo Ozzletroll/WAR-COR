@@ -3,6 +3,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/campaign_entry.html" as campaign_entry %}
+{% import "components/page_selection.html" as page_selection %}
 
 {% extends "base/base.html" %}
 
@@ -70,6 +71,8 @@
       {% endif %}
 
     </ol>
+
+    {{ page_selection.render_pagination(campaigns, "campaign.campaigns", "campaigns") }}
 
   </div>
 </div>
