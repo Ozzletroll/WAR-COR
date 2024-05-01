@@ -132,7 +132,7 @@ class User(UserMixin, db.Model):
                           .where(UserCampaign.user_id == self.id)
                           .order_by(desc(Campaign.last_edited)))
 
-        paginated_campaigns = db.paginate(user_campaigns, page=page, per_page=5, error_out=False)
+        paginated_campaigns = db.paginate(user_campaigns, page=page, per_page=6, error_out=False)
         
         return paginated_campaigns
     
