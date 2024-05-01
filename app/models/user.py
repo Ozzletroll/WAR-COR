@@ -3,8 +3,10 @@ from flask_login import UserMixin
 import werkzeug
 import jwt
 from datetime import datetime
+from sqlalchemy import select, join, desc
 
 from app.models.associations import *
+from app.models import Campaign
 
 
 class User(UserMixin, db.Model):
@@ -122,4 +124,15 @@ class User(UserMixin, db.Model):
             return
         
         return db.session.get(User, id)
+    
+    def return_paginated_campaigns(self, page):
+
+        user_campaigns = (select(Campaign)
+                          .select_from(join(UserCampaign, Campaign, UserCampaign.campaign_id == Campaign.id))
+                          .where(UserCampaign.user_id == self.id)
+                          .order_by(desc(Campaign.last_edited)))
+
+        paginated_campaigns = db.paginate(user_campaigns, page=page, per_page=5, error_out=False)
+        
+        return paginated_campaigns
     

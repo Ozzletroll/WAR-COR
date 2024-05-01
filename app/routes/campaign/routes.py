@@ -20,8 +20,8 @@ from app.routes.campaign import bp
 @login_required
 def campaigns():
 
-    campaigns = current_user.campaigns
-    campaigns.sort(key=lambda campaign: campaign.last_edited, reverse=True)
+    page = request.args.get("page", 1, type=int)
+    campaigns = current_user.return_paginated_campaigns(page)
 
     # Clear any existing event scroll target
     session.pop("timeline_scroll_target", None)
