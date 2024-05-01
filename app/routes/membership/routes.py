@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
-from sqlalchemy import select, func
+from sqlalchemy import select, func, not_
 from flask_login import login_required, current_user
 import json
 
@@ -188,48 +188,72 @@ def join_campaign():
     form = forms.SearchForm()
     request_form = forms.SubmitForm()
 
-    # Check if page has any results to render
-    if "results" not in request.args:
-        results = None
-    else:
-        results = request.args["results"]
+    page = request.args.get("page", 1, type=int)
+    per_page = 2
 
-    if form.validate_on_submit():
-        search = request.form["search"].lower()
-
-        # Ignore search if less than 3 characters
-        if len(search) < 3:
-            flash("Search queries must be three or more characters")
-            return redirect(url_for("membership.join_campaign"))
-
+    if request.method == "GET":
+        
+         # Check if page has any results to render
+        if "search" not in request.args:
+            results = None
+            search = None
         else:
+            search = request.args["search"]
+            form.search.data = search
             search_format = "%{}%".format(search)
-            campaigns = (db.session.execute(select(models.Campaign)
-                        .filter(func.lower(models.Campaign.title).like(search_format)))
-                        .scalars())
 
-            results = [campaign for campaign in campaigns 
-                       if campaign not in current_user.campaigns 
-                       and campaign.accepting_applications]
-                                        
-            if len(results) == 0:
-                flash("No campaigns matching query found")
+            campaigns_query = (select(models.Campaign)
+                               .filter(
+                                   func.lower(models.Campaign.title).like(search_format),
+                                   models.Campaign.accepting_applications))
+
+            results = db.paginate(campaigns_query, page=page, per_page=per_page, error_out=False)
+
+        # Flash form errors
+        for field_name, errors in form.errors.items():
+            for error_message in errors:
+                flash(field_name + ": " + error_message)
+
+        return render_template("pages/join_campaign.html",
+                               form=form,
+                               request_form=request_form,
+                               search=search,
+                               results=results)
+
+
+    elif request.method == "POST":
+
+        if form.validate_on_submit():
+            search = request.form["search"].lower()
+
+            # Ignore search if less than 3 characters
+            if len(search) < 3:
+                flash("Search queries must be three or more characters")
                 return redirect(url_for("membership.join_campaign"))
 
-            return render_template("pages/join_campaign.html",
-                                   form=form,
-                                   request_form=request_form,
-                                   results=results)
+            else:
+                search_format = "%{}%".format(search)
 
-    # Flash form errors
-    for field_name, errors in form.errors.items():
-        for error_message in errors:
-            flash(field_name + ": " + error_message)
+                campaigns_query = (select(models.Campaign)
+                                   .filter(
+                                       func.lower(models.Campaign.title).like(search_format),
+                                       models.Campaign.accepting_applications))
 
-    return render_template("pages/join_campaign.html",
-                           form=form,
-                           request_form=request_form,
-                           results=results)
+                results = db.paginate(campaigns_query, page=page, per_page=per_page, error_out=False)
+
+                if len(results.items) == 0:
+                    flash("No campaigns matching query found")
+                    return redirect(url_for("membership.join_campaign"))
+                
+        for field_name, errors in form.errors.items():
+            for error_message in errors:
+                flash(field_name + ": " + error_message)
+
+        return render_template("pages/join_campaign.html",
+                               form=form,
+                               request_form=request_form,
+                               search=search,
+                               results=results)
 
 
 # Function called when applying to join campaign 
