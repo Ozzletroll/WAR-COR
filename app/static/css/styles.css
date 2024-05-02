@@ -3441,8 +3441,10 @@ p {
 
 /* Campaigns Pagination */
 
-.campaigns-pagination {
+.campaigns-pagination,
+.advanced-search-pagination {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin-top: auto;
   margin-bottom: 25px;
@@ -3469,7 +3471,7 @@ p {
   
   .pagination-item {
     font-size: 18px;
-    margin: 15px;
+    margin: 10px;
   }
 
 }
