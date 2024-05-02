@@ -8,10 +8,10 @@
           <strong class="pagination-item current-page-item" aria-label="Current Page">{{ page }}</strong>
         {% endif %}
       {% else %}
-        <span class=ellipsis>…</span>
+        <span class="pagination-item ellipsis">…</span>
       {% endif %}
     {% endfor %}
-  </div>
+  </nav>
 {% endmacro %}
 
 
@@ -25,8 +25,32 @@
           <strong class="pagination-item current-page-item" aria-label="Current Page">{{ page }}</strong>
         {% endif %}
       {% else %}
-        <span class=ellipsis>…</span>
+        <span class="pagination-item ellipsis">…</span>
       {% endif %}
     {% endfor %}
-  </div>
+  </nav>
+{% endmacro %}
+
+
+{% macro advanced_search_pagination(paginator, campaign, endpoint, previous_search, class_prefix) %}
+  <nav class="{{ class_prefix }}-pagination" aria-label="Page Selection">
+
+    {% for page_number in paginator.page_numbers %}
+      {% if page_number %}
+        {% if page_number != paginator.current_page %}
+        <a class="pagination-item" href="{{ url_for(endpoint, 
+                                                    campaign_name=campaign.url_title,
+                                                    campaign_id=campaign.id, 
+                                                    search=previous_search, 
+                                                    page=page_number) }}">
+          {{ page_number }}
+        </a>
+        {% else %}
+        <strong class="pagination-item current-page-item" aria-label="Current Page">{{ page_number }}</strong>
+        {% endif %}
+      {% else %}
+        <span class="pagination-item ellipsis">…</span>
+      {% endif%}
+    {% endfor %}
+  </nav>
 {% endmacro %}

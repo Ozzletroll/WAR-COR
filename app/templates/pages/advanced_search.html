@@ -2,6 +2,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/search_result.html" as search_result %}
+{% import "components/page_selection.html" as page_selection %}
 
 
 {% extends "base/base.html" %}
@@ -77,19 +78,19 @@
     {# Animation fade in group 2 #}
     <div class="search-campaigns-list fade-in-block-2">
 
-      {% if results is not none %}
-          <div class="results-counter">
-            {% if results | length > 1 %}
-              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULTS</h5>
-            {% elif results | length == 1 %}
-              <h5 class="flavour-text search-header-bold results-flavour">{{ results | length }} RESULT</h5>
-            {% endif %}
-          </div>
-        {% endif %}
+      {% if paginator is not none %}
+        <div class="results-counter">
+          {% if paginator.data | length > 1 %}
+            <h5 class="flavour-text search-header-bold results-flavour">{{ paginator.data  | length }} RESULTS</h5>
+          {% elif paginator.data | length == 1 %}
+            <h5 class="flavour-text search-header-bold results-flavour">{{ paginator.data  | length }} RESULT</h5>
+          {% endif %}
+        </div>
+      {% endif %}
 
       <div class="search-campaigns-upper">
   
-        {% if results is none %}
+        {% if paginator is none or paginator.data is none %}
           <div id="empty-flavour" class="empty-search-entry" aria-label="No Results Flavour Text">
             <h5 class="flavour-text typing-1 empty-search-header search-header-bold">TERMINAL ACTIVE:</h5>
             <h5 class="flavour-text typing-2 empty-search-header">>DATABASE::SEARCH</h5>
@@ -104,9 +105,9 @@
         <ol id="campaigns-list" class="advanced-search-results-area" aria-label="Search Results">
 
           {# Results go here #}
-          {% if results is not none %}
+          {% if paginator is not none and paginator.data is not none %}
 
-            {% for result in results %}
+            {% for result in paginator.page.items %}
               {% if edit %}
                 {{ search_result.result(result, edit) }}
               {% else %}
@@ -121,6 +122,12 @@
       </div>
 
     </div>
+
+    {{ page_selection.advanced_search_pagination(paginator, 
+                                                 campaign,
+                                                 "search.advanced_search", 
+                                                 search,
+                                                 "advanced-search") }}
 
   </div>
 
