@@ -4,7 +4,7 @@ from flask_login import login_required, current_user
 import json
 
 from app.utils import authenticators, formatters, messengers
-import app.utils.search as search_tools
+from app.utils.paginators import Paginator
 from app.forms import forms
 from app import db, models
 
@@ -72,7 +72,7 @@ def user_search(campaign_name, campaign_id):
     if len(results) == 0:
         response = make_response(jsonify({"message": "No users found"}), 204)
     else:
-        paginator = search_tools.Paginator(results, page, per_page=10)
+        paginator = Paginator(results, page, per_page=10)
         target_url = url_for("membership.add_user",
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id)
