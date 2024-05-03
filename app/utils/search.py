@@ -2,6 +2,7 @@ from flask import url_for
 from sqlalchemy import or_, func
 import editdistance
 from bs4 import BeautifulSoup
+import json
 
 from app import db
 from app import models
@@ -19,7 +20,6 @@ class Paginator:
         self.total_pages = len(self.pages)
         self.page_numbers = self.get_page_numbers()
 
-
     def initialise_pages(self):
 
         pages = []
@@ -33,14 +33,12 @@ class Paginator:
 
         return pages
 
-
     def get_current_page(self, page):
 
         if page > len(self.pages) or page < 1:
             return None
         else:
             return self.pages[page - 1]
-
 
     def get_page_numbers(self,
                          left_edge = 2,
@@ -74,7 +72,15 @@ class Paginator:
                 page_numbers.append(None)
 
         return remove_consecutive_nones(page_numbers)
+    
+    def serialise(self, target_url, new_page_url):
 
+        object_dict = self.__dict__
+        object_dict["pages"] = [page.serialise() for page in object_dict["pages"]]
+        object_dict["page"] = object_dict["page"].serialise()
+        object_dict["target_url"] = target_url
+        object_dict["new_page_url"] = new_page_url
+        return json.dumps(object_dict)
 
 
 class Page:
@@ -82,6 +88,9 @@ class Page:
     def __init__(self, page_number, items):
         self.page_number = page_number
         self.items = items
+
+    def serialise(self):
+        return self.__dict__
 
 
 class Result:
