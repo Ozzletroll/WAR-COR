@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 import json
 
 from app.utils import authenticators, formatters, messengers
+import app.utils.search as search_tools
 from app.forms import forms
 from app import db, models
 
@@ -54,22 +55,32 @@ def user_search(campaign_name, campaign_id):
     
     authenticators.permission_required(campaign)
 
+    page = request.form.get("page", 1, type=int)
     search = request.form["username"]
+    
     if len(search) == 0:
         response = make_response(jsonify({"message": "Please enter a search query"}), 400)
         return response
-    
+
     search_format = "%{}%".format(search)
     users = (db.session.execute(select(models.User)
              .filter(models.User.username.like(search_format)))
              .scalars())
 
     results = formatters.format_user_search_results(users, campaign, search)
-    
-    if len(results["results"]) == 0:
+
+    if len(results) == 0:
         response = make_response(jsonify({"message": "No users found"}), 204)
     else:
-        response = make_response(json.dumps(results), 200)
+        paginator = search_tools.Paginator(results, page, per_page=1)
+        target_url = url_for("membership.add_user",
+                    campaign_name=campaign.url_title,
+                    campaign_id=campaign.id)
+        new_page_url = url_for("membership.user_search", 
+                               campaign_name=campaign.url_title, 
+                               campaign_id=campaign.id)
+        json = paginator.serialise(target_url, new_page_url)
+        response = make_response(json, 200)
         
     return response
 
