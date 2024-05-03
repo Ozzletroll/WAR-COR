@@ -69,9 +69,8 @@ def test_format_user_search_results(client):
 
     results = formatters.format_user_search_results(users, campaign, query)
 
-    assert results["results"]["TestUser"]["relevance"] \
-           <= results["results"]["TestUser123"]["relevance"]
+    assert results[0]["relevance"] <= results[1]["relevance"]
 
     # Assert that "TestUser" comes before "TestUser123" in the list
-    keys_list = list(results["results"].keys())
-    assert keys_list.index("TestUser") < keys_list.index("TestUser123")
+    assert results[0]["username"] == "TestUser"
+    assert results[1]["username"] == "TestUser123"
