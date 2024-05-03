@@ -3442,7 +3442,8 @@ p {
 /* Campaigns Pagination */
 
 .campaigns-pagination,
-.advanced-search-pagination {
+.advanced-search-pagination,
+.user-search-pagination {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -3450,16 +3451,31 @@ p {
   margin-bottom: 25px;
 }
 
+.user-search-pagination {
+  margin-top: 30px;
+  margin-bottom: 0px;
+}
+
 .pagination-item {
   text-decoration: none;
-  margin: 5px;
+  margin: 0px;
   color: var(--text_dark);
   transition: 0.15s;
   font-size: 16px;
+  padding: 10px;
 }
 
 .pagination-item:hover {
   color: var(--text_header_hover);
+}
+
+.page-button {
+  outline: none;
+  border: none;
+  margin: 0px;
+  padding: 10px;
+  background-color: transparent;
+  appearance: none;
 }
 
 .current-page-item {
@@ -4248,6 +4264,9 @@ p {
 }
 
 .results-username {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 2px;
   color: var(--text_dark);
 }
