@@ -53,7 +53,7 @@ function userSearch(url, csrfToken, additionalArg=null, previousSearch=null) {
         // Get the results area div element
         const resultsAreaDiv = document.getElementById("results-area");
         // Delete any existing dynamic elements
-        resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
+        deleteOldElements(resultsAreaDiv);
   
         // Create no users found entry
         const newLi = Object.assign(
