@@ -88,19 +88,11 @@ def increment_datestring(datestring, args):
 def format_user_search_results(users, campaign, query):
     """ Function to format add user query results """
 
-    results = {"results": {user.username: {"id": user.id,
-                                           "username": user.username,
-                                           "relevance": editdistance.eval(user.username, query)} 
-                                           for user in users 
-                                           if user not in campaign.members},
-               "target_url": url_for("membership.add_user",
-                                     campaign_name=campaign.url_title,
-                                     campaign_id=campaign.id)}
+    results = [{"id": user.id, 
+                "username": user.username,
+                "relevance": editdistance.eval(user.username, query)} 
+                for user in users if user not in campaign.members]
     
-    sorted_results = {"results": {key: value for key, value in sorted(results["results"].items(), 
-                                                                      key=lambda item: item[1]["relevance"])},
-                      "target_url": url_for("membership.add_user",
-                                            campaign_name=campaign.url_title,
-                                            campaign_id=campaign.id)}
+    sorted_results = sorted(results, key=lambda x: x["relevance"])
 
     return sorted_results
