@@ -57,7 +57,7 @@ def user_search(campaign_name, campaign_id):
 
     page = request.form.get("page", 1, type=int)
     search = request.form["username"]
-    
+
     if len(search) == 0:
         response = make_response(jsonify({"message": "Please enter a search query"}), 400)
         return response
@@ -72,7 +72,7 @@ def user_search(campaign_name, campaign_id):
     if len(results) == 0:
         response = make_response(jsonify({"message": "No users found"}), 204)
     else:
-        paginator = search_tools.Paginator(results, page, per_page=1)
+        paginator = search_tools.Paginator(results, page, per_page=10)
         target_url = url_for("membership.add_user",
                     campaign_name=campaign.url_title,
                     campaign_id=campaign.id)
