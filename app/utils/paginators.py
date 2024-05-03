@@ -1,7 +1,6 @@
 import json
 
 
-
 class Paginator:
     """ Paginator class to format all results for template """
 
@@ -35,15 +34,15 @@ class Paginator:
             return self.pages[page - 1]
 
     def get_page_numbers(self,
-                         left_edge = 2,
-                         left_current = 2,
-                         right_current = 4,
-                         right_edge = 2):
-        
+                         left_edge=2,
+                         left_current=2,
+                         right_current=4,
+                         right_edge=2):
+
         def remove_consecutive_nones(list):
 
             if not list:
-                return[1]
+                return [1]
 
             new_list = [list[0]]
             for index in range(1, len(list)):
@@ -52,21 +51,21 @@ class Paginator:
                 new_list.append(list[index])
 
             return new_list
-        
+
         page_numbers = []
 
         for index, page in enumerate(self.pages):
-            if (index + 1 <= left_edge or 
-                page.page_number > (self.total_pages - right_edge) or 
-                page.page_number == self.current_page or 
-                self.current_page <= page.page_number < self.current_page + right_current or 
-                self.current_page - left_current <= page.page_number < self.current_page):
+            if (index + 1 <= left_edge or
+                    page.page_number > (self.total_pages - right_edge) or
+                    page.page_number == self.current_page or
+                    self.current_page <= page.page_number < self.current_page + right_current or
+                    self.current_page - left_current <= page.page_number < self.current_page):
                 page_numbers.append(page.page_number)
             else:
                 page_numbers.append(None)
 
         return remove_consecutive_nones(page_numbers)
-    
+
     def serialise(self, target_url, new_page_url):
 
         object_dict = self.__dict__
