@@ -1,7 +1,6 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
-from sqlalchemy import select, func, not_
+from sqlalchemy import select, func
 from flask_login import login_required, current_user
-import json
 
 from app.utils import authenticators, formatters, messengers
 from app.utils.paginators import Paginator
