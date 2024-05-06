@@ -12,6 +12,7 @@ class Event(db.Model):
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
     url_title = db.Column(db.String(250))
+    hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
     date = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer)
@@ -21,11 +22,7 @@ class Event(db.Model):
     minute = db.Column(db.Integer)
     second = db.Column(db.Integer)
 
-    location = db.Column(db.String(), nullable=True)
-    belligerents = db.Column(db.String(), nullable=True)
-    body = db.Column(db.String(), nullable=False)
-    result = db.Column(db.String(), nullable=True)
-    hide_time = db.Column(db.Boolean(), nullable=False, default=False)
+    data = db.Column(db.JSON, default={})
 
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments. 
