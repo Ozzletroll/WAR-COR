@@ -16,7 +16,6 @@ from app.routes.search import bp
 # Advanced search page, accessed from deployable searchbar on timeline
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/search", methods=["GET", "POST"])
 def advanced_search(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -29,8 +28,8 @@ def advanced_search(campaign_name, campaign_id):
 
     # Set back button route, excluding this route
     if not session["previous_url"]:
-        session["previous_url"] = url_for("campaign.show_timeline", 
-                                          campaign_name=campaign.url_title, 
+        session["previous_url"] = url_for("campaign.show_timeline",
+                                          campaign_name=campaign.url_title,
                                           campaign_id=campaign.id)
 
     if request.method == "GET":
@@ -54,10 +53,10 @@ def advanced_search(campaign_name, campaign_id):
             paginator = Paginator(data=results, page=page, per_page=per_page)
 
         return render_template("pages/advanced_search.html",
-                                form=form,
-                                campaign=campaign,
-                                search=search,
-                                paginator=paginator)
+                               form=form,
+                               campaign=campaign,
+                               search=search,
+                               paginator=paginator)
 
     elif request.method == "POST":
 
@@ -66,7 +65,7 @@ def advanced_search(campaign_name, campaign_id):
             page = 1
             search = request.form["search"].lower()
             search_engine.search_campaign(campaign=campaign,
-                                        query=search)
+                                          query=search)
             results = search_engine.return_results()
             paginator = Paginator(data=results, page=page, per_page=per_page)
 
