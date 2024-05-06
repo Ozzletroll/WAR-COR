@@ -1,12 +1,18 @@
 // Search for users when NewUserForm is submitted
-function userSearch(url, csrfToken) {
+function userSearch(url, csrfToken, additionalArg=null, previousSearch=null) {
+
+    
 
     var target_url = url;
-    var username = document.getElementById("username-search");
+    var username = document.getElementById("username-search").value;
   
     var data = new FormData();
-    data.append("username", username.value);
-  
+    if (previousSearch != null) {
+      username = previousSearch;
+    }
+    data.append("username", username);
+    data.append("page", additionalArg)
+
     // Send fetch request to target url
     fetch(target_url, {
       "method": "POST",
@@ -21,8 +27,8 @@ function userSearch(url, csrfToken) {
         // Get the results area div element
         const resultsAreaDiv = document.getElementById("results-area");
         // Delete any existing dynamic elements
-        resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
-  
+        deleteOldElements(resultsAreaDiv);
+
         // Create no users found entry
         const newLi = Object.assign(
           document.createElement("li"), 
@@ -47,7 +53,7 @@ function userSearch(url, csrfToken) {
         // Get the results area div element
         const resultsAreaDiv = document.getElementById("results-area");
         // Delete any existing dynamic elements
-        resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
+        deleteOldElements(resultsAreaDiv);
   
         // Create no users found entry
         const newLi = Object.assign(
@@ -55,8 +61,6 @@ function userSearch(url, csrfToken) {
           {id: "results-none",
           className: "results-area"}
           );
-  
-        var message = response.json().data;
   
         const newHeading = Object.assign(
           document.createElement("h4"), 
@@ -73,27 +77,26 @@ function userSearch(url, csrfToken) {
       
       // Create results elements
       response.json().then(function(data) {
-        
+
         // Get the results area div element
         const resultsAreaDiv = document.getElementById("results-area");
-  
+
         // Delete any existing dynamic elements
-        resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
-  
-        let index = 0
-        for (let user in data["results"]) {
-  
+        deleteOldElements(resultsAreaDiv);
+
+        for (let index in data["page"]["items"]) {
+
           // Create the new elements
           const newLi = Object.assign(
             document.createElement("li"), 
-            {id: "results-" + user ,
+            {id: "results-" + index ,
             className: "results-area"}
             );
   
           const newHeading = Object.assign(
             document.createElement("h4"), 
             {className: "results-username",
-            innerHTML: user}
+            innerHTML: data["page"]["items"][index]["username"]}
             );
   
           const newButton = Object.assign(
@@ -103,8 +106,8 @@ function userSearch(url, csrfToken) {
             );
   
           // Set result data as attributes of button
-          newButton.setAttribute("data-userID", data["results"][user]["id"]);
-          newButton.setAttribute("data-username", data["results"][user]["username"]);
+          newButton.setAttribute("data-userID", data["data"][index]["id"]);
+          newButton.setAttribute("data-username", data["data"][index]["username"]);
           newButton.setAttribute("data-targetURL", data["target_url"]);
   
           // Bind onclick function
@@ -123,18 +126,69 @@ function userSearch(url, csrfToken) {
             resultsAreaDiv.insertBefore(newLi, startingDiv);
           }
           else {
-            const currentDiv = document.getElementById("results-" + user);
+            const currentDiv = document.getElementById("results-" + index);
             resultsAreaDiv.insertBefore(newLi, currentDiv);
           }
           
-          index += 1
-  
+        }
+
+        if (data["pages"].length > 1) {
+
+          var newMemberTab = document.getElementById("tab-2");
+      
+          let innerElements = "";
+
+          for (let index = 0; index < data["page_numbers"].length; index++) {
+            const page_number = data["page_numbers"][index];
+            if (page_number) {
+              if (page_number !== data.current_page) {
+                innerElements += `<button id="page-${page_number}" class="pagination-item page-button" data-pagenumber="${page_number}">${page_number}</button>`;
+              } else {
+                innerElements += `<strong class="pagination-item current-page-item" aria-label="Current Page">${page_number}</strong>`;
+              }
+            } else {
+              innerElements += `<span class="pagination-item ellipsis">…</span>`;
+            }
+          }
+
+          const newPageWidget = Object.assign(
+            document.createElement("nav"), 
+            {id: "user-search-pagination",
+            className: "user-search-pagination",
+            ariaLabel: "Page Selection",
+            innerHTML: innerElements}
+            );
+
+          newMemberTab.appendChild(newPageWidget);
+          bindPageFunctions();
         }
   
       })
   
     })
   
+    // Function to bind fetch request functions to page number buttons
+    // Passes previous search value, preventing changing page
+    // from taking new search input values.
+    function bindPageFunctions() {
+      var pageButtons = document.getElementsByClassName("page-button");
+
+      Array.from(pageButtons).forEach(button => {
+        let pageNumber = button.dataset.pagenumber;
+        button.addEventListener("click", function() {
+          userSearch(url, csrfToken, pageNumber, username);
+        });
+      })
+    }
+
+    function deleteOldElements(resultsAreaDiv) {
+      resultsAreaDiv.innerHTML = '<div id="results-marker" aria-hidden="true"></div>';
+      var pageSelector = document.getElementById("user-search-pagination");
+      if (pageSelector != null) {
+        pageSelector.remove();
+      }
+    }
+
   }
   
   // Function called when clicking an invite button. Grabs user data and fills hidden form, then submits.

@@ -3,6 +3,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/campaign_entry.html" as campaign_entry %}
+{% import "components/page_selection.html" as page_selection %}
 
 {% extends "base/base.html" %}
 
@@ -64,12 +65,14 @@
         {{ campaign_entry.campaign_entry(campaign=campaign, current_user=current_user) }}
       {% endfor %}
 
-      {# New user introduction, if user.campaigns is empty #}
-      {% if not campaigns %}
+      {# New user introduction, if user.campaigns.items is empty #}
+      {% if campaigns.items | length == 0 %}
         {{ campaign_entry.new_user_entry(campaign=campaign, current_user=current_user) }}
       {% endif %}
 
     </ol>
+
+    {{ page_selection.render_pagination(campaigns, "campaign.campaigns", "campaigns") }}
 
   </div>
 </div>

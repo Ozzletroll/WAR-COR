@@ -1,4 +1,3 @@
-from flask import url_for
 import editdistance
 
 
@@ -54,10 +53,10 @@ def increment_datestring(datestring, args):
     if "new_hour" in args:
         incremented_values = increment(values, 2)
         # Format date as string for form field
-        datestring = (str(incremented_values[0]).zfill(year_format) 
-                      + "/" + str(incremented_values[1]).zfill(2) 
-                      + "/" + str(incremented_values[2]).zfill(2) 
-                      + " " + str(incremented_values[3]).zfill(2) 
+        datestring = (str(incremented_values[0]).zfill(year_format)
+                      + "/" + str(incremented_values[1]).zfill(2)
+                      + "/" + str(incremented_values[2]).zfill(2)
+                      + " " + str(incremented_values[3]).zfill(2)
                       + ":00:00")
 
     # Move to the next day and format the string
@@ -78,8 +77,8 @@ def increment_datestring(datestring, args):
     if "new_month" in args:
         incremented_values = increment(values, 4)
         # Format date as string for form field
-        datestring = (str(incremented_values[0]).zfill(year_format) 
-                      + "/" + str(incremented_values[1]).zfill(2) 
+        datestring = (str(incremented_values[0]).zfill(year_format)
+                      + "/" + str(incremented_values[1]).zfill(2)
                       + "/" + "01 00:00:00")
 
     return datestring
@@ -88,19 +87,11 @@ def increment_datestring(datestring, args):
 def format_user_search_results(users, campaign, query):
     """ Function to format add user query results """
 
-    results = {"results": {user.username: {"id": user.id,
-                                           "username": user.username,
-                                           "relevance": editdistance.eval(user.username, query)} 
-                                           for user in users 
-                                           if user not in campaign.members},
-               "target_url": url_for("membership.add_user",
-                                     campaign_name=campaign.url_title,
-                                     campaign_id=campaign.id)}
-    
-    sorted_results = {"results": {key: value for key, value in sorted(results["results"].items(), 
-                                                                      key=lambda item: item[1]["relevance"])},
-                      "target_url": url_for("membership.add_user",
-                                            campaign_name=campaign.url_title,
-                                            campaign_id=campaign.id)}
+    results = [{"id": user.id,
+                "username": user.username,
+                "relevance": editdistance.eval(user.username, query)}
+               for user in users if user not in campaign.members]
+
+    sorted_results = sorted(results, key=lambda x: x["relevance"])
 
     return sorted_results

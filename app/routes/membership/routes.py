@@ -1,9 +1,9 @@
 from flask import render_template, redirect, request, url_for, flash, jsonify, make_response, session, abort
 from sqlalchemy import select, func
 from flask_login import login_required, current_user
-import json
 
 from app.utils import authenticators, formatters, messengers
+from app.utils.paginators import Paginator
 from app.forms import forms
 from app import db, models
 
@@ -18,7 +18,6 @@ from app.routes.membership import bp
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/edit-members", methods=["GET", "POST"])
 @login_required
 def edit_campaign_users(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -36,8 +35,8 @@ def edit_campaign_users(campaign_name, campaign_id):
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
-    return render_template("pages/campaign_members.html", 
-                           campaign=campaign, 
+    return render_template("pages/campaign_members.html",
+                           campaign=campaign,
                            search_form=search_form,
                            add_form=add_form,
                            remove_form=remove_form)
@@ -47,30 +46,39 @@ def edit_campaign_users(campaign_name, campaign_id):
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/user-search", methods=["POST"])
 @login_required
 def user_search(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
-    
+
     authenticators.permission_required(campaign)
 
+    page = request.form.get("page", 1, type=int)
     search = request.form["username"]
+
     if len(search) == 0:
         response = make_response(jsonify({"message": "Please enter a search query"}), 400)
         return response
-    
+
     search_format = "%{}%".format(search)
     users = (db.session.execute(select(models.User)
-             .filter(models.User.username.like(search_format)))
+                                .filter(models.User.username.like(search_format)))
              .scalars())
 
     results = formatters.format_user_search_results(users, campaign, search)
-    
-    if len(results["results"]) == 0:
+
+    if len(results) == 0:
         response = make_response(jsonify({"message": "No users found"}), 204)
     else:
-        response = make_response(json.dumps(results), 200)
-        
+        paginator = Paginator(results, page, per_page=10)
+        target_url = url_for("membership.add_user",
+                             campaign_name=campaign.url_title,
+                             campaign_id=campaign.id)
+        new_page_url = url_for("membership.user_search",
+                               campaign_name=campaign.url_title,
+                               campaign_id=campaign.id)
+        json = paginator.serialise(target_url, new_page_url)
+        response = make_response(json, 200)
+
     return response
 
 
@@ -93,9 +101,9 @@ def add_user(campaign_name, campaign_id):
 
     # Check if username exists
     user = (db.session.execute(select(models.User)
-            .filter_by(username=username, id=user_id))
+                               .filter_by(username=username, id=user_id))
             .scalar())
-    
+
     if user:
         # Check if user isn't already a member
         if campaign not in user.campaigns:
@@ -119,18 +127,17 @@ def add_user(campaign_name, campaign_id):
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/remove-user", methods=["POST"])
 @login_required
 def remove_user(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
-    
+
     authenticators.permission_required(campaign)
 
     username = request.form["username"]
     user_id = request.form["user_id"]
 
     user = (db.session.execute(select(models.User)
-            .filter_by(username=username, id=user_id))
+                               .filter_by(username=username, id=user_id))
             .scalar())
 
     if user:
@@ -147,8 +154,8 @@ def remove_user(campaign_name, campaign_id):
 
     if campaign:
         if current_user in campaign.members:
-            return redirect(url_for("membership.edit_campaign_users", 
-                                    campaign_name=campaign_name, 
+            return redirect(url_for("membership.edit_campaign_users",
+                                    campaign_name=campaign_name,
                                     campaign_id=campaign.id))
         else:
             return redirect(url_for("campaign.campaigns"))
@@ -159,16 +166,15 @@ def remove_user(campaign_name, campaign_id):
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/leave", methods=["POST"])
 @login_required
 def leave_campaign(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
-    
+
     username = request.form["username"]
     user_id = request.form["user_id"]
 
     user = (db.session.execute(select(models.User)
-            .filter_by(username=username, id=user_id))
+                               .filter_by(username=username, id=user_id))
             .scalar())
 
     authenticators.user_verification(user)
@@ -176,7 +182,7 @@ def leave_campaign(campaign_name, campaign_id):
     campaign.remove_user(user)
     flash(f"Left campaign '{campaign.title}'")
 
-    return redirect(url_for("user.user_page", 
+    return redirect(url_for("user.user_page",
                             username=current_user.username))
 
 
@@ -184,63 +190,78 @@ def leave_campaign(campaign_name, campaign_id):
 @bp.route("/campaigns/join-campaign", methods=["GET", "POST"])
 @login_required
 def join_campaign():
-
     form = forms.SearchForm()
     request_form = forms.SubmitForm()
 
-    # Check if page has any results to render
-    if "results" not in request.args:
-        results = None
-    else:
-        results = request.args["results"]
+    page = request.args.get("page", 1, type=int)
+    per_page = 6
 
-    if form.validate_on_submit():
-        search = request.form["search"].lower()
+    if request.method == "GET":
 
-        # Ignore search if less than 3 characters
-        if len(search) < 3:
-            flash("Search queries must be three or more characters")
-            return redirect(url_for("membership.join_campaign"))
-
+        # Check if page has any results to render
+        if "search" not in request.args:
+            results = None
+            search = None
         else:
+            search = request.args["search"]
+            form.search.data = search
             search_format = "%{}%".format(search)
-            campaigns = (db.session.execute(select(models.Campaign)
-                        .filter(func.lower(models.Campaign.title).like(search_format)))
-                        .scalars())
 
-            results = [campaign for campaign in campaigns 
-                       if campaign not in current_user.campaigns 
-                       and campaign.accepting_applications]
-                                        
-            if len(results) == 0:
+            campaigns_query = (select(models.Campaign).filter(
+                func.lower(models.Campaign.title).like(search_format),
+                models.Campaign.accepting_applications))
+
+            results = db.paginate(campaigns_query, page=page, per_page=per_page, error_out=False)
+
+        # Flash form errors
+        for field_name, errors in form.errors.items():
+            for error_message in errors:
+                flash(field_name + ": " + error_message)
+
+        return render_template("pages/join_campaign.html",
+                               form=form,
+                               request_form=request_form,
+                               search=search,
+                               results=results)
+
+    elif request.method == "POST":
+
+        search = None
+        results = None
+
+        if form.validate_on_submit():
+            search = request.form["search"].lower()
+            search_format = "%{}%".format(search)
+
+            campaigns_query = (select(models.Campaign).filter(
+                func.lower(models.Campaign.title).like(search_format),
+                models.Campaign.accepting_applications))
+
+            results = db.paginate(campaigns_query, page=page, per_page=per_page, error_out=False)
+
+            if len(results.items) == 0:
                 flash("No campaigns matching query found")
                 return redirect(url_for("membership.join_campaign"))
 
-            return render_template("pages/join_campaign.html",
-                                   form=form,
-                                   request_form=request_form,
-                                   results=results)
+        for field_name, errors in form.errors.items():
+            for error_message in errors:
+                flash(field_name + ": " + error_message)
 
-    # Flash form errors
-    for field_name, errors in form.errors.items():
-        for error_message in errors:
-            flash(field_name + ": " + error_message)
-
-    return render_template("pages/join_campaign.html",
-                           form=form,
-                           request_form=request_form,
-                           results=results)
+        return render_template("pages/join_campaign.html",
+                               form=form,
+                               request_form=request_form,
+                               search=search,
+                               results=results)
 
 
 # Function called when applying to join campaign 
 @bp.route("/campaigns/join_campaign/<campaign_name>-<campaign_id>", methods=["POST"])
 @login_required
 def request_membership(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
-    
+
     # Retrieve the users with editing permissions for the campaign
     campaign_admins = campaign.admins
 
@@ -265,7 +286,7 @@ def accept_invite():
     message = (db.session.query(models.Message)
                .filter(models.Message.id == message_id)
                .first_or_404(description="No matching message found"))
-    
+
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -290,7 +311,7 @@ def accept_invite():
                                                     recipients,
                                                     campaign,
                                                     current_user.username)
-            
+
             # Set scroll target
             session["campaign_scroll_target"] = f"campaign-{campaign.id}"
 
@@ -306,7 +327,6 @@ def accept_invite():
 @bp.route("/campaigns/decline-invite", methods=["POST"])
 @login_required
 def decline_invite():
-
     message_id = request.form["message_id"]
 
     message = (db.session.query(models.Message)
@@ -328,14 +348,13 @@ def decline_invite():
 @bp.route("/campaigns/confirm-join-request", methods=["POST"])
 @login_required
 def confirm_request():
-
     campaign_id = request.form["campaign_id"]
     message_id = request.form["message_id"]
 
     message = (db.session.query(models.Message)
                .filter(models.Message.id == message_id)
                .first_or_404(description="No matching message found"))
-    
+
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -344,10 +363,9 @@ def confirm_request():
 
     # Check message is valid and user not already in campaign
     if message.request and message.target_user not in campaign.members:
-        
         # Add user to campaign
         message.target_user.campaigns.append(campaign)
-        
+
         # Delete message
         db.session.delete(message)
         db.session.commit()
@@ -357,7 +375,7 @@ def confirm_request():
                                                 campaign.members,
                                                 campaign,
                                                 message.target_user.username)
-        
+
     return redirect(request.referrer)
 
 
@@ -365,14 +383,13 @@ def confirm_request():
 @bp.route("/campaigns/deny-join-request", methods=["POST"])
 @login_required
 def deny_request():
-
     campaign_id = request.form["campaign_id"]
     message_id = request.form["message_id"]
 
     message = (db.session.query(models.Message)
                .filter(models.Message.id == message_id)
                .first_or_404(description="No matching message found"))
-    
+
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -391,7 +408,6 @@ def deny_request():
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/grant-permission", methods=["POST"])
 @login_required
 def add_permission(campaign_name, campaign_id):
-
     user_to_add = request.form["username"]
     user_id = request.form["user_id"]
 
@@ -399,7 +415,7 @@ def add_permission(campaign_name, campaign_id):
             .filter(models.User.id == user_id)
             .filter(models.User.username == user_to_add)
             .first_or_404(description="No matching user found"))
-    
+
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
@@ -411,8 +427,8 @@ def add_permission(campaign_name, campaign_id):
         user.permissions.append(campaign)
         db.session.commit()
         flash(f"Granted {user.username} campaign editing permissions")
-        
-    return redirect(url_for("membership.edit_campaign_users", 
+
+    return redirect(url_for("membership.edit_campaign_users",
                             campaign_name=campaign.url_title,
                             campaign_id=campaign.id))
 
@@ -421,7 +437,6 @@ def add_permission(campaign_name, campaign_id):
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/update-membership-settings", methods=["POST"])
 @login_required
 def update_membership_settings(campaign_name, campaign_id):
-
     campaign = (db.session.query(models.Campaign)
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
