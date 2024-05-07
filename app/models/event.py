@@ -49,30 +49,32 @@ class Event(db.Model):
     # Methods
     def update(self, form, parent_campaign, new=False):
         """ Method to populate and update self.
-            Takes form data from form.data, but only updates if respective
-            "edit_" field has been set to True via event page Javascript.
             Set "new" to true if creating new entry.  """
         
-        # If new event, use all fields except those with "edit_" prefix
-        # Otherwise, iterate over only those with the "edit_" prefix
-        fields = {field: value for field, value in form.items() 
-                  if (not new and field.startswith("edit_")) 
-                  or (new and not field.startswith("edit_"))}
+        for field, value in form.items():
 
-        for field, value in fields.items():
-            matching_field = field.replace("edit_", "")
-            
             if value or new:
-                form_value = form[matching_field]
 
-                if matching_field == "date":
-                    self.date = form_value
-                    self.split_date(form_value)
+                if field == "date":
+                    self.date = value
+                    self.split_date(value)
 
-                if matching_field == "body":
-                    form_value = sanitise_input(form_value)
+                elif field == "dynamic_fields":
 
-                setattr(self, matching_field, form_value)
+                    data = []
+                    for dynamic_field_data in value:
+                        dict = {}
+                        for key, dynamic_value in dynamic_field_data.items():
+                            if key == "value":
+                                dynamic_value = sanitise_input(dynamic_value)
+                            if key != "edited":
+                                dict[key] = dynamic_value
+                            data.append(dict)
+
+                    self.data = data
+                        
+                else:
+                    setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
