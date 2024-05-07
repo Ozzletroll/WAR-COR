@@ -1,12 +1,13 @@
-function summernoteInitialise(idSuffix, 
-                              placeholder, 
-                              charLimit, 
-                              allowImages, 
-                              allowURLS) {
-
+export function summernoteInitialise(
+  idSuffix,
+  placeholder,
+  charLimit,
+  allowImages,
+  allowURLS
+) {
   charLimit = parseInt(charLimit) || null;
   var editor = "#summernote" + idSuffix;
-  
+
   $(editor).summernote({
     callbacks: {
       onKeydown: function(event) {
