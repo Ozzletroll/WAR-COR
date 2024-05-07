@@ -3,6 +3,7 @@
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/dynamic_fields.html" as dynamic_fields %}
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/modal.html" as modal %}
 
@@ -81,16 +82,8 @@
       <form id="edit-event-form" class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Event Form">
         {{ form.csrf_token }}
         <div id="event-form-edit-fields" class="form-hidden">
-          {{ form.edit_date(id="event-form-date-edit", value=false) }}
-          {{ form.edit_title(id="event-form-title-edit", value=false) }}
-          {{ form.edit_type(id="event-form-type-edit", value=false) }}
-          {{ form.edit_location(id="event-form-location-edit", value=false) }}
-          {{ form.edit_belligerents(id="event-form-belligerents-edit", value=false) }}
-          {{ form.edit_hide_time(id="event-form-hide-time-edit", value=false) }}
-          {{ form.edit_body(id="summernote-desc-edit", value=false) }}
-          {{ form.edit_result(id="event-form-result-edit", value=false) }}
-        </div>
 
+        </div>
         <div id="date-field" class="form-container form-container-small">
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
@@ -178,56 +171,6 @@
         
         </div>
 
-        <div id="location-field" class="form-container form-container-small">
-          <div class="campaign-form-label form-icon">
-            <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='images/icons/edit.sv') }}g">
-              <label for="event-form-location">
-                <h4 class="campaign-form label-title">Location</h4>
-              </label>
-            </div>
-            <p class="flavour-text" aria-label="Flavour Text">UWC-6-04 //  Event::Location</p>
-          </div>
-
-          <div class="form-input-container">
-            {{ form.location(id="event-form-location", 
-                             class_="campaign-input form-input event-input", 
-                             autocomplete="off", 
-                             placeholder="OPTIONAL") }}
-            <div class="form-underline"></div>
-          </div>
-
-        </div>
-
-        <div id="belligerents-field" class="form-container form-container-small">
-          <div class="campaign-form-label form-icon">
-            <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-              <label for="event-form-belligerents">
-                <h4 class="campaign-form label-title">Belligerents</h4>
-              </label>
-
-              <div class="form-extra-button-area">
-                <button id="event-belligerents-help-button" class="button form-button" type="button" aria-label="Help">
-                  {% include "components/help_icon.html" %}
-                </button>
-              </div>
-            </div>
-            <p class="flavour-text" aria-label="Flavour Text">UWC-6-05 //  Event::Participants</p>
-          </div>
-
-          <div class="form-input-container">
-            {{ form.belligerents(id="event-form-belligerents", 
-                                 class_="campaign-input form-input event-input", 
-                                 autocomplete="off", 
-                                 placeholder="OPTIONAL") }}
-            <div class="form-underline"></div>
-          </div>
-
-        </div>
-
         <div id="display-field" class="form-container form-container-small">
           <div class="campaign-form-label form-icon">
             <div class="campaign-form-label-container">
@@ -243,7 +186,7 @@
               </div>
 
             </div>
-            <p class="flavour-text" aria-label="Flavour Text">UWC-6-06 //  Event::Formatting</p>
+            <p class="flavour-text" aria-label="Flavour Text">UWC-6-04 //  Event::Formatting</p>
           </div>
 
           <div class="form-toggle-inputs">
@@ -254,58 +197,15 @@
           </div>
         </div>
 
-        <div id="event-desc-field" class="form-container form-container-large">
-          <div class="campaign-form-label form-icon">
-            <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-          
-              <label for="summernote">
-                <h4 class="campaign-form label-title">Description</h4>
-              </label>
-              <div class="form-extra-button-area">
-                  
-                <button id="html-preview-button" type="button" class="button form-button form-preview-button">
-                  HTML PREVIEW
-                </button>
-                
-              </div>
-              
-            </div>
-            <p class="flavour-text" aria-label="Flavour Text">UWC-6-07 //  Event::Overview</p>
-          </div>
-
-          {{ form.body(id="summernote-desc", 
-                       class_="campaign-input large-input event-input", 
-                       autocomplete="off") }}
-          {{ summernote.summernote_editor(placeholder="REQUIRED", 
-                                          char_limit=none, 
-                                          id_suffix="-desc",
-                                          allow_images=true,
-                                          allow_urls=true) }}
-          
+        <div id="dynamic-field-area" class="dynamic-field-area">
+          {% for field in form.dynamic_fields %}
+            {{ dynamic_fields.dynamic_html_field(field, loop.index) }}
+          {% endfor %}
         </div>
 
-        <div id="result-field" class="form-container form-container-footer">
-          <div class="campaign-form-label form-icon">
-            <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-              <label for="event-form-result">
-                <h4 class="campaign-form label-title">Result</h4>
-              </label>
-            </div>
-            <p class="flavour-text" aria-label="Flavour Text">UWC-6-08 //  Event::Outcome</p>
-          </div>
-
-          <div class="form-input-container">
-            {{ form.result(id="event-form-result", 
-                           class_="campaign-input form-input event-input", 
-                           autocomplete="off", 
-                           placeholder="OPTIONAL") }}
-            <div class="form-underline"></div>
-          </div>
-
+        <div class="new-field-area">
+          <button type="button" class="button new-field-button" 
+          onclick="addNewField()">ADD NEW FIELD</button>
         </div>
 
         <div class="campaign-submit-area event-submit-area">
