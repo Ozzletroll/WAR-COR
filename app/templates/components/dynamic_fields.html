@@ -1,0 +1,38 @@
+{% import "components/summernote_editor.html" as summernote %}
+
+{% macro dynamic_html_field(field, index) %}
+
+  <div id="event-desc-field" class="form-container form-container-large">
+    <div class="campaign-form-label form-icon">
+      <div class="campaign-form-label-container">
+        <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
+        src="{{ url_for('static', filename='images/icons/edit.svg') }}">
+        {% set title_id = "dynamic-field-" + index | string %}
+        {{ field.title(id=title_id, 
+                       class="dynamic-field-title campaign-form-label-title", 
+                       title="Title") }}
+        <nav role="toolbar" class="form-extra-button-area" aria-label="Dynamic Field {{ index }} Toolbar">
+          <button id="html-preview-button" type="button" class="button form-button form-preview-button">
+            HTML PREVIEW
+          </button>
+          {% set delete_id = "delete-" + index | string %}
+          <button id="delete" type="button" class="button form-button form-preview-button">
+            X
+          </button>
+        </nav> 
+      </div>
+      <p class="flavour-text" aria-label="Flavour Text">UWC-6-0{{ 4 + index  }} //  Event::{{field.title.data}}</p>
+    </div>
+
+      {% set id = "summernote-" + field.name %}
+      {% set suffix = "-" + field.name %}
+      {{ field.value(id=id, class_="campaign-input large-input event-input", autocomplete="off") }}
+      {{ summernote.summernote_editor(placeholder="OPTIONAL", 
+                                      char_limit=none, 
+                                      id_suffix=suffix,
+                                      allow_images=true,
+                                      allow_urls=true) }}
+    
+  </div>
+
+{%- endmacro %}
