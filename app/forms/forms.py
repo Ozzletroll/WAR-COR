@@ -91,7 +91,6 @@ class CreateEventForm(FlaskForm):
             dynamic_field = DynamicField()
             dynamic_field.title = field["title"]
             dynamic_field.value = field["value"]
-            dynamic_field.edited = False
             self.dynamic_fields.append_entry(dynamic_field)
 
 
