@@ -81,17 +81,15 @@ def add_event(campaign_name, campaign_id):
 
     authenticators.permission_required(campaign)
 
-    # Check if date argument given
     if "date" in request.args:
-        # Get date arguments
+
+        # Increase the date by one unit and format the datestring
         datestring = request.args["date"]
         args = request.args
-        # Increase the date by one unit and format the datestring
         datestring = formatters.increment_datestring(datestring, args)
-        # Create placeholder event
+        # Create placeholder event to prepopulate form
         event = models.Event()
         event.create_blank(datestring)
-        # Prepopulate form
         form = forms.CreateEventForm(obj=event)
 
         # Set scroll_to target for back button
@@ -102,18 +100,16 @@ def add_event(campaign_name, campaign_id):
     else:
         form = forms.CreateEventForm()
 
-    # Check if user has submitted a new event
     if form.validate_on_submit():
-        # Create new event object using form data
+
         event = models.Event()
         event.update(form=form.data,
                      parent_campaign=campaign,
                      new=True)
-        # Update "following_event" relationships for all events
+        
         campaign.get_following_events()
-        # Check all epochs for events
         campaign.check_epochs()
-        # Create notification message
+        
         messengers.send_event_notification(current_user,
                                            recipients=campaign.members,
                                            campaign=campaign,
