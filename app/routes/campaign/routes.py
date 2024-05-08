@@ -186,7 +186,7 @@ def delete_campaign(campaign_name, campaign_id):
         if search_user:
             if search_user.id == current_user.id:
                 if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
-                    # Delete campaign from database
+                    campaign.clear_cache()
                     db.session.delete(campaign)
                     db.session.commit()
                     return redirect(url_for("campaign.campaigns"))

@@ -166,6 +166,7 @@ def delete_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                 .filter(models.Epoch.id == epoch_id)
                 .first_or_404(description="No matching epoch found"))
 
+    campaign.clear_cache()
     db.session.delete(epoch)
     db.session.commit()
     
