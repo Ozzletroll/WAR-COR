@@ -44,7 +44,7 @@ function addNewField() {
                   </button>
 
                   <button id="html-preview-button" type="button" class="button form-button form-preview-button form-close">
-                    HTML PREVIEW
+                    PREVIEW
                   </button>
 
                   <button id="form-delete-${index}" type="button" class="button form-button form-close">
@@ -65,8 +65,7 @@ function addNewField() {
         
             <textarea name="dynamic_fields-${index-1}-value" 
             id="summernote-dynamic-${index}" 
-            class="campaign-input large-input event-input">
-            </textarea>
+            class="campaign-input large-input event-input"></textarea>
 
           </div>
         </div> 
