@@ -33,7 +33,7 @@ function addNewField() {
 
                 <nav role="toolbar" class="form-extra-button-area form-buttons-dynamic" aria-label="Dynamic Field ${index} Toolbar">
                   
-                  <button type="button" class="form-button handle" aria-label="Drag">
+                  <button type="button" class="button form-button handle" aria-label="Drag">
                     <svg width="30px" height="30px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                       <g stroke="none" class="icon-colour-var" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="drop" transform="translate(42.666667, 42.666667)">
