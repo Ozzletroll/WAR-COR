@@ -22,6 +22,7 @@ export function summernoteInitialise(
         pastePlainText(event, editor, charLimit);
       },
     },
+    disableDragAndDrop: true,
     placeholder: "<p>" + placeholder + "</p>",
     dialogsClass: "summernote-dialog",
     dialogsInBody: true,
