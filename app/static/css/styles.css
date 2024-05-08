@@ -2147,10 +2147,6 @@ p {
   animation-fill-mode: forwards;
 }
 
-.handle .icon-colour-var {
-  fill: var(--bright_red);
-}
-
 .dynamic-field-draggable {
   display: flex;
   flex-direction: column;
