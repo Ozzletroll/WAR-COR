@@ -38,16 +38,13 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
 
     # Check if new comment submitted
     if form.validate_on_submit():
-        # Check user is allowed to comment
+
         authenticators.check_campaign_comment_status(campaign)
 
-        # Create new comment
         comment = models.Comment()
         comment.update(form=request.form,
                        parent_event=event,
                        author=current_user)
-
-        # Create new comment notification
         messengers.send_comment_notification(sender=current_user,
                                              recipients=campaign.members,
                                              campaign=campaign,
@@ -146,32 +143,25 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
 
     campaign = event.parent_campaign
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
+    form.submit.label.text = "Update Event"
     delete_form = forms.SubmitForm()
 
     if form.validate_on_submit():
-        # Update event object using form data
+
         event.update(form=form.data,
                      parent_campaign=campaign)
-
-        # Update "following_event" relationships for all events
         campaign.get_following_events()
-
-        # Update all epochs
         campaign.check_epochs()
 
         return redirect(url_for("campaign.edit_timeline",
                                 campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
-
-    # Change form label to 'update'
-    form.submit.label.text = "Update Event"
 
     # Flash form errors
     for field_name, errors in form.errors.items():
@@ -198,7 +188,6 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
 
     campaign = event.parent_campaign
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     campaign.last_edited = datetime.now()
@@ -207,10 +196,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
     db.session.delete(event)
     db.session.commit()
 
-    # Update "following_event" relationships for all events
     campaign.get_following_events()
-
-    # Update campaigns epochs
     campaign.check_epochs()
 
     return redirect(url_for("campaign.edit_timeline",
