@@ -67,7 +67,6 @@ class CreateCampaignForm(FlaskForm):
 class DynamicField(FlaskForm):
     title = StringField(validators=[DataRequired()])
     value = TextAreaField(validators=[Optional()])
-    edited = BooleanField(default=False)
 
 
 class CreateEventForm(FlaskForm):
