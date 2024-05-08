@@ -1929,7 +1929,6 @@ p {
 .form-icon {
   display: flex;
   align-items: center;
-  padding: 0px 5px;
 }
 
 .form-elem.elem-centre {
@@ -2197,6 +2196,7 @@ p {
 .form-extra-button-area.form-buttons-dynamic {
   flex: 0 0 0;
   justify-content: left;
+  margin: 0px 3px;
 }
 
 .form-label-wrap {
