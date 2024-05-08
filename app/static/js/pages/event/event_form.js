@@ -1,11 +1,12 @@
 import { Modal, PreviewModal } from "../../components/modal.js";
 import { summernoteInitialise } from "../../components/summernote_initialise.js";
 
+var fieldList;
 
 // Function to apply SortableJS drag functionality to all dynamic fields
 // as well as reordering the names of the fields to represent their new order.
 function setDraggableItems(formArea) {
-  var fieldList = new Sortable(formArea, {
+  fieldList = new Sortable(formArea, {
     handle: ".handle",
     animation: 150,
     onEnd: function(event) {
@@ -108,6 +109,11 @@ function addNewField() {
     false,
     false
   );
+
+  // Destroy the existing SortableJS instance to prevent iOS devices breaking
+  fieldList.destroy();
+
+  // Re-initialize SortableJS
   setDraggableItems(formArea);
 }
 window.addNewField = addNewField;
