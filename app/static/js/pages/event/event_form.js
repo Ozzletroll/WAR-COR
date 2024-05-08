@@ -2,10 +2,25 @@ import { Modal, PreviewModal } from "../../components/modal.js";
 import { summernoteInitialise } from "../../components/summernote_initialise.js";
 
 
+// Function to apply SortableJS drag functionality to all dynamic fields
+// as well as reordering the names of the fields to represent their new order.
 function setDraggableItems(formArea) {
   var fieldList = new Sortable(formArea, {
     handle: ".handle",
-    animation: 150
+    animation: 150,
+    onEnd: function(event) {
+      var items = event.from.getElementsByClassName("dynamic-field");
+      for (var index = 0; index < items.length; index++) {
+        var inputs = items[index].getElementsByTagName("input");
+        for (var index2 = 0; index2 < inputs.length; index2++) {
+          inputs[index2].name = inputs[index2].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
+        }
+        var textAreas = items[index].getElementsByTagName("textarea");
+        for (var index3 = 0; index3 < textAreas.length; index3++) {
+          textAreas[index3].name = textAreas[index3].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
+        }
+      }
+    }
   });
 }
 
