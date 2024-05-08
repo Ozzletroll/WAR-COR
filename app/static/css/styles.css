@@ -2134,12 +2134,42 @@ p {
   width: 100%;
 }
 
+.dynamic-field-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .dynamic-field {
   opacity: 0;
   -moz-animation: 0.3s ease-out 0s 1 fadein;
   animation: 0.3s ease-out 0s 1 fadein;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+}
+
+.handle .icon-colour-var {
+  fill: var(--bright_red);
+}
+
+.dynamic-field-draggable {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dynamic-form-label-container {
+  flex-wrap: wrap;
+  gap: 10px 0px;
+}
+
+.dynamic-form-title-container {
+  display: flex;
+  margin-right: auto;
+}
+
+.dynamic-form-title-area {
+  margin-right: 40px;
 }
 
 .dynamic-field-title {
@@ -2151,17 +2181,22 @@ p {
   border: none;
   transition: 0.15s;
   font-weight: 500;
+  outline: none;
+  min-width: 300px;
 }
 
-.dynamic-field-title:hover {
+.dynamic-field-title:hover,
+.dynamic-field-title:focus{
   color: var(--text_header_hover);
 }
 
-.form-extra-button-area.form-button-dynamic {
-  flex: 0 0 auto;
-  padding-left: 20px;
-  justify-content: flex-start;
+.form-extra-button-area.form-buttons-dynamic {
+  flex: 0 0 0;
+  justify-content: left;
+}
 
+.form-close .icon-colour-var {
+  fill: var(--bright_red);
 }
 
 .form-label-wrap {
@@ -4155,6 +4190,7 @@ p {
   color: var(--text_flavour_bright);
   font-size: min(14px, 3vw);
   width: fit-content;
+  white-space: nowrap;
 }
 
 .form-button:hover {
