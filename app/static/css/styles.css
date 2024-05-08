@@ -2126,6 +2126,69 @@ p {
 
 }
     
+/* Dynamic Form Components */
+
+.dynamic-field-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.dynamic-field {
+  opacity: 0;
+  -moz-animation: 0.3s ease-out 0s 1 fadein;
+  animation: 0.3s ease-out 0s 1 fadein;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.dynamic-field-title {
+  display: flex;
+  flex: 2 0 auto;
+  color: var(--text_dark);
+  background-color: transparent;
+  text-transform: uppercase;
+  border: none;
+  transition: 0.15s;
+  font-weight: 500;
+}
+
+.dynamic-field-title:hover {
+  color: var(--text_header_hover);
+}
+
+.form-extra-button-area.form-button-dynamic {
+  flex: 0 0 auto;
+  padding-left: 20px;
+  justify-content: flex-start;
+
+}
+
+.form-label-wrap {
+  flex-wrap: wrap;
+  gap: 20px 0px;
+}
+
+.new-field-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 40px 0px;
+}
+
+.new-field-button {
+  color: var(--text_header);
+  background-color: transparent;
+  border: 1px dashed var(--elem_border);
+  padding: 20px 50px;
+  width: 100%;
+}
+
+.new-field-button:hover {
+  color: var(--text_header_hover);
+}
+
 /* Top of page navigation elements */
 
 .navigation-area {
