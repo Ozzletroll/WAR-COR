@@ -22,7 +22,7 @@ class Event(db.Model):
     minute = db.Column(db.Integer)
     second = db.Column(db.Integer)
 
-    data = db.Column(db.JSON, default={})
+    dynamic_fields = db.Column(db.JSON, default={})
 
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments. 
@@ -67,11 +67,10 @@ class Event(db.Model):
                         for key, dynamic_value in dynamic_field_data.items():
                             if key == "value":
                                 dynamic_value = sanitise_input(dynamic_value)
-                            if key != "edited":
-                                dict[key] = dynamic_value
-                            data.append(dict)
+                            dict[key] = dynamic_value
+                        data.append(dict)
 
-                    self.data = data
+                    self.dynamic_fields = data
                         
                 else:
                     setattr(self, field, value)
