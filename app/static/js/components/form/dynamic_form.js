@@ -12,6 +12,7 @@ export class DynamicForm {
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
       this.updateDraggableItems(this.formArea);
+      this.bindCloseModalEvents();
 
       // Bind "this" to the instance for the addNewField method
       this.addNewField = this.addNewField.bind(this);
@@ -48,6 +49,9 @@ export class DynamicForm {
         true
       );
 
+      // Add event listeners to all summernote modals
+      this.bindCloseModalEvents();
+  
       // Create instance of Field class
       var newField = new DynamicField({
         type: "html",
@@ -80,6 +84,18 @@ export class DynamicForm {
             }
           }
         }
+      });
+    }
+
+    bindCloseModalEvents() {
+      var summernoteModals = document.getElementsByClassName("note-modal");
+      Array.from(summernoteModals).forEach(modal => {
+          var modalCloseButton = modal.querySelector(".close");
+          modal.addEventListener("click", (event) => {
+              if (event.target.classList.contains("note-modal")) {
+                modalCloseButton.click();
+              }
+          });
       });
     }
 
