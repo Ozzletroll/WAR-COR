@@ -8,6 +8,13 @@ export function summernoteInitialise(
   charLimit = parseInt(charLimit) || null;
   var editor = "#summernote" + idSuffix;
 
+  if (allowImages) {
+    allowImages = "picture";
+  }
+  if (allowURLS) {
+    allowURLS = "link";
+  }
+
   $(editor).summernote({
     callbacks: {
       onKeydown: function(event) {

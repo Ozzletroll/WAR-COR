@@ -44,8 +44,8 @@ export class DynamicForm {
         id,
         "OPTIONAL",
         null,
-        false,
-        false
+        true,
+        true
       );
 
       // Create instance of Field class
@@ -61,8 +61,6 @@ export class DynamicForm {
 
       // Re-initialize SortableJS
       this.updateDraggableItems(this.formArea);
-
-      console.log(this.fields)
     }
 
     updateDraggableItems(formArea) {
