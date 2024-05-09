@@ -1,6 +1,6 @@
 import { createFieldHTML } from "./html_field_template.js";
-import { summernoteInitialise } from "../../components/summernote_initialise.js";
-
+import { summernoteInitialise } from "../summernote_initialise.js";
+import { Modal, PreviewModal } from "../modal.js";
 
 
 export class DynamicForm {
@@ -21,23 +21,22 @@ export class DynamicForm {
     getDynamicFields() {
       var fields = [];
       var dynamicFields = document.getElementsByClassName("dynamic-field");
-      Array.from(dynamicFields).forEach(element => {
+      Array.from(dynamicFields).forEach((element, index) => {
         var newField = new DynamicField({
           type: "html",
           element: element,
+          index: index + 1,
         })
         fields.push(newField);
-      })
+    })
       return fields;
     }
 
     addNewField() {
 
       // Create page elements and insert in DOM
-      var newDiv = document.createElement("div");
       var dynamicFieldCount = document.getElementsByClassName("dynamic-field").length + 1;
-      newDiv.innerHTML = createFieldHTML(dynamicFieldCount);
-      this.formArea.appendChild(newDiv);
+      this.formArea.insertAdjacentHTML("beforeend", createFieldHTML(dynamicFieldCount));
     
       // Initialise new summernote editor
       var id = `-dynamic-${dynamicFieldCount}`;
@@ -49,11 +48,12 @@ export class DynamicForm {
         false
       );
 
+      // Create instance of Field class
       var newField = new DynamicField({
         type: "html",
-        element: newDiv,
+        element: document.getElementById(`event-dynamic-field-${dynamicFieldCount}`),
+        index: dynamicFieldCount,
       })
-
       this.fields.push(newField);
 
       // Destroy the existing SortableJS instance to prevent iOS devices breaking
@@ -63,10 +63,6 @@ export class DynamicForm {
       this.updateDraggableItems(this.formArea);
 
       console.log(this.fields)
-    }
-
-    removeField() {
-  
     }
 
     updateDraggableItems(formArea) {
@@ -89,7 +85,6 @@ export class DynamicForm {
       });
     }
 
-
   }
 
 
@@ -97,12 +92,17 @@ class DynamicField {
   constructor({
     type,
     element,
+    index
   }) {
     this.type = type;
     this.element = element;
+    this.index = index;
     this.previewButton;
     this.closeButton;
   }
 
+  close () {
+
+  }
 
 }
