@@ -1,4 +1,4 @@
-import { createFieldHTML } from "./html_field_template.js";
+import { createFieldHTML } from "./dynamic_field_templates/html_field_template.js";
 import { summernoteInitialise } from "../summernote_initialise.js";
 import { Modal, PreviewModal } from "../modal.js";
 
@@ -11,6 +11,8 @@ export class DynamicForm {
       this.fieldList;
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
+      // this.modals = this.getModals();
+
       this.updateDraggableItems(this.formArea);
       this.bindCloseModalEvents();
 
@@ -38,6 +40,10 @@ export class DynamicForm {
       // Create page elements and insert in DOM
       var dynamicFieldCount = document.getElementsByClassName("dynamic-field").length + 1;
       this.formArea.insertAdjacentHTML("beforeend", createFieldHTML(dynamicFieldCount));
+      
+      // Insert modals into DOM
+      // close modal
+      // htmlPreviewModal
     
       // Initialise new summernote editor
       var id = `-dynamic-${dynamicFieldCount}`;
@@ -113,6 +119,12 @@ class DynamicField {
     this.index = index;
     this.previewButton;
     this.closeButton;
+
+    // this.closeModal = new Modal({
+    //   modal: "",
+    //   button: "",
+    //   span: "",
+    // })
   }
 
   close () {
