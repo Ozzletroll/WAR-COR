@@ -1,4 +1,5 @@
 import { createFieldHTML } from "./dynamic_field_templates/html_field_template.js";
+import { createDeleteModal } from "./modal_templates/close_modal_template.js";
 import { summernoteInitialise } from "../summernote_initialise.js";
 import { Modal, PreviewModal } from "../modal.js";
 
@@ -11,10 +12,9 @@ export class DynamicForm {
       this.fieldList;
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
-      // this.modals = this.getModals();
-
+  
       this.updateDraggableItems(this.formArea);
-      this.bindCloseModalEvents();
+      this.bindSummernoteModalEvents();
 
       // Bind "this" to the instance for the addNewField method
       this.addNewField = this.addNewField.bind(this);
@@ -25,6 +25,7 @@ export class DynamicForm {
       var fields = [];
       var dynamicFields = document.getElementsByClassName("dynamic-field");
       Array.from(dynamicFields).forEach((element, index) => {
+        this.addNewDeleteModal();
         var newField = new DynamicField({
           type: "html",
           element: element,
@@ -36,14 +37,12 @@ export class DynamicForm {
     }
 
     addNewField() {
-
       // Create page elements and insert in DOM
       var dynamicFieldCount = document.getElementsByClassName("dynamic-field").length + 1;
       this.formArea.insertAdjacentHTML("beforeend", createFieldHTML(dynamicFieldCount));
       
       // Insert modals into DOM
-      // close modal
-      // htmlPreviewModal
+      this.addNewDeleteModal();
     
       // Initialise new summernote editor
       var id = `-dynamic-${dynamicFieldCount}`;
@@ -56,8 +55,8 @@ export class DynamicForm {
       );
 
       // Add event listeners to all summernote modals
-      this.bindCloseModalEvents();
-  
+      this.bindSummernoteModalEvents();
+
       // Create instance of Field class
       var newField = new DynamicField({
         type: "html",
@@ -71,6 +70,11 @@ export class DynamicForm {
 
       // Re-initialize SortableJS
       this.updateDraggableItems(this.formArea);
+    }
+
+    addNewDeleteModal() {
+      var deleteModalCount = document.getElementsByClassName("dynamic-delete-modal").length + 1;
+      document.body.insertAdjacentHTML("beforeend", createDeleteModal(deleteModalCount));
     }
 
     updateDraggableItems(formArea) {
@@ -93,7 +97,7 @@ export class DynamicForm {
       });
     }
 
-    bindCloseModalEvents() {
+    bindSummernoteModalEvents() {
       var summernoteModals = document.getElementsByClassName("note-modal");
       Array.from(summernoteModals).forEach(modal => {
           var modalCloseButton = modal.querySelector(".close");
@@ -104,7 +108,6 @@ export class DynamicForm {
           });
       });
     }
-
   }
 
 
@@ -112,23 +115,29 @@ class DynamicField {
   constructor({
     type,
     element,
-    index
+    index,
+    previewModal,
   }) {
     this.type = type;
     this.element = element;
     this.index = index;
-    this.previewButton;
-    this.closeButton;
+    this.closeModal = new Modal({
+      modal: document.getElementById(`dynamic-delete-modal-${this.index}`),
+      button: document.getElementById(`dynamic-delete-button-${this.index}`),
+      span: document.getElementById(`dynamic-delete-close-${this.index}`),
+    });
+    this.modalDeleteButton = document.getElementById(`dynamic-delete-confirm-${this.index}`)
+    this.previewModal = previewModal;
 
-    // this.closeModal = new Modal({
-    //   modal: "",
-    //   button: "",
-    //   span: "",
-    // })
+    this.modalDeleteButton.onclick = event => {
+      this.delete(event)
+    } 
   }
 
-  close () {
-
+  delete() {
+    this.closeModal.closeModal();
+    this.closeModal.modal.remove();
+    this.element.remove();
   }
 
 }
