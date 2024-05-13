@@ -67,6 +67,7 @@ class CreateCampaignForm(FlaskForm):
 class DynamicField(FlaskForm):
     title = StringField(validators=[DataRequired()])
     value = TextAreaField(validators=[Optional()])
+    field_type = StringField(validators=[DataRequired()])
 
 
 class CreateEventForm(FlaskForm):
@@ -83,14 +84,6 @@ class CreateEventForm(FlaskForm):
     dynamic_fields = FieldList(FormField(DynamicField))
 
     submit = SubmitField("Create Event")
-
-    def set_dynamic_fields(self, fields):
-
-        for field in fields:
-            dynamic_field = DynamicField()
-            dynamic_field.title = field["title"]
-            dynamic_field.value = field["value"]
-            self.dynamic_fields.append_entry(dynamic_field)
 
 
 class CreateEpochForm(FlaskForm):

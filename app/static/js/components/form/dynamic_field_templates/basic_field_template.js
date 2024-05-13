@@ -1,6 +1,7 @@
 export function createBasicFieldHTML(index) {
     return `
     <div id="event-dynamic-field-${index}" class="form-container form-container-small dynamic-field basic-field">
+      <input name="dynamic_fields-${index-1}-field_type" value="basic">
       <div class="dynamic-field-inner">
         <div class="dynamic-field-draggable">
           <div class="campaign-form-label form-icon">
@@ -50,8 +51,7 @@ export function createBasicFieldHTML(index) {
           </div>
       
           <div class="form-input-container">
-            <input name="dynamic_fields-${index-1}-value" 
-            id="summernote-dynamic-${index}" autocomplete="off"
+            <input name="dynamic_fields-${index-1}-value" autocomplete="off"
             class="campaign-input form-input event-input">
             <div class="form-underline"></div>
           </div>

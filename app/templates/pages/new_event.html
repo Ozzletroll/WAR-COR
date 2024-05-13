@@ -200,7 +200,11 @@
 
         <div id="dynamic-field-area" class="dynamic-field-area">
           {% for field in form.dynamic_fields %}
-            {{ dynamic_fields.dynamic_html_field(field, loop.index) }}
+            {% if field.field_type.data == "html" %}
+              {{ dynamic_fields.dynamic_html_field(field, loop.index) }}
+            {% elif field.field_type.data == "basic" %}
+              {{ dynamic_fields.dynamic_basic_field(field, loop.index) }}
+            {% endif %}
           {% endfor %}
         </div>
 
