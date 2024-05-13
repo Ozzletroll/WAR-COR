@@ -1,4 +1,5 @@
-import { createFieldHTML } from "./dynamic_field_templates/html_field_template.js";
+import { createTextFieldHTML } from "./dynamic_field_templates/html_field_template.js";
+import { createBasicFieldHTML } from "./dynamic_field_templates/basic_field_template.js";
 import { createDeleteModal } from "./modal_templates/close_modal_template.js";
 import { summernoteInitialise } from "../summernote_initialise.js";
 import { Modal, PreviewModal } from "../modal.js";
@@ -7,48 +8,90 @@ import { createHTMLPreviewModal } from "./modal_templates/html_preview_modal.js"
 
 export class DynamicForm {
     constructor({
-      button,
+      basicButton,
+      textButton,
     }) {
-      this.button = button;
+      this._idValue = 0;
+      this.basicButton = basicButton;
+      this.textButton = textButton;
       this.fieldList;
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
-  
+
       this.updateDraggableItems(this.formArea);
       this.bindSummernoteModalEvents();
 
-      // Bind "this" to the instance for the addNewField method
-      this.addNewField = this.addNewField.bind(this);
-      this.button.addEventListener("click", this.addNewField);
+      // Bind "this" to the instance for the new field methods
+      this.addBasicField = this.addBasicField.bind(this);
+      this.basicButton.addEventListener("click", this.addBasicField);
+
+      this.addHTMLField = this.addHTMLField.bind(this);
+      this.textButton.addEventListener("click", this.addHTMLField);
     }
   
+    get idValue() {
+      return ++this._idValue;
+    }
+
     getDynamicFields() {
       var fields = [];
       var dynamicFields = document.getElementsByClassName("dynamic-field");
       Array.from(dynamicFields).forEach((element, index) => {
-        this.addNewDeleteModal();
-        this.addPreviewModal();
+        var fieldType;
+        if (element.classList.contains("html-field")) {
+          fieldType = "text";
+          this.addPreviewModal(index + 1);
+        }
+        else if (element.classList.contains("basic-field")) {
+          fieldType = "basic";
+        }
+        this.addNewDeleteModal(index + 1);
         var newField = new DynamicField({
-          type: "html",
+          form: this,
+          type: fieldType,
           element: element,
-          index: index + 1,
+          index: this.idValue,
         })
         fields.push(newField);
     })
       return fields;
     }
 
-    addNewField() {
+    addBasicField() {
+
       // Create page elements and insert in DOM
-      var dynamicFieldCount = document.getElementsByClassName("dynamic-field").length + 1;
-      this.formArea.insertAdjacentHTML("beforeend", createFieldHTML(dynamicFieldCount));
+      var fieldID = this.idValue;
+      this.formArea.insertAdjacentHTML("beforeend", createBasicFieldHTML(fieldID));
       
       // Insert modals into DOM
-      this.addNewDeleteModal();
-      this.addPreviewModal();
+      this.addNewDeleteModal(fieldID);
+
+      // Create instance of Field class
+      var newField = new DynamicField({
+        type: "basic",
+        element: document.getElementById(`event-dynamic-field-${fieldID}`),
+        index: fieldID,
+      })
+      this.fields.push(newField);
+
+      // Destroy the existing SortableJS instance to prevent iOS devices breaking
+      this.fieldList.destroy();
+
+      // Re-initialize SortableJS
+      this.updateDraggableItems(this.formArea);
+    }
+
+    addHTMLField() {
+      // Create page elements and insert in DOM
+      var fieldID = this.idValue;
+      this.formArea.insertAdjacentHTML("beforeend", createTextFieldHTML(fieldID));
+      
+      // Insert modals into DOM
+      this.addNewDeleteModal(fieldID);
+      this.addPreviewModal(fieldID);
     
       // Initialise new summernote editor
-      var id = `-dynamic-${dynamicFieldCount}`;
+      var id = `-dynamic-${fieldID}`;
       summernoteInitialise(
         id,
         "OPTIONAL",
@@ -62,9 +105,9 @@ export class DynamicForm {
 
       // Create instance of Field class
       var newField = new DynamicField({
-        type: "html",
-        element: document.getElementById(`event-dynamic-field-${dynamicFieldCount}`),
-        index: dynamicFieldCount,
+        type: "text",
+        element: document.getElementById(`event-dynamic-field-${fieldID}`),
+        index: fieldID,
       })
       this.fields.push(newField);
 
@@ -75,14 +118,12 @@ export class DynamicForm {
       this.updateDraggableItems(this.formArea);
     }
 
-    addPreviewModal() {
-      var previewModalCount = document.getElementsByClassName("dynamic-preview-modal").length + 1
-      document.body.insertAdjacentHTML("beforeend", createHTMLPreviewModal(previewModalCount));
+    addPreviewModal(index) {
+      document.body.insertAdjacentHTML("beforeend", createHTMLPreviewModal(index));
     }
 
-    addNewDeleteModal() {
-      var deleteModalCount = document.getElementsByClassName("dynamic-delete-modal").length + 1;
-      document.body.insertAdjacentHTML("beforeend", createDeleteModal(deleteModalCount));
+    addNewDeleteModal(index) {
+      document.body.insertAdjacentHTML("beforeend", createDeleteModal(index));
     }
 
     updateDraggableItems(formArea) {
@@ -134,13 +175,14 @@ class DynamicField {
       span: document.getElementById(`dynamic-delete-close-${this.index}`),
     });
     this.modalDeleteButton = document.getElementById(`dynamic-delete-confirm-${this.index}`);
-    this.previewModal = new PreviewModal({
-      modal: document.getElementById(`dynamic-preview-modal-${this.index}`),
-      button: document.getElementById(`dynamic-preview-button-${this.index}`),
-      span: document.getElementById(`dynamic-preview-close-${this.index}`),
-      editor: element,
-    });
-
+    if (this.type == "text") {
+      this.previewModal = new PreviewModal({
+        modal: document.getElementById(`dynamic-preview-modal-${this.index}`),
+        button: document.getElementById(`dynamic-preview-button-${this.index}`),
+        span: document.getElementById(`dynamic-preview-close-${this.index}`),
+        editor: element,
+      });
+    }
     this.modalDeleteButton.onclick = event => {
       this.delete(event)
     } 

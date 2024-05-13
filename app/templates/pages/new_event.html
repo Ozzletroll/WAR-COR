@@ -4,6 +4,7 @@
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/dynamic_fields.html" as dynamic_fields %}
+{% import "components/new_field_buttons.html" as new_field_buttons %}
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/modal.html" as modal %}
 
@@ -203,9 +204,7 @@
           {% endfor %}
         </div>
 
-        <div class="new-field-area">
-          <button type="button" id="new-field-button" class="button new-field-button">ADD NEW FIELD</button>
-        </div>
+        {{ new_field_buttons.new_field_buttons(text_field=true, html_field=true) }}
 
         <div class="campaign-submit-area event-submit-area">
           {{ form.submit(class_="button campaign-input campaign-submit") }}

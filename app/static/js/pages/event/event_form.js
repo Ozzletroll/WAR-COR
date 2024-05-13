@@ -4,9 +4,10 @@ import { DynamicForm } from "../../components/form/dynamic_form.js";
 
 // Create dynamic form 
 const eventForm = new DynamicForm({
-  button: document.getElementById("new-field-button"),
+  basicButton: document.getElementById("new-basic-field-button"),
+  textButton: document.getElementById("new-text-field-button"),
 });
-window.addNewField = eventForm.addNewField;
+window.addNewField = eventForm.addHTMLField;
 
 // Create modals
 const modal_1 = new Modal({

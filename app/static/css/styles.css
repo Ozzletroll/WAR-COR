@@ -2129,7 +2129,9 @@ p {
 
 .dynamic-field-area {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
 }
 
@@ -2145,6 +2147,15 @@ p {
   animation: 0.3s ease-out 0s 1 fadein;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
+  width: 100%;
+}
+
+@media screen and (min-width: 800px) {
+
+  .dynamic-field.form-container-small {
+    width: 45%;
+  }
+
 }
 
 .dynamic-field-draggable {
@@ -2156,6 +2167,10 @@ p {
 .dynamic-form-label-container {
   flex-wrap: wrap;
   gap: 10px 0px;
+}
+
+.label-container-small {
+  flex-wrap: nowrap;
 }
 
 .dynamic-form-title-container {
@@ -2177,7 +2192,6 @@ p {
   transition: 0.15s;
   font-weight: 500;
   outline: none;
-  min-width: 300px;
   margin: 0px;
   padding: 0px;
 }
