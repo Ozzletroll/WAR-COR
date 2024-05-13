@@ -33,7 +33,8 @@
                   </svg>
                 </div>
               </button>
-              <button id="html-preview-button" type="button" class="button form-button form-preview-button form-close">
+              {% set preview_id = "dynamic-preview-button-" + index | string %}
+              <button id="{{preview_id}}" type="button" class="button form-button form-preview-button form-close">
                 PREVIEW
               </button>
               {% set delete_id = "dynamic-delete-button-" + index | string %}

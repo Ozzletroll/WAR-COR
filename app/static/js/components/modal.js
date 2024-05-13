@@ -74,8 +74,12 @@ export class PreviewModal extends Modal{
 
     // Get the content of the Summernote editor and add it to the modal
     var content = this.editor.innerHTML;
-    var modalBody = document.getElementById("preview-modal-body");
+    var modalBody = this.modal.querySelector(".modal-body-preview");
     modalBody.innerHTML = content;
+
+    var fieldTitle = this.button.closest(".dynamic-form-label-container").querySelector(".dynamic-field-title").value;
+    var modalTitle = this.modal.querySelector(".dynamic-preview-header");
+    modalTitle.innerText = fieldTitle;
    
     this.formatImages();
   }

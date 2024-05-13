@@ -2,6 +2,7 @@ import { createFieldHTML } from "./dynamic_field_templates/html_field_template.j
 import { createDeleteModal } from "./modal_templates/close_modal_template.js";
 import { summernoteInitialise } from "../summernote_initialise.js";
 import { Modal, PreviewModal } from "../modal.js";
+import { createHTMLPreviewModal } from "./modal_templates/html_preview_modal.js";
 
 
 export class DynamicForm {
@@ -26,6 +27,7 @@ export class DynamicForm {
       var dynamicFields = document.getElementsByClassName("dynamic-field");
       Array.from(dynamicFields).forEach((element, index) => {
         this.addNewDeleteModal();
+        this.addPreviewModal();
         var newField = new DynamicField({
           type: "html",
           element: element,
@@ -43,6 +45,7 @@ export class DynamicForm {
       
       // Insert modals into DOM
       this.addNewDeleteModal();
+      this.addPreviewModal();
     
       // Initialise new summernote editor
       var id = `-dynamic-${dynamicFieldCount}`;
@@ -70,6 +73,11 @@ export class DynamicForm {
 
       // Re-initialize SortableJS
       this.updateDraggableItems(this.formArea);
+    }
+
+    addPreviewModal() {
+      var previewModalCount = document.getElementsByClassName("dynamic-preview-modal").length + 1
+      document.body.insertAdjacentHTML("beforeend", createHTMLPreviewModal(previewModalCount));
     }
 
     addNewDeleteModal() {
@@ -100,12 +108,12 @@ export class DynamicForm {
     bindSummernoteModalEvents() {
       var summernoteModals = document.getElementsByClassName("note-modal");
       Array.from(summernoteModals).forEach(modal => {
-          var modalCloseButton = modal.querySelector(".close");
-          modal.addEventListener("click", (event) => {
-              if (event.target.classList.contains("note-modal")) {
-                modalCloseButton.click();
-              }
-          });
+        var modalCloseButton = modal.querySelector(".close");
+        modal.addEventListener("click", (event) => {
+            if (event.target.classList.contains("note-modal")) {
+              modalCloseButton.click();
+            }
+        });
       });
     }
   }
@@ -116,7 +124,6 @@ class DynamicField {
     type,
     element,
     index,
-    previewModal,
   }) {
     this.type = type;
     this.element = element;
@@ -126,8 +133,13 @@ class DynamicField {
       button: document.getElementById(`dynamic-delete-button-${this.index}`),
       span: document.getElementById(`dynamic-delete-close-${this.index}`),
     });
-    this.modalDeleteButton = document.getElementById(`dynamic-delete-confirm-${this.index}`)
-    this.previewModal = previewModal;
+    this.modalDeleteButton = document.getElementById(`dynamic-delete-confirm-${this.index}`);
+    this.previewModal = new PreviewModal({
+      modal: document.getElementById(`dynamic-preview-modal-${this.index}`),
+      button: document.getElementById(`dynamic-preview-button-${this.index}`),
+      span: document.getElementById(`dynamic-preview-close-${this.index}`),
+      editor: element,
+    });
 
     this.modalDeleteButton.onclick = event => {
       this.delete(event)

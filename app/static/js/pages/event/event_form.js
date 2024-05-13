@@ -1,4 +1,4 @@
-import { Modal, PreviewModal } from "../../components/modal.js";
+import { Modal } from "../../components/modal.js";
 import { DynamicForm } from "../../components/form/dynamic_form.js";
 
 

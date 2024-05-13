@@ -30,7 +30,7 @@ export function createFieldHTML(index) {
                     </div>
                   </button>
 
-                  <button id="html-preview-button" type="button" class="button form-button form-preview-button form-close">
+                  <button id="dynamic-preview-button-${index}" type="button" class="button form-button form-preview-button form-close">
                     PREVIEW
                   </button>
 
