@@ -5877,10 +5877,12 @@ for selection in timeline_search.js */
 
 .event-page-body {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   box-sizing: border-box;
-  padding-top: 20px;
+  padding-top: 40px;
+  gap: 25px;
 }
 
 .event-body-top {
@@ -5893,9 +5895,22 @@ for selection in timeline_search.js */
 
 .event-page-elem {
   display: flex;
+  width: 100%;
   flex-direction: column;
   color: var(--text_dark);
   box-sizing: border-box;
+}
+
+@media screen and (min-width: 800px) {
+
+  .event-page-elem {
+    width: 45%;
+  }
+
+  .event-date-area {
+    width: 100%;
+  }
+
 }
 
 .event-location, .event-belligerents {
@@ -5906,6 +5921,7 @@ for selection in timeline_search.js */
 }
 
 .event-date-area {
+  width: fit-content;
   justify-content: center;
 }
 

@@ -4,6 +4,7 @@
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
+{% import "components/event_elements.html" as event_elements %}
 {% import "components/modal.html" as modal %}
 {% import "components/summernote_editor.html" as summernote %}
 
@@ -99,72 +100,13 @@
 
               <div class="event-page-body">
 
-                  <div class="event-body-top">
-                    {# Only render if it is needed #}
-                    {% if event.location | length > 0 %}
-                    <section class="event-page-elem event-location" aria-label="Event Location">
-                        <div class="event-elem-header">
-                            <h4 class="event-elem-h">Location</h4>
-                        </div>
-                        <div class="event-elem-body">
-                            {{event.location}}
-                        </div>  
-                      </section>
-                    {% endif %}
-          
-                    {# Only render if it is needed #}
-                    {% if belligerents %}
-                      <section class="event-page-elem event-belligerents" aria-label="Event Belligerents">
-                        <div class="event-elem-header">
-                            <h4 class="event-elem-h">Belligerents</h4>
-                        </div>
-                        <ul class="event-elem-body belligerents-list">
-                          {% for group in belligerents %}
-
-                            {% if group | length == 1 and belligerents | length == 1  %}
-                              <li class="ally-group ally-group-solo">
-                            {% else %}
-                              <li class="ally-group">
-                            {% endif %}
-                              {% for ally in group %}
-                                <div class="ally-elem">
-                                    {{ally}}
-                                </div>
-                              {% endfor %}
-                              </li> 
-                              {% if not loop.last %}
-                              <li class="vs-area">vs</li>
-                              {% endif %}
-                          {% endfor %}
-                        </ul>
-                      </section>
-                    {% endif %}
-
-                  </div>
-      
-                  <section class="event-page-elem event-elem-large elem-body event-page-description" aria-label="Archive Entry">
-                    <div class="entry-left-padding"></div>
-                    <div class="description-body">
-                      <h4 class="event-desc-header">Archive Entry:</h4>
-                      <div class="event-desc">
-                        {{event.body | safe }}
-                      </div>
-                    </div>
-                  </section>
-      
-                  {# Only render if it is needed #}
-                  {% if event.result | length > 0 %}  
-                    <section class="event-elem-centre" aria-label="Event Result">
-                      <div class="event-page-elem elem-body event-page-result">
-                          <div class="event-elem-header">
-                              <h4 class="event-elem-h">RESULT</h4>
-                          </div>
-                          <div class="event-elem-body">
-                              {{event.result}}
-                          </div>
-                      </div>
-                    </section>
+                {% for entry in event.dynamic_fields %}
+                  {% if entry.field_type == "basic" %}
+                    {{ event_elements.render_basic_field(entry) }}
+                  {% elif entry.field_type == "html" %}
+                    {{ event_elements.render_html_field(entry) }}
                   {% endif %}
+                {% endfor %}
 
               </div>
 
