@@ -66,7 +66,8 @@ class Event(db.Model):
                         dict = {}
                         for key, dynamic_value in dynamic_field_data.items():
                             if key == "value":
-                                dynamic_value = sanitise_input(dynamic_value)
+                                use_wrap = dynamic_field_data.get("field_type") == "html"
+                                dynamic_value = sanitise_input(dynamic_value, wrap=use_wrap)
                             dict[key] = dynamic_value
                         data.append(dict)
 
@@ -74,6 +75,10 @@ class Event(db.Model):
                         
                 else:
                     setattr(self, field, value)
+
+            # If no value is set for dynamic fields, clear data
+            else:
+                self.dynamic_fields = []
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()

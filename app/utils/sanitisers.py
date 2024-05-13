@@ -2,7 +2,7 @@ import nh3
 from bs4 import BeautifulSoup
 
 
-def sanitise_input(value, allow_images=True, allow_urls=True, message_body=False):
+def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
     """ Method to sanitise user submitted html input using nh3. """
 
     allowed_tags = {"p", "b", "i", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol", "strong"}
@@ -25,7 +25,7 @@ def sanitise_input(value, allow_images=True, allow_urls=True, message_body=False
 
     # Wrap any text without tags in <p> tags
     # Not applicable for message body text
-    if not message_body:
+    if wrap:
         soup = BeautifulSoup(cleaned_input, "html.parser")
         for text in soup.find_all(string=True):
             if text.parent.name not in allowed_tags:
