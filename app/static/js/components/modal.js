@@ -77,10 +77,13 @@ export class PreviewModal extends Modal{
     var modalBody = this.modal.querySelector(".modal-body-preview");
     modalBody.innerHTML = content;
 
-    var fieldTitle = this.button.closest(".dynamic-form-label-container").querySelector(".dynamic-field-title").value;
-    var modalTitle = this.modal.querySelector(".dynamic-preview-header");
-    modalTitle.innerText = fieldTitle;
-   
+    var labelContainer = this.button.closest(".dynamic-form-label-container");
+    if (labelContainer != null) {
+      var fieldTitle = labelContainer.querySelector(".dynamic-field-title").value;
+      var modalTitle = this.modal.querySelector(".dynamic-preview-header");
+      modalTitle.innerText = fieldTitle;
+    }
+
     this.formatImages();
   }
 
