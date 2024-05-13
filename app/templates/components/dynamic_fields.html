@@ -3,6 +3,7 @@
 {% macro dynamic_html_field(field, index) %}
 
   <div class="form-container form-container-large dynamic-field html-field">
+    {{ field.field_type(type="hidden") }}
     <div class="dynamic-field-inner">
       <div class="dynamic-field-draggable">
         <div class="campaign-form-label form-icon">
@@ -72,7 +73,8 @@
 
 {% macro dynamic_basic_field(field, index) %}
 
-  <div id="event-dynamic-field-${index}" class="form-container form-container-small dynamic-field basic-field">
+  <div id="event-dynamic-field-{{index}}" class="form-container form-container-small dynamic-field basic-field">
+    {{ field.field_type(type="hidden") }}
     <div class="dynamic-field-inner">
       <div class="dynamic-field-draggable">
         <div class="campaign-form-label form-icon">
