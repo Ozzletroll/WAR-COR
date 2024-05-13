@@ -68,6 +68,9 @@ class Event(db.Model):
                             if key == "value":
                                 use_wrap = dynamic_field_data.get("field_type") == "html"
                                 dynamic_value = sanitise_input(dynamic_value, wrap=use_wrap)
+                            if key == "field_type":
+                                if dynamic_value not in ["html", "basic"]:
+                                    dynamic_value = "basic"
                             dict[key] = dynamic_value
                         data.append(dict)
 
