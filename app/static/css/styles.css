@@ -5895,10 +5895,17 @@ for selection in timeline_search.js */
 
 .event-page-elem {
   display: flex;
+  flex: 1 1 auto;
   width: 100%;
   flex-direction: column;
   color: var(--text_dark);
   box-sizing: border-box;
+  scroll-margin: 25vh;
+  transition: 0.15s ease;
+}
+
+.event-page-corner {
+  clip-path: polygon(0 0,calc(101% - 11.00px) 0, 101% 11.00px, 101% 101%, 0 101%);
 }
 
 @media screen and (min-width: 800px) {
@@ -5911,13 +5918,6 @@ for selection in timeline_search.js */
     width: 100%;
   }
 
-}
-
-.event-location, .event-belligerents {
-  flex: 1 1 auto;
-  clip-path: polygon(0 0,calc(100% - 10.00px) 0,100% 10.00px,100% 100%,0 100%);
-  transition: 0.15s ease;
-  scroll-margin: 25vh;
 }
 
 .event-date-area {
@@ -5946,12 +5946,15 @@ for selection in timeline_search.js */
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  height: 100%;
   padding: 10px 20px 10px 20px;
   box-sizing: border-box;
   background-color: var(--elem_mid);
   font-size: min(14px, 3vw);
+  font-weight: 300;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  border: 1px solid var(--darker_red);
 }
 
 .event-belligerents.event-elem-body {
@@ -6275,18 +6278,6 @@ for selection in timeline_search.js */
 
 .comment-submit:active {
   background-color: var(--bright_red);
-}
-
-@media screen and (min-width: 900px) {
-
-  .event-body-top {
-    flex-direction: row;
-  }
-
-  .event-location .event-elem-body {
-    height: 100%;
-  }
-
 }
 
 @media screen and (max-width: 950px) {
