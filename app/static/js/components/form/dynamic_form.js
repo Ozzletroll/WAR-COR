@@ -165,8 +165,11 @@ export class DynamicForm {
     }
 
     bindFieldChangeEvents() {
-      var fields = document.getElementsByClassName("form-input");
-      Array.from(fields).forEach(field => {
+      var formInputs = document.getElementsByClassName("form-input");
+      var checkboxes = document.getElementsByClassName("input-checkbox");
+
+      var fields = Array.from(formInputs).concat(Array.from(checkboxes));
+      fields.forEach(field => {
         field.addEventListener("change", function() {
           this.fieldDataChanged = true;
         }.bind(this));
