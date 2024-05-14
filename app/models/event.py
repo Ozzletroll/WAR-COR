@@ -53,7 +53,7 @@ class Event(db.Model):
         
         for field, value in form.items():
 
-            if value or new:
+            if value is not None or new:
 
                 if field == "date":
                     self.date = value
