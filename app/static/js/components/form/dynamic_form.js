@@ -17,6 +17,7 @@ export class DynamicForm {
       this.fieldList;
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
+      this.fieldDataChanged = false;
 
       this.updateDraggableItems(this.formArea);
       this.bindSummernoteModalEvents();
@@ -27,6 +28,10 @@ export class DynamicForm {
 
       this.addHTMLField = this.addHTMLField.bind(this);
       this.textButton.addEventListener("click", this.addHTMLField);
+
+      this.bindFieldChangeEvents();
+      this.bindUnsavedChangesWarning();
+      this.bindSubmitButtonEvents();
     }
   
     get idValue() {
@@ -130,7 +135,7 @@ export class DynamicForm {
       this.fieldList = new Sortable(formArea, {
           handle: ".handle",
           animation: 150,
-          onEnd: function(event) {
+          onEnd: (event) => {
               var items = event.from.getElementsByClassName("dynamic-field");
               for (var index = 0; index < items.length; index++) {
                   var inputs = items[index].getElementsByTagName("input");
@@ -142,9 +147,10 @@ export class DynamicForm {
                       textAreas[index3].name = textAreas[index3].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
                   }
               }
+              this.fieldDataChanged = true;
           }
       });
-    } 
+    }
 
     bindSummernoteModalEvents() {
       var summernoteModals = document.getElementsByClassName("note-modal");
@@ -155,6 +161,36 @@ export class DynamicForm {
               modalCloseButton.click();
             }
         });
+      });
+    }
+
+    bindFieldChangeEvents() {
+      var fields = document.getElementsByClassName("form-input");
+      Array.from(fields).forEach(field => {
+        field.addEventListener("change", function() {
+          this.fieldDataChanged = true;
+        }.bind(this));
+      });
+
+      $(document).on("summernoteFieldChanged", (function(event, content) {
+        this.fieldDataChanged = true;
+      }).bind(this));
+    }
+
+    bindSubmitButtonEvents () {
+      var excludedButtons = document.getElementsByClassName("campaign-submit");
+      Array.from(excludedButtons).forEach(button => {
+        button.addEventListener("click", function() {
+          this.fieldDataChanged = false;
+        }.bind(this));
+      })
+    }
+
+    bindUnsavedChangesWarning() {
+      window.addEventListener("beforeunload", (event) => {
+        if (this.fieldDataChanged) {
+          event.preventDefault();
+        }
       });
     }
   }

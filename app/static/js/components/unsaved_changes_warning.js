@@ -7,14 +7,6 @@ const fields = [
     "#campaign-form-title",
     "#campaign-form-suffix",
     "#campaign-form-negative-suffix",
-    // EVENT FORM
-    "#event-form-title",
-    "#event-form-date",
-    "#event-form-type",
-    "#event-form-location",
-    "#event-form-belligerents",
-    "#event-form-hide-time",
-    "#event-form-results",
     // EPOCH FORM
     "#epoch-form-start-date",
     "#epoch-form-end-date",
