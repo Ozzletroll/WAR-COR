@@ -2262,7 +2262,8 @@ p {
   border-radius: 3px;
 }
 
-.new-group-button:hover {
+.new-group-button:hover,
+.new-belligerent-button:hover {
   color: var(--text_header_hover);
 }
 
@@ -2324,6 +2325,11 @@ p {
   outline: none;
   border: none;
   background-color: transparent;
+  transition: 0.15s;
+}
+
+.column-header-text:hover {
+  color: var(--text_header_hover);
 }
 
 .column-body {
@@ -2337,6 +2343,8 @@ p {
   background-color: var(--elem_mid);
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
+  min-width: 100%;
+  box-sizing: border-box;
 }
 
 .belligerent-cell {
