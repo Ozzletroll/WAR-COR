@@ -2236,30 +2236,104 @@ p {
   color: var(--text_header_hover);
 }
 
+.belligerents-field-top-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px;
+}
+
 .belligerents-table {
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
   gap: 20px;
+  filter: drop-shadow(3px 1px 3px var(--elem_shadow));
 }
 
 .belligerents-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+}
+
+.column-header-outer {
+  background-color: var(--elem_border);
+  padding: 1px 1px 0px;
+  width: 100%;
+  box-sizing: border-box;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--darker_red);
+  border-top-left-radius: 3px;
+}
+
+.column-header .form-close,
+.column-header .belligerents-handle {
+  background-color: transparent;
+}
+
+.column-header .form-close:hover,
+.column-header .belligerents-handle:hover  {
+  background-color: transparent;
+}
+
+.column-header .form-close .icon-colour-var,
+.column-header .belligerents-handle .icon-colour-var {
+  fill: var(--text_header_contrast);
+}
+
+.column-header .form-close:hover .icon-colour-var,
+.column-header .belligerents-handle:hover .icon-colour-var {
+  fill: var(--text_header_hover);
+}
+
+.column-header-text {
+  text-align: center;
+  color: var(--text_header_contrast);
+  font-weight: 500;
+  margin: 0px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.column-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 10px;
+  border: 1px solid var(--elem_border);
+  background-color: var(--elem_mid);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .belligerent-cell {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 20px;
+}
+
+.belligerent-input {
+  outline: none;
+  border: none;
 }
 
 .belligerents-field-buttons {
   display: flex;
   justify-content: center;
-  margin: 20px 0px;
+  margin: 20px;
 }
 
 /* Top of page navigation elements */

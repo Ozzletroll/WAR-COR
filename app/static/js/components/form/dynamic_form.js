@@ -331,7 +331,7 @@ class BelligerentsColumn {
 
   addCell() {
     var cellIndex = this.cellIndex;
-    this.element.insertAdjacentHTML("beforeend", createBelligerentsCellHTML(this.parentIndex, this.index, cellIndex));
+    this.element.querySelector(".column-body").insertAdjacentHTML("beforeend", createBelligerentsCellHTML(this.parentIndex, this.index, cellIndex));
     var newCell = new BelligerentsCell({
       index: cellIndex,
       parentIndex: this.parentIndex,
