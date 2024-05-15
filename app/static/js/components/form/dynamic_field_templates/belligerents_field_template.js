@@ -2,6 +2,7 @@ export function createBelligerentsFieldHTML(index) {
   return `
     <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field belligerents-field">
       <input name="dynamic_fields-${index-1}-field_type" value="belligerents" type="hidden">
+      <input name="dynamic_fields-${index-1}-value" value="" type="hidden">
       <div class="dynamic-field-inner">
         <div class="dynamic-field-draggable">
           <div class="campaign-form-label form-icon">
@@ -69,6 +70,9 @@ export function createBelligerentsFieldHTML(index) {
 export function createBelligerentsColumnHTML(index, columnIndex) {
   return `
     <div id="belligerents-column-${index}-${columnIndex}" class="belligerents-column">
+
+      <input class="column-position" value="${columnIndex}" type="hidden">
+
       <div class="column-header-outer">
         <div class="column-header">
           <button type="button" class="button form-button belligerents-handle" aria-label="Drag">

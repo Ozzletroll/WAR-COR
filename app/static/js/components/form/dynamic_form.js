@@ -26,7 +26,7 @@ export class DynamicForm {
       this.fields = this.getDynamicFields();
       this.fieldDataChanged = false;
 
-      this.updateDraggableItems(this.formArea);
+      this.updateDraggableItems();
       this.bindSummernoteModalEvents();
 
       // Bind "this" to the instance for the new field methods
@@ -145,6 +145,7 @@ export class DynamicForm {
         type: "belligerents",
         element: document.getElementById(`event-dynamic-field-${fieldID}`),
         index: fieldID,
+        parent: this,
       })
       this.fields.push(newField);
 
@@ -163,8 +164,8 @@ export class DynamicForm {
       document.body.insertAdjacentHTML("beforeend", createDeleteModal(index));
     }
 
-    updateDraggableItems(formArea) {
-      this.fieldList = new Sortable(formArea, {
+    updateDraggableItems() {
+      this.fieldList = new Sortable(this.formArea, {
           handle: ".handle",
           animation: 150,
           onEnd: (event) => {
@@ -272,11 +273,13 @@ class DynamicBelligerentsField extends DynamicField {
   constructor({
     type,
     element,
-    index
+    index,
+    parent
   }) {
     super({type, element, index});
     this._columnIndex = 0;
     this.columns = [];
+    this.parent = parent;
     this.tableElement = this.element.querySelector(".belligerents-table");
     this.newColumnButton = this.element.querySelector(".new-group-button");
 
@@ -298,10 +301,53 @@ class DynamicBelligerentsField extends DynamicField {
     })
     newColumn.addCell();
     this.columns.push(newColumn);
+    this.updateDraggableColumns();
   }
 
   deleteColumn() {
     
+  }
+
+  updateDraggableColumns() {
+    this.columnList = new Sortable(this.element.querySelector(".belligerents-table"), {
+      handle: ".belligerents-handle",
+      animation: 150,
+      onEnd: (event) => {
+        this.updateColumnOrder();
+        this.parent.fieldDataChanged = true;
+        this.updateFieldData();
+      }
+    });
+  }
+
+  updateFieldData() {
+    var formData = [];
+    this.columns.forEach(column => {
+
+      var columnData = {
+        title: column.title,
+        position: column.position,
+        belligerents: [],
+      };
+      
+      column.cells.forEach(cell => {
+        columnData["belligerents"].push(cell.value) 
+      });
+
+      formData.push(columnData);
+
+    });
+
+    console.log(formData)
+  }
+
+  updateColumnOrder() {
+    var columnElements = this.element.querySelectorAll(".belligerents-column");
+    console.log(columnElements)
+    Array.from(columnElements).forEach((column, index) => {
+      var positionField = column.querySelector(".column-position");
+      positionField.value = index + 1;
+    });
   }
 }
 
@@ -317,6 +363,10 @@ class BelligerentsColumn {
     this.index = index;
     this.parentIndex = parentIndex;
     this.element = element;
+    this.titleField = element.querySelector(".column-header-text");
+    this.positionField = element.querySelector(".column-position");
+    this._title = "";
+    this._position = 0;
     this.cells = [];
     this.newBelligerentButton = element.querySelector(".new-belligerent-button");
 
@@ -327,6 +377,14 @@ class BelligerentsColumn {
 
   get cellIndex() {
     return ++this._cellIndex;
+  }
+
+  get title() {
+    return this.titleField.value;
+  }
+
+  get position() {
+    return this.positionField.value;
   }
 
   addCell() {
@@ -354,10 +412,16 @@ class BelligerentsCell {
     this.index = index;
     this.parentIndex = parentIndex;
     this.element = element;
+    this.field = element.querySelector(".belligerent-input");
+    this._value = "";
 
     this.deleteButton = this.element.querySelector(".belligerents-remove");
     this.delete = this.delete.bind(this);
     this.deleteButton.addEventListener("click", this.delete);
+  }
+
+  get value() {
+    return this.field.value;
   }
 
   delete() {
