@@ -2142,12 +2142,15 @@ p {
 }
 
 .dynamic-field {
+  width: 100%;
+}
+
+.dynamic-fade {
   opacity: 0;
   -moz-animation: 0.3s ease-out 0s 1 fadein;
   animation: 0.3s ease-out 0s 1 fadein;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  width: 100%;
 }
 
 @media screen and (min-width: 800px) {
@@ -2250,10 +2253,28 @@ p {
   filter: drop-shadow(3px 1px 3px var(--elem_shadow));
 }
 
+.new-group-button,
+.new-belligerent-button {
+  color: var(--text_header);
+  background-color: transparent;
+  padding: 5px;
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+}
+
+.new-group-button:hover {
+  color: var(--text_header_hover);
+}
+
 .belligerents-column {
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: 0;
+  -moz-animation: 0.3s ease-out 0s 1 fadein;
+  animation: 0.3s ease-out 0s 1 fadein;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
 }
 
 .column-header-outer {
@@ -2327,7 +2348,11 @@ p {
 
 .belligerent-input {
   outline: none;
-  border: none;
+  border: 1px solid var(--elem_dark);
+  background-color: var(--elem_bright);
+  color: var(--text_dark);
+  font-weight: 400;
+  height: 30px;
 }
 
 .belligerents-field-buttons {

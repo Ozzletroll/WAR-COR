@@ -1,6 +1,6 @@
 export function createBelligerentsFieldHTML(index) {
   return `
-    <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field belligerents-field">
+    <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field dynamic-fade belligerents-field">
       <input name="dynamic_fields-${index-1}-field_type" value="belligerents" type="hidden">
       <input name="dynamic_fields-${index-1}-value" class="belligerents-hidden-value" value="" type="hidden">
       <div class="dynamic-field-inner">
@@ -69,7 +69,7 @@ export function createBelligerentsFieldHTML(index) {
 
 export function createBelligerentsColumnHTML(index, columnIndex) {
   return `
-    <div id="belligerents-column-${index}-${columnIndex}" class="belligerents-column">
+    <div id="belligerents-column-${index}-${columnIndex}" class="belligerents-column dynamic-fade">
 
       <input class="column-position" value="${columnIndex}" type="hidden">
 
@@ -121,7 +121,7 @@ export function createBelligerentsColumnHTML(index, columnIndex) {
 
 export function createBelligerentsCellHTML(parentIndex, index, cellIndex) {
   return `
-    <div id="belligerent-cell-${parentIndex}-${index}-${cellIndex}" class="belligerent-cell">
+    <div id="belligerent-cell-${parentIndex}-${index}-${cellIndex}" class="belligerent-cell dynamic-fade">
 
       <div class="form-input-container">
         <input name="" class="form-input belligerent-input" value="BELLIGERENT ${cellIndex}">

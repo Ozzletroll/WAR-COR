@@ -1,6 +1,6 @@
 export function createTextFieldHTML(index) {
     return `
-      <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field html-field">
+      <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field dynamic-fade html-field">
         <input name="dynamic_fields-${index-1}-field_type" value="html" type="hidden">
         <div class="dynamic-field-inner">
           <div class="dynamic-field-draggable">
