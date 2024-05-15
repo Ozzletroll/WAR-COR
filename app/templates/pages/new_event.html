@@ -204,11 +204,13 @@
               {{ dynamic_fields.dynamic_html_field(field, loop.index) }}
             {% elif field.field_type.data == "basic" %}
               {{ dynamic_fields.dynamic_basic_field(field, loop.index) }}
+            {% elif field.field_type.data == "belligerents" %}
+              {{ dynamic_fields.dynamic_belligerents_field(field, loop.index) }}
             {% endif %}
           {% endfor %}
         </div>
 
-        {{ new_field_buttons.new_field_buttons(text_field=true, html_field=true) }}
+        {{ new_field_buttons.new_field_buttons(text_field=true, html_field=true, belligerents_field=true) }}
 
         <div class="campaign-submit-area event-submit-area">
           {{ form.submit(class_="button campaign-input campaign-submit") }}
