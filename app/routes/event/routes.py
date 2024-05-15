@@ -28,8 +28,6 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     authenticators.check_campaign_visibility(campaign)
     comment_form_visible = authenticators.check_comment_form_visibility(campaign)
 
-    # belligerents = event.separate_belligerents()
-
     form = forms.CommentForm()
     delete_form = forms.SubmitForm()
 
