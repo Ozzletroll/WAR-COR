@@ -2236,6 +2236,32 @@ p {
   color: var(--text_header_hover);
 }
 
+.belligerents-table {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.belligerents-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.belligerent-cell {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.belligerents-field-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0px;
+}
+
 /* Top of page navigation elements */
 
 .navigation-area {
