@@ -1,5 +1,10 @@
 import { createTextFieldHTML } from "./dynamic_field_templates/html_field_template.js";
 import { createBasicFieldHTML } from "./dynamic_field_templates/basic_field_template.js";
+import { 
+  createBelligerentsFieldHTML, 
+  createBelligerentsColumnHTML, 
+  createBelligerentsCellHTML 
+} from "./dynamic_field_templates/belligerents_field_template.js";
 import { createDeleteModal } from "./modal_templates/close_modal_template.js";
 import { summernoteInitialise } from "../summernote_initialise.js";
 import { Modal, PreviewModal } from "../modal.js";
@@ -10,10 +15,12 @@ export class DynamicForm {
     constructor({
       basicButton,
       textButton,
+      belligerentsButton
     }) {
       this._idValue = 0;
       this.basicButton = basicButton;
       this.textButton = textButton;
+      this.belligerentsButton = belligerentsButton;
       this.fieldList;
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
@@ -28,6 +35,9 @@ export class DynamicForm {
 
       this.addHTMLField = this.addHTMLField.bind(this);
       this.textButton.addEventListener("click", this.addHTMLField);
+
+      this.addBelligerentsField = this.addBelligerentsField.bind(this);
+      this.belligerentsButton.addEventListener("click", this.addBelligerentsField);
 
       this.bindFieldChangeEvents();
       this.bindUnsavedChangesWarning();
@@ -63,7 +73,6 @@ export class DynamicForm {
     }
 
     addBasicField() {
-
       // Create page elements and insert in DOM
       var fieldID = this.idValue;
       this.formArea.insertAdjacentHTML("beforeend", createBasicFieldHTML(fieldID));
@@ -111,6 +120,29 @@ export class DynamicForm {
       // Create instance of Field class
       var newField = new DynamicField({
         type: "text",
+        element: document.getElementById(`event-dynamic-field-${fieldID}`),
+        index: fieldID,
+      })
+      this.fields.push(newField);
+
+      // Destroy the existing SortableJS instance to prevent iOS devices breaking
+      this.fieldList.destroy();
+
+      // Re-initialize SortableJS
+      this.updateDraggableItems(this.formArea);
+    }
+
+    addBelligerentsField() {
+      // Create page elements and insert in DOM
+      var fieldID = this.idValue;
+      this.formArea.insertAdjacentHTML("beforeend", createBelligerentsFieldHTML(fieldID));
+      
+      // Insert modals into DOM
+      this.addNewDeleteModal(fieldID);
+
+      // Create instance of Field class
+      var newField = new DynamicBelligerentsField({
+        type: "belligerents",
         element: document.getElementById(`event-dynamic-field-${fieldID}`),
         index: fieldID,
       })
@@ -231,6 +263,105 @@ class DynamicField {
     this.closeModal.closeModal();
     this.closeModal.modal.remove();
     this.element.remove();
+  }
+
+}
+
+
+class DynamicBelligerentsField extends DynamicField {
+  constructor({
+    type,
+    element,
+    index
+  }) {
+    super({type, element, index});
+    this._columnIndex = 0;
+    this.columns = [];
+    this.tableElement = this.element.querySelector(".belligerents-table");
+    this.newColumnButton = this.element.querySelector(".new-group-button");
+
+    this.addColumn = this.addColumn.bind(this);
+    this.newColumnButton.addEventListener("click", this.addColumn);
+  }
+
+  get columnIndex() {
+    return ++this._columnIndex;
+  }
+
+  addColumn() {
+    var columnIndex = this.columnIndex;
+    this.tableElement.insertAdjacentHTML("beforeend", createBelligerentsColumnHTML(this.index, columnIndex));
+    var newColumn = new BelligerentsColumn({
+      index: columnIndex,
+      parentIndex: this.index,
+      element: this.element.querySelector(`#belligerents-column-${this.index}-${columnIndex}`),
+    })
+    newColumn.addCell();
+    this.columns.push(newColumn);
+  }
+
+  deleteColumn() {
+    
+  }
+}
+
+
+class BelligerentsColumn {
+  constructor({
+    index,
+    parentIndex,
+    element,
+  })
+  {
+    this._cellIndex = 0;
+    this.index = index;
+    this.parentIndex = parentIndex;
+    this.element = element;
+    this.cells = [];
+    this.newBelligerentButton = element.querySelector(".new-belligerent-button");
+
+    this.addCell = this.addCell.bind(this);
+    this.newBelligerentButton.addEventListener("click", this.addCell);
+    
+  }
+
+  get cellIndex() {
+    return ++this._cellIndex;
+  }
+
+  addCell() {
+    var cellIndex = this.cellIndex;
+    this.element.insertAdjacentHTML("beforeend", createBelligerentsCellHTML(this.parentIndex, this.index, cellIndex));
+    var newCell = new BelligerentsCell({
+      index: cellIndex,
+      parentIndex: this.parentIndex,
+      element: this.element.querySelector(`#belligerent-cell-${this.parentIndex}-${this.index}-${cellIndex}`),
+    })
+    this.cells.push(newCell);
+    
+  }
+
+}
+
+
+class BelligerentsCell {
+  constructor({
+    index,
+    parentIndex,
+    element,
+  })
+  {
+    this.index = index;
+    this.parentIndex = parentIndex;
+    this.element = element;
+
+    this.deleteButton = this.element.querySelector(".belligerents-remove");
+    this.delete = this.delete.bind(this);
+    this.deleteButton.addEventListener("click", this.delete);
+  }
+
+  delete() {
+    this.element.remove()
   }
 
 }
