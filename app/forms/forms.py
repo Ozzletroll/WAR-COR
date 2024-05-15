@@ -71,11 +71,6 @@ class DynamicField(FlaskForm):
 
 
 class CreateEventForm(FlaskForm):
-    """
-        Event model form, capable of adding dynamic fields with
-        the "set_dynamic_fields" method, passing a list of dictionaries.
-    """
-
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
     date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
