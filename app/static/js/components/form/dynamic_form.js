@@ -417,6 +417,9 @@ class BelligerentsColumn {
   delete() {
     this.element.remove();
     this.parentClass.columns = this.parentClass.columns.filter(item => item != this);
+    this.parentClass.updateColumnOrder();
+    this.parentClass.parent.fieldDataChanged = true;
+    this.parentClass.updateFieldData();
   }
 
 }
