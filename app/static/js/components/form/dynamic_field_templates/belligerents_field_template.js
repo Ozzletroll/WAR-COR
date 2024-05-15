@@ -93,7 +93,7 @@ export function createBelligerentsColumnHTML(index, columnIndex) {
             <div class="form-underline"></div>
           </div>
 
-          <button id="dynamic-delete-button-${index}" type="button" class="button form-button form-close" aria-label="Delete">
+          <button id="dynamic-delete-button-${index}-${columnIndex}" type="button" class="button form-button form-close" aria-label="Delete">
             <div class="icon-safari-fix">
               <svg class="icon icon-colour-var" width="20px" height="20px" aria-label="Close Icon"
               viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

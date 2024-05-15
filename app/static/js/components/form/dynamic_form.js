@@ -312,14 +312,11 @@ class DynamicBelligerentsField extends DynamicField {
       index: columnIndex,
       parentIndex: this.index,
       element: this.element.querySelector(`#belligerents-column-${this.index}-${columnIndex}`),
+      parentClass: this,
     })
     newColumn.addCell();
     this.columns.push(newColumn);
     this.updateDraggableColumns();
-  }
-
-  deleteColumn() {
-    
   }
 
   updateDraggableColumns() {
@@ -370,8 +367,10 @@ class BelligerentsColumn {
     index,
     parentIndex,
     element,
+    parentClass
   })
   {
+    this.parentClass = parentClass;
     this._cellIndex = 0;
     this.index = index;
     this.parentIndex = parentIndex;
@@ -381,11 +380,14 @@ class BelligerentsColumn {
     this._title = "";
     this._position = 0;
     this.cells = [];
+    this.deleteColumnButton = element.querySelector(".form-close")
     this.newBelligerentButton = element.querySelector(".new-belligerent-button");
 
     this.addCell = this.addCell.bind(this);
     this.newBelligerentButton.addEventListener("click", this.addCell);
-    
+
+    this.delete = this.delete.bind(this);
+    this.deleteColumnButton.addEventListener("click", this.delete); 
   }
 
   get cellIndex() {
@@ -407,9 +409,14 @@ class BelligerentsColumn {
       index: cellIndex,
       parentIndex: this.parentIndex,
       element: this.element.querySelector(`#belligerent-cell-${this.parentIndex}-${this.index}-${cellIndex}`),
+      parentClass: this,
     })
     this.cells.push(newCell);
-    
+  }
+
+  delete() {
+    this.element.remove();
+    this.parentClass.columns = this.parentClass.columns.filter(item => item != this);
   }
 
 }
@@ -420,8 +427,10 @@ class BelligerentsCell {
     index,
     parentIndex,
     element,
+    parentClass
   })
   {
+    this.parentClass = parentClass;
     this.index = index;
     this.parentIndex = parentIndex;
     this.element = element;
@@ -439,6 +448,6 @@ class BelligerentsCell {
 
   delete() {
     this.element.remove()
+    this.parentClass.cells = this.parentClass.cells.filter(item => item != this);
   }
-
 }
