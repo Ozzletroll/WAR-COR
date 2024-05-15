@@ -89,7 +89,7 @@ export function createBelligerentsColumnHTML(index, columnIndex) {
           </button>
 
           <div class="form-input-container">
-            <input name="dynamic_fields-${index-1}-title" class="form-input column-header-text" value="GROUP ${columnIndex}" autocomplete="off">
+            <input class="form-input column-header-text" value="GROUP ${columnIndex}" autocomplete="off">
             <div class="form-underline"></div>
           </div>
 
