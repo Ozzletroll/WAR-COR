@@ -13,6 +13,7 @@ import { createHTMLPreviewModal } from "./modal_templates/html_preview_modal.js"
 
 export class DynamicForm {
     constructor({
+      form,
       basicButton,
       textButton,
       belligerentsButton
@@ -21,6 +22,7 @@ export class DynamicForm {
       this.basicButton = basicButton;
       this.textButton = textButton;
       this.belligerentsButton = belligerentsButton;
+      this.form = form,
       this.fieldList;
       this.formArea = document.getElementById("dynamic-field-area");
       this.fields = this.getDynamicFields();
@@ -38,6 +40,9 @@ export class DynamicForm {
 
       this.addBelligerentsField = this.addBelligerentsField.bind(this);
       this.belligerentsButton.addEventListener("click", this.addBelligerentsField);
+
+      this.updateBelligerentsFields = this.updateBelligerentsFields.bind(this);
+      this.form.addEventListener("submit", this.updateBelligerentsFields)
 
       this.bindFieldChangeEvents();
       this.bindUnsavedChangesWarning();
@@ -229,6 +234,14 @@ export class DynamicForm {
         }
       });
     }
+
+    updateBelligerentsFields() {
+      this.fields.forEach(field => {
+        if (field instanceof DynamicBelligerentsField) {
+          field.updateFieldData();
+        }
+      });
+    }
   }
 
 
@@ -282,6 +295,7 @@ class DynamicBelligerentsField extends DynamicField {
     this.parent = parent;
     this.tableElement = this.element.querySelector(".belligerents-table");
     this.newColumnButton = this.element.querySelector(".new-group-button");
+    this.valueField = this.element.querySelector(".belligerents-hidden-value");
 
     this.addColumn = this.addColumn.bind(this);
     this.newColumnButton.addEventListener("click", this.addColumn);
@@ -320,7 +334,16 @@ class DynamicBelligerentsField extends DynamicField {
     });
   }
 
+  updateColumnOrder() {
+    var columnElements = this.element.querySelectorAll(".belligerents-column");
+    Array.from(columnElements).forEach((column, index) => {
+      var positionField = column.querySelector(".column-position");
+      positionField.value = index + 1;
+    });
+  }
+
   updateFieldData() {
+
     var formData = [];
     this.columns.forEach(column => {
 
@@ -337,17 +360,7 @@ class DynamicBelligerentsField extends DynamicField {
       formData.push(columnData);
 
     });
-
-    console.log(formData)
-  }
-
-  updateColumnOrder() {
-    var columnElements = this.element.querySelectorAll(".belligerents-column");
-    console.log(columnElements)
-    Array.from(columnElements).forEach((column, index) => {
-      var positionField = column.querySelector(".column-position");
-      positionField.value = index + 1;
-    });
+    this.valueField.value = JSON.stringify(formData);
   }
 }
 
