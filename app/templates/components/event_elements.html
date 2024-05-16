@@ -28,12 +28,9 @@
       <h4 class="event-elem-h">{{field.title}}</h4>
     </div>
     <div class="event-elem-body belligerents-list">
-
       {% for group in field.value %}
-
         <div class="belligerent-group">
           <h4 class="belligerent-group-header">{{ group.title }}</h4>
-          
           <ul class="belligerents-sub-list">
             {% for belligerent in group.belligerents %}
               <li class="belligerent-item">
@@ -41,10 +38,7 @@
               </li>
             {% endfor %}
           </ul>
-          
         </div>
-        
-
       {% endfor %}
       </div>
   </section>
