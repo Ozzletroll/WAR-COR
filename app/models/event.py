@@ -91,7 +91,8 @@ class Event(db.Model):
                     if dynamic_field_data["field_type"] == "html":
                         dynamic_value = sanitise_input(dynamic_value, wrap=True)
                     if dynamic_field_data["field_type"] == "belligerents":
-                        dynamic_value = sanitise_json(dynamic_value)
+                        dynamic_value = sorted(sanitise_json(dynamic_value), 
+                                               key=lambda x: int(x["position"])) 
                 if key == "field_type":
                     if dynamic_value not in ["html", "basic", "belligerents"]:
                         dynamic_value = "basic"
