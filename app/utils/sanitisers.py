@@ -1,4 +1,7 @@
 import nh3
+import json
+import jsonschema
+from jsonschema import validate
 from bs4 import BeautifulSoup
 
 
@@ -34,3 +37,33 @@ def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
         return str(soup)
     else:
         return cleaned_input
+
+
+def sanitise_json(value):
+
+    schema = {
+    "type" : "array",
+    "items": {
+            "type" : "object",
+            "properties" : {
+                "title" : {"type" : "string"},
+                "position" : {"type" : "string"},
+                "belligerents" : {
+                    "type" : "array",
+                    "items": {
+                        "type" : "string",
+                    },
+                },
+            },
+            "required": ["title", "position", "belligerents"],
+        },
+    }
+
+    value = json.loads(value) 
+
+    try:
+        validate(instance=value, schema=schema)
+    except jsonschema.exceptions.ValidationError as error:
+        return ""
+
+    return value

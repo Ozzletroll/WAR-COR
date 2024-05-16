@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from app import db
-from app.utils.sanitisers import sanitise_input
+from app.utils.sanitisers import sanitise_input, sanitise_json
 
 
 class Event(db.Model):
@@ -61,21 +61,9 @@ class Event(db.Model):
 
                 elif field == "dynamic_fields":
 
-                    data = []
-                    for dynamic_field_data in value:
-                        dict = {}
-                        for key, dynamic_value in dynamic_field_data.items():
-                            if key == "value":
-                                use_wrap = dynamic_field_data.get("field_type") == "html"
-                                dynamic_value = sanitise_input(dynamic_value, wrap=use_wrap)
-                            if key == "field_type":
-                                if dynamic_value not in ["html", "basic"]:
-                                    dynamic_value = "basic"
-                            dict[key] = dynamic_value
-                        data.append(dict)
-
+                    data = self.map_dynamic_field_data(value)
                     self.dynamic_fields = data
-                        
+
                 else:
                     setattr(self, field, value)
 
@@ -92,6 +80,25 @@ class Event(db.Model):
             db.session.add(self)
 
         db.session.commit()
+
+    def map_dynamic_field_data(self, value):
+
+        data = []
+        for dynamic_field_data in value:
+            dict = {}
+            for key, dynamic_value in dynamic_field_data.items():
+                if key == "value":
+                    if dynamic_field_data["field_type"] == "html":
+                        dynamic_value = sanitise_input(dynamic_value, wrap=True)
+                    if dynamic_field_data["field_type"] == "belligerents":
+                        dynamic_value = sanitise_json(dynamic_value)
+                if key == "field_type":
+                    if dynamic_value not in ["html", "basic", "belligerents"]:
+                        dynamic_value = "basic"
+                dict[key] = dynamic_value
+            data.append(dict)
+
+        return data
 
     def create_blank(self, datestring):
         """ Method to create a blank temporary pending event for pre-populating form.
