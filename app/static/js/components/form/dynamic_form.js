@@ -65,13 +65,29 @@ export class DynamicForm {
         else if (element.classList.contains("basic-field")) {
           fieldType = "basic";
         }
+        else if(element.classList.contains("belligerents-field")) {
+          fieldType = "belligerents";
+        }
         this.addNewDeleteModal(index + 1);
-        var newField = new DynamicField({
-          form: this,
-          type: fieldType,
-          element: element,
-          index: this.idValue,
-        })
+
+        if (fieldType == "belligerents") {
+          var newField = new DynamicBelligerentsField({
+            form: this,
+            type: "belligerents",
+            element: element,
+            index: this.idValue,
+            parent: this,
+          })
+        }
+        else {
+          var newField = new DynamicField({
+            form: this,
+            type: fieldType,
+            element: element,
+            index: this.idValue,
+          })
+        }
+
         fields.push(newField);
     })
       return fields;
@@ -299,10 +315,30 @@ class DynamicBelligerentsField extends DynamicField {
 
     this.addColumn = this.addColumn.bind(this);
     this.newColumnButton.addEventListener("click", this.addColumn);
+
+    this.getColumns();
   }
 
   get columnIndex() {
     return ++this._columnIndex;
+  }
+
+  getColumns() {
+    var existingColumns = this.element.querySelectorAll(".belligerents-column");
+
+    if (existingColumns != null) {
+      Array.from(existingColumns).forEach(column => {
+        var columnIndex = this.columnIndex;
+        var newColumn = new BelligerentsColumn({
+          index: columnIndex,
+          parentIndex: this.index,
+          element: column,
+          parentClass: this,
+        })
+        this.columns.push(newColumn);
+        this.updateDraggableColumns();
+      })
+    }
   }
 
   addColumn() {
@@ -388,6 +424,8 @@ class BelligerentsColumn {
 
     this.delete = this.delete.bind(this);
     this.deleteColumnButton.addEventListener("click", this.delete); 
+
+    this.getCells();
   }
 
   get cellIndex() {
@@ -400,6 +438,23 @@ class BelligerentsColumn {
 
   get position() {
     return this.positionField.value;
+  }
+
+  getCells() {
+    var existingCells = this.element.querySelectorAll(".belligerent-cell");
+
+    if (existingCells != null) {
+      Array.from(existingCells).forEach(cell => {
+        var cellIndex = this.cellIndex;
+        var newCell = new BelligerentsCell({
+          index: cellIndex,
+          parentIndex: this.parentIndex,
+          element: cell,
+          parentClass: this,
+        })
+        this.cells.push(newCell);
+      })
+    }
   }
 
   addCell() {
