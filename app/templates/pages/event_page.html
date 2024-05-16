@@ -105,6 +105,8 @@
                     {{ event_elements.render_basic_field(entry) }}
                   {% elif entry.field_type == "html" %}
                     {{ event_elements.render_html_field(entry) }}
+                  {% elif entry.field_type == "belligerents" %}
+                    {{ event_elements.render_belligerents_field(entry) }}
                   {% endif %}
                 {% endfor %}
 

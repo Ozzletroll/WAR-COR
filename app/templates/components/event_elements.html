@@ -1,6 +1,6 @@
 
 {% macro render_html_field(field) %}
-  <section class="event-page-elem event-elem-large elem-body event-page-description" aria-label="Archive Entry">
+  <section class="event-page-elem event-elem-large elem-body event-page-description" aria-label="{{ field.title }}">
     <div class="entry-left-padding"></div>
     <div class="description-body">
       <h4 class="event-desc-header">{{ field.title }}</h4>
@@ -12,7 +12,7 @@
 {%- endmacro %}
 
 {% macro render_basic_field(field) %}
-  <section class="event-page-elem event-page-corner" aria-label="{{ field.title }}">
+  <section class="event-page-elem event-elem-small event-page-corner" aria-label="{{ field.title }}">
     <div class="event-elem-header">
       <h4 class="event-elem-h">{{ field.title }}</h4>
     </div>
@@ -23,28 +23,29 @@
 {%- endmacro %}f
 
 {% macro render_belligerents_field(field) %}
-  <section class="event-page-elem event-belligerents" aria-label="Event Belligerents">
+  <section class="event-page-elem event-elem-large event-page-corner" aria-label="{{ field.title }}">
     <div class="event-elem-header">
-      <h4 class="event-elem-h">Belligerents</h4>
+      <h4 class="event-elem-h">{{field.title}}</h4>
     </div>
-    <ul class="event-elem-body belligerents-list">
-      {% for group in belligerents %}
+    <div class="event-elem-body belligerents-list">
 
-        {% if group | length == 1 and belligerents | length == 1  %}
-          <li class="ally-group ally-group-solo">
-        {% else %}
-          <li class="ally-group">
-        {% endif %}
-          {% for ally in group %}
-            <div class="ally-elem">
-                {{ally}}
-            </div>
-          {% endfor %}
-          </li> 
-          {% if not loop.last %}
-          <li class="vs-area">vs</li>
-          {% endif %}
+      {% for group in field.value %}
+
+        <div class="belligerent-group">
+          <h4 class="belligerent-group-header">{{ group.title }}</h4>
+          
+          <ul class="belligerents-sub-list">
+            {% for belligerent in group.belligerents %}
+              <li class="belligerent-item">
+                {{ belligerent }}
+              </li>
+            {% endfor %}
+          </ul>
+          
+        </div>
+        
+
       {% endfor %}
-    </ul>
+      </div>
   </section>
 {%- endmacro %}
