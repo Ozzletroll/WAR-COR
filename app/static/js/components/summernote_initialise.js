@@ -8,10 +8,10 @@ export function summernoteInitialise(
   charLimit = parseInt(charLimit) || null;
   var editor = "#summernote" + idSuffix;
 
-  if (allowImages) {
+  if (allowImages == "True") {
     allowImages = "picture";
   }
-  if (allowURLS) {
+  if (allowURLS == "True") {
     allowURLS = "link";
   }
 
