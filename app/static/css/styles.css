@@ -6105,7 +6105,6 @@ for selection in timeline_search.js */
 
 .event-page-description {
   flex-direction: row;
-  margin: 20px 0 20px 0;
   border: 1px solid var(--elem_border);
   border-radius: 5px;
   transition: 0.15s ease;
