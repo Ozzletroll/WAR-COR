@@ -137,7 +137,7 @@
 
 {%- endmacro %}
 
-{% macro dynamic_belligerents_field(field, index) %}
+{% macro dynamic_composite_field(field, index) %}
   
   <div id="event-dynamic-field-{{index}}" class="form-container form-container-large dynamic-field dynamic-fade belligerents-field">
     {{ field.field_type(type="hidden") }}
@@ -253,12 +253,12 @@
 
 
     <div class="column-body">
-      {% for cell in column.belligerents %}
+      {% for cell in column.entries %}
         {{ dynamic_belligerents_cell(cell, parent_index, column_index, loop.index) }}
       {% endfor %}
     </div>
     <div class="belligerents-field-buttons">
-      <button id="new-belligerent-button-{{parent_index}}" class="button new-belligerent-button" type="button">NEW BELLIGERENT</button>
+      <button id="new-belligerent-button-{{parent_index}}" class="button new-belligerent-button" type="button">NEW ENTRY</button>
     </div>
   </div>
 {%- endmacro %}

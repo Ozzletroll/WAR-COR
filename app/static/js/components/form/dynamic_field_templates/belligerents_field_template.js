@@ -1,7 +1,7 @@
 export function createBelligerentsFieldHTML(index) {
   return `
     <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field dynamic-fade belligerents-field">
-      <input name="dynamic_fields-${index-1}-field_type" value="belligerents" type="hidden">
+      <input name="dynamic_fields-${index-1}-field_type" value="composite" type="hidden">
       <input name="dynamic_fields-${index-1}-value" class="belligerents-hidden-value" value="" type="hidden">
       <div class="dynamic-field-inner">
         <div class="dynamic-field-draggable">
@@ -12,7 +12,7 @@ export function createBelligerentsFieldHTML(index) {
                 <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
                 src="/static/images/icons/edit.svg">
                 <div class="form-input-container dynamic-form-title-area">
-                  <input name="dynamic_fields-${index-1}-title" class="form-input dynamic-field-title campaign-form-label-title label-title-small" value="Belligerents" autocomplete="off">
+                  <input name="dynamic_fields-${index-1}-title" class="form-input dynamic-field-title campaign-form-label-title label-title-small" value="Composite Field" autocomplete="off">
                   <div class="form-underline"></div>
                 </div>
               </div>
@@ -112,7 +112,7 @@ export function createBelligerentsColumnHTML(index, columnIndex) {
         
       </div>
       <div class="belligerents-field-buttons">
-        <button id="new-belligerent-button-${index}" class="button new-belligerent-button" type="button">NEW BELLIGERENT</button>
+        <button id="new-belligerent-button-${index}" class="button new-belligerent-button" type="button">NEW ENTRY</button>
       </div>
     </div>
   `
@@ -124,7 +124,7 @@ export function createBelligerentsCellHTML(parentIndex, index, cellIndex) {
     <div id="belligerent-cell-${parentIndex}-${index}-${cellIndex}" class="belligerent-cell dynamic-fade">
 
       <div class="form-input-container">
-        <input name="" class="form-input belligerent-input" value="BELLIGERENT ${cellIndex}">
+        <input name="" class="form-input belligerent-input" value="ENTRY ${cellIndex}">
         <div class="form-underline"></div>
       </div>
 
