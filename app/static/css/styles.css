@@ -2124,7 +2124,74 @@ p {
   }
 
 }
-    
+
+/* Form footer */
+
+.form-footer-container {
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 321px;
+  filter: drop-shadow(-1px -1px 1px var(--elem_shadow));
+}
+
+.form-footer {
+  display: flex;
+  justify-content: right;
+  background-color: var(--darker_red);
+  height: 40px;
+  width: 320px;
+  padding-left: 30px;
+  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), 15px 100%, 0% 100%);
+  clip-path: polygon(15px 0%, 100% 0, 100% 100%, 0 100%, 0 15px);
+}
+
+.form-footer-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  margin: 5px 10px;
+  background-color: transparent;
+  border: none;
+  border-radius: 3px;
+  color: var(--text_normal);
+  transition: 0.15s;
+  font-weight: 500;
+}
+
+.form-footer-button:hover {
+  background-color: var(--dark_red);
+}
+
+.form-footer-button:active {
+  background-color: var(--bright_red);
+}
+
+.form-footer-button-large {
+  width: 100px;
+}
+
+.form-footer-button-small {
+  width: 100px;
+}
+
+@media screen and (max-width: 600px) {
+
+  .form-footer-container {
+    width: 100%;
+  }
+
+  .form-footer {
+    width: 100%;
+    clip-path: none;
+  }
+
+}
+
 /* Dynamic Form Components */
 
 .dynamic-field-area {

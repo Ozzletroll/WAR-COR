@@ -1,0 +1,26 @@
+{% macro form_footer(form_type) %}
+
+<div class="form-footer-container">
+  <nav class="form-footer" aria-label="Form Buttons">
+    <button id="footer-update-button" class="button form-footer-button form-footer-button-large">
+      <img class="icon" src="{{ url_for('static', filename='/images/icons/upload.svg') }}">
+      UPDATE
+    </button>
+    <button id="footer-delete-button" class="button form-footer-button form-footer-button-large">
+      <img class="icon" src="{{ url_for('static', filename='/images/icons/bin_white.svg') }}">
+      DELETE
+    </button>
+    <button id="footer-help-button" class="button form-footer-button form-footer-button-small">
+      <img class="icon" src="{{ url_for('static', filename='/images/icons/question.svg') }}">
+      HELP
+    </button>
+  </nav>
+</div>
+
+{% if form_type == "event" %}
+  <!-- Create event help modal -->
+{% elif form_type == "epoch" %}
+
+{% endif %}
+
+{%- endmacro %}

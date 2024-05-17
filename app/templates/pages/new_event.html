@@ -7,6 +7,7 @@
 {% import "components/new_field_buttons.html" as new_field_buttons %}
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/modal.html" as modal %}
+{% import "components/form_footer.html" as form_footer%}
 
 
 {% extends "base/base.html" %}
@@ -233,6 +234,8 @@
     </div>
 
   </div>
+
+{{ form_footer.form_footer(form_type="event") }}
 
 </div>
 
