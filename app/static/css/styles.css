@@ -2143,13 +2143,17 @@ p {
 
 .form-footer {
   display: flex;
-  justify-content: right;
   background-color: var(--darker_red);
   height: 40px;
   width: 320px;
   padding-left: 30px;
   clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), 15px 100%, 0% 100%);
   clip-path: polygon(15px 0%, 100% 0, 100% 100%, 0 100%, 0 15px);
+}
+
+.form-footer-buttons {
+  display: flex;
+  width: 320px;
 }
 
 .form-footer-button {
@@ -2190,8 +2194,13 @@ p {
   }
 
   .form-footer {
+    justify-content: right;
     width: 100%;
     clip-path: none;
+  }
+
+  .form-footer .hidden {
+    display: none;
   }
 
 }

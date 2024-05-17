@@ -13,8 +13,10 @@ export class FormFooter {
     this.formSubmit = this.formSubmit.bind(this);
     this.updateButton.addEventListener("click", this.formSubmit);
 
-    this.formDelete = this.formDelete.bind(this);
-    this.deleteButton.addEventListener("click", this.formDelete);
+    if (this.formDeleteButton != null) {
+      this.formDelete = this.formDelete.bind(this);
+      this.deleteButton.addEventListener("click", this.formDelete);
+    }
   }
 
   formSubmit() {
