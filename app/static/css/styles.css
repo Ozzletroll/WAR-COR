@@ -6883,6 +6883,7 @@ pre {
   background-color: var(--bg_colour1);
   transition: 0.3s;
   box-sizing: border-box;
+  line-height: initial;
 }
 
 .backup-button:hover {
