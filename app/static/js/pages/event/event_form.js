@@ -12,15 +12,21 @@ const eventForm = new DynamicForm({
 window.addNewField = eventForm.addHTMLField;
 
 // Create modals
-const modal_1 = new Modal({
+const modal1 = new Modal({
   modal: document.getElementById("help-modal-1"),
   button: document.getElementById("event-date-help-button"),
   span: document.getElementById("help-close-1"),
 })
 
-const modal_3 = new Modal({
-  modal: document.getElementById("help-modal-3"),
+const modal2 = new Modal({
+  modal: document.getElementById("help-modal-2"),
   button: document.getElementById("event-format-help-button"),
+  span: document.getElementById("help-close-2"),
+})
+
+const footerModal = new Modal({
+  modal: document.getElementById("help-modal-3"),
+  button: document.getElementById("footer-help-button"),
   span: document.getElementById("help-close-3"),
 })
 

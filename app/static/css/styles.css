@@ -352,6 +352,10 @@ h1, h2, h3, h4, h5 {
   width: 80px;
 }
 
+.icon-inline {
+  vertical-align: text-bottom;
+}
+
 .icon-safari-fix {
   display: flex;
   justify-content: center;
