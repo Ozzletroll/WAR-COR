@@ -10,13 +10,15 @@ export class Modal {
       this.span = span;
       this.innerElement = this.modal.querySelector(".modal-content");
       this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
+      this.lastClicked = null;
    
       this.button.onclick = event => {
-        this.openModal(event)
+        this.lastClicked = event.detail.originButton || this.button;
+        this.openModal();
       } 
   
       this.span.onclick = event => {
-        this.closeModal(event)
+        this.closeModal();
       }
       
       this.modal.addEventListener("click", event => {
@@ -42,7 +44,7 @@ export class Modal {
       Array.from(this.hiddenElements).forEach(element => {
         element.inert = false;
       })
-      this.button.focus();
+      this.lastClicked.focus();
     }
   
   }

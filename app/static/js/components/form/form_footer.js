@@ -24,6 +24,13 @@ export class FormFooter {
   }
 
   formDelete() {
-    this.formDeleteButton.click();
+    var event = new CustomEvent(
+      "click", 
+      { 
+        bubbles: true, 
+        detail: { originButton: this.deleteButton } 
+      }
+    );
+    this.formDeleteButton.dispatchEvent(event);
   }
 }
