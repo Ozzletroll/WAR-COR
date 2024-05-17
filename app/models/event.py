@@ -90,11 +90,11 @@ class Event(db.Model):
                 if key == "value":
                     if dynamic_field_data["field_type"] == "html":
                         dynamic_value = sanitise_input(dynamic_value, wrap=True)
-                    if dynamic_field_data["field_type"] == "belligerents":
+                    if dynamic_field_data["field_type"] == "composite":
                         dynamic_value = sorted(sanitise_json(dynamic_value), 
                                                key=lambda x: int(x["position"])) 
                 if key == "field_type":
-                    if dynamic_value not in ["html", "basic", "belligerents"]:
+                    if dynamic_value not in ["html", "basic", "composite"]:
                         dynamic_value = "basic"
                 dict[key] = dynamic_value
             data.append(dict)

@@ -1,15 +1,9 @@
-{% macro new_field_buttons(text_field=false, html_field=false, belligerents_field=false) %}
+{% macro new_field_buttons() %}
 
   <div class="new-field-area">
-    {% if text_field %}
-      <button type="button" id="new-basic-field-button" class="button new-field-button">ADD NEW BASIC FIELD</button>
-    {% endif %}
-    {% if html_field %}
-      <button type="button" id="new-text-field-button" class="button new-field-button">ADD NEW TEXT FIELD</button>
-    {% endif %}
-    {% if belligerents_field %}
-      <button type="button" id="new-belligerents-field-button" class="button new-field-button">ADD NEW BELLIGERENTS FIELD</button>
-    {% endif %}
+    <button type="button" id="new-basic-field-button" class="button new-field-button">ADD NEW BASIC FIELD</button>
+    <button type="button" id="new-text-field-button" class="button new-field-button">ADD NEW TEXT FIELD</button>
+    <button type="button" id="new-composite-field-button" class="button new-field-button">ADD NEW BELLIGERENTS FIELD</button>
   </div>
 
 {%- endmacro %}

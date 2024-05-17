@@ -22,7 +22,7 @@
   </section>
 {%- endmacro %}f
 
-{% macro render_belligerents_field(field) %}
+{% macro render_composite_field(field) %}
   <section class="event-page-elem event-elem-large event-page-corner" aria-label="{{ field.title }}">
     <div class="event-elem-header">
       <h4 class="event-elem-h">{{field.title}}</h4>
@@ -32,9 +32,9 @@
         <div class="belligerent-group">
           <h4 class="belligerent-group-header">{{ group.title }}</h4>
           <ul class="belligerents-sub-list">
-            {% for belligerent in group.belligerents %}
+            {% for entry in group.entries %}
               <li class="belligerent-item">
-                {{ belligerent }}
+                {{ entry }}
               </li>
             {% endfor %}
           </ul>

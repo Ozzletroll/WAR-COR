@@ -7,7 +7,7 @@ const eventForm = new DynamicForm({
   form: document.getElementById("edit-event-form"),
   basicButton: document.getElementById("new-basic-field-button"),
   textButton: document.getElementById("new-text-field-button"),
-  belligerentsButton: document.getElementById("new-belligerents-field-button"),
+  belligerentsButton: document.getElementById("new-composite-field-button"),
 });
 window.addNewField = eventForm.addHTMLField;
 

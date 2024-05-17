@@ -21,8 +21,8 @@ def test_sanitise_input():
 
     value = "Message body that shouldn't have p tags"
     expected_output = "Message body that shouldn't have p tags"
-    assert sanitise_input(value, message_body=True) == expected_output
+    assert sanitise_input(value, wrap=False) == expected_output
 
     value = '<a href="http://www.google.com">LINK TEXT</a>'
     expected_output = '<a href="http://www.google.com" rel="noopener noreferrer nofollow">LINK TEXT</a>'
-    assert sanitise_input(value, message_body=True) == expected_output
+    assert sanitise_input(value, wrap=False) == expected_output

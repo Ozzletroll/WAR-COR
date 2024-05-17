@@ -48,14 +48,14 @@ def sanitise_json(value):
             "properties" : {
                 "title" : {"type" : "string"},
                 "position" : {"type" : "string"},
-                "belligerents" : {
+                "entries" : {
                     "type" : "array",
                     "items": {
                         "type" : "string",
                     },
                 },
             },
-            "required": ["title", "position", "belligerents"],
+            "required": ["title", "position", "entries"],
         },
     }
 

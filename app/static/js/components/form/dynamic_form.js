@@ -387,11 +387,11 @@ class DynamicBelligerentsField extends DynamicField {
       var columnData = {
         title: column.title,
         position: column.position,
-        belligerents: [],
+        entries: [],
       };
       
       column.cells.forEach(cell => {
-        columnData["belligerents"].push(cell.value) 
+        columnData["entries"].push(cell.value) 
       });
 
       formData.push(columnData);
