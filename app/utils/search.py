@@ -187,7 +187,11 @@ class SearchEngine:
                             result.matching_attributes.append(attr)
                             matching_fields.append(value)
 
+            # Calculate relevance scores
             result.relevance = self.calculate_relevance(query, matching_fields)
+
+            # Get excerpt text
+            result.excerpt = self.create_excerpt(item)
 
             # Create matching attributes text for template
             result.matching_attributes_text = ", ".join(result.matching_attributes).title()
@@ -220,9 +224,13 @@ class SearchEngine:
     @staticmethod
     def create_excerpt(item):
 
-        fields = [field for field in item.dynamic_fields if field["title"] == matching_fieldname]
-        if len(fields) > 0:
-            excerpt_html = fields[0]["value"]
+        if isinstance(item, models.Event):
+            fields = [field for field in item.dynamic_fields if field["field_type"] == "html"]
+            fields = sorted(fields, key=lambda field: len(field["value"]), reverse=True)
+            if len(fields) > 0:
+                excerpt_html = fields[0]["value"]
+        elif isinstance(item, models.Epoch):
+            excerpt_html = item.description or item.overview
 
         # Convert html to plaintext with BeautifulSoup
         if excerpt_html is not None:
