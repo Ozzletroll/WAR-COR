@@ -68,7 +68,7 @@
         {% include 'components/flash.html' %}
       </div>
   
-      <form id="edit-epoch-form" class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Epoch Form">
+      <form id="edit-epoch-form" class="edit-form form-column fade-in-block-2" method="POST" aria-label="Epoch Form">
         {{ form.csrf_token }}
         <div id="epoch-form-edit-fields" class="form-hidden">
           {{ form.edit_title(id="epoch-form-title-edit", value=false) }}
