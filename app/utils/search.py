@@ -1,6 +1,7 @@
 from flask import url_for
 from sqlalchemy import or_, func
 import editdistance
+import re
 from bs4 import BeautifulSoup
 
 from app import db
@@ -47,7 +48,7 @@ class SearchEngine:
         self.results = []
 
     def return_results(self):
-        return sorted(self.results, key=lambda result: result.relevance)
+        return sorted(self.results, key=lambda result: result.relevance, reverse=True)
 
     def search_campaign(self, campaign, query):
 
@@ -145,47 +146,83 @@ class SearchEngine:
 
                 table_columns = epoch_columns
 
-            scores = []
+            matching_fields = []
+            searchable_columns = [column.name for column in table_columns]
+            for attr, value in item.__dict__.items():
+                if attr in searchable_columns:
+                    if attr == "dynamic_fields":
+                        for field in item.dynamic_fields:
+                            found = False
+                            if field["field_type"] == "composite":
+                                for group in field["value"]:
+                                    # Check title of group
+                                    if query in group["title"]:
+                                        found = True
+                                        matching_fields.append(group["title"])
 
-            # Find the matching event attributes
-            for column in table_columns:
-                attr_value = getattr(item, column.name)
-                if query in str(attr_value).lower():
+                                    # Check all entries in group
+                                    for entry in group["entries"]:
+                                        if query in entry:
+                                            found = True
+                                            matching_fields.append(entry)
 
-                    matching_words = []
-                    result.matching_attributes.append(column.name)
-                    result.excerpt = self.create_excerpt(item)
+                            else:
+                                if field["field_type"] == "html":
+                                    soup = BeautifulSoup(field["value"], "html.parser")
+                                    text = soup.get_text()
+                                    for word in text.split(" "):
+                                        if query in word.lower():
+                                            found = True
+                                            matching_fields.append(word)
+                                elif field["field_type"] == "basic":
+                                    for word in field["value"].split(" "):
+                                        if query in word.lower():
+                                            found = True
+                                            matching_fields.append(word)
 
-                    # Convert html value entries to plain text
-                    html_columns = ["description", "overview"]
-                    if column.name in html_columns:
-                        soup = BeautifulSoup(attr_value, "html.parser")
-                        value = soup.get_text()
+                            if found:
+                                result.matching_attributes.append(field["title"])
                     else:
-                        value = attr_value
+                        if query in value:
+                            result.matching_attributes.append(attr)
+                            matching_fields.append(value)
 
-                    for word in value.split(" "):
-                        if query in word.lower():
-                            matching_words.append(word)
-
-                        relevance = editdistance.eval(query, word)
-                        scores.append(relevance)
-
-            # Calculate final relevance score
-            result.relevance = (sum(scores) / len(scores)) / len(scores)
+            result.relevance = self.calculate_relevance(query, matching_fields)
 
             # Create matching attributes text for template
             result.matching_attributes_text = ", ".join(result.matching_attributes).title()
 
             self.results.append(result)
 
+
+    @staticmethod
+    def calculate_relevance(query, matching_strings):
+        total_score = 0
+        for string in matching_strings:
+            # Calculate the edit distance
+            distance = editdistance.eval(query, string)
+
+            if distance > 0:
+                score = 1 / distance
+            else:
+                score = 1  # If distance is 0 (exact match), set score to 1
+
+            # Adjust score based on the length of the string
+            score /= len(string)
+
+            total_score += score
+
+        # Multiply by the number of matching fields to give more weight to results with more matches
+        total_score *= len(matching_strings)
+        return total_score
+
+
     @staticmethod
     def create_excerpt(item):
 
-        if isinstance(item, models.Event):
-            excerpt_html = item.body
-        elif isinstance(item, models.Epoch):
-            excerpt_html = item.description or item.overview
+        fields = [field for field in item.dynamic_fields if field["title"] == matching_fieldname]
+        if len(fields) > 0:
+            excerpt_html = fields[0]["value"]
 
         # Convert html to plaintext with BeautifulSoup
         if excerpt_html is not None:
