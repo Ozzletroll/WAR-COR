@@ -28,3 +28,27 @@
 </div>
 
 {%- endmacro %}
+
+
+{% macro timeline_footer() %}
+
+<div class="form-footer-container">
+  <div class="form-footer">
+    <nav class="form-footer-buttons">
+      <button id="footer-update-button" class="button form-footer-button form-footer-button-large">
+        <img class="icon" src="{{ url_for('static', filename='/images/icons/egress_icon.svg') }}" aria-label="Backup Icon">
+        BACKUP
+      </button>
+      <button id="footer-delete-button" class="button form-footer-button form-footer-button-large">
+        <img class="icon" src="{{ url_for('static', filename='/images/icons/user_management.svg') }}" aria-label="Members Icon">
+          MEMBERS
+        </button>
+      <button id="footer-help-button" class="button form-footer-button form-footer-button-small">
+        <img class="icon" src="{{ url_for('static', filename='/images/icons/question.svg') }}" aria-label="Help Icon">
+        HELP
+      </button>
+    </nav>
+  </div>
+</div>
+
+{%- endmacro %}
