@@ -156,13 +156,13 @@ class SearchEngine:
                             if field["field_type"] == "composite":
                                 for group in field["value"]:
                                     # Check title of group
-                                    if query in group["title"]:
+                                    if query in group["title"].lower():
                                         found = True
                                         matching_fields.append(group["title"])
 
                                     # Check all entries in group
                                     for entry in group["entries"]:
-                                        if query in entry:
+                                        if query in entry.lower():
                                             found = True
                                             matching_fields.append(entry)
 
@@ -183,7 +183,7 @@ class SearchEngine:
                             if found:
                                 result.matching_attributes.append(field["title"])
                     else:
-                        if query in value:
+                        if query in value.lower():
                             result.matching_attributes.append(attr)
                             matching_fields.append(value)
 
