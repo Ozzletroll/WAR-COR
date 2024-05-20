@@ -152,7 +152,11 @@ class SearchEngine:
                 if attr in searchable_columns:
                     if attr == "dynamic_fields":
                         for field in item.dynamic_fields:
+                            
                             found = False
+                            if query in field["title"].lower():
+                                found = True
+
                             if field["field_type"] == "composite":
                                 for group in field["value"]:
                                     # Check title of group
