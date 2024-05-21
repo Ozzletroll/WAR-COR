@@ -225,7 +225,7 @@ class SearchEngine:
     def find_phrase(query, text):
         pattern = r"(?:^|\s|,|\.)([^\s,.]*?{0}[^\s,.]*?)(?:\s|,|\.|$)".format(re.escape(query))
         matches = re.findall(pattern, text, re.IGNORECASE)
-        return matches
+        return [match.lower() for match in matches]
 
 
     @staticmethod
@@ -239,9 +239,6 @@ class SearchEngine:
                 score = 1 / distance
             else:
                 score = 1  # If distance is 0 (exact match), set score to 1
-
-            # Adjust score based on the length of the string
-            score /= len(string)
 
             total_score += score
 
