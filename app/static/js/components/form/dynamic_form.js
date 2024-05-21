@@ -336,6 +336,7 @@ class DynamicField {
 
   toggleSize() {
     if (this.state == false) {
+      this.element.style.transition = "0.15s";
       this.element.style.width = "100%";
       this.toggleLabel.innerHTML = `
         <svg class="icon-colour-var" width="20px" height="20px" viewBox="0 0 512 512" aria-label="Shrink Icon"
@@ -349,6 +350,7 @@ class DynamicField {
       `
     }
     else {
+      this.element.style.transition = "0.15s";
       this.element.style.width = "";
       this.toggleLabel.innerHTML = `
         <svg class="icon-colour-var" width="20px" height="20px" viewBox="0 0 512 512" aria-label="Expand Icon"
