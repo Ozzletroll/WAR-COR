@@ -4,7 +4,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
-{% import "components/form_footer.html" as form_footer %}
+{% import "components/footer.html" as footer %}
 
 {% import "components/timeline/month.html" as timeline_month %}
 
@@ -273,7 +273,7 @@
   </div>
 
   {% if edit %}
-    {{ form_footer.timeline_footer() }}
+    {{ footer.timeline_footer() }}
   {% endif %}
 
 </div>

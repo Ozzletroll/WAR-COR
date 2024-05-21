@@ -1,4 +1,4 @@
-export class FormFooter {
+export class Footer {
   constructor({
     formSubmitButton,
     formDeleteButton,

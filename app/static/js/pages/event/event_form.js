@@ -1,6 +1,6 @@
 import { Modal } from "../../components/modal.js";
 import { DynamicForm } from "../../components/form/dynamic_form.js";
-import { FormFooter} from "../../components/form/form_footer.js";
+import { Footer} from "../../components/footer.js";
 
 
 // Create dynamic form 
@@ -43,7 +43,7 @@ if (deleteModalCheck!= null) {
 }
 
 // Create form footer
-const formFooter = new FormFooter({
+const formFooter = new Footer({
   formSubmitButton: document.getElementById("submit"),
   formDeleteButton: document.getElementById("event-delete-button"),
   updateButton: document.getElementById("footer-update-button"),
