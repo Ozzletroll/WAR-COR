@@ -12,7 +12,12 @@
 {%- endmacro %}
 
 {% macro render_basic_field(field) %}
-  <section class="event-page-elem event-elem-small event-page-corner" aria-label="{{ field.title }}">
+  {% if field.is_full_width %}
+    {% set width_class = "event-elem-large" %}
+  {% else %}
+    {% set width_class = "event-elem-small" %}
+  {% endif %}
+  <section class="event-page-elem {{ width_class }} event-page-corner" aria-label="{{ field.title }}">
     <div class="event-elem-header">
       <h4 class="event-elem-h">{{ field.title }}</h4>
     </div>
