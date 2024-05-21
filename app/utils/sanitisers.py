@@ -18,6 +18,9 @@ def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
         "*": {"class"},
         "a": {"href", "title", "target"},
         "img": {"alt", "src", "style"},
+        "h1": {"align", "style"},
+        "h2": {"align", "style"},
+        "h3": {"align", "style"},
         "p": {"align", "style"},
     }
 
