@@ -18,6 +18,7 @@ class Result:
         self.excerpt = ""
         self.matching_attributes = []
         self.matching_attributes_text = ""
+        self.matching_strings = []
         self.url = ""
         self.edit_url = ""
 
@@ -146,7 +147,6 @@ class SearchEngine:
 
                 table_columns = epoch_columns
 
-            matching_fields = []
             searchable_columns = [column.name for column in table_columns]
             for attr, value in item.__dict__.items():
                 if attr in searchable_columns:
@@ -156,43 +156,61 @@ class SearchEngine:
                             found = False
                             if query in field["title"].lower():
                                 found = True
+                                result.matching_strings.append(field["title"])
 
                             if field["field_type"] == "composite":
                                 for group in field["value"]:
                                     # Check title of group
                                     if query in group["title"].lower():
                                         found = True
-                                        matching_fields.append(group["title"])
+                                        result.matching_strings.append(group["title"])
 
                                     # Check all entries in group
                                     for entry in group["entries"]:
                                         if query in entry.lower():
                                             found = True
-                                            matching_fields.append(entry)
+                                            result.matching_strings.append(entry)
 
                             else:
                                 if field["field_type"] == "html":
                                     soup = BeautifulSoup(field["value"], "html.parser")
                                     text = soup.get_text()
-                                    for word in text.split(" "):
-                                        if query in word.lower():
-                                            found = True
-                                            matching_fields.append(word)
+                                    matches = self.find_phrase(query, text)
+                                    for match in matches:
+                                        found = True
+                                        result.matching_strings.append(match)
+
                                 elif field["field_type"] == "basic":
-                                    for word in field["value"].split(" "):
-                                        if query in word.lower():
-                                            found = True
-                                            matching_fields.append(word)
+                                    matches = self.find_phrase(query, field["value"].lower())
+                                    for match in matches:
+                                        found = True
+                                        result.matching_strings.append(match)
 
                             if found:
                                 result.matching_attributes.append(field["title"])
+
+                    # Handle static fields
                     else:
-                        if query in value.lower():
+                        found = False
+                        if query in attr.lower():
+                            found = True
+                            result.matching_strings.append(attr)
+                        # Parse static HTML fields "eg. Epoch Overview, Description"
+                        if attr in ["overview", "description"]:
+                            soup = BeautifulSoup(value.lower(), "html.parser")
+                            text = soup.get_text()
+                            matches = self.find_phrase(query, text)
+                        else:
+                            matches = self.find_phrase(query, value.lower())
+
+                        for match in matches:
+                            found = True
+                            result.matching_strings.append(match)
+                        if found:
                             result.matching_attributes.append(attr)
-                            matching_fields.append(value)
 
             # Calculate relevance scores
-            result.relevance = self.calculate_relevance(query, matching_fields)
+            result.relevance = self.calculate_relevance(query, result.matching_strings)
 
             # Get excerpt text
             result.excerpt = self.create_excerpt(item)
@@ -201,6 +219,13 @@ class SearchEngine:
             result.matching_attributes_text = ", ".join(result.matching_attributes).title()
 
             self.results.append(result)
+
+
+    @staticmethod
+    def find_phrase(query, text):
+        pattern = r"(?:^|\s|,|\.)([^\s,.]*?{0}[^\s,.]*?)(?:\s|,|\.|$)".format(re.escape(query))
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        return matches
 
 
     @staticmethod
