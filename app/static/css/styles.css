@@ -2299,6 +2299,14 @@ p {
   gap: 20px 0px;
 }
 
+.form-button.field-size-toggle {
+  display: none;
+}
+
+.field-size-toggle + label .icon-colour-var {
+  fill: var(--darker_red);
+}
+
 .new-field-area {
   display: flex;
   justify-content: center;

@@ -107,6 +107,12 @@
                   </svg>
                 </div>
               </button>
+
+              {{ field.is_full_width(class="button form-button field-size-toggle") }}
+              <label for="{{field.is_full_width.id}}" class="button form-button size-toggle-label" tabindex="0"
+              role="checkbox" aria-label="Toggle Field Size">
+              </label>
+
               {% set delete_id = "dynamic-delete-button-" + index | string %}
               <button id="{{delete_id}}" type="button" class="button form-button form-close" aria-label="Delete">
                 <div class="icon-safari-fix">

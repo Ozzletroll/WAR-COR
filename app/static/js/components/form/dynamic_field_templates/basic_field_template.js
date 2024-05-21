@@ -31,6 +31,11 @@ export function createBasicFieldHTML(index) {
                   </div>
                 </button>
 
+                <input type="checkbox" id="dynamic_field_is_full_width-${index-1}" class="button form-button field-size-toggle">
+                <label for="dynamic_field_is_full_width-${index-1}" class="button form-button size-toggle-label" 
+                tabindex="0" role="checkbox" aria-label="Toggle Field Size">  
+                </label>
+
                 <button id="dynamic-delete-button-${index}" type="button" class="button form-button form-close" aria-label="Delete">
                   <div class="icon-safari-fix">
                     <svg class="icon icon-colour-var" width="20px" height="20px" aria-label="Close Icon"

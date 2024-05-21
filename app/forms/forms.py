@@ -68,6 +68,7 @@ class DynamicField(FlaskForm):
     title = StringField(validators=[DataRequired()])
     value = TextAreaField(validators=[Optional()])
     field_type = StringField(validators=[DataRequired()])
+    is_full_width = BooleanField(default=False, validators=[Optional()])
 
 
 class CreateEventForm(FlaskForm):
