@@ -32,6 +32,9 @@ export class HTMLResult {
       .event-desc > p,
       .event-desc > ul > li,
       .event-desc > ol > li,
+      .note-editable > h1,
+      .note-editable > h2,
+      .note-editable > h3,
       .note-editable > ul > li,
       .note-editable > ol > li,
       .note-editable > p`;
