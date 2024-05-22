@@ -83,25 +83,13 @@ class CreateEventForm(FlaskForm):
 
 
 class CreateEpochForm(FlaskForm):
-    """ 
-        The "edit_" prefix fields are rendered as hidden fields on the page,
-        and toggled via Javascript when the user makes a change to the corresponding field.
-        This helps prevent unnecessary overwrites if multiple users are editing
-        the same model at once.
-        
-    """
-
-    edit_title = BooleanField("Edit Title")
-    edit_start_date = BooleanField("Edit Start Date")
-    edit_end_date = BooleanField("Edit End Date")
-    edit_overview = BooleanField("Edit Overview")
-    edit_description = BooleanField("Edit Description")
-
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
     end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after()])
     overview = TextAreaField("Overview")
-    description = TextAreaField("Description")
+
+    dynamic_fields = FieldList(FormField(DynamicField))
+    
     submit = SubmitField("Create Epoch")
 
 

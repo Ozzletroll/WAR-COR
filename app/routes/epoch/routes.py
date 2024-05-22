@@ -79,9 +79,8 @@ def new_epoch(campaign_name, campaign_id):
 
     if form.validate_on_submit():
 
-        # Create new epoch and populate with form data
         epoch = models.Epoch()
-        epoch.update(form=request.form,
+        epoch.update(form=form.data,
                      parent_campaign=campaign,
                      new=True)
 
@@ -123,11 +122,12 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
     form = forms.CreateEpochForm(obj=epoch)
+    form.submit.label.text = "Update Epoch"
     delete_form = forms.SubmitForm()
 
     if form.validate_on_submit():
 
-        epoch.update(form=request.form,
+        epoch.update(form=form.data,
                      parent_campaign=campaign)
 
         return redirect(url_for("campaign.edit_timeline", 
@@ -138,9 +138,6 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     for field_name, errors in form.errors.items():
         for error_message in errors:
             flash(field_name + ": " + error_message)
-
-    # Change form label to 'update'
-    form.submit.label.text = "Update Epoch"
 
     return render_template("pages/new_epoch.html",
                            campaign=campaign,
