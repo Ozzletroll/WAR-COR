@@ -6,28 +6,35 @@ export class HTMLResult {
     textElement,
   }) {
     this.positive = false;
-    this.baseElement = document.querySelector(baseElement);
-    this.textElement = this.baseElement.querySelector(textElement);
+    this.baseElement = baseElement;
+    this.textElement = textElement;
     this.initialHTML = this.textElement.innerHTML;
     this.queryMatches = [];
   }
 
   stylePositive(searchQuery) {
-
     // Handle basic event page elements
     if (this.textElement.classList.contains("event-elem-body")
     || this.textElement.classList.contains("event-input")) {
       this.queryMatches.push(this.baseElement);
     }
+    // Handle composite/belligerents fields
+    else if (this.textElement.classList.contains("belligerents-container")) {
+      this.queryMatches.push(this.baseElement);
+    }
     // Handle user submitted html elements
     else {
       this.initialHTML = this.textElement.innerHTML;
-      var selector = `.event-desc > p,
-                       .event-desc > ul > li,
-                       .event-desc > ol > li,
-                       .note-editable > ul > li,
-                       .note-editable > ol > li,
-                       .note-editable > p`;
+      var selector = `
+      .event-desc > h1,
+      .event-desc > h2,
+      .event-desc > h3,
+      .event-desc > p,
+      .event-desc > ul > li,
+      .event-desc > ol > li,
+      .note-editable > ul > li,
+      .note-editable > ol > li,
+      .note-editable > p`;
 
       var elements = this.textElement.querySelectorAll(selector);
 

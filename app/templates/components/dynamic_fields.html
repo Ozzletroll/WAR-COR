@@ -145,7 +145,7 @@
 
 {% macro dynamic_composite_field(field, index) %}
   
-  <div id="event-dynamic-field-{{index}}" class="form-container form-container-large dynamic-field dynamic-fade belligerents-field">
+  <div id="event-dynamic-field-{{index}}" class="form-container form-container-large dynamic-field belligerents-field">
     {{ field.field_type(type="hidden") }}
     <input id="{{ field.value.id }}" class="belligerents-hidden-value" type="hidden" name="{{ field.value.name }}" 
     value="{{ field.value.data }}" autocomplete="off">

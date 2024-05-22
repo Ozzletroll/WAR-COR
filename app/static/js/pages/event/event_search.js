@@ -37,19 +37,22 @@ searchBar.addEventListener("keydown", function(event) {
 // Add event listen to the Summernote editor field to listen for user interaction
 if (editPage == true) {
 
-  var summernoteEditor = document.querySelector(".note-editor");
-  summernoteEditor.addEventListener("input", function(event) {
-    if (searchEngine.searchBar.value != "") {
-      searchEngine.clearSearch();
-    }
-    searchEngine.updateDescription();
-  });
-  
-  summernoteEditor.addEventListener("click", function(event) {
-    if (searchEngine.searchBar.value != "") {
-      searchEngine.clearSearch();
-    }
-  });
+  var summernoteEditors = document.querySelectorAll(".note-editor");
+
+  summernoteEditors.forEach(editor => {
+    editor.addEventListener("input", function(event) {
+      if (searchEngine.searchBar.value != "") {
+        searchEngine.clearSearch();
+      }
+      searchEngine.updateDescription();
+    });
+    
+    editor.addEventListener("click", function(event) {
+      if (searchEngine.searchBar.value != "") {
+        searchEngine.clearSearch();
+      }
+    });
+  })
 
   var updateButton = document.getElementById("submit");
   updateButton.addEventListener("click", function(event) {
@@ -57,5 +60,4 @@ if (editPage == true) {
       searchEngine.clearSearch();
     }
   });
-
 }
