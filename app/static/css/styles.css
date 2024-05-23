@@ -2157,6 +2157,10 @@ p {
   width: 320px;
 }
 
+.form-footer-buttons a {
+  text-decoration: none;
+}
+
 .form-footer-button {
   display: flex;
   justify-content: center;
