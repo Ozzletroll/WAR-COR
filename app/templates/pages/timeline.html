@@ -5,6 +5,7 @@
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/footer.html" as footer %}
+{% import "components/modal.html" as modal%}
 
 {% import "components/timeline/month.html" as timeline_month %}
 
@@ -273,10 +274,17 @@
   </div>
 
   {% if edit %}
-    {{ footer.timeline_footer() }}
+    {{ footer.timeline_footer(campaign) }}
   {% endif %}
 
 </div>
+
+{# Footer help modal #}
+{{ modal.modal(type="help",
+               subtype="event_form",
+               title="Timeline Help",
+               aria_label="Timeline Help",
+               loop_index=1) }}
 
 {% if edit %}
   <div id="editPageVariable" class="hidden" editPage="true"></div>

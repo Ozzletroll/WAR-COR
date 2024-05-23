@@ -30,19 +30,19 @@
 {%- endmacro %}
 
 
-{% macro timeline_footer() %}
+{% macro timeline_footer(campaign) %}
 
 <div class="form-footer-container">
   <div class="form-footer">
     <nav class="form-footer-buttons">
-      <button id="footer-update-button" class="button form-footer-button form-footer-button-large">
+      <a href="{{ url_for('data.backup_page', campaign_name=campaign.url_title, campaign_id=campaign.id) }}" class="button form-footer-button form-footer-button-large">
         <img class="icon" src="{{ url_for('static', filename='/images/icons/egress_icon.svg') }}" aria-label="Backup Icon">
         BACKUP
-      </button>
-      <button id="footer-delete-button" class="button form-footer-button form-footer-button-large">
+      </a>
+      <a href="{{ url_for('membership.edit_campaign_users', campaign_name=campaign.url_title, campaign_id=campaign.id)}}" class="button form-footer-button form-footer-button-large">
         <img class="icon" src="{{ url_for('static', filename='/images/icons/user_management.svg') }}" aria-label="Members Icon">
           MEMBERS
-        </button>
+      </a>
       <button id="footer-help-button" class="button form-footer-button form-footer-button-small">
         <img class="icon" src="{{ url_for('static', filename='/images/icons/question.svg') }}" aria-label="Help Icon">
         HELP
