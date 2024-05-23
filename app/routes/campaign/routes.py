@@ -131,7 +131,7 @@ def edit_campaign(campaign_name, campaign_id):
                 .first_or_404(description="No matching campaign found"))
 
     # Set the last visited url, excluding this route
-    if request.referrer and "/data/edit" not in request.referrer:
+    if request.referrer and request.referrer != request.url:
         session["previous_url"] = request.referrer
 
     # Check if the user has permissions to edit the target campaign.
