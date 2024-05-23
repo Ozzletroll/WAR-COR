@@ -1,3 +1,13 @@
+import { adjustEpochLine } from '../../components/timeline/epoch_line_adjust.js';
+import { marginFix } from '../../components/timeline/margin_fix.js';
+
+
+adjustEpochLine();
+
+// Fix timeline element negative margins on safari iOS
+window.addEventListener("resize", marginFix);
+window.addEventListener("DOMContentLoaded", marginFix());
+
 // Animate horizontal line on load
 function animateHR(horizontalLine) {
   var horizontalLine = document.getElementById("title-hr");
@@ -21,7 +31,6 @@ function checkScrollPos () {
     downArrow.style.display = "flex";
     downArrowArea.setAttribute("tabIndex", 0);
 
-    // Clear timeout
     clearTimeout(timeout);
   }
   else {
