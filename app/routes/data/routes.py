@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, session
+from flask import render_template, redirect, url_for, flash, session, request
 from flask_login import login_required
 
 import json
@@ -31,6 +31,10 @@ def backup_page(campaign_name, campaign_id):
 
     # Set back button scroll target
     session["campaign_scroll_target"] = f"campaign-{campaign.id}"
+
+    # Set url for back button
+    if request.referrer and request.referrer != request.url:
+        session["previous_url"] = request.referrer
 
     form = forms.UploadJsonForm()
 
