@@ -212,7 +212,8 @@ export class SearchEngine {
 
       eventElements.forEach(element => {
 
-        if (element.classList.contains("html-field")) {
+        if (element.classList.contains("html-field") 
+          || element.id == "epoch-overview-field") {
           var newResult = new HTMLResult({
             baseElement: element,
             textElement: element.querySelector(".note-editable"),
@@ -310,8 +311,9 @@ export class SearchEngine {
           }
         }
         else {
-          // Handle event description field
-          if (result.baseElement.classList.contains("html-field")) {
+          // Handle html fields
+          if (result.baseElement.classList.contains("html-field")
+          || result.baseElement.id == "epoch-overview-field") {
             if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
               result.positive = true;
             }
