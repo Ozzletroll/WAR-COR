@@ -2163,7 +2163,6 @@ p {
 
 .form-footer-button {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 5px;
   height: 30px;
