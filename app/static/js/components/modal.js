@@ -62,6 +62,7 @@ export class PreviewModal extends Modal{
     this.editor = editor.querySelector(".note-editable");
 
     this.button.onclick = event => {
+      this.lastClicked = event.detail.originButton || this.button;
       this.openModal(event)
       this.htmlPreview()
     } 
