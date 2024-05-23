@@ -3,6 +3,7 @@
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/event_elements.html" as event_elements %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/timeline/month.html" as timeline_month %}
@@ -87,20 +88,16 @@
               </section>
 
               <section class="event-page-body" aria-label="Epoch Data">
-                {% if epoch.description is not none %}
-                  <div class="event-page-elem event-elem-large elem-body event-page-description epoch-page-description"
-                  aria-label="Archive Entry">
-      
-                    <div class="entry-left-padding"></div>
-
-                    <div class="description-body">
-                      <h4 class="event-desc-header">Archive Entry:</h4>
-                      <div class="event-desc">
-                        {{ epoch.description | safe }}
-                      </div>
-                    </div>
-                  </div>
-                {% endif %}
+                
+                {% for entry in epoch.dynamic_fields %}
+                  {% if entry.field_type == "basic" %}
+                    {{ event_elements.render_basic_field(entry) }}
+                  {% elif entry.field_type == "html" %}
+                    {{ event_elements.render_html_field(entry) }}
+                  {% elif entry.field_type == "composite" %}
+                    {{ event_elements.render_composite_field(entry) }}
+                  {% endif %}
+                {% endfor %}
 
                 {% if epoch_events is not none %}
                   <div class="timeline-container epoch-events-container" aria-label="Epoch Timeline">
