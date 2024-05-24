@@ -2140,6 +2140,7 @@ p {
   right: 0px;
   width: 321px;
   filter: drop-shadow(-1px -1px 1px var(--elem_shadow));
+  box-sizing: border-box;
 }
 
 .form-footer {
@@ -2154,11 +2155,14 @@ p {
 
 .form-footer-buttons {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 320px;
 }
 
 .form-footer-buttons a {
   text-decoration: none;
+  padding: 0px;
 }
 
 .form-footer-button {
@@ -2167,6 +2171,7 @@ p {
   gap: 5px;
   height: 30px;
   margin: 5px 10px;
+  padding: 0px 0px 0px 5px;
   background-color: transparent;
   border: none;
   border-radius: 3px;
@@ -2176,7 +2181,7 @@ p {
 }
 
 .form-footer-button:hover {
-  background-color: var(--dark_red);
+  color: var(--text_header_hover);
 }
 
 .form-footer-button:active {
