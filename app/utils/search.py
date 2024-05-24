@@ -209,6 +209,10 @@ class SearchEngine:
                         if found:
                             result.matching_attributes.append(attr)
 
+            # Exclude results that only matched "hidden" html elements
+            if len(result.matching_attributes) == 0:
+                continue
+
             # Calculate relevance scores
             result.relevance = self.calculate_relevance(query, result.matching_strings)
 
@@ -250,13 +254,16 @@ class SearchEngine:
     @staticmethod
     def create_excerpt(item):
 
-        if isinstance(item, models.Event):
-            fields = [field for field in item.dynamic_fields if field["field_type"] == "html"]
-            fields = sorted(fields, key=lambda field: len(field["value"]), reverse=True)
-            if len(fields) > 0:
+        fields = [field for field in item.dynamic_fields if field["field_type"] == "html"]
+        fields = sorted(fields, key=lambda field: len(field["value"]), reverse=True)
+
+        if len(fields) > 0:
+            if isinstance(item, models.Epoch):
+                excerpt_html = item.overview or fields[0]["value"]
+            else:    
                 excerpt_html = fields[0]["value"]
-        elif isinstance(item, models.Epoch):
-            excerpt_html = item.description or item.overview
+        else:
+            excerpt_html = None
 
         # Convert html to plaintext with BeautifulSoup
         if excerpt_html is not None:
