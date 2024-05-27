@@ -17,8 +17,7 @@ class Template(db.Model):
     parent_campaign = db.relationship("Campaign", back_populates="templates")
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def update(self):
         self.share_code = self.generate_share_code()
 
         while True:
