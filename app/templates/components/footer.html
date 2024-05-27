@@ -1,4 +1,6 @@
-{% macro form_footer(form_type, new=false) %}
+{% import "components/template_menu.html" as template_menu %}
+
+{% macro form_footer(form_type, campaign, new=false) %}
 
 {% if new %}
   {% set update_label = "Create" %}
@@ -15,6 +17,8 @@
   </div>
 
   <div class="form-footer">
+    {{ template_menu.template_menu(campaign) }}
+
     <nav class="form-footer-buttons">
       <div class="footer-buttons-left">
         <button id="footer-update-button" class="button form-footer-button form-footer-button-large"
@@ -29,7 +33,7 @@
         {% else %}
           <div class="form-footer-button hidden"></div>
         {% endif %}
-        <button id="footer-delete-button" class="button form-footer-button form-footer-button-large"
+        <button id="footer-templates-button" class="button form-footer-button form-footer-button-large"
         aria-label="TEMPLATES" aria-describedby="tooltip-templates">
           <img class="icon" src="{{ url_for('static', filename='/images/icons/templates.svg') }}" aria-label="Delete Icon">
         </button>

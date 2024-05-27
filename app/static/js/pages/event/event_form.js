@@ -48,4 +48,6 @@ const formFooter = new FormFooter({
   formDeleteButton: document.getElementById("event-delete-button"),
   updateButton: document.getElementById("footer-update-button"),
   deleteButton: document.getElementById("footer-delete-button"),
+  templatesButton: document.getElementById("footer-templates-button"),
+  templateMenu: document.getElementById("templates-menu"),
 })

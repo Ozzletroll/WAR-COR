@@ -2146,8 +2146,10 @@ p {
 
 .form-footer {
   display: flex;
+  flex-direction: column;
+  align-items: end;
   background-color: var(--darker_red);
-  height: 40px;
+  height: fit-content;
   clip-path: polygon(15px 0%, 100% 0, 100% 100%, 0 100%, 0 15px);
 }
 
@@ -2156,6 +2158,7 @@ p {
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 40px;
 }
 
 .footer-buttons-left,
@@ -2220,8 +2223,12 @@ p {
 
 .tooltips-container {
   display: flex;
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
   justify-content: center;
   margin-bottom: 5px;
+  z-index: 5;
 }
 
 .footer-tooltip {
@@ -2242,6 +2249,53 @@ p {
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
   box-shadow: -1px -1px 1px var(--elem_shadow);
+}
+
+/* Templates menu */
+
+.templates-menu {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 0px;
+  border: 1px solid var(--elem_border);
+  overflow-y: scroll;
+  transition: 0.15s;
+}
+
+.template-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+  color: var(--text_header_contrast);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.share-code-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--elem_mid);
+}
+
+.templates-area {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 10px;
+  margin: 0px;
+  background-color: var(--elem_mid);
+}
+
+.template-li {
+  display: flex;
+  padding: 0px;
 }
 
 /* Dynamic Form Components */

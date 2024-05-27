@@ -1,10 +1,24 @@
-{% macro template_menu(model) %}
+{% macro template_menu(campaign) %}
 
-  <div class="template_menu">
+  <div id="templates-menu" class="templates-menu">
 
-    TEMPLATES GO HERE
+    <h3 class="template-menu-header">TEMPLATES</h3>
+    
+    <div class="share-code-area">
+      <h4 class="share-code-header">Import from code</h4>
+      <input id="share-code-input" class="share-code-input">
+      <button id="share-code-submit" class="button">IMPORT</button>
+    </div>
+    <ul class="templates-area">
+      {% for template in campaign.templates %}
+        <li class="template-li">TEMPLATE</li>
+      {% endfor %}
+
+      {% if campaign.templates | length == 0 %}
+        <li class="template-li no-templates">NO TEMPLATES</li>
+      {% endif %}
+    </ul>
 
   </div>
 
 {%- endmacro %}
-
