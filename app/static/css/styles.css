@@ -2134,11 +2134,12 @@ p {
 
 .form-footer-container {
   display: flex;
+  flex-direction: column;
   justify-content: flex-end;
   position: fixed;
   bottom: 0px;
   right: 0px;
-  width: 321px;
+  width: 301px;
   filter: drop-shadow(-1px -1px 1px var(--elem_shadow));
   box-sizing: border-box;
 }
@@ -2147,9 +2148,6 @@ p {
   display: flex;
   background-color: var(--darker_red);
   height: 40px;
-  width: 320px;
-  padding-left: 30px;
-  clip-path: polygon(0% 0%, 100% 0%, 100% calc(100% - 15px), 15px 100%, 0% 100%);
   clip-path: polygon(15px 0%, 100% 0, 100% 100%, 0 100%, 0 15px);
 }
 
@@ -2157,7 +2155,13 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 320px;
+  width: 100%;
+}
+
+.footer-buttons-left,
+.footer-buttons-right {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .form-footer-buttons a {
@@ -2167,11 +2171,13 @@ p {
 
 .form-footer-button {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 5px;
+  width: 50px;
   height: 30px;
   margin: 5px 10px;
-  padding: 0px 0px 0px 5px;
   background-color: transparent;
   border: none;
   border-radius: 3px;
@@ -2188,14 +2194,6 @@ p {
   background-color: var(--bright_red);
 }
 
-.form-footer-button-large {
-  width: 100px;
-}
-
-.form-footer-button-small {
-  width: 100px;
-}
-
 @media screen and (max-width: 600px) {
 
   .form-footer-container {
@@ -2208,10 +2206,42 @@ p {
     clip-path: none;
   }
 
+  .form-footer-buttons {
+    justify-content: center;
+  }
+
   .form-footer .hidden {
     display: none;
   }
 
+}
+
+/* Tooltips */
+
+.tooltips-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.footer-tooltip {
+  display: none;
+  justify-content: center;
+  align-self: center;
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  width: fit-content;
+  background-color: var(--elem_mid);
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  color: var(--text_header);
+  -moz-animation: 1s ease-out 0s 1 fadein;
+  animation: 1s ease-out 0s 1 fadein;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  box-shadow: -1px -1px 1px var(--elem_shadow);
 }
 
 /* Dynamic Form Components */

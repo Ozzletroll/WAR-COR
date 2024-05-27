@@ -2,6 +2,7 @@ import { checkLeftMarker } from '../../components/timeline/timeline_left_markers
 import { adjustEpochLine } from '../../components/timeline/epoch_line_adjust.js';
 import { marginFix } from '../../components/timeline/margin_fix.js';
 import { Modal } from '../../components/modal.js';
+import { TimelineFooter } from '../../components/footer.js';
 
 // Offset epoch elements
 adjustEpochLine();
@@ -22,3 +23,6 @@ if (editPageElem == "true") {
     span: document.getElementById("help-close-1"),
   })
 }
+
+// Create footer
+const formFooter = new TimelineFooter();
