@@ -1,3 +1,6 @@
+import { TemplateMenu } from "../components/template_menu.js";
+
+
 export class FormFooter {
   constructor({
     formSubmitButton,
@@ -11,16 +14,14 @@ export class FormFooter {
     this.formDeleteButton = formDeleteButton;
     this.updateButton = updateButton;
     this.deleteButton = deleteButton;
-    this.templatesButton = templatesButton;
-    this.menuState = false;
-    this.templateMenu = templateMenu;
+    this.templateMenu = new TemplateMenu({
+      element: templateMenu,
+      button: templatesButton,
+    });
     this.tooltips = this.bindTooltips();
 
     this.formSubmit = this.formSubmit.bind(this);
     this.updateButton.addEventListener("click", this.formSubmit);
-
-    this.toggleTemplatesMenu = this.toggleTemplatesMenu.bind(this);
-    this.templatesButton.addEventListener("click", this.toggleTemplatesMenu);
 
     if (this.formDeleteButton != null) {
       this.formDelete = this.formDelete.bind(this);
@@ -41,16 +42,6 @@ export class FormFooter {
       }
     );
     this.formDeleteButton.dispatchEvent(event);
-  }
-
-  toggleTemplatesMenu() {
-    if (this.menuState == false) {
-      this.templateMenu.style.height = "500px";
-    }
-    else {
-      this.templateMenu.style.height = "0px";
-    }
-    this.menuState = !this.menuState;
   }
 
   bindTooltips() {
