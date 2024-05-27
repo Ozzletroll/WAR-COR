@@ -7,6 +7,7 @@
     <div class="share-code-area">
       <h4 class="share-code-header">Import from code</h4>
       <form class="share-code-form">
+        <input id="share-code-csrf" type="hidden" value="{{ csrf_token() }}">
         <input id="share-code-input" class="share-code-input">
         <button id="share-code-submit" class="button" type="button">IMPORT</button>
       </form>
@@ -23,7 +24,9 @@
 
     </ul>
     <form class="save-template-area">
-      <button class="button save-template-button" type="button">SAVE NEW TEMPLATE</button>
+      <input id="save-template-csrf" type="hidden" value="{{ csrf_token() }}">
+      <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+      <button id="save-template-button" class="button save-template-button" type="button">SAVE NEW TEMPLATE</button>
     </form>
 
   </div>
