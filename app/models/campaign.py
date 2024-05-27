@@ -22,9 +22,7 @@ class Campaign(db.Model):
     accepting_applications = db.Column(db.Boolean(), default=False)
     comments = db.Column(db.String(), default="private")
 
-    # Database relationships
-    # A campaign has a number of participating users, and is made up of a number of events. Users may have editing
-    # permission. 
+    # Relationships
     events = db.relationship("Event", 
                              back_populates="parent_campaign", 
                              cascade="delete, delete-orphan")
@@ -37,6 +35,9 @@ class Campaign(db.Model):
     admins = db.relationship("User",
                              secondary="user_edit_permissions",
                              back_populates="permissions")
+    templates = db.relationship("Template",
+                                back_populates="parent_campaign",
+                                cascade="delete, delete-orphan")
     # Many-to-many relationship to User, bypassing the `UserCampaign` class
     members = db.relationship("User",
                               secondary="user_campaign",
