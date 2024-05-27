@@ -19,11 +19,21 @@ export class TemplateMenu{
   }
 
   toggleMenu() {
+    var focusableElements = this.element.querySelectorAll("button, input, .templates-area");
+
     if (this.state == false) {
       this.element.style.height = "500px";
+      this.element.setAttribute("tabindex", "0");
+      focusableElements.forEach(element => {
+        element.setAttribute("tabindex", "0");
+      })
     }
     else {
       this.element.style.height = "0px";
+      this.element.setAttribute("tabindex", "-1");
+      focusableElements.forEach(element => {
+        element.setAttribute("tabindex", "-1");
+      })
     }
     this.state = !this.state;
   }

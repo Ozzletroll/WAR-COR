@@ -2258,7 +2258,7 @@ p {
   flex-direction: column;
   width: 100%;
   height: 0px;
-  border: 1px solid var(--elem_border);
+  border-left: 1px solid var(--elem_border);
   box-sizing: border-box;
   transition: 0.15s;
   overflow-y: hidden;
@@ -2297,6 +2297,7 @@ p {
 
 .templates-area {
   display: flex;
+  flex-direction: column;
   height: 100%;
   flex-direction: column;
   align-items: center;
@@ -2310,6 +2311,8 @@ p {
 
 .template-li {
   display: flex;
+  width: 100%;
+  justify-content: space-between;
   padding: 0px;
 }
 

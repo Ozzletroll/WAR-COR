@@ -1,21 +1,21 @@
 {% macro template_menu(campaign) %}
 
-  <div id="templates-menu" class="templates-menu">
+  <div id="templates-menu" class="templates-menu" tabindex="-1">
 
     <h3 class="template-menu-header">TEMPLATES</h3>
     
     <div class="share-code-area">
-      <h4 class="share-code-header">Import from code</h4>
+      <h4 class="share-code-header">Import via code</h4>
       <form class="share-code-form">
-        <input id="share-code-csrf" type="hidden" value="{{ csrf_token() }}">
-        <input id="share-code-input" class="share-code-input">
-        <button id="share-code-submit" class="button" type="button">IMPORT</button>
+        <input id="share-code-csrf" type="hidden" value="{{ csrf_token() }}" tabindex="-1">
+        <input id="share-code-input" class="share-code-input" tabindex="-1">
+        <button id="share-code-submit" class="button" type="button" tabindex="-1">IMPORT</button>
       </form>
     </div>
-    <ul class="templates-area">
+    <ul class="templates-area" tabindex="-1">
 
-      {% for template in campaign.templates %}
-        <li class="template-li">TEMPLATE</li>
+      {% for template_object in campaign.templates %}
+        {{ template(template_object) }}
       {% endfor %}
 
       {% if campaign.templates | length == 0 %}
@@ -28,11 +28,11 @@
       <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
       <div class="save-template-fields">
         <div class="form-input-container">
-          <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" ">
+          <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" " tabindex="-1">
           <label for="save-template-title" class="form-label">NEW TEMPLATE NAME</label>
           <div class="form-underline auth-form-underline"></div>
         </div>
-        <button id="save-template-button" class="button save-template-button" type="button">SAVE</button>
+        <button id="save-template-button" class="button save-template-button" type="button" tabindex="-1">SAVE</button>
       </div>
     </form>
 
@@ -42,5 +42,13 @@
 
 
 {% macro template(template) %}
+  <li id="template-{{ template.id }}" class="template-li">
+    {{ template.name }}
+    <button type="button" tabindex="-1">
+      LOAD
+    </button>
+    <button type="button" tabindex="-1">COPY</button>
+    <button type="button" tabindex="-1">DELETE</button>
+  </li>
 
 {%- endmacro %}
