@@ -108,6 +108,9 @@ def create_app(config_class=Config):
     from app.routes.session import bp as session_bp
     flask_app.register_blueprint(session_bp)
 
+    from app.routes.template import bp as template_bp
+    flask_app.register_blueprint(template_bp)
+
     from app.routes.error import bp as error_bp
     flask_app.register_blueprint(error_bp)
 
