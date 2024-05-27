@@ -26,7 +26,14 @@
     <form class="save-template-area">
       <input id="save-template-csrf" type="hidden" value="{{ csrf_token() }}">
       <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-      <button id="save-template-button" class="button save-template-button" type="button">SAVE NEW TEMPLATE</button>
+      <div class="save-template-fields">
+        <div class="form-input-container">
+          <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" ">
+          <label for="save-template-title" class="form-label">NEW TEMPLATE NAME</label>
+          <div class="form-underline auth-form-underline"></div>
+        </div>
+        <button id="save-template-button" class="button save-template-button" type="button">SAVE</button>
+      </div>
     </form>
 
   </div>

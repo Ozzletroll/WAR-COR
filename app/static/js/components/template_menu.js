@@ -35,28 +35,34 @@ export class TemplateMenu{
       if (field.classList.contains("basic-field")) {
         formStructure.push({
           "field_type": "basic",
-          "field_title": field.querySelector(".campaign-form-label-title").value,
-          "field_width": field.querySelector(".field-size-toggle").checked,
+          "is_full_width": field.querySelector(".field-size-toggle").checked,
+          "title": field.querySelector(".campaign-form-label-title").value,
         })
       }
       else if (field.classList.contains("belligerents-field")) {
         formStructure.push({
           "field_type": "composite",
-          "field_title": field.querySelector(".campaign-form-label-title").value,
-          "field_width": null,
+          "is_full_width": null,
+          "title": field.querySelector(".campaign-form-label-title").value,
         })
       }
       else if (field.classList.contains("html-field")) {
         formStructure.push({
           "field_type": "html",
-          "field_title": field.querySelector(".campaign-form-label-title").value,
-          "field_width": null,
+          "is_full_width": null,
+          "title": field.querySelector(".campaign-form-label-title").value,
         })
       }
     })
 
     var csrfToken = this.element.querySelector("#save-template-csrf").value;
     var url = this.element.querySelector("#save-template-url").value;
+    var title = this.element.querySelector("#save-template-title").value;
+
+    var data = {
+      "template_name": title,
+      "format": formStructure,
+    }
     
     fetch(url, {
       method: "POST",
@@ -65,7 +71,7 @@ export class TemplateMenu{
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": csrfToken,
       },
-      body: JSON.stringify(formStructure),
+      body: JSON.stringify(data),
     })
     .then((response)=>{ 
       console.log(response)

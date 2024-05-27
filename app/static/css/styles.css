@@ -2315,9 +2315,35 @@ p {
 
 .save-template-area {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: var(--elem_mid);
   padding-bottom: 20px;
+}
+
+.save-template-header {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text_dark);
+  margin: 10px 20px;
+}
+
+.save-template-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.save-template-button {
+  background-color: var(--darker_red);
+  border: 1px solid var(--elem_border);
+  color: var(--text_header_contrast);
+  border-radius: 3px;
+  transition: 0.15s;
+}
+
+.save-template-button:hover {
+  background-color: var(--bright_red);
 }
 
 /* Dynamic Form Components */
