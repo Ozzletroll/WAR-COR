@@ -1,5 +1,6 @@
-from flask import abort
+from flask import abort, jsonify
 from flask_login import current_user
+from functools import wraps
 
 
 def permission_required(campaign):
@@ -65,3 +66,13 @@ def check_comment_form_visibility(campaign):
         return True
         
     return False
+
+
+def login_required_api(function):
+    @wraps(function)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_authenticated:
+            return function(*args, **kwargs)
+        else:
+            return jsonify(error="Login required"), 401
+    return decorated_function

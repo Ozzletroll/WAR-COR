@@ -1,5 +1,4 @@
 from flask import make_response, request, render_template
-from flask_login import login_required
 
 from app import db, models
 import app.utils.authenticators as authenticators
@@ -9,7 +8,7 @@ from app.routes.template import bp
 
 
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/get-templates", methods=["GET"])
-@login_required
+@authenticators.login_required_api
 def get_templates(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
@@ -22,7 +21,7 @@ def get_templates(campaign_name, campaign_id):
 
 
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/create-template", methods=["POST"])
-@login_required
+@authenticators.login_required_api
 def create_template(campaign_name, campaign_id):
 
     campaign = (db.session.query(models.Campaign)
