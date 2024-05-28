@@ -4,37 +4,56 @@
 
     <h3 class="template-menu-header">TEMPLATES</h3>
     
-    <div class="share-code-area">
-      <h4 class="share-code-header">Import via code</h4>
-      <form class="share-code-form">
-        <input id="share-code-csrf" type="hidden" value="{{ csrf_token() }}" tabindex="-1">
-        <input id="share-code-input" class="share-code-input" tabindex="-1">
-        <button id="share-code-submit" class="button" type="button" tabindex="-1">IMPORT</button>
-      </form>
+    <div class="templates-tab-list" role="tablist">
+      <button type="button" class="button templates-tab-button" role="tab" aria-controls="template-tab-1" aria-selected="true">
+        LOAD
+        <div class="tab-underline"></div>
+      </button>
+      <button type="button" class="button templates-tab-button" role="tab" aria-controls="">
+        SAVE
+        <div class="tab-underline"></div>
+      </button>
+      <button type="button" class="button templates-tab-button" role="tab" aria-controls="">
+        IMPORT
+        <div class="tab-underline"></div>
+      </button>
     </div>
-    <ul class="templates-area" tabindex="-1">
 
-      {% for template_object in campaign.templates %}
-        {{ template(template_object) }}
-      {% endfor %}
+    <div class="templates-tab-panels">
 
-      {% if campaign.templates | length == 0 %}
-        <li class="template-li no-templates">NO TEMPLATES</li>
-      {% endif %}
+      <ul id="template-tab-1" class="templates-tab templates-area" tabindex="-1" role="tabpanel">
+        {% for template_object in campaign.templates %}
+          {{ template(template_object) }}
+        {% endfor %}
+  
+        {% if campaign.templates | length == 0 %}
+          <li class="template-li no-templates">NO TEMPLATES</li>
+        {% endif %}
+      </ul>
 
-    </ul>
-    <form class="save-template-area">
-      <input id="save-template-csrf" type="hidden" value="{{ csrf_token() }}">
-      <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-      <div class="save-template-fields">
-        <div class="form-input-container">
-          <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" " tabindex="-1">
-          <label for="save-template-title" class="form-label">NEW TEMPLATE NAME</label>
-          <div class="form-underline auth-form-underline"></div>
+      <form id="template-tab-2" class="templates-tab save-template-area" aria-role="tabpanel" style="display: none">
+        <input id="save-template-csrf" type="hidden" value="{{ csrf_token() }}">
+        <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+        <div class="save-template-fields">
+          <div class="form-input-container">
+            <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" " tabindex="-1">
+            <label for="save-template-title" class="form-label">NEW TEMPLATE NAME</label>
+            <div class="form-underline auth-form-underline"></div>
+          </div>
+          <button id="save-template-button" class="button save-template-button" type="button" tabindex="-1">SAVE</button>
         </div>
-        <button id="save-template-button" class="button save-template-button" type="button" tabindex="-1">SAVE</button>
+      </form>
+
+      <div id="template-tab-3" class="templates-tab share-code-area" aria-role="tabpanel" style="display: none">
+        <h4 class="share-code-header">Import via code</h4>
+        <form class="share-code-form">
+          <input id="share-code-csrf" type="hidden" value="{{ csrf_token() }}" tabindex="-1">
+          <input id="share-code-input" class="share-code-input" tabindex="-1">
+          <button id="share-code-submit" class="button" type="button" tabindex="-1">IMPORT</button>
+        </form>
       </div>
-    </form>
+
+    </div>
 
   </div>
 

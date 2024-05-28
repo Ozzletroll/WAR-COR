@@ -7,6 +7,8 @@ export class TemplateMenu{
     this.toggleButton = button;
     this.state = false;
 
+    this.tabs = this.bindTabs();
+
     this.importButton = this.element.querySelector("#import-template-button");
     this.saveButton = this.element.querySelector("#save-template-button");
 
@@ -18,8 +20,31 @@ export class TemplateMenu{
 
   }
 
+  bindTabs() {
+    var tabButtons = this.element.querySelectorAll(".templates-tab-button");
+    var tabPanels = this.element.querySelectorAll(".templates-tab");
+
+    for (let index = 0; index < tabButtons.length; index++) {
+      tabButtons[index].addEventListener("click", function() {
+
+        tabButtons.forEach(tabButton => {
+          tabButton.setAttribute("aria-selected", false);
+        })
+
+        // Deselect all tabs and hide all panels
+        tabPanels.forEach(tabPanel => {
+          tabPanel.style.display = "none";
+        })
+
+        // Select current tab and display panel
+        tabPanels[index].style.display = "flex";
+        tabButtons[index].setAttribute("aria-selected", true)
+      })
+    }
+  }
+
   toggleMenu() {
-    var focusableElements = this.element.querySelectorAll("button, input, .templates-area");
+    var focusableElements = this.element.querySelectorAll("button, input");
 
     if (this.state == false) {
       this.element.style.height = "500px";
