@@ -2258,7 +2258,6 @@ p {
   flex-direction: column;
   width: 100%;
   height: 0px;
-  border-left: 1px solid var(--elem_border);
   box-sizing: border-box;
   transition: 0.15s;
   overflow-y: hidden;
@@ -2283,7 +2282,7 @@ p {
 .templates-tab-button {
   display: flex;
   flex-direction: column;
-  flex: 1 0 auto;
+  flex: 1 0 0;
   justify-content: center;
   align-items: center;
   padding: 5px;
@@ -2335,11 +2334,15 @@ p {
 .templates-tab-panels {
   display: flex;
   flex: 1 0 auto;
+  background-color: var(--elem_mid);
+  border-left: 1px solid var(--elem_border);
+  border-right: 1px solid var(--elem_border);
 }
 
 .templates-tab {
   display: flex;
   width: 100%;
+  padding: 10px;
 }
 
 .share-code-header {
@@ -2398,8 +2401,20 @@ p {
   margin: 10px 20px;
 }
 
+.save-templates-text {
+  display: flex;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  height: 50px;
+  margin-top: -50px;
+}
+
 .save-template-fields {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
@@ -2409,6 +2424,8 @@ p {
   color: var(--text_header_contrast);
   border-radius: 3px;
   transition: 0.15s;
+  width: 100px;
+  padding: 5px;
 }
 
 .save-template-button:hover {

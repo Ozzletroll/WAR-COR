@@ -21,7 +21,7 @@
 
     <div class="templates-tab-panels">
 
-      <ul id="template-tab-1" class="templates-tab templates-area" tabindex="-1" role="tabpanel">
+      <ul id="template-tab-1" class="templates-tab templates-area dynamic-fade" tabindex="-1" role="tabpanel">
         {% for template_object in campaign.templates %}
           {{ template(template_object) }}
         {% endfor %}
@@ -31,10 +31,12 @@
         {% endif %}
       </ul>
 
-      <form id="template-tab-2" class="templates-tab save-template-area" aria-role="tabpanel" style="display: none">
+      <form id="template-tab-2" class="templates-tab save-template-area dynamic-fade" aria-role="tabpanel" style="display: none">
         <input id="save-template-csrf" type="hidden" value="{{ csrf_token() }}">
         <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
         <div class="save-template-fields">
+          <h4 class="save-templates-text">Save current form structure as new template</h4>
+
           <div class="form-input-container">
             <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" " tabindex="-1">
             <label for="save-template-title" class="form-label">NEW TEMPLATE NAME</label>
@@ -44,8 +46,8 @@
         </div>
       </form>
 
-      <div id="template-tab-3" class="templates-tab share-code-area" aria-role="tabpanel" style="display: none">
-        <h4 class="share-code-header">Import via code</h4>
+      <div id="template-tab-3" class="templates-tab share-code-area dynamic-fade" aria-role="tabpanel" style="display: none">
+        <h4 class="share-code-header save-templates-text">Import via code</h4>
         <form class="share-code-form">
           <input id="share-code-csrf" type="hidden" value="{{ csrf_token() }}" tabindex="-1">
           <input id="share-code-input" class="share-code-input" tabindex="-1">
