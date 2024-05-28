@@ -6,9 +6,9 @@ export class TemplateMenu{
     this.element = element;
     this.toggleButton = button;
     this.state = false;
-
-    this.tabs = this.bindTabs();
-
+    this.csrfToken = this.element.querySelector("#csrf-token").value;
+    this.templatesListTab = this.element.querySelector("#template-tab-1");
+  
     this.importButton = this.element.querySelector("#import-template-button");
     this.saveButton = this.element.querySelector("#save-template-button");
 
@@ -18,6 +18,8 @@ export class TemplateMenu{
     this.saveTemplate = this.saveTemplate.bind(this);
     this.saveButton.addEventListener("click", this.saveTemplate);
 
+    this.bindTabs();
+    this.getTemplates();
   }
 
   bindTabs() {
@@ -63,6 +65,23 @@ export class TemplateMenu{
     this.state = !this.state;
   }
 
+  getTemplates() {
+    var url = this.element.querySelector("#get-templates-url").value;
+
+    fetch(url, {
+      method: "GET",
+      redirect: "follow",
+      headers: {
+        "X-CSRF-TOKEN": this.csrfToken,
+      },
+    })
+    .then((response) => response.text())
+    .then((html) => {
+      this.templatesListTab.innerHTML = html;
+    })
+    .catch((error) => console.warn(error));
+  }
+
   saveTemplate() {
     var formStructure = [];
     var dynamicFields = document.getElementsByClassName("dynamic-field");
@@ -90,7 +109,6 @@ export class TemplateMenu{
       }
     })
 
-    var csrfToken = this.element.querySelector("#save-template-csrf").value;
     var url = this.element.querySelector("#save-template-url").value;
     var title = this.element.querySelector("#save-template-title").value;
 
@@ -104,12 +122,15 @@ export class TemplateMenu{
       redirect: "follow",
       headers: {
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN": csrfToken,
+        "X-CSRF-TOKEN": this.csrfToken,
       },
       body: JSON.stringify(data),
     })
     .then((response)=>{ 
-      console.log(response)
-    })
+      if (response.status == 200) {
+        this.element.querySelector("#save-template-title").value = "";
+        this.getTemplates();
+      }
+    }).catch((error) => console.warn(error));
   };
 }

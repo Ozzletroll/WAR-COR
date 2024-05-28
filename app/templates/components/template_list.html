@@ -1,0 +1,16 @@
+{# This template is dynamically inserted into the templates menu via fetch request #}
+
+  {% for template in campaign.templates %}
+    <li id="template-{{ template.id }}" class="template-li">
+      {{ template.name }}
+      <button type="button" tabindex="-1">
+        LOAD
+      </button>
+      <button type="button" tabindex="-1">COPY</button>
+      <button type="button" tabindex="-1">DELETE</button>
+    </li>
+  {% endfor %}
+
+  {% if campaign.templates | length == 0 %}
+    <li class="template-li no-templates">NO TEMPLATES</li>
+  {% endif %}
