@@ -2287,40 +2287,24 @@ p {
   align-items: center;
   padding: 5px;
   background-color: var(--elem_mid);
-  border: 1px solid var(--elem_border);
+  border: 1px solid var(--dark_red);
   color: var(--text_header_dark);
   box-sizing: border-box;
+  transition: background-colour 0.15s;
 }
 
-.tab-underline {
-  height: 2px;
-  width: 100%;
-  position: relative;
-}
-
-.tab-underline::before {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background-color: none;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: 0.3s ease;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
+.tab-button-middle {
+  border-left: none;
+  border-right: none;
 }
 
 [role="tab"][aria-selected="true"] {
-  background-color: var(--elem_dark);
+  border-bottom: none;
+  padding-bottom: 6px;
 }
 
-[role="tab"][aria-selected="true"] .tab-underline::before {
-  transform: scaleX(1);
-  background-color: var(--bright_red);
+[role="tab"][aria-selected="false"] {
+  background-color: var(--elem_dark);
 }
 
 .templates-tab-button:hover {
@@ -2333,16 +2317,18 @@ p {
 
 .templates-tab-panels {
   display: flex;
-  flex: 1 0 auto;
+  height: 100%;
   background-color: var(--elem_mid);
-  border-left: 1px solid var(--elem_border);
-  border-right: 1px solid var(--elem_border);
+  border-left: 1px solid var(--dark_red);
+  border-right: 1px solid var(--dark_red);
+  overflow: hidden;
 }
 
 .templates-tab {
   display: flex;
   width: 100%;
-  padding: 10px;
+  height: 100%;
+  padding: 20px;
 }
 
 .share-code-header {
@@ -2371,11 +2357,11 @@ p {
   flex-direction: column;
   align-items: center;
   list-style: none;
-  padding: 10px;
   margin: 0px;
-  gap: 10px;
+  gap: 25px;
   background-color: var(--elem_mid);
-  overflow-y: auto;
+  box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 .template-li {
@@ -2383,6 +2369,84 @@ p {
   width: 100%;
   justify-content: space-between;
   padding: 0px;
+}
+
+.no-templates {
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  color: var(--text_flavour_bright);
+}
+
+.template-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  word-break: break-all;
+  margin: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text_dark);
+  margin-right: 10px;
+}
+
+.template-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.template-button-small {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 25px;
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  background-color: transparent;
+  position: relative;
+}
+
+.template-button-small:hover .icon-colour-var {
+  fill: var(--text_header_hover);
+}
+
+.template-button-small:active {
+  background-color: var(--elem_hover);
+}
+
+.template-button-small:active .icon-colour-var {
+  fill: var(--text_header_contrast);
+}
+
+.template-button-small:hover::after {
+  position: absolute;
+  text-wrap: nowrap;
+  font-size: 12px;
+  color: var(--text_dark);
+  bottom: 28px;
+  -moz-animation: 1s ease-out 0s 1 fadein;
+  animation: 1s ease-out 0s 1 fadein;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.template-load:hover::after {
+  content: "LOAD TEMPLATE"
+}
+
+.template-copy:hover::after {
+  content: "COPY SHARE CODE"
+}
+
+.template-delete:hover::after {
+  content: "DELETE"
+}
+
+.template-icon {
+  width: 15px;
+  height: 15px;
 }
 
 .save-template-area {
@@ -2408,6 +2472,7 @@ p {
   font-size: 14px;
   height: 50px;
   margin-top: -50px;
+  color: var(--text_dark);
 }
 
 .save-template-fields {

@@ -31,6 +31,8 @@ export class TemplateMenu{
 
         tabButtons.forEach(tabButton => {
           tabButton.setAttribute("aria-selected", false);
+          tabButton.style.borderBottom = "";
+          tabButton.style.paddingBottom = "";
         })
 
         // Deselect all tabs and hide all panels
@@ -40,6 +42,8 @@ export class TemplateMenu{
 
         // Select current tab and display panel
         tabPanels[index].style.display = "flex";
+        tabButtons[index].style.borderBottom = "none";
+        tabButtons[index].style.paddingBottom = "6px";
         tabButtons[index].setAttribute("aria-selected", true)
       })
     }
