@@ -8,6 +8,7 @@ export class TemplateMenu{
     this.state = false;
     this.csrfToken = this.element.querySelector("#csrf-token").value;
     this.templatesListTab = this.element.querySelector("#template-tab-1");
+    this.saveFlash = this.element.querySelector("#save-templates-flash");
   
     this.importButton = this.element.querySelector("#import-template-button");
     this.saveButton = this.element.querySelector("#save-template-button");
@@ -87,6 +88,14 @@ export class TemplateMenu{
   }
 
   saveTemplate() {
+    var url = this.element.querySelector("#save-template-url").value;
+    var title = this.element.querySelector("#save-template-title").value;
+
+    if (!title) {
+      this.flashMessage(this.saveFlash, "TEMPLATE NAME REQUIRED");
+      return;
+    }
+
     var formStructure = [];
     var dynamicFields = document.getElementsByClassName("dynamic-field");
     Array.from(dynamicFields).forEach(field => {
@@ -113,9 +122,6 @@ export class TemplateMenu{
       }
     })
 
-    var url = this.element.querySelector("#save-template-url").value;
-    var title = this.element.querySelector("#save-template-title").value;
-
     var data = {
       "template_name": title,
       "format": formStructure,
@@ -133,8 +139,19 @@ export class TemplateMenu{
     .then((response)=>{ 
       if (response.status == 200) {
         this.element.querySelector("#save-template-title").value = "";
+        this.flashMessage(this.saveFlash, "TEMPLATE SAVED");
         this.getTemplates();
+      }
+      else if (response.status == 400) {
+        this.flashMessage(this.saveFlash, "TEMPLATE NAME REQUIRED");
       }
     }).catch((error) => console.warn(error));
   };
+
+  flashMessage(element, message) {
+    element.innerText = message;
+    setTimeout(() => {
+      element.innerText = "";
+    }, 1500);
+  }
 }

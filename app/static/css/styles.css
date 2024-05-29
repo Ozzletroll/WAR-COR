@@ -2497,6 +2497,11 @@ p {
   background-color: var(--bright_red);
 }
 
+.save-templates-flash {
+  color: var(--text_flavour_bright);
+  height: 20px;
+}
+
 /* Dynamic Form Components */
 
 .dynamic-field-area {

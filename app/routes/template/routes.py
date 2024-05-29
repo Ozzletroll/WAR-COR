@@ -31,11 +31,12 @@ def create_template(campaign_name, campaign_id):
     authenticators.permission_required(campaign, api=True)
 
     json_data = request.get_json()
+    if len(json_data["template_name"]) == 0:
+        return make_response({"Message": "Title Required"}, 400)
+
     new_template = models.Template(name=json_data["template_name"],
                                    format=json_data["format"],
                                    parent_campaign=campaign)
     new_template.update()
     
-    response = make_response({"Message": "New template created"}, 200)
-
-    return response
+    return make_response({"Message": "New template created"}, 200)
