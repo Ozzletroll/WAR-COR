@@ -15,7 +15,7 @@ def get_templates(campaign_name, campaign_id):
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
 
-    authenticators.permission_required(campaign)
+    authenticators.permission_required(campaign, api=True)
 
     return render_template("components/template_list.html", campaign=campaign)
 
@@ -28,15 +28,14 @@ def create_template(campaign_name, campaign_id):
                 .filter(models.Campaign.id == campaign_id)
                 .first_or_404(description="No matching campaign found"))
 
-    authenticators.permission_required(campaign)
+    authenticators.permission_required(campaign, api=True)
 
     json_data = request.get_json()
-
     new_template = models.Template(name=json_data["template_name"],
                                    format=json_data["format"],
                                    parent_campaign=campaign)
     new_template.update()
-
+    
     response = make_response({"Message": "New template created"}, 200)
 
     return response

@@ -3,12 +3,15 @@ from flask_login import current_user
 from functools import wraps
 
 
-def permission_required(campaign):
+def permission_required(campaign, api=False):
     """Function for checking if user has campaign editing permissions"""
     if campaign in current_user.permissions:
         return True
     else:
-        abort(403) 
+        if api:
+            return jsonify(error="Access Denied"), 403
+        else:
+            abort(403) 
 
 
 def user_verification(user):
