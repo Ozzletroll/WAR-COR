@@ -8,6 +8,7 @@
       
       <div class="template-buttons">
         <button id="template-load-{{template.id}}" type="button" class="button template-button-small template-load" tabindex="-1" aria-label="Load Template">
+          <label class="template-button-tooltip">LOAD TEMPLATE</label>
           <svg class="icon template-icon icon-colour-var" aria-label="Load Template Icon"
           viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -17,7 +18,9 @@
             </g>
         </svg>
         </button>
-        <button id="template-copy-{{template.id}}" type="button" class="button template-button-small template-copy" tabindex="-1" aria-label="Copy Share Code">
+        <button id="template-copy-{{template.id}}" type="button" data-code="{{template.share_code}}"
+        class="button template-button-small template-copy" tabindex="-1" aria-label="Copy Share Code">
+          <label class="template-button-tooltip">COPY SHARE CODE</label>
           <svg class="icon template-icon icon-colour-var" aria-label="Copy Share Code Icon"
           viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -28,6 +31,7 @@
         </svg>
         </button>
         <button id="template-delete-{{template.id}}" type="button" class="button template-button-small template-delete" tabindex="-1" aria-label="Delete Template">
+          <label class="template-button-tooltip">DELETE</label>
           <svg class="icon template-icon icon-colour-var" aria-label="Delete Template Icon"
           viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill-rule="evenodd">

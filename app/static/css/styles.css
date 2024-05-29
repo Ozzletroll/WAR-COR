@@ -2420,7 +2420,8 @@ p {
   fill: var(--text_header_contrast);
 }
 
-.template-button-small:hover::after {
+.template-button-tooltip {
+  display: none;
   position: absolute;
   text-wrap: nowrap;
   font-size: 12px;
@@ -2432,16 +2433,9 @@ p {
   animation-fill-mode: forwards;
 }
 
-.template-load:hover::after {
-  content: "LOAD TEMPLATE"
-}
-
-.template-copy:hover::after {
-  content: "COPY SHARE CODE"
-}
-
-.template-delete:hover::after {
-  content: "DELETE"
+.template-button-small:hover .template-button-tooltip,
+.template-button-small:focus-visible .template-button-tooltip {
+  display: flex;
 }
 
 .template-icon {
@@ -2497,7 +2491,7 @@ p {
   background-color: var(--bright_red);
 }
 
-.save-templates-flash {
+.templates-flash {
   color: var(--text_flavour_bright);
   height: 20px;
 }

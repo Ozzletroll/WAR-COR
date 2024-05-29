@@ -50,6 +50,25 @@ export class TemplateMenu{
     }
   }
 
+  bindCopyButtons() {
+    var copyButtons = this.element.querySelectorAll(".template-copy");
+    copyButtons.forEach(button => {
+      button.addEventListener("click", function() {
+        var shareCode = button.dataset.code;
+
+        navigator.clipboard.writeText(shareCode).then(function() {
+          var label = button.querySelector(".template-button-tooltip");
+          label.innerText = "COPIED";
+          setTimeout(() => {
+            label.innerText = "COPY SHARE CODE";
+          }, 1500);
+        }, function(error) {
+          console.error("Could not copy text: ", error);
+        }); 
+      })
+    })
+  }
+
   toggleMenu() {
     var focusableElements = this.element.querySelectorAll("button, input");
 
@@ -83,6 +102,7 @@ export class TemplateMenu{
     .then((response) => response.text())
     .then((html) => {
       this.templatesListTab.innerHTML = html;
+      this.bindCopyButtons();
     })
     .catch((error) => console.warn(error));
   }
