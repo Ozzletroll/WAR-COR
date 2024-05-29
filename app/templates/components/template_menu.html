@@ -41,10 +41,11 @@
       <div id="template-tab-3" class="templates-tab share-code-area dynamic-fade" aria-role="tabpanel" style="display: none">
         <h4 class="share-code-header save-templates-text">Import via code</h4>
         <form class="share-code-form">
+          <input id="import-template-url" type="hidden" value="{{ url_for('template.import_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
           <input id="share-code-input" class="share-code-input" tabindex="-1">
           <button id="share-code-submit" class="button" type="button" tabindex="-1">IMPORT</button>
         </form>
-        <h4 id="iport-templates-flash" class="templates-flash"></h4>
+        <h4 id="import-templates-flash" class="templates-flash"></h4>
       </div>
 
     </div>

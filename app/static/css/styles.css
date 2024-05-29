@@ -2492,8 +2492,11 @@ p {
 }
 
 .templates-flash {
+  display: flex;
+  justify-content: center;
   color: var(--text_flavour_bright);
   height: 20px;
+  text-align: center;
 }
 
 /* Dynamic Form Components */

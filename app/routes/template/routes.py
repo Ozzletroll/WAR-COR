@@ -40,3 +40,30 @@ def create_template(campaign_name, campaign_id):
     new_template.update()
     
     return make_response({"Message": "New template created"}, 200)
+
+
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/import-template", methods=["POST"])
+@authenticators.login_required_api
+def import_template(campaign_name, campaign_id):
+
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+
+    authenticators.permission_required(campaign, api=True)
+
+    json_data = request.get_json()
+    share_code = json_data["share_code"]
+
+    template = (db.session.query(models.Template)
+                .filter(models.Template.share_code == share_code)
+                .first())
+    
+    if template is None:
+        return make_response({"Message": "Share code invalid"}, 404)
+    elif campaign == template.parent_campaign:
+        return make_response({"Message": "Template already imported"}, 400)
+    else:
+        new_template = template.duplicate(campaign)
+        new_template.update()
+        return make_response({"Message": "Template imported"}, 200)

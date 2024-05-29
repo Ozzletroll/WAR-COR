@@ -8,9 +8,11 @@ export class TemplateMenu{
     this.state = false;
     this.csrfToken = this.element.querySelector("#csrf-token").value;
     this.templatesListTab = this.element.querySelector("#template-tab-1");
+
     this.saveFlash = this.element.querySelector("#save-templates-flash");
+    this.importFlash = this.element.querySelector("#import-templates-flash");
   
-    this.importButton = this.element.querySelector("#import-template-button");
+    this.importButton = this.element.querySelector("#share-code-submit");
     this.saveButton = this.element.querySelector("#save-template-button");
 
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -18,6 +20,9 @@ export class TemplateMenu{
 
     this.saveTemplate = this.saveTemplate.bind(this);
     this.saveButton.addEventListener("click", this.saveTemplate);
+
+    this.importTemplate = this.importTemplate.bind(this);
+    this.importButton.addEventListener("click", this.importTemplate);
 
     this.bindTabs();
     this.getTemplates();
@@ -167,6 +172,44 @@ export class TemplateMenu{
       }
     }).catch((error) => console.warn(error));
   };
+
+  importTemplate() {
+    var url = this.element.querySelector("#import-template-url").value;
+    var shareCode = this.element.querySelector("#share-code-input").value;
+
+    if (!shareCode) {
+      this.flashMessage(this.importFlash, "ENTER SHARE CODE");
+      return;
+    }
+    
+    var data = {
+      "share_code": shareCode,
+    }
+
+    fetch(url, {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": this.csrfToken,
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response)=>{ 
+      if (response.status == 200) {
+        this.element.querySelector("#share-code-input").value = "";
+        this.flashMessage(this.importFlash, "TEMPLATE IMPORTED SUCCESSFULLY");
+        this.getTemplates();
+      }
+      else if (response.status == 400) {
+        this.flashMessage(this.importFlash, "TEMPLATE ALREADY IMPORTED");
+      }
+      else if (response.status == 404) {
+        this.flashMessage(this.importFlash, "INVALID SHARE CODE");
+      }
+    }).catch((error) => console.warn(error));
+
+  }
 
   flashMessage(element, message) {
     element.innerText = message;
