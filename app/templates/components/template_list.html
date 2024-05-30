@@ -2,9 +2,12 @@
 
   {% for template in campaign.templates %}
     <li id="template-{{ template.id }}" class="template-li">
-      <h4 class="template-name">
-        {{ template.name }}
-      </h4>
+      <div class="template-left">
+        <h4 class="template-name">
+          {{ template.name }}
+        </h4>
+        <h5 class="template-share-code">{{ template.share_code }}</h5>
+      </div>
       
       <div class="template-buttons">
         <button id="template-load-{{template.id}}" type="button" class="button template-button-small template-load" tabindex="-1" aria-label="Load Template">
