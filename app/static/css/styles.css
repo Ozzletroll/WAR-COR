@@ -2382,11 +2382,11 @@ p {
 .template-left {
   display: flex;
   flex-direction: column;
+  margin-right: 10px;
 }
 
 .template-name {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   word-break: break-all;
@@ -2394,7 +2394,6 @@ p {
   font-size: 14px;
   font-weight: 400;
   color: var(--text_dark);
-  margin-right: 10px;
 }
 
 .template-share-code {
