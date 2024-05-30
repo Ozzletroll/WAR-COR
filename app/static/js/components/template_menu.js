@@ -257,7 +257,7 @@ export class TemplateMenu{
     };
 
     fetch(url, {
-      method: "POST",
+      method: "DELETE",
       redirect: "follow",
       headers: {
         "Content-Type": "application/json",

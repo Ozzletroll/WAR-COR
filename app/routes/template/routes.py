@@ -69,7 +69,7 @@ def import_template(campaign_name, campaign_id):
         return make_response({"Message": "Template imported"}, 200)
 
 
-@bp.route("/campaigns/<campaign_name>-<campaign_id>/delete-template", methods=["POST"])
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/delete-template", methods=["DELETE"])
 @authenticators.login_required_api
 def delete_template(campaign_name, campaign_id):
 
