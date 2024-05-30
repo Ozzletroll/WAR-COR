@@ -48,10 +48,53 @@ export class Modal {
     }
   
   }
-  
 
-  // Preview Area Modal class
-export class PreviewModal extends Modal{
+  
+// Delete template confirmation modal
+export class TemplateModal {
+  constructor({
+    modal,
+    span,
+    text
+  }) {
+    this.modal = modal;
+    this.span = span;
+    this.templateTextArea = this.modal.querySelector("#template-delete-modal-text");
+    this.innerElement = this.modal.querySelector(".modal-content");
+    this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
+    this.span.onclick = event => {
+      this.closeModal();
+    }
+    this.modal.addEventListener("click", event => {
+      if (event.target == this.modal) {
+        this.closeModal();
+      }
+    });
+    this.templateTextArea.innerText = text;
+    this.openModal();
+  }
+
+  openModal() {
+    this.modal.style.display = "flex";
+    this.innerElement.setAttribute("aria-modal", "true")
+    Array.from(this.hiddenElements).forEach(element => {
+      element.inert = true;
+    })
+    this.span.focus();
+  }
+
+  closeModal() {
+    this.modal.style.display = "none";
+    this.innerElement.setAttribute("aria-modal", "false")
+    Array.from(this.hiddenElements).forEach(element => {
+      element.inert = false;
+    })
+  }
+}
+
+
+// Preview Area Modal class
+export class PreviewModal extends Modal {
   constructor({
     modal,
     button,

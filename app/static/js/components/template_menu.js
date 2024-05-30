@@ -1,3 +1,6 @@
+import { TemplateModal } from "../components/modal.js";
+
+
 export class TemplateMenu{
   constructor({
     element,
@@ -8,6 +11,13 @@ export class TemplateMenu{
     this.state = false;
     this.csrfToken = this.element.querySelector("#csrf-token").value;
     this.templatesListTab = this.element.querySelector("#template-tab-1");
+    this.templateDeleteModalElement = document.getElementById("template-modal-1");
+    this.modalConfirmButton = document.getElementById("template-modal-confirm");
+    this.templateModal;
+
+    // Reference to modal delete function, so that it can be unbound from modal
+    // button after use.
+    this.modalDeleteFunction;
 
     this.saveFlash = this.element.querySelector("#save-templates-flash");
     this.importFlash = this.element.querySelector("#import-templates-flash");
@@ -70,8 +80,32 @@ export class TemplateMenu{
         }, function(error) {
           console.error("Could not copy text: ", error);
         }); 
-      })
-    })
+      });
+    });
+  }
+
+  bindDeleteButtons() {
+    var deleteButtons = this.element.querySelectorAll(".template-delete");
+
+    deleteButtons.forEach(button => {
+      button.addEventListener("click", () => {
+
+        var templateName = button.dataset.name;
+        var templateID = button.dataset.templateid;
+        
+        this.templateModal = new TemplateModal({
+          modal: document.getElementById("template-modal-1"),
+          span: document.getElementById("template-close-1"),
+          text: templateName,
+        })
+
+        // Update reference to delete function, so that it can be unbound after calling
+        this.modalDeleteFunction = () => {
+          this.deleteTemplate(templateID);
+        };
+        this.modalConfirmButton.addEventListener("click", this.modalDeleteFunction);
+      });
+    });
   }
 
   toggleMenu() {
@@ -108,6 +142,7 @@ export class TemplateMenu{
     .then((html) => {
       this.templatesListTab.innerHTML = html;
       this.bindCopyButtons();
+      this.bindDeleteButtons();
     })
     .catch((error) => console.warn(error));
   }
@@ -208,7 +243,33 @@ export class TemplateMenu{
         this.flashMessage(this.importFlash, "INVALID SHARE CODE");
       }
     }).catch((error) => console.warn(error));
+  }
 
+  deleteTemplate(templateID) {
+    // Unbind modal confirm button's event listener function to
+    // avoid being called by subsequent button presses
+    this.modalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
+
+    var url = this.modalConfirmButton.dataset.url;
+    var data = {
+      "template_id": templateID,
+    };
+
+    fetch(url, {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": this.csrfToken,
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response)=>{ 
+      if (response.status == 200) {
+        this.templateModal.closeModal();
+        this.getTemplates();
+      }
+    }).catch((error) => console.warn(error));
   }
 
   flashMessage(element, message) {

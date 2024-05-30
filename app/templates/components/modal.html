@@ -106,6 +106,13 @@
               {{ form.submit(class_="button modal-confirm-button", value="DELETE") }}
             </form>
 
+          {% elif type == "template" %}
+
+            <p class="flavour-text modal-flavour">TMP-5-1 // DELETION::CONFIRM</p>
+            <p class="modal-text modal-text-upper">Confirm termination of template <strong id="template-delete-modal-text"></strong>.</p>
+            <button id="template-modal-confirm" class="button modal-confirm-button"
+            data-url="{{ form_action }}">DELETE</button>
+
           {% elif type == "help" %}
 
             {% if subtype == "date" %}

@@ -30,7 +30,8 @@
             </g>
         </svg>
         </button>
-        <button id="template-delete-{{template.id}}" type="button" class="button template-button-small template-delete" tabindex="-1" aria-label="Delete Template">
+        <button id="template-delete-{{template.id}}" type="button" class="button template-button-small template-delete" tabindex="-1" aria-label="Delete Template"
+        data-name="{{ template.name }}" data-templateid="{{ template.id }}">
           <label class="template-button-tooltip">DELETE</label>
           <svg class="icon template-icon icon-colour-var" aria-label="Delete Template Icon"
           viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

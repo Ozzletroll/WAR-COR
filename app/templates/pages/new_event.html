@@ -280,6 +280,13 @@
                aria_label="Event Form Help",
                loop_index=3) }}
 
+{# Template deletion modal #}
+{{ modal.modal(type="template",
+               title="Delete Template",
+               aria_label="Delete Template",
+               loop_index=1,
+               form_action=url_for('template.delete_template', campaign_name=campaign.url_title, campaign_id=campaign.id)) }} 
+
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 

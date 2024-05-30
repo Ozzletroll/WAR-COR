@@ -53,16 +53,3 @@
   </div>
 
 {%- endmacro %}
-
-
-{% macro template(template) %}
-  <li id="template-{{ template.id }}" class="template-li">
-    {{ template.name }}
-    <button type="button" tabindex="-1">
-      LOAD
-    </button>
-    <button type="button" tabindex="-1">COPY</button>
-    <button type="button" tabindex="-1">DELETE</button>
-  </li>
-
-{%- endmacro %}
