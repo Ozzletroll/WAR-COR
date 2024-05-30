@@ -10,6 +10,7 @@ class Template(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
+    origin_id = db.Column(db.Integer)
     name = db.Column(db.String(250), nullable=False)
     share_code = db.Column(db.String(30), nullable=False, unique=True)
     format = db.Column(db.JSON, default={})
@@ -37,7 +38,8 @@ class Template(db.Model):
 
         new_template = Template(name=self.name,
                                 format=self.format,
-                                parent_campaign=new_campaign)
+                                parent_campaign=new_campaign,
+                                origin_id=self.id)
 
         return new_template
     

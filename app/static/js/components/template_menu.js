@@ -233,19 +233,21 @@ export class TemplateMenu{
       },
       body: JSON.stringify(data),
     })
-    .then((response)=>{ 
-      if (response.status == 200) {
-        this.element.querySelector("#share-code-input").value = "";
-        this.flashMessage(this.importFlash, "TEMPLATE IMPORTED SUCCESSFULLY");
-        this.getTemplates();
+    .then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          var message = data.message;
+          this.element.querySelector("#share-code-input").value = "";
+          this.flashMessage(this.importFlash, message);
+          this.getTemplates();
+        });
+      } else {
+        console.error("Error:", response.statusText);
       }
-      else if (response.status == 400) {
-        this.flashMessage(this.importFlash, "TEMPLATE ALREADY IMPORTED");
-      }
-      else if (response.status == 404) {
-        this.flashMessage(this.importFlash, "INVALID SHARE CODE");
-      }
-    }).catch((error) => console.warn(error));
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
   }
 
   deleteTemplate(templateID) {

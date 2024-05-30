@@ -32,14 +32,14 @@ def create_template(campaign_name, campaign_id):
 
     json_data = request.get_json()
     if len(json_data["template_name"]) == 0:
-        return make_response({"Message": "Title Required"}, 400)
+        return make_response({"message": "Title Required"}, 400)
 
     new_template = models.Template(name=json_data["template_name"],
                                    format=json_data["format"],
                                    parent_campaign=campaign)
     new_template.update()
     
-    return make_response({"Message": "New template created"}, 200)
+    return make_response({"message": "New template created"}, 200)
 
 
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/import-template", methods=["POST"])
@@ -59,14 +59,17 @@ def import_template(campaign_name, campaign_id):
                 .filter(models.Template.share_code == share_code)
                 .first())
     
+    campaign_origin_ids = [template.origin_id for template in campaign.templates]
+
     if template is None:
-        return make_response({"Message": "Share code invalid"}, 404)
-    elif campaign == template.parent_campaign:
-        return make_response({"Message": "Template already imported"}, 400)
+        return make_response({"message": "Share code invalid"}, 404)
+    # Check if no template derived from same original template has already been imported
+    elif campaign == template.parent_campaign or template.id in campaign_origin_ids:
+        return make_response({"message": "Template already imported"}, 200)
     else:
         new_template = template.duplicate(campaign)
         new_template.update()
-        return make_response({"Message": "Template imported"}, 200)
+        return make_response({"message": "Template imported"}, 200)
 
 
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/delete-template", methods=["DELETE"])
@@ -91,7 +94,7 @@ def delete_template(campaign_name, campaign_id):
         authenticators.permission_required(template.parent_campaign, api=True)
         db.session.delete(template)
         db.session.commit()
-        return make_response({"Message": "Template Deleted"}, 200)
+        return make_response({"message": "Template Deleted"}, 200)
     
     else:
-        return make_response({"Message": "No matching template found"}, 404)
+        return make_response({"message": "No matching template found"}, 404)
