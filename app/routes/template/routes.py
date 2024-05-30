@@ -67,3 +67,31 @@ def import_template(campaign_name, campaign_id):
         new_template = template.duplicate(campaign)
         new_template.update()
         return make_response({"Message": "Template imported"}, 200)
+
+
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/delete-template", methods=["POST"])
+@authenticators.login_required_api
+def delete_template(campaign_name, campaign_id):
+
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+
+    authenticators.permission_required(campaign, api=True)
+
+    json_data = request.get_json()
+    template_id = json_data.get("template_id", None)
+
+    template = (db.session.query(models.Template)
+                .filter(models.Template.id == template_id)
+                .first())
+    
+    if template:
+        # Check if user can edit selected template
+        authenticators.permission_required(template.parent_campaign, api=True)
+        db.session.delete(template)
+        db.session.commit()
+        return make_response({"Message": "Template Deleted"}, 200)
+    
+    else:
+        return make_response({"Message": "No matching template found"}, 404)
