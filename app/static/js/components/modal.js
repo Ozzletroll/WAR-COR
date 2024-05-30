@@ -59,7 +59,7 @@ export class TemplateModal {
   }) {
     this.modal = modal;
     this.span = span;
-    this.templateTextArea = this.modal.querySelector("#template-delete-modal-text");
+    this.templateTextArea = this.modal.querySelector(".template-modal-text");
     this.innerElement = this.modal.querySelector(".modal-content");
     this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
     this.span.onclick = event => {

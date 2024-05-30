@@ -280,11 +280,22 @@
                aria_label="Event Form Help",
                loop_index=3) }}
 
+{# Template load modal #}
+{{ modal.modal(type="template",
+               title="Load Template",
+               subtype="load",
+               aria_label="Load Template",
+               loop_index=1,
+               button_text="LOAD",
+               form_action=url_for('template.load_template', campaign_name=campaign.url_title, campaign_id=campaign.id)) }} 
+
 {# Template deletion modal #}
 {{ modal.modal(type="template",
                title="Delete Template",
+               subtype="delete",
                aria_label="Delete Template",
-               loop_index=1,
+               loop_index=2,
+               button_text="DELETE",
                form_action=url_for('template.delete_template', campaign_name=campaign.url_title, campaign_id=campaign.id)) }} 
 
 {# Variable to determine page type in searchbar script #}

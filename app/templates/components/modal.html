@@ -109,9 +109,14 @@
           {% elif type == "template" %}
 
             <p class="flavour-text modal-flavour">TMP-5-1 // DELETION::CONFIRM</p>
-            <p class="modal-text modal-text-upper">Confirm termination of template <strong id="template-delete-modal-text"></strong>.</p>
-            <button id="template-modal-confirm" class="button modal-confirm-button"
-            data-url="{{ form_action }}">DELETE</button>
+            {% if subtype == "load" %}
+              <p class="modal-text modal-text-upper">Confirm loading of template <strong class="template-modal-text"></strong>. This will
+              overwrite any existing form data.</p>
+            {% elif subtype == "delete" %}
+              <p class="modal-text modal-text-upper">Confirm termination of template <strong class="template-modal-text"></strong>.</p>
+            {% endif %}
+            <button id="template-modal-confirm-{{loop_index}}" class="button modal-confirm-button"
+            data-url="{{ form_action }}">{{ button_text }}</button>
 
           {% elif type == "help" %}
 

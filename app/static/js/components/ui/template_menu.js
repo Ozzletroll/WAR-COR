@@ -11,12 +11,18 @@ export class TemplateMenu{
     this.state = false;
     this.csrfToken = this.element.querySelector("#csrf-token").value;
     this.templatesListTab = this.element.querySelector("#template-tab-1");
-    this.templateDeleteModalElement = document.getElementById("template-modal-1");
-    this.modalConfirmButton = document.getElementById("template-modal-confirm");
-    this.templateModal;
 
-    // Reference to modal delete function, so that it can be unbound from modal
+    this.templateLoadModalElement = document.getElementById("template-modal-1");
+    this.loadModalConfirmButton = this.templateLoadModalElement.querySelector("#template-modal-confirm-1");
+    this.loadTemplateModal;
+
+    this.templateDeleteModalElement = document.getElementById("template-modal-2");
+    this.deleteModalConfirmButton = this.templateDeleteModalElement.querySelector("#template-modal-confirm-2");
+    this.deleteTemplateModal;
+
+    // Reference to modal functions, so that they can be unbound from modal
     // button after use.
+    this.modalLoadFunction;
     this.modalDeleteFunction;
 
     this.saveFlash = this.element.querySelector("#save-templates-flash");
@@ -84,6 +90,34 @@ export class TemplateMenu{
     });
   }
 
+  bindLoadButtons() {
+    var loadButtons = this.element.querySelectorAll(".template-load");
+    loadButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        var templateName = button.dataset.name;
+        var templateID = button.dataset.templateid;
+        
+        this.loadTemplateModal = new TemplateModal({
+          modal: document.getElementById("template-modal-1"),
+          span: document.getElementById("template-close-1"),
+          text: templateName,
+        })
+
+        // Unbind any existing listener on modal confirm button
+        this.loadModalConfirmButton.removeEventListener("click", this.modalLoadFunction)
+
+        // Update reference to delete function, so that it can be unbound after calling
+        this.modalLoadFunction = () => {
+          this.loadTemplate(templateID);
+        };
+        this.loadModalConfirmButton.addEventListener("click", this.modalLoadFunction);
+      });
+
+    });
+  }
+
   bindDeleteButtons() {
     var deleteButtons = this.element.querySelectorAll(".template-delete");
 
@@ -93,20 +127,20 @@ export class TemplateMenu{
         var templateName = button.dataset.name;
         var templateID = button.dataset.templateid;
         
-        this.templateModal = new TemplateModal({
-          modal: document.getElementById("template-modal-1"),
-          span: document.getElementById("template-close-1"),
+        this.deleteTemplateModal = new TemplateModal({
+          modal: document.getElementById("template-modal-2"),
+          span: document.getElementById("template-close-2"),
           text: templateName,
         })
 
         // Unbind any existing listener on modal confirm button
-        this.modalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
+        this.deleteModalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
 
         // Update reference to delete function, so that it can be unbound after calling
         this.modalDeleteFunction = () => {
           this.deleteTemplate(templateID);
         };
-        this.modalConfirmButton.addEventListener("click", this.modalDeleteFunction);
+        this.deleteModalConfirmButton.addEventListener("click", this.modalDeleteFunction);
       });
     });
   }
@@ -144,6 +178,7 @@ export class TemplateMenu{
     .then((response) => response.text())
     .then((html) => {
       this.templatesListTab.innerHTML = html;
+      this.bindLoadButtons();
       this.bindCopyButtons();
       this.bindDeleteButtons();
     })
@@ -252,10 +287,35 @@ export class TemplateMenu{
     });
   }
 
-  deleteTemplate(templateID) {
-    this.modalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
+  loadTemplate(templateID) {
+    this.loadModalConfirmButton.removeEventListener("click", this.modalLoadFunction)
 
-    var url = this.modalConfirmButton.dataset.url;
+    var url = this.loadModalConfirmButton.dataset.url;
+    var data = {
+      "template_id": templateID,
+    };
+
+    fetch(url, {
+      method: "POST",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": this.csrfToken,
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response)=>{ 
+      if (response.status == 200) {
+        this.loadTemplateModal.closeModal();
+        // REDIRECT HERE
+      }
+    }).catch((error) => console.warn(error));
+  }
+
+  deleteTemplate(templateID) {
+    this.deleteModalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
+
+    var url = this.deleteModalConfirmButton.dataset.url;
     var data = {
       "template_id": templateID,
     };
@@ -271,7 +331,7 @@ export class TemplateMenu{
     })
     .then((response)=>{ 
       if (response.status == 200) {
-        this.templateModal.closeModal();
+        this.deleteTemplateModal.closeModal();
         this.getTemplates();
       }
     }).catch((error) => console.warn(error));
