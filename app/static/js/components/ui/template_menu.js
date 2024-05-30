@@ -1,4 +1,4 @@
-import { TemplateModal } from "../components/modal.js";
+import { TemplateModal } from "../modal.js";
 
 
 export class TemplateMenu{

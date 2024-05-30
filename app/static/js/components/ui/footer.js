@@ -1,4 +1,4 @@
-import { TemplateMenu } from "../components/template_menu.js";
+import { TemplateMenu } from "./template_menu.js";
 
 
 export class FormFooter {

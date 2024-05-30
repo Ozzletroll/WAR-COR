@@ -1,6 +1,6 @@
 import { Modal } from "../../components/modal.js";
 import { DynamicForm } from "../../components/form/dynamic_form.js";
-import { FormFooter } from "../../components/footer.js";
+import { FormFooter } from "../../components/ui/footer.js";
 
 
 // Create dynamic form 
