@@ -99,6 +99,9 @@ export class TemplateMenu{
           text: templateName,
         })
 
+        // Unbind any existing listener on modal confirm button
+        this.modalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
+
         // Update reference to delete function, so that it can be unbound after calling
         this.modalDeleteFunction = () => {
           this.deleteTemplate(templateID);
@@ -246,8 +249,6 @@ export class TemplateMenu{
   }
 
   deleteTemplate(templateID) {
-    // Unbind modal confirm button's event listener function to
-    // avoid being called by subsequent button presses
     this.modalConfirmButton.removeEventListener("click", this.modalDeleteFunction)
 
     var url = this.modalConfirmButton.dataset.url;
