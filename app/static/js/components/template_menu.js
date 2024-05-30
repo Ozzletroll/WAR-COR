@@ -242,7 +242,9 @@ export class TemplateMenu{
           this.getTemplates();
         });
       } else {
-        console.error("Error:", response.statusText);
+        response.json().then((data) => {
+          this.flashMessage(this.importFlash, data.message);
+        });
       }
     })
     .catch((error) => {

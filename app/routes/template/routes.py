@@ -2,6 +2,7 @@ from flask import make_response, request, render_template
 
 from app import db, models
 import app.utils.authenticators as authenticators
+from app.utils.sanitisers import sanitise_share_code
 
 from app.routes.template import bp
 
@@ -53,7 +54,7 @@ def import_template(campaign_name, campaign_id):
     authenticators.permission_required(campaign, api=True)
 
     json_data = request.get_json()
-    share_code = json_data["share_code"]
+    share_code = sanitise_share_code(json_data["share_code"])
 
     template = (db.session.query(models.Template)
                 .filter(models.Template.share_code == share_code)

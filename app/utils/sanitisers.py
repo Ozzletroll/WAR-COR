@@ -3,6 +3,8 @@ import json
 import jsonschema
 from jsonschema import validate
 from bs4 import BeautifulSoup
+import base64
+import binascii
 
 
 def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
@@ -70,3 +72,21 @@ def sanitise_json(value):
         return ""
 
     return value
+
+
+def sanitise_share_code(share_code):
+    """ Method to sanitise share codes for template import. """
+
+    # Remove leading/trailing spaces
+    sanitised_code = share_code.strip()
+
+    # Check length
+    if len(sanitised_code) == 12:
+        try:
+            base64.urlsafe_b64decode(sanitised_code)            
+            return sanitised_code
+        except binascii.Error:
+            return ""
+    else:
+        return ""
+    
