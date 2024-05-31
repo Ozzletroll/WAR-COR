@@ -81,7 +81,7 @@ class DynamicForm(FlaskForm):
     def load_template(self, template):
 
         # Clear field list
-        for field in self.dynamic_fields:
+        for field in self.dynamic_fields.data:
             self.dynamic_fields.pop_entry()
 
         for field in template.format:

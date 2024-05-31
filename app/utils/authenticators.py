@@ -79,3 +79,10 @@ def login_required_api(function):
         else:
             return jsonify(error="Login required"), 401
     return decorated_function
+
+
+def check_template_is_valid(template, campaign):
+    if template.parent_campaign == campaign and campaign in current_user.permissions:
+        return True
+    else:
+        abort(403)

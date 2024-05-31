@@ -94,6 +94,17 @@ def add_event(campaign_name, campaign_id):
     else:
         form = forms.CreateEventForm()
 
+    # If loading from template, update for with template's dynamic fields
+    if "template_id" in request.args and request.method == "GET":
+        template_id = request.args["template_id"]
+
+        template = (db.session.query(models.Template)
+                    .filter(models.Template.id == template_id)
+                    .first_or_404(description="No matching template found"))
+        
+        authenticators.check_template_is_valid(template, campaign)
+        form.load_template(template)
+
     if form.validate_on_submit():
 
         event = models.Event()
@@ -148,6 +159,17 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
     form = forms.CreateEventForm(obj=event)
     form.submit.label.text = "Update Event"
     delete_form = forms.SubmitForm()
+
+    # If loading from template, update for with template's dynamic fields
+    if "template_id" in request.args and request.method == "GET":
+        template_id = request.args["template_id"]
+
+        template = (db.session.query(models.Template)
+                    .filter(models.Template.id == template_id)
+                    .first_or_404(description="No matching template found"))
+        
+        authenticators.check_template_is_valid(template, campaign)
+        form.load_template(template)
 
     if form.validate_on_submit():
 

@@ -77,6 +77,17 @@ def new_epoch(campaign_name, campaign_id):
     else:
         form = forms.CreateEpochForm()
 
+    # If loading from template, update for with template's dynamic fields
+    if "template_id" in request.args and request.method == "GET":
+        template_id = request.args["template_id"]
+
+        template = (db.session.query(models.Template)
+                    .filter(models.Template.id == template_id)
+                    .first_or_404(description="No matching template found"))
+        
+        authenticators.check_template_is_valid(template, campaign)
+        form.load_template(template)
+
     if form.validate_on_submit():
 
         epoch = models.Epoch()
@@ -124,6 +135,17 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     form = forms.CreateEpochForm(obj=epoch)
     form.submit.label.text = "Update Epoch"
     delete_form = forms.SubmitForm()
+
+    # If loading from template, update for with template's dynamic fields
+    if "template_id" in request.args and request.method == "GET":
+        template_id = request.args["template_id"]
+
+        template = (db.session.query(models.Template)
+                    .filter(models.Template.id == template_id)
+                    .first_or_404(description="No matching template found"))
+        
+        authenticators.check_template_is_valid(template, campaign)
+        form.load_template(template)
 
     if form.validate_on_submit():
 
