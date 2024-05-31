@@ -1,4 +1,4 @@
-from flask import make_response, request, render_template
+from flask import make_response, request, render_template, redirect, url_for
 
 from app import db, models
 import app.utils.authenticators as authenticators
@@ -96,6 +96,35 @@ def delete_template(campaign_name, campaign_id):
         db.session.delete(template)
         db.session.commit()
         return make_response({"message": "Template Deleted"}, 200)
+    
+    else:
+        return make_response({"message": "No matching template found"}, 404)
+
+
+@bp.route("/campaigns/<campaign_name>-<campaign_id>/load-template", methods=["POST"])
+@authenticators.login_required_api
+def load_template(campaign_name, campaign_id):
+
+    campaign = (db.session.query(models.Campaign)
+                .filter(models.Campaign.id == campaign_id)
+                .first_or_404(description="No matching campaign found"))
+
+    authenticators.permission_required(campaign, api=True)
+
+    json_data = request.get_json()
+    template_id = json_data.get("template_id", None)
+
+    template = (db.session.query(models.Template)
+                .filter(models.Template.id == template_id)
+                .first())
+    
+    if template:
+        if template in campaign.templates:
+            # Build redirect url with template parameters
+            redirect_url = template.build_redirect_url(request.referrer)
+            return redirect(redirect_url)
+        else:
+            return make_response({"message": "Template Invalid"}, 400)
     
     else:
         return make_response({"message": "No matching template found"}, 404)

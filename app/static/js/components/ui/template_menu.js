@@ -297,7 +297,6 @@ export class TemplateMenu{
 
     fetch(url, {
       method: "POST",
-      redirect: "follow",
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": this.csrfToken,
@@ -305,11 +304,11 @@ export class TemplateMenu{
       body: JSON.stringify(data),
     })
     .then((response)=>{ 
-      if (response.status == 200) {
-        this.loadTemplateModal.closeModal();
-        // REDIRECT HERE
+      if(response.redirected){
+        window.location.href = response.url;
       }
-    }).catch((error) => console.warn(error));
+    })
+    .catch((error) => console.warn(error));
   }
 
   deleteTemplate(templateID) {
