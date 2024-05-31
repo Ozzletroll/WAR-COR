@@ -5036,11 +5036,6 @@ p {
   gap: 20px;
 }
 
-.data-buttons-hor {
-  flex-direction: row;
-  width: 100%;
-}
-
 .data-button {
   display: flex;
   flex-direction: column;
