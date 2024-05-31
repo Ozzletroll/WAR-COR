@@ -65,31 +65,50 @@ class CreateCampaignForm(FlaskForm):
 
 
 class DynamicField(FlaskForm):
+    """ Dynamic field form, used in DynamicForm class """
+
     title = StringField(validators=[DataRequired()])
     value = TextAreaField(validators=[Optional()])
     field_type = StringField(validators=[DataRequired()])
     is_full_width = BooleanField(default=False, validators=[Optional()])
 
 
-class CreateEventForm(FlaskForm):
+class DynamicForm(FlaskForm):
+    """ Base dynamic form class, inherited by both CreateEventForm and CreateEpochForm """
+
+    dynamic_fields = FieldList(FormField(DynamicField))
+
+    def load_template(self, template):
+
+        # Clear field list
+        for field in self.dynamic_fields:
+            self.dynamic_fields.pop_entry()
+
+        for field in template.format:
+            dynamic_field = DynamicField()
+            dynamic_field.title = field["title"]
+            dynamic_field.value = ""
+            dynamic_field.field_type = field["field_type"]
+            dynamic_field.is_full_width = field["is_full_width"]
+
+            self.dynamic_fields.append_entry(dynamic_field)
+
+
+class CreateEventForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
     date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
     hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
 
-    dynamic_fields = FieldList(FormField(DynamicField))
-
     submit = SubmitField("Create Event")
 
 
-class CreateEpochForm(FlaskForm):
+class CreateEpochForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
     end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after()])
     overview = TextAreaField("Overview")
 
-    dynamic_fields = FieldList(FormField(DynamicField))
-    
     submit = SubmitField("Create Epoch")
 
 
