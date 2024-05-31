@@ -199,23 +199,26 @@ export class TemplateMenu{
     Array.from(dynamicFields).forEach(field => {
       if (field.classList.contains("basic-field")) {
         formStructure.push({
+          "title": field.querySelector(".campaign-form-label-title").value,
+          "value": "",
           "field_type": "basic",
           "is_full_width": field.querySelector(".field-size-toggle").checked,
-          "title": field.querySelector(".campaign-form-label-title").value,
         })
       }
       else if (field.classList.contains("belligerents-field")) {
         formStructure.push({
+          "title": field.querySelector(".campaign-form-label-title").value,
+          "value": "",
           "field_type": "composite",
           "is_full_width": null,
-          "title": field.querySelector(".campaign-form-label-title").value,
         })
       }
       else if (field.classList.contains("html-field")) {
         formStructure.push({
+          "title": field.querySelector(".campaign-form-label-title").value,
+          "value": "",
           "field_type": "html",
           "is_full_width": null,
-          "title": field.querySelector(".campaign-form-label-title").value,
         })
       }
     })
