@@ -2,7 +2,7 @@ from flask import make_response, request, render_template, redirect, url_for
 
 from app import db, models
 import app.utils.authenticators as authenticators
-from app.utils.sanitisers import sanitise_share_code
+from app.utils.sanitisers import sanitise_share_code, sanitise_template_json
 
 from app.routes.template import bp
 
@@ -36,7 +36,7 @@ def create_template(campaign_name, campaign_id):
         return make_response({"message": "Title Required"}, 400)
 
     new_template = models.Template(name=json_data["template_name"],
-                                   format=json_data["format"],
+                                   format=sanitise_template_json(json_data["format"]),
                                    parent_campaign=campaign)
     new_template.update()
     

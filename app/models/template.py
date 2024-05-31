@@ -51,7 +51,7 @@ class Template(db.Model):
         # Parse the previous url and its parameters
         url_parts = list(urlparse(previous_url))
         query = dict(parse_qs(url_parts[4]))
-        query.update({'template_id': [str(self.id)]})
+        query.update({"template_id": self.id})
 
         # Build the new url
         url_parts[4] = urlencode(query, doseq=True)

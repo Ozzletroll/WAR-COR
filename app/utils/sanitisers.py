@@ -74,6 +74,30 @@ def sanitise_json(value):
     return value
 
 
+def sanitise_template_json(template_data):
+
+    schema = {
+        "type" : "array",
+        "items": {
+            "type" : "object",
+            "properties" : {
+                "title" : {"type" : "string"},
+                "value" : {"type" : ["string", "null"]},
+                "field_type" : {"type" : "string"},
+                "is_full_width" : {"type" : ["boolean", "null"]},
+            },
+            "required": ["title", "value", "field_type"],
+        },
+    }
+
+    try:
+        validate(instance=template_data, schema=schema)
+    except jsonschema.exceptions.ValidationError as error:
+        return []
+
+    return template_data
+
+
 def sanitise_share_code(share_code):
     """ Method to sanitise share codes for template import. """
 
