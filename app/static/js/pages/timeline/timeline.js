@@ -22,7 +22,8 @@ if (editPageElem == "true") {
     button: document.getElementById("footer-help-button"),
     span: document.getElementById("help-close-1"),
   })
+  const formFooter = new TimelineFooter({
+    newButton: document.getElementById("footer-new-button"),
+    menu: document.getElementById("footer-new-menu"),
+  });
 }
-
-// Create footer
-const formFooter = new TimelineFooter();

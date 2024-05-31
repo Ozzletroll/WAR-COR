@@ -61,8 +61,38 @@ export class FormFooter {
 
 
 export class TimelineFooter {
-  constructor() {
+  constructor({
+    newButton,
+    menu
+  }) {
+    this.newButton = newButton;
+    this.menu = menu;
+    this.buttons = this.menu.querySelectorAll(".footer-new-button");
     this.tooltips = this.bindTooltips();
+    this.state = false;
+
+    this.newButton.addEventListener("click", () => {
+      this.toggleNewMenu();
+      this.buttons[0].focus();
+    });
+  }
+
+  toggleNewMenu() {
+    var focusableElements = this.menu.querySelectorAll("a");
+
+    if (this.state == false) {
+      this.menu.style.height = "70px";
+      focusableElements.forEach(element => {
+        element.setAttribute("tabindex", "0");
+      })
+    }
+    else {
+      this.menu.style.height = "0px";
+      focusableElements.forEach(element => {
+        element.setAttribute("tabindex", "-1");
+      })
+    }
+    this.state = !this.state;
   }
 
   bindTooltips() {

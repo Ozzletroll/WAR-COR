@@ -55,14 +55,38 @@
 
 <div class="form-footer-container">
   <div class="tooltips-container">
+    <label role="tooltip" id="tooltip-new" class="footer-tooltip">New event/epoch</label>
     <label role="tooltip" id="tooltip-backup" class="footer-tooltip">Backup</label>
     <label role="tooltip" id="tooltip-members" class="footer-tooltip">Members</label> 
     <label role="tooltip" id="tooltip-help" class="footer-tooltip">Help</label> 
   </div>
 
-  <div class="form-footer">
+  <div class="form-footer" tabindex="-1">
+    
+    <div id="footer-new-menu" class="footer-new-menu" tabindex="-1">
+      <h4 class="new-menu-header">CREATE</h4>
+      <div class="new-menu-buttons">
+        <a class="button footer-new-button" tabindex="-1" 
+        href="{{ url_for('event.add_event', 
+        campaign_name=campaign.url_title,
+        campaign_id=campaign.id) }}">
+        NEW EVENT
+        </a>
+        <a class="button footer-new-button" tabindex="-1" 
+        href="{{ url_for('epoch.new_epoch', 
+        campaign_name=campaign.url_title,
+        campaign_id=campaign.id ) }}">
+        NEW EPOCH
+        </a>
+      </div>
+    </div>
+
     <nav class="form-footer-buttons">
       <div class="footer-buttons-left">
+        <button id="footer-new-button" class="button form-footer-button form-footer-button-small"
+        aria-label="NEW EVENT/EPOCH" aria-describedby="tooltip-new">
+        <img class="icon icon-comp" src="{{ url_for('static', filename='/images/icons/new_corner.svg') }}" aria-label="New Event/Epoch Icon">
+      </button>
         <a href="{{ url_for('data.backup_page', campaign_name=campaign.url_title, campaign_id=campaign.id) }}" class="button form-footer-button form-footer-button-large"
         aria-label="BACKUP" aria-describedby="tooltip-backup">
           <img class="icon" src="{{ url_for('static', filename='/images/icons/egress_icon.svg') }}" aria-label="Backup Icon">

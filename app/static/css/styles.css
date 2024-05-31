@@ -352,6 +352,11 @@ h1, h2, h3, h4, h5 {
   width: 80px;
 }
 
+.icon-comp {
+  height: 15px;
+  width: 15px;
+}
+
 .icon-inline {
   vertical-align: text-bottom;
 }
@@ -2195,6 +2200,53 @@ p {
 
 .form-footer-button:active {
   background-color: var(--bright_red);
+}
+
+.footer-new-menu {
+  display: flex;
+  flex-direction: column;
+  height: 0px;
+  width: 100%;
+  background-color: var(--elem_mid);
+  overflow-y: hidden;
+  transition: 0.15s;
+}
+
+.new-menu-header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0px;
+  background-color: var(--darker_red);
+  color: var(--text_header_contrast);
+}
+
+.new-menu-buttons {
+  display: flex;
+  flex: 1 0 0;
+  border: 1px solid var(--dark_red);
+}
+
+.footer-new-button {
+  display: flex;
+  flex: 1 0 0;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: var(--text_header);
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  margin: 5px;
+  text-decoration: none;
+}
+
+.footer-new-button:hover {
+  background-color: var(--elem_hover);
+}
+
+.footer-new-button:active {
+  background-color: var(--elem_dark);
 }
 
 @media screen and (max-width: 600px) {
