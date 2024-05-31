@@ -1,6 +1,8 @@
 import base64
 import os
 from sqlalchemy.exc import IntegrityError
+from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
+
 
 from app import db
 
@@ -42,4 +44,18 @@ class Template(db.Model):
                                 origin_id=self.id)
 
         return new_template
+    
+    def build_redirect_url(self, previous_url):
+        """ Method to return redirect url when loading template """
+
+        # Parse the previous url and its parameters
+        url_parts = list(urlparse(previous_url))
+        query = dict(parse_qs(url_parts[4]))
+        query.update({'template_id': [str(self.id)]})
+
+        # Build the new url
+        url_parts[4] = urlencode(query, doseq=True)
+        redirect_url = urlunparse(url_parts)
+
+        return redirect_url
     
