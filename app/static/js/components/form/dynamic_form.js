@@ -294,6 +294,11 @@ class DynamicField {
       this.sizeButton.onclick = event => {
         this.toggleSize();
       }
+      this.toggleLabel.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          this.sizeButton.click();
+        }
+      });
       this.initialiseSize();
     }
   }
