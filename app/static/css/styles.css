@@ -1809,6 +1809,13 @@ p {
   cursor: text;
 }
 
+.form-label-centre {
+  top: 1px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  white-space: nowrap;
+}
+
 .form-input:focus + .form-label,
 .form-input:not(:placeholder-shown) + .form-label {
   top: -15px;
@@ -1817,6 +1824,24 @@ p {
   background-color: var(--elem_dark);
   opacity: 1;
   padding-bottom: 0px;
+}
+
+.form-input:focus + .form-label-centre,
+.form-input:not(:placeholder-shown) + .form-label-centre {
+  top: -15px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  height: 20px;
+  font-size: 12px;
+  background-color: var(--elem_dark);
+  opacity: 1;
+  padding-bottom: 0px;
+  border-top: 1px solid var(--elem_border);
+  border-left: 1px solid var(--elem_border);
+  border-right: 1px solid var(--elem_border);
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  clip-path: polygon(0 0, 101% 0, 101% 16px, 0 16px);
 }
 
 .form-input:focus.form-input:hover + .form-label,
@@ -1835,6 +1860,14 @@ p {
   box-sizing: border-box;
   cursor: text;
   transition: transform 0.3s ease;
+}
+
+.form-input.form-input-centre {
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  box-sizing: border-box;
 }
 
 .label-hidden {
@@ -1881,6 +1914,12 @@ p {
 .auth-form-input:focus ~ .form-underline::before {
   transform: scaleX(1);
   border-bottom-left-radius: 0px;
+}
+
+.form-input-centre:focus ~ .form-underline::before {
+  transform: scaleX(1);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .form-heading {
@@ -2383,20 +2422,6 @@ p {
   padding: 20px;
 }
 
-.share-code-header {
-  font-weight: 400;
-  text-transform: uppercase;
-  margin: 5px;
-}
-
-.share-code-area {
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--elem_mid);
-  padding-bottom: 10px;
-}
-
 .share-code-form {
   display: flex;
   flex-direction: column;
@@ -2509,7 +2534,8 @@ p {
   height: 15px;
 }
 
-.save-template-area {
+.save-template-area,
+.share-code-area {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2540,6 +2566,7 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   gap: 10px;
 }
 

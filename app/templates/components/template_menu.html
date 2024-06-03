@@ -29,9 +29,9 @@
         <div class="save-template-fields">
           <h4 class="save-templates-text">Save current form structure as new template</h4>
           <div class="form-input-container">
-            <input id="save-template-title" class="form-input auth-form-input form-field" placeholder=" " tabindex="-1">
-            <label for="save-template-title" class="form-label">NEW TEMPLATE NAME</label>
-            <div class="form-underline auth-form-underline"></div>
+            <input id="save-template-title" class="form-input auth-form-input form-field form-input-centre" placeholder=" " tabindex="-1">
+            <label for="save-template-title" class="form-label form-label-centre">NEW TEMPLATE NAME</label>
+            <div class="form-underline"></div>
           </div>
           <button id="save-template-button" class="button save-template-button" type="button" tabindex="-1">SAVE</button>
           <h4 id="save-templates-flash" class="templates-flash"></h4>
@@ -39,11 +39,15 @@
       </form>
 
       <div id="template-tab-3" class="templates-tab share-code-area dynamic-fade" aria-role="tabpanel" style="display: none">
-        <h4 class="share-code-header save-templates-text">Import via code</h4>
-        <form class="share-code-form">
+        <h4 class="save-templates-text">Import  template via code</h4>
+        <form class="share-code-form save-template-fields">
           <input id="import-template-url" type="hidden" value="{{ url_for('template.import_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
-          <input id="share-code-input" class="share-code-input" tabindex="-1">
-          <button id="share-code-submit" class="button" type="button" tabindex="-1">IMPORT</button>
+          <div class="form-input-container">
+            <input id="share-code-input" class="form-input auth-form-input form-field form-input-centre share-code-input" placeholder=" " tabindex="-1">
+            <label for="share-code-input" class="form-label form-label-centre">ENTER SHARE CODE</label>
+            <div class="form-underline"></div>
+          </div>
+          <button id="share-code-submit" class="button save-template-button" type="button" tabindex="-1">IMPORT</button>
         </form>
         <h4 id="import-templates-flash" class="templates-flash"></h4>
       </div>
