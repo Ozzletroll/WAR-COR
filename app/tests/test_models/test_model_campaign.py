@@ -121,7 +121,6 @@ def test_return_timeline_data(client, auth, campaign, event, epoch):
         "title": "Epoch Title",
         "start_date": "5016/01/05",
         "end_date": "5016/02/01",
-        "description": "A test epoch",
         "overview": "A test epoch"
     }
     epoch.create(campaign_object, data=epoch_data)

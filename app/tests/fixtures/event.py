@@ -20,7 +20,8 @@ class EventActions(object):
                 data[field.name] = ""
 
         if no_redirect:
-            return self._client.post(url, data=data, follow_redirects=False)
+            asd = self._client.post(url, data=data, follow_redirects=False)
+            return asd
         else:
             return self._client.post(url, data=data, follow_redirects=True)
 
@@ -113,6 +114,7 @@ class EventFormat:
             self.number = 1
             self.title = f"Test Event {self.number}"
             self.date = starting_date
+        self.type = "Test Event"
         self.header = False
         self.hide_time = False
 
