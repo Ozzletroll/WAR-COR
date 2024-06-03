@@ -1,4 +1,5 @@
 from sqlalchemy import select
+import json
 
 from app import db, models
 
@@ -11,7 +12,6 @@ def test_setup(client, auth, campaign, event):
 
 
 def test_update(client):
-
     campaign_object = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
@@ -38,8 +38,68 @@ def test_update(client):
             assert getattr(event, field) == event_form[field]
 
 
-def test_create_blank(client):
+def test_map_dynamic_field_data(client):
+    # Case 1, correct data
+    test_data_1 = [{"title": "Title 1",
+                    "value": "Value 1",
+                    "is_full_width": False,
+                    "field_type": "basic"}]
 
+    event = models.Event()
+
+    test_1 = event.map_dynamic_field_data(test_data_1)
+    assert test_1 == test_data_1
+
+    # Case 2, disallowed html in value
+    test_data_2 = [{"title": "Title 2",
+                    "value": "<script>install_virus.exe</script>",
+                    "is_full_width": False,
+                    "field_type": "html"}]
+
+    test_2 = event.map_dynamic_field_data(test_data_2)
+    assert test_2 == [{"title": "Title 2",
+                       "value": "",
+                       "is_full_width": False,
+                       "field_type": "html"}]
+
+    # Case 3, correct composite field format
+    composite_data = json.dumps(
+        [{"entries": ["Entry 1", "Entry 2"],
+          "position": "1",
+          "title": "Group 1"}])
+
+    test_data_3 = [{"title": "Title 3",
+                    "value": composite_data,
+                    "is_full_width": False,
+                    "field_type": "composite"}]
+
+    test_3 = event.map_dynamic_field_data(test_data_3)
+    assert test_3 == [{"title": "Title 3",
+                       "value": [{"entries": ["Entry 1", "Entry 2"],
+                                  "position": "1",
+                                  "title": "Group 1"}],
+                       "is_full_width": False,
+                       "field_type": "composite"}]
+
+    # Case 4, incorrect composite field format
+    composite_data = json.dumps(
+        [{"entries": ["Entry 1", "Entry 2"],
+          "incorrect name": "1",
+          "title": "Group 1"}])
+
+    test_data_4 = [{"title": "Title 3",
+                    "value": composite_data,
+                    "is_full_width": False,
+                    "field_type": "composite"}]
+
+    test_4 = event.map_dynamic_field_data(test_data_4)
+    assert test_4 == [{"title": "Title 3",
+                       "value": [],
+                       "is_full_width": False,
+                       "field_type": "composite"}]
+
+
+def test_create_blank(client):
     event = models.Event()
     event.create_blank(datestring="5016/01/01 12:00:00")
 
@@ -49,7 +109,6 @@ def test_create_blank(client):
 
 
 def test_split_date(client):
-
     event = models.Event()
     event.split_date(datestring="5016/01/01 12:00:00")
 
@@ -62,7 +121,6 @@ def test_split_date(client):
 
 
 def test_set_url_title(client):
-
     event = models.Event()
     event.title = "Event Title"
     event.set_url_title()
