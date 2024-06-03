@@ -15,7 +15,7 @@ class Template(db.Model):
     origin_id = db.Column(db.Integer)
     name = db.Column(db.String(250), nullable=False)
     share_code = db.Column(db.String(30), nullable=False, unique=True)
-    format = db.Column(db.JSON, default={})
+    field_format = db.Column(db.JSON, default={})
 
     parent_campaign = db.relationship("Campaign", back_populates="templates")
     campaign_id = db.Column(db.Integer, db.ForeignKey("campaign.id"))
@@ -39,7 +39,7 @@ class Template(db.Model):
     def duplicate(self, new_campaign):
 
         new_template = Template(name=self.name,
-                                format=self.format,
+                                field_format=self.field_format,
                                 parent_campaign=new_campaign,
                                 origin_id=self.id)
 

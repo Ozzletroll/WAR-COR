@@ -84,7 +84,7 @@ class DynamicForm(FlaskForm):
         for field in self.dynamic_fields.data:
             self.dynamic_fields.pop_entry()
 
-        for field in template.format:
+        for field in template.field_format:
             dynamic_field = DynamicField()
             dynamic_field.title = field["title"]
             dynamic_field.value = ""
