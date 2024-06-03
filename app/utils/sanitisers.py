@@ -45,18 +45,17 @@ def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
 
 
 def sanitise_json(value):
-
     schema = {
-    "type" : "array",
-    "items": {
-            "type" : "object",
-            "properties" : {
-                "title" : {"type" : "string"},
-                "position" : {"type" : "string"},
-                "entries" : {
-                    "type" : "array",
+        "type": "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "title": {"type": "string"},
+                "position": {"type": "string"},
+                "entries": {
+                    "type": "array",
                     "items": {
-                        "type" : "string",
+                        "type": "string",
                     },
                 },
             },
@@ -64,7 +63,7 @@ def sanitise_json(value):
         },
     }
 
-    value = json.loads(value) 
+    value = json.loads(value)
 
     try:
         validate(instance=value, schema=schema)
@@ -75,16 +74,15 @@ def sanitise_json(value):
 
 
 def sanitise_template_json(template_data):
-
     schema = {
-        "type" : "array",
+        "type": "array",
         "items": {
-            "type" : "object",
-            "properties" : {
-                "title" : {"type" : "string"},
-                "value" : {"type" : ["string", "null"]},
-                "field_type" : {"type" : "string"},
-                "is_full_width" : {"type" : ["boolean", "null"]},
+            "type": "object",
+            "properties": {
+                "title": {"type": "string"},
+                "value": {"type": ["string", "null"]},
+                "field_type": {"type": "string"},
+                "is_full_width": {"type": ["boolean", "null"]},
             },
             "required": ["title", "value", "field_type"],
         },
@@ -107,10 +105,9 @@ def sanitise_share_code(share_code):
     # Check length
     if len(sanitised_code) == 12:
         try:
-            base64.urlsafe_b64decode(sanitised_code)            
+            base64.urlsafe_b64decode(sanitised_code)
             return sanitised_code
         except binascii.Error:
             return ""
     else:
         return ""
-    
