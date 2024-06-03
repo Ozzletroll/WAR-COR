@@ -81,7 +81,8 @@ class Event(db.Model):
 
         db.session.commit()
 
-    def map_dynamic_field_data(self, value):
+    @staticmethod
+    def map_dynamic_field_data(value):
 
         data = []
         for dynamic_field_data in value:
@@ -91,8 +92,8 @@ class Event(db.Model):
                     if dynamic_field_data["field_type"] == "html":
                         dynamic_value = sanitise_input(dynamic_value, wrap=True)
                     if dynamic_field_data["field_type"] == "composite":
-                        dynamic_value = sorted(sanitise_json(dynamic_value), 
-                                               key=lambda x: int(x["position"])) 
+                        dynamic_value = sorted(sanitise_json(dynamic_value),
+                                               key=lambda x: int(x["position"]))
                 if key == "field_type":
                     if dynamic_value not in ["html", "basic", "composite"]:
                         dynamic_value = "basic"
@@ -107,7 +108,6 @@ class Event(db.Model):
 
         self.title = ""
         self.type = ""
-        self.body = ""
         self.date = datestring
 
     def split_date(self, datestring):
@@ -119,23 +119,6 @@ class Event(db.Model):
         self.hour = int(datestring.split("/")[2].split()[1].split(":")[0])
         self.minute = int(datestring.split("/")[2].split()[1].split(":")[1])
         self.second = int(datestring.split("/")[2].split()[1].split(":")[2])
-
-    def separate_belligerents(self):
-        """ Method to separate the belligerents into groups for rendering. """
-
-        if self.belligerents == "":
-            return []
-
-        separated_belligerents = self.belligerents.split(",")
-        groups = []
-
-        for group in separated_belligerents:
-            allied_belligerents = []
-            for element in group.split("&"):
-                allied_belligerents.append(element.strip())
-            groups.append(allied_belligerents)
-            
-        return groups
 
     def set_url_title(self):
         """ Method to set url safe version of title, replacing spaces
