@@ -7,10 +7,6 @@ const fields = [
   "#campaign-form-title",
   "#campaign-form-suffix",
   "#campaign-form-negative-suffix",
-  // EPOCH FORM
-  "#epoch-form-start-date",
-  "#epoch-form-end-date",
-  "#epoch-form-title",
 ]
 fields.forEach(field => {
   var element = document.querySelector(field);

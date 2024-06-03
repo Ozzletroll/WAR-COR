@@ -94,6 +94,9 @@ export class DynamicForm {
     }
 
     addBasicField() {
+      // Flag changes
+      this.fieldDataChanged = true;
+
       // Create page elements and insert in DOM
       var fieldID = this.idValue;
       this.formArea.insertAdjacentHTML("beforeend", createBasicFieldHTML(fieldID));
@@ -117,6 +120,9 @@ export class DynamicForm {
     }
 
     addHTMLField() {
+      // Flag changes
+      this.fieldDataChanged = true;
+
       // Create page elements and insert in DOM
       var fieldID = this.idValue;
       this.formArea.insertAdjacentHTML("beforeend", createTextFieldHTML(fieldID));
@@ -154,6 +160,9 @@ export class DynamicForm {
     }
 
     addBelligerentsField() {
+      // Flag changes
+      this.fieldDataChanged = true;
+
       // Create page elements and insert in DOM
       var fieldID = this.idValue;
       this.formArea.insertAdjacentHTML("beforeend", createBelligerentsFieldHTML(fieldID));
@@ -219,8 +228,8 @@ export class DynamicForm {
     }
 
     bindFieldChangeEvents() {
-      var formInputs = document.getElementsByClassName("form-input");
-      var checkboxes = document.getElementsByClassName("input-checkbox");
+      var formInputs = this.form.querySelectorAll(".form-input");
+      var checkboxes = this.form.querySelectorAll(".input-checkbox");
 
       var fields = Array.from(formInputs).concat(Array.from(checkboxes));
       fields.forEach(field => {
