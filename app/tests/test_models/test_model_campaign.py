@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 from app import db, models
 
 
-def test_setup(client, auth, campaign, event, epoch):
+def test_setup(client, auth, campaign):
     # Create a new campaign and populate it with events
     auth.register()
     campaign.create(title="Model Test Campaign",
