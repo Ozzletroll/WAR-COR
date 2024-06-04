@@ -1,4 +1,3 @@
-// Store a flag indicating if inputs have changed
 var fieldDataChanged = false;
 
 // Add event listener to each input field
@@ -7,6 +6,8 @@ const fields = [
   "#campaign-form-title",
   "#campaign-form-suffix",
   "#campaign-form-negative-suffix",
+  "#campaign-form-system",
+  "#campaign-form-image",
 ]
 fields.forEach(field => {
   var element = document.querySelector(field);
