@@ -7,14 +7,12 @@ from app import db, models
 
 
 def test_setup(client, auth, campaign):
-
     auth.register()
     campaign.create(title="Template Test Campaign",
                     description="A campaign for testing purposes")
 
 
 def test_update(client):
-
     campaign_object = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Template Test Campaign")).scalar()
@@ -52,7 +50,6 @@ def test_update(client):
 
 
 def test_generate_share_code(client):
-
     campaign_object = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Template Test Campaign")).scalar()
@@ -68,3 +65,24 @@ def test_generate_share_code(client):
         base64.urlsafe_b64decode(share_code)
     except binascii.Error:
         assert False
+
+
+def test_duplicate(client):
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Template Test Campaign")).scalar()
+
+    template_data = [{"title": "Title 3",
+                      "value": "Text",
+                      "is_full_width": False,
+                      "field_type": "basic"}]
+
+    template = models.Template(name="Test Template",
+                               parent_campaign=campaign_object,
+                               field_format=template_data)
+
+    template_2 = template.duplicate(campaign_object)
+
+    assert isinstance(template_2, models.Template)
+    assert template_2.origin_id == template.id
+    assert template_2.field_format == template.field_format
