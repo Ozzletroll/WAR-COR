@@ -58,8 +58,7 @@ def test_json(file):
     try:
         data = json.load(file)
     except json.JSONDecodeError:
-        errors_dict["Filetype:"] = "Invalid file format. Data backups must be a JSON file."
-        flash("Invalid file format. Data backups must be a JSON file.")
+        flash("Invalid file format. Data backups must be a WAR/COR JSON file.")
         return False
 
     test_campaign = models.Campaign()
