@@ -1,6 +1,6 @@
 from sqlalchemy import select
-from sqlalchemy.exc import IntegrityError
-import pytest
+import base64
+import binascii
 from unittest.mock import Mock
 
 from app import db, models
@@ -49,3 +49,22 @@ def test_update(client):
     # generate the second value
     template_2.update()
     assert template_2.share_code == "Unique Share Code"
+
+
+def test_generate_share_code(client):
+
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Template Test Campaign")).scalar()
+
+    template = models.Template(name="Test Template",
+                               parent_campaign=campaign_object,
+                               share_code="Test Share Code")
+
+    share_code = template.generate_share_code()
+    assert len(share_code) == 12
+
+    try:
+        base64.urlsafe_b64decode(share_code)
+    except binascii.Error:
+        assert False
