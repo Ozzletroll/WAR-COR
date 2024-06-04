@@ -1,7 +1,9 @@
+from flask import url_for
 from sqlalchemy import select
 import base64
 import binascii
 from unittest.mock import Mock
+from urllib.parse import urlparse
 
 from app import db, models
 
@@ -86,3 +88,31 @@ def test_duplicate(client):
     assert isinstance(template_2, models.Template)
     assert template_2.origin_id == template.id
     assert template_2.field_format == template.field_format
+
+
+def test_build_redirect_url(client):
+    campaign_object = db.session.execute(
+        select(models.Campaign)
+        .filter_by(title="Template Test Campaign")).scalar()
+
+    template = models.Template(name="Test Template",
+                               parent_campaign=campaign_object)
+    template.update()
+
+    url_1 = url_for("event.add_event",
+                    campaign_name=campaign_object.url_title,
+                    campaign_id=campaign_object.id)
+
+    url_2 = url_for("event.add_event",
+                    campaign_name=campaign_object.url_title,
+                    campaign_id=campaign_object.id,
+                    additional_argument="Parameter")
+
+    redirect_url_1 = template.build_redirect_url(url_1)
+    redirect_url_2 = template.build_redirect_url(url_2)
+
+    parameters_1 = urlparse(redirect_url_1).query
+    parameters_2 = urlparse(redirect_url_2).query
+    assert f"template_id={template.id}" in parameters_1
+    assert f"template_id={template.id}" in parameters_2 \
+           and "additional_argument=Parameter" in parameters_2
