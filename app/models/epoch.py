@@ -96,22 +96,31 @@ class Epoch(db.Model):
         self.populate_self()
         self.parent_campaign.check_epochs()
 
-    def map_dynamic_field_data(self, value):
+    @staticmethod
+    def map_dynamic_field_data(value):
+
+        allowed_keys = ["title", "value", "field_type", "is_full_width"]
+        allowed_field_types = ["html", "basic", "composite"]
 
         data = []
         for dynamic_field_data in value:
             dict = {}
             for key, dynamic_value in dynamic_field_data.items():
+                
                 if key == "value":
                     if dynamic_field_data["field_type"] == "html":
                         dynamic_value = sanitise_input(dynamic_value, wrap=True)
-                    if dynamic_field_data["field_type"] == "composite":
-                        dynamic_value = sorted(sanitise_json(dynamic_value), 
-                                               key=lambda x: int(x["position"])) 
+                    elif dynamic_field_data["field_type"] == "composite":
+                        dynamic_value = sorted(sanitise_json(dynamic_value),
+                                               key=lambda x: int(x["position"]))
                 if key == "field_type":
-                    if dynamic_value not in ["html", "basic", "composite"]:
+                    if dynamic_value not in allowed_field_types:
                         dynamic_value = "basic"
-                dict[key] = dynamic_value
+                if key == "is_full_width":
+                    if not isinstance(dynamic_value, bool):
+                        dynamic_value == False
+                if key in allowed_keys:
+                    dict[key] = dynamic_value
             data.append(dict)
 
         return data
