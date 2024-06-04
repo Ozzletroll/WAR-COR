@@ -63,11 +63,12 @@ def sanitise_json(value):
         },
     }
 
-    value = json.loads(value)
+    if isinstance(value, str):
+        value = json.loads(value)
 
     try:
         validate(instance=value, schema=schema)
-    except jsonschema.exceptions.ValidationError as error:
+    except jsonschema.exceptions.ValidationError:
         return ""
 
     return value
@@ -88,9 +89,12 @@ def sanitise_template_json(template_data):
         },
     }
 
+    if isinstance(value, str):
+        value = json.loads(value)
+
     try:
         validate(instance=template_data, schema=schema)
-    except jsonschema.exceptions.ValidationError as error:
+    except jsonschema.exceptions.ValidationError:
         return []
 
     return template_data

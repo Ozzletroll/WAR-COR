@@ -1,25 +1,21 @@
 from flask import jsonify, make_response, flash
-from datetime import datetime
 import json
 
-from app import models
-from app.utils.sanitisers import sanitise_input
+from app import db, models
+
 
 
 def data_export(campaign):
     """Serialise campaign object as json file for export"""
-    
+
     events_data = []
     for event in campaign.events:
         event_dict = {"type": event.type,
                       "title": event.title,
                       "date": event.date,
-                      "location": event.location,
-                      "belligerents": event.belligerents,
-                      "body": event.body,
-                      "result": event.result,
-                      "hide_time": event.hide_time}
-        
+                      "hide_time": event.hide_time,
+                      "dynamic_fields": event.dynamic_fields, }
+
         events_data.append(event_dict)
 
     epoch_data = []
@@ -28,8 +24,8 @@ def data_export(campaign):
                       "start_date": epoch.start_date,
                       "end_date": epoch.end_date,
                       "overview": epoch.overview,
-                      "description": epoch.description}
-        
+                      "dynamic_fields": epoch.dynamic_fields}
+
         epoch_data.append(epoch_dict)
 
     campaign_data = {"title": campaign.title,
@@ -38,7 +34,7 @@ def data_export(campaign):
                      "date_suffix": campaign.date_suffix,
                      "negative_date_suffix": campaign.negative_date_suffix,
                      "system": campaign.system}
-    
+
     final_output = {"campaign_data": campaign_data,
                     "events": events_data,
                     "epochs": epoch_data}
@@ -60,7 +56,7 @@ def test_json(file):
 
     # Test if file is actually a json file
     try:
-        data = json.load(file)    
+        data = json.load(file)
     except json.JSONDecodeError:
         errors_dict["Filetype:"] = "Invalid file format. Data backups must be a JSON file."
         flash("Invalid file format. Data backups must be a JSON file.")
@@ -75,7 +71,11 @@ def test_json(file):
 
     # Test event data
     for index, item in enumerate(data["events"]):
-        event, errors = events_import(item)
+        try:
+            event, errors = events_import(item, test_campaign)
+        except ValueError:
+            errors.append("Invalid event data")
+            db.session.rollback()
         if len(errors) > 0:
             if event.title is not None:
                 errors_dict[f"Event - {event.title}"] = errors
@@ -84,10 +84,14 @@ def test_json(file):
 
     # Test backup epoch data
     for index, item in enumerate(data["epochs"]):
-        epoch, errors = epochs_import(item)
+        try:
+            epoch, errors = epochs_import(item, test_campaign)
+        except ValueError:
+            errors.append("Invalid epoch data")
+            db.session.rollback()
         if len(errors) > 0:
             if epoch.title is not None:
-                errors_dict[f"Epoch - {event.title}"] = errors
+                errors_dict[f"Epoch - {epoch.title}"] = errors
             else:
                 errors_dict[f"Epoch - {index}"] = errors
 
@@ -98,159 +102,106 @@ def test_json(file):
         for error, text in errors_dict.items():
             flash(f"{error}: {', '.join(text)}")
 
+    # Teardown
+    db.session.delete(test_campaign)
+    db.session.commit()
+
     return file_valid
 
 
-def campaign_import(json, campaign):
+def campaign_import(json_data, campaign):
     """Updates campaign object with json campaign data."""
 
     errors = []
 
-    json = json["campaign_data"]
+    json_data = json_data["campaign_data"]
+    expected_values = {
+        "title": "required",
+        "description": "required",
+        "image_url": "optional",
+        "date_suffix": "optional",
+        "negative_date_suffix": "optional",
+        "system": "optional",
+    }
+    for field_name, requirement in expected_values.items():
+        try:
+            json_data[field_name]
+        except KeyError:
+            if requirement == "required":
+                errors.append(f"Unable to locate {field_name}")
 
-    try:
-        campaign.title = json["title"]
-        campaign.set_url_title()
-    except KeyError:
-        errors.append("Unable to locate campaign title")
-    try:
-        campaign.description = sanitise_input(json["description"])
-    except KeyError:
-        errors.append("Unable to locate campaign description")
-    try:
-        campaign.image_url = json["image_url"]
-    except KeyError:
-        errors.append("Unable to locate image url")
-    try:
-        campaign.date_suffix = json["date_suffix"]
-    except KeyError:
-        errors.append("Unable to locate date suffix")
-    try:
-        campaign.negative_date_suffix = json["negative_date_suffix"]
-    except KeyError:
-        errors.append("Unable to locate negative date suffix")
-    try:
-        campaign.system = json["system"]
-    except KeyError:
-        errors.append("Unable to locate campaign system")
-
-    campaign.last_edited = datetime.now()
+    if len(errors) == 0:
+        form = {field_name: value for field_name, value in json_data.items()}
+        try:
+            campaign.update(form)
+        except AttributeError:
+            db.session.rollback()
 
     return campaign, errors
 
 
-def events_import(event):
+def events_import(event, campaign):
     """Creates a new event object from json events list item."""
 
     new_event = models.Event()
 
     errors = []
 
-    try:
-        new_event.title = event["title"]
-        new_event.set_url_title()
-    except KeyError:
-        errors.append("Unable to locate event title")
-    try:
-        new_event.date = event["date"]
-    except KeyError:
-        errors.append("Unable to locate event date")
-    try:
-        new_event.split_date(new_event.date)
-    except ValueError:
-        errors.append("Incorrect date format")
-    except AttributeError:
-        errors.append("Incorrect date format")
-    try:
-        new_event.type = event["type"]
-    except KeyError:
-        errors.append("Unable to locate event type")
-    try:
-        new_event.belligerents = event["belligerents"]
-    except KeyError:
-        errors.append("Unable to locate event belligerents")
-    try:
-        new_event.body = sanitise_input(event["body"])
-    except KeyError:
-        errors.append("Unable to locate event body")
-    try:
-        new_event.hide_time = event["hide_time"]
-    except KeyError:
-        errors.append("Unable to locate event header")
-    try:
-        new_event.location = event["location"]
-    except KeyError:
-        errors.append("Unable to locate event location")
-    try:
-        new_event.result = event["result"]
-    except KeyError:
-        errors.append("Unable to locate event result")
+    expected_values = {
+        "title": "required",
+        "type": "required",
+        "date": "required",
+        "hide_time": "optional",
+        "dynamic_fields": "optional",
+    }
+    for field_name, requirement in expected_values.items():
+        try:
+            event[field_name]
+        except KeyError:
+            if requirement == "required":
+                errors.append(f"Unable to locate {field_name}")
+        
+    if len(errors) == 0:
+        form = {field_name: value for field_name, value in event.items()}
+        try:
+            new_event.update(form, parent_campaign=campaign, new=True)
+        except AttributeError:
+            errors.append(f"Incorrect data format")
+            db.session.rollback()
+        except KeyError:
+            db.session.rollback()
 
     return new_event, errors
 
 
-def epochs_import(epoch):
-    """Creates new epoch from json epochs list item."""    
+def epochs_import(epoch, campaign):
+    """Creates new epoch from json epochs list item."""
 
     new_epoch = models.Epoch()
     errors = []
-        
-    try:
-        new_epoch.title = epoch["title"]
-        new_epoch.set_url_title()
-    except KeyError:
-        errors.append("Unable to locate epoch title")
-    try:
-        new_epoch.start_date = epoch["start_date"]
-    except KeyError:
-        errors.append("Unable to locate epoch start date")
-    try:
-        new_epoch.start_year = new_epoch.split_date(new_epoch.start_date)[0]
-    except ValueError:
-        errors.append("Incorrect date format")
-    except AttributeError:
-        errors.append("Incorrect date format")
-    try:
-        new_epoch.start_month = new_epoch.split_date(new_epoch.start_date)[1]
-    except ValueError:
-        errors.append("Incorrect date format")
-    except AttributeError:
-        errors.append("Incorrect date format")
-    try:
-        new_epoch.start_day = new_epoch.split_date(new_epoch.start_date)[2]
-    except ValueError:
-        errors.append("Incorrect date format")
-    try:
-        new_epoch.end_date = epoch["end_date"]
-    except KeyError:
-        errors.append("Unable to locate epoch end date")
-    try:
-        new_epoch.end_year = new_epoch.split_date(new_epoch.end_date)[0]
-    except ValueError:
-        errors.append("Incorrect date format")
-    except AttributeError:
-        errors.append("Incorrect date format")
-    try:
-        new_epoch.end_month = new_epoch.split_date(new_epoch.end_date)[1]
-    except ValueError:
-        errors.append("Incorrect date format")
-    try:
-        new_epoch.end_day = new_epoch.split_date(new_epoch.end_date)[2]
-    except ValueError:
-        errors.append("Incorrect date format")
-    try:
-        if epoch["description"] is not None:
-            new_epoch.description = sanitise_input(epoch["description"])
-        else:
-            new_epoch.description = None       
-    except KeyError:
-        errors.append("Unable to locate epoch description")
-    try:
-        if epoch["overview"] is not None:
-            new_epoch.overview = sanitise_input(epoch["overview"])
-        else:
-            new_epoch.overview = None
-    except KeyError:
-        errors.append("Unable to locate epoch overview")
-    
+
+    expected_values = {
+        "title": "required",
+        "start_date": "required",
+        "end_date": "required",
+        "overview": "optional",
+        "dynamic_fields": "optional",
+    }
+    for field_name, requirement in expected_values.items():
+        try:
+            epoch[field_name]
+        except KeyError:
+            if requirement == "required":
+                errors.append(f"Unable to locate {field_name}")
+
+    if len(errors) == 0:
+        form = {field_name: value for field_name, value in epoch.items()}
+        try:
+            new_epoch.update(form, parent_campaign=campaign, new=True)
+        except AttributeError:
+            errors.append(f"Incorrect data format")
+            db.session.rollback()
+        except KeyError:
+            db.session.rollback()
+
     return new_epoch, errors

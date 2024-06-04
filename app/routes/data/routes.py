@@ -63,27 +63,19 @@ def backup_page(campaign_name, campaign_id):
 
             # Convert json events into event objects
             for item in data["events"]:
-                event, errors = serialisers.events_import(item)
-                event.parent_campaign = campaign
-                db.session.add(event)
-
-            db.session.commit()
+                event, errors = serialisers.events_import(item, campaign)
 
             # Convert json epochs into epoch objects
             for item in data["epochs"]:
-                epoch, errors = serialisers.epochs_import(item)
-                db.session.add(epoch)
-                epoch.parent_campaign = campaign
-                epoch.populate_self()
+                epoch, errors = serialisers.epochs_import(item, campaign)
 
             db.session.commit()
 
             # Update campaign event and epoch relationships
             campaign.get_following_events()
             campaign.check_epochs()
-
-            # Commit to db
             db.session.commit()
+            
             flash(f"Campaign: {campaign.title} successfully restored from backup")
 
             return redirect(url_for("campaign.campaigns"))
