@@ -1,3 +1,4 @@
+from app.utils.schemas import COMPOSITE_FIELD_SCHEMA, TEMPLATE_SCHEMA
 import nh3
 import json
 import jsonschema
@@ -8,7 +9,7 @@ import binascii
 
 
 def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
-    """ Method to sanitise user submitted html input using nh3. """
+    """ Function to sanitise user submitted html input using nh3. """
 
     allowed_tags = {"p", "b", "i", "em", "h1", "h2", "h3", "a", "br", "u", "img", "li", "ul", "ol", "strong"}
     if not allow_images:
@@ -44,27 +45,17 @@ def sanitise_input(value, allow_images=True, allow_urls=True, wrap=True):
         return cleaned_input
 
 
-def sanitise_json(value):
-    schema = {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "title": {"type": "string"},
-                "position": {"type": "string"},
-                "entries": {
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                    },
-                },
-            },
-            "required": ["title", "position", "entries"],
-        },
-    }
+def sanitise_json(value, json_type):
+    """ Function to validate json field data. """
 
     if isinstance(value, str):
         value = json.loads(value)
+
+    schema = None
+    if json_type == "composite_field":
+        schema = COMPOSITE_FIELD_SCHEMA
+    elif json_type == "template":
+        schema = TEMPLATE_SCHEMA
 
     try:
         validate(instance=value, schema=schema)
@@ -74,34 +65,8 @@ def sanitise_json(value):
     return value
 
 
-def sanitise_template_json(template_data):
-    schema = {
-        "type": "array",
-        "items": {
-            "type": "object",
-            "properties": {
-                "title": {"type": "string"},
-                "value": {"type": ["string", "null"]},
-                "field_type": {"type": "string"},
-                "is_full_width": {"type": ["boolean", "null"]},
-            },
-            "required": ["title", "value", "field_type"],
-        },
-    }
-
-    if isinstance(value, str):
-        value = json.loads(value)
-
-    try:
-        validate(instance=template_data, schema=schema)
-    except jsonschema.exceptions.ValidationError:
-        return []
-
-    return template_data
-
-
 def sanitise_share_code(share_code):
-    """ Method to sanitise share codes for template import. """
+    """ Function to sanitise share codes for template import. """
 
     # Remove leading/trailing spaces
     sanitised_code = share_code.strip()

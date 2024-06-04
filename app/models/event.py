@@ -96,7 +96,7 @@ class Event(db.Model):
                     if dynamic_field_data["field_type"] == "html":
                         dynamic_value = sanitise_input(dynamic_value, wrap=True)
                     elif dynamic_field_data["field_type"] == "composite":
-                        dynamic_value = sorted(sanitise_json(dynamic_value),
+                        dynamic_value = sorted(sanitise_json(dynamic_value, "composite_field"),
                                                key=lambda x: int(x["position"]))
                 if key == "field_type":
                     if dynamic_value not in allowed_field_types:
