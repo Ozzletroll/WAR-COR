@@ -50,7 +50,8 @@ class Event(db.Model):
     def update(self, form, parent_campaign, new=False):
         """ Method to populate and update self.
             Set "new" to true if creating new entry.  """
-        
+
+        self.dynamic_fields = []
         for field, value in form.items():
 
             if value is not None or new:
@@ -58,18 +59,10 @@ class Event(db.Model):
                 if field == "date":
                     self.date = value
                     self.split_date(value)
-
                 elif field == "dynamic_fields":
-
-                    data = self.map_dynamic_field_data(value)
-                    self.dynamic_fields = data
-
+                    self.dynamic_fields = self.map_dynamic_field_data(value)
                 else:
                     setattr(self, field, value)
-
-            # If no value is set for dynamic fields, clear data
-            else:
-                self.dynamic_fields = []
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
