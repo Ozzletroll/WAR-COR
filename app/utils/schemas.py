@@ -1,7 +1,7 @@
 # JSON validation schemas
 
 # Schema for composite field groups and entries
-COMPOSITE_FIELD_SCHEMA =  {
+COMPOSITE_FIELD_SCHEMA = {
     "type": "array",
     "items": {
         "type": "object",
@@ -20,7 +20,7 @@ COMPOSITE_FIELD_SCHEMA =  {
 }
 
 # Schema for main dynamic fields
-DYNAMIC_FIELD_SCHEMA =  {
+DYNAMIC_FIELD_SCHEMA = {
     "type": "array",
     "items": {
         "type": "object",
@@ -30,7 +30,7 @@ DYNAMIC_FIELD_SCHEMA =  {
             "title": {"type": "string"},
             "value": {
                 "oneOf": [
-                    COMPOSITE_FIELD_SCHEMA, 
+                    COMPOSITE_FIELD_SCHEMA,
                     {
                         "type": "string",
                     }
@@ -63,12 +63,12 @@ BACKUP_SCHEMA = {
         "campaign_data": {
             "type": "object",
             "properties": {
-                "title": { "type": "string" },
-                "description": { "type": "string" },
-                "image_url": { "type": "string" },
-                "date_suffix": { "type": "string" },
-                "negative_date_suffix": { "type": "string" },
-                "system": { "type": "string" }
+                "title": {"type": "string"},
+                "description": {"type": "string"},
+                "image_url": {"type": ["string", "null"]},
+                "date_suffix": {"type": ["string", "null"]},
+                "negative_date_suffix": {"type": ["string", "null"]},
+                "system": {"type": ["string", "null"]}
             },
             "required": ["title", "description"]
         },
@@ -77,10 +77,10 @@ BACKUP_SCHEMA = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "type": { "type": "string" },
-                    "title": { "type": "string" },
-                    "date": { "type": "string" },
-                    "hide_time": { "type": "boolean" },
+                    "type": {"type": ["string", "null"]},
+                    "title": {"type": ["string", "null"]},
+                    "date": {"type": ["string", "null"]},
+                    "hide_time": {"type": ["boolean", "null"]},
                     "dynamic_fields": DYNAMIC_FIELD_SCHEMA,
                 },
                 "required": ["type", "title", "date"]
@@ -91,10 +91,10 @@ BACKUP_SCHEMA = {
             "items": {
                 "type": "object",
                 "properties": {
-                    "title": { "type": "string" },
-                    "start_date": { "type": "string" },
-                    "end_date": { "type": "string" },
-                    "overview": { "type": "string" },
+                    "title": {"type": ["string", "null"]},
+                    "start_date": {"type": ["string", "null"]},
+                    "end_date": {"type": ["string", "null"]},
+                    "overview": {"type": ["string", "null"]},
                     "dynamic_fields": DYNAMIC_FIELD_SCHEMA,
                 },
                 "required": ["title", "start_date", "end_date"]
