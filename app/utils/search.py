@@ -1,5 +1,5 @@
 from flask import url_for
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, cast, String
 import editdistance
 import re
 from bs4 import BeautifulSoup
@@ -85,10 +85,12 @@ class SearchEngine:
             "campaign_id"
         ]
 
-        event_columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns
+        event_columns = [func.lower(cast(column, String)).label(column.name)
+                         for column in models.Event.__table__.columns
                          if column.name not in excluded_event_columns]
 
-        epoch_columns = [func.lower(column).label(column.name) for column in models.Epoch.__table__.columns
+        epoch_columns = [func.lower(cast(column, String)).label(column.name)
+                         for column in models.Epoch.__table__.columns
                          if column.name not in excluded_epoch_columns]
 
         # Construct .like statements for each column using given search query
@@ -224,13 +226,11 @@ class SearchEngine:
 
             self.results.append(result)
 
-
     @staticmethod
     def find_phrase(query, text):
         pattern = r"(?:^|\s|,|\.)([^\s,.]*?{0}[^\s,.]*?)(?:\s|,|\.|$)".format(re.escape(query))
         matches = re.findall(pattern, text, re.IGNORECASE)
         return [match.lower() for match in matches]
-
 
     @staticmethod
     def calculate_relevance(query, matching_strings):
@@ -249,7 +249,6 @@ class SearchEngine:
         # Multiply by the number of matching fields to give more weight to results with more matches
         total_score *= len(matching_strings)
         return total_score
-
 
     @staticmethod
     def create_excerpt(item):
