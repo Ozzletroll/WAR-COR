@@ -1,4 +1,4 @@
-from app.utils.schemas import COMPOSITE_FIELD_SCHEMA, TEMPLATE_SCHEMA
+from app.utils.schemas import COMPOSITE_FIELD_SCHEMA, TEMPLATE_SCHEMA, BACKUP_SCHEMA
 import nh3
 import json
 import jsonschema
@@ -56,10 +56,12 @@ def sanitise_json(value, json_type):
         schema = COMPOSITE_FIELD_SCHEMA
     elif json_type == "template":
         schema = TEMPLATE_SCHEMA
+    elif json_type == "backup":
+        schema = BACKUP_SCHEMA
 
     try:
         validate(instance=value, schema=schema)
-    except jsonschema.exceptions.ValidationError:
+    except jsonschema.exceptions.ValidationError as error:
         return ""
 
     return value

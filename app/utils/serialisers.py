@@ -2,6 +2,7 @@ from flask import jsonify, make_response, flash
 import json
 
 from app import db, models
+from app.utils.sanitisers import sanitise_json
 
 
 
@@ -59,6 +60,12 @@ def test_json(file):
         data = json.load(file)
     except json.JSONDecodeError:
         flash("Invalid file format. Data backups must be a WAR/COR JSON file.")
+        return False
+
+    # Validate json schema
+    data = sanitise_json(data, "backup")
+    if data == "":
+        flash("Invalid JSON schema.")
         return False
 
     test_campaign = models.Campaign()
