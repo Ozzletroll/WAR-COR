@@ -1,5 +1,6 @@
 from sqlalchemy import select
 from flask import url_for
+from werkzeug.datastructures import MultiDict
 
 from app import db
 from app import models
@@ -15,17 +16,21 @@ def test_advanced_search(client, auth, campaign, event):
         select(models.Campaign)
         .filter_by(title="Backup Test Campaign")).scalar()
 
-    event_data_1 = {
+    # Use MultiDict to mimic dynamic form
+    event_data_1 = MultiDict({
         "type": "Test",
         "title": "Test Event",
         "date": "5016/01/01 09:00:00",
-        "location": "Test Location",
-        "belligerents": "Belligerent 1, Belligerent 2",
-        "body": "Test Body Text",
-        "result": "Test Result",
-        "header": False,
+        "dynamic_fields-0-title": "Title 1",
+        "dynamic_fields-0-value": "Lorem ipsum",
+        "dynamic_fields-0-is_full_width": False,
+        "dynamic_fields-0-field_type": "basic",
+        "dynamic_fields-1-title": "Title 2",
+        "dynamic_fields-1-value": "Different value",
+        "dynamic_fields-1-is_full_width": False,
+        "dynamic_fields-1-field_type": "basic",
         "hide_time": False,
-    }
+    })
 
     event.create(campaign_object, event_data_1)
 
@@ -39,9 +44,9 @@ def test_advanced_search(client, auth, campaign, event):
 
     # Test search returns event
     search_data = {
-        "search": "Test Location"
+        "search": "Lorem ips"
     }
 
     response_2 = client.post(url, data=search_data, follow_redirects=True)
     assert response_2.status_code == 200
-    assert b'Test Event' in response_2.data
+    assert b'Test Event' in response_2.data and b'Matching fields: Title 1' in response_2.data
