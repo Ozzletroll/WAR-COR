@@ -22,22 +22,14 @@ def test_backup_page(client, auth, campaign, epoch, event):
         "type": "Test",
         "title": "Test Event",
         "date": "5016/01/01 09:00:00",
-        "location": "Test Location",
-        "belligerents": "Belligerent 1, Belligerent 2",
-        "body": "Test Body Text",
-        "result": "Test Result",
-        "header": False,
+        "dynamic_fields": [],
         "hide_time": False,
     }
     event_data_2 = {
         "type": "Test",
         "title": "Test Event 2",
         "date": "5016/01/02 09:00:00",
-        "location": "Test Location",
-        "belligerents": "Belligerent 1, Belligerent 2",
-        "body": "Test Body Text",
-        "result": "Test Result",
-        "header": False,
+        "dynamic_fields": [],
         "hide_time": False,
     }
     epoch_data = {
@@ -45,7 +37,7 @@ def test_backup_page(client, auth, campaign, epoch, event):
         "end_date": "5016/01/02",
         "title": "Test Epoch",
         "overview": "Epoch overview",
-        "description": "Epoch description",
+        "dynamic_fields": [],
     }
 
     # Create basic campaign data
@@ -91,9 +83,9 @@ def test_backup_campaign(client, auth, campaign):
                               campaign_name=campaign_object_2.title,
                               campaign_id=campaign_object_2.id)
 
-    # Convert JSON to BytesIO object, and then into a file-like object
-    json_bytes = BytesIO(json.dumps(response_1.json).encode())
-    file = FileStorage(stream=json_bytes, filename='data.json')
+    # # Convert JSON to BytesIO object, and then into a file-like object
+    json_bytes = BytesIO(json.dumps(response_1.json, ensure_ascii=False).encode("utf8"))
+    file = FileStorage(stream=json_bytes, filename="data.json")
     form_data = {
         "file": file
     }
@@ -107,8 +99,8 @@ def test_backup_campaign(client, auth, campaign):
         assert event.title == campaign_object_2.events[index].title
         assert event.date == campaign_object_2.events[index].date
 
-    epoch_attributes = ["start_date", "end_date", "title", "overview", "description"]
-    event_attributes = ["title", "date", "body", "location", "belligerents", "result", "hide_time"]
+    epoch_attributes = ["start_date", "end_date", "title", "overview"]
+    event_attributes = ["title", "date", "hide_time"]
 
     for index, epoch in enumerate(campaign_object_1.epochs):
         # Check epoch attributes
