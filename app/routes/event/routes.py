@@ -94,7 +94,7 @@ def add_event(campaign_name, campaign_id):
     else:
         form = forms.CreateEventForm()
 
-    # If loading from template, update for with template's dynamic fields
+    # If loading from template, update form with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":
         template_id = request.args["template_id"]
 
