@@ -50,6 +50,7 @@ class Epoch(db.Model):
             Takes form data from request.form
             Set "new" to true if creating new entry.  """
 
+        self.dynamic_fields = []
         for field, value in form.items():
 
             if value is not None or new:
@@ -59,29 +60,21 @@ class Epoch(db.Model):
                     self.start_year = self.split_date(value)[0]
                     self.start_month = self.split_date(value)[1]
                     self.start_day = self.split_date(value)[2]
-
                 elif field == "end_date":
                     self.end_date = value
                     self.end_year = self.split_date(value)[0]
                     self.end_month = self.split_date(value)[1]
                     self.end_day = self.split_date(value)[2]
-
                 elif field == "overview":
                     value = sanitise_input(value, allow_urls=False)
                     if value in ["<p><br/></p>", ""]:
                         value = None
                     self.overview = value
-
                 elif field == "dynamic_fields":
                     data = self.map_dynamic_field_data(value)
                     self.dynamic_fields = data
-
                 else:
                     setattr(self, field, value)
-
-            # If no value is set for dynamic fields, clear data
-            else:
-                self.dynamic_fields = []
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
