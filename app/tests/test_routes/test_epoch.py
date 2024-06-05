@@ -31,7 +31,7 @@ def test_new_epoch(client, auth, epoch):
         "start_date": "5016/01/01",
         "end_date": "5016/01/03",
         "title": "Test Epoch",
-        "description": "Epoch description",
+        "overview": "Epoch Overview",
     }
 
     # Test that unauthenticated user cannot access route
@@ -84,15 +84,9 @@ def test_edit_epoch(client, auth, epoch):
 
     data = {
         "start_date": "5017/01/01",
-        "edit_start_date": True,
         "end_date": "5017/01/03",
-        "edit_end_date": True,
         "title": "Test Epoch Edited",
-        "edit_title": True,
         "overview": "Overview Text",
-        "edit_overview": True,
-        "description": "Epoch description edited",
-        "edit_description": True,
     }
 
     # Test that epoch can be edited
