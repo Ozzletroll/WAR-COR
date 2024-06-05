@@ -20,8 +20,7 @@ class EventActions(object):
                 data[field.name] = ""
 
         if no_redirect:
-            asd = self._client.post(url, data=data, follow_redirects=False)
-            return asd
+            return self._client.post(url, data=data, follow_redirects=False)
         else:
             return self._client.post(url, data=data, follow_redirects=True)
 
