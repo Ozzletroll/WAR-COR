@@ -118,7 +118,7 @@ class Epoch(db.Model):
                         dynamic_value = "basic"
                 if key == "is_full_width":
                     if not isinstance(dynamic_value, bool):
-                        dynamic_value == False
+                        dynamic_value = False
                 if key in allowed_keys:
                     dict[key] = dynamic_value
             data.append(dict)
