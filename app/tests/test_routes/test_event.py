@@ -52,11 +52,6 @@ def test_add_event(client, auth, campaign, event):
         "type": "Test",
         "title": "Test Event",
         "date": "5016/01/01 09:00:00",
-        "location": "Test Location",
-        "belligerents": "Belligerent 1, Belligerent 2",
-        "body": "Test Body Text",
-        "result": "Test Result",
-        "header": False,
         "hide_time": False,
     }
 
@@ -85,7 +80,7 @@ def test_add_event(client, auth, campaign, event):
         .filter_by(title="Test Event")).scalar()
 
     assert event_object in campaign_object.events
-    assert event_object.belligerents == "Belligerent 1, Belligerent 2"
+    assert event_object.date == "5016/01/01 09:00:00"
 
 
 def test_add_event_prepopulate(client, auth, campaign, event):
@@ -127,20 +122,8 @@ def test_edit_event(client, auth, campaign, event):
 
     event_data = {
         "type": "Test",
-        "edit_type": True,
         "title": "Test Event",
-        "edit_title": True,
-        "date": "5016/01/01 09:00:00",
-        "edit_date": True,
-        "location": "Edited Test Location",
-        "edit_location": True,
-        "belligerents": "Belligerent 1, Belligerent 2",
-        "edit_belligerents": True,
-        "body": "Edited Test Body Text",
-        "edit_body": True,
-        "result": "Edited Test Result",
-        "edit_result": True,
-        "header": False,
+        "date": "1111/01/01 11:00:00",
         "hide_time": False,
     }
 
@@ -180,7 +163,7 @@ def test_edit_event(client, auth, campaign, event):
     assert response_7.status_code == 200
     response_8 = event.edit(campaign_object, event_object, data=event_data)
     assert response_8.status_code == 200
-    assert event_object.body == "<p>Edited Test Body Text</p>"
+    assert event_object.date == "1111/01/01 11:00:00"
     auth.logout()
 
 
