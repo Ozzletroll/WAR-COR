@@ -54,7 +54,10 @@ def test_update(client):
                  new=True)
 
     for field in epoch_form:
-        assert getattr(epoch, field) == epoch_form[field]
+        if field == "overview":
+            assert getattr(epoch, field) == "<p>Updated overview</p>"
+        else:
+            assert getattr(epoch, field) == epoch_form[field]
 
 
 def test_set_url_title():
