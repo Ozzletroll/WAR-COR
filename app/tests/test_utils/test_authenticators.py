@@ -6,7 +6,6 @@ from app.utils.authenticators import *
 
 
 def test_permission_required(client, auth, campaign):
-
     auth.register(username="User_1", password="12345678")
     campaign.create(title="Test Campaign")
     test_campaign = db.session.execute(
@@ -26,7 +25,6 @@ def test_permission_required(client, auth, campaign):
 
 
 def test_user_verification(client, auth):
-
     auth.login(username="User_1", password="12345678")
     user_1 = db.session.execute(
         select(models.User)
@@ -43,7 +41,6 @@ def test_user_verification(client, auth):
 
 
 def test_check_membership(client, auth):
-
     auth.login(username="User_1", password="12345678")
     test_campaign = db.session.execute(
         select(models.Campaign)
@@ -58,7 +55,6 @@ def test_check_membership(client, auth):
 
 
 def test_check_campaign_visibility(client, auth):
-
     test_campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
@@ -80,7 +76,6 @@ def test_check_campaign_visibility(client, auth):
 
 
 def test_check_campaign_comment_status(client, auth):
-
     test_campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
@@ -135,7 +130,6 @@ def test_check_campaign_comment_status(client, auth):
 
 
 def test_check_comment_form_visibility(client, auth):
-
     test_campaign = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
@@ -168,7 +162,6 @@ def test_check_comment_form_visibility(client, auth):
 
 
 def test_login_required_api(client):
-
     # Mock function to be decorated
     mock_function = Mock()
 
@@ -190,3 +183,28 @@ def test_login_required_api(client):
         result = decorated_function()
         assert result[0].get_json() == jsonify(error="Login required").get_json() and result[1] == 401
         mock_function.assert_not_called()
+
+
+def test_check_template_is_valid():
+    # Mock template and campaign
+    template = Mock()
+    campaign = Mock()
+
+    with patch("flask_login.utils._get_user") as mock_user:
+        # Test when template.parent_campaign == campaign and campaign in current_user.permissions
+        template.parent_campaign = campaign
+        mock_user.return_value.permissions = [campaign]
+        assert check_template_is_valid(template, campaign)
+
+        # Test when template.parent_campaign != campaign
+        template.parent_campaign = Mock()
+        with pytest.raises(Exception) as error:
+            check_template_is_valid(template, campaign)
+        assert str(error.value.code) == "403"
+
+        # Test when campaign not in current_user.permissions
+        template.parent_campaign = campaign
+        mock_user.return_value.permissions = []
+        with pytest.raises(Exception) as error:
+            check_template_is_valid(template, campaign)
+        assert str(error.value.code) == "403"
