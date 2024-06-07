@@ -1,7 +1,9 @@
 from sqlalchemy import select
 import json
+from werkzeug.datastructures import MultiDict
 
 from app import db, models
+from app.forms.forms import CreateEventForm
 
 
 def test_setup(client, auth, campaign, event):
@@ -17,25 +19,29 @@ def test_update(client):
         .filter_by(title="Test Campaign")).scalar()
 
     event = models.Event()
-    event_form = {
-        "type": "Test",
-        "title": "Test Event",
-        "date": "5016/01/01 09:00:00",
-        "dynamic_fields": [{"title": "Title 1",
-                            "value": "Value 1",
-                            "is_full_width": False,
-                            "field_type": "basic"}],
-        "hide_time": False,
-    }
+
+    event_form = CreateEventForm(
+        MultiDict({
+            "type": "Test",
+            "title": "Test Event",
+            "date": "5016/01/01 09:00:00",
+            "dynamic_fields-0-title": "Title 1",
+            "dynamic_fields-0-value": "Value 1",
+            "dynamic_fields-0-is_full_width": False,
+            "dynamic_fields-0-field_type": "basic",
+            "dynamic_fields-1-title": "Title 2",
+            "dynamic_fields-1-value": "Value 2",
+            "dynamic_fields-1-is_full_width": False,
+            "dynamic_fields-1-field_type": "basic",
+            "hide_time": False,
+        })).data
+
     event.update(form=event_form,
                  parent_campaign=campaign_object,
                  new=True)
 
-    for field in event_form.keys():
-        if field == "body":
-            assert event_form[field] in getattr(event, field)
-        else:
-            assert getattr(event, field) == event_form[field]
+    for field in event_form:
+        assert getattr(event, field) == event_form[field]
 
 
 def test_map_dynamic_field_data(client):
