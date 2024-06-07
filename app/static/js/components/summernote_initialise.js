@@ -1,12 +1,20 @@
-function summernoteInitialise(idSuffix, 
-                              placeholder, 
-                              charLimit, 
-                              allowImages, 
-                              allowURLS) {
-
+export function summernoteInitialise(
+  idSuffix,
+  placeholder,
+  charLimit,
+  allowImages,
+  allowURLS
+) {
   charLimit = parseInt(charLimit) || null;
   var editor = "#summernote" + idSuffix;
-  
+
+  if (allowImages == "True") {
+    allowImages = "picture";
+  }
+  if (allowURLS == "True") {
+    allowURLS = "link";
+  }
+
   $(editor).summernote({
     callbacks: {
       onKeydown: function(event) {
@@ -21,6 +29,7 @@ function summernoteInitialise(idSuffix,
         pastePlainText(event, editor, charLimit);
       },
     },
+    disableDragAndDrop: true,
     placeholder: "<p>" + placeholder + "</p>",
     dialogsClass: "summernote-dialog",
     dialogsInBody: true,

@@ -114,10 +114,6 @@ class EventFormat:
             self.title = f"Test Event {self.number}"
             self.date = starting_date
         self.type = "Test Event"
-        self.location = "Location Name"
-        self.belligerents = "Belligerent 1, Belligerent 2"
-        self.body = "Example Description"
-        self.result = "Result"
         self.header = False
         self.hide_time = False
 

@@ -1,5 +1,6 @@
 {% import "components/timeline/epoch.html" as epoch %}
 {% import "components/timeline/event.html" as timeline_event %}
+{% import "components/timeline/new_icon.html" as new_icon %}
 
 {# 
 
@@ -136,8 +137,7 @@ elements.
                           campaign_id=campaign.id,
                           elem_id='new-missing-event-' + year.name + '-' + month.name + '-' + day.name, 
                           date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-                <img class="icon icon-invert" aria-label="New Event Icon"
-                src="{{ url_for('static', filename='images/icons/plus.svg') }}">
+              {{ new_icon.new_icon("New Event Icon") }}
               </a>
               <label for="new-missing-event-{{year.name}}-{{month.name}}-{{day.name}}"
               class="flavour-text new-event-flavour">
@@ -216,8 +216,7 @@ elements.
                      new_day=True,
                      elem_id='new-day-event-' + year.name + '-' + month.name + '-' + day.name,
                      date=year.name + '/' + month.name + '/' + day.name + ' 00:00:00') }}">
-      <img class="icon icon-invert" aria-label="New Event Icon" 
-      src="{{ url_for('static', filename='images/icons/plus.svg') }}">
+    {{ new_icon.new_icon("New Event Icon") }}
     </a>
     <label for="new-day-event-{{year.name}}-{{month.name}}-{{day.name}}"
     class="flavour-text new-event-flavour">//NEW EVENT: +1 Day</label>

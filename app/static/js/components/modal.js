@@ -10,13 +10,15 @@ export class Modal {
       this.span = span;
       this.innerElement = this.modal.querySelector(".modal-content");
       this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
+      this.lastClicked = null;
    
       this.button.onclick = event => {
-        this.openModal(event)
+        this.lastClicked = event.detail.originButton || this.button;
+        this.openModal();
       } 
   
       this.span.onclick = event => {
-        this.closeModal(event)
+        this.closeModal();
       }
       
       this.modal.addEventListener("click", event => {
@@ -42,14 +44,57 @@ export class Modal {
       Array.from(this.hiddenElements).forEach(element => {
         element.inert = false;
       })
-      this.button.focus();
+      this.lastClicked.focus();
     }
   
   }
-  
 
-  // Preview Area Modal class
-export class PreviewModal extends Modal{
+  
+// Delete template confirmation modal
+export class TemplateModal {
+  constructor({
+    modal,
+    span,
+    text
+  }) {
+    this.modal = modal;
+    this.span = span;
+    this.templateTextArea = this.modal.querySelector(".template-modal-text");
+    this.innerElement = this.modal.querySelector(".modal-content");
+    this.hiddenElements = document.querySelectorAll(".scrollpage, .ui-buttons");
+    this.span.onclick = event => {
+      this.closeModal();
+    }
+    this.modal.addEventListener("click", event => {
+      if (event.target == this.modal) {
+        this.closeModal();
+      }
+    });
+    this.templateTextArea.innerText = text;
+    this.openModal();
+  }
+
+  openModal() {
+    this.modal.style.display = "flex";
+    this.innerElement.setAttribute("aria-modal", "true")
+    Array.from(this.hiddenElements).forEach(element => {
+      element.inert = true;
+    })
+    this.span.focus();
+  }
+
+  closeModal() {
+    this.modal.style.display = "none";
+    this.innerElement.setAttribute("aria-modal", "false")
+    Array.from(this.hiddenElements).forEach(element => {
+      element.inert = false;
+    })
+  }
+}
+
+
+// Preview Area Modal class
+export class PreviewModal extends Modal {
   constructor({
     modal,
     button,
@@ -60,6 +105,7 @@ export class PreviewModal extends Modal{
     this.editor = editor.querySelector(".note-editable");
 
     this.button.onclick = event => {
+      this.lastClicked = event.detail.originButton || this.button;
       this.openModal(event)
       this.htmlPreview()
     } 
@@ -74,9 +120,16 @@ export class PreviewModal extends Modal{
 
     // Get the content of the Summernote editor and add it to the modal
     var content = this.editor.innerHTML;
-    var modalBody = document.getElementById("preview-modal-body");
+    var modalBody = this.modal.querySelector(".modal-body-preview");
     modalBody.innerHTML = content;
-   
+
+    var labelContainer = this.button.closest(".dynamic-form-label-container");
+    if (labelContainer != null) {
+      var fieldTitle = labelContainer.querySelector(".dynamic-field-title").value;
+      var modalTitle = this.modal.querySelector(".dynamic-preview-header");
+      modalTitle.innerText = fieldTitle;
+    }
+
     this.formatImages();
   }
 

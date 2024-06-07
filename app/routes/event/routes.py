@@ -28,8 +28,6 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     authenticators.check_campaign_visibility(campaign)
     comment_form_visible = authenticators.check_comment_form_visibility(campaign)
 
-    belligerents = event.separate_belligerents()
-
     form = forms.CommentForm()
     delete_form = forms.SubmitForm()
 
@@ -38,16 +36,13 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
 
     # Check if new comment submitted
     if form.validate_on_submit():
-        # Check user is allowed to comment
+
         authenticators.check_campaign_comment_status(campaign)
 
-        # Create new comment
         comment = models.Comment()
         comment.update(form=request.form,
                        parent_event=event,
                        author=current_user)
-
-        # Create new comment notification
         messengers.send_comment_notification(sender=current_user,
                                              recipients=campaign.members,
                                              campaign=campaign,
@@ -65,7 +60,6 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     return render_template("pages/event_page.html",
                            event=event,
                            campaign=campaign,
-                           belligerents=belligerents,
                            form=form,
                            delete_form=delete_form,
                            comment_form_visible=comment_form_visible)
@@ -81,17 +75,15 @@ def add_event(campaign_name, campaign_id):
 
     authenticators.permission_required(campaign)
 
-    # Check if date argument given
     if "date" in request.args:
-        # Get date arguments
+
+        # Increase the date by one unit and format the datestring
         datestring = request.args["date"]
         args = request.args
-        # Increase the date by one unit and format the datestring
         datestring = formatters.increment_datestring(datestring, args)
-        # Create placeholder event
+        # Create placeholder event to prepopulate form
         event = models.Event()
         event.create_blank(datestring)
-        # Prepopulate form
         form = forms.CreateEventForm(obj=event)
 
         # Set scroll_to target for back button
@@ -102,18 +94,27 @@ def add_event(campaign_name, campaign_id):
     else:
         form = forms.CreateEventForm()
 
-    # Check if user has submitted a new event
+    # If loading from template, update form with template's dynamic fields
+    if "template_id" in request.args and request.method == "GET":
+        template_id = request.args["template_id"]
+
+        template = (db.session.query(models.Template)
+                    .filter(models.Template.id == template_id)
+                    .first_or_404(description="No matching template found"))
+        
+        authenticators.check_template_is_valid(template, campaign)
+        form.load_template(template)
+
     if form.validate_on_submit():
-        # Create new event object using form data
+
         event = models.Event()
         event.update(form=form.data,
                      parent_campaign=campaign,
                      new=True)
-        # Update "following_event" relationships for all events
+        
         campaign.get_following_events()
-        # Check all epochs for events
         campaign.check_epochs()
-        # Create notification message
+        
         messengers.send_event_notification(current_user,
                                            recipients=campaign.members,
                                            campaign=campaign,
@@ -150,32 +151,36 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
 
     campaign = event.parent_campaign
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
+    form.submit.label.text = "Update Event"
     delete_form = forms.SubmitForm()
 
+    # If loading from template, update for with template's dynamic fields
+    if "template_id" in request.args and request.method == "GET":
+        template_id = request.args["template_id"]
+
+        template = (db.session.query(models.Template)
+                    .filter(models.Template.id == template_id)
+                    .first_or_404(description="No matching template found"))
+        
+        authenticators.check_template_is_valid(template, campaign)
+        form.load_template(template)
+
     if form.validate_on_submit():
-        # Update event object using form data
+
         event.update(form=form.data,
                      parent_campaign=campaign)
-
-        # Update "following_event" relationships for all events
         campaign.get_following_events()
-
-        # Update all epochs
         campaign.check_epochs()
 
         return redirect(url_for("campaign.edit_timeline",
                                 campaign_name=campaign.url_title,
                                 campaign_id=campaign.id))
-
-    # Change form label to 'update'
-    form.submit.label.text = "Update Event"
 
     # Flash form errors
     for field_name, errors in form.errors.items():
@@ -202,7 +207,6 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
 
     campaign = event.parent_campaign
 
-    # Check if the user has permissions to edit the target campaign.
     authenticators.permission_required(campaign)
 
     campaign.last_edited = datetime.now()
@@ -211,10 +215,7 @@ def delete_event(campaign_name, campaign_id, event_name, event_id):
     db.session.delete(event)
     db.session.commit()
 
-    # Update "following_event" relationships for all events
     campaign.get_following_events()
-
-    # Update campaigns epochs
     campaign.check_epochs()
 
     return redirect(url_for("campaign.edit_timeline",

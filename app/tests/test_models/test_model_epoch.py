@@ -1,6 +1,8 @@
 from sqlalchemy import select
+from werkzeug.datastructures import MultiDict
 
 from app import db, models
+from app.forms.forms import CreateEpochForm
 
 
 def test_setup(client, auth, campaign, event):
@@ -28,56 +30,34 @@ def test_update(client):
 
     # Create a new epoch
     epoch = models.Epoch()
-    epoch.title = "Epoch 1"
-    epoch.start_date = "5016/01/01"
-    epoch.end_date = "5016/02/01"
-    db.session.add(epoch)
-    db.session.commit()
 
     # Update the epoch
-    form = {
-        "title": "Updated Epoch",
-        "start_date": "5016/01/02",
-        "end_date": "5016/02/02",
-        "description": "Updated description",
-        "overview": "Updated overview"
-    }
-    epoch.update(form, 
-                 parent_campaign=campaign_object, 
+    epoch_form = CreateEpochForm(
+        MultiDict({
+            "title": "Updated Epoch",
+            "start_date": "5016/01/02",
+            "end_date": "5016/02/02",
+            "overview": "Updated overview",
+            "dynamic_fields-0-title": "Title 1",
+            "dynamic_fields-0-value": "Value 1",
+            "dynamic_fields-0-is_full_width": False,
+            "dynamic_fields-0-field_type": "basic",
+            "dynamic_fields-1-title": "Title 2",
+            "dynamic_fields-1-value": "Value 2",
+            "dynamic_fields-1-is_full_width": False,
+            "dynamic_fields-1-field_type": "basic",
+            "hide_time": False,
+        })).data
+
+    epoch.update(epoch_form,
+                 parent_campaign=campaign_object,
                  new=True)
 
-    # Verify the changes
-    updated_epoch = db.session.execute(
-        select(models.Epoch)
-        .filter_by(id=epoch.id)).scalar()
-
-    assert updated_epoch.title == "Updated Epoch"
-    assert updated_epoch.start_date == "5016/01/02"
-    assert updated_epoch.end_date == "5016/02/02"
-    assert updated_epoch.description == "<p>Updated description</p>"
-    assert updated_epoch.overview == "<p>Updated overview</p>"
-
-    # Test that form field without corresponding "edit_" field value of True
-    # does not update model
-
-    edit_form = {
-        "title": "Updated Epoch Edit",
-        "edit_title": True,
-        "start_date": "5016/01/01",
-        "edit_start": False,
-        "end_date": "5016/05/05",
-        "edit_end_date": True,
-        "description": "Updated description edit",
-        "edit_description": False,
-        "overview": "Updated overview edit",
-        "edit_overview": True,
-    }
-
-    updated_epoch.update(edit_form, parent_campaign=campaign_object)
-    assert updated_epoch.title == "Updated Epoch Edit"
-    assert updated_epoch.end_date == "5016/05/05"
-    assert updated_epoch.description == "<p>Updated description</p>"
-    assert updated_epoch.overview == "<p>Updated overview edit</p>"
+    for field in epoch_form:
+        if field == "overview":
+            assert getattr(epoch, field) == "<p>Updated overview</p>"
+        else:
+            assert getattr(epoch, field) == epoch_form[field]
 
 
 def test_set_url_title():

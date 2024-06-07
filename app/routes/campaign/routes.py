@@ -131,7 +131,7 @@ def edit_campaign(campaign_name, campaign_id):
                 .first_or_404(description="No matching campaign found"))
 
     # Set the last visited url, excluding this route
-    if request.referrer and "/data/edit" not in request.referrer:
+    if request.referrer and request.referrer != request.url:
         session["previous_url"] = request.referrer
 
     # Check if the user has permissions to edit the target campaign.
@@ -186,7 +186,7 @@ def delete_campaign(campaign_name, campaign_id):
         if search_user:
             if search_user.id == current_user.id:
                 if werkzeug.security.check_password_hash(pwhash=user.password, password=password):
-                    # Delete campaign from database
+                    campaign.clear_cache()
                     db.session.delete(campaign)
                     db.session.commit()
                     return redirect(url_for("campaign.campaigns"))

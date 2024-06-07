@@ -29,7 +29,7 @@ def edit_campaign_users(campaign_name, campaign_id):
     remove_form = forms.AddUserForm()
 
     # Set url for back button
-    if request.referrer and "/edit-members" not in request.referrer:
+    if request.referrer and request.referrer != request.url:
         session["previous_url"] = request.referrer
 
     # Set back button scroll target

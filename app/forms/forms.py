@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, EmailField, SubmitField, PasswordField, \
-                    BooleanField, FileField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email, URL
+                    BooleanField, FileField, IntegerField, TextAreaField, FieldList, FormField
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email
 
 from app.forms.validators import *
 
@@ -64,54 +64,51 @@ class CreateCampaignForm(FlaskForm):
     submit = SubmitField("Create Campaign")
 
 
-class CreateEventForm(FlaskForm):
-    """ 
-        The "edit_" prefix fields are rendered as hidden fields on the page,
-        and toggled via Javascript when the user makes a change to the corresponding field.
-        This helps prevent unnecessary overwrites if multiple users are editing
-        the same model at once.
-        
-    """
-    edit_title = BooleanField("Edit Title")
-    edit_type = BooleanField("Edit Type")
-    edit_date = BooleanField("Edit Date")
-    edit_location = BooleanField("Edit Location")
-    edit_belligerents = BooleanField("Edit Belligerents")
-    edit_hide_time = BooleanField("Edit Hide Time")
-    edit_body = BooleanField("Edit Body")
-    edit_result = BooleanField("Edit Result")
+class DynamicField(FlaskForm):
+    """ Dynamic field form, used in DynamicForm class """
 
+    title = StringField(validators=[DataRequired()])
+    value = TextAreaField(validators=[Optional()])
+    field_type = StringField(validators=[DataRequired()])
+    is_full_width = BooleanField(default=False, validators=[Optional()])
+
+
+class DynamicForm(FlaskForm):
+    """ Base dynamic form class, inherited by both CreateEventForm and CreateEpochForm """
+
+    dynamic_fields = FieldList(FormField(DynamicField))
+
+    def load_template(self, template):
+
+        # Clear field list
+        for field in self.dynamic_fields.data:
+            self.dynamic_fields.pop_entry()
+
+        for field in template.field_format:
+            dynamic_field = DynamicField()
+            dynamic_field.title = field["title"]
+            dynamic_field.value = ""
+            dynamic_field.field_type = field["field_type"]
+            dynamic_field.is_full_width = field["is_full_width"]
+
+            self.dynamic_fields.append_entry(dynamic_field)
+
+
+class CreateEventForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
     date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
-    location = StringField("Location", validators=[Optional()])
-    belligerents = StringField("Belligerents", validators=[Optional()])
-    body = TextAreaField("Body", validators=[DataRequired(), plain_text_length(max=None, required=True)])
-    result = StringField("Result", validators=[Optional()])
     hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
+
     submit = SubmitField("Create Event")
 
 
-class CreateEpochForm(FlaskForm):
-    """ 
-        The "edit_" prefix fields are rendered as hidden fields on the page,
-        and toggled via Javascript when the user makes a change to the corresponding field.
-        This helps prevent unnecessary overwrites if multiple users are editing
-        the same model at once.
-        
-    """
-
-    edit_title = BooleanField("Edit Title")
-    edit_start_date = BooleanField("Edit Start Date")
-    edit_end_date = BooleanField("Edit End Date")
-    edit_overview = BooleanField("Edit Overview")
-    edit_description = BooleanField("Edit Description")
-
+class CreateEpochForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     start_date = StringField("Start Date", validators=[date_format(format="epoch")])
     end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after()])
     overview = TextAreaField("Overview")
-    description = TextAreaField("Description")
+
     submit = SubmitField("Create Epoch")
 
 

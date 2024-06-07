@@ -173,7 +173,7 @@ export class SearchEngine {
     this.updateUI();
 
     // Clear results and end operation if searchbar cleared
-    if (this.searchQuery.length == 0){
+    if (this.searchQuery.length == 0) {
       // Reset styling for each result
       this.htmlResults.forEach(result => {
         result.styleReset();
@@ -188,101 +188,50 @@ export class SearchEngine {
     this.htmlResults = []
 
     if (this.editPage == false) {
-      // Get event and epoch page fields and create result object for each if they exist on page
-      var element = document.querySelector(".event-location");
-      if (element) {
-        var eventLocation = new HTMLResult({
-          baseElement: ".event-location",
-          textElement: ".event-elem-body",
-        });
-        this.htmlResults.push(eventLocation);
-      }
+      var allElements = document.querySelectorAll(".event-page-elem");
+      var eventElements = Array.from(allElements).filter(element => 
+          !element.classList.contains("event-date-area") && 
+          !element.classList.contains("type-area")
+      );
 
-      var element = document.querySelector(".event-belligerents");
-      if (element) {
-        var eventBelligerents = new HTMLResult({
-          baseElement: ".event-belligerents",
-          textElement: ".event-elem-body"
+      eventElements.forEach(element => {
+        var newResult = new HTMLResult({
+          baseElement: element,
+          textElement: element.querySelector(".event-elem-body") 
+          || element.querySelector(".event-desc"),
         });
-        this.htmlResults.push(eventBelligerents);
-      }
-
-      var element = document.querySelector(".event-page-description");
-      if (element) {
-        var eventDesc = new HTMLResult({
-          baseElement: ".event-page-description",
-          textElement: ".event-desc"
-        });
-        this.htmlResults.push(eventDesc);
-      }
-
-      var element = document.querySelector(".event-page-result");
-      if (element) {
-        var eventResults = new HTMLResult({
-          baseElement: ".event-page-result",
-          textElement: ".event-elem-body"
-        });
-        this.htmlResults.push(eventResults);
-      }
-
-      var element = document.querySelector(".epoch-events-container");
-      if (element) {
-        var epochResults = new HTMLResult({
-          baseElement: ".epoch-events-container",
-          textElement: ".epoch-events-list"
-        });
-        this.htmlResults.push(epochResults);
-      }
+        this.htmlResults.push(newResult);
+      })
     }
     else {
       // Get edit event page fields and create result object for each if they exist on page
-      var editFields = [
-        "#date-field", 
-        "#start-date-field",
-        "#end-date-field",
-        "#title-field", 
-        "#type-field", 
-        "#location-field", 
-        "#belligerents-field",  
-        "#result-field",
-      ]
+      var allElements = document.querySelectorAll(".form-container");
+      var eventElements = Array.from(allElements).filter(element => 
+          element.id != "display-field"
+      );
 
-      editFields.forEach((field) => {
-        var element = document.querySelector(field);
-        if (element) {
-          var newResultObject = new HTMLResult({
-            baseElement: field,
-            textElement: ".event-input",
+      eventElements.forEach(element => {
+
+        if (element.classList.contains("html-field") 
+          || element.id == "epoch-overview-field") {
+          var newResult = new HTMLResult({
+            baseElement: element,
+            textElement: element.querySelector(".note-editable"),
           });
-          this.htmlResults.push(newResultObject);
         }
-      })
-
-      // Event description summernote field
-      // Result is spliced at pos 5 to put it before the "result" field
-      var element = document.querySelector("#event-desc-field .note-editor");
-      if (element) {
-        var newResultObject = new HTMLResult({
-          baseElement: "#event-desc-field .note-editor",
-          textElement: "#event-desc-field .note-editable",
-        });
-        this.htmlResults.splice(5, 0, newResultObject);
-      }
-
-      var epochSummernoteFields = [
-        "#epoch-overview-field",
-        "#epoch-desc-field"
-      ]
-      epochSummernoteFields.forEach((field) => {
-        // Epoch summernote fields
-        var element = document.querySelector(field);
-        if (element) {
-          var newResultObject = new HTMLResult({
-            baseElement: `${field} .note-editor`,
-            textElement: `${field} .note-editable`,
+        else if (element.classList.contains("belligerents-field")) {
+          var newResult = new HTMLResult({
+            baseElement: element,
+            textElement: element.querySelector(".belligerents-container"),
           });
-          this.htmlResults.push(newResultObject);
         }
+        else {
+          var newResult = new HTMLResult({
+            baseElement: element,
+            textElement: element.querySelector(".event-input")
+          });
+        }
+        this.htmlResults.push(newResult);
       })
     }
 
@@ -362,8 +311,9 @@ export class SearchEngine {
           }
         }
         else {
-          // Handle event description field
-          if (result.baseElement.classList.contains("note-editor")) {
+          // Handle html fields
+          if (result.baseElement.classList.contains("html-field")
+          || result.baseElement.id == "epoch-overview-field") {
             if (result.textElement.innerText.toLowerCase().includes(this.searchQuery)) {
               result.positive = true;
             }
@@ -371,6 +321,21 @@ export class SearchEngine {
               result.positive = false;
             }
           }
+          // Handle composite fields
+          else if (result.baseElement.classList.contains("belligerents-field")) {
+            
+            result.positive = false;
+            var columns = result.textElement.querySelectorAll(".belligerents-column");
+            columns.forEach(column => {
+              var entries = column.querySelectorAll(".belligerent-input");
+              entries.forEach(entry => {
+                if (entry.value.toLowerCase().includes(this.searchQuery)) {
+                  result.positive = true;
+                }
+              })
+            })
+          }
+
           // Handle all other edit event fields
           else {
             if (result.textElement.value.toLowerCase().includes(this.searchQuery)) {
@@ -381,6 +346,7 @@ export class SearchEngine {
             }
           }
         }
+
       });
     }
   }

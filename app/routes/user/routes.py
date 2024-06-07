@@ -114,7 +114,7 @@ def user_page(username):
     password_form = forms.ChangePasswordForm()
 
     # Set url for back button
-    if request.referrer and "/user" not in request.referrer:
+    if request.referrer and request.url not in request.referrer:
         session["previous_url"] = request.referrer
 
     return render_template("pages/user_page.html",

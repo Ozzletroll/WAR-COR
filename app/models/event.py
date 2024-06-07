@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from app import db
-from app.utils.sanitisers import sanitise_input
+from app.utils.sanitisers import sanitise_input, sanitise_json
 
 
 class Event(db.Model):
@@ -12,6 +12,7 @@ class Event(db.Model):
     type = db.Column(db.String(250), nullable=False)
     title = db.Column(db.String(250), nullable=False)
     url_title = db.Column(db.String(250))
+    hide_time = db.Column(db.Boolean(), nullable=False, default=False)
 
     date = db.Column(db.String, nullable=False)
     year = db.Column(db.Integer)
@@ -21,11 +22,7 @@ class Event(db.Model):
     minute = db.Column(db.Integer)
     second = db.Column(db.Integer)
 
-    location = db.Column(db.String(), nullable=True)
-    belligerents = db.Column(db.String(), nullable=True)
-    body = db.Column(db.String(), nullable=False)
-    result = db.Column(db.String(), nullable=True)
-    hide_time = db.Column(db.Boolean(), nullable=False, default=False)
+    dynamic_fields = db.Column(db.JSON, default={})
 
     # Database relationships
     # An event is part of a campaign, and may contain multiple comments. 
@@ -52,30 +49,20 @@ class Event(db.Model):
     # Methods
     def update(self, form, parent_campaign, new=False):
         """ Method to populate and update self.
-            Takes form data from form.data, but only updates if respective
-            "edit_" field has been set to True via event page Javascript.
             Set "new" to true if creating new entry.  """
-        
-        # If new event, use all fields except those with "edit_" prefix
-        # Otherwise, iterate over only those with the "edit_" prefix
-        fields = {field: value for field, value in form.items() 
-                  if (not new and field.startswith("edit_")) 
-                  or (new and not field.startswith("edit_"))}
 
-        for field, value in fields.items():
-            matching_field = field.replace("edit_", "")
-            
-            if value or new:
-                form_value = form[matching_field]
+        self.dynamic_fields = []
+        for field, value in form.items():
 
-                if matching_field == "date":
-                    self.date = form_value
-                    self.split_date(form_value)
+            if value is not None or new:
 
-                if matching_field == "body":
-                    form_value = sanitise_input(form_value)
-
-                setattr(self, matching_field, form_value)
+                if field == "date":
+                    self.date = value
+                    self.split_date(value)
+                elif field == "dynamic_fields":
+                    self.dynamic_fields = self.map_dynamic_field_data(value)
+                else:
+                    setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
@@ -87,13 +74,41 @@ class Event(db.Model):
 
         db.session.commit()
 
+    @staticmethod
+    def map_dynamic_field_data(value):
+
+        allowed_keys = ["title", "value", "field_type", "is_full_width"]
+        allowed_field_types = ["html", "basic", "composite"]
+
+        data = []
+        for dynamic_field_data in value:
+            dict = {}
+            for key, dynamic_value in dynamic_field_data.items():
+                
+                if key == "value":
+                    if dynamic_field_data["field_type"] == "html":
+                        dynamic_value = sanitise_input(dynamic_value, wrap=True)
+                    elif dynamic_field_data["field_type"] == "composite":
+                        dynamic_value = sorted(sanitise_json(dynamic_value, "composite_field"),
+                                               key=lambda x: int(x["position"]))
+                if key == "field_type":
+                    if dynamic_value not in allowed_field_types:
+                        dynamic_value = "basic"
+                if key == "is_full_width":
+                    if not isinstance(dynamic_value, bool):
+                        dynamic_value = False
+                if key in allowed_keys:
+                    dict[key] = dynamic_value
+            data.append(dict)
+
+        return data
+
     def create_blank(self, datestring):
         """ Method to create a blank temporary pending event for pre-populating form.
             Takes an incremented date-string from organisers.format_event_datestring(). """
 
         self.title = ""
         self.type = ""
-        self.body = ""
         self.date = datestring
 
     def split_date(self, datestring):
@@ -105,23 +120,6 @@ class Event(db.Model):
         self.hour = int(datestring.split("/")[2].split()[1].split(":")[0])
         self.minute = int(datestring.split("/")[2].split()[1].split(":")[1])
         self.second = int(datestring.split("/")[2].split()[1].split(":")[2])
-
-    def separate_belligerents(self):
-        """ Method to separate the belligerents into groups for rendering. """
-
-        if self.belligerents == "":
-            return []
-
-        separated_belligerents = self.belligerents.split(",")
-        groups = []
-
-        for group in separated_belligerents:
-            allied_belligerents = []
-            for element in group.split("&"):
-                allied_belligerents.append(element.strip())
-            groups.append(allied_belligerents)
-            
-        return groups
 
     def set_url_title(self):
         """ Method to set url safe version of title, replacing spaces

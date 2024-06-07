@@ -2,7 +2,7 @@ from datetime import datetime
 
 from app import db
 from app.models import associations
-from app.utils.sanitisers import sanitise_input
+from app.utils.sanitisers import sanitise_input, sanitise_json
 
 
 class Epoch(db.Model):
@@ -12,6 +12,7 @@ class Epoch(db.Model):
 
     title = db.Column(db.String(250), nullable=False)
     url_title = db.Column(db.String(250))
+    has_events = db.Column(db.Boolean(), nullable=False, default=False)
 
     start_date = db.Column(db.String, nullable=False)
     start_year = db.Column(db.Integer)
@@ -24,8 +25,7 @@ class Epoch(db.Model):
     end_day = db.Column(db.Integer)
 
     overview = db.Column(db.String(), nullable=True)
-    description = db.Column(db.String(), nullable=True)
-    has_events = db.Column(db.Boolean(), nullable=False, default=False)
+    dynamic_fields = db.Column(db.JSON, default={})
 
     # Database relationships
     # An epoch is part of a campaign, and may encapsulate multiple events.
@@ -50,41 +50,31 @@ class Epoch(db.Model):
             Takes form data from request.form
             Set "new" to true if creating new entry.  """
 
-        # If new event, use all fields except those with "edit_" prefix
-        # Otherwise, iterate over only those with the "edit_" prefix
-        fields = {field: value for field, value in form.items() 
-                  if (not new and field.startswith("edit_")) 
-                  or (new and not field.startswith("edit_"))}
+        self.dynamic_fields = []
+        for field, value in form.items():
 
-        for field, value in fields.items():
-            matching_field = field.replace("edit_", "")
+            if value is not None or new:
 
-            if value or new:
-                form_value = form[matching_field]
-
-                if matching_field == "start_date":
-                    self.start_date = form_value
-                    self.start_year = self.split_date(form_value)[0]
-                    self.start_month = self.split_date(form_value)[1]
-                    self.start_day = self.split_date(form_value)[2]
-
-                elif matching_field == "end_date":
-                    self.end_date = form_value
-                    self.end_year = self.split_date(form_value)[0]
-                    self.end_month = self.split_date(form_value)[1]
-                    self.end_day = self.split_date(form_value)[2]
-
-                elif matching_field == "description":
-                    form_value = sanitise_input(form_value)
-                    if form_value in ["<p><br/></p>", ""]:
-                        form_value = None
-
-                elif matching_field == "overview":
-                    form_value = sanitise_input(form_value, allow_urls=False)
-                    if form_value in ["<p><br/></p>", ""]:
-                        form_value = None
-
-                setattr(self, matching_field, form_value)
+                if field == "start_date":
+                    self.start_date = value
+                    self.start_year = self.split_date(value)[0]
+                    self.start_month = self.split_date(value)[1]
+                    self.start_day = self.split_date(value)[2]
+                elif field == "end_date":
+                    self.end_date = value
+                    self.end_year = self.split_date(value)[0]
+                    self.end_month = self.split_date(value)[1]
+                    self.end_day = self.split_date(value)[2]
+                elif field == "overview":
+                    value = sanitise_input(value, allow_urls=False)
+                    if value in ["<p><br/></p>", ""]:
+                        value = None
+                    self.overview = value
+                elif field == "dynamic_fields":
+                    data = self.map_dynamic_field_data(value)
+                    self.dynamic_fields = data
+                else:
+                    setattr(self, field, value)
 
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
@@ -98,6 +88,35 @@ class Epoch(db.Model):
 
         self.populate_self()
         self.parent_campaign.check_epochs()
+
+    @staticmethod
+    def map_dynamic_field_data(value):
+
+        allowed_keys = ["title", "value", "field_type", "is_full_width"]
+        allowed_field_types = ["html", "basic", "composite"]
+
+        data = []
+        for dynamic_field_data in value:
+            dict = {}
+            for key, dynamic_value in dynamic_field_data.items():
+                
+                if key == "value":
+                    if dynamic_field_data["field_type"] == "html":
+                        dynamic_value = sanitise_input(dynamic_value, wrap=True)
+                    elif dynamic_field_data["field_type"] == "composite":
+                        dynamic_value = sorted(sanitise_json(dynamic_value, "composite_field"),
+                                               key=lambda x: int(x["position"]))
+                if key == "field_type":
+                    if dynamic_value not in allowed_field_types:
+                        dynamic_value = "basic"
+                if key == "is_full_width":
+                    if not isinstance(dynamic_value, bool):
+                        dynamic_value = False
+                if key in allowed_keys:
+                    dict[key] = dynamic_value
+            data.append(dict)
+
+        return data
 
     @staticmethod
     def split_date(datestring):

@@ -5,7 +5,7 @@ from unittest.mock import MagicMock
 from app import db, models
 
 
-def test_setup(client, auth, campaign, event, epoch):
+def test_setup(client, auth, campaign):
     # Create a new campaign and populate it with events
     auth.register()
     campaign.create(title="Model Test Campaign",
@@ -121,7 +121,6 @@ def test_return_timeline_data(client, auth, campaign, event, epoch):
         "title": "Epoch Title",
         "start_date": "5016/01/05",
         "end_date": "5016/02/01",
-        "description": "A test epoch",
         "overview": "A test epoch"
     }
     epoch.create(campaign_object, data=epoch_data)

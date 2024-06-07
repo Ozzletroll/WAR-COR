@@ -1,6 +1,7 @@
 from flask import url_for
-from sqlalchemy import or_, func
+from sqlalchemy import or_, func, cast, String
 import editdistance
+import re
 from bs4 import BeautifulSoup
 
 from app import db
@@ -17,6 +18,7 @@ class Result:
         self.excerpt = ""
         self.matching_attributes = []
         self.matching_attributes_text = ""
+        self.matching_strings = []
         self.url = ""
         self.edit_url = ""
 
@@ -47,7 +49,7 @@ class SearchEngine:
         self.results = []
 
     def return_results(self):
-        return sorted(self.results, key=lambda result: result.relevance)
+        return sorted(self.results, key=lambda result: result.relevance, reverse=True)
 
     def search_campaign(self, campaign, query):
 
@@ -83,10 +85,12 @@ class SearchEngine:
             "campaign_id"
         ]
 
-        event_columns = [func.lower(column).label(column.name) for column in models.Event.__table__.columns
+        event_columns = [func.lower(cast(column, String)).label(column.name)
+                         for column in models.Event.__table__.columns
                          if column.name not in excluded_event_columns]
 
-        epoch_columns = [func.lower(column).label(column.name) for column in models.Epoch.__table__.columns
+        epoch_columns = [func.lower(cast(column, String)).label(column.name)
+                         for column in models.Epoch.__table__.columns
                          if column.name not in excluded_epoch_columns]
 
         # Construct .like statements for each column using given search query
@@ -145,34 +149,77 @@ class SearchEngine:
 
                 table_columns = epoch_columns
 
-            scores = []
+            searchable_columns = [column.name for column in table_columns]
+            for attr, value in item.__dict__.items():
+                if attr in searchable_columns:
+                    if attr == "dynamic_fields":
+                        for field in item.dynamic_fields:
+                            
+                            found = False
+                            if query in field["title"].lower():
+                                found = True
+                                result.matching_strings.append(field["title"])
 
-            # Find the matching event attributes
-            for column in table_columns:
-                attr_value = getattr(item, column.name)
-                if query in str(attr_value).lower():
+                            if field["field_type"] == "composite":
+                                for group in field["value"]:
+                                    # Check title of group
+                                    if query in group["title"].lower():
+                                        found = True
+                                        result.matching_strings.append(group["title"])
 
-                    matching_words = []
-                    result.matching_attributes.append(column.name)
-                    result.excerpt = self.create_excerpt(item)
+                                    # Check all entries in group
+                                    for entry in group["entries"]:
+                                        if query in entry.lower():
+                                            found = True
+                                            result.matching_strings.append(entry)
 
-                    # Convert html value entries to plain text
-                    html_columns = ["description", "overview"]
-                    if column.name in html_columns:
-                        soup = BeautifulSoup(attr_value, "html.parser")
-                        value = soup.get_text()
+                            else:
+                                if field["field_type"] == "html":
+                                    soup = BeautifulSoup(field["value"], "html.parser")
+                                    text = soup.get_text()
+                                    matches = self.find_phrase(query, text)
+                                    for match in matches:
+                                        found = True
+                                        result.matching_strings.append(match)
+
+                                elif field["field_type"] == "basic":
+                                    matches = self.find_phrase(query, field["value"].lower())
+                                    for match in matches:
+                                        found = True
+                                        result.matching_strings.append(match)
+
+                            if found:
+                                result.matching_attributes.append(field["title"])
+
+                    # Handle static fields
                     else:
-                        value = attr_value
+                        found = False
+                        if query in attr.lower():
+                            found = True
+                            result.matching_strings.append(attr)
+                        # Parse static HTML fields "eg. Epoch Overview, Description"
+                        if attr in ["overview", "description"]:
+                            soup = BeautifulSoup(value.lower(), "html.parser")
+                            text = soup.get_text()
+                            matches = self.find_phrase(query, text)
+                        else:
+                            matches = self.find_phrase(query, value.lower())
 
-                    for word in value.split(" "):
-                        if query in word.lower():
-                            matching_words.append(word)
+                        for match in matches:
+                            found = True
+                            result.matching_strings.append(match)
+                        if found:
+                            result.matching_attributes.append(attr)
 
-                        relevance = editdistance.eval(query, word)
-                        scores.append(relevance)
+            # Exclude results that only matched "hidden" html elements
+            if len(result.matching_attributes) == 0:
+                continue
 
-            # Calculate final relevance score
-            result.relevance = (sum(scores) / len(scores)) / len(scores)
+            # Calculate relevance scores
+            result.relevance = self.calculate_relevance(query, result.matching_strings)
+
+            # Get excerpt text
+            result.excerpt = self.create_excerpt(item)
 
             # Create matching attributes text for template
             result.matching_attributes_text = ", ".join(result.matching_attributes).title()
@@ -180,12 +227,42 @@ class SearchEngine:
             self.results.append(result)
 
     @staticmethod
+    def find_phrase(query, text):
+        pattern = r"(?:^|\s|,|\.)([^\s,.]*?{0}[^\s,.]*?)(?:\s|,|\.|$)".format(re.escape(query))
+        matches = re.findall(pattern, text, re.IGNORECASE)
+        return [match.lower() for match in matches]
+
+    @staticmethod
+    def calculate_relevance(query, matching_strings):
+        total_score = 0
+        for string in matching_strings:
+            # Calculate the edit distance
+            distance = editdistance.eval(query, string)
+
+            if distance > 0:
+                score = 1 / distance
+            else:
+                score = 1  # If distance is 0 (exact match), set score to 1
+
+            total_score += score
+
+        # Multiply by the number of matching fields to give more weight to results with more matches
+        total_score *= len(matching_strings)
+        return total_score
+
+    @staticmethod
     def create_excerpt(item):
 
-        if isinstance(item, models.Event):
-            excerpt_html = item.body
-        elif isinstance(item, models.Epoch):
-            excerpt_html = item.description or item.overview
+        fields = [field for field in item.dynamic_fields if field["field_type"] == "html"]
+        fields = sorted(fields, key=lambda field: len(field["value"]), reverse=True)
+
+        if len(fields) > 0:
+            if isinstance(item, models.Epoch):
+                excerpt_html = item.overview or fields[0]["value"]
+            else:    
+                excerpt_html = fields[0]["value"]
+        else:
+            excerpt_html = None
 
         # Convert html to plaintext with BeautifulSoup
         if excerpt_html is not None:

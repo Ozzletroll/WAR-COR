@@ -24,11 +24,13 @@
 
 <!-- ABOUT THE PROJECT -->
 ## Features
-WAR/COR is a dynamic timeline creator app, for structured, military-style RPG combat reporting and campaign logging.
+WAR/COR is a dynamic timeline creator, for structured, military-style RPG combat reporting and campaign logging.
 
 - Dynamic timeline creation
-    - One-click event creation
+    - One-click event placement
+    - Freeform event layout using dynamic fields
     - Non-standard calendar support
+    - Save/load templates for easy reuse
     - Group events into custom epochs
 - Collaborate with players
     - Share editing privileges
@@ -125,7 +127,7 @@ WAR/COR is a dynamic timeline creator app, for structured, military-style RPG co
 <br>
 <br>
 
-  By default, WAR/COR uses a local PostgreSQL database during testing to better match the production environment. If necessary, this can be changed to a local SQLite database by updating your environment:
+  By default, WAR/COR requires a local PostgreSQL database during testing to better match the production environment. If necessary, this can be changed to a local SQLite database by updating your environment:
 
   ```
   TESTING_USE_SQLITE=True

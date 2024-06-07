@@ -146,9 +146,7 @@
   {% include "base/footer.html" %}
 
 <!-- Javascript -->
-<script src="{{ url_for('static', filename='js/pages/index/index.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/index/index.js') }}" type="module"></script>
 <script src="{{ url_for('static', filename='js/pages/index/carousel.js') }}"></script>
-<script src="{{ url_for('static', filename='js/pages/timeline/margin_fix.js') }}"></script> 
-<script src="{{ url_for('static', filename='js/pages/timeline/epoch_line_adjust.js') }}"></script>
 
 {% endblock %}

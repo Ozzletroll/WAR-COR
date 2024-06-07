@@ -1,0 +1,59 @@
+{% macro template_menu(campaign) %}
+
+  <div id="templates-menu" class="templates-menu" tabindex="-1">
+
+    <input id="get-templates-url" type="hidden" value="{{ url_for('template.get_templates', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+    <input id="csrf-token" type="hidden" value="{{ csrf_token() }}">
+
+    <h3 class="template-menu-header">TEMPLATES</h3>
+    
+    <div class="templates-tab-list" role="tablist">
+      <button type="button" class="button templates-tab-button" role="tab" aria-controls="template-tab-1" aria-selected="true">
+        LOAD
+      </button>
+      <button type="button" class="button templates-tab-button tab-button-middle" role="tab" aria-controls="template-tab-2" aria-selected="false">
+        SAVE
+      </button>
+      <button type="button" class="button templates-tab-button" role="tab" aria-controls="template-tab-3" aria-selected="false">
+        IMPORT
+      </button>
+    </div>
+
+    <div class="templates-tab-panels">
+
+      {# Tab 1 content is loaded via fetch request when template_menu.js initialises #}
+      <ul id="template-tab-1" class="templates-tab templates-area dynamic-fade" tabindex="-1" role="tabpanel"></ul>
+
+      <form id="template-tab-2" class="templates-tab save-template-area dynamic-fade" aria-role="tabpanel" style="display: none">
+        <input id="save-template-url" type="hidden" value="{{ url_for('template.create_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+        <div class="save-template-fields">
+          <h4 class="save-templates-text">Save current form structure as new template</h4>
+          <div class="form-input-container">
+            <input id="save-template-title" class="form-input auth-form-input form-field form-input-centre" placeholder=" " tabindex="-1">
+            <label for="save-template-title" class="form-label form-label-centre">NEW TEMPLATE NAME</label>
+            <div class="form-underline"></div>
+          </div>
+          <button id="save-template-button" class="button save-template-button" type="button" tabindex="-1">SAVE</button>
+          <h4 id="save-templates-flash" class="templates-flash"></h4>
+        </div>
+      </form>
+
+      <div id="template-tab-3" class="templates-tab share-code-area dynamic-fade" aria-role="tabpanel" style="display: none">
+        <h4 class="save-templates-text">Import  template via code</h4>
+        <form class="share-code-form save-template-fields">
+          <input id="import-template-url" type="hidden" value="{{ url_for('template.import_template', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
+          <div class="form-input-container">
+            <input id="share-code-input" class="form-input auth-form-input form-field form-input-centre share-code-input" placeholder=" " tabindex="-1">
+            <label for="share-code-input" class="form-label form-label-centre">ENTER SHARE CODE</label>
+            <div class="form-underline"></div>
+          </div>
+          <button id="share-code-submit" class="button save-template-button" type="button" tabindex="-1">IMPORT</button>
+        </form>
+        <h4 id="import-templates-flash" class="templates-flash"></h4>
+      </div>
+
+    </div>
+
+  </div>
+
+{%- endmacro %}

@@ -35,28 +35,44 @@ searchBar.addEventListener("keydown", function(event) {
 });
 
 // Add event listen to the Summernote editor field to listen for user interaction
-if (editPage == true) {
+document.addEventListener("DOMContentLoaded", function() {
+  if (editPage == true) {
 
-  var summernoteEditor = document.querySelector(".note-editor");
-  summernoteEditor.addEventListener("input", function(event) {
-    if (searchEngine.searchBar.value != "") {
-      searchEngine.clearSearch();
-    }
-    searchEngine.updateDescription();
-  });
+    var summernoteEditors = document.getElementsByClassName("note-editor");
+
+    function lengthChanged() {
+      Array.from(summernoteEditors).forEach(editor => {
+        editor.addEventListener("input", function(event) {
+          if (searchEngine.searchBar.value != "") {
+            searchEngine.clearSearch();
+          }
+          searchEngine.updateDescription();
+        });
+        
+        editor.addEventListener("click", function(event) {
+          if (searchEngine.searchBar.value != "") {
+            searchEngine.clearSearch();
+          }
+        });
+      })
   
-  summernoteEditor.addEventListener("click", function(event) {
-    if (searchEngine.searchBar.value != "") {
-      searchEngine.clearSearch();
+      var updateButton = document.getElementById("submit");
+      updateButton.addEventListener("click", function(event) {
+        if (searchEngine.searchBar.value != "") {
+          searchEngine.clearSearch();
+        }
+      });
     }
-  });
 
-  var updateButton = document.getElementById("submit");
-  updateButton.addEventListener("click", function(event) {
-    if (searchEngine.searchBar.value != "") {
-      searchEngine.clearSearch();
-    }
-  });
+    // Create a MutationObserver instance to watch for changes in the summernoteEditors collection
+    var observer = new MutationObserver(function(mutations) {
+      // If any mutation represents a change in child list, call lengthChanged
+      if (mutations.some(mutation => mutation.type === 'childList')) {
+          lengthChanged();
+      }
+    });
 
-}
-
+    // Start observing the document with the configured parameters
+    observer.observe(document, { childList: true, subtree: true });
+  }
+});

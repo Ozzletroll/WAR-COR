@@ -1,3 +1,5 @@
+{% import "components/timeline/new_icon.html" as new_icon %}
+
 {# 
 
 EVENT COMPONENT
@@ -35,8 +37,7 @@ elements.
                            campaign_id=campaign.id,
                            elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
                            date=year.name + '/' + month.name + '/' + day.name) }}">
-            <img class="icon icon-invert" aria-label="New Epoch Icon"
-            src="{{ url_for('static', filename='images/icons/plus.svg') }}">
+            {{ new_icon.new_icon("New Epoch Icon") }}
           </a>
           <label for="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}"
           class="flavour-text new-event-flavour">
@@ -66,8 +67,7 @@ elements.
                            campaign_id=campaign.id,
                            elem_id='new-epoch-' + year.name + '-' + month.name + '-' + day.name,
                            date=year.name + '/' + month.name + '/' + day.name) }}">
-            <img class="icon icon-invert" aria-label="New Epoch Icon"
-            src="{{ url_for('static', filename='images/icons/plus.svg') }}">
+          {{ new_icon.new_icon("New Epoch Icon") }}
           </a>
           <label for="new-epoch-{{year.name}}-{{month.name}}-{{day.name}}"
           class="flavour-text new-event-flavour">
@@ -190,8 +190,7 @@ elements.
                          new_hour=True,
                          elem_id='new-event-' + year.name + '-' + month.name + '-' + day.name + '-' + event.date.split(' ')[1],
                          date=event.date) }}">
-          <img class="icon icon-invert" aria-label="New Event Icon"
-          src="{{ url_for('static', filename='images/icons/plus.svg') }}">
+        {{ new_icon.new_icon("New Event Icon") }}
         </a>
         <label for="new-event-{{year.name}}-{{month.name}}-{{day.name}}-{{event.date.split(' ')[1] }}"
         class="flavour-text new-event-flavour">

@@ -5,6 +5,10 @@
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/modal.html" as modal%}
+{% import "components/dynamic_fields.html" as dynamic_fields %}
+{% import "components/new_field_buttons.html" as new_field_buttons %}
+{% import "components/footer.html" as footer %}
+
 
 
 {% extends "base/base.html" %}
@@ -68,15 +72,8 @@
         {% include 'components/flash.html' %}
       </div>
   
-      <form id="edit-epoch-form" class="edit-form form-column fade-in-block-2" method="POST" novalidate aria-label="Epoch Form">
+      <form id="edit-epoch-form" class="edit-form form-column fade-in-block-2" method="POST" aria-label="Epoch Form">
         {{ form.csrf_token }}
-        <div id="epoch-form-edit-fields" class="form-hidden">
-          {{ form.edit_title(id="epoch-form-title-edit", value=false) }}
-          {{ form.edit_start_date(id="epoch-form-start-date-edit", value=false) }}
-          {{ form.edit_end_date(id="epoch-form-end-date-edit", value=false) }}
-          {{ form.edit_overview(id="summernote-overview-edit", value=false) }}
-          {{ form.edit_description(id="summernote-desc-edit", value=false) }}
-        </div>
 
         <div id="start-date-field" class="form-container form-container-small">
           <div class="campaign-form-label form-icon">
@@ -189,40 +186,19 @@
         
         </div>
 
-        <div id="epoch-desc-field" class="form-container form-container-large">
-          <div class="campaign-form-label form-icon">
-            <div class="campaign-form-label-container">
-              <img class="icon campaign-form-icon icon-invert" aria-label="Pen Icon"
-              src="{{ url_for('static', filename='images/icons/edit.svg') }}">
-          
-              <label for="summernote">
-                <h4 class="campaign-form label-title">Description</h4>
-              </label>
-
-              <div class="form-extra-button-area">
-                <button id="epoch-desc-button" type="button" class="button form-button">
-                  {% include "components/help_icon.html" %}
-                </button>
-                <button id="html-preview-button" type="button" class="button form-button form-preview-button">
-                  HTML PREVIEW
-                </button>
-              </div>
-
-            </div>
-            <p class="flavour-text" aria-label="Flavour Text">UWC-17-04 //  Epoch::Description</p>
-          </div>
-
-          {{ form.description(id="summernote-desc", 
-                              class_="campaign-input large-input event-input", 
-                              autocomplete="off", 
-                              placeholder="OPTIONAL") }}
-          {{ summernote.summernote_editor(placeholder="OPTIONAL", 
-                                          char_limit=none, 
-                                          id_suffix="-desc",
-                                          allow_images=true,
-                                          allow_urls=true) }}
-        
+        <div id="dynamic-field-area" class="dynamic-field-area">
+          {% for field in form.dynamic_fields %}
+            {% if field.field_type.data == "html" %}
+              {{ dynamic_fields.dynamic_html_field(field, loop.index) }}
+            {% elif field.field_type.data == "basic" %}
+              {{ dynamic_fields.dynamic_basic_field(field, loop.index) }}
+            {% elif field.field_type.data == "composite" %}
+              {{ dynamic_fields.dynamic_composite_field(field, loop.index) }}
+            {% endif %}
+          {% endfor %}
         </div>
+
+        {{ new_field_buttons.new_field_buttons() }}
 
         <div class="campaign-submit-area event-submit-area">
           {{ form.submit(class_="campaign-input campaign-submit", ) }}
@@ -248,6 +224,8 @@
     </div>
 
   </div>
+
+  {{ footer.form_footer("event", campaign, new=new) }}
 
 </div>
 
@@ -291,26 +269,35 @@
                 aria_label="Epoch Overview Help",
                 loop_index=3) }}
 
-{# Epoch Description Modal #}
+{# Footer help modal #}
 {{ modal.modal(type="help",
-               subtype="epoch_description",
-               title="Epoch Description",
-               aria_label="Epoch Description Help",
+               subtype="event_form",
+               title="Epoch Form Help",
+               aria_label="Epoch Form Help",
                loop_index=4) }}
 
-{# HTML Preview Modal #}
-{{ modal.modal(type="preview",
-              title="HTML Preview",
-              aria_label="HTML Preview",
-              loop_index=5) }}
+{# Template load modal #}
+{{ modal.modal(type="template",
+               title="Load Template",
+               subtype="load",
+               aria_label="Load Template",
+               loop_index=1,
+               button_text="LOAD",
+               form_action=url_for('template.load_template', campaign_name=campaign.url_title, campaign_id=campaign.id)) }} 
 
+{# Template deletion modal #}
+{{ modal.modal(type="template",
+               title="Delete Template",
+               subtype="delete",
+               aria_label="Delete Template",
+               loop_index=2,
+               button_text="DELETE",
+               form_action=url_for('template.delete_template', campaign_name=campaign.url_title, campaign_id=campaign.id)) }} 
 
 {# Variable to determine page type in searchbar script #}
 <div id="editPageVariable" class="hidden" editPage="true"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script src="{{ url_for('static', filename='js/pages/epoch/epoch_form.js') }}" type="module"></script>
-<script src="{{ url_for('static', filename='js/components/form_edited.js') }}" type="module"></script>
-<script src="{{ url_for('static', filename='js/components/unsaved_changes_warning.js') }}"></script>
-<script src="{{ url_for('static', filename='js/components/summernote_modal_close.js') }}"></script>
 
 {% endblock %}

@@ -6,6 +6,7 @@ export class CharCount {
     this.summernote = summernote;
 
     this.updateCharCount();
+    this.charField.addEventListener("input", this.updateCharCount.bind(this));
     $(document).on('summernoteFieldChanged', this.updateCharCount.bind(this)); 
   }
 
@@ -19,7 +20,5 @@ export class CharCount {
 
     var remainingChars = this.charLimit - currentChars;
     this.charCount.innerText = remainingChars;
-    
   }
-
 }

@@ -1,13 +1,17 @@
-from flask import abort
+from flask import abort, jsonify
 from flask_login import current_user
+from functools import wraps
 
 
-def permission_required(campaign):
+def permission_required(campaign, api=False):
     """Function for checking if user has campaign editing permissions"""
     if campaign in current_user.permissions:
         return True
     else:
-        abort(403) 
+        if api:
+            return jsonify(error="Access Denied"), 403
+        else:
+            abort(403) 
 
 
 def user_verification(user):
@@ -65,3 +69,20 @@ def check_comment_form_visibility(campaign):
         return True
         
     return False
+
+
+def login_required_api(function):
+    @wraps(function)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_authenticated:
+            return function(*args, **kwargs)
+        else:
+            return jsonify(error="Login required"), 401
+    return decorated_function
+
+
+def check_template_is_valid(template, campaign):
+    if template.parent_campaign == campaign and campaign in current_user.permissions:
+        return True
+    else:
+        abort(403)

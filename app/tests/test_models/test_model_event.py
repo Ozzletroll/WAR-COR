@@ -1,6 +1,9 @@
 from sqlalchemy import select
+import json
+from werkzeug.datastructures import MultiDict
 
 from app import db, models
+from app.forms.forms import CreateEventForm
 
 
 def test_setup(client, auth, campaign, event):
@@ -11,75 +14,107 @@ def test_setup(client, auth, campaign, event):
 
 
 def test_update(client):
-
     campaign_object = db.session.execute(
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
 
     event = models.Event()
-    event_form = {
-        "type": "Test",
-        "title": "Test Event",
-        "date": "5016/01/01 09:00:00",
-        "location": "Location",
-        "belligerents": "Belligerent 1, Belligerent 2",
-        "body": "Test Body Text",
-        "result": "Test Result",
-        "header": False,
-        "hide_time": False,
-    }
+
+    event_form = CreateEventForm(
+        MultiDict({
+            "type": "Test",
+            "title": "Test Event",
+            "date": "5016/01/01 09:00:00",
+            "dynamic_fields-0-title": "Title 1",
+            "dynamic_fields-0-value": "Value 1",
+            "dynamic_fields-0-is_full_width": False,
+            "dynamic_fields-0-field_type": "basic",
+            "dynamic_fields-1-title": "Title 2",
+            "dynamic_fields-1-value": "Value 2",
+            "dynamic_fields-1-is_full_width": False,
+            "dynamic_fields-1-field_type": "basic",
+            "hide_time": False,
+        })).data
+
     event.update(form=event_form,
                  parent_campaign=campaign_object,
                  new=True)
 
-    for field in event_form.keys():
-        if field == "body":
-            assert event_form[field] in getattr(event, field)
-        else:
-            assert getattr(event, field) == event_form[field]
+    for field in event_form:
+        assert getattr(event, field) == event_form[field]
 
-    # Test that form field without corresponding "edit_" field value of True
-    # does not update model
-    event_update_form = {
-       "type": "Test Edit",
-       "edit_type": False,
-       "title": "Test Event Edit",
-       "edit_title": False,
-       "date": "5016/01/01 09:00:01",
-       "edit_date": True,
-       "location": "Location Edit",
-       "edit_location": False,
-       "belligerents": "Belligerent 1, Belligerent 2, New Belligerent",
-       "edit_belligerents": False,
-       "body": "Test Body Text Edit",
-       "edit_body": True,
-       "result": "Test Result Edit",
-       "edit_result": False,
-       "header": False,
-       "hide_time": False,
-    }
 
-    event.update(form=event_update_form,
-                 parent_campaign=campaign_object)
+def test_map_dynamic_field_data(client):
+    # Case 1, correct data
+    test_data_1 = [{"title": "Title 1",
+                    "value": "Value 1",
+                    "is_full_width": False,
+                    "field_type": "basic"}]
 
-    assert event.type == "Test"
-    assert event.date == "5016/01/01 09:00:01"
-    assert event.body == "<p>Test Body Text Edit</p>"
+    event = models.Event()
+
+    test_1 = event.map_dynamic_field_data(test_data_1)
+    assert test_1 == test_data_1
+
+    # Case 2, disallowed html in value
+    test_data_2 = [{"title": "Title 2",
+                    "value": "<script>install_virus.exe</script>",
+                    "is_full_width": False,
+                    "field_type": "html"}]
+
+    test_2 = event.map_dynamic_field_data(test_data_2)
+    assert test_2 == [{"title": "Title 2",
+                       "value": "",
+                       "is_full_width": False,
+                       "field_type": "html"}]
+
+    # Case 3, correct composite field format
+    composite_data = json.dumps(
+        [{"entries": ["Entry 1", "Entry 2"],
+          "position": "1",
+          "title": "Group 1"}])
+
+    test_data_3 = [{"title": "Title 3",
+                    "value": composite_data,
+                    "is_full_width": False,
+                    "field_type": "composite"}]
+
+    test_3 = event.map_dynamic_field_data(test_data_3)
+    assert test_3 == [{"title": "Title 3",
+                       "value": [{"entries": ["Entry 1", "Entry 2"],
+                                  "position": "1",
+                                  "title": "Group 1"}],
+                       "is_full_width": False,
+                       "field_type": "composite"}]
+
+    # Case 4, incorrect composite field format
+    composite_data = json.dumps(
+        [{"entries": ["Entry 1", "Entry 2"],
+          "incorrect name": "1",
+          "title": "Group 1"}])
+
+    test_data_4 = [{"title": "Title 3",
+                    "value": composite_data,
+                    "is_full_width": False,
+                    "field_type": "composite"}]
+
+    test_4 = event.map_dynamic_field_data(test_data_4)
+    assert test_4 == [{"title": "Title 3",
+                       "value": [],
+                       "is_full_width": False,
+                       "field_type": "composite"}]
 
 
 def test_create_blank(client):
-
     event = models.Event()
     event.create_blank(datestring="5016/01/01 12:00:00")
 
     assert event.title == ""
     assert event.type == ""
-    assert event.body == ""
     assert event.date == "5016/01/01 12:00:00"
 
 
 def test_split_date(client):
-
     event = models.Event()
     event.split_date(datestring="5016/01/01 12:00:00")
 
@@ -91,37 +126,7 @@ def test_split_date(client):
     assert event.second == 0
 
 
-def test_separate_belligerents(client):
-
-    event_1 = models.Event()
-    event_1.belligerents = "Group 1 & Group 2, Group 3"
-
-    belligerents_1 = event_1.separate_belligerents()
-    # Assert two vs groups
-    assert len(belligerents_1) == 2
-    # Assert group's 1 and 2 in first list
-    assert len(belligerents_1[0]) == 2
-    assert belligerents_1[0][0] == "Group 1"
-    assert belligerents_1[0][1] == "Group 2"
-    # Assert group 2 in second list
-    assert len(belligerents_1[1]) == 1
-    assert belligerents_1[1][0] == "Group 3"
-
-    event_2 = models.Event()
-    event_2.belligerents = "Group 1, Group 2, Group 3, Group 4"
-    belligerents_2 = event_2.separate_belligerents()
-    # Assert four vs groups of 1 belligerent
-    assert len(belligerents_2) == 4
-    for group in belligerents_2:
-        assert len(group) == 1
-    assert belligerents_2[0][0] == "Group 1"
-    assert belligerents_2[1][0] == "Group 2"
-    assert belligerents_2[2][0] == "Group 3"
-    assert belligerents_2[3][0] == "Group 4"
-
-
 def test_set_url_title(client):
-
     event = models.Event()
     event.title = "Event Title"
     event.set_url_title()

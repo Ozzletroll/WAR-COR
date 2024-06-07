@@ -15,8 +15,8 @@
     {% set allow_urls = "link" %}
   {% endif %}
 
-  <script src="{{ url_for('static', filename='js/components/summernote_initialise.js') }}"></script>
-  <script>
+  <script type="module">
+    import { summernoteInitialise } from "{{ url_for('static', filename='js/components/summernote_initialise.js') }}"
     summernoteInitialise("{{ id_suffix }}", 
                          "{{ placeholder }}", 
                          "{{ char_limit }}", 

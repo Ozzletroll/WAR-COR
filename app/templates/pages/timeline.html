@@ -4,6 +4,8 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
 {% import "components/back_button.html" as back_button %}
+{% import "components/footer.html" as footer %}
+{% import "components/modal.html" as modal%}
 
 {% import "components/timeline/month.html" as timeline_month %}
 
@@ -172,35 +174,6 @@
             <p class="flavour-text">Awaiting conflict data input</p>
           {% endif %}
         </section>
-      {% else %}
-        {% if edit %}
-          <section class="new-timeline-data-buttons data-buttons-hor" aria-label="New Timeline Item Buttons">
-            <div class="data-button">
-              <a class="first-event-link button new-timeline-item first-event-button" 
-              href="{{ url_for('event.add_event', 
-              campaign_name=campaign.url_title,
-              campaign_id=campaign.id) }}">
-              NEW EVENT
-              </a>
-              <p class="flavour-text">Events make up the main structure of the timeline. They represent events or occurences
-                that take place at specific dates. Events are rendered in grouped year/month/day blocks.
-              </p>
-            </div>
-
-            <div class="data-button">
-              <a class="first-event-link button new-timeline-item first-event-button" 
-                href="{{ url_for('epoch.new_epoch', 
-                campaign_name=campaign.url_title,
-                campaign_id=campaign.id ) }}">
-                NEW EPOCH
-              </a>
-              <p class="flavour-text">An epoch represents an era or a time period during a campaign.
-                Epochs are placed at the month level within the timeline, and encapsulate 
-                all the events that take place within them.</p>
-            </div>
-
-          </section>
-        {% endif %}
       {% endif %}
 
       <!-- Timeline -->
@@ -271,22 +244,28 @@
 
   </div>
 
+  {% if edit %}
+    {{ footer.timeline_footer(campaign) }}
+  {% endif %}
+
 </div>
+
+{# Footer help modal #}
+{{ modal.modal(type="help",
+               subtype="timeline",
+               title="Timeline Help",
+               aria_label="Timeline Help",
+               loop_index=1) }}
 
 {% if edit %}
   <div id="editPageVariable" class="hidden" editPage="true"></div>
 {% else %}
   <div id="editPageVariable" class="hidden" editPage="false"></div>
 {% endif %}
-<script src="{{ url_for('static', filename='js/pages/timeline/margin_fix.js') }}"></script>
-<script src="{{ url_for('static', filename='js/pages/timeline/epoch_line_adjust.js') }}"></script>
-<script src="{{ url_for('static', filename='js/pages/timeline/timeline_left_markers.js') }}"></script>
+
 <script src="{{ url_for('static', filename='js/components/scroll_target.js') }}"></script> 
-<script src="{{ url_for('static', filename='js/components/user_image_styling.js') }}"></script>
+<script src="{{ url_for('static', filename='js/pages/timeline/timeline.js') }}" type="module"></script>
 <script>
-  formatImageElements(".campaign-overview p");
-  window.addEventListener("resize", marginFix);
-  window.addEventListener('DOMContentLoaded', marginFix());
   window.addEventListener('DOMContentLoaded', scrollToTarget('{{ url_for("session.timeline_target") }}', '{{ csrf_token() }}'));
 </script>
 
