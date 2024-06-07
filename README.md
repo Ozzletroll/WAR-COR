@@ -28,10 +28,10 @@ WAR/COR is a dynamic timeline creator, for structured, military-style RPG combat
 
 - Dynamic timeline creation
     - One-click event placement
-    - Freeform event layout using dynamic fields
-    - Non-standard calendar support
-    - Save/load templates for easy reuse
     - Group events into custom epochs
+    - Non-standard calendar support
+    - Freeform layout using dynamic fields
+    - Save/load templates for easy reuse
 - Collaborate with players
     - Share editing privileges
     - Set custom callsigns
