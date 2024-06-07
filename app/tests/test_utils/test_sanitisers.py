@@ -1,4 +1,5 @@
-from app.utils.sanitisers import sanitise_input, sanitise_json
+from app.utils.sanitisers import sanitise_input, sanitise_json, sanitise_share_code
+from app.models import Template
 
 
 def test_sanitise_input():
@@ -175,3 +176,12 @@ def test_sanitise_json():
 
     assert sanitise_json(backup_valid_test_data, "backup") != ""
     assert sanitise_json(backup_invalid_test_data, "backup") == ""
+
+
+def test_sanitise_share_code():
+
+    valid_share_code = Template().generate_share_code()
+    invalid_share_code = "An invalid share code"
+
+    assert sanitise_share_code(valid_share_code) != ""
+    assert sanitise_share_code(invalid_share_code) == ""
