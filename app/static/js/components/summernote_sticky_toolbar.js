@@ -34,6 +34,7 @@
       let $editor = context.layoutInfo.editor;
       let $toolbar = context.layoutInfo.toolbar;
       let options = context.options.stickyToolbar;
+      let $dynamicField = context.layoutInfo.editor.closest('.dynamic-field')
 
       this.initialize = function () {
         if (options.enabled) {
@@ -52,10 +53,22 @@
             'top': options.offset,
             'z-index': options.zIndex,
           });
+          $editor.css({
+            'clip-path': 'none',
+          });
+          $dynamicField.css({
+            'z-index': options.zIndex,
+          });
         } else {
           $toolbar.css({
             'position': 'static',
             'top': 0,
+          });
+          $editor.css({
+            'clip-path': '',
+          })
+          $dynamicField.css({
+            'z-index': '',
           });
         }
       };
