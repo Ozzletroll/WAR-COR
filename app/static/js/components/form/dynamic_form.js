@@ -137,8 +137,8 @@ export class DynamicForm {
         id,
         "OPTIONAL",
         null,
-        true,
-        true
+        "True",
+        "True"
       );
 
       // Add event listeners to all summernote modals
