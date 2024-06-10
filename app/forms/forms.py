@@ -109,6 +109,16 @@ class CreateEventForm(DynamicForm):
 
     submit = SubmitField("Create Event")
 
+    def format_date_fields(self, event):
+
+        fields_to_format = ["month", "day", "hour", "minute", "second"]
+
+        for field in fields_to_format:
+            attribute = getattr(self, field)
+            value = getattr(event, field)
+            if value is not None:
+                attribute.data = str(value).zfill(2)
+
 
 class CreateEpochForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
@@ -124,6 +134,16 @@ class CreateEpochForm(DynamicForm):
     overview = TextAreaField("Overview")
 
     submit = SubmitField("Create Epoch")
+
+    def format_date_fields(self, epoch):
+
+        fields_to_format = ["start_month", "start_day", "end_month", "end_day"]
+
+        for field in fields_to_format:
+            attribute = getattr(self, field)
+            value = getattr(epoch, field)
+            if value is not None:
+                attribute.data = str(value).zfill(2)
 
 
 class SearchUserForm(FlaskForm):

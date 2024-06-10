@@ -133,6 +133,7 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
     form = forms.CreateEpochForm(obj=epoch)
+    form.format_date_fields(epoch)
     form.submit.label.text = "Update Epoch"
     delete_form = forms.SubmitForm()
 
