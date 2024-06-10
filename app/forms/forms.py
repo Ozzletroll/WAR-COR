@@ -102,8 +102,8 @@ class CreateEventForm(DynamicForm):
     month = IntegerField("Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
     day = IntegerField("Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
     hour = IntegerField("Hour", validators=[DataRequired(), NumberRange(min=1, max=99)])
-    minute = IntegerField("Minute", validators=[DataRequired(), NumberRange(min=0, max=59)])
-    second = IntegerField("Second", validators=[DataRequired(), NumberRange(min=0, max=59)])
+    minute = IntegerField("Minute", validators=[InputRequired(), NumberRange(min=0, max=59)])
+    second = IntegerField("Second", validators=[InputRequired(), NumberRange(min=0, max=59)])
 
     hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
 
