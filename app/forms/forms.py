@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, EmailField, SubmitField, PasswordField, \
                     BooleanField, FileField, IntegerField, TextAreaField, FieldList, FormField
-from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email, NumberRange
 
 from app.forms.validators import *
 
@@ -97,7 +97,14 @@ class DynamicForm(FlaskForm):
 class CreateEventForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
-    date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
+
+    year = IntegerField("Year", validators=[DataRequired()])
+    month = IntegerField("Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    day = IntegerField("Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    hour = IntegerField("Hour", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    minute = IntegerField("Minute", validators=[DataRequired(), NumberRange(min=0, max=59)])
+    second = IntegerField("Second", validators=[DataRequired(), NumberRange(min=0, max=59)])
+
     hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
 
     submit = SubmitField("Create Event")
@@ -105,8 +112,15 @@ class CreateEventForm(DynamicForm):
 
 class CreateEpochForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
-    start_date = StringField("Start Date", validators=[date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after()])
+
+    start_year = IntegerField("Start Year", validators=[DataRequired()])
+    start_month = IntegerField("Start Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    start_day = IntegerField("Start Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
+
+    end_year = IntegerField("End Year", validators=[DataRequired()])
+    end_month = IntegerField("End Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    end_day = IntegerField("End Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
+
     overview = TextAreaField("Overview")
 
     submit = SubmitField("Create Epoch")
