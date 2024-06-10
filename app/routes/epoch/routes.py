@@ -133,9 +133,11 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
     form = forms.CreateEpochForm(obj=epoch)
-    form.format_date_fields(epoch)
     form.submit.label.text = "Update Epoch"
     delete_form = forms.SubmitForm()
+
+    if request.method == "GET":
+        form.format_date_fields(epoch)
 
     # If loading from template, update for with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":

@@ -157,9 +157,11 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
     session["timeline_scroll_target"] = f"event-{event.id}"
 
     form = forms.CreateEventForm(obj=event)
-    form.format_date_fields(event)
     form.submit.label.text = "Update Event"
     delete_form = forms.SubmitForm()
+
+    if request.method == "GET":
+        form.format_date_fields(event)
 
     # If loading from template, update for with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":
