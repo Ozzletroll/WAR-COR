@@ -1,6 +1,7 @@
 import { Modal } from "../../components/modal.js";
 import { DynamicForm } from "../../components/form/dynamic_form.js";
 import { FormFooter } from "../../components/ui/footer.js";
+import { DateField } from "../../components/datefield.js";
 
 
 // Create dynamic form 
@@ -56,4 +57,18 @@ const formFooter = new FormFooter({
   deleteButton: document.getElementById("footer-delete-button"),
   templatesButton: document.getElementById("footer-templates-button"),
   templateMenu: document.getElementById("templates-menu"),
+})
+
+// Create date fields to add leading zeroes
+const startMonthField = new DateField({
+  element: document.getElementById("epoch-form-start-month"),
+})
+const startDayField = new DateField({
+  element: document.getElementById("epoch-form-start-day"),
+})
+const endMonthField = new DateField({
+  element: document.getElementById("epoch-form-end-month"),
+})
+const endDayField = new DateField({
+  element: document.getElementById("epoch-form-end-day"),
 })
