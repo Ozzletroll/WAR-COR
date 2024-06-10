@@ -29,6 +29,11 @@ export function summernoteInitialise(
         pastePlainText(event, editor, charLimit);
       },
     },
+    stickyToolbar: {
+      enabled: true,
+      offset: 54,
+      zIndex: 9999
+    },
     disableDragAndDrop: true,
     placeholder: "<p>" + placeholder + "</p>",
     dialogsClass: "summernote-dialog",
@@ -40,14 +45,14 @@ export function summernoteInitialise(
     toolbar: [
       ['style', ['style']],
       ['font', ['bold', 'italic', 'underline', 'clear']],
-      ['para', ['ul', 'ol', 'paragraph']],,
-      ['insert', [allowURLS, allowImages]]
+      ['para', ['ul', 'ol', 'paragraph']],
+      ['insert', [allowURLS, allowImages]],
     ],
     popover: {
       image: [
         ['remove', ['removeMedia']]
       ]
-    }
+    },
   });
 }
 
