@@ -101,13 +101,18 @@ class Event(db.Model):
 
         return data
 
-    def create_blank(self, datestring):
+    def create_blank(self, date_values):
         """ Method to create a blank temporary pending event for pre-populating form.
-            Takes an incremented date-string from organisers.format_event_datestring(). """
+            Takes a dict of incremented date values from organisers.increment_date(). """
 
         self.title = ""
         self.type = ""
-        self.date = datestring
+        self.year = date_values["year"]
+        self.month = date_values["month"]
+        self.day = date_values["day"]
+        self.hour = date_values["hour"]
+        self.minute = date_values["minute"]
+        self.second = date_values["second"]
 
     def set_date(self):
         """ Method that formats date as string for template rendering """
