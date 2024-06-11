@@ -36,7 +36,6 @@ def increment_date(datestring, args):
 
         return incremented_values
 
-    
     # Map arguments to column index values
     date_mapping = {
         "new_hour": 2,
