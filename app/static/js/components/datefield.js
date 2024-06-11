@@ -1,7 +1,6 @@
 export class DateField {
   constructor({
     element,
-    allowZero,
   })
   {
     this.element = element;
