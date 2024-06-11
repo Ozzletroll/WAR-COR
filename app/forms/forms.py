@@ -145,6 +145,18 @@ class CreateEpochForm(DynamicForm):
             if value is not None:
                 attribute.data = str(value).zfill(2)
 
+    def validate(self, extra_validators=None):
+
+        # First call base class's validate function
+        returnValue = DynamicForm.validate(self)
+        if not returnValue:
+            return False
+        
+        # Call custom validator
+        if not date_is_after(self):
+            return False
+        
+        return True
 
 class SearchUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])

@@ -1,3 +1,4 @@
+from flask import flash
 from wtforms.validators import ValidationError
 import re
 import nh3
@@ -70,25 +71,15 @@ def image_url():
     return _image_url
 
 
-def date_is_after():
+def date_is_after(form):
 
-    def _date_is_after(form, field):
-
-        start_date = form.start_date.data
-        end_date = field.data
-
-        # Convert to integers, catching exception if incorrect format submitted
-        try:
-            start_year, start_month, start_day = map(int, start_date.split("/"))
-            end_year, end_month, end_day = map(int, end_date.split("/"))
-        except ValueError:
-            # The date_format validator will raise a Validation error already.
-            return
-
-        if (start_year, start_month, start_day) > (end_year, end_month, end_day):
-            raise ValidationError("End Date must be after Start Date")
-
-    return _date_is_after
+    if ((form.start_year.data, form.start_month.data, form.start_day.data) 
+        > (form.end_year.data, form.end_month.data, form.end_day.data)):
+        
+        flash("DATE: End Date must be after Start Date")
+        return False
+    
+    return True
 
 
 def plain_text_length(max=600, required=False):
