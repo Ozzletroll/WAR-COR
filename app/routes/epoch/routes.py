@@ -60,6 +60,7 @@ def new_epoch(campaign_name, campaign_id):
     form = forms.CreateEpochForm()
     
     if "date" in request.args and request.method == "GET":
+
         # Get the date argument
         datestring = request.args["date"]
         args = request.args
