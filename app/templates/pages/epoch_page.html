@@ -99,7 +99,7 @@
                   {% endif %}
                 {% endfor %}
 
-                {% if epoch_events is not none %}
+                {% if epoch.events | length > 0 %}
                   <div class="timeline-container epoch-events-container" aria-label="Epoch Timeline">
                     <h4 class="epoch-events-header">
                         EPOCH DATA
