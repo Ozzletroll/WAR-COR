@@ -2209,6 +2209,11 @@ p {
     flex-wrap: wrap;
   }
 
+  .date-container .form-label {
+    font-size: 12px;
+    top: 9px;
+  }
+
 }  
 
 @media screen and (max-width: 500px){
