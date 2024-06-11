@@ -62,10 +62,13 @@ const dayField = new DateField({
 })
 const hourField = new DateField({
   element: document.getElementById("event-form-hour"),
+  allowZero: true,
 })
 const minuteField = new DateField({
   element: document.getElementById("event-form-minute"),
+  allowZero: true,
 })
 const secondField = new DateField({
   element: document.getElementById("event-form-second"),
+  allowZero: true,
 })
