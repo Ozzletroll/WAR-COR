@@ -120,7 +120,20 @@ class Epoch(db.Model):
             with dashes '-'. """
         
         self.url_title = self.title.replace(" ", "-")
-        
+
+    def create_blank(self, date_values):
+        """ Method to create a blank temporary pending epoch for pre-populating form.
+            Takes a list of separated date values from formatters.split_date(). """
+
+        self.title = ""
+        self.type = ""
+        self.start_year = date_values[0]
+        self.start_month = date_values[1]
+        self.start_day = date_values[2]
+        self.end_year = date_values[0]
+        self.end_month = date_values[1]
+        self.end_day = date_values[2]
+
     def populate_self(self):
         """ Method to get all events in parent campaign that fall
         between the epochs start and end dates, and flag self
