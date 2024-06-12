@@ -7,6 +7,7 @@ from app import db, models
 from app.utils import authenticators
 import app.utils.formatters as formatters
 import app.utils.messengers as messengers
+import app.utils.validators as validators
 
 from app.routes.event import bp
 
@@ -78,9 +79,9 @@ def add_event(campaign_name, campaign_id):
     form = forms.CreateEventForm()
 
     if "date" in request.args and request.method == "GET":
+        args = validators.validate_event_url_parameters(request.args)
         # Get the date argument and increment by specified amount
         datestring = request.args["date"]
-        args = request.args
         date_values = formatters.increment_date(datestring, args)
         # Create placeholder event to prepopulate form
         event = models.Event()
