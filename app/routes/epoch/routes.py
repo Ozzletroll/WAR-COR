@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from app import db, models
 from app.forms import forms
-from app.utils import authenticators, formatters
+from app.utils import authenticators, formatters, validators
 
 from app.routes.epoch import bp
 
@@ -60,10 +60,9 @@ def new_epoch(campaign_name, campaign_id):
     form = forms.CreateEpochForm()
     
     if "date" in request.args and request.method == "GET":
-
         # Get the date argument
         datestring = request.args["date"]
-        args = request.args
+        args = validators.validate_epoch_url_parameters(request.args)
         date_values = formatters.split_date(datestring)
         # Create placeholder event to prepopulate form
         epoch = models.Epoch()
