@@ -4,6 +4,11 @@ from app import db
 from app.routes.error import bp
 
 
+@bp.app_errorhandler(400)
+def bad_request_error(error):
+    return render_template("pages/error.html", error=error), 400
+
+
 @bp.app_errorhandler(401)
 def access_denied_error(error):
     flash("Please log in to access this page")
