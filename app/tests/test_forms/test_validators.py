@@ -22,37 +22,6 @@ def validate_fixture():
     return _validate
 
 
-def test_date_format(validate_fixture):
-    correct_event_format = "5016/01/01 12:00:00"
-    correct_epoch_format = "5016/01/01"
-    incorrect_event_format = "5016/1/01 12:00:00"
-    incorrect_epoch_format = "5016/0101"
-
-    # Test that incorrect formats raise ValidationErrors
-    with pytest.raises(ValidationError):
-        validate_fixture(date_format("event"),
-                         forms.CreateEventForm,
-                         {"date": incorrect_event_format},
-                         incorrect_event_format)
-
-    with pytest.raises(ValidationError):
-        validate_fixture(date_format("epoch"),
-                         forms.CreateEventForm,
-                         {"date": incorrect_epoch_format},
-                         incorrect_epoch_format)
-
-    # Test correct format passes
-    validate_fixture(date_format("event"),
-                     forms.CreateEventForm,
-                     {"date": correct_event_format},
-                     correct_event_format)
-
-    validate_fixture(date_format("epoch"),
-                     forms.CreateEventForm,
-                     {"date": correct_epoch_format},
-                     correct_epoch_format)
-
-
 def test_file_format(validate_fixture):
     # Test that 6MB file raises ValidationError
     with pytest.raises(ValidationError):
@@ -97,19 +66,36 @@ def test_image_url(validate_fixture):
                      correct_image_url)
 
 
-def test_date_is_after(validate_fixture):
-    with pytest.raises(ValidationError):
-        validate_fixture(date_is_after(),
-                         forms.CreateEpochForm,
-                         form_data={"start_date": "5016/01/05",
-                                    "end_date": "5015/12/04"},
-                         field_data="5015/12/04")
+def test_date_is_after(client, validate_fixture):
 
-    validate_fixture(date_is_after(),
-                     forms.CreateEpochForm,
-                     form_data={"start_date": "5016/01/05",
-                                "end_date": "5016/02/11"},
-                     field_data="5016/02/11")
+    valid_data = {
+        "start_year": 5016,
+        "start_month": 1,
+        "start_day": 5,
+        "end_year": 5016,
+        "end_month": 2,
+        "end_day": 1,
+    }
+
+    invalid_data = {
+        "start_year": 5016,
+        "start_month": 1,
+        "start_day": 5,
+        "end_year": 5015,
+        "end_month": 5,
+        "end_day": 2,
+    }
+
+    valid_form = forms.CreateEpochForm()
+    for key, value in valid_data.items():
+        getattr(valid_form, key).data = value
+
+    invalid_form = forms.CreateEpochForm()
+    for key, value in invalid_data.items():
+        getattr(invalid_form, key).data = value
+
+    assert date_is_after(valid_form)
+    assert not date_is_after(invalid_form)
 
 
 def test_plain_text_length(validate_fixture):
