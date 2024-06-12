@@ -11,21 +11,40 @@ def data_export(campaign):
 
     events_data = []
     for event in campaign.events:
-        event_dict = {"type": event.type,
-                      "title": event.title,
-                      "date": event.date,
-                      "hide_time": event.hide_time,
-                      "dynamic_fields": event.dynamic_fields, }
+        event_dict = {
+            "type": event.type,
+            "title": event.title,
+            "hide_time": event.hide_time,
+            "dynamic_fields": event.dynamic_fields,
+            "date": {
+                "year": event.year,
+                "month": event.month,
+                "day": event.day,
+                "hour": event.hour,
+                "minute": event.minute,
+                "second": event.second
+            }
+        }
 
         events_data.append(event_dict)
 
     epoch_data = []
     for epoch in campaign.epochs:
-        epoch_dict = {"title": epoch.title,
-                      "start_date": epoch.start_date,
-                      "end_date": epoch.end_date,
-                      "overview": epoch.overview,
-                      "dynamic_fields": epoch.dynamic_fields}
+        epoch_dict = {
+            "title": epoch.title,
+            "overview": epoch.overview,
+            "dynamic_fields": epoch.dynamic_fields,
+            "start_date": {
+                "start_year": epoch.start_year,
+                "start_month": epoch.start_month,
+                "start_day": epoch.start_day,
+            },
+            "end_date": {
+                "end_year": epoch.end_year,
+                "end_month": epoch.end_month,
+                "end_day": epoch.end_day,
+            }
+        }
 
         epoch_data.append(epoch_dict)
 
@@ -162,13 +181,27 @@ def events_import(event, campaign):
     }
     for field_name, requirement in expected_values.items():
         try:
-            event[field_name]
+            event[field_name]    
         except KeyError:
             if requirement == "required":
                 errors.append(f"Unable to locate {field_name}")
-        
+
+        if field_name == "date":
+            for field in ["year", "month", "day", "hour", "minute", "second"]:
+                try:
+                    event[field_name][field]
+                except KeyError:
+                    errors.append(f"Unable to locate {field_name}: {field}")
+
+    # If no errors, proceed with import
     if len(errors) == 0:
-        form = {field_name: value for field_name, value in event.items()}
+        form = {}
+        for field_name, value in event.items():
+            if isinstance(value, dict):
+                form.update(value)
+            else:
+                form[field_name] = value
+
         try:
             new_event.update(form, parent_campaign=campaign, new=True)
         except AttributeError:
@@ -200,8 +233,28 @@ def epochs_import(epoch, campaign):
             if requirement == "required":
                 errors.append(f"Unable to locate {field_name}")
 
+        field_subfields = {
+            "start_date": ["start_year", "start_month", "start_day"],
+            "end_date": ["end_year", "end_month", "end_day"]
+        }
+
+        for field_name, subfields in field_subfields.items():
+            for subfield in subfields:
+                try:
+                    epoch[field_name][subfield]
+                except KeyError:
+                    errors.append(f"Unable to locate {field_name}: {subfield}")
+
+    # If no errors, proceed with import
     if len(errors) == 0:
-        form = {field_name: value for field_name, value in epoch.items()}
+
+        form = {}
+        for field_name, value in epoch.items():
+            if isinstance(value, dict):
+                form.update(value)
+            else:
+                form[field_name] = value
+
         try:
             new_epoch.update(form, parent_campaign=campaign, new=True)
         except AttributeError:

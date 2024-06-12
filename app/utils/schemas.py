@@ -79,9 +79,20 @@ BACKUP_SCHEMA = {
                 "properties": {
                     "type": {"type": ["string", "null"]},
                     "title": {"type": ["string", "null"]},
-                    "date": {"type": ["string", "null"]},
                     "hide_time": {"type": ["boolean", "null"]},
                     "dynamic_fields": DYNAMIC_FIELD_SCHEMA,
+                    "date": {
+                        "type": "object",
+                        "properties": {
+                            "year": {"type": ["integer", "null"]},
+                            "month": {"type": ["integer", "null"]},
+                            "day": {"type": ["integer", "null"]},
+                            "hour": {"type": ["integer", "null"]},
+                            "minute": {"type": ["integer", "null"]},
+                            "second": {"type": ["integer", "null"]},
+                        },
+                        "required": ["year", "month", "day", "hour", "minute", "second"]
+                    }
                 },
                 "required": ["type", "title", "date"]
             }
@@ -92,10 +103,26 @@ BACKUP_SCHEMA = {
                 "type": "object",
                 "properties": {
                     "title": {"type": ["string", "null"]},
-                    "start_date": {"type": ["string", "null"]},
-                    "end_date": {"type": ["string", "null"]},
                     "overview": {"type": ["string", "null"]},
                     "dynamic_fields": DYNAMIC_FIELD_SCHEMA,
+                    "start_date": {
+                        "type": "object",
+                        "properties": {
+                            "start_year": {"type": ["integer", "null"]},
+                            "start_month": {"type": ["integer", "null"]},
+                            "start_day": {"type": ["integer", "null"]},
+                        },
+                        "required": ["start_year", "start_month", "start_day"]
+                    },
+                    "end_date": {
+                        "type": "object",
+                        "properties": {
+                            "end_year": {"type": ["integer", "null"]},
+                            "end_month": {"type": ["integer", "null"]},
+                            "end_day": {"type": ["integer", "null"]},
+                        },
+                        "required": ["end_year", "end_month", "end_day"]
+                    }
                 },
                 "required": ["title", "start_date", "end_date"]
             }

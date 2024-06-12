@@ -56,10 +56,7 @@ class Epoch(db.Model):
             if value is not None or new:
 
                 if field == "overview":
-                    value = sanitise_input(value, allow_urls=False)
-                    if value in ["<p><br/></p>", ""]:
-                        value = None
-                    self.overview = value
+                    self.overview = sanitise_input(value, allow_urls=False)
                 elif field == "dynamic_fields":
                     data = self.map_dynamic_field_data(value)
                     self.dynamic_fields = data
