@@ -4,10 +4,7 @@ from datetime import datetime
 
 from app.forms import forms
 from app import db, models
-from app.utils import authenticators
-import app.utils.formatters as formatters
-import app.utils.messengers as messengers
-import app.utils.validators as validators
+from app.utils import authenticators, formatters, messengers, validators
 
 from app.routes.event import bp
 
