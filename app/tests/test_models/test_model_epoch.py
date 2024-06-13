@@ -63,7 +63,7 @@ def test_update(client):
             assert getattr(epoch, field) == epoch_form[field]
 
 
-def test_map_dynamic_fields():
+def test_map_dynamic_field_data():
     epoch = models.Epoch()
 
     input_value = [
