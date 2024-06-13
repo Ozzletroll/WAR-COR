@@ -107,7 +107,8 @@ class Epoch(db.Model):
 
         return data
 
-    def set_date(self, year, month, day):
+    @staticmethod
+    def set_date(year, month, day):
         """ Method that formats date as string for template rendering """
 
         return f"{year}/{str(month).zfill(2)}/{str(day).zfill(2)}"
@@ -123,7 +124,6 @@ class Epoch(db.Model):
             Takes a list of separated date values from formatters.split_date(). """
 
         self.title = ""
-        self.type = ""
         self.start_year = date_values[0]
         self.start_month = date_values[1]
         self.start_day = date_values[2]
