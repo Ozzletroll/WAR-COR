@@ -13,39 +13,88 @@ def test_split_date():
     assert output_2 == [150432, 99, 99, 25, 10, 0]
 
     test_string_3 = "5016/01/01"
-    output_3 = formatters.split_date(test_string_3, epoch_date=True)
+    output_3 = formatters.split_date(test_string_3)
     assert output_3 == [5016, 1, 1]
 
 
-def test_increment_datestring():
+def test_increment_date():
 
     test_string_1 = "5016/01/01 10:00:00"
-    output_1 = formatters.increment_datestring(test_string_1, args={"new_month": True})
-    assert output_1 == "5016/02/01 00:00:00"
+    output_1 = formatters.increment_date(test_string_1, args={"new_month": True})
+    assert output_1 == {
+        "year": 5016,
+        "month": 2,
+        "day": 1,
+        "hour": 10,
+        "minute": 0,
+        "second": 0,
+    }
 
     test_string_2 = "5016/99/01 10:00:00"
-    output_2 = formatters.increment_datestring(test_string_2, args={"new_month": True})
-    assert output_2 == "5017/01/01 00:00:00"
+    output_2 = formatters.increment_date(test_string_2, args={"new_month": True})
+    assert output_2 == {
+        "year": 5017,
+        "month": 1,
+        "day": 1,
+        "hour": 10,
+        "minute": 0,
+        "second": 0,
+    }
 
     test_string_3 = "5016/01/01 10:00:00"
-    output_3 = formatters.increment_datestring(test_string_3, args={"new_day": True})
-    assert output_3 == "5016/01/02 00:00:00"
+    output_3 = formatters.increment_date(test_string_3, args={"new_day": True})
+    assert output_3 == {
+        "year": 5016,
+        "month": 1,
+        "day": 2,
+        "hour": 10,
+        "minute": 0,
+        "second": 0,
+    }
 
     test_string_4 = "5016/01/99 10:00:00"
-    output_4 = formatters.increment_datestring(test_string_4, args={"new_day": True})
-    assert output_4 == "5016/02/01 00:00:00"
+    output_4 = formatters.increment_date(test_string_4, args={"new_day": True})
+    assert output_4 == {
+        "year": 5016,
+        "month": 2,
+        "day": 1,
+        "hour": 10,
+        "minute": 0,
+        "second": 0,
+    }
 
     test_string_5 = "5016/01/01 10:00:00"
-    output_5 = formatters.increment_datestring(test_string_5, args={"new_hour": True})
-    assert output_5 == "5016/01/01 11:00:00"
+    output_5 = formatters.increment_date(test_string_5, args={"new_hour": True})
+    assert output_5 == {
+        "year": 5016,
+        "month": 1,
+        "day": 1,
+        "hour": 11,
+        "minute": 0,
+        "second": 0,
+    }
 
     test_string_6 = "5016/01/01 99:00:00"
-    output_6 = formatters.increment_datestring(test_string_6, args={"new_hour": True})
-    assert output_6 == "5016/01/02 01:00:00"
+    output_6 = formatters.increment_date(test_string_6, args={"new_hour": True})
+    assert output_6 == {
+        "year": 5016,
+        "month": 1,
+        "day": 2,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+    }
 
-    test_string_6 = "5016/99/99 99:00:00"
-    output_6 = formatters.increment_datestring(test_string_6, args={"new_hour": True})
-    assert output_6 == "5017/01/01 01:00:00"
+    test_string_7 = "5016/99/99 99:00:00"
+    output_7 = formatters.increment_date(test_string_7, args={"new_hour": True})
+    assert output_7 == {
+        "year": 5017,
+        "month": 1,
+        "day": 1,
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+    }
 
 
 def test_format_user_search_results(client):
