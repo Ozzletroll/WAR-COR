@@ -148,8 +148,8 @@ class CreateEpochForm(DynamicForm):
     def validate(self, extra_validators=None):
 
         # First call base class's validate function
-        returnValue = DynamicForm.validate(self)
-        if not returnValue:
+        return_value = DynamicForm.validate(self)
+        if not return_value:
             return False
         
         # Call custom validator
@@ -157,6 +157,7 @@ class CreateEpochForm(DynamicForm):
             return False
         
         return True
+
 
 class SearchUserForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
