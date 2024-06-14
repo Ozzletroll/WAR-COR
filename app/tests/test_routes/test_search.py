@@ -17,22 +17,28 @@ def test_advanced_search(client, auth, campaign, event):
         .filter_by(title="Backup Test Campaign")).scalar()
 
     # Use MultiDict to mimic dynamic form
-    event_data_1 = MultiDict({
-        "type": "Test",
+    # None values are used to represent False boolean checkbox values
+    event_form = MultiDict({
         "title": "Test Event",
-        "date": "5016/01/01 09:00:00",
-        "dynamic_fields-0-title": "Title 1",
+        "type": "Test",
+        "year": 5016,
+        "month": 1,
+        "day": 1,
+        "hour": 9,
+        "minute": 0,
+        "second": 0,
+        "hide_time": "",
+        "dynamic_fields-0-title": "Field 1 Title",
         "dynamic_fields-0-value": "Lorem ipsum",
-        "dynamic_fields-0-is_full_width": False,
+        "dynamic_fields-0-is_full_width": "",
         "dynamic_fields-0-field_type": "basic",
-        "dynamic_fields-1-title": "Title 2",
+        "dynamic_fields-1-title": "Field 2 Title",
         "dynamic_fields-1-value": "Different value",
-        "dynamic_fields-1-is_full_width": False,
+        "dynamic_fields-1-is_full_width": "",
         "dynamic_fields-1-field_type": "basic",
-        "hide_time": False,
     })
 
-    event.create(campaign_object, event_data_1)
+    event.create(campaign_object, event_form)
 
     url = url_for("search.advanced_search",
                   campaign_name=campaign_object.title,
@@ -49,4 +55,4 @@ def test_advanced_search(client, auth, campaign, event):
 
     response_2 = client.post(url, data=search_data, follow_redirects=True)
     assert response_2.status_code == 200
-    assert b'Test Event' in response_2.data and b'Matching fields: Title 1' in response_2.data
+    assert b'Test Event' in response_2.data and b'Matching fields: Field 1 Title' in response_2.data
