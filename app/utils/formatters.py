@@ -20,7 +20,8 @@ def increment_date(datestring, args):
         at the value of the given index. Rollover values are specified in 
         the "rollover" list. """
 
-        rollover = [float("inf"), 100, 100, 100, 59, 59][-len(values):]
+        # Year, month, day, hour, minute, second rollover values
+        rollover = list(reversed([float("inf"), 100, 100, 100, 59, 59][-len(values):]))
         incremented_values = []
 
         # Working from the smallest unit, increment by one from the given index
@@ -28,7 +29,12 @@ def increment_date(datestring, args):
             if index == column:
                 value += 1
                 if value >= rollover[index] and index != len(values) - 1:
-                    value = 1
+                    # Reset to zero on hour rollover
+                    if column <= 2:
+                        value = 0
+                    # All other values reset to 1
+                    else:
+                        value = 1
                     column += 1
             incremented_values.append(value)
 
