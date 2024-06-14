@@ -1,7 +1,10 @@
 from sqlalchemy import select
 from flask import url_for
-from app import db
-from app import models
+from werkzeug.datastructures import MultiDict
+from bs4 import BeautifulSoup
+
+from app import db, models
+from app.forms.forms import CreateEventForm
 
 TEST_PASSWORD = "123456768"
 
@@ -48,12 +51,27 @@ def test_add_event(client, auth, campaign, event):
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
 
-    event_data = {
-        "type": "Test",
+    # Test epoch form data
+    # None values are used to represent False boolean checkbox values
+    event_form = MultiDict({
         "title": "Test Event",
-        "date": "5016/01/01 09:00:00",
-        "hide_time": False,
-    }
+        "type": "Test",
+        "year": 5016,
+        "month": 1,
+        "day": 1,
+        "hour": 9,
+        "minute": 0,
+        "second": 0,
+        "hide_time": "",
+        "dynamic_fields-0-title": "Field 1 Title",
+        "dynamic_fields-0-value": "Value 1",
+        "dynamic_fields-0-is_full_width": "",
+        "dynamic_fields-0-field_type": "basic",
+        "dynamic_fields-1-title": "Field 2 Title",
+        "dynamic_fields-1-value": "Value 2",
+        "dynamic_fields-1-is_full_width": "",
+        "dynamic_fields-1-field_type": "basic",
+    })
 
     url = url_for("event.add_event",
                   campaign_name=campaign_object.title,
@@ -66,13 +84,13 @@ def test_add_event(client, auth, campaign, event):
 
     # Test that post request fails if logged in as non admin user
     auth.login(username=user_1.username, password=TEST_PASSWORD)
-    response_2 = event.create(campaign_object=campaign_object, data=event_data)
+    response_2 = event.create(campaign_object=campaign_object, data=event_form)
     assert response_2.status_code == 403
     auth.logout()
 
     # Test that event can be created when logged in as campaign admin
     auth.login(username="Admin", password=TEST_PASSWORD)
-    response_3 = event.create(campaign_object=campaign_object, data=event_data)
+    response_3 = event.create(campaign_object=campaign_object, data=event_form)
     assert response_3.status_code == 200
 
     event_object = db.session.execute(
@@ -80,7 +98,13 @@ def test_add_event(client, auth, campaign, event):
         .filter_by(title="Test Event")).scalar()
 
     assert event_object in campaign_object.events
-    assert event_object.date == "5016/01/01 09:00:00"
+    for attribute, value in CreateEventForm(event_form).data.items():
+        try:
+            getattr(event_object, attribute)
+        except AttributeError:
+            continue
+
+        assert getattr(event_object, attribute) == value
 
 
 def test_add_event_prepopulate(client, auth, campaign, event):
@@ -99,7 +123,10 @@ def test_add_event_prepopulate(client, auth, campaign, event):
     auth.login(username="Admin", password=TEST_PASSWORD)
     response = client.get(url)
     assert response.status_code == 200
-    assert b'value="5016/01/01 01:00:00"' in response.data
+    soup = BeautifulSoup(response.data, "html.parser")
+    input_elements = soup.find_all(class_="form-date-input")
+    values = [input_element.get("value") for input_element in input_elements]
+    assert values == ["5016", "01", "01", "01", "00", "00"]
 
 
 def test_edit_event(client, auth, campaign, event):
@@ -120,12 +147,26 @@ def test_edit_event(client, auth, campaign, event):
         select(models.Event)
         .filter_by(title="Test Event")).scalar()
 
-    event_data = {
-        "type": "Test",
+    # None values are used to represent False boolean checkbox values
+    event_form = MultiDict({
         "title": "Test Event",
-        "date": "1111/01/01 11:00:00",
-        "hide_time": False,
-    }
+        "type": "Test",
+        "year": 1111,
+        "month": 1,
+        "day": 1,
+        "hour": 11,
+        "minute": 0,
+        "second": 0,
+        "hide_time": "",
+        "dynamic_fields-0-title": "Field 1 Title",
+        "dynamic_fields-0-value": "Value 1",
+        "dynamic_fields-0-is_full_width": "",
+        "dynamic_fields-0-field_type": "basic",
+        "dynamic_fields-1-title": "Field 2 Title",
+        "dynamic_fields-1-value": "Value 2",
+        "dynamic_fields-1-is_full_width": "",
+        "dynamic_fields-1-field_type": "basic",
+    })
 
     get_url = url_for("event.edit_event",
                       campaign_name=campaign_object.title,
@@ -137,7 +178,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.login(username=user_2.username, password=TEST_PASSWORD)
     response_1 = client.get(get_url)
     assert response_1.status_code == 403
-    response_2 = event.edit(campaign_object, event_object, data=event_data)
+    response_2 = event.edit(campaign_object, event_object, data=event_form)
     assert response_2.status_code == 403
     auth.logout()
 
@@ -145,7 +186,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_3 = client.get(get_url)
     assert response_3.status_code == 403
-    response_4 = event.edit(campaign_object, event_object, data=event_data)
+    response_4 = event.edit(campaign_object, event_object, data=event_form)
     assert response_4.status_code == 403
     auth.logout()
 
@@ -153,7 +194,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.login(username=user_1.username, password=TEST_PASSWORD)
     response_5 = client.get(get_url)
     assert response_5.status_code == 403
-    response_6 = event.edit(campaign_object, event_object, data=event_data)
+    response_6 = event.edit(campaign_object, event_object, data=event_form)
     assert response_6.status_code == 403
     auth.logout()
 
@@ -161,7 +202,7 @@ def test_edit_event(client, auth, campaign, event):
     auth.login(username="Admin", password=TEST_PASSWORD)
     response_7 = client.get(get_url)
     assert response_7.status_code == 200
-    response_8 = event.edit(campaign_object, event_object, data=event_data)
+    response_8 = event.edit(campaign_object, event_object, data=event_form)
     assert response_8.status_code == 200
     assert event_object.date == "1111/01/01 11:00:00"
     auth.logout()
