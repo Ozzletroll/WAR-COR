@@ -74,7 +74,6 @@ def new_epoch(campaign_name, campaign_id):
         target_date = args["date"].replace("/", "-")
         session["timeline_scroll_target"] = f"new-epoch-{target_date}"
 
-
     # If loading from template, update for with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":
         template_id = request.args["template_id"]
