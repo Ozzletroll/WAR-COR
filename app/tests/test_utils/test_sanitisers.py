@@ -130,7 +130,14 @@ def test_sanitise_json():
             {
                 "type": "Event Type",
                 "title": "Event Title",
-                "date": "2024-06-07",
+                "date": {
+                    "year": 2024,
+                    "month": 6,
+                    "day": 7,
+                    "hour": 0,
+                    "minute": 0,
+                    "second": 0,
+                },
                 "hide_time": False,
                 "dynamic_fields": dynamic_field_valid_test_data
             }
@@ -138,8 +145,16 @@ def test_sanitise_json():
         "epochs": [
             {
                 "title": "Epoch Title",
-                "start_date": "2024-06-01",
-                "end_date": "2024-06-30",
+                "start_date": {
+                    "start_year": 2024,
+                    "start_month": 6,
+                    "start_day": 1,
+                },
+                "end_date": {
+                    "end_year": 2024,
+                    "end_month": 6,
+                    "end_day": 30,
+                },
                 "overview": "Epoch Overview",
                 "dynamic_fields": dynamic_field_valid_test_data
             }
