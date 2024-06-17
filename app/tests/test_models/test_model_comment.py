@@ -1,5 +1,7 @@
 from sqlalchemy import select
+from werkzeug.datastructures import MultiDict
 
+from app.forms.forms import CreateEventForm
 from app import db, models
 
 
@@ -13,14 +15,28 @@ def test_setup(auth, client, campaign, event):
         select(models.Campaign)
         .filter_by(title="Test Campaign")).scalar()
 
-    event_data = {
-        "title": "Event 1",
-        "body": "Description",
-        "date": "5016/02/15 09:00:00",
-        "type": "Test",
-    }
+    event_form = CreateEventForm(
+        MultiDict({
+            "type": "Test",
+            "title": "Event 1",
+            "year": 5016,
+            "month": 1,
+            "day": 1,
+            "hour": 9,
+            "minute": 0,
+            "second": 0,
+            "dynamic_fields-0-title": "Title 1",
+            "dynamic_fields-0-value": "Value 1",
+            "dynamic_fields-0-is_full_width": False,
+            "dynamic_fields-0-field_type": "basic",
+            "dynamic_fields-1-title": "Title 2",
+            "dynamic_fields-1-value": "Value 2",
+            "dynamic_fields-1-is_full_width": False,
+            "dynamic_fields-1-field_type": "basic",
+            "hide_time": False,
+        })).data
 
-    event.create(campaign_object, data=event_data)
+    event.create(campaign_object, data=event_form)
 
 
 def test_update(auth, client, event):

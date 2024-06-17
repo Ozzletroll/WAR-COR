@@ -1787,6 +1787,21 @@ p {
   border-radius: 5px;
 }
 
+.form-date-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+.year-month-day-container,
+.hour-min-second-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
 .form-input-container {
   display: flex;
   flex-direction: column;
@@ -1868,6 +1883,46 @@ p {
   border: 1px solid var(--elem_border);
   border-radius: 3px;
   box-sizing: border-box;
+}
+
+.date-divider {
+  margin: 0px;
+}
+
+.date-container .form-label {
+  top: 5px;
+  color: var(--text_dark);
+}
+
+.date-container:hover .form-label,
+.date-container:focus .form-label {
+  background-color: var(--elem_dark);
+}
+
+.date-container .form-input:focus,
+.date-container .form-input:not(:placeholder-shown) {
+  border-top-left-radius: 0px;
+}
+
+.date-container .form-input:hover + .form-label,
+.date-container .form-input:not(:placeholder-shown) + .form-label {
+  background-color: var(--elem_dark);
+}
+
+.date-container .form-input:focus + .form-label,
+.date-container .form-input:not(:placeholder-shown) + .form-label {
+  top: -13px;
+  left: 0px;
+  font-size: 12px;
+  background-color: var(--elem_mid);
+  opacity: 1;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.date-container .form-input:focus.form-input:hover + .form-label,
+.date-container .form-input:hover + .form-label {
+  background-color: var(--elem_dark);
 }
 
 .label-hidden {
@@ -2148,6 +2203,15 @@ p {
 
   .login-flavour-text {
     margin-top: 5vh;
+  }
+
+  .form-date-container {
+    flex-wrap: wrap;
+  }
+
+  .date-container .form-label {
+    font-size: 12px;
+    top: 9px;
   }
 
 }  

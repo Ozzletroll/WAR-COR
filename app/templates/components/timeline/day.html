@@ -44,7 +44,7 @@ elements.
   
   {# Give element "day-line-followed" class, which is targeted via js to
      extend line to meet element below #}
-  {% if day.followed_by_epoch and not day.no_following_events %}
+  {% if day.followed_by_epoch %}
     {% set followed_by_epoch_class = "day-line-followed" %}
   {% endif %}
 

@@ -4,9 +4,7 @@ from datetime import datetime
 
 from app.forms import forms
 from app import db, models
-from app.utils import authenticators
-import app.utils.formatters as formatters
-import app.utils.messengers as messengers
+from app.utils import authenticators, formatters, messengers, validators
 
 from app.routes.event import bp
 
@@ -75,24 +73,22 @@ def add_event(campaign_name, campaign_id):
 
     authenticators.permission_required(campaign)
 
-    if "date" in request.args:
+    form = forms.CreateEventForm()
 
-        # Increase the date by one unit and format the datestring
+    if "date" in request.args and request.method == "GET":
+        args = validators.validate_event_url_parameters(request.args)
+        # Get the date argument and increment by specified amount
         datestring = request.args["date"]
-        args = request.args
-        datestring = formatters.increment_datestring(datestring, args)
+        date_values = formatters.increment_date(datestring, args)
         # Create placeholder event to prepopulate form
         event = models.Event()
-        event.create_blank(datestring)
+        event.create_blank(date_values)
         form = forms.CreateEventForm(obj=event)
+        form.format_date_fields(event)
 
         # Set scroll_to target for back button
         if "elem_id" in request.args:
             session["timeline_scroll_target"] = request.args["elem_id"]
-
-    # Otherwise, create default empty form
-    else:
-        form = forms.CreateEventForm()
 
     # If loading from template, update form with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":
@@ -159,6 +155,9 @@ def edit_event(campaign_name, campaign_id, event_name, event_id):
     form = forms.CreateEventForm(obj=event)
     form.submit.label.text = "Update Event"
     delete_form = forms.SubmitForm()
+
+    if request.method == "GET":
+        form.format_date_fields(event)
 
     # If loading from template, update for with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":

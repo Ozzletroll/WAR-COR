@@ -1,6 +1,7 @@
 import { Modal } from "../../components/modal.js";
 import { DynamicForm } from "../../components/form/dynamic_form.js";
 import { FormFooter } from "../../components/ui/footer.js";
+import { DateField } from "../../components/datefield.js";
 
 
 // Create dynamic form 
@@ -50,4 +51,24 @@ const formFooter = new FormFooter({
   deleteButton: document.getElementById("footer-delete-button"),
   templatesButton: document.getElementById("footer-templates-button"),
   templateMenu: document.getElementById("templates-menu"),
+})
+
+// Create date fields to add leading zeroes
+const monthField = new DateField({
+  element: document.getElementById("event-form-month"),
+})
+const dayField = new DateField({
+  element: document.getElementById("event-form-day"),
+})
+const hourField = new DateField({
+  element: document.getElementById("event-form-hour"),
+  allowZero: true,
+})
+const minuteField = new DateField({
+  element: document.getElementById("event-form-minute"),
+  allowZero: true,
+})
+const secondField = new DateField({
+  element: document.getElementById("event-form-second"),
+  allowZero: true,
 })

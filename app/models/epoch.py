@@ -55,27 +55,16 @@ class Epoch(db.Model):
 
             if value is not None or new:
 
-                if field == "start_date":
-                    self.start_date = value
-                    self.start_year = self.split_date(value)[0]
-                    self.start_month = self.split_date(value)[1]
-                    self.start_day = self.split_date(value)[2]
-                elif field == "end_date":
-                    self.end_date = value
-                    self.end_year = self.split_date(value)[0]
-                    self.end_month = self.split_date(value)[1]
-                    self.end_day = self.split_date(value)[2]
-                elif field == "overview":
-                    value = sanitise_input(value, allow_urls=False)
-                    if value in ["<p><br/></p>", ""]:
-                        value = None
-                    self.overview = value
+                if field == "overview":
+                    self.overview = sanitise_input(value, allow_urls=False)
                 elif field == "dynamic_fields":
                     data = self.map_dynamic_field_data(value)
                     self.dynamic_fields = data
                 else:
                     setattr(self, field, value)
 
+        self.start_date = self.set_date(self.start_year, self.start_month, self.start_day)
+        self.end_date = self.set_date(self.end_year, self.end_month, self.end_day)
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
         self.parent_campaign.clear_cache()
@@ -119,43 +108,48 @@ class Epoch(db.Model):
         return data
 
     @staticmethod
-    def split_date(datestring):
-        """ Method that splits a form datestring into individual integer values. """
+    def set_date(year, month, day):
+        """ Method that formats date as string for template rendering """
 
-        year = int(datestring.split("/")[0])
-        month = int(datestring.split("/")[1])
-        day = int(datestring.split("/")[2])
+        return f"{year}/{str(month).zfill(2)}/{str(day).zfill(2)}"
 
-        return [year, month, day]
-    
     def set_url_title(self):
         """ Method to set url safe version of title, replacing spaces
             with dashes '-'. """
         
         self.url_title = self.title.replace(" ", "-")
-        
+
+    def create_blank(self, date_values):
+        """ Method to create a blank temporary pending epoch for pre-populating form.
+            Takes a list of separated date values from formatters.split_date(). """
+
+        self.title = ""
+        self.start_year = date_values[0]
+        self.start_month = date_values[1]
+        self.start_day = date_values[2]
+        self.end_year = date_values[0]
+        self.end_month = date_values[1]
+        self.end_day = date_values[2]
+
     def populate_self(self):
         """ Method to get all events in parent campaign that fall
         between the epochs start and end dates, and flag self
         if containing any events. """
         
-        def is_in_epoch(item_to_check, epoch):
+        def is_in_epoch(item_to_check):
 
             def date_falls_between(year, month, day):
-                if epoch_start_year <= year <= epoch_end_year:
-                    if epoch_start_year == year and month < epoch_start_month:
+                if self.start_year <= year <= self.end_year:
+                    if self.start_year == year and month < self.start_month:
                         return False
-                    if epoch_end_year == year and month > epoch_end_month:
+                    if self.end_year == year and month > self.end_month:
                         return False
-                    if epoch_start_year == year and month == epoch_start_month and day < epoch_start_day:
+                    if self.start_year == year and month == self.start_month and day < self.start_day:
                         return False
-                    if epoch_end_year == year and month == epoch_end_month and day > epoch_end_day:
+                    if self.end_year == year and month == self.end_month and day > self.end_day:
                         return False
                     return True
                 return False
-
-            epoch_start_year, epoch_start_month, epoch_start_day = self.split_date(epoch.start_date)
-            epoch_end_year, epoch_end_month, epoch_end_day = self.split_date(epoch.end_date)
 
             # Handle epoch objects
             if isinstance(item_to_check, Epoch):
@@ -189,10 +183,10 @@ class Epoch(db.Model):
                     return False
 
         self.events.clear()
-        self.events = [event for event in self.parent_campaign.events if is_in_epoch(event, self)]
+        self.events = [event for event in self.parent_campaign.events if is_in_epoch(event)]
         self.sub_epochs.clear()
         self.sub_epochs = [epoch for epoch in self.parent_campaign.epochs 
-                           if is_in_epoch(epoch, self) and epoch.id != self.id]
+                           if is_in_epoch(epoch) and epoch.id != self.id]
 
         if len(self.events) > 0:
             self.has_events = True

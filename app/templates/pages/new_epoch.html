@@ -94,14 +94,38 @@
             <p class="flavour-text" aria-label="Flavour Text">UWC-17-01 //  Epoch::Start Marker</p>
           </div>
         
-          <div class="form-input-container">
-            {{ form.start_date(id="epoch-form-start-date", 
-                               class_="campaign-input form-input event-input", 
-                               placeholder_="YYYY/MM/DD REQUIRED", 
-                               autocomplete="off") }}
-            <div class="form-underline"></div>
-          </div>
+          <div class="form-date-container">
+            <div class="year-month-day-container">
+              <div class="form-input-container date-container">
+                {{ form.start_year(id="epoch-form-start-year", 
+                             class_="campaign-input form-input form-date-input form-input-year event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="epoch-form-start-year" class="form-label">YEAR</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">/</p>
 
+              <div class="form-input-container date-container">
+                {{ form.start_month(id="epoch-form-start-month", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="epoch-form-start-month" class="form-label">MONTH</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">/</p>
+
+              <div class="form-input-container date-container">
+                {{ form.start_day(id="epoch-form-start-day", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="epoch-form-start-day" class="form-label">DAY</label>
+                <div class="form-underline"></div>
+              </div>
+            </div>
+          </div>
         </div>
 
 
@@ -123,12 +147,37 @@
             <p class="flavour-text" aria-label="Flavour Text">UWC-17-02 //  Epoch::End Marker</p>
           </div>
         
-          <div class="form-input-container">
-            {{ form.end_date(id="epoch-form-end-date", 
-                             class_="campaign-input form-input event-input", 
-                             placeholder_="YYYY/MM/DD REQUIRED", 
-                             autocomplete="off") }}
-            <div class="form-underline"></div>
+          <div class="form-date-container">
+            <div class="year-month-day-container">
+              <div class="form-input-container date-container">
+                {{ form.end_year(id="epoch-form-end-year", 
+                             class_="campaign-input form-input form-date-input form-input-year event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="epoch-form-end-year" class="form-label">YEAR</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">/</p>
+
+              <div class="form-input-container date-container">
+                {{ form.end_month(id="epoch-form-end-month", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="epoch-form-end-month" class="form-label">MONTH</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">/</p>
+
+              <div class="form-input-container date-container">
+                {{ form.end_day(id="epoch-form-end-day", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="epoch-form-end-day" class="form-label">DAY</label>
+                <div class="form-underline"></div>
+              </div>
+            </div>
           </div>
 
         </div>

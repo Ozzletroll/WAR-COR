@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import StringField, EmailField, SubmitField, PasswordField, \
                     BooleanField, FileField, IntegerField, TextAreaField, FieldList, FormField
-from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email
+from wtforms.validators import DataRequired, InputRequired, Optional, EqualTo, Length, Email, NumberRange
 
 from app.forms.validators import *
 
@@ -97,19 +97,66 @@ class DynamicForm(FlaskForm):
 class CreateEventForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
     type = StringField("Event Type", validators=[DataRequired(), Length(max=250)])
-    date = StringField("Event Date", validators=[InputRequired(), date_format(format="event")])
+
+    year = IntegerField("Year", validators=[DataRequired()])
+    month = IntegerField("Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    day = IntegerField("Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    hour = IntegerField("Hour", validators=[InputRequired(), NumberRange(min=0, max=99)])
+    minute = IntegerField("Minute", validators=[InputRequired(), NumberRange(min=0, max=59)])
+    second = IntegerField("Second", validators=[InputRequired(), NumberRange(min=0, max=59)])
+
     hide_time = BooleanField("Hide Time", default=False, validators=[Optional()])
 
     submit = SubmitField("Create Event")
 
+    def format_date_fields(self, event):
+
+        fields_to_format = ["month", "day", "hour", "minute", "second"]
+
+        for field in fields_to_format:
+            attribute = getattr(self, field)
+            value = getattr(event, field)
+            if value is not None:
+                attribute.data = str(value).zfill(2)
+
 
 class CreateEpochForm(DynamicForm):
     title = StringField("Event Title", validators=[DataRequired(), Length(max=250)])
-    start_date = StringField("Start Date", validators=[date_format(format="epoch")])
-    end_date = StringField("End Date", validators=[date_format(format="epoch"), date_is_after()])
+
+    start_year = IntegerField("Start Year", validators=[DataRequired()])
+    start_month = IntegerField("Start Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    start_day = IntegerField("Start Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
+
+    end_year = IntegerField("End Year", validators=[DataRequired()])
+    end_month = IntegerField("End Month", validators=[DataRequired(), NumberRange(min=1, max=99)])
+    end_day = IntegerField("End Day", validators=[DataRequired(), NumberRange(min=1, max=99)])
+
     overview = TextAreaField("Overview")
 
     submit = SubmitField("Create Epoch")
+
+    def format_date_fields(self, epoch):
+
+        fields_to_format = ["start_month", "start_day", "end_month", "end_day"]
+
+        for field in fields_to_format:
+            attribute = getattr(self, field)
+            value = getattr(epoch, field)
+            if value is not None:
+                attribute.data = str(value).zfill(2)
+
+    def validate(self, extra_validators=None):
+
+        # First call base class's validate function
+        return_value = DynamicForm.validate(self)
+        if not return_value:
+            return False
+        
+        # Call custom validator
+        if not date_is_after(self):
+            return False
+        
+        return True
 
 
 class SearchUserForm(FlaskForm):

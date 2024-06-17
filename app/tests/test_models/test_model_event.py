@@ -24,7 +24,12 @@ def test_update(client):
         MultiDict({
             "type": "Test",
             "title": "Test Event",
-            "date": "5016/01/01 09:00:00",
+            "year": 5016,
+            "month": 1,
+            "day": 2,
+            "hour": 9,
+            "minute": 0,
+            "second": 0,
             "dynamic_fields-0-title": "Title 1",
             "dynamic_fields-0-value": "Value 1",
             "dynamic_fields-0-is_full_width": False,
@@ -106,24 +111,37 @@ def test_map_dynamic_field_data(client):
 
 
 def test_create_blank(client):
+
+    data = {
+        "year": 5016,
+        "month": 1,
+        "day": 1,
+        "hour": 12,
+        "minute": 0,
+        "second": 0
+    }
+
     event = models.Event()
-    event.create_blank(datestring="5016/01/01 12:00:00")
+    event.create_blank(date_values=data)
 
     assert event.title == ""
     assert event.type == ""
-    assert event.date == "5016/01/01 12:00:00"
+    for attribute, value in data.items():
+        assert getattr(event, attribute) == value
 
 
-def test_split_date(client):
+def test_set_date(client):
+
     event = models.Event()
-    event.split_date(datestring="5016/01/01 12:00:00")
+    event.year = 5016
+    event.month = 1
+    event.day = 1
+    event.hour = 12
+    event.minute = 0
+    event.second = 0
 
-    assert event.year == 5016
-    assert event.month == 1
-    assert event.day == 1
-    assert event.hour == 12
-    assert event.minute == 0
-    assert event.second == 0
+    output = event.set_date()
+    assert output == "5016/01/01 12:00:00"
 
 
 def test_set_url_title(client):

@@ -3,7 +3,7 @@ from flask_login import login_required
 
 from app import db, models
 from app.forms import forms
-from app.utils import authenticators, formatters
+from app.utils import authenticators, formatters, validators
 
 from app.routes.epoch import bp
 
@@ -57,25 +57,22 @@ def new_epoch(campaign_name, campaign_id):
     
     authenticators.permission_required(campaign)
 
-    args = request.args
-
-    # Check if date argument given
-    if "date" in args:
+    form = forms.CreateEpochForm()
+    
+    if "date" in request.args and request.method == "GET":
+        # Get the date argument
+        datestring = request.args["date"]
+        args = validators.validate_epoch_url_parameters(request.args)
+        date_values = formatters.split_date(datestring)
         # Create placeholder event to prepopulate form
         epoch = models.Epoch()
-
-        epoch.start_date = request.args["date"]
-        epoch.end_date = formatters.increment_datestring(args["date"], args=["new_day", "new_epoch"])
-        
+        epoch.create_blank(date_values)
         form = forms.CreateEpochForm(obj=epoch)
+        form.format_date_fields(epoch)
 
         # Set scroll_to target for back button
         target_date = args["date"].replace("/", "-")
         session["timeline_scroll_target"] = f"new-epoch-{target_date}"
-
-    # Otherwise, create default empty form
-    else:
-        form = forms.CreateEpochForm()
 
     # If loading from template, update for with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":
@@ -135,6 +132,9 @@ def edit_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     form = forms.CreateEpochForm(obj=epoch)
     form.submit.label.text = "Update Epoch"
     delete_form = forms.SubmitForm()
+
+    if request.method == "GET":
+        form.format_date_fields(epoch)
 
     # If loading from template, update for with template's dynamic fields
     if "template_id" in request.args and request.method == "GET":

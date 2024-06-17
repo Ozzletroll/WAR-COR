@@ -56,14 +56,12 @@ class Event(db.Model):
 
             if value is not None or new:
 
-                if field == "date":
-                    self.date = value
-                    self.split_date(value)
-                elif field == "dynamic_fields":
+                if field == "dynamic_fields":
                     self.dynamic_fields = self.map_dynamic_field_data(value)
                 else:
                     setattr(self, field, value)
 
+        self.date = self.set_date()
         self.parent_campaign = parent_campaign
         self.parent_campaign.last_edited = datetime.now()
         self.parent_campaign.clear_cache()
@@ -103,23 +101,26 @@ class Event(db.Model):
 
         return data
 
-    def create_blank(self, datestring):
+    def create_blank(self, date_values):
         """ Method to create a blank temporary pending event for pre-populating form.
-            Takes an incremented date-string from organisers.format_event_datestring(). """
+            Takes a dict of incremented date values from organisers.increment_date(). """
 
         self.title = ""
         self.type = ""
-        self.date = datestring
+        self.year = date_values["year"]
+        self.month = date_values["month"]
+        self.day = date_values["day"]
+        self.hour = date_values["hour"]
+        self.minute = date_values["minute"]
+        self.second = date_values["second"]
 
-    def split_date(self, datestring):
-        """ Method that splits a form date string into individual integer values. """
+    def set_date(self):
+        """ Method that formats date as string for template rendering """
 
-        self.year = int(datestring.split("/")[0])
-        self.month = int(datestring.split("/")[1])
-        self.day = int(datestring.split("/")[2].split()[0])
-        self.hour = int(datestring.split("/")[2].split()[1].split(":")[0])
-        self.minute = int(datestring.split("/")[2].split()[1].split(":")[1])
-        self.second = int(datestring.split("/")[2].split()[1].split(":")[2])
+        date = f"{self.year}/{str(self.month).zfill(2)}/{str(self.day).zfill(2)}"
+        time = f"{str(self.hour).zfill(2)}:{str(self.minute).zfill(2)}:{str(self.second).zfill(2)}"
+
+        return date + " " + time
 
     def set_url_title(self):
         """ Method to set url safe version of title, replacing spaces

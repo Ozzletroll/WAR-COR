@@ -105,14 +105,71 @@
             <p class="flavour-text" aria-label="Flavour Text">UWC-6-01 //  Event::Chronometric Data</p>
           </div>
         
-          <div class="form-input-container">
-            {{ form.date(id="event-form-date", 
-                         class_="campaign-input form-input event-input", 
-                         placeholder_="YYYY/MM/DD HH:MM:SS REQUIRED", 
-                         autocomplete="off") }}
-            <div class="form-underline"></div>
-          </div>
+          <div class="form-date-container">
+            <div class="year-month-day-container">
+              <div class="form-input-container date-container">
+                {{ form.year(id="event-form-year", 
+                             class_="campaign-input form-input form-date-input form-input-year event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="event-form-year" class="form-label">YEAR</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">/</p>
 
+              <div class="form-input-container date-container">
+                {{ form.month(id="event-form-month", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="event-form-month" class="form-label">MONTH</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">/</p>
+
+              <div class="form-input-container date-container">
+                {{ form.day(id="event-form-day", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="event-form-day" class="form-label">DAY</label>
+                <div class="form-underline"></div>
+              </div>
+            </div>
+            
+            <div class="hour-min-second-container">
+              <div class="form-input-container date-container">
+                {{ form.hour(id="event-form-hour", 
+                             class_="campaign-input form-input form-date-input form-input-two-digit event-input", 
+                             autocomplete="off",
+                             placeholder=" ") }}
+                <label for="event-form-hour" class="form-label">HOUR</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">:</p>
+
+              <div class="form-input-container date-container">
+                {{ form.minute(id="event-form-minute",
+                               class_="campaign-input form-input form-date-input form-input-two-digit event-input",
+                               autocomplete="off",
+                               placeholder=" ") }}
+                <label for="event-form-minute" class="form-label">MIN</label>
+                <div class="form-underline"></div>
+              </div>
+              <p class="date-divider">:</p>
+
+              <div class="form-input-container date-container">
+                {{ form.second(id="event-form-second",
+                               class_="campaign-input form-input form-date-input form-input-two-digit event-input",
+                               autocomplete="off",
+                               placeholder=" ") }}
+                <label for="event-form-second" class="form-label">SEC</label>
+                <div class="form-underline"></div>
+              </div>
+            </div>
+            
+          </div>
+          
         </div>
 
         <div id="title-field" class="form-container form-container-small">
