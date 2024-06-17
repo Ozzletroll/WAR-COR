@@ -62,7 +62,6 @@ def sanitise_json(value, json_type):
     try:
         validate(instance=value, schema=schema)
     except jsonschema.exceptions.ValidationError as error:
-        print(error)
         return ""
 
     return value
