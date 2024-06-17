@@ -17,6 +17,13 @@ def test_config_only(function):
     return decorated_function
 
 
+# Test route for triggering 400 error
+@bp.route("/test/bad_request_route")
+@test_config_only
+def bad_request_route():
+    abort(400)
+
+
 # Test route for triggering 403 error
 @bp.route("/test/restricted_route")
 @test_config_only
@@ -29,6 +36,13 @@ def restricted_route():
 @test_config_only
 def nonexistent_route():
     abort(404)
+
+
+# Test route for 429 page
+@bp.route("/test/too_many_requests_route")
+@test_config_only
+def too_many_requests_route():
+    abort(429)
 
 
 # Test route for triggering 500 error
