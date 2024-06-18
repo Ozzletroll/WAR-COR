@@ -18,6 +18,7 @@ export class Tooltip{
         }
       }.bind(this));
       this.parentButton.addEventListener("blur", this.closeTooltip.bind(this))
+      this.parentButton.addEventListener("click", this.closeTooltip.bind(this))
     }
   
     openTooltip() {
