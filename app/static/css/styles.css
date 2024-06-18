@@ -244,7 +244,7 @@ body {
   flex-direction: column;
   width: calc(100vw - (100vw - 100%));
   max-width: 1920px;
-  min-height: 100vh;
+  min-height: var(--app-height);
   overflow-x: clip;
 }
 
@@ -263,7 +263,7 @@ body {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  justify-content: first baseline;
+  justify-content: center;
   align-items: center;
 }
 
