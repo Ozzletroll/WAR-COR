@@ -1,6 +1,10 @@
 import { Modal } from "../../components/modal.js";
 import { CharCount } from "../../components/char_count.js";
+import { Toolbar } from '../../components/ui/ui_toolbar.js';
 
+
+// Add tooltips to ui toolbar
+const toolbar = new Toolbar()
 
 // Create array to hold modal objects
 const modalItems = []

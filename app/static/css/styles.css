@@ -3135,7 +3135,7 @@ p {
   filter: hue-rotate(var(--background_rotate))
 }
 
-/* Search bar */
+/* UI Toolbar */
 
 .ui-buttons {
   display: flex;
@@ -3152,6 +3152,36 @@ p {
   filter: drop-shadow(3px 1px 3px var(--elem_shadow));
   margin-left: -40px;
 }
+
+.ui-tooltips-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: -60px;
+  top: 25px;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.ui-tooltip {
+  visibility: hidden;
+  justify-content: center;
+  align-self: center;
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 2px 5px;
+  margin-bottom: 45px;
+  width: fit-content;
+  background-color: var(--elem_mid);
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  color: var(--text_header);
+  box-shadow: -1px -1px 1px var(--elem_shadow);
+}
+
+/* Search bar */
 
 .searchbar-border {
   display: flex;

@@ -9,7 +9,10 @@
 
 {% block content %}
 
-<nav class="ui-buttons" aria-label="UI Buttons">
+<nav id="ui-toolbar" class="ui-buttons" aria-label="UI Buttons">
+  <div class="ui-tooltips-container" tabindex="-1">
+    <label role="tooltip" id="tooltip-search" class="ui-tooltip">Search</label>
+  </div>
   {{ searchbar.searchbar(campaign=none, current_user=current_user) }}
 </nav>
 
@@ -21,7 +24,6 @@
     <div class="fade-in-block-1">
     
       {# Create navigation url bar #}
-
       {% set urls = [""] %}
 
       {{ page_upper_area.page_upper_area(navigation_urls=urls, 

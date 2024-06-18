@@ -25,6 +25,17 @@
   {% include "components/sidebar.html" %}
 
   <nav class="ui-buttons" aria-label="UI Buttons" role="toolbar" aria-orientation="vertical">
+    <div class="ui-tooltips-container" tabindex="-1">
+      <label role="tooltip" id="tooltip-search" class="ui-tooltip">Search</label>
+      <label role="tooltip" id="tooltip-toggle" class="ui-tooltip">
+        {% if edit %}
+          View
+        {% else %}
+          Edit
+        {% endif %}
+      </label>
+    </div>
+
     {% if edit %}
       {{ searchbar.searchbar(campaign, timeline=true, edit=true) }}
     {% else %}

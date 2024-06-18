@@ -2,6 +2,7 @@ import { Modal } from "../../components/modal.js";
 import { DynamicForm } from "../../components/form/dynamic_form.js";
 import { FormFooter } from "../../components/ui/footer.js";
 import { DateField } from "../../components/datefield.js";
+import { Toolbar } from '../../components/ui/ui_toolbar.js';
 
 
 // Create dynamic form 
@@ -12,6 +13,9 @@ const epochForm = new DynamicForm({
   belligerentsButton: document.getElementById("new-composite-field-button"),
 });
 window.addNewField = epochForm.addHTMLField;
+
+// Add tooltips to ui toolbar
+const toolbar = new Toolbar()
 
 // Create modals
 const modal_1 = new Modal({

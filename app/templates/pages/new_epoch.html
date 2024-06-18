@@ -29,6 +29,10 @@
 
   {% if not new %}
     <nav class="ui-buttons" aria-label="UI Buttons" role="tablist">
+      <div class="ui-tooltips-container" tabindex="-1">
+        <label role="tooltip" id="tooltip-search" class="ui-tooltip">Search</label>
+        <label role="tooltip" id="tooltip-toggle" class="ui-tooltip">View</label>
+      </div>
       {{ searchbar.searchbar(campaign, epoch=true) }}
       {% if current_user.is_authenticated and campaign in current_user.permissions %}
         {{ edit_toggle.epoch_edit_toggle(campaign, epoch, edit=true) }}

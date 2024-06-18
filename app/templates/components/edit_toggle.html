@@ -13,11 +13,11 @@
   <div class="edit-toggle-outer">
 
     {% if edit %}
-      <button class="button edit-toggle-button" onclick="setScrollTarget(toggleTargetURL, csrfTokenForToggle, timelineURL)" 
-      title="VIEW/EDIT TOGGLE" aria-label="Switch to timeline view layer">
+      <button class="button edit-toggle-button toolbar-button" onclick="setScrollTarget(toggleTargetURL, csrfTokenForToggle, timelineURL)" 
+      aria-describedby="tooltip-toggle">
     {% else %}
-      <button class="button edit-toggle-button" onclick="setScrollTarget(toggleTargetURL, csrfTokenForToggle, editTimelineURL)" 
-      title="VIEW/EDIT TOGGLE" aria-label="Switch to timeline editing layer">
+      <button class="button edit-toggle-button toolbar-button" onclick="setScrollTarget(toggleTargetURL, csrfTokenForToggle, editTimelineURL)" 
+      aria-describedby="tooltip-toggle">
     {% endif %}
         <label class="edit-toggle-label">
           {% if edit %}
@@ -60,11 +60,11 @@
   <div class="edit-toggle-outer">
 
     {% if edit %}
-      <button class="button edit-toggle-button" onclick="eventToggle(eventURL)"
-      title="VIEW/EDIT TOGGLE" aria-label="Switch to event view layer">
+      <button class="button edit-toggle-button toolbar-button" onclick="eventToggle(eventURL)"
+      aria-describedby="tooltip-toggle">
     {% else %}
-      <button class="button edit-toggle-button" onclick="eventToggle(eventEditURL)"
-      title="VIEW/EDIT TOGGLE" aria-label="Switch to event editing layer">
+      <button class="button edit-toggle-button toolbar-button" onclick="eventToggle(eventEditURL)"
+      aria-describedby="tooltip-toggle">
     {% endif %}
         <label class="edit-toggle-label">
           {% if edit %}
@@ -107,11 +107,13 @@
   <div class="edit-toggle-outer">
 
     {% if edit %}
-      <button class="button edit-toggle-button" onclick="epochToggle(epochURL)">
+      <button class="button edit-toggle-button toolbar-button" onclick="epochToggle(epochURL)"
+      aria-describedby="tooltip-toggle">
     {% else %}
-      <button class="button edit-toggle-button" onclick="epochToggle(epochEditURL)">
+      <button class="button edit-toggle-button toolbar-button" onclick="epochToggle(epochEditURL)"
+      aria-describedby="tooltip-toggle">
     {% endif %}
-        <label class="edit-toggle-label" title="VIEW/EDIT TOGGLE">
+        <label class="edit-toggle-label">
           {% if edit %}
             <svg width="20px" height="20px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

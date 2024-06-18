@@ -51,7 +51,8 @@ export class FormFooter {
     Array.from(buttons).forEach(button => {
       var newTooltip = new Tooltip({
         parentButton: button,
-        tooltip: document.getElementById(button.getAttribute("aria-describedby"))
+        tooltip: document.getElementById(button.getAttribute("aria-describedby")),
+        mode: "flex"
       })
       tooltips.push(newTooltip);
     })
@@ -102,7 +103,8 @@ export class TimelineFooter {
     Array.from(buttons).forEach(button => {
       var newTooltip = new Tooltip({
         parentButton: button,
-        tooltip: document.getElementById(button.getAttribute("aria-describedby"))
+        tooltip: document.getElementById(button.getAttribute("aria-describedby")),
+        mode: "flex"
       })
       tooltips.push(newTooltip);
     })

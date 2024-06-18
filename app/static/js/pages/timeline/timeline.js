@@ -2,6 +2,7 @@ import { checkLeftMarker } from '../../components/timeline/timeline_left_markers
 import { adjustEpochLine } from '../../components/timeline/epoch_line_adjust.js';
 import { marginFix } from '../../components/timeline/margin_fix.js';
 import { Modal } from '../../components/modal.js';
+import { Toolbar } from '../../components/ui/ui_toolbar.js';
 import { TimelineFooter } from '../../components/ui/footer.js';
 
 // Offset epoch elements
@@ -14,6 +15,9 @@ window.addEventListener("DOMContentLoaded", marginFix());
 // Toggle display of left hand year marker
 window.addEventListener("resize", checkLeftMarker);
 checkLeftMarker();
+
+// Add tooltips to ui toolbar
+const toolbar = new Toolbar()
 
 var editPageElem = document.getElementById("editPageVariable").getAttribute("editPage");
 if (editPageElem == "true") {
