@@ -1,6 +1,6 @@
 {% macro template_menu(campaign) %}
 
-  <div id="templates-menu" class="templates-menu" tabindex="-1">
+  <div id="templates-menu" class="templates-menu" tabindex="-1" aria-expanded="false">
 
     <input id="get-templates-url" type="hidden" value="{{ url_for('template.get_templates', campaign_name=campaign.url_title, campaign_id=campaign.id) }}">
     <input id="csrf-token" type="hidden" value="{{ csrf_token() }}">
@@ -8,13 +8,16 @@
     <h3 class="template-menu-header">TEMPLATES</h3>
     
     <div class="templates-tab-list" role="tablist">
-      <button type="button" class="button templates-tab-button" role="tab" aria-controls="template-tab-1" aria-selected="true">
+      <button type="button" class="button templates-tab-button" role="tab" 
+      aria-controls="template-tab-1" aria-selected="true" tabindex="-1">
         LOAD
       </button>
-      <button type="button" class="button templates-tab-button tab-button-middle" role="tab" aria-controls="template-tab-2" aria-selected="false">
+      <button type="button" class="button templates-tab-button tab-button-middle" role="tab" 
+      aria-controls="template-tab-2" aria-selected="false" tabindex="-1">
         SAVE
       </button>
-      <button type="button" class="button templates-tab-button" role="tab" aria-controls="template-tab-3" aria-selected="false">
+      <button type="button" class="button templates-tab-button" role="tab" 
+      aria-controls="template-tab-3" aria-selected="false" tabindex="-1">
         IMPORT
       </button>
     </div>

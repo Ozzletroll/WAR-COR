@@ -146,14 +146,16 @@ export class TemplateMenu{
   }
 
   toggleMenu() {
-    var focusableElements = this.element.querySelectorAll("button, input");
+    var focusableElements = this.element.querySelectorAll(".templates-tab-button, .template-button-small, .form-input, .button");
 
     if (this.state == false) {
+      this.element.setAttribute("aria-expanded", "true");
       this.element.style.height = "500px";
       this.element.setAttribute("tabindex", "0");
       focusableElements.forEach(element => {
         element.setAttribute("tabindex", "0");
       })
+      focusableElements[0].focus();
     }
     else {
       this.element.style.height = "0px";
