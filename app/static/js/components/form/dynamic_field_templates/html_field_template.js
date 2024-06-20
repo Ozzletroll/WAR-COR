@@ -31,10 +31,6 @@ export function createTextFieldHTML(index) {
                     </div>
                   </button>
 
-                  <button id="dynamic-preview-button-${index}" type="button" class="button form-button form-preview-button form-close">
-                    PREVIEW
-                  </button>
-
                   <button id="dynamic-delete-button-${index}" type="button" class="button form-button form-close" aria-label="Delete">
                     <div class="icon-safari-fix">
                       <svg class="icon icon-colour-var" width="20px" height="20px" aria-label="Close Icon"

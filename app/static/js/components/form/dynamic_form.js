@@ -288,7 +288,7 @@ class DynamicField {
     if (this.type == "text") {
       this.previewModal = new PreviewModal({
         modal: document.getElementById(`dynamic-preview-modal-${this.index}`),
-        button: document.getElementById(`dynamic-preview-button-${this.index}`),
+        button: this.element.querySelector(".note-mybutton"),
         span: document.getElementById(`dynamic-preview-close-${this.index}`),
         editor: element,
       });

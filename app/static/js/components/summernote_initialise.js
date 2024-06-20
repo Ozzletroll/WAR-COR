@@ -71,7 +71,11 @@ export function summernoteInitialise(
       ['font', ['bold', 'italic', 'underline', 'clear']],
       ['para', ['ul', 'ol', 'paragraph']],
       ['insert', [allowURLS, allowImages]],
+      ['mybutton', ['HTMLPreview']]
     ],
+    buttons: {
+      HTMLPreview: HTMLPreviewButton
+    },
     popover: {
       image: [
         ['remove', ['removeMedia']]
@@ -155,4 +159,20 @@ function setHORUSstyling(editable) {
   horusElements.each(function() {
     $(this).attr("data-content", $(this).text());
   })
+}
+
+
+// Preview HTML Button
+var HTMLPreviewButton = function (context) {
+  var ui = $.summernote.ui;
+
+  // Create button
+  var button = ui.button({
+    contents: '<i class="fa fa-child"/> PREVIEW',
+    tooltip: "View HTML Preview",
+    click: function () {
+    },
+    container: context.layoutInfo.editor,
+  });
+  return button.render();
 }
