@@ -3051,6 +3051,7 @@ p {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-top: 5px;
 }
 
 .form-toggle-label {
