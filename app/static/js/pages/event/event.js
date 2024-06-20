@@ -162,11 +162,9 @@ images.forEach(element => {
   }
 });
 
-
 // Style all horus theme text elements
+var horusElements = document.getElementsByClassName("summernote-horus");
 
-  var horusElements = document.getElementsByClassName("summernote-horus");
-
-  Array.from(horusElements).forEach(element => {
-    element.setAttribute("data-content", element.innerText);
-  });
+Array.from(horusElements).forEach(element => {
+  element.setAttribute("data-content", element.innerText);
+});
