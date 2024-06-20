@@ -17,12 +17,17 @@ export function summernoteInitialise(
 
   $(editor).summernote({
     callbacks: {
+      onInit: function(event) {
+        var editable = event.editable;
+        setHORUSstyling(editable);
+      },
       onKeydown: function(event) {
         enforceCharLimit(event, charLimit);
         preventDelete(event, editor);
       },
       onChange: function(contents, $editable) {
         handleUnwrappedTags(editor, $editable);
+        setHORUSstyling($editable);
         $(document).trigger("summernoteFieldChanged", [$(this).summernote("code")]);
       },
       onPaste: function(event) {
@@ -41,7 +46,26 @@ export function summernoteInitialise(
     dialogsFade: true, 
     tabsize: 2,
     height: "fit-content",
-    styleTags: ['p', 'h1', 'h2', 'h3'],
+    styleTags: [
+      'p', 
+      'h1', 
+      'h2', 
+      'h3',
+      {
+        tag : 'p',
+        title : 'Flavour Text',
+        style : 'user-flavour-text',
+        className : 'user-flavour-text',
+        value : 'p'
+      },
+      {
+        tag : 'p',
+        title : 'CASTIGATE THE ENEMIES OF THE GODHEAD',
+        style : 'horus',
+        className : 'summernote-horus',
+        value : 'p'
+      },
+    ],
     toolbar: [
       ['style', ['style']],
       ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -79,7 +103,7 @@ function handleUnwrappedTags(editor, $editable) {
 
 // Convert clipboard text into plain text
 function pastePlainText (event, editor, charLimit) {
-  var bufferText = ((event.originalEvent || event).clipboardData || window.clipboardData).getData('Text');
+  var bufferText = ((event.originalEvent || event).clipboardData || window.clipboardData).getData("Text");
   event.preventDefault();
 
   if (charLimit != null) {
@@ -122,4 +146,13 @@ function enforceCharLimit(event, charLimit) {
       event.preventDefault(); 
     }
   }
+}
+
+
+// Update styling of horus text elements
+function setHORUSstyling(editable) {
+  var horusElements = editable.find(".summernote-horus");
+  horusElements.each(function() {
+    $(this).attr("data-content", $(this).text());
+  })
 }

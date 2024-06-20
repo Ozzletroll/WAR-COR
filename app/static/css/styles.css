@@ -44,6 +44,9 @@
   --background_colour: #ffffff;
   --background_saturation: 100%;
 
+  --glitch1: #00ffd5;
+  --glitch2: #d400ff;
+
   scrollbar-color: var(--bright_red) rgb(20, 25, 27);
   scroll-behavior: smooth;
 }
@@ -85,6 +88,9 @@
   --background_brightness: 1;
   --background_colour: #131212;
   --background_saturation: 100%;
+
+  --glitch1: #00ffd5;
+  --glitch2: #d400ff;
 }
 
 [theme="ironbow"] {
@@ -123,6 +129,9 @@
   --background_brightness: 1;
   --background_colour: #141314;
   --background_saturation: 120%;
+
+  --glitch1: #00ffd5;
+  --glitch2: #d400ff;
 }
 
 [theme="green"] {
@@ -161,6 +170,9 @@
   --background_brightness: 1;
   --background_colour: #0e0e0e;
   --background_saturation: 30%;
+
+  --glitch1: #00ffd5;
+  --glitch2: #d400ff;
 }
 
 [theme="horus"] {
@@ -417,36 +429,39 @@ p {
 }
 
 /* Horus theme glitch effect */
-.horus {
+.horus,
+.summernote-horus {
   text-transform: uppercase;
   font-weight: 500;
-}
-
-.horus {
   position: relative;
-  animation: glitch 1s linear infinite;
   z-index: 1;
 
   &:before {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     content: attr(data-content);
     color: var(--glitch1);
     transform: translateX(-5%);
     z-index: -1;
     animation: glitch .3s cubic-bezier(.25, .46, .45, .94) both infinite;
+    pointer-events: none;
   }
   
   &:after {
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     content: attr(data-content);
     color: var(--glitch2);
     transform: translateX(5%);
     z-index: -1;
     animation: glitch .3s cubic-bezier(.25, .46, .45, .94) reverse both infinite;
+    pointer-events: none;
   }
 }
 
@@ -7197,6 +7212,13 @@ pre {
   color: var(--text_header_contrast);
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
+}
+
+.user-flavour-text {
+  font-size: min(3vw, 12px);
+  font-weight: 200;
+  color: var(--text_flavour);
+  text-transform: uppercase;
 }
 
 /* Event preview HTML elements */

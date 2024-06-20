@@ -161,3 +161,12 @@ images.forEach(element => {
    element.style.margin = "20px"
   }
 });
+
+
+// Style all horus theme text elements
+
+  var horusElements = document.getElementsByClassName("summernote-horus");
+
+  Array.from(horusElements).forEach(element => {
+    element.setAttribute("data-content", element.innerText);
+  });

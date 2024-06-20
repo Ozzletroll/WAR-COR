@@ -31,3 +31,10 @@ if (editPageElem == "true") {
     menu: document.getElementById("footer-new-menu"),
   });
 }
+
+// Style all horus theme text elements
+var horusElements = document.getElementsByClassName("summernote-horus");
+
+Array.from(horusElements).forEach(element => {
+  element.setAttribute("data-content", element.innerText);
+});

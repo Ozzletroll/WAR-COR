@@ -28,10 +28,6 @@
   color: var(--text_header);
 }
 
-.note-dropdown-menu p {
-  color: var(--text_dark);
-}
-
 .note-toolbar {
   font-family: "Roboto Mono", monospace;
   background-color: var(--darker_red);
@@ -43,7 +39,7 @@
   font-size: 16px;
   background-color: var(--elem_mid);
   color: var(--text_dark);
-  min-height: 150px;
+  min-height: 240px;
 }
 
 .note-editable::after {

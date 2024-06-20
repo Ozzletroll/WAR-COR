@@ -17,3 +17,10 @@ window.addEventListener("DOMContentLoaded", marginFix());
 // Toggle display of left hand year marker
 window.addEventListener("resize", checkLeftMarker);
 checkLeftMarker();
+
+// Style all horus theme text elements
+var horusElements = document.getElementsByClassName("summernote-horus");
+
+Array.from(horusElements).forEach(element => {
+  element.setAttribute("data-content", element.innerText);
+});
