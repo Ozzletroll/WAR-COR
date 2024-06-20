@@ -57,14 +57,15 @@ function setHORUSStyling() {
       ) {
           // Split paragraph into words
           var paragraphText = element.innerHTML.split(" ");
+          var wrapNextWord = false;
 
           paragraphText.forEach((word, index) => {
             var randomNumber = getRandomInt(100);
             var castigateNumber = getRandomInt(100);
             // Set percentage chance for wrapping each word
-            var percentageChance = 2;
+            var percentageChance = 1;
             
-            if (randomNumber < percentageChance) {
+            if (randomNumber < percentageChance || wrapNextWord == true ) {
               var span = document.createElement("span");
               span.classList.add("horus");
               span.dataset.originalText = word;
@@ -77,6 +78,8 @@ function setHORUSStyling() {
                 span.dataset.content = word;
               }
               paragraphText[index] = span.outerHTML;
+
+              wrapNextWord = castigateNumber <= 50;
             }
           });
 
