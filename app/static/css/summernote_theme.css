@@ -192,3 +192,15 @@
 .popover-content .note-btn:hover {
   color: var(--bright_red);
 }
+
+.note-dropdown-item .summernote-horus {
+
+  &::before{
+    content: "CASTIGATE THE ENEMIES OF THE GODHEAD";
+  }
+
+  &::after{
+    content: "CASTIGATE THE ENEMIES OF THE GODHEAD";
+  }
+  
+}
