@@ -1424,14 +1424,14 @@ p {
   box-sizing: border-box;
 }
 
-.features-lower .feature-title {
+/* .features-lower .feature-title {
   opacity: 0;
-}
+} */
 
 .features-lower p {
-  opacity: 0;
   color: var(--text_dark);
   font-weight: 300;
+  min-height: 150px;
 }
 
 .features-lower img{

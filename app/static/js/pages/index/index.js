@@ -137,20 +137,45 @@ function checkElementVisible(element) {
   return elementPosition < (windowHeight - (windowHeight / 5));
 }
 
-function checkArticlesVisible() {
-  var articles = document.getElementsByClassName("features-lower");
-  Array.from(articles).forEach(article => {
-    if (checkElementVisible(article)) {
-      var image = article.querySelector("img");
-      var title = article.querySelector(".feature-title");
-      var text = article.querySelector("p");
-      image.classList.add("hero-fade");
-      title.classList.add("hero-fade");
-      text.classList.add("hero-fade");
+// Typewriter text effect
+function typewritingAnimation(element, delay) {
+  var text = element.getAttribute("data-text").replace(/\n/g, "");;
+  var index = 0;
+
+  function addNextCharacter() {
+    if (index < text.length) {
+      var newText = document.createTextNode(text[index]);
+      element.appendChild(newText);
+      index++;
+      setTimeout(addNextCharacter, delay);
+    }
+  }
+  addNextCharacter();
+}
+
+function handleIntersection(entries) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const article = entry.target;
+      const title = article.querySelector(".feature-title");
+      const img = article.querySelector("img");
+      const text = article.querySelector("p");
+      img.classList.add("hero-fade");
+      typewritingAnimation(title, 20);
+      typewritingAnimation(text, 10);
+      // Remove the observer after animation is triggered
+      observer.unobserve(article);
     }
   });
 }
 
-checkArticlesVisible();
-window.addEventListener("resize", checkArticlesVisible);
-window.addEventListener("scroll", checkArticlesVisible);
+const observer = new IntersectionObserver(handleIntersection, {
+  root: null, // Use the viewport as the root
+  threshold: 0.75,
+});
+
+const articles = document.getElementsByClassName("features-lower");
+Array.from(articles).forEach(article => {
+  observer.observe(article);
+});
+
