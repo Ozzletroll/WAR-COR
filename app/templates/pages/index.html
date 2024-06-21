@@ -49,9 +49,10 @@
         </article>
 
         <article id="features-paragraph" class="features-paragraph hero-fade" title="App overview">
-          <p aria-label="A short overview of the app's main features">WAR/COR is a free, lightweight roleplaying game timeline creator, with a focus on
-            structured, military campaign logging. Create and share session notes with your players,
-            document combat reports and track your campaign's history with dynamically generated timelines.
+          <p aria-label="A short overview of the app's main features">WAR/COR is a free, lightweight roleplaying game 
+            logger and timeline creator, built for the mechanised battlefields of the distant future. 
+            Create and share session notes with your players, document combat reports and 
+            track your campaign's history with dynamically generated timelines.
           </p>
         </article>
 
@@ -109,20 +110,31 @@
         25 hours in a day.">
         <div class="features-text-area">
           <h5 id="features-lower-title-1" class="feature-title">Freeform Timeline Editing</h5>
-          <p aria-label="A short paragraph about the app's freeform date system">Unbound by the constraints of pre-collapse archiving conventions, 
-            WAR/COR allows seamless conflict organisation in accordance with any 
+          <p aria-label="A short paragraph about the app's freeform date system">Unbound by the constraints of 
+            pre-collapse archiving conventions, WAR/COR allows seamless conflict organisation in accordance with any 
             non-standard local system calendars.</p>
         </div>
       </article>
 
       <article class="features-lower lower-2" aria-labelledby="features-lower-title-2">
         <div class="features-text-area">
-          <h5 id="features-lower-title-2" class="feature-title">Responsive Battlefield Performance</h5>
-          <p aria-label="A short paragraph about the app responsive web design">UWC military standardisation ensures reliable performance on a variety 
-            of hardware platforms, across any theatre of warfare.</p>
+          <h5 id="features-lower-title-2" class="feature-title">Dynamic Conflict Data Entry</h5>
+          <p aria-label="A short paragraph about the app's freeform date system">Whether capturing live conflict data
+            or archiving second-hand accounts, UWC personnel can easily add, remove and rearrange custom fields as they
+            require, saving configurations as reusable templates.</p>
         </div>
+        <img src="{{ url_for('static', filename='images/custom-date-example.png') }}"
+        alt="">
+      </article>
+
+      <article class="features-lower lower-3" aria-labelledby="features-lower-title-3">
         <img src="{{ url_for('static', filename='images/responsive-mockup.png') }}"
         alt="An example of the app running on three different devices, a smartphone, a tablet, and a laptop.">
+        <div class="features-text-area">
+          <h5 id="features-lower-title-3" class="feature-title">Responsive Battlefield Performance</h5>
+          <p aria-label="A short paragraph about the app responsive web design">UWC military standardisation ensures 
+            reliable performance on a variety of hardware platforms, across any theatre of warfare.</p>
+        </div>
       </article>
 
     </section>

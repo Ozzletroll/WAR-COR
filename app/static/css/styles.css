@@ -1411,8 +1411,8 @@ p {
   display: none;
 }
 
- .features-lower {
-  background-color: var(--bg_colour1);
+.features-lower {
+  background-color: var(--bg_colour2);
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -1422,7 +1422,7 @@ p {
   padding: 5%;
   width: 100%;
   box-sizing: border-box;
- }
+}
 
 .features-lower p {
   color: var(--text_dark);
@@ -1432,14 +1432,13 @@ p {
 .features-lower img{
   display: flex;
   flex: 0 0 auto;
-  padding: 5%;
+  margin: 5%;
   width: 40vw;
   max-width: 600px;
-  border-radius: 3px;
 }
 
-.lower-2 {
-  background-color: var(--bg_colour2);
+.lower-3 {
+  background-image: linear-gradient(var(--bg_colour2), var(--bg_colour1));
 }
 
  .features-text-area {
