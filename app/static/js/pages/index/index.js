@@ -130,22 +130,21 @@ checkTimelineDemoHeight();
 window.addEventListener("resize", checkTimelineDemoHeight);
 
 
-// Fade in each article on scroll
-function checkElementVisible(element) {
-  var elementPosition = element.getBoundingClientRect().top;
-  var windowHeight = window.innerHeight;
-  return elementPosition < (windowHeight - (windowHeight / 5));
-}
-
 // Typewriter text effect
 function typewritingAnimation(element, delay) {
-  var text = element.getAttribute("data-text").replace(/\n/g, "");;
-  var index = 0;
 
+  // Wrap all characters in span tags
+  element.innerHTML = element.textContent.replace(/\w/g, "<span>$&</span>");
+  // Set all inner characters to appear hidden
+  var innerElements = element.children;
+  Array.from(innerElements).forEach(character => {
+    character.style.visibility = "hidden";
+  })
+
+  var index = 0;
   function addNextCharacter() {
-    if (index < text.length) {
-      var newText = document.createTextNode(text[index]);
-      element.appendChild(newText);
+    if (index < innerElements.length) {
+      innerElements[index].style.visibility = "visible";
       index++;
       setTimeout(addNextCharacter, delay);
     }
@@ -178,4 +177,3 @@ const articles = document.getElementsByClassName("features-lower");
 Array.from(articles).forEach(article => {
   observer.observe(article);
 });
-
