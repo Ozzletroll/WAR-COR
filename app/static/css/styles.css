@@ -1424,23 +1424,19 @@ p {
   box-sizing: border-box;
 }
 
-/* .features-lower .feature-title {
-  opacity: 0;
-} */
-
 .features-lower p {
+  opacity: 0;
   color: var(--text_dark);
   font-weight: 300;
-  min-height: 150px;
 }
 
 .features-lower img{
   opacity: 0;
   display: flex;
   flex: 0 0 auto;
-  margin: 5%;
   width: 40vw;
   max-width: 600px;
+  margin: 40px;
 }
 
 .lower-3 {

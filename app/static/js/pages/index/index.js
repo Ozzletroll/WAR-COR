@@ -161,8 +161,8 @@ function handleIntersection(entries) {
       const img = article.querySelector("img");
       const text = article.querySelector("p");
       img.classList.add("hero-fade");
-      typewritingAnimation(title, 20);
-      typewritingAnimation(text, 10);
+      typewritingAnimation(title, 30);
+      text.classList.add("hero-fade");
       // Remove the observer after animation is triggered
       observer.unobserve(article);
     }
