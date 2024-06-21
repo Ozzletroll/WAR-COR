@@ -89,7 +89,6 @@ function fadeInElement(element, timing) {
 
 // Fade in features elements when visible
 const header = document.getElementById("features-header");
-const paragraph = document.getElementById("features-paragraph");
 
 function checkHeaderVisible() {
   const elementPosition = header.getBoundingClientRect().top;
@@ -102,7 +101,7 @@ function checkHeaderVisible() {
 }
 
 checkHeaderVisible();
-window.addEventListener('scroll', checkHeaderVisible);
+window.addEventListener("scroll", checkHeaderVisible);
 
 
 // Scale down timeline demo if features page larger that viewport
@@ -128,4 +127,30 @@ function checkTimelineDemoHeight() {
 }
 
 checkTimelineDemoHeight();
-window.addEventListener('resize', checkTimelineDemoHeight);
+window.addEventListener("resize", checkTimelineDemoHeight);
+
+
+// Fade in each article on scroll
+function checkElementVisible(element) {
+  var elementPosition = element.getBoundingClientRect().top;
+  var windowHeight = window.innerHeight;
+  return elementPosition < (windowHeight - (windowHeight / 5));
+}
+
+function checkArticlesVisible() {
+  var articles = document.getElementsByClassName("features-lower");
+  Array.from(articles).forEach(article => {
+    if (checkElementVisible(article)) {
+      var image = article.querySelector("img");
+      var title = article.querySelector(".feature-title");
+      var text = article.querySelector("p");
+      image.classList.add("hero-fade");
+      title.classList.add("hero-fade");
+      text.classList.add("hero-fade");
+    }
+  });
+}
+
+checkArticlesVisible();
+window.addEventListener("resize", checkArticlesVisible);
+window.addEventListener("scroll", checkArticlesVisible);
