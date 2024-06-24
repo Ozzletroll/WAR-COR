@@ -258,6 +258,7 @@ body {
   max-width: 1920px;
   min-height: var(--app-height);
   overflow-x: clip;
+  position: relative;
 }
 
 .onepage {
@@ -2257,9 +2258,12 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
   bottom: 0px;
   right: 0px;
+  margin-left: auto;
+  height: fit-content;
   width: 301px;
   filter: drop-shadow(-1px -1px 1px var(--elem_shadow));
   box-sizing: border-box;

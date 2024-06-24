@@ -255,11 +255,11 @@
 
   </div>
 
-  {% if edit %}
-    {{ footer.timeline_footer(campaign) }}
-  {% endif %}
-
 </div>
+
+{% if edit %}
+  {{ footer.timeline_footer(campaign) }}
+{% endif %}
 
 {# Footer help modal #}
 {{ modal.modal(type="help",
