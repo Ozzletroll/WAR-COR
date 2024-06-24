@@ -134,6 +134,7 @@ window.addEventListener("resize", checkTimelineDemoHeight);
 function typewritingAnimation(element, delay) {
 
   // Wrap all characters in span tags
+  var originalHTML = element.textContent;
   element.innerHTML = element.textContent.replace(/\w/g, "<span>$&</span>");
   // Set all inner characters to appear hidden
   var innerElements = element.children;
@@ -147,6 +148,11 @@ function typewritingAnimation(element, delay) {
       innerElements[index].style.visibility = "visible";
       index++;
       setTimeout(addNextCharacter, delay);
+    }
+    if (index == innerElements.length) {
+      // Remove all spans after animation finishes
+      element.innerHTML = originalHTML;
+      element.style.visibility = "visible";
     }
   }
   addNextCharacter();
