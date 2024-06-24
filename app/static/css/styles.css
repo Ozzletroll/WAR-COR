@@ -1773,7 +1773,7 @@ p {
 }
 
 .f-text {
-  color: var(--text_bright);
+  color: var(--text_header_contrast);
   padding: 5px;
   margin: 0px;
 }
