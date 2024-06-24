@@ -1293,7 +1293,7 @@ p {
   }
 }
 
-@media screen and (max-width: 600px) { 
+@media screen and (max-width: 700px) { 
 
   .sub-title {
     font-size: min(5vw, 38px);
@@ -1435,6 +1435,12 @@ p {
   width: 40vw;
   max-width: 600px;
   margin: 40px;
+}
+
+.feature-img-border {
+  border: 1px solid var(--darker_red);
+  border-radius: 3px;
+  box-shadow: 3px 3px 3px var(--elem_shadow);
 }
 
 .lower-3 {
