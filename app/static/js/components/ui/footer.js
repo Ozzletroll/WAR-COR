@@ -69,6 +69,7 @@ export class TimelineFooter {
   }) {
     this.newButton = newButton;
     this.menu = menu;
+    this.outerFooterElement = this.menu.closest(".form-footer-container");
     this.buttons = this.menu.querySelectorAll(".footer-new-button");
     this.tooltips = this.bindTooltips();
     this.state = false;
@@ -84,12 +85,14 @@ export class TimelineFooter {
 
     if (this.state == false) {
       this.menu.style.height = "70px";
+      this.outerFooterElement.style.marginTop = "-110px";
       focusableElements.forEach(element => {
         element.setAttribute("tabindex", "0");
       })
     }
     else {
       this.menu.style.height = "0px";
+      this.outerFooterElement.style.marginTop = "-40px";
       focusableElements.forEach(element => {
         element.setAttribute("tabindex", "-1");
       })
