@@ -7,6 +7,7 @@ export class TemplateMenu{
     button,
   }) {
     this.element = element;
+    this.outerFooterElement = element.closest(".form-footer-container");
     this.toggleButton = button;
     this.state = false;
     this.csrfToken = this.element.querySelector("#csrf-token").value;
@@ -151,6 +152,7 @@ export class TemplateMenu{
     if (this.state == false) {
       this.element.setAttribute("aria-expanded", "true");
       this.element.style.height = "500px";
+      this.outerFooterElement.style.marginTop = "-540px";
       this.element.setAttribute("tabindex", "0");
       focusableElements.forEach(element => {
         element.setAttribute("tabindex", "0");
@@ -159,6 +161,7 @@ export class TemplateMenu{
     }
     else {
       this.element.style.height = "0px";
+      this.outerFooterElement.style.marginTop = "-40px";
       this.element.setAttribute("tabindex", "-1");
       focusableElements.forEach(element => {
         element.setAttribute("tabindex", "-1");

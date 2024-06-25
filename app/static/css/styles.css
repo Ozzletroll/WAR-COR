@@ -2263,16 +2263,16 @@ p {
 .form-footer-container {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0px;
-  right: 0px;
-  margin-left: auto;
-  height: fit-content;
+  left: 100%;
   width: 301px;
+  margin-top: -40px;
   filter: drop-shadow(-1px -1px 1px var(--elem_shadow));
   box-sizing: border-box;
+  overscroll-behavior-y: none;
+  transition: 0.15s;
 }
 
 .form-footer {
