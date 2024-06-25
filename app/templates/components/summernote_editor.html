@@ -6,7 +6,8 @@
                            char_limit=none, 
                            id_suffix=none, 
                            allow_images=false,
-                           allow_urls=false) %}
+                           allow_urls=false,
+                           html_preview=false) %}
 
   {% if allow_images %}
     {% set allow_images = "picture" %}
@@ -21,7 +22,8 @@
                          "{{ placeholder }}", 
                          "{{ char_limit }}", 
                          "{{ allow_images }}", 
-                         "{{ allow_urls }}")
+                         "{{ allow_urls }}",
+                         "{{ html_preview }}")
   </script>
 
 {%- endmacro %}

@@ -138,6 +138,7 @@ export class DynamicForm {
         "OPTIONAL",
         null,
         "True",
+        "True",
         "True"
       );
 

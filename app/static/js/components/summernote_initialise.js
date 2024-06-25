@@ -3,18 +3,23 @@ export function summernoteInitialise(
   placeholder,
   charLimit,
   allowImages,
-  allowURLS
+  allowURLS,
+  htmlPreview
 ) {
   charLimit = parseInt(charLimit) || null;
   var editor = "#summernote" + idSuffix;
 
+  // Get jinja macro arguments
   if (allowImages == "True") {
     allowImages = "picture";
   }
   if (allowURLS == "True") {
     allowURLS = "link";
   }
-
+  if (htmlPreview == "True") {
+    htmlPreview = ['mybutton', ['HTMLPreview']];
+  }
+  
   $(editor).summernote({
     callbacks: {
       onInit: function(event) {
@@ -71,7 +76,8 @@ export function summernoteInitialise(
       ['font', ['bold', 'italic', 'underline', 'clear']],
       ['para', ['ul', 'ol', 'paragraph']],
       ['insert', [allowURLS, allowImages]],
-      ['mybutton', ['HTMLPreview']]
+      htmlPreview,
+
     ],
     buttons: {
       HTMLPreview: HTMLPreviewButton
