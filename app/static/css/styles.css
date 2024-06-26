@@ -2705,7 +2705,7 @@ p {
 }
 
 .dynamic-field:focus-visible {
-  border-radius: 5px;
+  border-radius: 3px;
   box-sizing: border-box;
   z-index: 2;
 }
