@@ -1,6 +1,6 @@
 export function createBelligerentsFieldHTML(index) {
   return `
-    <div id="event-dynamic-field-${index}" class="form-container form-container-large dynamic-field dynamic-fade belligerents-field">
+    <div id="dynamic-field-${index}" class="form-container form-container-large dynamic-field dynamic-fade belligerents-field">
       <input name="dynamic_fields-${index-1}-field_type" value="composite" type="hidden">
       <input name="dynamic_fields-${index-1}-value" class="belligerents-hidden-value" value="" type="hidden">
       <div class="dynamic-field-inner">

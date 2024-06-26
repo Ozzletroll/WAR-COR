@@ -85,6 +85,7 @@ export class DynamicForm {
             type: fieldType,
             element: element,
             index: this.idValue,
+            parent: this
           })
         }
 
@@ -107,8 +108,9 @@ export class DynamicForm {
       // Create instance of Field class
       var newField = new DynamicField({
         type: "basic",
-        element: document.getElementById(`event-dynamic-field-${fieldID}`),
+        element: document.getElementById(`dynamic-field-${fieldID}`),
         index: fieldID,
+        parent: this,
       })
       this.fields.push(newField);
 
@@ -148,8 +150,9 @@ export class DynamicForm {
       // Create instance of Field class
       var newField = new DynamicField({
         type: "text",
-        element: document.getElementById(`event-dynamic-field-${fieldID}`),
+        element: document.getElementById(`dynamic-field-${fieldID}`),
         index: fieldID,
+        parent: this,
       })
       this.fields.push(newField);
 
@@ -174,7 +177,7 @@ export class DynamicForm {
       // Create instance of Field class
       var newField = new DynamicBelligerentsField({
         type: "belligerents",
-        element: document.getElementById(`event-dynamic-field-${fieldID}`),
+        element: document.getElementById(`dynamic-field-${fieldID}`),
         index: fieldID,
         parent: this,
       })
@@ -197,23 +200,35 @@ export class DynamicForm {
 
     updateDraggableItems() {
       this.fieldList = new Sortable(this.formArea, {
+        dataIdAttr: "id",
         handle: ".handle",
         animation: 150,
         onEnd: (event) => {
-          var items = event.from.getElementsByClassName("dynamic-field");
-          for (var index = 0; index < items.length; index++) {
-            var inputs = items[index].getElementsByTagName("input");
-            for (var index2 = 0; index2 < inputs.length; index2++) {
-              inputs[index2].name = inputs[index2].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
-            }
-            var textAreas = items[index].getElementsByTagName("textarea");
-            for (var index3 = 0; index3 < textAreas.length; index3++) {
-              textAreas[index3].name = textAreas[index3].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
-            }
-          }
-          this.fieldDataChanged = true;
+          this.updateFieldOrder();
         }
       });
+    }
+
+    updateFieldOrder() {
+      var items = this.form.getElementsByClassName("dynamic-field");
+
+      // Update id's and names to match new positions
+      for (var index = 0; index < items.length; index++) {
+        items[index].id = "dynamic-field-" + (index + 1);
+      }
+
+      for (var index = 0; index < items.length; index++) {
+        var inputs = items[index].getElementsByTagName("input");
+        for (var index2 = 0; index2 < inputs.length; index2++) {
+          inputs[index2].name = inputs[index2].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
+        }
+        var textAreas = items[index].getElementsByTagName("textarea");
+        for (var index3 = 0; index3 < textAreas.length; index3++) {
+          textAreas[index3].name = textAreas[index3].name.replace(/dynamic_fields-\d+-/, "dynamic_fields-" + index + "-");
+        }
+      }
+      
+      this.fieldDataChanged = true;
     }
 
     bindSummernoteModalEvents() {
@@ -276,7 +291,9 @@ class DynamicField {
     type,
     element,
     index,
+    parent
   }) {
+    this.parent = parent;
     this.type = type;
     this.element = element;
     this.index = index;
@@ -297,6 +314,9 @@ class DynamicField {
     this.modalDeleteButton.onclick = event => {
       this.delete(event)
     }
+    this.dragHandle = this.element.querySelector(".handle");
+    this.dragState = false;
+    this.initialiseKeyboardDrag();
     this.sizeButton = this.element.querySelector(".field-size-toggle");
     if (this.sizeButton != null) {
       this.state = this.sizeButton.checked;
@@ -317,6 +337,68 @@ class DynamicField {
     this.closeModal.closeModal();
     this.closeModal.modal.remove();
     this.element.remove();
+  }
+
+  initialiseKeyboardDrag() {
+
+    // Add enter key listener to focus element
+    this.dragHandle.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.stopPropagation();
+        event.preventDefault();
+        this.element.tabIndex = 0;
+        this.element.focus();
+      }
+    });
+
+    // Add up/down key listener to move focussed element
+    this.element.addEventListener("keydown", (event) => {
+      // Check if element is focussed
+      if (document.activeElement === this.element) {
+        var code = event.which || event.keyCode;
+        if (code === 38) {
+          this.moveElement("up");
+        } else if (code === 40) {
+          this.moveElement("down");
+        }
+      }
+    });
+
+    // Remove from tab index when not active
+    this.element.addEventListener("blur", () => {
+      this.element.tabIndex = -1;
+    });
+  
+  }
+
+  moveElement(direction) {
+
+    var sortableId = this.element.id;
+    var order = this.parent.fieldList.toArray();
+    var index = order.indexOf(sortableId);
+
+    // Prevent moving first item upwards
+    if (index == 0 && direction == "up") {
+      return
+    }
+
+    // Remove the selected item from the order
+    order.splice(index, 1)
+
+    // Insert back into the new position
+    if (direction == "down") {
+      order.splice(index + 1, 0, sortableId)
+    } else if (direction == "up") {
+      order.splice(index - 1, 0, sortableId)
+    }
+
+    // Sort fieldList into new order
+    this.parent.fieldList.sort(order, true);
+    this.parent.updateFieldOrder();
+    this.parent.updateDraggableItems();
+    
+    // Reselect element
+    this.element.focus();
   }
 
   initialiseSize() {
