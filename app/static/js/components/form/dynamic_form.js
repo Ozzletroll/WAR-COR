@@ -341,6 +341,15 @@ class DynamicField {
 
   initialiseKeyboardDrag() {
 
+    this.element.addEventListener("keypress", (event) => {
+      if (event.key === "Enter" && document.activeElement === this.element) {
+        event.stopPropagation();
+        event.preventDefault();
+        this.element.blur();
+        this.dragHandle.focus();
+      }
+    });
+
     // Add enter key listener to focus element
     this.dragHandle.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
