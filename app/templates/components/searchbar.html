@@ -32,13 +32,13 @@
     <div class="searchbar-tab" aria-label="Searchbar Tab" aria-hidden="true">
       <div class="searchbar-area">
         {% if timeline %}
-          <input id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH"
+          <input type="search" id="search-bar" class="search-bar timeline-searchbar" placeholder="SEARCH"
           aria-label="Enter search query" aria-hidden="true" tabindex="-1">
         {% elif event or epoch %}
-          <input id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH"
+          <input type="search" id="search-bar" class="search-bar event-searchbar" placeholder="SEARCH"
           aria-label="Enter search query" aria-hidden="true" tabindex="-1">
         {% else %}
-          <input id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH"
+          <input type="search" id="search-bar" class="search-bar campaign-searchbar" placeholder="SEARCH"
           aria-label="Enter search query" aria-hidden="true" tabindex="-1">
         {% endif %}
         

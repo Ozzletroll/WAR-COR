@@ -3310,6 +3310,7 @@ p {
   height: 32px;
   box-sizing: border-box;
   outline: none;
+  outline-offset: 0px;
   transition: 0.15s;
   padding: 10px;
 }
@@ -3333,6 +3334,7 @@ p {
 
 .search-bar:focus + .searchbar-go {
   outline: 2px solid var(--elem_border);
+  outline-offset: 0px;
 }
 
 .searchbar-go:focus {

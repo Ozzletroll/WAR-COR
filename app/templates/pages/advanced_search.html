@@ -62,7 +62,8 @@
         <form class="search-form fade-in-block-2" method="POST" aria-label="Advanced Search Form">
           {{ form.csrf_token }}
           <div class="user-form-container search-form-container">
-            {{form.search(class_="form-input callsign-input search-input", 
+            {{form.search(class_="form-input callsign-input search-input",
+                          type="search", 
                           placeholder="SEARCH QUERY", 
                           autocomplete="off",
                           aria_label="Search Query")}}
