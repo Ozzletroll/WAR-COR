@@ -1577,7 +1577,7 @@ p {
 }
 
 .modal-content-small {
-  width: min(60%, 400px);
+  max-width: 500px;
   height: fit-content;
 }
 
@@ -2380,7 +2380,7 @@ p {
   background-color: var(--elem_dark);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
 
   .form-footer-container {
     width: 100%;
