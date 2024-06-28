@@ -95,11 +95,11 @@
                 
                 {% for entry in epoch.dynamic_fields %}
                   {% if entry.field_type == "basic" %}
-                    {{ event_elements.render_basic_field(entry) }}
+                    {{ event_elements.render_basic_field(entry, loop.index) }}
                   {% elif entry.field_type == "html" %}
-                    {{ event_elements.render_html_field(entry) }}
+                    {{ event_elements.render_html_field(entry, loop.index) }}
                   {% elif entry.field_type == "composite" %}
-                    {{ event_elements.render_composite_field(entry) }}
+                    {{ event_elements.render_composite_field(entry, loop.index) }}
                   {% endif %}
                 {% endfor %}
 

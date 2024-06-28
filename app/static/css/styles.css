@@ -6345,6 +6345,10 @@ for selection in timeline_search.js */
   color: var(--text_flavour_bright);
 }
 
+.event-indent {
+  padding-left: 34px;
+}
+
 .epoch-button {
   display: flex;
   justify-content: center;
@@ -6729,6 +6733,12 @@ for selection in timeline_search.js */
   padding: 20px;
   background-color: var(--elem_mid);
   border-radius: 5px;
+}
+
+.description-body h1,
+.description-body h2,
+.description-body h3 {
+  scroll-margin: 25vh;
 }
 
 .event-elem-centre {
