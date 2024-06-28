@@ -1,6 +1,7 @@
 import { Modal } from "../../components/modal.js";
 import { CharCount } from "../../components/char_count.js";
 import { Toolbar } from '../../components/ui/ui_toolbar.js';
+import { addHeaderIdMarker } from '../../components/header_id_marker.js';
 
 
 // Add tooltips to ui toolbar
@@ -56,7 +57,13 @@ window.addEventListener('resize', function() {
   checkEventHeight();
 });
 
-// Scroll header if header  on large screens and if header is broken across multiple lines.
+// Add id's to user submitted header elements
+var htmlFields = document.getElementsByClassName("event-page-description");
+Array.from(htmlFields).forEach(field => {
+  addHeaderIdMarker(field);
+});
+
+// Scroll header on large screens and if header is broken across multiple lines.
 function checkHeader() {
   const header = document.querySelector(".campaigns-heading");
   const headerContainer = header.parentElement;
