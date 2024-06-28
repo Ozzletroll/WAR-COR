@@ -4,6 +4,6 @@ export function addHeaderIdMarker(element) {
   var headers = element.querySelectorAll("h1, h2, h3");
   
   for (let index = 0; index < headers.length; index++) {
-    headers[index].classList.add(`${fieldId}-header-${index + 1}`)
+    headers[index].id = `${fieldId}-header-${index + 1}`;
   }
 }
