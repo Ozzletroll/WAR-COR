@@ -12,7 +12,7 @@ class Sidebar {
     this.scrollElem = this.tab.querySelector(".sidebar-scroll");
     this.childButtons = this.tab.querySelectorAll(".sidebar-button");
 
-    window.addEventListener("DOMContentLoaded", this.initialise.bind(this));
+    this.initialise();
     window.addEventListener("load", this.afterInitiliase.bind(this));
     this.checkScreenSize();
     window.addEventListener("resize", this.checkScreenSize.bind(this));
@@ -90,8 +90,10 @@ class Sidebar {
   // Method  to animate the highlight for scrollTo behavior
   scrollToItem(targetEvent) {
 
-    // Ignore year button clicks
-    if (targetEvent.startsWith("year") || targetEvent.startsWith("epoch")) {
+    // Ignore year, epoch and field button clicks
+    if (targetEvent.startsWith("year") 
+        || targetEvent.startsWith("epoch") 
+        || targetEvent.startsWith("field")) {
       return
     }
 
