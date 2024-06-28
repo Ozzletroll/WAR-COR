@@ -1,5 +1,6 @@
 import editdistance
 import re
+from bs4 import BeautifulSoup
 
 
 def split_date(datestring):
@@ -71,3 +72,39 @@ def format_user_search_results(users, campaign, query):
     sorted_results = sorted(results, key=lambda x: x["relevance"])
 
     return sorted_results
+
+
+def format_html_field_shortcuts(dynamic_fields):
+    """ Function to format an event or epoch model's html field
+        data for sidebar button rendering.
+    """
+
+    def extract_header_text(html):
+        soup = BeautifulSoup(html, "html.parser")
+        header_tags = soup.find_all(re.compile(r"^h"))
+        header_texts = [tag.get_text(strip=True) for tag in header_tags]
+        return header_texts
+
+    output = []
+
+    for index_1, field in enumerate(dynamic_fields):
+
+        if field["field_type"] != "html":
+            continue
+
+        header_texts = extract_header_text(field["value"])
+
+        groups = {
+            "field_index": index_1,
+            "subheadings": [],
+        }
+        for index_2, header in enumerate(header_texts):
+            subheading = {
+                "title": header,
+                "element_id": f"field-{index_1 + 1}-header-{index_2 + 1}"
+            }
+            groups["subheadings"].append(subheading)
+
+        output.append(groups)
+
+    return output

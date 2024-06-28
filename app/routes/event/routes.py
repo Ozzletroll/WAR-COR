@@ -29,6 +29,9 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
     form = forms.CommentForm()
     delete_form = forms.SubmitForm()
 
+    # Format html field data for sidebar buttons
+    sidebar_data = formatters.format_html_field_shortcuts(event.dynamic_fields)
+
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"event-{event.id}"
 
@@ -53,14 +56,16 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                                 campaign_name=campaign.url_title,
                                 campaign_id=campaign.id,
                                 event_name=event.url_title,
-                                event_id=event.id))
+                                event_id=event.id,
+                                sidebar_data=sidebar_data))
 
     return render_template("pages/event_page.html",
                            event=event,
                            campaign=campaign,
                            form=form,
                            delete_form=delete_form,
-                           comment_form_visible=comment_form_visible)
+                           comment_form_visible=comment_form_visible,
+                           sidebar_data=sidebar_data)
 
 
 # Add new event
