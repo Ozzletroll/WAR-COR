@@ -1,10 +1,3 @@
-{#
-  
-  TIMELINE SIDEBAR COMPONENT
-
-  Found on both timeline and edit_timeline page
-  
-  #}
 
 {% macro timeline_sidebar(campaign, timeline_data) %}
 
@@ -56,4 +49,65 @@
  <!-- Javascript -->
  <script src="{{ url_for('static', filename='js/components/ui/sidebar.js') }}"></script>
 
- {%- endmacro %}
+{%- endmacro %}
+
+
+{% macro event_sidebar(event, sidebar_data) %}
+
+<aside id="sidebar-outer" class="sidebar-outer" aria-label="Sidebar" tabindex="-1">
+
+<button id="sidebar-deploy" class="sidebar-deploy" aria-label="Deploy Sidebar">
+  <img aria-label="Sidebar double chevron symbol" id="sidebar-icon" class="icon icon-large" src="{{ url_for('static', filename='/images/icons/chevron_right.svg') }}">
+</button>
+
+<ol id="sidebar-scroll" class="sidebar-scroll" aria-label="Timeline Shortcuts" aria-hidden="true" tabindex="-1">
+  
+  {% for entry in event.dynamic_fields %}
+
+    {% set field_index = loop.index - 1 %}
+
+    {% if entry.field_type == "html" %}
+      <li class="sidebar-li">
+        <a class="sidebar-button event-button" href="#field-{{ loop.index }}" tabindex="-1"
+        data-target-elem="field-{{ loop.index }}">
+          {{ entry.title }}
+        </a>
+      </li>
+
+      {% for group in sidebar_data %}
+
+        {% if field_index == group.field_index %}
+
+          {% for subheader in group.subheadings %}
+            <li class="sidebar-li subheader-li">
+              <a class="sidebar-button event-button event-indent" href="#{{ subheader.element_id }}" tabindex="-1"
+              data-target-elem="{{ subheader.element_id }}">
+                {{ subheader.title }}
+              </a>
+            </li>
+          {% endfor %}
+
+        {% endif %}
+
+      {% endfor %}
+
+    {% else %}
+      <li class="sidebar-li">
+        <a class="sidebar-button event-button" href="#field-{{ loop.index }}" tabindex="-1"
+        data-target-elem="field-{{ loop.index }}">
+          {{ entry.title }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+  
+
+</ol>
+
+</aside>
+
+
+<!-- Javascript -->
+<script src="{{ url_for('static', filename='js/components/ui/sidebar.js') }}"></script>
+
+{%- endmacro %}

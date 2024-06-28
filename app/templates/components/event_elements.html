@@ -1,6 +1,7 @@
 
-{% macro render_html_field(field) %}
-  <section class="event-page-elem event-elem-large elem-body event-page-description" aria-label="{{ field.title }}">
+{% macro render_html_field(field, index) %}
+  <section id="field-{{ index }}" class="event-page-elem event-elem-large elem-body event-page-description" 
+  aria-label="{{ field.title }}">
     <div class="entry-left-padding"></div>
     <div class="description-body">
       <h4 class="event-desc-header">{{ field.title }}</h4>
@@ -11,13 +12,14 @@
   </section>
 {%- endmacro %}
 
-{% macro render_basic_field(field) %}
+{% macro render_basic_field(field, index) %}
   {% if field.is_full_width %}
     {% set width_class = "event-elem-large" %}
   {% else %}
     {% set width_class = "event-elem-small" %}
   {% endif %}
-  <section class="event-page-elem {{ width_class }} event-page-corner" aria-label="{{ field.title }}">
+  <section id="field-{{ index }}" class="event-page-elem {{ width_class }} event-page-corner" 
+  aria-label="{{ field.title }}">
     <div class="event-elem-header">
       <h4 class="event-elem-h">{{ field.title }}</h4>
     </div>
@@ -27,8 +29,9 @@
   </section>
 {%- endmacro %}f
 
-{% macro render_composite_field(field) %}
-  <section class="event-page-elem event-elem-large event-page-corner" aria-label="{{ field.title }}">
+{% macro render_composite_field(field, index) %}
+  <section id="field-{{ index }}" class="event-page-elem event-elem-large event-page-corner" 
+  aria-label="{{ field.title }}">
     <div class="event-elem-header">
       <h4 class="event-elem-h">{{field.title}}</h4>
     </div>

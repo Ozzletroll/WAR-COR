@@ -2,6 +2,7 @@
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/searchbar.html" as searchbar %}
+{% import "components/sidebar.html" as sidebar %}
 {% import "components/back_button.html" as back_button %}
 {% import "components/event_elements.html" as event_elements %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
@@ -33,6 +34,7 @@
 </nav>
 
 <div class="sidebar-page">
+  {{ sidebar.event_sidebar(epoch, sidebar_data) }}
   
   <div id="scrollpage" class="scrollpage">
 
@@ -95,11 +97,11 @@
                 
                 {% for entry in epoch.dynamic_fields %}
                   {% if entry.field_type == "basic" %}
-                    {{ event_elements.render_basic_field(entry) }}
+                    {{ event_elements.render_basic_field(entry, loop.index) }}
                   {% elif entry.field_type == "html" %}
-                    {{ event_elements.render_html_field(entry) }}
+                    {{ event_elements.render_html_field(entry, loop.index) }}
                   {% elif entry.field_type == "composite" %}
-                    {{ event_elements.render_composite_field(entry) }}
+                    {{ event_elements.render_composite_field(entry, loop.index) }}
                   {% endif %}
                 {% endfor %}
 
