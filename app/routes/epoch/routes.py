@@ -29,6 +29,9 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     # Set scroll_to target for back button
     session["timeline_scroll_target"] = f"epoch-{epoch.id}"
 
+    # Format html field data for sidebar buttons
+    sidebar_data = formatters.format_html_field_shortcuts(epoch.dynamic_fields)
+
     timeline_data = campaign.return_timeline_data(epoch=epoch)
 
     # Determine back button functionality if dealing with nested epochs
@@ -43,7 +46,8 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
                            campaign=campaign,
                            epoch=epoch,
                            timeline_data=timeline_data,
-                           can_use_referrer=can_use_referrer)
+                           can_use_referrer=can_use_referrer,
+                           sidebar_data=sidebar_data)
 
 
 # Add new epoch
