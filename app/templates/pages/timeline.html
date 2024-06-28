@@ -1,5 +1,6 @@
 {# Component Macro imports #}
 {% import "components/searchbar.html" as searchbar %}
+{% import "components/sidebar.html" as sidebar %}
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
@@ -22,7 +23,7 @@
 {% block content %}
 
 <div class="sidebar-page">
-  {% include "components/sidebar.html" %}
+  {{ sidebar.timeline_sidebar(campaign, timeline_data) }}
 
   <nav class="ui-buttons" aria-label="UI Buttons" role="toolbar" aria-orientation="vertical">
     <div class="ui-tooltips-container" tabindex="-1">

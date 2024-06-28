@@ -6,6 +6,8 @@
   
   #}
 
+{% macro timeline_sidebar(campaign, timeline_data) %}
+
 <aside id="sidebar-outer" class="sidebar-outer" aria-label="Sidebar" tabindex="-1">
   
   <button id="sidebar-deploy" class="sidebar-deploy" aria-label="Deploy Sidebar">
@@ -52,5 +54,6 @@
 
 
  <!-- Javascript -->
- <script src="{{ url_for('static', filename='js/components/ui/sidebar.js') }}" defer="True"></script> 
- 
+ <script src="{{ url_for('static', filename='js/components/ui/sidebar.js') }}"></script>
+
+ {%- endmacro %}
