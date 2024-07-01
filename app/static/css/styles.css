@@ -6813,7 +6813,7 @@ for selection in timeline_search.js */
   flex-direction: column;
   align-items: center;
   margin-top: 100px;
-  width: 75%;
+  width: 100%;
   margin-bottom: 200px;
   filter: drop-shadow(1px 3px 3px var(--elem_shadow));
 }
@@ -7014,15 +7014,7 @@ for selection in timeline_search.js */
   background-color: var(--bright_red);
 }
 
-@media screen and (max-width: 950px) {
-
-  .comments-area {
-    width: 100%;
-  }
-
-}
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
 
   .delete-comment-button {
     margin-right: 5px;
