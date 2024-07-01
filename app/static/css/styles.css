@@ -6398,7 +6398,7 @@ for selection in timeline_search.js */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: -80px;
+  margin-left: -50px;
   transition: 0.3s;
 }
 
@@ -6412,7 +6412,7 @@ for selection in timeline_search.js */
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 80px;
+  width: 50px;
 }
 
 .no-click {
@@ -6423,8 +6423,9 @@ for selection in timeline_search.js */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
+  transform: scaleY(-1) rotate(-90deg);
 }
 
 .back-button:hover .icon-colour-var {
