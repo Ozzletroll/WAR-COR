@@ -33,20 +33,14 @@ function checkEventHeight() {
   var event = document.querySelector(".event-centre-container");
   var eventHeight = event.clientHeight + 200;
   var windowHeight = window.innerHeight;
-  var windowWidth = window.innerWidth;
 
-  if (windowWidth > 1500) {
-    if (eventHeight > windowHeight) {
-      lowerAdjacentElement.style.display = "flex";
-    }
-    else {
-      lowerAdjacentElement.style.display = "none";
-    }
-  }
-  else {
+  if (eventHeight > windowHeight) {
     lowerAdjacentElement.style.display = "flex";
   }
-
+  else {
+    lowerAdjacentElement.style.display = "none";
+  }
+  
 }
 
 // Add click event listener to close the modal when clicking outside
@@ -62,48 +56,6 @@ var htmlFields = document.getElementsByClassName("event-page-description");
 Array.from(htmlFields).forEach(field => {
   addHeaderIdMarker(field);
 });
-
-// Scroll header on large screens and if header is broken across multiple lines.
-function checkHeader() {
-  const header = document.querySelector(".campaigns-heading");
-  const headerContainer = header.parentElement;
-  const textWidth = header.scrollWidth;
-  const containerWidth = headerContainer.offsetWidth;
-
-  // Find the animation rule
-  // stylesheet[1] = styles.css
-  const styleSheet = document.styleSheets[1];
-  let animationRule;
-  for (const rule of styleSheet.cssRules) {
-    if (rule.name === 'scrollHeader') {
-      animationRule = rule;
-      break;
-    }
-  }
-
-  // Calculate the difference between text width and container width
-  const widthDifference = textWidth - containerWidth;
-
-  // Check if animation should be applied
-  if (widthDifference > 0) {
-    // Set keyframes
-    const keyframes = animationRule.cssRules;
-    keyframes[2].style.transform = `translateX(calc(-100% + ${containerWidth - widthDifference}px))`;
-    keyframes[3].style.transform = `translateX(calc(-100% + ${containerWidth - widthDifference}px))`;
-
-    // Calculate the duration based on the difference
-    const animationDuration = widthDifference / 10;
-    // Apply the dynamic animation duration
-    header.style.animation = `scrollHeader ${animationDuration}s linear infinite`;
-  } 
-  else {
-    header.style.animation = "";
-  }
-}
-
-// Add event listener to recheck header on screen resize
-window.addEventListener('resize', checkHeader);
-window.addEventListener('load', checkHeader);
 
 // Create char count on comment form
 var commentFormPresent = document.getElementById("summernote-comment");

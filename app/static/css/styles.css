@@ -6380,26 +6380,6 @@ for selection in timeline_search.js */
 
 /* Event Page */
 
-@keyframes scrollHeader {
-  0% { transform: translateX(0%); }
-  10% { transform: translateX(0%); }
-  50% { transform: translateX(-100%); }
-  60% { transform: translateX(-100%); } /* Pause here for a moment */
-  100% { transform: translateX(0%); }
-}
-
-@media screen and (min-width: 1500px) {
-
-  .campaigns-heading-outer {
-    overflow: hidden;
-  }
-
-  .campaigns-heading {
-    white-space: nowrap;
-  }
-  
-}
-
 .event-back-button-area {
   display: flex;
   align-items: center;
@@ -6448,30 +6428,7 @@ for selection in timeline_search.js */
   transition: 0.3s;
 }
 
-@media screen and (max-width: 800px) {
-  
-  .event-back-button-area {
-    width: 60px;
-    height: 60px;
-    margin-left: -60px;
-  }
-
-  .icon-back-button {
-    height: 60px;
-    width: 60px;
-  }
-
-  .back-link {
-    width: 60px;
-  }
-
-}
-
-@media screen and (max-width: 600px) {
-
-  .campaigns-heading {
-    width: 80%;
-  }
+@media screen and (max-width: 950px) {
   
   .event-back-button-area {
     width: 40px;
@@ -6488,6 +6445,14 @@ for selection in timeline_search.js */
     width: 40px;
   }
 
+}
+
+@media screen and (max-width: 600px) {
+
+  .campaigns-heading {
+    width: 80%;
+  }
+  
 }
 
 @media screen and (max-width: 400px) {
@@ -6524,12 +6489,13 @@ for selection in timeline_search.js */
 }
 
 .adjacent-event-area {
-  display: none;
+  display: flex;
   flex: 1 0 0;
   max-height: 66px;
   align-items: center;
 }
 
+.adjacent-events-upper,
 .adjacent-events-lower {
   display: flex;
   width: 100%;
@@ -6540,7 +6506,12 @@ for selection in timeline_search.js */
   font-size: min(16px, 4vw);
 }
 
-.adjacent-events-lower .adjacent-elem-container {
+.adjacent-events-upper {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.adjacent-elem-container {
   display: flex;
   max-width: 200px;
 }
@@ -6562,14 +6533,6 @@ for selection in timeline_search.js */
   height: fit-content;
 }
 
-@media screen and (min-width: 1500px) {
-  
-  .adjacent-event-area {
-    display: flex;
-  }
-
-}
-
 .adjacent-event-a {
   display: flex;
   justify-content: center;
@@ -6584,6 +6547,12 @@ for selection in timeline_search.js */
   padding: 0;
   border: none;
   background-color: transparent;
+}
+
+.adjacent-icon {
+  width: 30px;
+  min-width: 30px;
+  box-sizing: border-box;
 }
 
 .adjacent-icon-left {

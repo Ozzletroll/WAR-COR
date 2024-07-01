@@ -83,9 +83,16 @@
 
         <div class="event-page-container fade-in-block-2">
 
-          <div class="event-main-container">
+          <div class="adjacent-events-upper">
+            <div class="adjacent-upper">
+              {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=false) }}
+            </div>
+            <div class="adjacent-upper">
+              {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=false) }}
+            </div>
+          </div>
 
-            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true) }}
+          <div class="event-main-container">
 
             <div class="event-centre-container">
               <div class="event-page-upper">
@@ -119,8 +126,6 @@
               </div>
 
             </div>
-
-            {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true) }}
 
           </div>
 
