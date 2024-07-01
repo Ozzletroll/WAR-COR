@@ -6511,6 +6511,10 @@ for selection in timeline_search.js */
   margin-bottom: 20px;
 }
 
+.adjacent-events-lower {
+  display: none;
+}
+
 .adjacent-elem-container {
   display: flex;
   max-width: 200px;
