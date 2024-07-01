@@ -25,16 +25,12 @@
   "campaign" is the campaign object, for the purposes of 
   accessing id/title etc.
 
-  "campaign" is the event object, for the purposes of 
-  accessing id/title etc.
-
   #}
 
 {% macro page_upper_area(navigation_urls, 
                          is_link=False, 
                          current_user=current_user,
                          campaign=none,
-                         event=none,
                          homepage=false) %}
 
 {% if is_link %}
