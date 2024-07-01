@@ -27,7 +27,7 @@ def advanced_search(campaign_name, campaign_id):
     search_engine = search_tools.SearchEngine()
 
     # Set back button route
-    if not session["previous_url"]:
+    if "previous_url" not in session:
         session["previous_url"] = url_for("campaign.show_timeline",
                                           campaign_name=campaign.url_title,
                                           campaign_id=campaign.id)
