@@ -6943,7 +6943,7 @@ for selection in timeline_search.js */
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  max-width: 75%;
+  max-width: 750px;
   width: 75%;
   filter: drop-shadow(1px 3px 3px var(--elem_shadow));
 }
