@@ -6271,7 +6271,7 @@ for selection in timeline_search.js */
   border: none;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
 
   .sidebar-outer {
     display: none;
