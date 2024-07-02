@@ -2799,18 +2799,23 @@ input[type="search"] {
 
 .new-field-area {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   margin: 40px 0px;
+  gap: 10px;
 }
 
 .new-field-button {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
   color: var(--text_header);
-  background-color: transparent;
-  border: 1px dashed var(--elem_border);
-  padding: 20px 50px;
-  width: 100%;
+  background-color: var(--elem_mid);
+  border: 1px solid var(--elem_border);
+  border-radius: 3px;
+  width: 280px;
 }
 
 .new-field-button:hover {
