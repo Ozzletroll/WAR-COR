@@ -6507,13 +6507,17 @@ for selection in timeline_search.js */
   max-width: 900px;
   margin-top: 50px;
   justify-content: space-between;
-  align-items: center;
-  font-size: min(16px, 4vw);
 }
 
 .adjacent-events-upper {
   margin-top: 0px;
   margin-bottom: 20px;
+}
+
+.adjacent-upper {
+  display: flex;
+  align-items: flex-start;
+  flex: 1 0 0;
 }
 
 .adjacent-events-lower {
@@ -6522,6 +6526,8 @@ for selection in timeline_search.js */
 
 .adjacent-elem-container {
   display: flex;
+  justify-content: center;
+  height: fit-content;
   max-width: 200px;
 }
 
@@ -6536,10 +6542,8 @@ for selection in timeline_search.js */
   text-align: right;
 }
 
-.adjacent-elem-container {
-  display: flex;
-  justify-content: center;
-  height: fit-content;
+.area-right .adjacent-event-header {
+  justify-content: right;
 }
 
 .adjacent-event-a {
@@ -6580,11 +6584,54 @@ for selection in timeline_search.js */
   fill: var(--text_header_hover);
 }
 
+.adjacent-headers-left,
+.adjacent-headers-right {
+  display: flex;
+  flex-direction: column;
+}
+
 .adjacent-event-header {
+  display: flex;
   margin: 0;
   color: var(--text_header);
   transition: 0.15s;
   text-transform: uppercase;
+  font-size: 12px;
+}
+
+.parent-epochs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-transform: uppercase;
+  color: var(--text_header);
+}
+
+.parent-epochs-header {
+  font-size: 12px;
+  margin: 0px;
+}
+
+.parent-epochs-list {
+  margin: 0px;
+  padding: 0px;
+}
+
+.parent-epoch-li {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.parent-epoch-li a {
+  color: var(--text_header);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.parent-epoch-li a:hover {
+  color: var(--text_header_hover);
 }
 
 .event-centre-container {

@@ -87,6 +87,29 @@
             <div class="adjacent-upper">
               {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, left=true, lower=false) }}
             </div>
+
+            {% if event.epochs | length != 0 %}
+              <div class="parent-epochs-container">
+                <h5 class="parent-epochs-header">
+                  Part of:
+                </h5>
+                <ul class="parent-epochs-list">
+                  {% for epoch in event.epochs %}
+                    <li class="parent-epoch-li">
+                      <a 
+                      href="{{ url_for('epoch.view_epoch', 
+                                       campaign_id=campaign.id,
+                                       campaign_name=campaign.url_title, 
+                                       epoch_id=epoch.id,
+                                       epoch_title=epoch.url_title) }}">
+                        {{ epoch.title }}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            {% endif %}
+
             <div class="adjacent-upper">
               {{ adjacent_event_button.adjacent_event_button(event=event, campaign=campaign, right=true, lower=false) }}
             </div>
