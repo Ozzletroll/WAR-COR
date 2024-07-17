@@ -22,7 +22,7 @@ const layoutManager = new LayoutManager({
       {
         localStorageName: "grid",
         button: document.getElementById("campaign-toggle-grid"),
-        minAllowedScreenWidth: 1200,
+        minAllowedScreenWidth: 1250,
       })
     ],
     defaultLayout: "list",

@@ -3577,7 +3577,7 @@ input[type="search"] {
   transition: 0.15s;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1250px) {
 
   .view-toggles {
     display: flex;

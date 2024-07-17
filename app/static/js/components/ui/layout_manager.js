@@ -208,7 +208,7 @@ export class GridLayout extends CampaignLayout {
     
     // Set button area styling
     Array.from(buttonAreas).forEach((entry) => {
-        entry.style.justifyContent = "space-between";
+      entry.style.justifyContent = "space-between";
     });
 
     // Hide banner images
