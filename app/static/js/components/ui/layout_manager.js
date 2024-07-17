@@ -10,8 +10,9 @@ export class LayoutManager {
     });
     this.layouts = layouts;
     this.defaultLayout = defaultLayout;
-    var currentLayoutName = localStorage.getItem(layoutLocalStorage) || defaultLayout;
-    this.setLayout(this.getLayout(currentLayoutName));
+    this.storedLayout = this.getLayout(localStorage.getItem(layoutLocalStorage) || defaultLayout);
+    this.selectedLayout = this.storedLayout;
+    this.setLayout(this.storedLayout);
 
     window.addEventListener("resize", () => {
       this.checkLayoutWidth();
@@ -22,7 +23,7 @@ export class LayoutManager {
     if (window.innerWidth < layout.minAllowedScreenWidth) {
       layout = this.getLayout(this.defaultLayout);
     }
-    this.currentLayout = layout;
+    this.selectedLayout = layout;
     layout.resetButtonStyle();
     layout.applyButtonStyle();
     layout.applyLayoutStyle();
@@ -37,8 +38,11 @@ export class LayoutManager {
   }
 
   checkLayoutWidth() {
-    if (window.innerWidth < this.currentLayout.minAllowedScreenWidth) {
+    if (window.innerWidth < this.storedLayout.minAllowedScreenWidth) {
       this.setLayout(this.getLayout(this.defaultLayout));
+    }
+    else {
+      this.setLayout(this.storedLayout);
     }
   }
 }
@@ -57,6 +61,8 @@ class Layout {
     this.minAllowedScreenWidth = minAllowedScreenWidth;
     this.allButtons = document.querySelectorAll(".radio");
     this.button.addEventListener("click", () => {
+      localStorage.setItem("campaignLayout", this.localStorageName);
+      this.layoutManager.storedLayout = this;
       this.layoutManager.setLayout(this);
     });
     this.resetButtonStyle();
@@ -159,8 +165,6 @@ export class ListLayout extends CampaignLayout {
 
   applyLayoutStyle() {
 
-    localStorage.setItem("campaignLayout", "list");
-
     var buttonAreas = document.querySelectorAll(".campaign-entry-buttons");
     var campaignsList = document.getElementById("campaigns-list");
     var campaignsEntries = document.getElementsByClassName("campaign-entry")
@@ -191,9 +195,7 @@ export class ListLayout extends CampaignLayout {
 export class GridLayout extends CampaignLayout {
 
   applyLayoutStyle() {
-
-    localStorage.setItem("campaignLayout", "grid");
-
+    
     var buttonAreas = document.querySelectorAll(".campaign-entry-buttons");
     var campaignsList = document.getElementById("campaigns-list");
     var campaignsEntries = document.getElementsByClassName("campaign-entry")
