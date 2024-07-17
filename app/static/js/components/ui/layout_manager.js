@@ -5,15 +5,14 @@ export class LayoutManager {
   })
   {
     this.layouts = layouts;
-    this.currentLayout = this.getLayout(JSON.parse(localStorage.getItem(layoutLocalStorage)) || "list");
+    var currentLayoutName = localStorage.getItem(layoutLocalStorage) || "list"
+    this.currentLayout = this.getLayout(currentLayoutName);
     this.setLayout(this.currentLayout);
   }
 
-  initialiseLayout() {
-    console.log(this.currentLayout)
-  }
-
   setLayout(layout) {
+    layout.resetButtonStyle();
+    layout.applyButtonStyle();
     layout.applyLayoutStyle();
   }
 
@@ -22,12 +21,8 @@ export class LayoutManager {
       if (layout.localStorageName == layoutName) {
         return layout;
       }
-      else {
-        return null;
-      }
     }
   }
-
 }
 
 
@@ -39,19 +34,36 @@ class Layout {
   {
     this.localStorageName = localStorageName;
     this.button = button;
+    this.allButtons = document.querySelectorAll(".radio");
     this.button.addEventListener("click", () => {
+      this.resetButtonStyle();
+      this.applyButtonStyle();
       this.applyLayoutStyle();
     });
+    this.resetButtonStyle();
   }
 
-  applyLayoutStyle() {}
+  resetButtonStyle() {
+    this.allButtons.forEach(button => {
+      button.parentElement.style.backgroundColor = "";
+    })
+  }
+
+  applyButtonStyle() {
+    this.button.checked = true;
+    this.button.parentElement.style.backgroundColor = "var(--elem_dark)";
+  }
+
+  applyLayoutStyle() {
+    
+  }
 }
 
 
 export class ListLayout extends Layout {
 
   applyLayoutStyle() {
-    console.log("APPLIED LIST STYLE");
+    localStorage.setItem("campaignLayout", "list");
   }
 
 }
@@ -59,7 +71,7 @@ export class ListLayout extends Layout {
 export class GridLayout extends Layout {
 
   applyLayoutStyle() {
-    console.log("APPLIED GRID STYLE");
+    localStorage.setItem("campaignLayout", "grid");
   }
 
 }
