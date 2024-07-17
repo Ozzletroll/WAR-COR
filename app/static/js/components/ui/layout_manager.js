@@ -1,16 +1,28 @@
 export class LayoutManager {
   constructor({
     layoutLocalStorage,
-    layouts
+    layouts,
+    defaultLayout,
   })
   {
+    layouts.forEach(layout => {
+      layout.layoutManager = this;
+    });
     this.layouts = layouts;
-    var currentLayoutName = localStorage.getItem(layoutLocalStorage) || "list"
-    this.currentLayout = this.getLayout(currentLayoutName);
-    this.setLayout(this.currentLayout);
+    this.defaultLayout = defaultLayout;
+    var currentLayoutName = localStorage.getItem(layoutLocalStorage) || defaultLayout;
+    this.setLayout(this.getLayout(currentLayoutName));
+
+    window.addEventListener("resize", () => {
+      this.checkLayoutWidth();
+    });
   }
 
   setLayout(layout) {
+    if (window.innerWidth < layout.minAllowedScreenWidth) {
+      layout = this.getLayout(this.defaultLayout);
+    }
+    this.currentLayout = layout;
     layout.resetButtonStyle();
     layout.applyButtonStyle();
     layout.applyLayoutStyle();
@@ -23,6 +35,12 @@ export class LayoutManager {
       }
     }
   }
+
+  checkLayoutWidth() {
+    if (window.innerWidth < this.currentLayout.minAllowedScreenWidth) {
+      this.setLayout(this.getLayout(this.defaultLayout));
+    }
+  }
 }
 
 
@@ -30,15 +48,16 @@ class Layout {
   constructor({
     localStorageName,
     button,
+    minAllowedScreenWidth
   })
   {
+    this.layoutManager;
     this.localStorageName = localStorageName;
     this.button = button;
+    this.minAllowedScreenWidth = minAllowedScreenWidth;
     this.allButtons = document.querySelectorAll(".radio");
     this.button.addEventListener("click", () => {
-      this.resetButtonStyle();
-      this.applyButtonStyle();
-      this.applyLayoutStyle();
+      this.layoutManager.setLayout(this);
     });
     this.resetButtonStyle();
   }
@@ -57,6 +76,10 @@ class Layout {
   applyLayoutStyle() {
     // This is overridden by individual layouts
   }
+}
+
+
+class CampaignLayout extends Layout {
 
   matchOverviewHeight() {
 
@@ -132,7 +155,7 @@ class Layout {
 }
 
 
-export class ListLayout extends Layout {
+export class ListLayout extends CampaignLayout {
 
   applyLayoutStyle() {
 
@@ -165,7 +188,7 @@ export class ListLayout extends Layout {
 
 }
 
-export class GridLayout extends Layout {
+export class GridLayout extends CampaignLayout {
 
   applyLayoutStyle() {
 
@@ -194,7 +217,6 @@ export class GridLayout extends Layout {
 
     // Make overview areas heights match
     this.matchOverviewHeight();
-
   }
 
 }
