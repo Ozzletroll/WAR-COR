@@ -87,6 +87,21 @@ class Layout {
 
 class CampaignLayout extends Layout {
 
+  constructor({
+    localStorageName,
+    button,
+    minAllowedScreenWidth
+  }) {
+    super({
+      localStorageName,
+      button,
+      minAllowedScreenWidth
+    })
+    // Display styled elements after initialising to avoid flicker on layout load
+    this.campaignsList = document.getElementById("campaigns-list");
+    this.campaignsList.style.display = "flex";
+  }
+
   matchOverviewHeight() {
 
     // Set matching height of overview elements for each pair of campaign cards
