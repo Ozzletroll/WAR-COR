@@ -1,8 +1,9 @@
 import { Toolbar } from '../../components/ui/ui_toolbar.js';
-import { LayoutManager, ListLayout, GridLayout } from '../../components/ui/layout_manager.js';
+import { LayoutManager } from '../../components/layout/layout_manager.js';
+import { ListLayout } from '../../components/layout/layouts/campaign/campaign_list_layout.js';
+import { GridLayout } from '../../components/layout/layouts/campaign/campaign_grid_layout.js';
 import { initialiseCampaignMobileTabs } from '../../pages/campaign/campaign_mobile_tabs.js';
 import { initialiseDropdownMenus } from '../../pages/campaign/dropdown_menu.js';
-
 
 
 // Add tooltips to ui toolbar
