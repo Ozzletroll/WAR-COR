@@ -8,7 +8,6 @@
 
     <div class="onepage-content">
 
-        <h1 class="form-heading">DELETE</h1>
         <div class="form-flash">
           {% include 'components/flash.html' %}
             <ul class = flashes>
@@ -27,7 +26,7 @@
           method="POST" action="{{ url_for('user.delete_user', username=current_user.username, user_id=current_user.id) }}">
               {{ form.csrf_token }}
               <div class="form-header">
-                <h4 class="auth-form-header">Delete</h3>
+                <h4 class="auth-form-header">Delete Account</h3>
               </div>
                 
               <div class="form-layout">
