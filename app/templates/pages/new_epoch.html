@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/searchbar.html" as searchbar %}
@@ -55,11 +54,6 @@
                                         campaign=campaign) }}
 
         <div class="campaigns-title">
-
-          {# Back button #}
-          {% set url = url_for('campaign.edit_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
-          {{ back_button.back_button(url=url, blank=false) }}
-
           {% if edit_page %}
           <h3 class="campaigns-heading edit-campaign-heading">EDIT EPOCH DATA</h3>
           {% else %}

@@ -32,21 +32,13 @@ def view_epoch(campaign_name, campaign_id, epoch_title, epoch_id):
     # Format html field data for sidebar buttons
     sidebar_data = formatters.format_html_field_shortcuts(epoch.dynamic_fields)
 
+    # Format nested event timeline data
     timeline_data = campaign.return_timeline_data(epoch=epoch)
-
-    # Determine back button functionality if dealing with nested epochs
-    can_use_referrer = False
-    if request.referrer is not None:
-        url_titles = [epoch.url_title for epoch in epoch.sub_epochs] 
-        url_titles_found = [title for title in url_titles if title in request.referrer]
-        if len(url_titles_found) == 0 and "/edit" not in request.referrer:
-            can_use_referrer = True
 
     return render_template("pages/epoch_page.html",
                            campaign=campaign,
                            epoch=epoch,
                            timeline_data=timeline_data,
-                           can_use_referrer=can_use_referrer,
                            sidebar_data=sidebar_data)
 
 

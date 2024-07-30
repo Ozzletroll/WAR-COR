@@ -1,7 +1,6 @@
 {# Component Macro imports #}
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/campaign_entry.html" as campaign_entry %}
 {% import "components/page_selection.html" as page_selection %}
 
@@ -31,13 +30,7 @@
                               current_user=current_user) }}
 
       <div class="campaigns-title">
-
-        {# Blank back button area area. No url needed. #}
-        {% set url = "" %}
-        {{ back_button.back_button(url=url, blank=true) }}
-
         <h3 class="campaigns-heading">Campaigns</h3>
-
       </div>
 
       <hr class="campaigns-divider" aria-hidden="true">

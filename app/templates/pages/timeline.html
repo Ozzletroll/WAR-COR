@@ -4,7 +4,6 @@
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/page_upper_area.html" as page_upper_area %}
 {% import "components/members_list.html" as members_list %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/footer.html" as footer %}
 {% import "components/modal.html" as modal%}
 
@@ -69,13 +68,7 @@
                                           campaign=campaign) }}
 
         <div class="campaigns-title">
-
-          {# Blank back button area area. No url needed. #}
-          {% set url = "" %}
-          {{ back_button.back_button(url=url, blank=true) }}
-
           <h3 id="campaigns-heading" class="campaigns-heading">{{campaign.title}}</h3>
-
         </div>
 
         <hr class="campaigns-divider" aria-hidden="true">

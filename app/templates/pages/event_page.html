@@ -3,7 +3,6 @@
 {% import "components/edit_toggle.html" as edit_toggle %}
 {% import "components/sidebar.html" as sidebar %}
 {% import "components/searchbar.html" as searchbar %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/adjacent_event_button.html" as adjacent_event_button %}
 {% import "components/event_elements.html" as event_elements %}
 {% import "components/modal.html" as modal %}
@@ -55,25 +54,9 @@
                                             campaign=campaign) }}
 
             <div class="campaigns-title">
-              
-              {# Back button #}
-              {% if request.referrer %}
-                {% if "/search" in request.referrer and campaign.url_title in request.referrer %}
-                  {% set url = url_for('search.advanced_search', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
-                {% elif "/epoch" in request.referrer and campaign.url_title in request.referrer %}
-                  {% set url = request.referrer %}
-                {% else %}
-                  {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
-                {% endif %}
-              {% else %}
-                {% set url = url_for('campaign.show_timeline', campaign_name=campaign.url_title, campaign_id=campaign.id) %}
-              {% endif %}
-              {{ back_button.back_button(url=url, blank=false) }}
-
               <div class="campaigns-heading-outer">
                 <h3 class="campaigns-heading">{{event.title}}</h3>
               </div>
-              
             </div>
       
             <hr class="campaigns-divider" aria-hidden="true">

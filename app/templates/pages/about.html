@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/campaign_entry.html" as campaign_entry %}
 
 {% extends "base/base.html" %}
@@ -24,13 +23,7 @@
                               homepage=true) }}
 
       <div class="campaigns-title">
-
-        {# Blank back button area area. No url needed. #}
-        {% set url = url_for('home.home') %}
-        {{ back_button.back_button(url=url) }}
-
         <h3 class="campaigns-heading">About</h3>
-
       </div>
 
       <hr class="campaigns-divider" aria-hidden="true">
