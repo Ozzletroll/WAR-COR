@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/summernote_editor.html" as summernote %}
 {% import "components/modal.html" as modal %}
 
@@ -49,15 +48,6 @@
                                         campaign=campaign) }}
 
       <div class="campaigns-title">
-
-        {# Back button #}
-        {% if session["previous_url"] %}
-          {% set url = session["previous_url"] %}
-        {% else %}
-          {% set url = url_for("campaign.campaigns") %}
-        {% endif %}
-        {{ back_button.back_button(url=url, blank=false) }}
-
         {% if edit %}
           <h3 class="campaigns-heading edit-campaign-heading">EDIT CAMPAIGN DATA</h1>
         {% else %}

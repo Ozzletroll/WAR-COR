@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 
 {% extends "base/base.html" %}
 
@@ -24,18 +23,6 @@
                                         campaign=campaign) }}
 
       <div class="campaigns-title">
-
-        {# Back button #}
-        {# Only render usable back button if referrer has a url #}
-        {% if request.referrer %}
-          {% set url = url_for("session.back") %}
-          {{ back_button.back_button(url=url, blank=false) }}
-        {% else %}
-          {# Blank back button area area. No url needed. #}
-          {% set url = "" %}
-          {{ back_button.back_button(url=url, blank=true) }}
-        {% endif %}
-
         <h3 class="campaigns-heading">DATA BACKUP</h3>
       </div>
       <hr class="campaigns-divider" aria-hidden="true">

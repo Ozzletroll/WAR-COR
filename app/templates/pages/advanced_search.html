@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/search_result.html" as search_result %}
 {% import "components/page_selection.html" as page_selection %}
 
@@ -32,23 +31,9 @@
                                         campaign=campaign) }}
 
         <div class="campaigns-title">
-          
-          {# Back button #}
-          
-          {# Only render usable back button if referrer has a url #}
-          {% if request.referrer %}
-            {% set url = url_for("session.back") %}
-            {{ back_button.back_button(url=url, blank=false) }}
-          {% else %}
-            {# Blank back button area area. No url needed. #}
-            {% set url = "" %}
-            {{ back_button.back_button(url=url, blank=true) }}
-          {% endif %}
-
           <div class="campaigns-heading-outer">
             <h3 class="campaigns-heading">Advanced Search</h1>
           </div>
-          
         </div>
   
         <hr class="campaigns-divider" aria-hidden="true">

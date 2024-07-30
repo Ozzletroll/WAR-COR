@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/modal.html" as modal %}
 
 {% extends "base/base.html" %}
@@ -34,11 +33,6 @@
                                         campaign=campaign) }}
 
       <div class="campaigns-title"> 
-
-        {# Back button #}
-        {% set url = url_for("session.back") %}
-        {{ back_button.back_button(url=url, blank=false) }}
-
         <h3 class="campaigns-heading">Edit Members</h3>
       </div>
       <hr class="campaigns-divider" aria-hidden="true">

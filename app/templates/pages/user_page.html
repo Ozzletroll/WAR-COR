@@ -1,6 +1,5 @@
 {# Component Macro imports #}
 {% import "components/page_upper_area.html" as page_upper_area %}
-{% import "components/back_button.html" as back_button %}
 {% import "components/modal.html" as modal %}
 
 {% extends "base/base.html" %}
@@ -30,20 +29,6 @@
                                         current_user=current_user) }}
 
       <div class="user-title">
-
-        {# Back Button Area #}
-
-        {# Only render usable back button if referrer has a url #}
-        {% if request.referrer %}
-          {# User page back button #}
-          {% set url = url_for("session.back") %}
-          {{ back_button.back_button(url=url, blank=false) }}
-        {% else %}
-          {# Blank back button area area. No url needed. #}
-          {% set url = "" %}
-          {{ back_button.back_button(url=url, blank=true) }}
-        {% endif %}
-
         <h3 class="user-heading heading-line-2">{{ user.username }}</h3>
       </div>
 
