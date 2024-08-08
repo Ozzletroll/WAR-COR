@@ -537,6 +537,7 @@ class DynamicBelligerentsField extends DynamicField {
 
   updateDraggableColumns() {
     this.columnList = new Sortable(this.element.querySelector(".belligerents-table"), {
+      dataIdAttr: "id",
       handle: ".belligerents-handle",
       animation: 150,
       onEnd: (event) => {
@@ -591,6 +592,8 @@ class BelligerentsColumn {
     this.index = index;
     this.parentIndex = parentIndex;
     this.element = element;
+    this.dragHandle = this.element.querySelector(".belligerents-handle");
+    this.initialiseKeyboardDrag();
     this.titleField = element.querySelector(".column-header-text");
     this.positionField = element.querySelector(".column-position");
     this._title = "";
@@ -655,6 +658,77 @@ class BelligerentsColumn {
     this.parentClass.updateColumnOrder();
     this.parentClass.parent.fieldDataChanged = true;
     this.parentClass.updateFieldData();
+  }
+
+  initialiseKeyboardDrag() {
+
+    this.element.addEventListener("keypress", (event) => {
+      if (event.key === "Enter" && document.activeElement === this.element) {
+        event.stopPropagation();
+        event.preventDefault();
+        this.element.blur();
+        this.dragHandle.focus();
+      }
+    });
+
+    // Add enter key listener to focus element
+    this.dragHandle.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        event.stopPropagation();
+        event.preventDefault();
+        this.element.tabIndex = 0;
+        this.element.focus();
+      }
+    });
+
+    // Add up/down key listener to move focussed element
+    this.element.addEventListener("keydown", (event) => {
+      // Check if element is focussed
+      if (document.activeElement === this.element) {
+        var code = event.which || event.keyCode;
+        if (code === 38) {
+          this.moveElement("up");
+        } else if (code === 40) {
+          this.moveElement("down");
+        }
+      }
+    });
+
+    // Remove from tab index when not active
+    this.element.addEventListener("blur", () => {
+      this.element.tabIndex = -1;
+    });
+  
+  }
+
+  moveElement(direction) {
+
+    var sortableId = this.element.id;
+    var order = this.parentClass.columnList.toArray();
+    var index = order.indexOf(sortableId);
+
+    // Prevent moving first item upwards
+    if (index == 0 && direction == "up") {
+      return
+    }
+
+    // Remove the selected item from the order
+    order.splice(index, 1)
+
+    // Insert back into the new position
+    if (direction == "down") {
+      order.splice(index + 1, 0, sortableId)
+    } else if (direction == "up") {
+      order.splice(index - 1, 0, sortableId)
+    }
+
+    // Sort fieldList into new order
+    this.parentClass.columnList.sort(order, true);
+    this.parentClass.updateColumnOrder();
+    this.parentClass.updateDraggableColumns();
+    
+    // Reselect element
+    this.element.focus();
   }
 
 }
