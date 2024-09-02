@@ -1,5 +1,6 @@
 {% import "components/modal/modal_preview.html" as modal_preview %}
 {% import "components/modal/modal_comment.html" as modal_comment %}
+{% import "components/modal/modal_admin.html" as modal_admin %}
 
 
 {% macro modal(type=none,
@@ -47,20 +48,13 @@
                                            body_text=body_text, 
                                            button_text=button_text) }}
           {% elif type == "admin" %}
-
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
-            <p class="modal-text modal-text-upper">
-              Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> 
-              in campaign <strong>{{ body_text }}</strong>.
-            </p>
-            <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
-            method="POST" action="{{ form_action }}">
-              {{ form.csrf_token }}
-              {{ form.username(value=form_target.username, class_="form-hidden") }}
-              {{ form.user_id(value=form_target.id, class_="form-hidden") }}
-              {{ form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
-            </form>
-
+            {{ modal_admin.modal_admin(loop_index=loop_index,
+                                       modal_id=modal_id,
+                                       model_id=model_id,
+                                       form=form,
+                                       form_target=form_target,
+                                       form_action=form_action,
+                                       body_text=body_text) }}
           {% elif type == "remove" %}
 
             <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::REVOKE</p>
