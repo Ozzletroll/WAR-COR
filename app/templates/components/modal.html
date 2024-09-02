@@ -2,6 +2,7 @@
 {% import "components/modal/modal_comment.html" as modal_comment %}
 {% import "components/modal/modal_admin.html" as modal_admin %}
 {% import "components/modal/modal_remove.html" as modal_remove %}
+{% import "components/modal/modal_event.html" as modal_event %}
 
 
 {% macro modal(type=none,
@@ -63,13 +64,10 @@
                                          body_text=body_text,
                                          button_text=button_text) }}
           {% elif type == "event" %}
-            <p class="flavour-text modal-flavour">CMB-3-{{model_id}} // DELETION::CONFIRM</p>
-            <p class="modal-text modal-text-upper">Confirm termination of event <strong>{{body_text}}</strong>.</p>
-            <form method="POST" action="{{ form_action }}">
-              {{ form.csrf_token }}
-              {{ form.submit(class_="button modal-confirm-button", value="DELETE") }}
-            </form>
-
+            {{ modal_event.modal_event(model_id=model_id,
+                                       form=form,
+                                       form_action=form_action,
+                                       body_text=body_text) }}
           {% elif type == "epoch" %}
 
             <p class="flavour-text modal-flavour">EPC-5-{{model_id}} // DELETION::CONFIRM</p>
