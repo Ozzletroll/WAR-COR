@@ -1,4 +1,5 @@
 {% import "components/modal/modal_preview.html" as modal_preview %}
+{% import "components/modal/modal_comment.html" as modal_comment %}
 
 
 {% macro modal(type=none,
@@ -38,14 +39,13 @@
           {% if type == "preview" %}
             {{ modal_preview.modal_preview(loop_index=loop_index) }}
           {% elif type == "comment" %}
-
-            <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM</p>
-            <p class="modal-text modal-text-upper">{{ body_text }}</p>
-            <form method="POST" action="{{ form_action }}" aria-label="Confirmation Form">
-              {{ form.csrf_token }}
-              {{ form.submit(class_="button modal-confirm-button", value=button_text) }}
-            </form>
-
+            {{ modal_comment.modal_comment(loop_index=loop_index, 
+                                           modal_id=modal_id,
+                                           model_id=model_id,
+                                           form=form, 
+                                           form_action=form_action, 
+                                           body_text=body_text, 
+                                           button_text=button_text) }}
           {% elif type == "admin" %}
 
             <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
