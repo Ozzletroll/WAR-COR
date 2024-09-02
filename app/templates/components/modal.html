@@ -1,3 +1,4 @@
+{% import "components/modal/modal_preview.html" as modal_preview %}
 
 
 {% macro modal(type=none,
@@ -35,19 +36,7 @@
         {% endif %}
 
           {% if type == "preview" %}
-
-            <div class="event-page-elem event-elem-large elem-body event-page-description">
-              <div class="entry-left-padding"></div>
-              <div class="description-body">
-                  <h4 class="event-desc-header">Archive Entry:</h4>
-                  <div class="event-desc">
-                    <div id="preview-modal-body-{{loop_index}}" class="modal-body modal-body-preview">
-                      {# Modal text goes here #}
-                    </div>
-                  </div>
-              </div>
-            </div>
-
+            {{ modal_preview.modal_preview(loop_index=loop_index) }}
           {% elif type == "comment" %}
 
             <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM</p>
