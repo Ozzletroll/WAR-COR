@@ -3,6 +3,7 @@
 {% import "components/modal/modal_admin.html" as modal_admin %}
 {% import "components/modal/modal_remove.html" as modal_remove %}
 {% import "components/modal/modal_event.html" as modal_event %}
+{% import "components/modal/modal_epoch.html" as modal_epoch %}
 
 
 {% macro modal(type=none,
@@ -69,15 +70,10 @@
                                        form_action=form_action,
                                        body_text=body_text) }}
           {% elif type == "epoch" %}
-
-            <p class="flavour-text modal-flavour">EPC-5-{{model_id}} // DELETION::CONFIRM</p>
-            <p class="modal-text modal-text-upper">Confirm termination of epoch <strong>{{body_text}}</strong>. 
-              This will not delete any events contained within the epoch.</p>
-            <form method="POST" action="{{ form_action }}">
-              {{ form.csrf_token }}
-              {{ form.submit(class_="button modal-confirm-button", value="DELETE") }}
-            </form>
-
+            {{ modal_epoch.modal_epoch(model_id=model_id,
+                                       form=form,
+                                       form_action=form_action,
+                                       body_text=body_text) }}
           {% elif type == "template" %}
 
             <p class="flavour-text modal-flavour">TMP-5-1 // DELETION::CONFIRM</p>
