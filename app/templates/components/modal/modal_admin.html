@@ -1,0 +1,16 @@
+{% macro modal_admin(loop_index, model_id, form, form_target, form_action, body_text) %}
+
+  <p class="flavour-text modal-flavour" aria-label="Flavour Text">CMB-{{model_id}}-{{loop_index}} // AUTHORISATION::GRANT</p>
+  <p class="modal-text modal-text-upper">
+    Confirm WARCOR admin authorisation for user <strong>{{ form_target.username }}</strong> 
+    in campaign <strong>{{ body_text }}</strong>.
+  </p>
+  <form id="make-admin-form" class="add-member-form" aria-label="Confirmation Form"
+  method="POST" action="{{ form_action }}">
+    {{ form.csrf_token }}
+    {{ form.username(value=form_target.username, class_="form-hidden") }}
+    {{ form.user_id(value=form_target.id, class_="form-hidden") }}
+    {{ form.submit_button(value="MAKE ADMIN", class_="button modal-confirm-button") }}
+  </form>
+
+{%- endmacro %}
