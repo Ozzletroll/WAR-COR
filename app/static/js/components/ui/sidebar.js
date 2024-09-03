@@ -87,17 +87,19 @@ class Sidebar {
     this.icon.style.transform = "scaleX(1)";
   }
 
-  // Method  to animate the highlight for scrollTo behavior
-  scrollToItem(targetEvent) {
+  scrollToItem(targetElement) {
 
-    // Ignore year, epoch and field button clicks
-    if (targetEvent.startsWith("year") 
-        || targetEvent.startsWith("epoch") 
-        || targetEvent.startsWith("field")) {
+    var element = document.getElementById(targetElement);
+    element.scrollIntoView();
+
+    // Ignore year, epoch and field button clicks, otherwise proceed with animation
+    if (targetElement.startsWith("year") 
+        || targetElement.startsWith("epoch") 
+        || targetElement.startsWith("field")) {
       return
     }
 
-    var parentElem = document.getElementById(targetEvent);
+    var parentElem = document.getElementById(targetElement);
     // Select the header element for animation
     var flashingElem = parentElem.querySelector('.event-header');
     flashingElem.style.transition = "0.1s"
@@ -119,7 +121,7 @@ class Sidebar {
       }
 
       count++;
-    }, 200); // Flashing interval in milliseconds
+    }, 100); // Flashing interval in milliseconds
   }
 
 }

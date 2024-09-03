@@ -11,9 +11,10 @@
     {% for year in timeline_data %}
 
     <li class="sidebar-li">
-      <a class="sidebar-button year-button" href="#year-{{year.name}}" tabindex="-1" data-target-elem="year-{{year.name}}">
+      <button class="sidebar-button year-button" 
+      tabindex="-1" data-target-elem="year-{{year.name}}">
         {{ year.name + campaign.date_suffix}}
-      </a>
+    </button>
     </li>
     
       {% for month in year.months %}
@@ -21,18 +22,20 @@
           {% if day.has_epoch %}
             {% for epoch in day.epochs %}
             <li>
-              <a class="sidebar-button event-button epoch-button" href="#epoch-{{epoch.id}}" tabindex="-1" data-target-elem="epoch-{{epoch.id}}">
+              <button class="sidebar-button event-button epoch-button" 
+              tabindex="-1" data-target-elem="epoch-{{epoch.id}}">
                 -{{epoch.title}}-
-              </a>
+              </button>
             </li>
             {% endfor %}
           {% endif %}
 
           {% for event in day.events  %}
           <li>
-            <a class="sidebar-button event-button" href="#event-{{event.id}}" tabindex="-1" data-target-elem="event-{{event.id}}">
+            <button class="sidebar-button event-button" 
+            tabindex="-1" data-target-elem="event-{{event.id}}">
               {{event.title}}
-            </a>
+            </button>
           </li>
           {% endfor %}
 
@@ -68,10 +71,10 @@
 
     {% if entry.field_type == "html" %}
       <li class="sidebar-li">
-        <a class="sidebar-button event-button" href="#field-{{ loop.index }}" tabindex="-1"
+        <button class="sidebar-button event-button" tabindex="-1"
         data-target-elem="field-{{ loop.index }}">
           {{ entry.title }}
-        </a>
+        </button>
       </li>
 
       {% for group in sidebar_data %}
@@ -80,10 +83,10 @@
 
           {% for subheader in group.subheadings %}
             <li class="sidebar-li subheader-li">
-              <a class="sidebar-button event-button event-indent" href="#{{ subheader.element_id }}" tabindex="-1"
+              <button class="sidebar-button event-button event-indent" tabindex="-1"
               data-target-elem="{{ subheader.element_id }}">
                 {{ subheader.title }}
-              </a>
+              </button>
             </li>
           {% endfor %}
 
@@ -93,10 +96,10 @@
 
     {% else %}
       <li class="sidebar-li">
-        <a class="sidebar-button event-button" href="#field-{{ loop.index }}" tabindex="-1"
+        <button class="sidebar-button event-button" tabindex="-1"
         data-target-elem="field-{{ loop.index }}">
           {{ entry.title }}
-        </a>
+        </button>
       </li>
     {% endif %}
   {% endfor %}
