@@ -1,0 +1,10 @@
+{% macro modal_comment(loop_index, model_id, form, form_action, body_text, button_text) %}
+
+  <p class="flavour-text modal-flavour" aria-label="Flavour Text">MSG-{{model_id}}-{{loop_index}} // DELETION::CONFIRM</p>
+  <p class="modal-text modal-text-upper">{{ body_text }}</p>
+  <form method="POST" action="{{ form_action }}" aria-label="Confirmation Form">
+    {{ form.csrf_token }}
+    {{ form.submit(class_="button modal-confirm-button", value=button_text) }}
+  </form>
+
+{%- endmacro %}
