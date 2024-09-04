@@ -4303,7 +4303,8 @@ input[type="search"] {
 
 .campaigns-pagination,
 .advanced-search-pagination,
-.user-search-pagination {
+.user-search-pagination,
+.comments-pagination {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
