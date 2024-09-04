@@ -18,14 +18,17 @@ from app.routes.event import bp
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
 def view_event(campaign_name, campaign_id, event_name, event_id):
 
-    page = request.args.get("page", 1, type=int)
-
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
              .first_or_404(description="No matching event found"))
-    
-    paginated_comments = event.return_paginated_comments(page)
 
+    # Get page number. If none given, go to last page
+    page = request.args.get("page", type=int)
+    if page is None:
+        page = event.return_paginated_comments(1).pages
+
+    paginated_comments = event.return_paginated_comments(page)
+    
     campaign = event.parent_campaign
 
     authenticators.check_campaign_visibility(campaign)
