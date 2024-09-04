@@ -17,10 +17,18 @@ from app.routes.event import bp
 # View event
 @bp.route("/campaigns/<campaign_name>-<campaign_id>/event/<event_name>-<event_id>", methods=["GET", "POST"])
 def view_event(campaign_name, campaign_id, event_name, event_id):
+
     event = (db.session.query(models.Event)
              .filter(models.Event.id == event_id)
              .first_or_404(description="No matching event found"))
 
+    # Get page number. If none given, go to last page
+    page = request.args.get("page", type=int)
+    if page is None:
+        page = event.return_paginated_comments(1).pages
+
+    paginated_comments = event.return_paginated_comments(page)
+    
     campaign = event.parent_campaign
 
     authenticators.check_campaign_visibility(campaign)
@@ -49,21 +57,31 @@ def view_event(campaign_name, campaign_id, event_name, event_id):
                                              campaign=campaign,
                                              event=event)
 
+        # Set redirect page number to last page
+        last_page = event.return_paginated_comments(page).pages
+
         # Set scroll to target to newly created comment
         session["comment_scroll_target"] = f"comment-{comment.id}"
 
-        return redirect(url_for('event.view_event',
-                                campaign_name=campaign.url_title,
-                                campaign_id=campaign.id,
-                                event_name=event.url_title,
-                                event_id=event.id,
-                                sidebar_data=sidebar_data))
+        parameters = {
+            "campaign_name": campaign.url_title,
+            "campaign_id": campaign.id,
+            "event_name": event.url_title,
+            "event_id": event.id
+        }
+
+        # Only provide page parameter if there are multiple pages
+        if last_page != 1:
+            parameters["page"] = last_page
+
+        return redirect(url_for("event.view_event", **parameters))
 
     return render_template("pages/event_page.html",
                            event=event,
                            campaign=campaign,
                            form=form,
                            delete_form=delete_form,
+                           comments=paginated_comments,
                            comment_form_visible=comment_form_visible,
                            sidebar_data=sidebar_data)
 

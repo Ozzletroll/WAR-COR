@@ -7,6 +7,7 @@
 {% import "components/event_elements.html" as event_elements %}
 {% import "components/modal/modal.html" as modal %}
 {% import "components/summernote_editor.html" as summernote %}
+{% import "components/page_selection.html" as page_selection %}
 
 
 {% extends "base/base.html" %}
@@ -163,7 +164,7 @@
               {% endif %}
 
               <ol class="comments-list" aria-label="Comments">
-              {% for comment in event.comments %}
+              {% for comment in comments %}
 
                   <li class="event-comment">
 
@@ -212,6 +213,12 @@
 
               {% endfor  %}
               </ol>
+
+            {{ page_selection.event_comments_pagination(comments,
+                                                        "event.view_event",
+                                                        campaign,
+                                                        event,
+                                                        "comments") }}
 
             <!-- New Comment Area -->
             {% if comment_form_visible %}

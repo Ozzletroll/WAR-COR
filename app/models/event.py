@@ -1,6 +1,8 @@
 from datetime import datetime
+from sqlalchemy import select, asc
 
 from app import db
+from app.models import Comment
 from app.utils.sanitisers import sanitise_input, sanitise_json
 
 
@@ -127,3 +129,18 @@ class Event(db.Model):
             with dashes '-'. """
 
         self.url_title = self.title.replace(" ", "-")
+
+    def return_paginated_comments(self, page):
+        """ Method to return paginated comments for template rendering """
+
+        event_comments = (select(Comment)
+                          .where(Comment.event_id == self.id)
+                          .order_by(asc(Comment.date)))
+
+        paginated_comments = db.paginate(event_comments, 
+                                         page=page, 
+                                         per_page=10, 
+                                         error_out=False)
+        
+        return paginated_comments
+    
