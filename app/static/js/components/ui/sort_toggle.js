@@ -7,31 +7,37 @@ export class SortToggle {
     this.csrfToken = document.getElementById("sort-toggles").dataset.csrfToken;
     this.URL = document.getElementById("sort-toggles").dataset.url;
     this.initialValue = document.getElementById("sort-toggles").dataset.initialValue;
+    this.initialSelection;
 
     this.dateButton = document.getElementById(dateButton);
     this.dateButton.addEventListener("click", () => {
       this.UncheckInputs();
       this.Toggle(this.dateButton);
-      this.UpdateSessionVariable(this.dateButton.dataset.storageValue);
+      if (this.initialSelection != "last_edited") {
+        this.UpdateSessionVariable(this.dateButton.dataset.storageValue);
+      }
     });
 
     this.titleButton = document.getElementById(titleButton);
     this.titleButton.addEventListener("click", () => {
       this.UncheckInputs();
       this.Toggle(this.titleButton);
-      this.UpdateSessionVariable(this.titleButton.dataset.storageValue);
+      if (this.initialSelection != "alphabetical") {
+        this.UpdateSessionVariable(this.titleButton.dataset.storageValue);
+      }
     });
 
     this.InitialiseToggleState();
   }
 
   InitialiseToggleState() {
-    
     this.UncheckInputs();
     if (this.initialValue == "last_edited") {
+      this.initialSelection = "last_edited";
       this.Toggle(this.dateButton);
     }
     else {
+      this.initialSelection = "alphabetical";
       this.Toggle(this.titleButton);
     }
   }
