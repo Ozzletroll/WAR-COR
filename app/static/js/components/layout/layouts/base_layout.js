@@ -10,7 +10,7 @@ export class Layout {
       this.localStorageName = localStorageName;
       this.button = button;
       this.minAllowedScreenWidth = minAllowedScreenWidth;
-      this.allButtons = document.querySelectorAll(".radio");
+      this.allButtons = document.querySelectorAll(".campaign-view-toggle .radio");
       this.button.addEventListener("click", () => {
         localStorage.setItem("campaignLayout", this.localStorageName);
         this.layoutManager.storedLayout = this;
