@@ -43,6 +43,16 @@ def accept_cookies():
     return response
 
 
+# Set campaign sort preference session variable
+@bp.route("/session/set-campaign-sort", methods=["POST"])
+def set_campaign_sort():
+
+    session["campaign_sort"] = request.form["sort_preference"]
+    response = make_response(jsonify({"Message": "Sort preference set"}), 200)
+
+    return response
+
+
 # Get and clear campaign page scroll target session variable
 @bp.route("/session/campaign-scroll-target", methods=["GET"])
 def campaign_target():

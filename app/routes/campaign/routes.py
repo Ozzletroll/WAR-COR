@@ -21,7 +21,7 @@ from app.routes.campaign import bp
 def campaigns():
 
     page = request.args.get("page", 1, type=int)
-    sort_by = session.get("sort_by", "last_edited")
+    sort_by = session.get("campaign_sort", "last_edited")
     campaigns = current_user.return_paginated_campaigns(page, sort_by)
 
     # Clear any existing event scroll target
@@ -31,7 +31,8 @@ def campaigns():
     session["previous_url"] = request.url
 
     return render_template("pages/campaigns.html", 
-                           campaigns=campaigns)
+                           campaigns=campaigns,
+                           sort_by=sort_by)
 
 
 # View campaign overview
