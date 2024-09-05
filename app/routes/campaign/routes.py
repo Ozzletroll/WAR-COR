@@ -21,7 +21,8 @@ from app.routes.campaign import bp
 def campaigns():
 
     page = request.args.get("page", 1, type=int)
-    campaigns = current_user.return_paginated_campaigns(page)
+    sort_by = session.get("sort_by", "last_edited")
+    campaigns = current_user.return_paginated_campaigns(page, sort_by)
 
     # Clear any existing event scroll target
     session.pop("timeline_scroll_target", None)
