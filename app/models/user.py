@@ -127,7 +127,7 @@ class User(UserMixin, db.Model):
     
     def return_paginated_campaigns(self, page, sort_by):
 
-        if sort_by == "title":
+        if sort_by == "alphabetical":
             order_by = asc(Campaign.title)
         else:
             order_by = desc(Campaign.last_edited)
