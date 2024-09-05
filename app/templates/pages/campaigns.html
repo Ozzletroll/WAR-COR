@@ -1,6 +1,7 @@
 {# Component Macro imports #}
 {% import "components/searchbar.html" as searchbar %}
 {% import "components/page_upper_area.html" as page_upper_area %}
+{% import "components/sort_toggles.html" as sort_toggles %}
 {% import "components/campaign_entry.html" as campaign_entry %}
 {% import "components/page_selection.html" as page_selection %}
 
@@ -46,7 +47,11 @@
         <a href="{{ url_for('membership.join_campaign')}}" class="create-campaign-button">+ JOIN CAMPAIGN</a>
       </div>
 
-      {% include "components/view_toggles.html" %}
+      <div class="campaigns-toggle-area">
+        {{ sort_toggles.sort_toggles(csrf_token(), url_for('session.set_campaign_sort'), sort_by) }}
+        {% include "components/view_toggles.html" %}
+      </div>
+       
     </div>
 
     <div class="form-flash">
@@ -60,8 +65,8 @@
         {{ campaign_entry.campaign_entry(campaign=campaign, current_user=current_user) }}
       {% endfor %}
 
-      {# New user introduction, if user.campaigns.items is empty #}
-      {% if campaigns.items | length == 0 %}
+      {# New user introduction, if user.campaigns is empty #}
+      {% if current_user.campaigns | length == 0 %}
         {{ campaign_entry.new_user_entry(campaign=campaign, current_user=current_user) }}
       {% endif %}
 

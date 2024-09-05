@@ -1,0 +1,32 @@
+{#
+
+  SORT TOGGLES COMPONENT
+
+  Used on campaigns page
+  
+#}
+
+{% macro sort_toggles(csrf_token, url, initial_value) %}
+
+<div id="sort-toggles" class="sort-toggles"
+data-initial-value="{{ initial_value }}" 
+data-csrf-token="{{ csrf_token }}"
+data-url="{{ url }}">
+
+  <label class="toggle campaign-sort-toggle sort-toggle-left" 
+  for="sort-toggle-date" aria-label="Last Edited Date Sort">
+    DATE
+    <input class="radio radio-hidden" type="radio" id="sort-toggle-date" name="view" value="HTML"
+    data-storage-value="last_edited">
+  </label>
+
+  <label class="toggle campaign-sort-toggle sort-toggle-right" 
+  for="sort-toggle-az" aria-label="Alphabetical Sort">
+    A-Z
+    <input class="radio radio-hidden" type="radio" id="sort-toggle-az" name="view" value="HTML"
+    data-storage-value="alphabetical">
+  </label>
+  
+</div>
+
+{%- endmacro %}
