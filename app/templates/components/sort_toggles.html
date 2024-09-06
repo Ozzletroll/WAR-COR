@@ -8,22 +8,31 @@
 
 {% macro sort_toggles(csrf_token, url, initial_value) %}
 
-<div id="sort-toggles" class="sort-toggles"
-data-initial-value="{{ initial_value }}" 
-data-csrf-token="{{ csrf_token }}"
-data-url="{{ url }}">
+<svg class="icon" width="32px" height="32px" viewBox="0 0 512 512" version="1.1" aria-label="Sort Icon"
+xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g id="add" transform="translate(64.000000, 106.666667)">
+          <path class="icon-colour-var" d="M-4.26325641e-14,213.333333 L106.666667,213.333333 L106.666667,256 L-4.26325641e-14,256 L-4.26325641e-14,213.333333 Z M-4.26325641e-14,149.333333 L149.333333,149.333333 L149.333333,106.666667 L-4.26325641e-14,106.666667 L-4.26325641e-14,149.333333 Z M-4.26325641e-14,42.6666667 L192,42.6666667 L192,-2.84217094e-14 L-4.26325641e-14,-2.84217094e-14 L-4.26325641e-14,42.6666667 Z M368.916693,189.31904 L320,238.235733 L320,-2.84217094e-14 L277.333333,-2.84217094e-14 L277.333333,238.235733 L228.41664,189.31904 L198.250027,219.485653 L298.666667,320 L399.083307,219.485653 L368.916693,189.31904 Z" id="Shape"></path>
+      </g>
+  </g>
+</svg>
+
+<div id="sort-toggles" class="sort-toggles" aria-label="Campaign sort type"
+  data-initial-value="{{ initial_value }}" 
+  data-csrf-token="{{ csrf_token }}"
+  data-url="{{ url }}">
 
   <label class="toggle campaign-sort-toggle sort-toggle-left" 
   for="sort-toggle-date" aria-label="Last Edited Date Sort">
     DATE
-    <input class="radio radio-hidden" type="radio" id="sort-toggle-date" name="view" value="HTML"
+    <input class="radio radio-hidden sort-radio" type="radio" id="sort-toggle-date" name="sort" value="HTML"
     data-storage-value="last_edited">
   </label>
 
   <label class="toggle campaign-sort-toggle sort-toggle-right" 
   for="sort-toggle-az" aria-label="Alphabetical Sort">
     A-Z
-    <input class="radio radio-hidden" type="radio" id="sort-toggle-az" name="view" value="HTML"
+    <input class="radio radio-hidden sort-radio" type="radio" id="sort-toggle-az" name="sort" value="HTML"
     data-storage-value="alphabetical">
   </label>
   

@@ -3612,8 +3612,12 @@ input[type="search"] {
 }
 
 .campaign-sort-toggle {
-  width: 40px;
+  width: 60px;
   font-size: 12px;
+}
+
+.radio.sort-radio {
+  width: 60px;
 }
 
 .view-toggle-left,
