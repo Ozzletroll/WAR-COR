@@ -5184,6 +5184,12 @@ input[type="search"] {
   justify-content: center;
 }
 
+/* Use to hide the timeline until margin fix has applied */
+.timeline-centring,
+.timeline-centring .timeline-left-marker {
+  visibility: hidden;
+}
+
 .timeline-container {
   display: flex;
   flex-direction: column;
