@@ -4424,11 +4424,6 @@ input[type="search"] {
   outline-offset: -10px;
 }
 
-.user-content .flavour-text {
-  margin-top: 0;
-  margin-bottom: 25px;
-}
-
 .user-content .flavour-text-small {
   margin: 0;
 }
@@ -5007,10 +5002,6 @@ input[type="search"] {
 
 .members-content h3 {
   width: 80%;
-}
-
-.members-content .flavour-text {
-	margin-bottom: 25px;
 }
 
 .edit-members-container {
