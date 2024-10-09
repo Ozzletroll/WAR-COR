@@ -39,6 +39,163 @@ class Day:
         self.no_following_events = True
 
 
+def create_dict(object_list, year_attr, month_attr, day_attr):
+    """ Function create a year/month/day/<object> dict from a list
+        of <event> or <epoch> objects.
+        
+        Parameters:
+        -------------------------------------------------
+            object_list: list<object>
+                A list of all event or epoch objects to be
+                used.
+
+            year_attr: string
+                The attribute name of the "year" property
+                of the object.
+
+            month_attr: string
+                The attribute name of the "month" property
+                of the object.
+
+            day_attr: string
+                The attribute name of the "day" property
+                of the object.
+
+            Returns:
+                (dict): A nested year/month/day/<object> dict
+
+        -------------------------------------------------
+
+    """
+
+    dict = {}
+    for item_object in object_list:
+
+        year = getattr(item_object, year_attr)
+        month = getattr(item_object, month_attr)
+        day = getattr(item_object, day_attr)
+
+        if year not in dict:
+            dict[year] = {}
+
+        if month not in dict[year]:
+            dict[year][month] = {}
+
+        if day not in dict[year][month]:
+            dict[year][month][day] = []
+
+        dict[year][month][day].append(item_object)
+
+    return dict
+
+
+def merge_dicts(dict1, dict2):
+    """ Function to combine two nested year/month/day/<object> dicts
+        
+        Parameters:
+        -------------------------------------------------
+            dict1: dict
+
+            dict2: dict
+
+            Returns:
+                (dict): A nested year/month/day/<object> dict
+
+        -------------------------------------------------
+
+    """
+
+    combined_dict = copy.deepcopy(dict1)
+
+    for year, months in dict2.items():
+        combined_dict.setdefault(year, {})
+        for month, days in months.items():
+            combined_dict[year].setdefault(month, {})
+            for day, value in days.items():
+                combined_dict[year][month].setdefault(day, value)
+
+    return {year: {month: dict(sorted(days.items())) 
+                    for month, days in sorted(months.items())} 
+                    for year, months in sorted(combined_dict.items())}
+
+
+def has_following(index, level, current_item):
+    """ Function to determine if month/day within timeline has a consecutive following month/day.
+        Used within the template to determine placement of +New Event buttons.
+        
+        Parameters:
+        -------------------------------------------------
+            index: int
+                Index of current loop
+
+            level: dict
+                The current level of the nested dict
+                being iterated through.
+
+                When checking a month, use:
+                level=final_group[year]
+
+                When checking a day, use:
+                level=final_group[year][month]
+
+            item: dict
+                The current item of the level iterable
+
+        -------------------------------------------------
+
+    """
+
+    if index != len(level) - 1:
+        next = list(level.keys())[index + 1]
+        if int(next) == int(current_item) + 1:
+            return True
+    else:
+        return False
+
+
+def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, epochs_attr):
+    """ Function that checks for the existence of epochs in a nested dictionary 
+    for a given date and updates the attributes of the day object accordingly.
+
+    Parameters:
+        -------------------------------------------------
+            dictionary: (dict)
+                The nested dictionary containing epochs.
+
+            year: (int)
+                he year key to access the dictionary.
+
+            month: (int)
+                The month key to access the dictionary.
+
+            day: (int)
+                The day key to access the dictionary.
+
+            day_object: (object)
+                The object representing the day, to be updated with attributes.
+
+            has_epoch_attr: (str) 
+                The name of the attribute in the day_object to indicate the presence of epochs.
+
+            epochs_attr (list)
+                The list in the day_object to append epochs to.
+
+        -------------------------------------------------
+
+    """
+    
+    try:
+        epochs = dictionary[year][month][day]
+    except KeyError:
+        pass
+    else:
+        setattr(day_object, has_epoch_attr, True)
+        for epoch in epochs:
+            epochs_attr.append(epoch)
+            if epoch.has_events:
+                day_object.epoch_has_events = True
+
+
 def campaign_sort(campaign, epoch=None):
     """ Function that structures campaign event data for timeline rendering. Returns
         a list of year objects. If epoch parameter is given, returns only data
@@ -57,109 +214,6 @@ def campaign_sort(campaign, epoch=None):
             year_list (list): A list of Year objects, for iteration in timeline template
   
     """
-
-    def create_dict(object_list, year_attr, month_attr, day_attr):
-
-        dict = {}
-        for item_object in object_list:
-
-            year = getattr(item_object, year_attr)
-            month = getattr(item_object, month_attr)
-            day = getattr(item_object, day_attr)
-
-            if year not in dict:
-                dict[year] = {}
-
-            if month not in dict[year]:
-                dict[year][month] = {}
-
-            if day not in dict[year][month]:
-                dict[year][month][day] = []
-
-            dict[year][month][day].append(item_object)
-
-        return dict
-
-    def merge_dicts(dict1, dict2):
-
-        combined_dict = copy.deepcopy(dict1)
-
-        for year in dict2:
-            if year in combined_dict:
-                for month in dict2[year]:
-                    if month in combined_dict[year]:
-                        for day in dict2[year][month]:
-                            if day in combined_dict[year][month]:
-                                pass
-                            else:
-                                combined_dict[year][month][day] = dict2[year][month][day]
-
-                    else:
-                        combined_dict[year][month] = dict2[year][month]
-
-                    # Sort days
-                    combined_dict[year][month] = {key: value for key, value in
-                                                  sorted(combined_dict[year][month].items())}
-            else:
-                combined_dict[year] = dict2[year]
-
-            # Sort months
-            combined_dict[year] = {key: value for key, value in sorted(combined_dict[year].items())}
-
-        # Sort years
-        combined_dict = {key: value for key, value in sorted(combined_dict.items())}
-
-        return combined_dict
-
-    def has_following(index, level, current_item):
-        """ Function to determine if month/day within timeline has a consecutive following month/day.
-            Used within the template to determine placement of +New Event buttons.
-            
-            Parameters:
-            -------------------------------------------------
-                index : int
-                    Index of current loop
-
-                level: dict
-                    The current level of the nested dict
-                    being iterated through.
-
-                    When checking a month, use:
-                    level=final_group[year]
-
-                    When checking a day, use:
-                    level=final_group[year][month]
-
-                item: dict
-                    The current item of the level iterable
-
-            -------------------------------------------------
-
-            """
-
-        if index != len(level) - 1:
-            next = list(level.keys())[index + 1]
-
-            if int(next) == int(current_item) + 1:
-                return True
-
-        else:
-            return False
-
-    def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, epochs_attr):
-        try:
-            epochs = dictionary[year][month][day]
-        except KeyError:
-            pass
-        else:
-            setattr(day_object, has_epoch_attr, True)
-            for epoch in epochs:
-                epochs_attr.append(epoch)
-                if epoch.has_events:
-                    day_object.epoch_has_events = True
-
-    # --- START --- #
-
     # Return whole campaign
     if epoch is None:
         events = (db.session.query(models.Event)
