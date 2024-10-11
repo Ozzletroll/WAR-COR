@@ -6327,7 +6327,7 @@ for selection in timeline_search.js */
 }
 
 .sidebar-li {
-  height: 40px;
+  min-height: 40px;
 }
 
 .sidebar-button {
