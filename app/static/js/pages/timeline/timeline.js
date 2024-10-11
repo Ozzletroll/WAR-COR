@@ -10,7 +10,9 @@ adjustEpochLine();
 
 // Fade in timeline area
 var timeline = document.querySelector(".timeline-centring");
-timeline.style.visibility = "visible";
+if (timeline != null) {
+  timeline.style.visibility = "visible";
+}
 
 // Fix timeline element negative margins on safari iOS
 window.addEventListener("resize", marginFix);
