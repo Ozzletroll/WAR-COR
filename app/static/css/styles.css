@@ -6349,6 +6349,17 @@ for selection in timeline_search.js */
   outline-offset: -5px;
 }
 
+.event-button:hover::before {
+  content: ">";
+  height: 100%;
+  width: 10px;
+  left: 0px;
+}
+
+.sidebar-button:hover {
+  font-weight: 500;
+}
+
 .year-button {
   justify-content: center;
   align-items: center;
@@ -6361,7 +6372,8 @@ for selection in timeline_search.js */
   background-color: var(--bright_red);
 }
 
-.event-button {
+.event-button,
+.epoch-button {
   text-align: left;
   font-size: 12px;
   font-weight: 400;
@@ -6370,16 +6382,19 @@ for selection in timeline_search.js */
   border: none;
 }
 
-.event-button:hover {
+.event-button:hover,
+.epoch-button:hover {
   background-color: var(--fixed-bg-2);
   color: var(--dark_red);
 }
 
-.event-button:active {
+.event-button:active,
+.epoch-button:active {
   color: var(--bright_red);
 }
 
-.event-button:focus-visible {
+.event-button:focus-visible,
+.epoch-button:focus-visible {
   color: var(--text_flavour_bright);
 }
 
