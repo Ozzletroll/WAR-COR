@@ -6362,6 +6362,7 @@ for selection in timeline_search.js */
 }
 
 .event-button {
+  text-align: left;
   font-size: 12px;
   font-weight: 400;
   background-color: var(--bg_colour2);
