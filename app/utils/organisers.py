@@ -39,6 +39,117 @@ class Day:
         self.no_following_events = True
 
 
+def get_events(campaign, epoch=None):
+    """ Function to return all events from a campaign, sorted
+        by date. If an epoch parameter is given, returns only events
+        from within that epoch.
+        
+        Parameters:
+        -------------------------------------------------
+            campaign: Campaign
+                The campaign object to be sorted
+
+            epoch: Epoch
+                The Epoch model object that denotes
+                the start and end of the period
+                to be returned.
+
+        Returns:
+        -------------------------------------------------
+            list:
+                A list of Event model objects,
+                sorted by date.
+
+    """
+
+    events_query = (db.session.query(models.Event)
+                    .filter_by(campaign_id=campaign.id)
+                    .order_by(models.Event.year,
+                              models.Event.month,
+                              models.Event.day,
+                              models.Event.hour,
+                              models.Event.minute,
+                              models.Event.second)
+                    .all())
+
+    if epoch is None:
+        return events_query
+
+    return [event for event in events_query if event in epoch.events]
+
+
+def get_epochs_by_start_date(campaign, epoch=None):
+    """ Function to return all epochs from a campaign, sorted
+        by start date. If an epoch parameter is given, returns only epochs
+        from within that epoch.
+
+        Parameters:
+        -------------------------------------------------
+            campaign: Campaign
+                Campaign object to be sorted
+
+            epoch: Epoch
+                The Epoch model object that denotes
+                the start and end of the period
+                to be returned.
+
+        Returns:
+        -------------------------------------------------
+            list:
+                A list of Epoch model objects, sorted by
+                start date.
+
+    """
+
+    epochs_start_query = (db.session.query(models.Epoch)
+                          .filter_by(campaign_id=campaign.id)
+                          .order_by(models.Epoch.start_year,
+                                    models.Epoch.start_month,
+                                    models.Epoch.start_day)
+                          .all())
+
+    if epoch is None:
+        return epochs_start_query
+
+    return [sub_epoch for sub_epoch in epochs_start_query if sub_epoch in epoch.sub_epochs]
+
+
+def get_epochs_by_end_date(campaign, epoch=None):
+    """ Function to return all epochs from a campaign, sorted
+        by end date. If an epoch parameter is given, returns only epochs
+        from within that epoch.
+
+        Parameters:
+        -------------------------------------------------
+            campaign: Campaign
+                Campaign object to be sorted
+
+            epoch: Epoch
+                The Epoch model object that denotes
+                the start and end of the period
+                to be returned.
+
+        Returns:
+        -------------------------------------------------
+            list:
+                A list of Epoch model objects, sorted by
+                end date.
+
+    """
+
+    epochs_end_query = (db.session.query(models.Epoch)
+                        .filter_by(campaign_id=campaign.id)
+                        .order_by(models.Epoch.end_year,
+                                  models.Epoch.end_month,
+                                  models.Epoch.end_day)
+                        .all())
+
+    if epoch is None:
+        return epochs_end_query
+
+    return [sub_epoch for sub_epoch in epochs_end_query if sub_epoch in epoch.sub_epochs]
+
+
 def create_dict(object_list, year_attr, month_attr, day_attr):
     """ Function create a year/month/day/<object> dict from a list
         of <event> or <epoch> objects.
@@ -61,32 +172,32 @@ def create_dict(object_list, year_attr, month_attr, day_attr):
                 The attribute name of the "day" property
                 of the object.
 
-            Returns:
-                (dict): A nested year/month/day/<object> dict
-
+        Returns:
         -------------------------------------------------
+            (dict) 
+                A nested year/month/day/<object> dict
 
     """
 
-    dict = {}
+    new_dict = {}
     for item_object in object_list:
 
         year = getattr(item_object, year_attr)
         month = getattr(item_object, month_attr)
         day = getattr(item_object, day_attr)
 
-        if year not in dict:
-            dict[year] = {}
+        if year not in new_dict:
+            new_dict[year] = {}
 
-        if month not in dict[year]:
-            dict[year][month] = {}
+        if month not in new_dict[year]:
+            new_dict[year][month] = {}
 
-        if day not in dict[year][month]:
-            dict[year][month][day] = []
+        if day not in new_dict[year][month]:
+            new_dict[year][month][day] = []
 
-        dict[year][month][day].append(item_object)
+        new_dict[year][month][day].append(item_object)
 
-    return dict
+    return new_dict
 
 
 def merge_dicts(dict1, dict2):
@@ -98,10 +209,10 @@ def merge_dicts(dict1, dict2):
 
             dict2: dict
 
-            Returns:
-                (dict): A nested year/month/day/<object> dict
-
+        Returns:
         -------------------------------------------------
+            (dict)
+                A nested year/month/day/<object> dict
 
     """
 
@@ -114,9 +225,9 @@ def merge_dicts(dict1, dict2):
             for day, value in days.items():
                 combined_dict[year][month].setdefault(day, value)
 
-    return {year: {month: dict(sorted(days.items())) 
-                    for month, days in sorted(months.items())} 
-                    for year, months in sorted(combined_dict.items())}
+    return {year: {month: dict(sorted(days.items()))
+                   for month, days in sorted(months.items())}
+            for year, months in sorted(combined_dict.items())}
 
 
 def has_following(index, level, current_item):
@@ -141,13 +252,11 @@ def has_following(index, level, current_item):
             item: dict
                 The current item of the level iterable
 
-        -------------------------------------------------
-
     """
 
     if index != len(level) - 1:
-        next = list(level.keys())[index + 1]
-        if int(next) == int(current_item) + 1:
+        next_item = list(level.keys())[index + 1]
+        if int(next_item) == int(current_item) + 1:
             return True
     else:
         return False
@@ -157,13 +266,13 @@ def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, ep
     """ Function that checks for the existence of epochs in a nested dictionary 
     for a given date and updates the attributes of the day object accordingly.
 
-    Parameters:
+        Parameters:
         -------------------------------------------------
             dictionary: (dict)
                 The nested dictionary containing epochs.
 
             year: (int)
-                he year key to access the dictionary.
+                The year key to access the dictionary.
 
             month: (int)
                 The month key to access the dictionary.
@@ -174,16 +283,14 @@ def check_for_epoch(dictionary, year, month, day, day_object, has_epoch_attr, ep
             day_object: (object)
                 The object representing the day, to be updated with attributes.
 
-            has_epoch_attr: (str) 
+            has_epoch_attr: (str)
                 The name of the attribute in the day_object to indicate the presence of epochs.
 
-            epochs_attr (list)
+            epochs_attr: (list)
                 The list in the day_object to append epochs to.
 
-        -------------------------------------------------
-
     """
-    
+
     try:
         epochs = dictionary[year][month][day]
     except KeyError:
@@ -202,78 +309,24 @@ def campaign_sort(campaign, epoch=None):
         from between that epochs start and end date values.
 
         Parameters:
-            --------------------------------------
-                campaign: Campaign model object
-                    Campaign object to return timeline data from
+        --------------------------------------
+            campaign: Campaign model object
+                Campaign object to return timeline data from
 
-                epoch(optional): Epoch model object
-                    Epoch to use for start and end date values
-            --------------------------------------
-
+            epoch(optional): Epoch model object
+                Epoch to use for start and end date values
+            
+        --------------------------------------
         Returns:
-            year_list (list): A list of Year objects, for iteration in timeline template
+            year_list (list) 
+                A list of Year objects, for iteration in timeline template
   
     """
-    # Return whole campaign
-    if epoch is None:
-        events = (db.session.query(models.Event)
-                  .filter_by(campaign_id=campaign.id)
-                  .order_by(models.Event.year,
-                            models.Event.month,
-                            models.Event.day,
-                            models.Event.hour,
-                            models.Event.minute,
-                            models.Event.second, )
-                  .all())
 
-        epochs_by_start_date = (db.session.query(models.Epoch)
-                                .filter_by(campaign_id=campaign.id)
-                                .order_by(models.Epoch.start_year,
-                                          models.Epoch.start_month,
-                                          models.Epoch.start_day)
-                                .all())
-
-        epochs_by_end_date = (db.session.query(models.Epoch)
-                              .filter_by(campaign_id=campaign.id)
-                              .order_by(models.Epoch.end_year,
-                                        models.Epoch.end_month,
-                                        models.Epoch.end_day)
-                              .all())
-
-    # Otherwise, get only events and epochs that fall between the given start and end values,
-    # excluding the current epoch
-    else:
-        all_events = (db.session.query(models.Event)
-                      .filter_by(campaign_id=campaign.id)
-                      .order_by(models.Event.year,
-                                models.Event.month,
-                                models.Event.day,
-                                models.Event.hour,
-                                models.Event.minute,
-                                models.Event.second, )
-                      .all())
-
-        events = [event for event in all_events if event in epoch.events]
-
-        all_epochs_by_start_date = (db.session.query(models.Epoch)
-                                    .filter_by(campaign_id=campaign.id)
-                                    .order_by(models.Epoch.start_year,
-                                              models.Epoch.start_month,
-                                              models.Epoch.start_day)
-                                    .all())
-
-        epochs_by_start_date = [sub_epoch for sub_epoch in all_epochs_by_start_date
-                                if sub_epoch in epoch.sub_epochs]
-
-        all_epochs_by_end_date = (db.session.query(models.Epoch)
-                                  .filter_by(campaign_id=campaign.id)
-                                  .order_by(models.Epoch.end_year,
-                                            models.Epoch.end_month,
-                                            models.Epoch.end_day)
-                                  .all())
-
-        epochs_by_end_date = [sub_epoch for sub_epoch in all_epochs_by_end_date
-                              if sub_epoch in epoch.sub_epochs]
+    # Get all events and epochs and group into dictionaries sorted by date
+    events = get_events(campaign, epoch)
+    epochs_by_start_date = get_epochs_by_start_date(campaign, epoch)
+    epochs_by_end_date = get_epochs_by_end_date(campaign, epoch)
 
     year_dict = create_dict(object_list=events,
                             year_attr="year",
@@ -291,10 +344,10 @@ def campaign_sort(campaign, epoch=None):
                                  day_attr="end_day")
 
     combined_epochs_dict = merge_dicts(epoch_start_dict, epoch_end_dict)
-
     final_group = merge_dicts(year_dict, combined_epochs_dict)
 
-    # Turn each level of the hierarchy into an object, with the level below as a list held in a property
+    # Turn each level of the hierarchy into an object, 
+    # with the level below as a list held in a class property
     year_list = []
 
     for year in final_group:
