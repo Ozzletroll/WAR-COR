@@ -4,7 +4,7 @@ from flask_login import login_user, login_required, current_user, logout_user
 
 from app.forms import forms
 from app import db, models, limiter
-from app.utils import authenticators, messengers
+from app.utils import authenticators, messengers, validators
 
 from app.routes.user import bp
 
@@ -74,7 +74,9 @@ def login():
         if user:
             if user.check_password(password):
                 login_user(user)
-                return redirect(request.args.get("next") or url_for("campaign.campaigns"))
+                next = request.args.get("next")
+                if validators.validate_redirect_url(next):
+                    return redirect(next or url_for("campaign.campaigns"))
             else:
                 flash("Incorrect password or username")
                 return redirect(url_for("user.login"))

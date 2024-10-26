@@ -1,7 +1,20 @@
 from flask import abort
+from urllib.parse import urlparse, urljoin
+from flask import request
 
 from app.utils.formatters import increment_date, split_date
 
+
+
+def validate_redirect_url(target_url):
+    
+    ref_url = urlparse(request.host_url)
+    test_url = urlparse(urljoin(request.host_url, target_url))
+
+    if test_url.scheme in ("http", "https") and ref_url.netloc == test_url.netloc:
+        return True
+    else:
+        abort(400, description=f"Invalid redirect url")
 
 
 def validate_event_url_parameters(url_parameters):
