@@ -46,17 +46,8 @@ export class Result {
       this.styleReset();
   
       if (this.editPage == true) {
-  
-        // Style downwards line if there are no results below it in the block
-        if (this.resultsBelow == false) {
-          this.elements["eventOutline"].style.opacity = fadeValue;
-          this.elements["rightBranchLabel"].style.opacity = fadeValue;
-        }
-        else {
-          this.elements["eventOutline"].style.opacity = fadeValue;
-          this.elements["rightBranchLabel"].style.opacity = fadeValue;
-        }
-  
+        this.elements["eventOutline"].style.opacity = fadeValue;
+        this.elements["rightBranchLabel"].style.opacity = fadeValue;
       }
       else {
   
@@ -65,11 +56,13 @@ export class Result {
           this.elements["eventLine"].style.opacity = fadeValue;
           this.elements["eventOutline"].style.opacity = fadeValue;
           this.elements["rightBranchLabel"].style.opacity = fadeValue;
+          this.elements["eventSmallDate"].style.opacity = fadeValue;
         }
         else {
           this.elements["eventLine"].style.opacity = "";
           this.elements["eventOutline"].style.opacity = fadeValue;
           this.elements["rightBranchLabel"].style.opacity = fadeValue;
+          this.elements["eventSmallDate"].style.opacity = fadeValue;
         }
         
       }
@@ -81,6 +74,7 @@ export class Result {
       this.elements["eventOutline"].style.opacity = "";
       this.elements["eventLine"].style.opacity = "";
       this.elements["rightBranchLabel"].style.opacity = "";
+      this.elements["eventSmallDate"].style.opacity = "";
   
       if (this.editPage == true) {
         if (this.elements["betweenEvents"] != null) {

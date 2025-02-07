@@ -9,11 +9,13 @@ export class CampaignCard {
   
       const handleClick = event => {
         var screenWidth = window.innerWidth || document.documentElement.clientWidth;
-        if (this.state == false && screenWidth <= 500) {
-          this.openTab(event)
-        } 
-        else if (this.state == true && screenWidth <= 500) {
-          this.closeTab(event)
+        if (screenWidth <= 500) {
+          if (this.state == false) {
+            this.openTab(event)
+          } 
+          else {
+            this.closeTab(event)
+          }
         }
       }
   
@@ -24,7 +26,6 @@ export class CampaignCard {
           handleClick(event);
         }
       });
-      
     }
     
     openTab() {

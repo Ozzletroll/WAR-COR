@@ -25,18 +25,23 @@ export function initialiseCampaignMobileTabs() {
 
   })
 
-  // If resizing above 500px, open all tabs again
+  // If resizing width above 500px, open all tabs again
+  var lastWidth = window.innerWidth;
+
   window.addEventListener("resize", function() {
-    if (window.innerWidth > 500) {
-      Array.from(campaigns).forEach((tab) => {
-        tab.openTab();
-      })
-    }
-    else {
-      Array.from(campaigns).forEach((tab) => {
-        tab.closeTab();
-        tab.checkStatus();
-      })
+    if (window.innerWidth !== lastWidth) {
+      lastWidth = window.innerWidth;
+  
+      if (window.innerWidth > 500) {
+        Array.from(campaigns).forEach((tab) => {
+          tab.openTab();
+        });
+      } else {
+        Array.from(campaigns).forEach((tab) => {
+          tab.closeTab();
+          tab.checkStatus();
+        });
+      }
     }
   });
 
