@@ -42,8 +42,6 @@ class messageTab {
       this.childButtons[0].focus();
     }
     this.button.setAttribute("aria-label", "Close Messages Tab");
-    this.tab.style.backdropFilter = "blur(15px)";
-    this.tab.style.webkitBackdropFilter = "blur(15px)";
     var noMessagesText = this.tab.querySelector("#no-messages-flavour-text");
     if (noMessagesText != null) {
       noMessagesText.style.display = "flex";
@@ -59,8 +57,6 @@ class messageTab {
       element.setAttribute("tabIndex", "-1");
     })
     this.button.setAttribute("aria-label", "Open Messages Tab: {{current_user.messages | length}} New Messages");
-    this.tab.style.backdropFilter = "";
-    this.tab.style.webkitBackdropFilter = "";
     var noMessagesText = this.tab.querySelector("#no-messages-flavour-text");
     if (noMessagesText != null) {
       noMessagesText.style.display = "none";
