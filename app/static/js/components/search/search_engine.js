@@ -118,7 +118,8 @@ export class SearchEngine {
             elements: {
               monthOuter: monthOuter,
               headerElement: eventHeaders[headerIndex],
-              eventOutline: eventHeaders[headerIndex].closest('.event-outline'), 
+              eventOutline: eventHeaders[headerIndex].closest('.event-outline'),
+              eventSmallDate: eventHeaders[headerIndex].closest('.event-outer-container').querySelector(".event-small-date"),
               rightBranchLabel: rightBranchLabel, 
               eventLine: eventLine,
               betweenEvents: betweenEvents, 
