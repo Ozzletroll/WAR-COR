@@ -4546,11 +4546,10 @@ input[type="search"] {
 .callsign-large {
   display: flex;
   justify-content: center;
-  font-size: min(16px, 4vw);
+  font-size: 12px;
   font-weight: 400;
   margin: 0;
-  word-wrap: break-word;
-  word-break: break-all;
+  text-align: center;
   margin-left: 10px;
 }
 
@@ -5057,7 +5056,7 @@ input[type="search"] {
 }
 
 .members-left {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .members-right {
